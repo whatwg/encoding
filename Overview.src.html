@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang=en-US>
+<meta charset=utf-8>
+<title>Encoding Standard</title>
+<style>
+ pre.idl { border:solid thin; background:#eee; color:#000; padding:0.5em }
+ pre.idl :link, pre.idl :visited { color:inherit; background:transparent }
+ pre code { color:inherit; background:transparent }
+ .example { margin-left:1em; padding-left:1em; border-left:double; color:#222; background:#fcfcfc }
+ .note { margin-left:2em; font-weight:bold; font-style:italic; color:#008000 }
+ p.note::before { content:"Note: " }
+ .XXX { padding:.5em; border:solid #f00 }
+ p.XXX::before { content:"Issue: " }
+ dl.switch { padding-left:2em }
+ dl.switch > dt { text-indent:-1.5em }
+ dl.switch > dt:before { content:'\21AA'; padding:0 0.5em 0 0; display:inline-block; width:1em; text-align:right; line-height:0.5em }
+ dl.domintro { color: green; margin: 2em 0 2em 2em; padding: 0.5em 1em; border: none; background: #DDFFDD; }
+ dl.domintro dt, dl.domintro dt * { color: black; text-decoration: none; }
+ dl.domintro dd { margin: 0.5em 0 1em 2em; padding: 0; }
+ dl.domintro dd p { margin: 0.5em 0; }
+ dl.domintro:before { display: table; margin: -1em -0.5em -0.5em auto; width: auto; content: 'This box is non-normative. Implementation requirements are given below this box.'; color: red; border: solid 2px; background: white; padding: 0 0.25em; }
+ em.ct { text-transform:lowercase; font-variant:small-caps; font-style:normal }
+ dfn { font-weight:bold; font-style:normal }
+ code { color:orangered }
+ code :link, code :visited { color:inherit }
+ hr:not(.top) { display:block; background:none; border:none; padding:0; margin:2em 0; height:auto }
+ table { border-collapse:collapse; border-style:hidden hidden none hidden }
+ table thead { border-bottom:solid }
+ table tbody th:first-child { border-left:solid }
+ table td, table th { border-left:solid; border-right:solid; border-bottom:solid thin; vertical-align:top; padding:0.2em }
+ .encoding th, .encoding td { font-family:monospace }
+
+ .warning { color: red; background: transparent; font-weight: bolder; font-style: italic; }
+ .warning p:first-child { margin-top: 0; }
+ .warning p:last-child { margin-bottom: 0; }
+ .warning:before { font-style: normal; }
+ p.warning:before { content: '\26A0 Warning! '; }
+</style>
+<style>
+ @media print { [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase } }
+</style>
+<link rel=stylesheet href="http://www.whatwg.org/style/specification">
+
+<div class=head>
+
+<h1>Encoding</h1>
+<h2 class="no-num no-toc">Living Draft &mdash; [DATE: 01 Jan 1901]</h2>
+
+<dl>
+ <dt>This Version:
+ <dd><a href="http://dvcs.w3.org/hg/domcore/raw-file/tip/Overview.html">http://dvcs.w3.org/hg/domcore/raw-file/tip/Overview.html</a>
+
+ <dt>Participate:</dt>
+ <dd><a href="http://www.whatwg.org/mailing-list">whatwg@whatwg.org</a>
+ <dd><a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
+
+ <dt>Editor:
+ <dd class="vcard h-card">
+  <a class="url u-url fn p-fn" lang="nl" href="http://annevankesteren.nl/">Anne van Kesteren</a>
+  (<a class="org h-org" href="http://www.opera.com/">Opera Software ASA</a>)
+  &lt;<a class="email u-email" href="mailto:annevk@opera.com">annevk@opera.com</a>>
+</dl>
+
+<p class=copyright><a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/"><img src="http://i.creativecommons.org/p/zero/1.0/80x15.png" alt="CC0"></a>
+To the extent possible under law, the editors have waived all copyright and
+related or neighboring rights to this work. In addition, as of
+[DATE: 01 Jan 1901], the editors have made this specification available
+under the
+<a rel="license"
+href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0">Open Web Foundation Agreement Version 1.0</a>,
+which is available at
+http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
+
+</div>
+
+<hr class="top">
+
+
+<h2 class="no-num no-toc">Table of Contents</h2>
+
+<!--toc-->
+
+
+<h2 class="no-num">Goals</h2>
+
+<ul>
+ <li>Define the finite list of encodings for the platform and obsolete the
+ "CHARACTER SETS" registry.
+ <li>Define error handling for those encodings.
+ <li>Converge implementations.
+ <li>Mark encodings that are not <span title>utf-8</span> as legacy.
+</ul>
+
+<h2 class="no-num">Notes</h2>
+
+<ul>
+ <li>Labels defined for each encoding is a conservative list at this point.
+ We can extend it as we please provided there is some agreement to do so.
+ <li>Mapping for each encoding is done by majority of implementations. If
+ the majority wants to change or has to change for compatibility, we can
+ change the mapping.
+ <li>The list of encodings is currently incomplete. Not all 8-bit encodings
+ are listed. Multi-octet encodings are not listed at all.
+</ul>
+
+
+<h2>Terminology</h2>
+
+<p>A code point is referenced as a four-or-more digit hexadecimal value
+preceded by "U+". E.g. U+0020.
+
+<p>An octet is referenced as a double-digit hexadecimal value. E.g. AA.
+
+<p>In an <span>8-bit encoding</span> table the octet can be found by
+concatenating the row and column header respectively. In these tables
+code points have "U+" omitted for brevity.
+
+
+<h2>Encodings</h2>
+
+<p>An <dfn title=concept-encoding>encoding</dfn> defines a mapping from a
+code point to one or more octets (and vice versa). Each
+<span title=concept-encoding>encoding</span> has a
+<dfn title=concept-encoding-name>name</dfn>, and one or more
+<dfn title=concept-encoding-label>labels</dfn>.
+
+<table>
+ <tr><th><span title=concept-encoding-name>Name</span><th><span title=concept-encoding-label>Labels</span>
+ <tr>
+  <td><span>arabic</span>
+  <td>
+   "<code title>arabic</code>"<br>
+   "<code title>csisolatinarabic</code>"<br>
+   "<code title>ecma-114</code>"<br>
+   "<code title>iso-8859-6</code>"<br>
+   "<code title>iso-ir-127</code>"
+ <tr>
+  <td><span>cyrillic</span>
+  <td>
+   "<code title>csisolatincyrillic</code>"<br>
+   "<code title>cyrillic</code>"<br>
+   "<code title>iso-8859-5</code>"<br>
+   "<code title>iso-ir-144</code>"
+ <tr>
+  <td><span>greek</span>
+  <td>
+   "<code title>csisolatingreek</code>"<br>
+   "<code title>ecma-118</code>"<br>
+   "<code title>elot_928</code>"<br>
+   "<code title>greek</code>"<br>
+   "<code title>greek8</code>"<br>
+   "<code title>iso-8859-7</code>"<br>
+   "<code title>iso-ir-126</code>"
+ <tr>
+  <td><span>hebrew</span>
+  <td>
+   "<code title>csisolatinhebrew</code>"<br>
+   "<code title>hebrew</code>"<br>
+   "<code title>iso-8859-8</code>"<br>
+   "<code title>iso-8859-8-i</code>"<br>
+   "<code title>iso-ir-138</code>"<br>
+   "<code title>visual</code>"
+ <tr>
+  <td><span>iso-8859-13</span>
+  <td>
+   "<code title>iso-8859-13</code>"
+ <tr>
+  <td><span>iso-8859-15</span>
+  <td>
+   "<code title>iso-8859-15</code>"
+ <tr>
+  <td><span>koi8-r</span>
+  <td>
+   "<code title>koi8-r</code>"
+ <tr>
+  <td><span>koi8-u</span>
+  <td>
+   "<code title>koi8-u</code>"
+ <tr>
+  <td><span>latin2</span>
+  <td>
+   "<code title>csisolatin2</code>"<br>
+   "<code title>iso-8859-2</code>"<br>
+   "<code title>iso-ir-101</code>"<br>
+   "<code title>iso8859-2</code>"<br>
+   "<code title>l2</code>"<br>
+   "<code title>latin2</code>"
+ <tr>
+  <td><span>latin3</span>
+  <td>
+   "<code title>csisolatin3</code>"<br>
+   "<code title>iso-8859-3</code>"<br>
+   "<code title>iso-ir-109</code>"<br>
+   "<code title>l3</code>"<br>
+   "<code title>latin3</code>"
+ <tr>
+  <td><span>latin4</span>
+  <td>
+   "<code title>csisolatin4</code>"<br>
+   "<code title>iso-8859-4</code>"<br>
+   "<code title>iso-ir-110</code>"<br>
+   "<code title>l4</code>"<br>
+   "<code title>latin4</code>"
+ <tr>
+  <td><span>windows-874</span>
+  <td>
+   "<code title>iso-8859-11</code>"<br>
+   "<code title>tis-620</code>"<br>
+   "<code title>windows-874</code>"
+ <tr>
+  <td><span>windows-1250</span>
+  <td>
+   "<code title>windows-1250</code>"
+   "<code title>x-cp1250</code>"
+ <tr>
+  <td><span>windows-1251</span>
+  <td>
+   "<code title>windows-1251</code>"<br>
+   "<code title>x-cp1251</code>"
+ <tr>
+  <td><span>windows-1253</span>
+  <td>
+   "<code title>windows-1253</code>"
+ <tr>
+  <td><span>windows-1254</span>
+  <td>
+   "<code title>csisolatin5</code>"<br>
+   "<code title>iso-ir-148</code>"<br>
+   "<code title>l5</code>"<br>
+   "<code title>latin5</code>"<br>
+   "<code title>windows-1254</code>"
+ <tr>
+  <td><span>windows-1256</span>
+  <td>
+   "<code title>cp1256</code>"<br>
+   "<code title>windows-1256</code>"
+</table>
+
+
+<h2>Legacy 8-bit encodings</h2>
+
+<p>An <span title=concept-encoding>encoding</span> where each octet maps to
+a code point is an <dfn>8-bit encoding</dfn>.
+<span title=concept-encoding>encoding</span> defined with subsections of
+this section are <span title="8-bit encoding">8-bit encodings</span>.
+
+<p>Unless stated otherwise, in an <span>8-bit encoding</span> the octet's
+hexadecimal value maps to a code point of the same hexadecimal value.
+
+<p class=example>An octet 7E maps to U+007E.
+
+<p class=note>See
+<a href="http://annevankesteren.nl/2010/8-bit-labels">8-bit labels and their encodings in various browsers</a>
+for the research this section is based on.
+
+
+<h3><dfn>arabic</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>FFFD<td>FFFD<td>FFFD<td>00A4<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>060C<td>00AD<td>FFFD<td>FFFD
+ <tr><th>B<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>061B<td>FFFD<td>FFFD<td>FFFD<td>061F
+ <tr><th>C<td>FFFD<td>0621<td>0622<td>0623<td>0624<td>0625<td>0626<td>0627<td>0628<td>0629<td>062A<td>062B<td>062C<td>062D<td>062E<td>062F
+ <tr><th>D<td>0630<td>0631<td>0632<td>0633<td>0634<td>0635<td>0636<td>0637<td>0638<td>0639<td>063A<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD
+ <tr><th>E<td>0640<td>0641<td>0642<td>0643<td>0644<td>0645<td>0646<td>0647<td>0648<td>0649<td>064A<td>064B<td>064C<td>064D<td>064E<td>064F
+ <tr><th>F<td>0650<td>0651<td>0652<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD
+</table>
+
+<p class=note>Gecko maps 7F-9F to U+FFFD rather than U+007F-U+009F. Trident maps A1-A3, A5-AB, AE-BA, BC-BE, C0, DB-DF, and F3-FF to U+F7C8-U+F7CA, U+F7CB-U+F7D1, U+F7D2-U+F7DE, U+F7DF-U+F7E1, U+F7E2, U+F7E3-U+F7E7, and U+F7E8-U+F7F4 respectively.
+
+
+<h3><dfn>cyrillic</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>0401<td>0402<td>0403<td>0404<td>0405<td>0406<td>0407<td>0408<td>0409<td>040A<td>040B<td>040C<td>00AD<td>040E<td>040F
+ <tr><th>B<td>0410<td>0411<td>0412<td>0413<td>0414<td>0415<td>0416<td>0417<td>0418<td>0419<td>041A<td>041B<td>041C<td>041D<td>041E<td>041F
+ <tr><th>C<td>0420<td>0421<td>0422<td>0423<td>0424<td>0425<td>0426<td>0427<td>0428<td>0429<td>042A<td>042B<td>042C<td>042D<td>042E<td>042F
+ <tr><th>D<td>0430<td>0431<td>0432<td>0433<td>0434<td>0435<td>0436<td>0437<td>0438<td>0439<td>043A<td>043B<td>043C<td>043D<td>043E<td>043F
+ <tr><th>E<td>0440<td>0441<td>0442<td>0443<td>0444<td>0445<td>0446<td>0447<td>0448<td>0449<td>044A<td>044B<td>044C<td>044D<td>044E<td>044F
+ <tr><th>F<td>2116<td>0451<td>0452<td>0453<td>0454<td>0455<td>0456<td>0457<td>0458<td>0459<td>045A<td>045B<td>045C<td>00A7<td>045E<td>045F
+</table>
+
+<p class=note>Gecko maps 7F-9F to U+FFFD rather than U+007F-U+009F.
+
+
+<h3><dfn>greek</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>2018<td>2019<td>00A3<td>20AC<td>20AF<td>00A6<td>00A7<td>00A8<td>00A9<td>037A<td>00AB<td>00AC<td>00AD<td>FFFD<td>2015
+ <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>0384<td>0385<td>0386<td>00B7<td>0388<td>0389<td>038A<td>00BB<td>038C<td>00BD<td>038E<td>038F
+ <tr><th>C<td>0390<td>0391<td>0392<td>0393<td>0394<td>0395<td>0396<td>0397<td>0398<td>0399<td>039A<td>039B<td>039C<td>039D<td>039E<td>039F
+ <tr><th>D<td>03A0<td>03A1<td>FFFD<td>03A3<td>03A4<td>03A5<td>03A6<td>03A7<td>03A8<td>03A9<td>03AA<td>03AB<td>03AC<td>03AD<td>03AE<td>03AF
+ <tr><th>E<td>03B0<td>03B1<td>03B2<td>03B3<td>03B4<td>03B5<td>03B6<td>03B7<td>03B8<td>03B9<td>03BA<td>03BB<td>03BC<td>03BD<td>03BE<td>03BF
+ <tr><th>F<td>03C0<td>03C1<td>03C2<td>03C3<td>03C4<td>03C5<td>03C6<td>03C7<td>03C8<td>03C9<td>03CA<td>03CB<td>03CC<td>03CD<td>03CE<td>FFFD
+</table>
+
+<p class=note>Gecko maps <em>80</em>-9F to U+FFFD rather than U+0080-U+009F. Trident maps A1, A2, A4, A5, AA, AE, D2, and FF, to U+02BD, U+02BC, U+F7C2, U+F7C3, U+F7C4, U+F7C5, U+F7C6, and U+F7C7 respectively.
+
+
+<h3><dfn>hebrew</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>FFFD<td>00A2<td>00A3<td>00A4<td>00A5<td>00A6<td>00A7<td>00A8<td>00A9<td>00D7<td>00AB<td>00AC<td>00AD<td>00AE<td>00AF
+ <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>00B4<td>00B5<td>00B6<td>00B7<td>00B8<td>00B9<td>00F7<td>00BB<td>00BC<td>00BD<td>00BE<td>FFFD
+ <tr><th>C<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD
+ <tr><th>D<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>2017
+ <tr><th>E<td>05D0<td>05D1<td>05D2<td>05D3<td>05D4<td>05D5<td>05D6<td>05D7<td>05D8<td>05D9<td>05DA<td>05DB<td>05DC<td>05DD<td>05DE<td>05DF
+ <tr><th>F<td>05E0<td>05E1<td>05E2<td>05E3<td>05E4<td>05E5<td>05E6<td>05E7<td>05E8<td>05E9<td>05EA<td>FFFD<td>FFFD<td>200E<td>200F<td>FFFD
+</table>
+
+<p class=note>Gecko maps <em>80</em>-9F to U+FFFD rather than U+0080-U+009F. Trident maps A1, AF, BF-DE, and FB-FF to U+F79C, U+203E, U+F79D-U+F7BC, and U+F7BD-U+F7C1 respectively.
+
+
+<h3><dfn>iso-8859-13</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>201D<td>00A2<td>00A3<td>00A4<td>201E<td>00A6<td>00A7<td>00D8<td>00A9<td>0156<td>00AB<td>00AC<td>00AD<td>00AE<td>00C6
+ <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>201C<td>00B5<td>00B6<td>00B7<td>00F8<td>00B9<td>0157<td>00BB<td>00BC<td>00BD<td>00BE<td>00E6
+ <tr><th>C<td>0104<td>012E<td>0100<td>0106<td>00C4<td>00C5<td>0118<td>0112<td>010C<td>00C9<td>0179<td>0116<td>0122<td>0136<td>012A<td>013B
+ <tr><th>D<td>0160<td>0143<td>0145<td>00D3<td>014C<td>00D5<td>00D6<td>00D7<td>0172<td>0141<td>015A<td>016A<td>00DC<td>017B<td>017D<td>00DF
+ <tr><th>E<td>0105<td>012F<td>0101<td>0107<td>00E4<td>00E5<td>0119<td>0113<td>010D<td>00E9<td>017A<td>0117<td>0123<td>0137<td>012B<td>013C
+ <tr><th>F<td>0161<td>0144<td>0146<td>00F3<td>014D<td>00F5<td>00F6<td>00F7<td>0173<td>0142<td>015B<td>016B<td>00FC<td>017C<td>017E<td>2019
+</table>
+
+<p class=note>Gecko maps 7F-9F to U+FFFD rather than U+007F-U+009F.
+
+
+<h3><dfn>iso-8859-15</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>00A1<td>00A2<td>00A3<td>20AC<td>00A5<td>0160<td>00A7<td>0161<td>00A9<td>00AA<td>00AB<td>00AC<td>00AD<td>00AE<td>00AF
+ <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>017D<td>00B5<td>00B6<td>00B7<td>017E<td>00B9<td>00BA<td>00BB<td>0152<td>0153<td>0178<td>00BF
+</table>
+
+<p class=note>Gecko maps 7F-9F to U+FFFD rather than U+007F-U+009F.
+
+
+<h3><dfn>koi8-r</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>2500<td>2502<td>250C<td>2510<td>2514<td>2518<td>251C<td>2524<td>252C<td>2534<td>253C<td>2580<td>2584<td>2588<td>258C<td>2590
+ <tr><th>9<td>2591<td>2592<td>2593<td>2320<td>25A0<td>2219<td>221A<td>2248<td>2264<td>2265<td>00A0<td>2321<td>00B0<td>00B2<td>00B7<td>00F7
+ <tr><th>A<td>2550<td>2551<td>2552<td>0451<td>2553<td>2554<td>2555<td>2556<td>2557<td>2558<td>2559<td>255A<td>255B<td>255C<td>255D<td>255E
+ <tr><th>B<td>255F<td>2560<td>2561<td>0401<td>2562<td>2563<td>2564<td>2565<td>2566<td>2567<td>2568<td>2569<td>256A<td>256B<td>256C<td>00A9
+ <tr><th>C<td>044E<td>0430<td>0431<td>0446<td>0434<td>0435<td>0444<td>0433<td>0445<td>0438<td>0439<td>043A<td>043B<td>043C<td>043D<td>043E
+ <tr><th>D<td>043F<td>044F<td>0440<td>0441<td>0442<td>0443<td>0436<td>0432<td>044C<td>044B<td>0437<td>0448<td>044D<td>0449<td>0447<td>044A
+ <tr><th>E<td>042E<td>0410<td>0411<td>0426<td>0414<td>0415<td>0424<td>0413<td>0425<td>0418<td>0419<td>041A<td>041B<td>041C<td>041D<td>041E
+ <tr><th>F<td>041F<td>042F<td>0420<td>0421<td>0422<td>0423<td>0416<td>0412<td>042C<td>042B<td>0417<td>0428<td>042D<td>0429<td>0427<td>042A
+</table>
+
+<p class=note>Gecko maps 7F to U+FFFD rather than U+007F.
+
+
+<h3><dfn>koi8-u</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>2500<td>2502<td>250C<td>2510<td>2514<td>2518<td>251C<td>2524<td>252C<td>2534<td>253C<td>2580<td>2584<td>2588<td>258C<td>2590
+ <tr><th>9<td>2591<td>2592<td>2593<td>2320<td>25A0<td>2219<td>221A<td>2248<td>2264<td>2265<td>00A0<td>2321<td>00B0<td>00B2<td>00B7<td>00F7
+ <tr><th>A<td>2550<td>2551<td>2552<td>0451<td>0454<td>2554<td>0456<td>0457<td>2557<td>2558<td>2559<td>255A<td>255B<td>0491<td>255D<td>255E
+ <tr><th>B<td>255F<td>2560<td>2561<td>0401<td>0404<td>2563<td>0406<td>0407<td>2566<td>2567<td>2568<td>2569<td>256A<td>0490<td>256C<td>00A9
+ <tr><th>C<td>044E<td>0430<td>0431<td>0446<td>0434<td>0435<td>0444<td>0433<td>0445<td>0438<td>0439<td>043A<td>043B<td>043C<td>043D<td>043E
+ <tr><th>D<td>043F<td>044F<td>0440<td>0441<td>0442<td>0443<td>0436<td>0432<td>044C<td>044B<td>0437<td>0448<td>044D<td>0449<td>0447<td>044A
+ <tr><th>E<td>042E<td>0410<td>0411<td>0426<td>0414<td>0415<td>0424<td>0413<td>0425<td>0418<td>0419<td>041A<td>041B<td>041C<td>041D<td>041E
+ <tr><th>F<td>041F<td>042F<td>0420<td>0421<td>0422<td>0423<td>0416<td>0412<td>042C<td>042B<td>0417<td>0428<td>042D<td>0429<td>0427<td>042A
+</table>
+
+<p class=note>Gecko maps 7F to U+FFFD rather than U+007F. Trident maps AE and BE to U+045E and U+040E respectively.
+
+
+<h3><dfn>latin2</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>0104<td>02D8<td>0141<td>00A4<td>013D<td>015A<td>00A7<td>00A8<td>0160<td>015E<td>0164<td>0179<td>00AD<td>017D<td>017B
+ <tr><th>B<td>00B0<td>0105<td>02DB<td>0142<td>00B4<td>013E<td>015B<td>02C7<td>00B8<td>0161<td>015F<td>0165<td>017A<td>02DD<td>017E<td>017C
+ <tr><th>C<td>0154<td>00C1<td>00C2<td>0102<td>00C4<td>0139<td>0106<td>00C7<td>010C<td>00C9<td>0118<td>00CB<td>011A<td>00CD<td>00CE<td>010E
+ <tr><th>D<td>0110<td>0143<td>0147<td>00D3<td>00D4<td>0150<td>00D6<td>00D7<td>0158<td>016E<td>00DA<td>0170<td>00DC<td>00DD<td>0162<td>00DF
+ <tr><th>E<td>0155<td>00E1<td>00E2<td>0103<td>00E4<td>013A<td>0107<td>00E7<td>010D<td>00E9<td>0119<td>00EB<td>011B<td>00ED<td>00EE<td>010F
+ <tr><th>F<td>0111<td>0144<td>0148<td>00F3<td>00F4<td>0151<td>00F6<td>00F7<td>0159<td>016F<td>00FA<td>0171<td>00FC<td>00FD<td>0163<td>02D9
+</table>
+
+<p class=note>Gecko maps 7F-9F to U+FFFD rather than U+007F-U+009F.
+
+
+<h3><dfn>latin3</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>0126<td>02D8<td>00A3<td>00A4<td>FFFD<td>0124<td>00A7<td>00A8<td>0130<td>015E<td>011E<td>0134<td>00AD<td>FFFD<td>017B
+ <tr><th>B<td>00B0<td>0127<td>00B2<td>00B3<td>00B4<td>00B5<td>0125<td>00B7<td>00B8<td>0131<td>015F<td>011F<td>0135<td>00BD<td>FFFD<td>017C
+ <tr><th>C<td>00C0<td>00C1<td>00C2<td>FFFD<td>00C4<td>010A<td>0108<td>00C7<td>00C8<td>00C9<td>00CA<td>00CB<td>00CC<td>00CD<td>00CE<td>00CF
+ <tr><th>D<td>FFFD<td>00D1<td>00D2<td>00D3<td>00D4<td>0120<td>00D6<td>00D7<td>011C<td>00D9<td>00DA<td>00DB<td>00DC<td>016C<td>015C<td>00DF
+ <tr><th>E<td>00E0<td>00E1<td>00E2<td>FFFD<td>00E4<td>010B<td>0109<td>00E7<td>00E8<td>00E9<td>00EA<td>00EB<td>00EC<td>00ED<td>00EE<td>00EF
+ <tr><th>F<td>FFFD<td>00F1<td>00F2<td>00F3<td>00F4<td>0121<td>00F6<td>00F7<td>011D<td>00F9<td>00FA<td>00FB<td>00FC<td>016D<td>015D<td>02D9
+</table>
+
+<p class=note>Gecko maps 7F-9F to U+FFFD rather than U+007F-U+009F. Trident maps A5, AE, BE, C3, D0, E3, and F0 to U+F7F5, U+F7F6, U+F7F7, U+F7F8, U+F7F9, U+F7FA, and U+F7FB respectively.
+
+
+<h3><dfn>latin4</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>0104<td>0138<td>0156<td>00A4<td>0128<td>013B<td>00A7<td>00A8<td>0160<td>0112<td>0122<td>0166<td>00AD<td>017D<td>00AF
+ <tr><th>B<td>00B0<td>0105<td>02DB<td>0157<td>00B4<td>0129<td>013C<td>02C7<td>00B8<td>0161<td>0113<td>0123<td>0167<td>014A<td>017E<td>014B
+ <tr><th>C<td>0100<td>00C1<td>00C2<td>00C3<td>00C4<td>00C5<td>00C6<td>012E<td>010C<td>00C9<td>0118<td>00CB<td>0116<td>00CD<td>00CE<td>012A
+ <tr><th>D<td>0110<td>0145<td>014C<td>0136<td>00D4<td>00D5<td>00D6<td>00D7<td>00D8<td>0172<td>00DA<td>00DB<td>00DC<td>0168<td>016A<td>00DF
+ <tr><th>E<td>0101<td>00E1<td>00E2<td>00E3<td>00E4<td>00E5<td>00E6<td>012F<td>010D<td>00E9<td>0119<td>00EB<td>0117<td>00ED<td>00EE<td>012B
+ <tr><th>F<td>0111<td>0146<td>014D<td>0137<td>00F4<td>00F5<td>00F6<td>00F7<td>00F8<td>0173<td>00FA<td>00FB<td>00FC<td>0169<td>016B<td>02D9
+</table>
+
+<p class=note>Gecko maps 7F-9F to U+FFFD rather than U+007F-U+009F.
+
+
+<h3><dfn>windows-874</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>20AC<td>0081<td>0082<td>0083<td>0084<td>2026<td>0086<td>0087<td>0088<td>0089<td>008A<td>008B<td>008C<td>008D<td>008E<td>008F
+ <tr><th>9<td>0090<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>0098<td>0099<td>009A<td>009B<td>009C<td>009D<td>009E<td>009F
+ <tr><th>A<td>00A0<td>0E01<td>0E02<td>0E03<td>0E04<td>0E05<td>0E06<td>0E07<td>0E08<td>0E09<td>0E0A<td>0E0B<td>0E0C<td>0E0D<td>0E0E<td>0E0F
+ <tr><th>B<td>0E10<td>0E11<td>0E12<td>0E13<td>0E14<td>0E15<td>0E16<td>0E17<td>0E18<td>0E19<td>0E1A<td>0E1B<td>0E1C<td>0E1D<td>0E1E<td>0E1F
+ <tr><th>C<td>0E20<td>0E21<td>0E22<td>0E23<td>0E24<td>0E25<td>0E26<td>0E27<td>0E28<td>0E29<td>0E2A<td>0E2B<td>0E2C<td>0E2D<td>0E2E<td>0E2F
+ <tr><th>D<td>0E30<td>0E31<td>0E32<td>0E33<td>0E34<td>0E35<td>0E36<td>0E37<td>0E38<td>0E39<td>0E3A<td>F8C1<td>F8C2<td>F8C3<td>F8C4<td>0E3F
+ <tr><th>E<td>0E40<td>0E41<td>0E42<td>0E43<td>0E44<td>0E45<td>0E46<td>0E47<td>0E48<td>0E49<td>0E4A<td>0E4B<td>0E4C<td>0E4D<td>0E4E<td>0E4F
+ <tr><th>F<td>0E50<td>0E51<td>0E52<td>0E53<td>0E54<td>0E55<td>0E56<td>0E57<td>0E58<td>0E59<td>0E5A<td>0E5B<td>F8C5<td>F8C6<td>F8C7<td>F8C8
+</table>
+
+<p class=note>Gecko and Presto map 81-84, 86-90, 98-9F, DB-DE, and FC-FF to U+FFFD.
+
+
+<h3><dfn>windows-1250</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>20AC<td>0081<td>201A<td>0083<td>201E<td>2026<td>2020<td>2021<td>0088<td>2030<td>0160<td>2039<td>015A<td>0164<td>017D<td>0179
+ <tr><th>9<td>0090<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>0098<td>2122<td>0161<td>203A<td>015B<td>0165<td>017E<td>017A
+ <tr><th>A<td>00A0<td>02C7<td>02D8<td>0141<td>00A4<td>0104<td>00A6<td>00A7<td>00A8<td>00A9<td>015E<td>00AB<td>00AC<td>00AD<td>00AE<td>017B
+ <tr><th>B<td>00B0<td>00B1<td>02DB<td>0142<td>00B4<td>00B5<td>00B6<td>00B7<td>00B8<td>0105<td>015F<td>00BB<td>013D<td>02DD<td>013E<td>017C
+ <tr><th>C<td>0154<td>00C1<td>00C2<td>0102<td>00C4<td>0139<td>0106<td>00C7<td>010C<td>00C9<td>0118<td>00CB<td>011A<td>00CD<td>00CE<td>010E
+ <tr><th>D<td>0110<td>0143<td>0147<td>00D3<td>00D4<td>0150<td>00D6<td>00D7<td>0158<td>016E<td>00DA<td>0170<td>00DC<td>00DD<td>0162<td>00DF
+ <tr><th>E<td>0155<td>00E1<td>00E2<td>0103<td>00E4<td>013A<td>0107<td>00E7<td>010D<td>00E9<td>0119<td>00EB<td>011B<td>00ED<td>00EE<td>010F
+ <tr><th>F<td>0111<td>0144<td>0148<td>00F3<td>00F4<td>0151<td>00F6<td>00F7<td>0159<td>016F<td>00FA<td>0171<td>00FC<td>00FD<td>0163<td>02D9
+</table>
+
+<p class=note>Gecko and Presto map 81, 83, 88, 90, and 98 to U+FFFD.
+
+
+<h3><dfn>windows-1251</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>0402<td>0403<td>201A<td>0453<td>201E<td>2026<td>2020<td>2021<td>20AC<td>2030<td>0409<td>2039<td>040A<td>040C<td>040B<td>040F
+ <tr><th>9<td>0452<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>0098<td>2122<td>0459<td>203A<td>045A<td>045C<td>045B<td>045F
+ <tr><th>A<td>00A0<td>040E<td>045E<td>0408<td>00A4<td>0490<td>00A6<td>00A7<td>0401<td>00A9<td>0404<td>00AB<td>00AC<td>00AD<td>00AE<td>0407
+ <tr><th>B<td>00B0<td>00B1<td>0406<td>0456<td>0491<td>00B5<td>00B6<td>00B7<td>0451<td>2116<td>0454<td>00BB<td>0458<td>0405<td>0455<td>0457
+ <tr><th>C<td>0410<td>0411<td>0412<td>0413<td>0414<td>0415<td>0416<td>0417<td>0418<td>0419<td>041A<td>041B<td>041C<td>041D<td>041E<td>041F
+ <tr><th>D<td>0420<td>0421<td>0422<td>0423<td>0424<td>0425<td>0426<td>0427<td>0428<td>0429<td>042A<td>042B<td>042C<td>042D<td>042E<td>042F
+ <tr><th>E<td>0430<td>0431<td>0432<td>0433<td>0434<td>0435<td>0436<td>0437<td>0438<td>0439<td>043A<td>043B<td>043C<td>043D<td>043E<td>043F
+ <tr><th>F<td>0440<td>0441<td>0442<td>0443<td>0444<td>0445<td>0446<td>0447<td>0448<td>0449<td>044A<td>044B<td>044C<td>044D<td>044E<td>044F
+</table>
+
+<p class=note>Gecko and Presto map 98 to U+FFFD.
+
+
+<h3><dfn>windows-1253</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>20AC<td>0081<td>201A<td>0192<td>201E<td>2026<td>2020<td>2021<td>0088<td>2030<td>008A<td>2039<td>008C<td>008D<td>008E<td>008F
+ <tr><th>9<td>0090<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>0098<td>2122<td>009A<td>203A<td>009C<td>009D<td>009E<td>009F
+ <tr><th>A<td>00A0<td>0385<td>0386<td>00A3<td>00A4<td>00A5<td>00A6<td>00A7<td>00A8<td>00A9<td>00AA<td>00AB<td>00AC<td>00AD<td>00AE<td>2015
+ <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>0384<td>00B5<td>00B6<td>00B7<td>0388<td>0389<td>038A<td>00BB<td>038C<td>00BD<td>038E<td>038F
+ <tr><th>C<td>0390<td>0391<td>0392<td>0393<td>0394<td>0395<td>0396<td>0397<td>0398<td>0399<td>039A<td>039B<td>039C<td>039D<td>039E<td>039F
+ <tr><th>D<td>03A0<td>03A1<td>FFFD<td>03A3<td>03A4<td>03A5<td>03A6<td>03A7<td>03A8<td>03A9<td>03AA<td>03AB<td>03AC<td>03AD<td>03AE<td>03AF
+ <tr><th>E<td>03B0<td>03B1<td>03B2<td>03B3<td>03B4<td>03B5<td>03B6<td>03B7<td>03B8<td>03B9<td>03BA<td>03BB<td>03BC<td>03BD<td>03BE<td>03BF
+ <tr><th>F<td>03C0<td>03C1<td>03C2<td>03C3<td>03C4<td>03C5<td>03C6<td>03C7<td>03C8<td>03C9<td>03CA<td>03CB<td>03CC<td>03CD<td>03CE<td>FFFD
+</table>
+
+<p class=note>Gecko and Presto map 81, 88, 8A, 8C-90, 98, 9A, 9C-9F, and AA to U+FFFD. Trident maps AA, D2, and FF to U+F8F9, U+F8FA, and U+F8FB respectively.
+
+
+<h3><dfn>windows-1254</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>20AC<td>0081<td>201A<td>0192<td>201E<td>2026<td>2020<td>2021<td>02C6<td>2030<td>0160<td>2039<td>0152<td>008D<td>008E<td>008F
+ <tr><th>9<td>0090<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>02DC<td>2122<td>0161<td>203A<td>0153<td>009D<td>009E<td>0178
+ <tr><th>D<td>011E<td>00D1<td>00D2<td>00D3<td>00D4<td>00D5<td>00D6<td>00D7<td>00D8<td>00D9<td>00DA<td>00DB<td>00DC<td>0130<td>015E<td>00DF
+ <tr><th>F<td>011F<td>00F1<td>00F2<td>00F3<td>00F4<td>00F5<td>00F6<td>00F7<td>00F8<td>00F9<td>00FA<td>00FB<td>00FC<td>0131<td>015F<td>00FF
+</table>
+
+<p class=note>Gecko and Presto map 81, 8D, 8E, 8F, 90, 9D, and 9E to U+FFFD.
+
+<p class=note>Gecko and Presto have not yet made "<code title>latin5</code>" a label for this encoding. (But per HTML and this specification which will replace HTML on this front they should.)
+
+
+<h3><dfn>windows-1256</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>20AC<td>067E<td>201A<td>0192<td>201E<td>2026<td>2020<td>2021<td>02C6<td>2030<td>0679<td>2039<td>0152<td>0686<td>0698<td>0688
+ <tr><th>9<td>06AF<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>06A9<td>2122<td>0691<td>203A<td>0153<td>200C<td>200D<td>06BA
+ <tr><th>A<td>00A0<td>060C<td>00A2<td>00A3<td>00A4<td>00A5<td>00A6<td>00A7<td>00A8<td>00A9<td>06BE<td>00AB<td>00AC<td>00AD<td>00AE<td>00AF
+ <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>00B4<td>00B5<td>00B6<td>00B7<td>00B8<td>00B9<td>061B<td>00BB<td>00BC<td>00BD<td>00BE<td>061F
+ <tr><th>C<td>06C1<td>0621<td>0622<td>0623<td>0624<td>0625<td>0626<td>0627<td>0628<td>0629<td>062A<td>062B<td>062C<td>062D<td>062E<td>062F
+ <tr><th>D<td>0630<td>0631<td>0632<td>0633<td>0634<td>0635<td>0636<td>00D7<td>0637<td>0638<td>0639<td>063A<td>0640<td>0641<td>0642<td>0643
+ <tr><th>E<td>00E0<td>0644<td>00E2<td>0645<td>0646<td>0647<td>0648<td>00E7<td>00E8<td>00E9<td>00EA<td>00EB<td>0649<td>064A<td>00EE<td>00EF
+ <tr><th>F<td>064B<td>064C<td>064D<td>064E<td>00F4<td>064F<td>0650<td>00F7<td>0651<td>00F9<td>0652<td>00FB<td>00FC<td>200E<td>200F<td>06D2
+</table>
