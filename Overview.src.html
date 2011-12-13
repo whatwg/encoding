@@ -166,6 +166,11 @@ code point to one or more octets (and vice versa). Each
    "<code title>cp864</code>"<br>
    "<code title>ibm864</code>"
  <tr>
+  <td><span>ibm866</span>
+  <td>
+   "<code title>cp866</code>"<br>
+   "<code title>ibm866</code>"
+ <tr>
   <td><span>iso-8859-13</span>
   <td>
    "<code title>iso-8859-13</code>"
@@ -397,6 +402,25 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 <p class=note>Trident maps A6, A7, and FF to U+F8BE, U+F8BF, and U+F8C0.
 
 <p class=note>Presto does not support this encoding.
+
+
+<h3><dfn>ibm866</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>0410<td>0411<td>0412<td>0413<td>0414<td>0415<td>0416<td>0417<td>0418<td>0419<td>041A<td>041B<td>041C<td>041D<td>041E<td>041F
+ <tr><th>9<td>0420<td>0421<td>0422<td>0423<td>0424<td>0425<td>0426<td>0427<td>0428<td>0429<td>042A<td>042B<td>042C<td>042D<td>042E<td>042F
+ <tr><th>A<td>0430<td>0431<td>0432<td>0433<td>0434<td>0435<td>0436<td>0437<td>0438<td>0439<td>043A<td>043B<td>043C<td>043D<td>043E<td>043F
+ <tr><th>B<td>2591<td>2592<td>2593<td>2502<td>2524<td>2561<td>2562<td>2556<td>2555<td>2563<td>2551<td>2557<td>255D<td>255C<td>255B<td>2510
+ <tr><th>C<td>2514<td>2534<td>252C<td>251C<td>2500<td>253C<td>255E<td>255F<td>255A<td>2554<td>2569<td>2566<td>2560<td>2550<td>256C<td>2567
+ <tr><th>D<td>2568<td>2564<td>2565<td>2559<td>2558<td>2552<td>2553<td>256B<td>256A<td>2518<td>250C<td>2588<td>2584<td>258C<td>2590<td>2580
+ <tr><th>E<td>0440<td>0441<td>0442<td>0443<td>0444<td>0445<td>0446<td>0447<td>0448<td>0449<td>044A<td>044B<td>044C<td>044D<td>044E<td>044F
+ <tr><th>F<td>0401<td>0451<td>0404<td>0454<td>0407<td>0457<td>040E<td>045E<td>00B0<td>2219<td>00B7<td>221A<td>2116<td>00A4<td>25A0<td>00A0
+</table>
+
+<p class=note>WebKit maps 1A, 1C, and 7F to U+001C, U+007F, and U+001A rather than U+001A, U+001C, and 007F.
+
+<p class=note>Chromium does not support this encoding.
 
 
 <h3><dfn>iso-8859-13</dfn></h3>
