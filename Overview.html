@@ -103,7 +103,10 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#windows-1251"><span class="secno">3.17 </span>windows-1251</a></li>
    <li><a href="#windows-1253"><span class="secno">3.18 </span>windows-1253</a></li>
    <li><a href="#windows-1254"><span class="secno">3.19 </span>windows-1254</a></li>
-   <li><a href="#windows-1256"><span class="secno">3.20 </span>windows-1256</a></ol></ol>
+   <li><a href="#windows-1255"><span class="secno">3.20 </span>windows-1255</a></li>
+   <li><a href="#windows-1256"><span class="secno">3.21 </span>windows-1256</a></li>
+   <li><a href="#windows-1257"><span class="secno">3.22 </span>windows-1257</a></li>
+   <li><a href="#windows-1258"><span class="secno">3.23 </span>windows-1258</a></ol></ol>
 <!--end-toc-->
 
 
@@ -269,10 +272,22 @@ code point to one or more octets (and vice versa). Each
    "<code title="">latin5</code>"<br>
    "<code title="">windows-1254</code>"
  <tr>
+  <td><a href="#windows-1255">windows-1255</a>
+  <td>
+   "<code title="">windows-1255</code>"
+ <tr>
   <td><a href="#windows-1256">windows-1256</a>
   <td>
    "<code title="">cp1256</code>"<br>
    "<code title="">windows-1256</code>"
+ <tr>
+  <td><a href="#windows-1257">windows-1257</a>
+  <td>
+   "<code title="">windows-1257</code>"
+ <tr>
+  <td><a href="#windows-1258">windows-1258</a>
+  <td>
+   "<code title="">windows-1258</code>"
 </table>
 
 
@@ -572,11 +587,29 @@ for the research this section is based on.
 </table>
 
 <p class="note">Gecko and Presto map 81, 8D, 8E, 8F, 90, 9D, and 9E to U+FFFD.
+<!-- Presto fixed this for these and others; prolly in Opera 12 -->
 
-<p class="note">Gecko and Presto have not yet made "<code title="">latin5</code>" a label for this encoding. (But per HTML and this specification which will replace HTML on this front they should.)
+<p class="note">Gecko has not yet made "<code title="">latin5</code>" (and others) a label for this encoding. (But per HTML and this specification which will replace HTML on this front they should.)
 
 
-<h3 id="windows-1256"><span class="secno">3.20 </span><dfn>windows-1256</dfn></h3>
+<h3 id="windows-1255"><span class="secno">3.20 </span><dfn>windows-1255</dfn></h3>
+
+<table class="encoding">
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>20AC<td>0081<td>201A<td>0192<td>201E<td>2026<td>2020<td>2021<td>02C6<td>2030<td>008A<td>2039<td>008C<td>008D<td>008E<td>008F
+ <tr><th>9<td>0090<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>02DC<td>2122<td>009A<td>203A<td>009C<td>009D<td>009E<td>009F
+ <tr><th>A<td>00A0<td>00A1<td>00A2<td>00A3<td>20AA<td>00A5<td>00A6<td>00A7<td>00A8<td>00A9<td>00D7<td>00AB<td>00AC<td>00AD<td>00AE<td>00AF
+ <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>00B4<td>00B5<td>00B6<td>00B7<td>00B8<td>00B9<td>00F7<td>00BB<td>00BC<td>00BD<td>00BE<td>00BF
+ <tr><th>C<td>05B0<td>05B1<td>05B2<td>05B3<td>05B4<td>05B5<td>05B6<td>05B7<td>05B8<td>05B9<td>FFFD<td>05BB<td>05BC<td>05BD<td>05BE<td>05BF
+ <tr><th>D<td>05C0<td>05C1<td>05C2<td>05C3<td>05F0<td>05F1<td>05F2<td>05F3<td>05F4<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD
+ <tr><th>E<td>05D0<td>05D1<td>05D2<td>05D3<td>05D4<td>05D5<td>05D6<td>05D7<td>05D8<td>05D9<td>05DA<td>05DB<td>05DC<td>05DD<td>05DE<td>05DF
+ <tr><th>F<td>05E0<td>05E1<td>05E2<td>05E3<td>05E4<td>05E5<td>05E6<td>05E7<td>05E8<td>05E9<td>05EA<td>FFFD<td>FFFD<td>200E<td>200F<td>FFFD
+</table>
+
+<p class="note">Gecko and Presto map 81, 8A, 8C-90, 9A, and 9C-9F to U+FFFD. Trident maps CA, D9-DF, FB-FC, and FF to U+05BA, U+F88D-U+F893, U+F894-U+F895, and U+F896.
+
+
+<h3 id="windows-1256"><span class="secno">3.21 </span><dfn>windows-1256</dfn></h3>
 
 <table class="encoding">
  <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
@@ -589,3 +622,35 @@ for the research this section is based on.
  <tr><th>E<td>00E0<td>0644<td>00E2<td>0645<td>0646<td>0647<td>0648<td>00E7<td>00E8<td>00E9<td>00EA<td>00EB<td>0649<td>064A<td>00EE<td>00EF
  <tr><th>F<td>064B<td>064C<td>064D<td>064E<td>00F4<td>064F<td>0650<td>00F7<td>0651<td>00F9<td>0652<td>00FB<td>00FC<td>200E<td>200F<td>06D2
 </table>
+
+
+<h3 id="windows-1257"><span class="secno">3.22 </span><dfn>windows-1257</dfn></h3>
+
+<table class="encoding">
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>20AC<td>0081<td>201A<td>0083<td>201E<td>2026<td>2020<td>2021<td>0088<td>2030<td>008A<td>2039<td>008C<td>00A8<td>02C7<td>00B8
+ <tr><th>9<td>0090<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>0098<td>2122<td>009A<td>203A<td>009C<td>00AF<td>02DB<td>009F
+ <tr><th>A<td>00A0<td>FFFD<td>00A2<td>00A3<td>00A4<td>FFFD<td>00A6<td>00A7<td>00D8<td>00A9<td>0156<td>00AB<td>00AC<td>00AD<td>00AE<td>00C6
+ <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>00B4<td>00B5<td>00B6<td>00B7<td>00F8<td>00B9<td>0157<td>00BB<td>00BC<td>00BD<td>00BE<td>00E6
+ <tr><th>C<td>0104<td>012E<td>0100<td>0106<td>00C4<td>00C5<td>0118<td>0112<td>010C<td>00C9<td>0179<td>0116<td>0122<td>0136<td>012A<td>013B
+ <tr><th>D<td>0160<td>0143<td>0145<td>00D3<td>014C<td>00D5<td>00D6<td>00D7<td>0172<td>0141<td>015A<td>016A<td>00DC<td>017B<td>017D<td>00DF
+ <tr><th>E<td>0105<td>012F<td>0101<td>0107<td>00E4<td>00E5<td>0119<td>0113<td>010D<td>00E9<td>017A<td>0117<td>0123<td>0137<td>012B<td>013C
+ <tr><th>F<td>0161<td>0144<td>0146<td>00F3<td>014D<td>00F5<td>00F6<td>00F7<td>0173<td>0142<td>015B<td>016B<td>00FC<td>017C<td>017E<td>02D9
+</table>
+
+<p class="note">Gecko and Presto map 81, 83, 88, 8A, 8C, 90, 98, 9A, 9C, and 9F to U+FFFD. Trident maps A1 and A5 to U+F8FC and U+F8FD.
+
+
+<h3 id="windows-1258"><span class="secno">3.23 </span><dfn>windows-1258</dfn></h3>
+
+<table class="encoding">
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>20AC<td>0081<td>201A<td>0192<td>201E<td>2026<td>2020<td>2021<td>02C6<td>2030<td>008A<td>2039<td>0152<td>008D<td>008E<td>008F
+ <tr><th>9<td>0090<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>02DC<td>2122<td>009A<td>203A<td>0153<td>009D<td>009E<td>0178
+ <tr><th>C<td>00C0<td>00C1<td>00C2<td>0102<td>00C4<td>00C5<td>00C6<td>00C7<td>00C8<td>00C9<td>00CA<td>00CB<td>0300<td>00CD<td>00CE<td>00CF
+ <tr><th>D<td>0110<td>00D1<td>0309<td>00D3<td>00D4<td>01A0<td>00D6<td>00D7<td>00D8<td>00D9<td>00DA<td>00DB<td>00DC<td>01AF<td>0303<td>00DF
+ <tr><th>E<td>00E0<td>00E1<td>00E2<td>0103<td>00E4<td>00E5<td>00E6<td>00E7<td>00E8<td>00E9<td>00EA<td>00EB<td>0301<td>00ED<td>00EE<td>00EF
+ <tr><th>F<td>0111<td>00F1<td>0323<td>00F3<td>00F4<td>01A1<td>00F6<td>00F7<td>00F8<td>00F9<td>00FA<td>00FB<td>00FC<td>01B0<td>20AB<td>00FF
+</table>
+
+<p class="note">Gecko and Presto map 81, 8A, 8D-90, 9A, and 9D-9E to U+FFFD.
