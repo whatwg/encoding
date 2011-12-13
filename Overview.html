@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-12-december-2011">Living Draft &mdash; 12 December 2011</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-13-december-2011">Living Draft &mdash; 13 December 2011</h2>
 
 <dl>
  <dt>This Version:
@@ -62,7 +62,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-12 December 2011, the editors have made this specification available
+13 December 2011, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -82,7 +82,7 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a class="no-num" href="#notes">Notes</a></li>
  <li><a href="#terminology"><span class="secno">1 </span>Terminology</a></li>
  <li><a href="#encodings"><span class="secno">2 </span>Encodings</a></li>
- <li><a href="#legacy-8-bit-encodings"><span class="secno">3 </span>Legacy 8-bit encodings</a>
+ <li><a href="#legacy-single-octet-encodings"><span class="secno">3 </span>Legacy single-octet encodings</a>
   <ol class="toc">
    <li><a href="#arabic"><span class="secno">3.1 </span>arabic</a></li>
    <li><a href="#cyrillic"><span class="secno">3.2 </span>cyrillic</a></li>
@@ -122,8 +122,8 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li>Mapping for each encoding is done by majority of implementations. If
  the majority wants to change or has to change for compatibility, we can
  change the mapping.
- <li>The list of encodings is currently incomplete. Not all 8-bit encodings
- are listed. Multi-octet encodings are not listed at all.
+ <li>The list of encodings is currently incomplete. Not all single-octet
+ encodings are listed. Multi-octet encodings are not listed at all.
 </ul>
 
 
@@ -134,7 +134,7 @@ preceded by "U+". E.g. U+0020.
 
 <p>An octet is referenced as a double-digit hexadecimal value. E.g. AA.
 
-<p>In an <a href="#8-bit-encoding">8-bit encoding</a> table the octet can be found by
+<p>In a <a href="#single-octet-encoding">single-octet encoding</a> table the octet can be found by
 concatenating the row and column header respectively. In these tables
 code points have "U+" omitted for brevity.
 
@@ -260,15 +260,17 @@ code point to one or more octets (and vice versa). Each
 </table>
 
 
-<h2 id="legacy-8-bit-encodings"><span class="secno">3 </span>Legacy 8-bit encodings</h2>
+<h2 id="legacy-single-octet-encodings"><span class="secno">3 </span>Legacy single-octet encodings</h2>
 
 <p>An <a href="#concept-encoding" title="concept-encoding">encoding</a> where each octet maps to
-a code point is an <dfn id="8-bit-encoding">8-bit encoding</dfn>.
+a code point is an <dfn id="single-octet-encoding">single-octet encoding</dfn>.
 <a href="#concept-encoding" title="concept-encoding">encoding</a> defined with subsections of
-this section are <a href="#8-bit-encoding" title="8-bit encoding">8-bit encodings</a>.
+this section are
+<a href="#single-octet-encoding" title="single-octet encoding">single-octet encodings</a>.
 
-<p>Unless stated otherwise, in an <a href="#8-bit-encoding">8-bit encoding</a> the octet's
-hexadecimal value maps to a code point of the same hexadecimal value.
+<p>Unless stated otherwise, in an <a href="#single-octet-encoding">single-octet encoding</a> the
+octet's hexadecimal value maps to a code point of the same hexadecimal
+value.
 
 <p class="example">An octet 7E maps to U+007E.
 
