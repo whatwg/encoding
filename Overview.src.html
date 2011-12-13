@@ -165,9 +165,18 @@ code point to one or more octets (and vice versa). Each
   <td>
    "<code title>iso-8859-13</code>"
  <tr>
+  <td><span>iso-8859-14</span>
+  <td>
+   "<code title>iso-8859-14</code>"
+   "<code title>iso8859-14</code>"
+ <tr>
   <td><span>iso-8859-15</span>
   <td>
    "<code title>iso-8859-15</code>"
+ <tr>
+  <td><span>iso-8859-16</span>
+  <td>
+   "<code title>iso-8859-16</code>"
  <tr>
   <td><span>koi8-r</span>
   <td>
@@ -214,7 +223,7 @@ code point to one or more octets (and vice versa). Each
  <tr>
   <td><span>windows-1250</span>
   <td>
-   "<code title>windows-1250</code>"
+   "<code title>windows-1250</code>"<br>
    "<code title>x-cp1250</code>"
  <tr>
   <td><span>windows-1251</span>
@@ -331,6 +340,19 @@ for the research this section is based on.
 </table>
 
 
+<h3><dfn>iso-8859-14</dfn></h3>
+
+<table>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>1E02<td>1E03<td>00A3<td>010A<td>010B<td>1E0A<td>00A7<td>1E80<td>00A9<td>1E82<td>1E0B<td>1EF2<td>00AD<td>00AE<td>0178
+ <tr><th>B<td>1E1E<td>1E1F<td>0120<td>0121<td>1E40<td>1E41<td>00B6<td>1E56<td>1E81<td>1E57<td>1E83<td>1E60<td>1EF3<td>1E84<td>1E85<td>1E61
+ <tr><th>D<td>0174<td>00D1<td>00D2<td>00D3<td>00D4<td>00D5<td>00D6<td>1E6A<td>00D8<td>00D9<td>00DA<td>00DB<td>00DC<td>00DD<td>0176<td>00DF
+ <tr><th>F<td>0175<td>00F1<td>00F2<td>00F3<td>00F4<td>00F5<td>00F6<td>1E6B<td>00F8<td>00F9<td>00FA<td>00FB<td>00FC<td>00FD<td>0177<td>00FF
+</table>
+
+<p class=note>Trident does not support this encoding.
+
+
 <h3><dfn>iso-8859-15</dfn></h3>
 
 <table class=encoding>
@@ -338,6 +360,21 @@ for the research this section is based on.
  <tr><th>A<td>00A0<td>00A1<td>00A2<td>00A3<td>20AC<td>00A5<td>0160<td>00A7<td>0161<td>00A9<td>00AA<td>00AB<td>00AC<td>00AD<td>00AE<td>00AF
  <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>017D<td>00B5<td>00B6<td>00B7<td>017E<td>00B9<td>00BA<td>00BB<td>0152<td>0153<td>0178<td>00BF
 </table>
+
+
+<h3><dfn>iso-8859-16</dfn></h3>
+
+<table>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>A<td>00A0<td>0104<td>0105<td>0141<td>20AC<td>201E<td>0160<td>00A7<td>0161<td>00A9<td>0218<td>00AB<td>0179<td>00AD<td>017A<td>017B
+ <tr><th>B<td>00B0<td>00B1<td>010C<td>0142<td>017D<td>201D<td>00B6<td>00B7<td>017E<td>010D<td>0219<td>00BB<td>0152<td>0153<td>0178<td>017C
+ <tr><th>C<td>00C0<td>00C1<td>00C2<td>0102<td>00C4<td>0106<td>00C6<td>00C7<td>00C8<td>00C9<td>00CA<td>00CB<td>00CC<td>00CD<td>00CE<td>00CF
+ <tr><th>D<td>0110<td>0143<td>00D2<td>00D3<td>00D4<td>0150<td>00D6<td>015A<td>0170<td>00D9<td>00DA<td>00DB<td>00DC<td>0118<td>021A<td>00DF
+ <tr><th>E<td>00E0<td>00E1<td>00E2<td>0103<td>00E4<td>0107<td>00E6<td>00E7<td>00E8<td>00E9<td>00EA<td>00EB<td>00EC<td>00ED<td>00EE<td>00EF
+ <tr><th>F<td>0111<td>0144<td>00F2<td>00F3<td>00F4<td>0151<td>00F6<td>015B<td>0171<td>00F9<td>00FA<td>00FB<td>00FC<td>0119<td>021B<td>00FF
+</table>
+
+<p class=note>Trident does not support this encoding.
 
 
 <h3><dfn>koi8-r</dfn></h3>
@@ -427,7 +464,7 @@ for the research this section is based on.
  <tr><th>F<td>F8FF<td>00D2<td>00DA<td>00DB<td>00D9<td>0131<td>02C6<td>02DC<td>00AF<td>02D8<td>02D9<td>02DA<td>00B8<td>02DD<td>02DB<td>02C7
 </table>
 
-<p class=note>Gecko maps 7F to U+FFFD rather than U+007F. Trident maps BD to U+2126.
+<p class=note>Trident maps BD to U+2126.
 
 
 <h3><dfn>windows-874</dfn></h3>
