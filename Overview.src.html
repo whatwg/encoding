@@ -161,6 +161,11 @@ code point to one or more octets (and vice versa). Each
    "<code title>iso-ir-138</code>"<br>
    "<code title>visual</code>"
  <tr>
+  <td><span>ibm864</span>
+  <td>
+   "<code title>cp864</code>"<br>
+   "<code title>ibm864</code>"
+ <tr>
   <td><span>iso-8859-13</span>
   <td>
    "<code title>iso-8859-13</code>"
@@ -357,6 +362,29 @@ for the research this section is based on.
 </table>
 
 <p class=note>Trident maps A1, AF, BF-DE, and FB-FF to U+F79C, U+203E, U+F79D-U+F7BC, and U+F7BD-U+F7C1 respectively.
+
+
+<h3><dfn>ibm864</dfn></h3>
+
+<table class=encoding>
+ <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
+ <tr><th>8<td>00B0<td>00B7<td>2219<td>221A<td>2592<td>2500<td>2502<td>253C<td>2524<td>252C<td>251C<td>2534<td>2510<td>250C<td>2514<td>2518
+ <tr><th>9<td>03B2<td>221E<td>03C6<td>00B1<td>00BD<td>00BC<td>2248<td>00AB<td>00BB<td>FEF7<td>FEF8<td>009B<td>009C<td>FEFB<td>FEFC<td>009F
+ <tr><th>A<td>00A0<td>00AD<td>FE82<td>00A3<td>00A4<td>FE84<td>FFFD<td>FFFD<td>FE8E<td>FE8F<td>FE95<td>FE99<td>060C<td>FE9D<td>FEA1<td>FEA5
+ <tr><th>B<td>0660<td>0661<td>0662<td>0663<td>0664<td>0665<td>0666<td>0667<td>0668<td>0669<td>FED1<td>061B<td>FEB1<td>FEB5<td>FEB9<td>061F
+ <tr><th>C<td>00A2<td>FE80<td>FE81<td>FE83<td>FE85<td>FECA<td>FE8B<td>FE8D<td>FE91<td>FE93<td>FE97<td>FE9B<td>FE9F<td>FEA3<td>FEA7<td>FEA9
+ <tr><th>D<td>FEAB<td>FEAD<td>FEAF<td>FEB3<td>FEB7<td>FEBB<td>FEBF<td>FEC1<td>FEC5<td>FECB<td>FECF<td>00A6<td>00AC<td>00F7<td>00D7<td>FEC9
+ <tr><th>E<td>0640<td>FED3<td>FED7<td>FEDB<td>FEDF<td>FEE3<td>FEE7<td>FEEB<td>FEED<td>FEEF<td>FEF3<td>FEBD<td>FECC<td>FECE<td>FECD<td>FEE1
+ <tr><th>F<td>FE7D<td>0651<td>FEE5<td>FEE9<td>FEEC<td>FEF0<td>FEF2<td>FED0<td>FED5<td>FEF5<td>FEF6<td>FEDD<td>FED9<td>FEF1<td>25A0<td>FFFD
+</table>
+
+<p class=note>WebKit and Chromium map 1A, 1C, and 7F to U+001C, U+007F, and U+001A rather than U+001A, U+001C, and 007F. And they map 9B &amp; 9C, 9F, D7, D8, and F1 to U+FFFD, U+200B, U+FEC3, U+FEC7, and U+FE7C.
+
+<p class=note>Gecko maps 25 to U+066A rather than U+0025. And it maps 9B &amp; 9C, 9F, A6, A7, and FF to U+FEF8, U+FEFC, U+FE84, U+20AC, and U+25A0.
+
+<p class=note>Trident maps A6, A7, and FF to U+F8BE, U+F8BF, and U+F8C0.
+
+<p class=note>Presto does not support this encoding.
 
 
 <h3><dfn>iso-8859-13</dfn></h3>
