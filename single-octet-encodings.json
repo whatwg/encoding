@@ -9,7 +9,7 @@
    "Trident maps A6, A7, and FF to U+F8BE, U+F8BF, and U+F8C0.",
    "Presto does not support this encoding."
  ],
- "XXX":"Is this encoding in use?"
+ "XXX":"Since Presto has no support, maybe we can remove this? Chromium only supports it because of WebKit..."
 },
 {
  "name":"ibm866",
@@ -18,7 +18,8 @@
  "notes":[
    "WebKit maps 1A, 1C, and 7F to U+001C, U+007F, and U+001A rather than U+001A, U+001C, and 007F.",
    "Chromium does not support this encoding."
- ]
+ ],
+ "XXX":"Since Chromium has no support, maybe we can remove this?"
 },
 {
  "name":"iso-8859-2",
