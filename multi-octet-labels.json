@@ -1,0 +1,97 @@
+[
+  {
+    "encodings": [
+      {
+        "labels": [
+          "unicode-1-1-utf-8",
+          "utf-8",
+          "utf8"
+        ],
+        "name": "utf-8"
+      }
+    ],
+    "heading": "The Encoding"
+  },
+  {
+    "heading": "Legacy single-octet encodings"
+  },
+  {
+    "encodings": [
+      {
+        "labels": [
+          "big5",
+          "big5-hkscs",
+          "cn-big5",
+          "csbig5",
+          "x-x-big5"
+        ],
+        "name": "big5"
+      },
+      {
+        "labels": [
+          "cseucjpkdfmtjapanese",
+          "euc-jp",
+          "x-euc-jp"
+        ],
+        "name": "euc-jp"
+      },
+      {
+        "labels": [
+          "csksc56011987",
+          "csueckr",
+          "euc-kr",
+          "iso-ir-149",
+          "korean",
+          "ks_c_5601-1989",
+          "ksc5601",
+          "ksc_5601"
+        ],
+        "name": "euc-kr"
+      },
+      {
+        "labels": [
+          "chinese",
+          "csgb2312",
+          "csiso58gb231280",
+          "gb2312",
+          "gbk",
+          "gb_2312",
+          "gb_2312-80",
+          "iso-ir-58",
+          "x-gbk"
+        ],
+        "name": "gbk"
+      },
+      {
+        "labels": [
+          "csshiftjis",
+          "ms_kanji",
+          "shift-jis",
+          "shift_jis",
+          "windows-31j",
+          "x-sjis"
+        ],
+        "name": "shift_jis"
+      },
+      {
+        "labels": [
+          "utf-16"
+        ],
+        "name": "utf-16"
+      },
+      {
+        "labels": [
+          "utf-16be"
+        ],
+        "name": "utf-16be"
+      },
+      {
+        "labels": [
+          "utf-16le"
+        ],
+        "name": "utf-16le"
+      }
+    ],
+    "heading": "Legacy multi-octet encodings"
+  }
+]

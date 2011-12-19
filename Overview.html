@@ -83,7 +83,9 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#preface"><span class="secno">1 </span>Preface</a></li>
  <li><a href="#terminology"><span class="secno">2 </span>Terminology</a></li>
  <li><a href="#encodings"><span class="secno">3 </span>Encodings</a></li>
- <li><a href="#utf-8"><span class="secno">4 </span>utf-8</a></li>
+ <li><a href="#the-encoding"><span class="secno">4 </span>The encoding</a>
+  <ol class="toc">
+   <li><a href="#utf-8"><span class="secno">4.1 </span>utf-8</a></ol></li>
  <li><a href="#legacy-single-octet-encodings"><span class="secno">5 </span>Legacy single-octet encodings</a>
   <ol class="toc">
    <li><a href="#ibm864"><span class="secno">5.1 </span>ibm864</a></li>
@@ -113,7 +115,11 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#windows-1256"><span class="secno">5.25 </span>windows-1256</a></li>
    <li><a href="#windows-1257"><span class="secno">5.26 </span>windows-1257</a></li>
    <li><a href="#windows-1258"><span class="secno">5.27 </span>windows-1258</a></li>
-   <li><a href="#x-mac-cyrillic"><span class="secno">5.28 </span>x-mac-cyrillic</a></ol></ol>
+   <li><a href="#x-mac-cyrillic"><span class="secno">5.28 </span>x-mac-cyrillic</a></ol></li>
+ <li><a href="#legacy-multi-octet-encodings"><span class="secno">6 </span>Legacy multi-octet encodings</a>
+  <ol class="toc">
+   <li><a href="#big5"><span class="secno">6.1 </span>big5</a></li>
+   <li><a href="#utf-16"><span class="secno">6.2 </span>utf-16</a></ol></ol>
 <!--end-toc-->
 
 
@@ -149,9 +155,6 @@ areas of encodings. This standard attempts to fill those gaps so that new
 implementations do not have to reverse engineer encoding implementations of
 the market leaders.</p>
 
-<p>New content and formats must exclusively use the <a href="#utf-8">utf-8</a>
-encoding.
-
 
 <h2 id="terminology"><span class="secno">2 </span>Terminology</h2>
 
@@ -177,7 +180,7 @@ code point to one or more octets (and vice versa). Each
  <thead>
   <tr><th><a href="#concept-encoding-name" title="concept-encoding-name">Name</a><th><a href="#concept-encoding-label" title="concept-encoding-label">Labels</a>
  <tbody>
-  <tr><th colspan="2">The encoding
+  <tr><th colspan="2">The Encoding
   <tr>
    <td rowspan="3"><a href="#utf-8">utf-8</a>
    <td>"<code title="">unicode-1-1-utf-8</code>"
@@ -342,10 +345,68 @@ code point to one or more octets (and vice versa). Each
    <td rowspan="2"><a href="#x-mac-cyrillic">x-mac-cyrillic</a>
    <td>"<code title="">x-mac-cyrillic</code>"
   <tr><td>"<code title="">x-mac-ukrainian</code>"
+ <tbody>
+  <tr><th colspan="2">Legacy multi-octet encodings
+  <tr>
+   <td rowspan="5"><a href="#big5">big5</a>
+   <td>"<code title="">big5</code>"
+  <tr><td>"<code title="">big5-hkscs</code>"
+  <tr><td>"<code title="">cn-big5</code>"
+  <tr><td>"<code title="">csbig5</code>"
+  <tr><td>"<code title="">x-x-big5</code>"
+  <tr>
+   <td rowspan="3"><span>euc-jp</span>
+   <td>"<code title="">cseucjpkdfmtjapanese</code>"
+  <tr><td>"<code title="">euc-jp</code>"
+  <tr><td>"<code title="">x-euc-jp</code>"
+  <tr>
+   <td rowspan="8"><span>euc-kr</span>
+   <td>"<code title="">csksc56011987</code>"
+  <tr><td>"<code title="">csueckr</code>"
+  <tr><td>"<code title="">euc-kr</code>"
+  <tr><td>"<code title="">iso-ir-149</code>"
+  <tr><td>"<code title="">korean</code>"
+  <tr><td>"<code title="">ks_c_5601-1989</code>"
+  <tr><td>"<code title="">ksc5601</code>"
+  <tr><td>"<code title="">ksc_5601</code>"
+  <tr>
+   <td rowspan="9"><span>gbk</span>
+   <td>"<code title="">chinese</code>"
+  <tr><td>"<code title="">csgb2312</code>"
+  <tr><td>"<code title="">csiso58gb231280</code>"
+  <tr><td>"<code title="">gb2312</code>"
+  <tr><td>"<code title="">gb_2312</code>"
+  <tr><td>"<code title="">gb_2312-80</code>"
+  <tr><td>"<code title="">gbk</code>"
+  <tr><td>"<code title="">iso-ir-58</code>"
+  <tr><td>"<code title="">x-gbk</code>"
+  <tr>
+   <td rowspan="6"><span>shift_jis</span>
+   <td>"<code title="">csshiftjis</code>"
+  <tr><td>"<code title="">ms_kanji</code>"
+  <tr><td>"<code title="">shift-jis</code>"
+  <tr><td>"<code title="">shift_jis</code>"
+  <tr><td>"<code title="">windows-31j</code>"
+  <tr><td>"<code title="">x-sjis</code>"
+  <tr>
+   <td><a href="#utf-16">utf-16</a>
+   <td>"<code title="">utf-16</code>"
+  <tr>
+   <td><span>utf-16be</span>
+   <td>"<code title="">utf-16be</code>"
+  <tr>
+   <td><span>utf-16le</span>
+   <td>"<code title="">utf-16le</code>"
 </table>
 
 
-<h2 id="utf-8"><span class="secno">4 </span><dfn>utf-8</dfn></h2>
+<h2 id="the-encoding"><span class="secno">4 </span>The encoding</h2>
+
+<p>New content and formats must exclusively use the <a href="#utf-8">utf-8</a>
+encoding.
+
+
+<h3 id="utf-8"><span class="secno">4.1 </span><dfn>utf-8</dfn></h3>
 
 <p class="XXX">Need to define <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8">decode a byte string as UTF-8, with error handling</a> in a way that avoids external dependencies.
 
@@ -854,3 +915,19 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
  <tr><th>E<td>0430<td>0431<td>0432<td>0433<td>0434<td>0435<td>0436<td>0437<td>0438<td>0439<td>043A<td>043B<td>043C<td>043D<td>043E<td>043F
  <tr><th>F<td>0440<td>0441<td>0442<td>0443<td>0444<td>0445<td>0446<td>0447<td>0448<td>0449<td>044A<td>044B<td>044C<td>044D<td>044E<td>20AC
 </table>
+
+
+<h2 id="legacy-multi-octet-encodings"><span class="secno">6 </span>Legacy multi-octet encodings</h2>
+
+<p class="XXX">There is some data available, but research into these encodings has not been done in detail thus far.
+
+
+<h3 id="big5"><span class="secno">6.1 </span><dfn>big5</dfn></h3>
+
+<p class="XXX">http://www.google.com/support/forum/p/Chrome/thread?tid=466c210af3fb6d08 and Internet Explorer supporting it that way suggests it is way better if <a href="#big5">big5</a> includes the Hong Kong extensions.
+
+
+<h3 id="utf-16"><span class="secno">6.2 </span><dfn>utf-16</dfn></h3>
+
+<p class="XXX">Per HTML when there is no BOM it uses <span>utf-16le</span> (rather than <span>utf-16be</span>) for decoding.
+
