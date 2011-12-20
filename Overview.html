@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-19-december-2011">Living Draft &mdash; 19 December 2011</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-20-december-2011">Living Draft &mdash; 20 December 2011</h2>
 
 <dl>
  <dt>This Version:
@@ -62,7 +62,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-19 December 2011, the editors have made this specification available
+20 December 2011, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -119,7 +119,8 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#legacy-multi-octet-encodings"><span class="secno">6 </span>Legacy multi-octet encodings</a>
   <ol class="toc">
    <li><a href="#big5"><span class="secno">6.1 </span>big5</a></li>
-   <li><a href="#utf-16"><span class="secno">6.2 </span>utf-16</a></ol></ol>
+   <li><a href="#euc-jp"><span class="secno">6.2 </span>euc-jp</a></li>
+   <li><a href="#utf-16"><span class="secno">6.3 </span>utf-16</a></ol></ol>
 <!--end-toc-->
 
 
@@ -167,6 +168,17 @@ four-or-more digit hexadecimal value preceded by "U+". E.g. U+0020.
 concatenating the row and column header respectively. In these tables
 code points have "U+" omitted for brevity.
 
+<p>The <dfn id="space-characters">space characters</dfn>, for the purposes of this specification,
+are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
+U+000C FORM FEED (FF), and U+000D CARRIAGE RETURN (CR).
+
+<p>Comparing two strings in an <dfn id="ascii-case-insensitive">ASCII case-insensitive</dfn> manner
+means comparing them exactly, code point for code point, except that the
+characters in the range U+0041 to U+005A (i.e. LATIN CAPITAL LETTER A to
+LATIN CAPITAL LETTER Z) and the corresponding characters in the range
+U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z) are
+considered to also match.
+
 
 <h2 id="encodings"><span class="secno">3 </span>Encodings</h2>
 
@@ -175,6 +187,33 @@ code point to one or more octets (and vice versa). Each
 <a href="#concept-encoding" title="concept-encoding">encoding</a> has a
 <dfn id="concept-encoding-name" title="concept-encoding-name">name</dfn>, and one or more
 <dfn id="concept-encoding-label" title="concept-encoding-label">labels</dfn>.
+
+<p>The table below lists all <a href="#concept-encoding" title="concept-encoding">encodings</a>
+and their <a href="#concept-encoding-label" title="concept-encoding-label">labels</a> user agents must
+support. User agents must not support any other
+<a href="#concept-encoding" title="concept-encoding">encodings</a> or
+<a href="#concept-encoding-label" title="concept-encoding-label">labels</a>.
+
+<p>To <dfn id="concept-encoding-get" title="concept-encoding-get">get an encoding</dfn> from a string
+<var title="">label</var>, run these steps:
+
+<ol>
+ <li><p>Remove any leading and trailing <a href="#space-characters">space characters</a> from
+ <var title="">label</var>.
+
+ <li><p>If <var title="">label</var> is an <a href="#ascii-case-insensitive">ASCII case-insensitive</a>
+ match for any of the <a href="#concept-encoding-label" title="concept-encoding-label">labels</a>
+ listed below, return the corresponding
+ <a href="#concept-encoding" title="concept-encoding">encoding</a> and terminate these steps.
+
+ <li><p>Return failure.
+</ol>
+
+<p class="note">This algorithm is different from the one defined
+in
+<a href="http://www.unicode.org/reports/tr22/tr22-7.html#Charset_Alias_Matching">section 1.4 of Unicode Technical Standard #22</a>
+as that algorithm is incompatible with legacy content.
+
 
 <table>
  <thead>
@@ -355,7 +394,7 @@ code point to one or more octets (and vice versa). Each
   <tr><td>"<code title="">csbig5</code>"
   <tr><td>"<code title="">x-x-big5</code>"
   <tr>
-   <td rowspan="3"><span>euc-jp</span>
+   <td rowspan="3"><a href="#euc-jp">euc-jp</a>
    <td>"<code title="">cseucjpkdfmtjapanese</code>"
   <tr><td>"<code title="">euc-jp</code>"
   <tr><td>"<code title="">x-euc-jp</code>"
@@ -414,12 +453,12 @@ encoding.
 <h2 id="legacy-single-octet-encodings"><span class="secno">5 </span>Legacy single-octet encodings</h2>
 
 <p>An <a href="#concept-encoding" title="concept-encoding">encoding</a> where each octet maps to
-a code point is an <dfn id="single-octet-encoding">single-octet encoding</dfn>.
+a code point is a <dfn id="single-octet-encoding">single-octet encoding</dfn>.
 <a href="#concept-encoding" title="concept-encoding">Encodings</a> defined in subsections of this
 section are
 <a href="#single-octet-encoding" title="single-octet encoding">single-octet encodings</a>.
 
-<p>Unless stated otherwise, in an <a href="#single-octet-encoding">single-octet encoding</a> the
+<p>Unless stated otherwise, in a <a href="#single-octet-encoding">single-octet encoding</a> the
 octet's hexadecimal value maps to a code point of the same hexadecimal
 value.
 
@@ -927,7 +966,12 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
 <p class="XXX">http://www.google.com/support/forum/p/Chrome/thread?tid=466c210af3fb6d08 and Internet Explorer supporting it that way suggests it is way better if <a href="#big5">big5</a> includes the Hong Kong extensions.
 
 
-<h3 id="utf-16"><span class="secno">6.2 </span><dfn>utf-16</dfn></h3>
+<h3 id="euc-jp"><span class="secno">6.2 </span><dfn>euc-jp</dfn></h3>
+
+<p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 Encoding / decoding use different tables.
+
+
+<h3 id="utf-16"><span class="secno">6.3 </span><dfn>utf-16</dfn></h3>
 
 <p class="XXX">Per HTML when there is no BOM it uses <span>utf-16le</span> (rather than <span>utf-16be</span>) for decoding.
 

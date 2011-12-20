@@ -125,6 +125,17 @@ four-or-more digit hexadecimal value preceded by "U+". E.g. U+0020.
 concatenating the row and column header respectively. In these tables
 code points have "U+" omitted for brevity.
 
+<p>The <dfn>space characters</dfn>, for the purposes of this specification,
+are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
+U+000C FORM FEED (FF), and U+000D CARRIAGE RETURN (CR).
+
+<p>Comparing two strings in an <dfn>ASCII case-insensitive</dfn> manner
+means comparing them exactly, code point for code point, except that the
+characters in the range U+0041 to U+005A (i.e. LATIN CAPITAL LETTER A to
+LATIN CAPITAL LETTER Z) and the corresponding characters in the range
+U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z) are
+considered to also match.
+
 
 <h2>Encodings</h2>
 
@@ -133,6 +144,33 @@ code point to one or more octets (and vice versa). Each
 <span title=concept-encoding>encoding</span> has a
 <dfn title=concept-encoding-name>name</dfn>, and one or more
 <dfn title=concept-encoding-label>labels</dfn>.
+
+<p>The table below lists all <span title=concept-encoding>encodings</span>
+and their <span title=concept-encoding-label>labels</span> user agents must
+support. User agents must not support any other
+<span title=concept-encoding>encodings</span> or
+<span title=concept-encoding-label>labels</span>.
+
+<p>To <dfn title=concept-encoding-get>get an encoding</dfn> from a string
+<var title>label</var>, run these steps:
+
+<ol>
+ <li><p>Remove any leading and trailing <span>space characters</span> from
+ <var title>label</var>.
+
+ <li><p>If <var title>label</var> is an <span>ASCII case-insensitive</span>
+ match for any of the <span title=concept-encoding-label>labels</span>
+ listed below, return the corresponding
+ <span title=concept-encoding>encoding</span> and terminate these steps.
+
+ <li><p>Return failure.
+</ol>
+
+<p class=note>This algorithm is different from the one defined
+in
+<a href="http://www.unicode.org/reports/tr22/tr22-7.html#Charset_Alias_Matching">section 1.4 of Unicode Technical Standard #22</a>
+as that algorithm is incompatible with legacy content.
+
 
 <table>
  <thead>
@@ -372,12 +410,12 @@ encoding.
 <h2>Legacy single-octet encodings</h2>
 
 <p>An <span title=concept-encoding>encoding</span> where each octet maps to
-a code point is an <dfn>single-octet encoding</dfn>.
+a code point is a <dfn>single-octet encoding</dfn>.
 <span title=concept-encoding>Encodings</span> defined in subsections of this
 section are
 <span title="single-octet encoding">single-octet encodings</span>.
 
-<p>Unless stated otherwise, in an <span>single-octet encoding</span> the
+<p>Unless stated otherwise, in a <span>single-octet encoding</span> the
 octet's hexadecimal value maps to a code point of the same hexadecimal
 value.
 
@@ -883,6 +921,11 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 <h3><dfn>big5</dfn></h3>
 
 <p class=XXX>http://www.google.com/support/forum/p/Chrome/thread?tid=466c210af3fb6d08 and Internet Explorer supporting it that way suggests it is way better if <span>big5</span> includes the Hong Kong extensions.
+
+
+<h3><dfn>euc-jp</dfn></h3>
+
+<p class=XXX>https://bugzilla.mozilla.org/show_bug.cgi?id=600715 Encoding / decoding use different tables.
 
 
 <h3><dfn>utf-16</dfn></h3>
