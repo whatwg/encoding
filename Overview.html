@@ -120,7 +120,8 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
   <ol class="toc">
    <li><a href="#big5"><span class="secno">6.1 </span>big5</a></li>
    <li><a href="#euc-jp"><span class="secno">6.2 </span>euc-jp</a></li>
-   <li><a href="#utf-16"><span class="secno">6.3 </span>utf-16</a></ol></ol>
+   <li><a href="#shift_jis"><span class="secno">6.3 </span>shift_jis</a></li>
+   <li><a href="#utf-16"><span class="secno">6.4 </span>utf-16</a></ol></ol>
 <!--end-toc-->
 
 
@@ -420,7 +421,7 @@ as that algorithm is incompatible with legacy content.
   <tr><td>"<code title="">iso-ir-58</code>"
   <tr><td>"<code title="">x-gbk</code>"
   <tr>
-   <td rowspan="6"><span>shift_jis</span>
+   <td rowspan="6"><a href="#shift_jis">shift_jis</a>
    <td>"<code title="">csshiftjis</code>"
   <tr><td>"<code title="">ms_kanji</code>"
   <tr><td>"<code title="">shift-jis</code>"
@@ -971,7 +972,12 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
 <p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 Encoding / decoding use different tables.
 
 
-<h3 id="utf-16"><span class="secno">6.3 </span><dfn>utf-16</dfn></h3>
+<h3 id="shift_jis"><span class="secno">6.3 </span><dfn>shift_jis</dfn></h3>
+
+<p class="XXX">This is actually http://msdn.microsoft.com/en-us/goglobal/cc305152.aspx plus some error handling.
+
+
+<h3 id="utf-16"><span class="secno">6.4 </span><dfn>utf-16</dfn></h3>
 
 <p class="XXX">Per HTML when there is no BOM it uses <span>utf-16le</span> (rather than <span>utf-16be</span>) for decoding.
 
