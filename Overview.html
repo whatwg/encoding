@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-20-december-2011">Living Draft &mdash; 20 December 2011</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-21-december-2011">Living Draft &mdash; 21 December 2011</h2>
 
 <dl>
  <dt>This Version:
@@ -50,6 +50,7 @@
 
  <dt>Participate:</dt>
  <dd><a href="http://www.whatwg.org/mailing-list">whatwg@whatwg.org</a>
+ <dd><a href="http://www.w3.org/Bugs/Public/enter_bug.cgi?product=Web%20Platform%20%28other%29&amp;component=Encoding">File a bug</a>
  <dd><a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
 
  <dt>Editor:
@@ -62,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-20 December 2011, the editors have made this specification available
+21 December 2011, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -121,7 +122,9 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#big5"><span class="secno">6.1 </span>big5</a></li>
    <li><a href="#euc-jp"><span class="secno">6.2 </span>euc-jp</a></li>
    <li><a href="#shift_jis"><span class="secno">6.3 </span>shift_jis</a></li>
-   <li><a href="#utf-16"><span class="secno">6.4 </span>utf-16</a></ol></ol>
+   <li><a href="#utf-16"><span class="secno">6.4 </span>utf-16</a></ol></li>
+ <li><a class="no-num" href="#references">References</a></li>
+ <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
 
 
@@ -135,6 +138,7 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li>Mark encodings that are not <span title="">utf-8</span> as legacy.
 </ul>
 
+
 <h2 class="no-num" id="notes">Notes</h2>
 
 <ul>
@@ -143,8 +147,6 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li>Mapping for each encoding is done by majority of implementations. If
  the majority wants to change or has to change for compatibility, we can
  change the mapping.
- <li>The list of encodings is currently incomplete. Not all single-octet
- encodings are listed. Multi-octet encodings are not listed at all.
 </ul>
 
 
@@ -980,6 +982,41 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
 <h3 id="utf-16"><span class="secno">6.4 </span><dfn>utf-16</dfn></h3>
 
 <p class="XXX">Per HTML when there is no BOM it uses <span>utf-16le</span> (rather than <span>utf-16be</span>) for decoding.
+
+
+<h2 class="no-num" id="references">References</h2>
+
+<p class="XXX">There will be a reference to Unicode here. Doh!
+
+
+<h2 class="no-num" id="acknowledgments">Acknowledgments</h2>
+
+<p>There have been a lot of people that have helped make encodings more
+interoperable over the years and thereby furthered the goals of this
+standard. Likewise people have helped making this standard what it is today.
+
+<p>Ideally they are all listed here so please contact the editor with any
+omissions.
+
+<p>What that, many thanks to
+
+Frank Tang,
+Ian Hickson,
+Jungshik Shin,
+Mark Callow,
+Mark Davis,
+Martin D&uuml;rst,
+Ms2ger,
+&Oslash;istein E. Andersen,
+Peter Krefting,
+Philip Taylor,
+Shawn Steele,
+Simon Montagu, and
+Yui NARUSE
+
+for being awesome.
+
+<p class="XXX">Clearly not complete at this point, but better than nothing.
 
 
 <script class="dontpublish" id="head" src="http://www.whatwg.org/specs/web-apps/current-work/dfn.js"></script>
