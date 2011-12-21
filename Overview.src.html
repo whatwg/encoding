@@ -121,10 +121,6 @@ four-or-more digit hexadecimal value preceded by "U+". E.g. U+0020.
 
 <p>An octet is referenced as a double-digit hexadecimal value. E.g. AA.
 
-<p>In a <span>single-octet encoding</span> table the octet can be found by
-concatenating the row and column header respectively. In these tables
-code points have "U+" omitted for brevity.
-
 <p>The <dfn>space characters</dfn>, for the purposes of this specification,
 are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
 U+000C FORM FEED (FF), and U+000D CARRIAGE RETURN (CR).
@@ -399,7 +395,7 @@ as that algorithm is incompatible with legacy content.
 <h2>The encoding</h2>
 
 <p>New content and formats must exclusively use the <span>utf-8</span>
-encoding.
+<span title=concept-encoding>encoding</span>.
 
 
 <h3><dfn>utf-8</dfn></h3>
@@ -409,23 +405,57 @@ encoding.
 
 <h2>Legacy single-octet encodings</h2>
 
-<p>An <span title=concept-encoding>encoding</span> where each octet maps to
-a code point is a <dfn>single-octet encoding</dfn>.
+<p>An <span title=concept-encoding>encoding</span> where each octet is
+either blank or a code point is a <dfn>single-octet encoding</dfn>.
 <span title=concept-encoding>Encodings</span> defined in subsections of this
 section are
 <span title="single-octet encoding">single-octet encodings</span>.
 
-<p>Unless stated otherwise, in a <span>single-octet encoding</span> the
-octet's hexadecimal value maps to a code point of the same hexadecimal
-value.
+<p>In a <span>single-octet encoding</span> table the octet can be found by
+concatenating the row and column header respectively. The cell corresponding
+to those headers is either blank or a code point (with "U+" omitted for
+brevity).
 
-<p class=example>An octet 7E maps to U+007E.
+<p>In the <span>single-octet encoding</span> tables in this subsections rows
+where each octet's corresponds to a code point of the same value, are
+omitted.
+
+<p class=note>In
+<span title="single-octet encoding">single-octet encodings</span> octets
+00-7F always map to U+0000-U+007F.
 
 <p class=note>See also:
 <a href="single-octet-research.html">single-octet research</a>.
 
 <p class=note><span>Single-octet encoding</span> data is also available as a
 non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-octet-encodings.json</code></a>.
+
+
+<h3>Decoder and encoder</h3>
+
+<p class=XXX>Sketch.
+
+<p>The decoder and encoder have the same logic for all
+<span title="single-octet encoding">single-octet encodings</span>.
+
+<p>Decoder:
+
+<ol>
+ <li><p>If the octet is listed in the table and its corresponding cell is
+ blank, return an error if the <span>fatal flag</span> is set, or otherwise
+ return a code point whose value is U+FFFD.
+
+ <li><p>Return a code point whose value is in the octet's corresponding
+ cell.
+</ol>
+
+<p>Encoder:
+
+<ol>
+ <li><p>If the code point is not listed in the table, return an error.
+
+ <li><p>Return the code point's corresponding octet.
+</ol>
 
 
 <h3><dfn>ibm864</dfn></h3>
@@ -438,12 +468,12 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
  <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
  <tr><th>8<td>00B0<td>00B7<td>2219<td>221A<td>2592<td>2500<td>2502<td>253C<td>2524<td>252C<td>251C<td>2534<td>2510<td>250C<td>2514<td>2518
  <tr><th>9<td>03B2<td>221E<td>03C6<td>00B1<td>00BD<td>00BC<td>2248<td>00AB<td>00BB<td>FEF7<td>FEF8<td>009B<td>009C<td>FEFB<td>FEFC<td>009F
- <tr><th>A<td>00A0<td>00AD<td>FE82<td>00A3<td>00A4<td>FE84<td>FFFD<td>FFFD<td>FE8E<td>FE8F<td>FE95<td>FE99<td>060C<td>FE9D<td>FEA1<td>FEA5
+ <tr><th>A<td>00A0<td>00AD<td>FE82<td>00A3<td>00A4<td>FE84<td>    <td>    <td>FE8E<td>FE8F<td>FE95<td>FE99<td>060C<td>FE9D<td>FEA1<td>FEA5
  <tr><th>B<td>0660<td>0661<td>0662<td>0663<td>0664<td>0665<td>0666<td>0667<td>0668<td>0669<td>FED1<td>061B<td>FEB1<td>FEB5<td>FEB9<td>061F
  <tr><th>C<td>00A2<td>FE80<td>FE81<td>FE83<td>FE85<td>FECA<td>FE8B<td>FE8D<td>FE91<td>FE93<td>FE97<td>FE9B<td>FE9F<td>FEA3<td>FEA7<td>FEA9
  <tr><th>D<td>FEAB<td>FEAD<td>FEAF<td>FEB3<td>FEB7<td>FEBB<td>FEBF<td>FEC1<td>FEC5<td>FECB<td>FECF<td>00A6<td>00AC<td>00F7<td>00D7<td>FEC9
  <tr><th>E<td>0640<td>FED3<td>FED7<td>FEDB<td>FEDF<td>FEE3<td>FEE7<td>FEEB<td>FEED<td>FEEF<td>FEF3<td>FEBD<td>FECC<td>FECE<td>FECD<td>FEE1
- <tr><th>F<td>FE7D<td>0651<td>FEE5<td>FEE9<td>FEEC<td>FEF0<td>FEF2<td>FED0<td>FED5<td>FEF5<td>FEF6<td>FEDD<td>FED9<td>FEF1<td>25A0<td>FFFD
+ <tr><th>F<td>FE7D<td>0651<td>FEE5<td>FEE9<td>FEEC<td>FEF0<td>FEF2<td>FED0<td>FED5<td>FEF5<td>FEF6<td>FEDD<td>FED9<td>FEF1<td>25A0<td>
 </table>
 
 <p class=note>WebKit and Chromium map 1A, 1C, and 7F to U+001C, U+007F, and U+001A rather than U+001A, U+001C, and 007F. And they map 9B &amp; 9C, 9F, D7, D8, and F1 to U+FFFD, U+200B, U+FEC3, U+FEC7, and U+FE7C.
@@ -499,12 +529,12 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 
 <table class=encoding>
  <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
- <tr><th>A<td>00A0<td>0126<td>02D8<td>00A3<td>00A4<td>FFFD<td>0124<td>00A7<td>00A8<td>0130<td>015E<td>011E<td>0134<td>00AD<td>FFFD<td>017B
- <tr><th>B<td>00B0<td>0127<td>00B2<td>00B3<td>00B4<td>00B5<td>0125<td>00B7<td>00B8<td>0131<td>015F<td>011F<td>0135<td>00BD<td>FFFD<td>017C
- <tr><th>C<td>00C0<td>00C1<td>00C2<td>FFFD<td>00C4<td>010A<td>0108<td>00C7<td>00C8<td>00C9<td>00CA<td>00CB<td>00CC<td>00CD<td>00CE<td>00CF
- <tr><th>D<td>FFFD<td>00D1<td>00D2<td>00D3<td>00D4<td>0120<td>00D6<td>00D7<td>011C<td>00D9<td>00DA<td>00DB<td>00DC<td>016C<td>015C<td>00DF
- <tr><th>E<td>00E0<td>00E1<td>00E2<td>FFFD<td>00E4<td>010B<td>0109<td>00E7<td>00E8<td>00E9<td>00EA<td>00EB<td>00EC<td>00ED<td>00EE<td>00EF
- <tr><th>F<td>FFFD<td>00F1<td>00F2<td>00F3<td>00F4<td>0121<td>00F6<td>00F7<td>011D<td>00F9<td>00FA<td>00FB<td>00FC<td>016D<td>015D<td>02D9
+ <tr><th>A<td>00A0<td>0126<td>02D8<td>00A3<td>00A4<td>    <td>0124<td>00A7<td>00A8<td>0130<td>015E<td>011E<td>0134<td>00AD<td>    <td>017B
+ <tr><th>B<td>00B0<td>0127<td>00B2<td>00B3<td>00B4<td>00B5<td>0125<td>00B7<td>00B8<td>0131<td>015F<td>011F<td>0135<td>00BD<td>    <td>017C
+ <tr><th>C<td>00C0<td>00C1<td>00C2<td>    <td>00C4<td>010A<td>0108<td>00C7<td>00C8<td>00C9<td>00CA<td>00CB<td>00CC<td>00CD<td>00CE<td>00CF
+ <tr><th>D<td>    <td>00D1<td>00D2<td>00D3<td>00D4<td>0120<td>00D6<td>00D7<td>011C<td>00D9<td>00DA<td>00DB<td>00DC<td>016C<td>015C<td>00DF
+ <tr><th>E<td>00E0<td>00E1<td>00E2<td>    <td>00E4<td>010B<td>0109<td>00E7<td>00E8<td>00E9<td>00EA<td>00EB<td>00EC<td>00ED<td>00EE<td>00EF
+ <tr><th>F<td>    <td>00F1<td>00F2<td>00F3<td>00F4<td>0121<td>00F6<td>00F7<td>011D<td>00F9<td>00FA<td>00FB<td>00FC<td>016D<td>015D<td>02D9
 </table>
 
 <p class=note>Trident maps A5, AE, BE, C3, D0, E3, and F0 to U+F7F5, U+F7F6, U+F7F7, U+F7F8, U+F7F9, U+F7FA, and U+F7FB respectively.
@@ -546,12 +576,12 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 
 <table class=encoding>
  <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
- <tr><th>A<td>00A0<td>FFFD<td>FFFD<td>FFFD<td>00A4<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>060C<td>00AD<td>FFFD<td>FFFD
- <tr><th>B<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>061B<td>FFFD<td>FFFD<td>FFFD<td>061F
- <tr><th>C<td>FFFD<td>0621<td>0622<td>0623<td>0624<td>0625<td>0626<td>0627<td>0628<td>0629<td>062A<td>062B<td>062C<td>062D<td>062E<td>062F
- <tr><th>D<td>0630<td>0631<td>0632<td>0633<td>0634<td>0635<td>0636<td>0637<td>0638<td>0639<td>063A<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD
+ <tr><th>A<td>00A0<td>    <td>    <td>    <td>00A4<td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>060C<td>00AD<td>    <td>
+ <tr><th>B<td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>061B<td>    <td>    <td>    <td>061F
+ <tr><th>C<td>    <td>0621<td>0622<td>0623<td>0624<td>0625<td>0626<td>0627<td>0628<td>0629<td>062A<td>062B<td>062C<td>062D<td>062E<td>062F
+ <tr><th>D<td>0630<td>0631<td>0632<td>0633<td>0634<td>0635<td>0636<td>0637<td>0638<td>0639<td>063A<td>    <td>    <td>    <td>    <td>
  <tr><th>E<td>0640<td>0641<td>0642<td>0643<td>0644<td>0645<td>0646<td>0647<td>0648<td>0649<td>064A<td>064B<td>064C<td>064D<td>064E<td>064F
- <tr><th>F<td>0650<td>0651<td>0652<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD
+ <tr><th>F<td>0650<td>0651<td>0652<td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>
 </table>
 
 <p class=note>Trident maps A1-A3, A5-AB, AE-BA, BC-BE, C0, DB-DF, and F3-FF to U+F7C8-U+F7CA, U+F7CB-U+F7D1, U+F7D2-U+F7DE, U+F7DF-U+F7E1, U+F7E2, U+F7E3-U+F7E7, and U+F7E8-U+F7F4 respectively.
@@ -563,12 +593,12 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 
 <table class=encoding>
  <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
- <tr><th>A<td>00A0<td>2018<td>2019<td>00A3<td>20AC<td>20AF<td>00A6<td>00A7<td>00A8<td>00A9<td>037A<td>00AB<td>00AC<td>00AD<td>FFFD<td>2015
+ <tr><th>A<td>00A0<td>2018<td>2019<td>00A3<td>20AC<td>20AF<td>00A6<td>00A7<td>00A8<td>00A9<td>037A<td>00AB<td>00AC<td>00AD<td>    <td>2015
  <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>0384<td>0385<td>0386<td>00B7<td>0388<td>0389<td>038A<td>00BB<td>038C<td>00BD<td>038E<td>038F
  <tr><th>C<td>0390<td>0391<td>0392<td>0393<td>0394<td>0395<td>0396<td>0397<td>0398<td>0399<td>039A<td>039B<td>039C<td>039D<td>039E<td>039F
- <tr><th>D<td>03A0<td>03A1<td>FFFD<td>03A3<td>03A4<td>03A5<td>03A6<td>03A7<td>03A8<td>03A9<td>03AA<td>03AB<td>03AC<td>03AD<td>03AE<td>03AF
+ <tr><th>D<td>03A0<td>03A1<td>    <td>03A3<td>03A4<td>03A5<td>03A6<td>03A7<td>03A8<td>03A9<td>03AA<td>03AB<td>03AC<td>03AD<td>03AE<td>03AF
  <tr><th>E<td>03B0<td>03B1<td>03B2<td>03B3<td>03B4<td>03B5<td>03B6<td>03B7<td>03B8<td>03B9<td>03BA<td>03BB<td>03BC<td>03BD<td>03BE<td>03BF
- <tr><th>F<td>03C0<td>03C1<td>03C2<td>03C3<td>03C4<td>03C5<td>03C6<td>03C7<td>03C8<td>03C9<td>03CA<td>03CB<td>03CC<td>03CD<td>03CE<td>FFFD
+ <tr><th>F<td>03C0<td>03C1<td>03C2<td>03C3<td>03C4<td>03C5<td>03C6<td>03C7<td>03C8<td>03C9<td>03CA<td>03CB<td>03CC<td>03CD<td>03CE<td>
 </table>
 
 <p class=note>Trident maps A1, A2, A4, A5, AA, AE, D2, and FF, to U+02BD, U+02BC, U+F7C2, U+F7C3, U+F7C4, U+F7C5, U+F7C6, and U+F7C7 respectively.
@@ -580,12 +610,12 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 
 <table class=encoding>
  <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
- <tr><th>A<td>00A0<td>FFFD<td>00A2<td>00A3<td>00A4<td>00A5<td>00A6<td>00A7<td>00A8<td>00A9<td>00D7<td>00AB<td>00AC<td>00AD<td>00AE<td>00AF
- <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>00B4<td>00B5<td>00B6<td>00B7<td>00B8<td>00B9<td>00F7<td>00BB<td>00BC<td>00BD<td>00BE<td>FFFD
- <tr><th>C<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD
- <tr><th>D<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>2017
+ <tr><th>A<td>00A0<td>    <td>00A2<td>00A3<td>00A4<td>00A5<td>00A6<td>00A7<td>00A8<td>00A9<td>00D7<td>00AB<td>00AC<td>00AD<td>00AE<td>00AF
+ <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>00B4<td>00B5<td>00B6<td>00B7<td>00B8<td>00B9<td>00F7<td>00BB<td>00BC<td>00BD<td>00BE<td>
+ <tr><th>C<td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>
+ <tr><th>D<td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>    <td>2017
  <tr><th>E<td>05D0<td>05D1<td>05D2<td>05D3<td>05D4<td>05D5<td>05D6<td>05D7<td>05D8<td>05D9<td>05DA<td>05DB<td>05DC<td>05DD<td>05DE<td>05DF
- <tr><th>F<td>05E0<td>05E1<td>05E2<td>05E3<td>05E4<td>05E5<td>05E6<td>05E7<td>05E8<td>05E9<td>05EA<td>FFFD<td>FFFD<td>200E<td>200F<td>FFFD
+ <tr><th>F<td>05E0<td>05E1<td>05E2<td>05E3<td>05E4<td>05E5<td>05E6<td>05E7<td>05E8<td>05E9<td>05EA<td>    <td>    <td>200E<td>200F<td>
 </table>
 
 <p class=note>Trident maps A1, AF, BF-DE, and FB-FF to U+F79C, U+203E, U+F79D-U+F7BC, and U+F7BD-U+F7C1 respectively.
@@ -798,9 +828,9 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
  <tr><th>A<td>00A0<td>0385<td>0386<td>00A3<td>00A4<td>00A5<td>00A6<td>00A7<td>00A8<td>00A9<td>00AA<td>00AB<td>00AC<td>00AD<td>00AE<td>2015
  <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>0384<td>00B5<td>00B6<td>00B7<td>0388<td>0389<td>038A<td>00BB<td>038C<td>00BD<td>038E<td>038F
  <tr><th>C<td>0390<td>0391<td>0392<td>0393<td>0394<td>0395<td>0396<td>0397<td>0398<td>0399<td>039A<td>039B<td>039C<td>039D<td>039E<td>039F
- <tr><th>D<td>03A0<td>03A1<td>FFFD<td>03A3<td>03A4<td>03A5<td>03A6<td>03A7<td>03A8<td>03A9<td>03AA<td>03AB<td>03AC<td>03AD<td>03AE<td>03AF
+ <tr><th>D<td>03A0<td>03A1<td>    <td>03A3<td>03A4<td>03A5<td>03A6<td>03A7<td>03A8<td>03A9<td>03AA<td>03AB<td>03AC<td>03AD<td>03AE<td>03AF
  <tr><th>E<td>03B0<td>03B1<td>03B2<td>03B3<td>03B4<td>03B5<td>03B6<td>03B7<td>03B8<td>03B9<td>03BA<td>03BB<td>03BC<td>03BD<td>03BE<td>03BF
- <tr><th>F<td>03C0<td>03C1<td>03C2<td>03C3<td>03C4<td>03C5<td>03C6<td>03C7<td>03C8<td>03C9<td>03CA<td>03CB<td>03CC<td>03CD<td>03CE<td>FFFD
+ <tr><th>F<td>03C0<td>03C1<td>03C2<td>03C3<td>03C4<td>03C5<td>03C6<td>03C7<td>03C8<td>03C9<td>03CA<td>03CB<td>03CC<td>03CD<td>03CE<td>
 </table>
 
 <p class=note>Gecko and Presto map 81, 88, 8A, 8C-90, 98, 9A, 9C-9F, and AA to U+FFFD. Trident maps AA, D2, and FF to U+F8F9, U+F8FA, and U+F8FB respectively.
@@ -834,10 +864,10 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
  <tr><th>9<td>0090<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>02DC<td>2122<td>009A<td>203A<td>009C<td>009D<td>009E<td>009F
  <tr><th>A<td>00A0<td>00A1<td>00A2<td>00A3<td>20AA<td>00A5<td>00A6<td>00A7<td>00A8<td>00A9<td>00D7<td>00AB<td>00AC<td>00AD<td>00AE<td>00AF
  <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>00B4<td>00B5<td>00B6<td>00B7<td>00B8<td>00B9<td>00F7<td>00BB<td>00BC<td>00BD<td>00BE<td>00BF
- <tr><th>C<td>05B0<td>05B1<td>05B2<td>05B3<td>05B4<td>05B5<td>05B6<td>05B7<td>05B8<td>05B9<td>FFFD<td>05BB<td>05BC<td>05BD<td>05BE<td>05BF
- <tr><th>D<td>05C0<td>05C1<td>05C2<td>05C3<td>05F0<td>05F1<td>05F2<td>05F3<td>05F4<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD<td>FFFD
+ <tr><th>C<td>05B0<td>05B1<td>05B2<td>05B3<td>05B4<td>05B5<td>05B6<td>05B7<td>05B8<td>05B9<td>    <td>05BB<td>05BC<td>05BD<td>05BE<td>05BF
+ <tr><th>D<td>05C0<td>05C1<td>05C2<td>05C3<td>05F0<td>05F1<td>05F2<td>05F3<td>05F4<td>    <td>    <td>    <td>    <td>    <td>    <td>
  <tr><th>E<td>05D0<td>05D1<td>05D2<td>05D3<td>05D4<td>05D5<td>05D6<td>05D7<td>05D8<td>05D9<td>05DA<td>05DB<td>05DC<td>05DD<td>05DE<td>05DF
- <tr><th>F<td>05E0<td>05E1<td>05E2<td>05E3<td>05E4<td>05E5<td>05E6<td>05E7<td>05E8<td>05E9<td>05EA<td>FFFD<td>FFFD<td>200E<td>200F<td>FFFD
+ <tr><th>F<td>05E0<td>05E1<td>05E2<td>05E3<td>05E4<td>05E5<td>05E6<td>05E7<td>05E8<td>05E9<td>05EA<td>    <td>    <td>200E<td>200F<td>
 </table>
 
 <p class=note>Gecko and Presto map 81, 8A, 8C-90, 9A, and 9C-9F to U+FFFD. Trident maps CA, D9-DF, FB-FC, and FF to U+05BA, U+F88D-U+F893, U+F894-U+F895, and U+F896.
@@ -868,7 +898,7 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
  <tr><th><th>0<th>1<th>2<th>3<th>4<th>5<th>6<th>7<th>8<th>9<th>A<th>B<th>C<th>D<th>E<th>F
  <tr><th>8<td>20AC<td>0081<td>201A<td>0083<td>201E<td>2026<td>2020<td>2021<td>0088<td>2030<td>008A<td>2039<td>008C<td>00A8<td>02C7<td>00B8
  <tr><th>9<td>0090<td>2018<td>2019<td>201C<td>201D<td>2022<td>2013<td>2014<td>0098<td>2122<td>009A<td>203A<td>009C<td>00AF<td>02DB<td>009F
- <tr><th>A<td>00A0<td>FFFD<td>00A2<td>00A3<td>00A4<td>FFFD<td>00A6<td>00A7<td>00D8<td>00A9<td>0156<td>00AB<td>00AC<td>00AD<td>00AE<td>00C6
+ <tr><th>A<td>00A0<td>    <td>00A2<td>00A3<td>00A4<td>    <td>00A6<td>00A7<td>00D8<td>00A9<td>0156<td>00AB<td>00AC<td>00AD<td>00AE<td>00C6
  <tr><th>B<td>00B0<td>00B1<td>00B2<td>00B3<td>00B4<td>00B5<td>00B6<td>00B7<td>00F8<td>00B9<td>0157<td>00BB<td>00BC<td>00BD<td>00BE<td>00E6
  <tr><th>C<td>0104<td>012E<td>0100<td>0106<td>00C4<td>00C5<td>0118<td>0112<td>010C<td>00C9<td>0179<td>0116<td>0122<td>0136<td>012A<td>013B
  <tr><th>D<td>0160<td>0143<td>0145<td>00D3<td>014C<td>00D5<td>00D6<td>00D7<td>0172<td>0141<td>015A<td>016A<td>00DC<td>017B<td>017D<td>00DF
