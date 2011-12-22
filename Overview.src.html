@@ -140,6 +140,26 @@ code point to one or more octets (and vice versa). Each
 <dfn title=concept-encoding-name>name</dfn>, and one or more
 <dfn title=concept-encoding-label>labels</dfn>.
 
+<p>Each <span title=concept-encoding>encoding</span> also has a
+<dfn>to Unicode</dfn> and <dfn>from Unicode</dfn> algorithm. The
+<span>to Unicode</span> algorithm takes a sequence of octets and returns a
+sequence of code points. It has an associated
+<dfn>to Unicode strict flag</dfn> that when set will make the algorithm
+return an error if an invalid octet or octet sequence is in the input octet
+sequence. The <span>from Unicode</span> algorithm takes a
+sequence of code points and returns a sequence of octets. It will fail when
+a code point is passed for which it does not have a corresponding octet or
+octet sequence.
+
+<p class=note>The <span>to Unicode strict flag</span> is for XML, which
+considers such an error a well-formed violation. Other formats such as HTML
+will use U+FFFD code points for such errors and carry on.
+
+<p class=note>Pre-processing is required to make <span>from Unicode</span>
+not fail (e.g. for HTML forms).
+
+<hr>
+
 <p>The table below lists all <span title=concept-encoding>encodings</span>
 and their <span title=concept-encoding-label>labels</span> user agents must
 support. User agents must not support any other
@@ -155,7 +175,7 @@ support. User agents must not support any other
 
  <li><p>If <var title>label</var> is an <span>ASCII case-insensitive</span>
  match for any of the <span title=concept-encoding-label>labels</span>
- listed below, return the corresponding
+ listed in the table below, return the corresponding
  <span title=concept-encoding>encoding</span> and terminate these steps.
 
  <li><p>Return failure.
@@ -432,28 +452,58 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 
 <h3>Decoder and encoder</h3>
 
-<p class=XXX>Sketch.
+<p>The <span>to Unicode</span> and <span>from Unicode</span> algorithms are
+the same for all
+<span title="single-octet encoding">single-octet encodings</span>, except
+for the table in use.
 
-<p>The decoder and encoder have the same logic for all
-<span title="single-octet encoding">single-octet encodings</span>.
-
-<p>Decoder:
+<p>The <span>to Unicode</span> algorithm is as follows:
 
 <ol>
- <li><p>If the octet is listed in the table and its corresponding cell is
- blank, return an error if the <span>fatal flag</span> is set, or otherwise
- return a code point whose value is U+FFFD.
+ <li><p>Let <var title>input</var> be a sequence of octets.
 
- <li><p>Return a code point whose value is in the octet's corresponding
- cell.
+ <li><p>Let <var title>output</var> be a sequence of code points, initially
+ empty.
+
+ <li>
+  <p>For each octet in <var title>input</var>:
+
+  <ol>
+   <li><p>If the octet is listed in the table, its corresponding cell is
+   blank, and the <span>to Unicode fatal flag</span> is set, terminate the
+   overall algorithm and return failure.
+
+   <li><p>If the octet is listed in the table and its corresponding cell is
+   blank, append a code point whose value is U+FFFD to
+   <var title>output</var>.
+
+   <li><p>Append a code point whose value is in octet's corresponding cell
+   to <var title>output</var>.
+  </ol>
+
+ <li><p>Return <var title>output</var>.
 </ol>
 
-<p>Encoder:
+<p>The <span>from Unicode</span> algorithm is as follows:
 
 <ol>
- <li><p>If the code point is not listed in the table, return an error.
+ <li><p>Let <var title>input</var> be a sequence of code points.
 
- <li><p>Return the code point's corresponding octet.
+ <li><p>Let <var title>output</var> be a sequence of octets, initially
+ empty.
+
+ <li>
+  <p>For each code point in <var title>input</var>
+
+  <ol>
+   <li><p>If the code point is not listed in the table, terminate the
+   overall algorithm and return failure.
+
+   <li><p>Append the code point's corresponding octet to
+   <var title>output</var>.
+  </ol>
+
+ <li><p>Return <var title>output</var>.
 </ol>
 
 
