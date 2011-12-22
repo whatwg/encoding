@@ -144,14 +144,14 @@ code point to one or more octets (and vice versa). Each
 <dfn>to Unicode</dfn> and <dfn>from Unicode</dfn> algorithm. The
 <span>to Unicode</span> algorithm takes a sequence of octets and returns a
 sequence of code points. It has an associated
-<dfn>to Unicode strict flag</dfn> that when set will make the algorithm
+<dfn>to Unicode fatal flag</dfn> that when set will make the algorithm
 return an error if an invalid octet or octet sequence is in the input octet
 sequence. The <span>from Unicode</span> algorithm takes a
 sequence of code points and returns a sequence of octets. It will fail when
 a code point is passed for which it does not have a corresponding octet or
 octet sequence.
 
-<p class=note>The <span>to Unicode strict flag</span> is for XML, which
+<p class=note>The <span>to Unicode fatal flag</span> is for XML, which
 considers such an error a well-formed violation. Other formats such as HTML
 will use U+FFFD code points for such errors and carry on.
 
