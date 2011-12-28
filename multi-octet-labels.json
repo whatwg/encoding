@@ -44,9 +44,16 @@
           "korean",
           "ks_c_5601-1989",
           "ksc5601",
-          "ksc_5601"
+          "ksc_5601",
+          "windows-949"
         ],
         "name": "euc-kr"
+      },
+      {
+        "labels": [
+          "gb18030"
+        ],
+        "name": "gb18030"
       },
       {
         "labels": [
@@ -75,7 +82,8 @@
       },
       {
         "labels": [
-          "utf-16"
+          "utf-16",
+          "utf-16le"
         ],
         "name": "utf-16"
       },
@@ -84,12 +92,6 @@
           "utf-16be"
         ],
         "name": "utf-16be"
-      },
-      {
-        "labels": [
-          "utf-16le"
-        ],
-        "name": "utf-16le"
       }
     ],
     "heading": "Legacy multi-octet encodings"
