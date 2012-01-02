@@ -118,6 +118,8 @@ the market leaders.</p>
 <p>A <dfn>code point</dfn> is a Unicode code point and is referenced as a
 four-or-more digit hexadecimal value preceded by "U+". E.g. U+0020.
 
+<p>The <dfn>fallback code point</dfn> is U+FFFD.
+
 <p>An octet is referenced as a double-digit hexadecimal value. E.g. AA.
 
 <p>The <dfn>space characters</dfn>, for the purposes of this specification,
@@ -168,7 +170,8 @@ algorithm must be invoked for each octet emitted.
 
 <p class=note>The <span>to Unicode fatal flag</span> is for XML, which
 considers such an error a well-formed violation. Other formats such as HTML
-will use U+FFFD code points for such errors and carry on.
+will use <span title="fallback code point">fallback code points</span> for
+such errors and carry on.
 
 <p class=note>Pre-processing is required to make <span>from Unicode</span>
 not fail (e.g. for HTML forms).
@@ -479,7 +482,7 @@ for the table in use.
  the overall algorithm and return failure.
 
  <li><p>If <var title>octet</var> is listed in the table and its
- corresponding cell is blank, emit a code point whose value is U+FFFD.
+ corresponding cell is blank, emit a <span>fallback code point</span>.
 
  <li><p>Emit a code point whose value is in <var title>octet</var>'s
  corresponding cell.
