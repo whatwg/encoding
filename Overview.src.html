@@ -147,7 +147,7 @@ code point to one or more octets (and vice versa). Each
 
 <p>The <span>to Unicode</span> algorithm takes a stream of octets and emits
 a stream of code points. It has an associated
-<dfn>to Unicode fatal flag</dfn> that when set will make the algorithm
+<dfn>fatal flag</dfn> that when set will make the algorithm
 return an error if an invalid octet or octet sequence is in the input octet
 stream. The <dfn>octet pointer</dfn> is initially zero, pointing to the
 first octet in the stream. It cannot be negative. It can be
@@ -168,7 +168,7 @@ octet sequence. Analogously to <span>to Unicode</span>, it has a
 <span>EOF octet</span> is not emitted, the <span>from Unicode</span>
 algorithm must be invoked for each octet emitted.
 
-<p class=note>The <span>to Unicode fatal flag</span> is for XML, which
+<p class=note>The <span>fatal flag</span> is for XML, which
 considers such an error a well-formed violation. Other formats such as HTML
 will use <span title="fallback code point">fallback code points</span> for
 such errors and carry on.
@@ -478,7 +478,7 @@ for the table in use.
  <li><p>Increase the <span>octet pointer</span> by one.
 
  <li><p>If <var title>octet</var> is listed in the table, its corresponding
- cell is blank, and the <span>to Unicode fatal flag</span> is set, terminate
+ cell is blank, and the <span>fatal flag</span> is set, terminate
  the overall algorithm and return failure.
 
  <li><p>If <var title>octet</var> is listed in the table and its
