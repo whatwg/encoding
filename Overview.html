@@ -162,11 +162,12 @@ the market leaders.</p>
 <h2 id="terminology"><span class="secno">2 </span>Terminology</h2>
 
 <p>A <dfn id="code-point">code point</dfn> is a Unicode code point and is referenced as a
-four-or-more digit hexadecimal value preceded by "U+". E.g. U+0020.
+four-or-more digit hexadecimal value, typically preceded by "U+". E.g. U+0020.
 
 <p>The <dfn id="fallback-code-point">fallback code point</dfn> is U+FFFD.
 
-<p>An octet is referenced as a double-digit hexadecimal value. E.g. AA.
+<p>An octet is referenced as a double-digit hexadecimal value, typically
+preceded by "0x". E.g. 0xAA.
 
 <p>The <dfn id="space-characters">space characters</dfn>, for the purposes of this specification,
 are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
@@ -1155,7 +1156,8 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
      set, return failure.
 
      <li><p>If <var title="">trail index</var> is null, decrease the
-     <a href="#octet-pointer">octet pointer</a> by one and emit a U+FFFD code point.
+     <a href="#octet-pointer">octet pointer</a> by one and emit a
+     <a href="#fallback-code-point">fallback code point</a>.
 
      <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
 
@@ -1197,7 +1199,8 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
      <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
      <li><p>If <var title="">trail index</var> is null, decrease the
-     <a href="#octet-pointer">octet pointer</a> by one and emit a U+FFFD code point.
+     <a href="#octet-pointer">octet pointer</a> by one and emit a
+     <a href="#fallback-code-point">fallback code point</a>.
 
      <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
 
