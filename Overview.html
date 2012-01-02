@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-29-december-2011">Living Draft &mdash; 29 December 2011</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-2-january-2012">Living Draft &mdash; 2 January 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -63,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-29 December 2011, the editors have made this specification available
+2 January 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -187,15 +187,30 @@ code point to one or more octets (and vice versa). Each
 <dfn id="concept-encoding-label" title="concept-encoding-label">labels</dfn>.
 
 <p>Each <a href="#concept-encoding" title="concept-encoding">encoding</a> also has a
-<dfn id="to-unicode">to Unicode</dfn> and <dfn id="from-unicode">from Unicode</dfn> algorithm. The
-<a href="#to-unicode">to Unicode</a> algorithm takes a sequence of octets and returns a
-sequence of code points. It has an associated
+<dfn id="to-unicode">to Unicode</dfn> and <dfn id="from-unicode">from Unicode</dfn> algorithm.
+
+<p>The <a href="#to-unicode">to Unicode</a> algorithm takes a stream of octets and emits
+a stream of code points. It has an associated
 <dfn id="to-unicode-fatal-flag">to Unicode fatal flag</dfn> that when set will make the algorithm
 return an error if an invalid octet or octet sequence is in the input octet
-sequence. The <a href="#from-unicode">from Unicode</a> algorithm takes a
-sequence of code points and returns a sequence of octets. It will fail when
+stream. The <dfn id="octet-pointer">octet pointer</dfn> is initially zero, pointing to the
+first octet in the stream. It cannot be negative. It can be
+increased and decreased to point to other octets in the stream. The
+<dfn id="eof-octet">EOF octet</dfn> is a conceptual octet representing the last octet in a
+stream. The <a href="#octet-pointer">octet pointer</a> cannot point beyond the
+<a href="#eof-octet">EOF octet</a>. The <dfn id="eof-code-point">EOF code point</dfn> is a conceptual code
+point that is emitted once the <a href="#to-unicode">to Unicode</a> algorithm is done. As
+long as the <a href="#eof-code-point">EOF code point</a> is not emitted, the
+<a href="#to-unicode">to Unicode</a> algorithm must be invoked for each code point
+emitted.
+
+<p>The <a href="#from-unicode">from Unicode</a> algorithm takes a
+stream of code points and emits a stream of octets. It will fail when
 a code point is passed for which it does not have a corresponding octet or
-octet sequence.
+octet sequence. Analogously to <a href="#to-unicode">to Unicode</a>, it has a
+<dfn id="code-point-pointer">code point pointer</dfn>. Again analogously, as long as the
+<a href="#eof-octet">EOF octet</a> is not emitted, the <a href="#from-unicode">from Unicode</a>
+algorithm must be invoked for each octet emitted.
 
 <p class="note">The <a href="#to-unicode-fatal-flag">to Unicode fatal flag</a> is for XML, which
 considers such an error a well-formed violation. Other formats such as HTML
@@ -498,50 +513,38 @@ for the table in use.
 <p>The <a href="#to-unicode">to Unicode</a> algorithm is as follows:
 
 <ol>
- <li><p>Let <var title="">input</var> be a sequence of octets.
+ <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
 
- <li><p>Let <var title="">output</var> be a sequence of code points, initially
- empty.
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, emit the
+ <a href="#eof-code-point">EOF code point</a>.
 
- <li>
-  <p>For each octet in <var title="">input</var>:
+ <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
 
-  <ol>
-   <li><p>If the octet is listed in the table, its corresponding cell is
-   blank, and the <a href="#to-unicode-fatal-flag">to Unicode fatal flag</a> is set, terminate the
-   overall algorithm and return failure.
+ <li><p>If <var title="">octet</var> is listed in the table, its corresponding
+ cell is blank, and the <a href="#to-unicode-fatal-flag">to Unicode fatal flag</a> is set, terminate
+ the overall algorithm and return failure.
 
-   <li><p>If the octet is listed in the table and its corresponding cell is
-   blank, append a code point whose value is U+FFFD to
-   <var title="">output</var>.
+ <li><p>If <var title="">octet</var> is listed in the table and its
+ corresponding cell is blank, emit a code point whose value is U+FFFD.
 
-   <li><p>Append a code point whose value is in octet's corresponding cell
-   to <var title="">output</var>.
-  </ol>
-
- <li><p>Return <var title="">output</var>.
+ <li><p>Emit a code point whose value is in <var title="">octet</var>'s
+ corresponding cell.
 </ol>
 
 <p>The <a href="#from-unicode">from Unicode</a> algorithm is as follows:
 
 <ol>
- <li><p>Let <var title="">input</var> be a sequence of code points.
+ <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
 
- <li><p>Let <var title="">output</var> be a sequence of octets, initially
- empty.
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-octet">EOF octet</a>.
 
- <li>
-  <p>For each code point in <var title="">input</var>
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
 
-  <ol>
-   <li><p>If the code point is not listed in the table, terminate the
-   overall algorithm and return failure.
+ <li><p>If <var title="">code point</var> is not listed in the table, terminate
+ the overall algorithm and return failure.
 
-   <li><p>Append the code point's corresponding octet to
-   <var title="">output</var>.
-  </ol>
-
- <li><p>Return <var title="">output</var>.
+ <li><p>Emit <var title="">code point</var>'s corresponding octet.
 </ol>
 
 <hr>
