@@ -1131,83 +1131,57 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
  <li><p>If <var title="">octet</var> is in the range 0x00 to 0x80, emit a
  code point whose value is <var title="">octet</var>.
 
+ <li><p>Let <var title="">lead index</var> be the
+ <a href="#shift_jis-lead-octet-index">shift_jis lead octet index</a> for <var title="">octet</var>.
+
  <li>
-  <p>Let <var title="">lead index</var> be the
-  <a href="#shift_jis-lead-octet-index">shift_jis lead octet index</a> for <var title="">octet</var>.
+  <p>If <var title="">lead index</var> is less than 0xF8F0 or null, run these
+  substeps:
 
-  <dl class="switch">
-   <dt><var title="">lead index</var> is less than 0xE000 or null
-   <dd>
-    <ol>
-     <li><p>Let <var title="">trail octet</var> be <a href="#octet-pointer">octet pointer</a>.
+  <ol>
+   <li><p>Let <var title="">trail octet</var> be <a href="#octet-pointer">octet pointer</a>.
 
-     <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>
-     and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+   <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>
+   and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
-     <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>,
-     emit the <a href="#eof-code-point">EOF code point</a>.
+   <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>,
+   emit the <a href="#eof-code-point">EOF code point</a>.
 
-     <li><p>Let <var title="">trail index</var> be the
-     <a href="#shift_jis-trail-octet-index">shift_jis trail octet index</a> for
-     <var title="">trail octet</var>.
+   <li><p>Let <var title="">trail index</var> be the
+   <a href="#shift_jis-trail-octet-index">shift_jis trail octet index</a> for <var title="">trail octet</var>.
 
-     <li><p>If either the <var title="">trail index</var> or
-     <var title="">lead index</var> is null and the <a href="#fatal-flag">fatal flag</a> is
-     set, return failure.
+   <li><p>If either the <var title="">trail index</var> or
+   <var title="">lead index</var> is null and the <a href="#fatal-flag">fatal flag</a> is
+   set, return failure.
 
-     <li><p>If <var title="">trail index</var> is null, decrease the
-     <a href="#octet-pointer">octet pointer</a> by one and emit a
-     <a href="#fallback-code-point">fallback code point</a>.
+   <li><p>If <var title="">trail index</var> is null, decrease the
+   <a href="#octet-pointer">octet pointer</a> by one and emit a
+   <a href="#fallback-code-point">fallback code point</a>.
 
-     <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
+   <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
 
-     <li><p>If <var title="">lead index</var> is null, emit a
-     <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
+   <li><p>If <var title="">lead index</var> is equal or more than 0xE000, emit
+   a code point whose value is <var title="">lead index</var> plus
+   <var title="">trail index</var>.
 
-     <li><p>Otherwise, let <var title="">code point</var> be
-     <a href="#japanese-code-point">japanese code point</a> for <var title="">lead index</var> plus
-     <var title="">trail index</var>.
+   <li><p>If <var title="">lead index</var> is null, emit a
+   <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
 
-     <li><p>If <var title="">code point</var> is null and the
-     <a href="#fatal-flag">fatal flag</a> is set, return failure.
+   <li><p>Otherwise, let <var title="">code point</var> be
+   <a href="#japanese-code-point">japanese code point</a> for <var title="">lead index</var> plus
+   <var title="">trail index</var>.
 
-     <li><p>If <var title="">code point</var> is null, emit a
-     <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
+   <li><p>If <var title="">code point</var> is null and the
+   <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
-     <li><p>Otherwise, emit <var title="">code point</var>.
-    </ol>
+   <li><p>If <var title="">code point</var> is null, emit a
+   <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
 
-   <dt><var title="">lead index</var> is equal or more than 0xF8F0
-   <dd>Emit a code point whose value is <var title="">lead index</var>.
+   <li><p>Otherwise, emit <var title="">code point</var>.
+  </ol>
 
-   <dt>Otherwise</dt>
-   <dd>
-    <ol>
-     <li><p>Let <var title="">trail octet</var> be <a href="#octet-pointer">octet pointer</a>.
-
-     <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>
-     and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
-
-     <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>,
-     emit the <a href="#eof-code-point">EOF code point</a>.
-
-     <li><p>Let <var title="">trail index</var> be the
-     <a href="#shift_jis-trail-octet-index">shift_jis trail octet index</a> for
-     <var title="">trail octet</var>.
-
-     <li><p>If <var title="">trail index</var> is null and the
-     <a href="#fatal-flag">fatal flag</a> is set, return failure.
-
-     <li><p>If <var title="">trail index</var> is null, decrease the
-     <a href="#octet-pointer">octet pointer</a> by one and emit a
-     <a href="#fallback-code-point">fallback code point</a>.
-
-     <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
-
-     <li><p>Emit a code point whose value is <var title="">lead index</var>
-     plus <var title="">trail index</var>.
-    </ol>
-  </dl>
+ <li><p>Otherwise, emit a code point whose value is
+ <var title="">lead index</var>.
 </ol>
 
 <p>The <a href="#from-unicode">from Unicode</a> algorithm is:

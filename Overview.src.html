@@ -1085,83 +1085,57 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
  <li><p>If <var title>octet</var> is in the range 0x00 to 0x80, emit a
  code point whose value is <var title>octet</var>.
 
+ <li><p>Let <var title>lead index</var> be the
+ <span>shift_jis lead octet index</span> for <var title>octet</var>.
+
  <li>
-  <p>Let <var title>lead index</var> be the
-  <span>shift_jis lead octet index</span> for <var title>octet</var>.
+  <p>If <var title>lead index</var> is less than 0xF8F0 or null, run these
+  substeps:
 
-  <dl class=switch>
-   <dt><var title>lead index</var> is less than 0xE000 or null
-   <dd>
-    <ol>
-     <li><p>Let <var title>trail octet</var> be <span>octet pointer</span>.
+  <ol>
+   <li><p>Let <var title>trail octet</var> be <span>octet pointer</span>.
 
-     <li><p>If <var title>trail octet</var> is the <span>EOF octet</span>
-     and the <span>fatal flag</span> is set, return failure.
+   <li><p>If <var title>trail octet</var> is the <span>EOF octet</span>
+   and the <span>fatal flag</span> is set, return failure.
 
-     <li><p>If <var title>trail octet</var> is the <span>EOF octet</span>,
-     emit the <span>EOF code point</span>.
+   <li><p>If <var title>trail octet</var> is the <span>EOF octet</span>,
+   emit the <span>EOF code point</span>.
 
-     <li><p>Let <var title>trail index</var> be the
-     <span>shift_jis trail octet index</span> for
-     <var title>trail octet</var>.
+   <li><p>Let <var title>trail index</var> be the
+   <span>shift_jis trail octet index</span> for <var title>trail octet</var>.
 
-     <li><p>If either the <var title>trail index</var> or
-     <var title>lead index</var> is null and the <span>fatal flag</span> is
-     set, return failure.
+   <li><p>If either the <var title>trail index</var> or
+   <var title>lead index</var> is null and the <span>fatal flag</span> is
+   set, return failure.
 
-     <li><p>If <var title>trail index</var> is null, decrease the
-     <span>octet pointer</span> by one and emit a
-     <span>fallback code point</span>.
+   <li><p>If <var title>trail index</var> is null, decrease the
+   <span>octet pointer</span> by one and emit a
+   <span>fallback code point</span>.
 
-     <li><p>Increase the <span>octet pointer</span> by one.
+   <li><p>Increase the <span>octet pointer</span> by one.
 
-     <li><p>If <var title>lead index</var> is null, emit a
-     <span>shift_jis fallback code point</span>.
+   <li><p>If <var title>lead index</var> is equal or more than 0xE000, emit
+   a code point whose value is <var title>lead index</var> plus
+   <var title>trail index</var>.
 
-     <li><p>Otherwise, let <var title>code point</var> be
-     <span>japanese code point</span> for <var title>lead index</var> plus
-     <var title>trail index</var>.
+   <li><p>If <var title>lead index</var> is null, emit a
+   <span>shift_jis fallback code point</span>.
 
-     <li><p>If <var title>code point</var> is null and the
-     <span>fatal flag</span> is set, return failure.
+   <li><p>Otherwise, let <var title>code point</var> be
+   <span>japanese code point</span> for <var title>lead index</var> plus
+   <var title>trail index</var>.
 
-     <li><p>If <var title>code point</var> is null, emit a
-     <span>shift_jis fallback code point</span>.
+   <li><p>If <var title>code point</var> is null and the
+   <span>fatal flag</span> is set, return failure.
 
-     <li><p>Otherwise, emit <var title>code point</var>.
-    </ol>
+   <li><p>If <var title>code point</var> is null, emit a
+   <span>shift_jis fallback code point</span>.
 
-   <dt><var title>lead index</var> is equal or more than 0xF8F0
-   <dd>Emit a code point whose value is <var title>lead index</var>.
+   <li><p>Otherwise, emit <var title>code point</var>.
+  </ol>
 
-   <dt>Otherwise</dt>
-   <dd>
-    <ol>
-     <li><p>Let <var title>trail octet</var> be <span>octet pointer</span>.
-
-     <li><p>If <var title>trail octet</var> is the <span>EOF octet</span>
-     and the <span>fatal flag</span> is set, return failure.
-
-     <li><p>If <var title>trail octet</var> is the <span>EOF octet</span>,
-     emit the <span>EOF code point</span>.
-
-     <li><p>Let <var title>trail index</var> be the
-     <span>shift_jis trail octet index</span> for
-     <var title>trail octet</var>.
-
-     <li><p>If <var title>trail index</var> is null and the
-     <span>fatal flag</span> is set, return failure.
-
-     <li><p>If <var title>trail index</var> is null, decrease the
-     <span>octet pointer</span> by one and emit a
-     <span>fallback code point</span>.
-
-     <li><p>Increase the <span>octet pointer</span> by one.
-
-     <li><p>Emit a code point whose value is <var title>lead index</var>
-     plus <var title>trail index</var>.
-    </ol>
-  </dl>
+ <li><p>Otherwise, emit a code point whose value is
+ <var title>lead index</var>.
 </ol>
 
 <p>The <span>from Unicode</span> algorithm is:
