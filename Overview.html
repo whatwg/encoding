@@ -1061,7 +1061,156 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
 
 <h3 id="shift_jis"><span class="secno">6.3 </span><dfn>shift_jis</dfn></h3>
 
-<p class="XXX">This is actually http://msdn.microsoft.com/en-us/goglobal/cc305152.aspx plus some error handling.
+<p class="XXX">The <dfn id="japanese-code-point">japanese code point</dfn> for a given number is: ...</p>
+
+<p>The <dfn id="shift_jis-fallback-code-point">shift_jis fallback code point</dfn> is U+30FB.</p>
+
+<p>The <dfn id="shift_jis-lead-octet-index">shift_jis lead octet index</dfn> for a given
+<var title="">octet</var> is:</p>
+
+<dl class="switch">
+ <dt>0x81
+ <dd>8648
+
+ <dt>0x82 to 0x84
+ <dd>(<var title="">octet - 0x80) &times; 188
+
+ </var><dt>0x87 to 0x9F
+ <dd>(<var title="">octet - 0x82) &times; 188
+
+ </var><dt>0xA0
+ <dd>0xF8F0
+
+ <dt>0xA1 to 0xDF
+ <dd>0xFEC0 + <var title="">octet</var>
+
+ <dt>0xE1 to 0xEA
+ <dd>(<var title="">octet - 0xC2) &times; 188
+
+ </var><dt>0xED to 0xEE
+ <dd>(<var title="">octet - 0xC4) &times; 188
+
+ </var><dt>0xF0 to 0xF9
+ <dd>(<var title="">octet - 0xF0) &times; 188 + 0xE000
+
+ </var><dt>0xFA to 0xFC
+ <dd>(<var title="">octet - 0xCF) &times; 188
+
+  </var><dt>0xFD to 0xFF
+  <dd>0xF8F1 + <var title="">octet</var> - 0xFD
+
+  <dt>Otherwise
+  <dd>null
+</dl>
+
+<p>The <dfn id="shift_jis-trail-octet-index">shift_jis trail octet index</dfn> for a given
+<var title="">octet</var> is:</p>
+
+<dl class="switch">
+ <dt>0x40 to 0x7E</dt>
+ <dd><var title="">octet</var> - 0x40
+
+ <dt>0x80 to 0x7C</dt>
+ <dd><var title="">octet</var> - 0x41
+
+ <dt>Otherwise</dt>
+ <dd>null
+</dl>
+
+<p>The <a href="#to-unicode">to Unicode</a> algorithm is:</p>
+
+<ol>
+ <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, emit the
+ <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
+
+ <li><p>If <var title="">octet</var> is in the range 0x00 to 0x80, emit a
+ code point whose value is <var title="">octet</var>.
+
+ <li>
+  <p>Let <var title="">lead index</var> be the
+  <a href="#shift_jis-lead-octet-index">shift_jis lead octet index</a> for <var title="">octet</var>.
+
+  <dl class="switch">
+   <dt><var title="">lead index</var> is less than 0xE000 or null
+   <dd>
+    <ol>
+     <li><p>Let <var title="">trail octet</var> be <a href="#octet-pointer">octet pointer</a>.
+
+     <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>
+     and the <span>error flag</span> is set, return failure.
+
+     <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>,
+     emit the <a href="#eof-code-point">EOF code point</a>.
+
+     <li><p>Let <var title="">trail index</var> be the
+     <a href="#shift_jis-trail-octet-index">shift_jis trail octet index</a> for
+     <var title="">trail octet</var>.
+
+     <li><p>If either the <var title="">trail index</var> or
+     <var title="">lead index</var> is null and the <span>error flag</span> is
+     set, return failure.
+
+     <li><p>If <var title="">trail index</var> is null, decrease the
+     <a href="#octet-pointer">octet pointer</a> by one and emit a U+FFFD code point.
+
+     <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
+
+     <li><p>If <var title="">lead index</var> is null, emit a
+     <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
+
+     <li><p>Otherwise, let <var title="">code point</var> be
+     <a href="#japanese-code-point">japanese code point</a> for <var title="">lead index</var> plus
+     <var title="">trail index</var>.
+
+     <li><p>If <var title="">code point</var> is null and the
+     <span>error flag</span> is set, return failure.
+
+     <li><p>If <var title="">code point</var> is null, emit a
+     <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
+
+     <li><p>Otherwise, emit <var title="">code point</var>.
+    </ol>
+
+   <dt><var title="">lead index</var> is equal or more than 0xF8F0
+   <dd>Emit a code point whose value is <var title="">lead index</var>.
+
+   <dt>Otherwise</dt>
+   <dd>
+    <ol>
+     <li><p>Let <var title="">trail octet</var> be <a href="#octet-pointer">octet pointer</a>.
+
+     <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>
+     and the <span>error flag</span> is set, return failure.
+
+     <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>,
+     emit the <a href="#eof-code-point">EOF code point</a>.
+
+     <li><p>Let <var title="">trail index</var> be the
+     <a href="#shift_jis-trail-octet-index">shift_jis trail octet index</a> for
+     <var title="">trail octet</var>.
+
+     <li><p>If <var title="">trail index</var> is null and the
+     <span>error flag</span> is set, return failure.
+
+     <li><p>If <var title="">trail index</var> is null, decrease the
+     <a href="#octet-pointer">octet pointer</a> by one and emit a U+FFFD code point.
+
+     <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
+
+     <li><p>Emit a code point whose value is <var title="">lead index</var>
+     plus <var title="">trail index</var>.
+    </ol>
+  </dl>
+</ol>
+
+<p>The <a href="#from-unicode">from Unicode</a> algorithm is:
+
+<ol class="XXX">
+</ol>
 
 
 <h3 id="utf-16"><span class="secno">6.4 </span><dfn>utf-16</dfn></h3>
