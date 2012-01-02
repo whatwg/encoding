@@ -1073,30 +1073,30 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
  <dd>8648
 
  <dt>0x82 to 0x84
- <dd>(<var title="">octet - 0x80) &times; 188
+ <dd>(<var title="">octet</var> - 0x80) &times; 188
 
- </var><dt>0x87 to 0x9F
- <dd>(<var title="">octet - 0x82) &times; 188
+ <dt>0x87 to 0x9F
+ <dd>(<var title="">octet</var> - 0x82) &times; 188
 
- </var><dt>0xA0
+ <dt>0xA0
  <dd>0xF8F0
 
  <dt>0xA1 to 0xDF
  <dd>0xFEC0 + <var title="">octet</var>
 
  <dt>0xE1 to 0xEA
- <dd>(<var title="">octet - 0xC2) &times; 188
+ <dd>(<var title="">octet</var> - 0xC2) &times; 188
 
- </var><dt>0xED to 0xEE
- <dd>(<var title="">octet - 0xC4) &times; 188
+ <dt>0xED to 0xEE
+ <dd>(<var title="">octet</var> - 0xC4) &times; 188
 
- </var><dt>0xF0 to 0xF9
- <dd>(<var title="">octet - 0xF0) &times; 188 + 0xE000
+ <dt>0xF0 to 0xF9
+ <dd>(<var title="">octet</var> - 0xF0) &times; 188 + 0xE000
 
- </var><dt>0xFA to 0xFC
- <dd>(<var title="">octet - 0xCF) &times; 188
+ <dt>0xFA to 0xFC
+ <dd>(<var title="">octet</var> - 0xCF) &times; 188
 
-  </var><dt>0xFD to 0xFF
+  <dt>0xFD to 0xFF
   <dd>0xF8F1 + <var title="">octet</var> - 0xFD
 
   <dt>Otherwise
@@ -1141,7 +1141,7 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
      <li><p>Let <var title="">trail octet</var> be <a href="#octet-pointer">octet pointer</a>.
 
      <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>
-     and the <span>error flag</span> is set, return failure.
+     and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
      <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>,
      emit the <a href="#eof-code-point">EOF code point</a>.
@@ -1151,7 +1151,7 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
      <var title="">trail octet</var>.
 
      <li><p>If either the <var title="">trail index</var> or
-     <var title="">lead index</var> is null and the <span>error flag</span> is
+     <var title="">lead index</var> is null and the <a href="#fatal-flag">fatal flag</a> is
      set, return failure.
 
      <li><p>If <var title="">trail index</var> is null, decrease the
@@ -1167,7 +1167,7 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
      <var title="">trail index</var>.
 
      <li><p>If <var title="">code point</var> is null and the
-     <span>error flag</span> is set, return failure.
+     <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
      <li><p>If <var title="">code point</var> is null, emit a
      <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
@@ -1184,7 +1184,7 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
      <li><p>Let <var title="">trail octet</var> be <a href="#octet-pointer">octet pointer</a>.
 
      <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>
-     and the <span>error flag</span> is set, return failure.
+     and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
      <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>,
      emit the <a href="#eof-code-point">EOF code point</a>.
@@ -1194,7 +1194,7 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
      <var title="">trail octet</var>.
 
      <li><p>If <var title="">trail index</var> is null and the
-     <span>error flag</span> is set, return failure.
+     <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
      <li><p>If <var title="">trail index</var> is null, decrease the
      <a href="#octet-pointer">octet pointer</a> by one and emit a U+FFFD code point.
