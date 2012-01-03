@@ -1010,7 +1010,183 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 
 <h3><dfn>euc-jp</dfn></h3>
 
-<p class=XXX>https://bugzilla.mozilla.org/show_bug.cgi?id=600715 Encoding / decoding use different tables.
+<p>The <dfn>jis0208 index</dfn> for a given <var title>octet</var> is:
+<!-- only valid in range A1-FE -->
+
+<dl class=switch>
+ <dt>0xA1 to 0xA2
+ <dd><!--8648-->(<var title>octet</var> &minus; 0x45) &times; 94
+
+ <dt>0xA3 to 0xA8
+ <dd><!--376-->(<var title>octet</var> &minus; 0x9F) &times; 94
+
+ <dt>0xAD
+ <dd>940
+
+ <dt>0xB1 to 0xF4
+ <dd><!--1222-->(<var title>octet</var> &minus; 0xA4) &times; 94
+
+ <dt>0xF9 to 0xFC
+ <dd><!--7708-->(<var title>octet</var> &minus; 0xA7) &times; 94
+
+ <dt>Otherwise
+ <dd>null
+</dl>
+
+<p>The <dfn>jis0212 index</dfn> for a given <var title>octet</var> is:
+<!-- only valid in range A1-FE -->
+
+<dl class=switch>
+ <dt>0xA2
+ <dd>9400
+ <dt>0xA6 to 0xA7
+ <dd><!--9494-->(<var title>octet</var> &minus; 0x41) &times; 94
+ <dt>0xA9 to 0xAB
+ <dd><!--9682-->(<var title>octet</var> &minus; 0x42) &times; 94
+ <dt>0xB0 to 0xED
+ <dd><!--9964-->(<var title>octet</var> &minus; 0x46) &times; 94
+ <dt>Otherwise
+ <dd>null
+</dl>
+
+<p>The <dfn>euc-jp offset</dfn> is for a given <var title>octet</var> is
+null if <var title>octet</var> &minus; 0xA1 is greater than 93 or less than
+0, or otherwise the result of that equation.
+
+<p>The <span>to Unicode</span> algorithm is:
+<!-- euc-jp to Unicode -->
+
+<ol>
+ <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit the
+ <span>EOF code point</span>.
+
+ <li><p>Increase the <span>octet pointer</span> by one.
+
+ <li><p>If <var title>octet</var> is in the range 0x00 to 0x7E, emit a
+ code point whose value is <var title>octet</var>.
+
+ <li><p>If <var title>octet</var> is not 0x8E, 0x8F, or in the range 0xA1 to
+ 0xFE, and the <span>fatal flag</span> is set, return failure.
+
+ <li><p>If <var title>octet</var> is not 0x8E, 0x8F, or in the range 0xA1 to
+ 0xFE, emit a <span>fallback code point</span>.
+
+ <li><p>Let <var title>second octet</var> be <span>octet pointer</span>.
+
+ <li><p>If <var title>second octet</var> is the <span>EOF octet</span> and
+ the <span>fatal flag</span> is set, return failure.
+
+ <li><p>If <var title>second octet</var> is the <span>EOF octet</span>, emit
+ the <span>fallback code point</span>.
+
+ <li><p>If <var title>second octet</var> is in the range 0x00 to 0x7E and
+ the <span>fatal flag</span> is not set, emit a
+ <span>fallback code point</span>.
+
+ <li><p>Increase the <span>octet pointer</span> by one.
+
+ <li>
+  <p>If <var title>octet</var> is:
+
+  <dl class=switch>
+   <dt>0x8E
+   <dd>
+    <ol>
+     <li><p>If <var title>second octet</var> is in the range 0xA1 to 0xDF,
+     emit a code point whose value is 0xFEC0 +
+     <var title>second octet</var>.
+
+     <li><p>If the <span>fatal flag</span> is set, return failure.
+
+     <li><p>Emit the <span>fallback code point</span>.
+    </ol>
+
+   <dt>0x8F
+   <dd>
+    <ol>
+     <li><p>If <var title>second octet</var> is in the range 0xA1 to 0xFE,
+     let <var title>lead</var> be the <span>jis0212 index</span> for
+     <var title>second octet</var>.
+
+     <li><p>If the <span>fatal flag</span> is set and either
+     <var title>second octet</var> is not in the range 0xA1 to 0xFE or
+     <var title>lead</var> is null, return failure.
+
+     <li><p>If either <var title>second octet</var> is not in the range 0xA1
+     to 0xFE or <var title>lead</var> is null, emit the
+     <span>fallback code point</span>.
+
+     <li><p>Let <var title>trail octet</var> be the
+     <span>octet pointer</span>.
+
+     <li><p>If <var title>trail octet</var> is the <span>EOF octet</span>
+     and the <span>fatal flag</span> is set, return failure.
+
+     <li><p>If <var title>trail octet</var> is the <span>EOF octet</span> or
+     is in the range 0x00 to 0x7E, decrease the <span>octet pointer</span>
+     by one and emit the <span>fallback code point</span>.
+
+     <li><p>Otherwise, increase the <span>octet pointer</span> by one.
+
+     <li><p>Let <var title>offset</var> be the <span>euc-jp offset</span>
+     for the <var title>trail octet</var>.
+
+     <li><p>If <var title>offset</var> is null and the
+     <span>fatal flag</span> is set, return failure.
+
+     <li><p>If <var title>offset</var> is null, emit the
+     <span>fallback code point</span>.
+
+     <li><p>Let <var title>code point</var> be
+     <span>japanese code point</span> for <var title>lead</var> plus
+     <var title>offset</var>.
+
+     <li><p>If <var title>code point</var> is null and the
+     <span>fatal flag</span> is set, return failure.
+
+     <li><p>If <var title>code point</var> is null, emit the
+     <span>fallback code point</span>.
+
+     <li><p>Emit <var title>code point</var>.
+    </ol>
+
+   <dt>0xA1 to 0xFE
+   <dd>
+    <ol>
+     <li><p>Let <var title>lead</var> be the <span>jis0208 index</span> for
+     <var title>octet</var> and <var title>offset</var> the
+     <span>euc-jp offset</span> for <var title>second octet</var>.
+
+     <li><p>If the <span>fatal flag</span> is set and either
+     <var title>lead</var> or <var title>offset</var> is null,
+     return failure.
+
+     <li><p>If either <var title>lead</var> or <var title>offset</var> is
+     null, emit the <span>fallback code point</span>.
+
+     <li><p>Let <var title>code point</var> be
+     <span>japanese code point</span> for <var title>lead</var> plus
+     <var title>offset</var>.
+
+     <li><p>If <var title>code point</var> is null and the
+     <span>fatal flag</span> is set, return failure.
+
+     <li><p>If <var title>code point</var> is null, emit the
+     <span>fallback code point</span>.
+
+     <li><p>Emit <var title>code point</var>.
+    </ol>
+  </dl>
+</ol>
+
+<p>The <span>from Unicode</span> algorithm is:
+
+<ol class=XXX>
+</ol>
+
+<p class=XXX>https://bugzilla.mozilla.org/show_bug.cgi?id=600715 from Unicode is more restrictive.
 
 
 <h3><dfn>shift_jis</dfn></h3>
@@ -1071,7 +1247,8 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
  <dd>null
 </dl>
 
-<p>The <span>to Unicode</span> algorithm is:</p>
+<p>The <span>to Unicode</span> algorithm is:
+<!-- shift_jis to Unicode -->
 
 <ol>
  <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
