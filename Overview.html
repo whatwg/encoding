@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-2-january-2012">Living Draft &mdash; 2 January 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-3-january-2012">Living Draft &mdash; 3 January 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -63,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-2 January 2012, the editors have made this specification available
+3 January 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -194,18 +194,17 @@ code point to one or more octets (and vice versa). Each
 
 <p>The <a href="#to-unicode">to Unicode</a> algorithm takes a stream of octets and emits
 a stream of code points. It has an associated
-<dfn id="fatal-flag">fatal flag</dfn> that when set will make the algorithm
-return an error if an invalid octet or octet sequence is in the input octet
-stream. The <dfn id="octet-pointer">octet pointer</dfn> is initially zero, pointing to the
-first octet in the stream. It cannot be negative. It can be
-increased and decreased to point to other octets in the stream. The
-<dfn id="eof-octet">EOF octet</dfn> is a conceptual octet representing the last octet in a
-stream. The <a href="#octet-pointer">octet pointer</a> cannot point beyond the
-<a href="#eof-octet">EOF octet</a>. The <dfn id="eof-code-point">EOF code point</dfn> is a conceptual code
-point that is emitted once the <a href="#to-unicode">to Unicode</a> algorithm is done. As
-long as the <a href="#eof-code-point">EOF code point</a> is not emitted, the
-<a href="#to-unicode">to Unicode</a> algorithm must be invoked for each code point
-emitted.
+<dfn id="fatal-flag">fatal flag</dfn> that when set will make the algorithm return failure
+if an invalid octet or octet sequence is in the stream. The
+<dfn id="octet-pointer">octet pointer</dfn> is initially zero, pointing to the first octet in
+the stream. It cannot be negative. It can be increased and decreased to
+point to other octets in the stream. The <dfn id="eof-octet">EOF octet</dfn> is a
+conceptual octet representing the last octet in a stream. The
+<a href="#octet-pointer">octet pointer</a> cannot point beyond the <a href="#eof-octet">EOF octet</a>.
+The <dfn id="eof-code-point">EOF code point</dfn> is a conceptual code point that is emitted
+once the <a href="#to-unicode">to Unicode</a> algorithm is done. As long as the
+<a href="#eof-code-point">EOF code point</a> is not emitted, the <a href="#to-unicode">to Unicode</a>
+algorithm must be invoked for each code point emitted.
 
 <p>The <a href="#from-unicode">from Unicode</a> algorithm takes a
 stream of code points and emits a stream of octets. It will fail when
@@ -1066,7 +1065,7 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
 
 <p>The <dfn id="shift_jis-fallback-code-point">shift_jis fallback code point</dfn> is U+30FB.</p>
 
-<p>The <dfn id="shift_jis-lead-octet-index">shift_jis lead octet index</dfn> for a given
+<p>The <dfn id="shift_jis-lead-octet-index-or-code-point">shift_jis lead octet index or code point</dfn> for a given
 <var title="">octet</var> is:</p>
 
 <dl class="switch">
@@ -1074,10 +1073,10 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
  <dd>8648
 
  <dt>0x82 to 0x84
- <dd>(<var title="">octet</var> - 0x80) &times; 188
+ <dd>(<var title="">octet</var> &minus; 0x80) &times; 188
 
  <dt>0x87 to 0x9F
- <dd>(<var title="">octet</var> - 0x82) &times; 188
+ <dd>(<var title="">octet</var> &minus; 0x82) &times; 188
 
  <dt>0xA0
  <dd>0xF8F0
@@ -1086,33 +1085,33 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
  <dd>0xFEC0 + <var title="">octet</var>
 
  <dt>0xE1 to 0xEA
- <dd>(<var title="">octet</var> - 0xC2) &times; 188
+ <dd>(<var title="">octet</var> &minus; 0xC2) &times; 188
 
  <dt>0xED to 0xEE
- <dd>(<var title="">octet</var> - 0xC4) &times; 188
+ <dd>(<var title="">octet</var> &minus; 0xC4) &times; 188
 
  <dt>0xF0 to 0xF9
- <dd>(<var title="">octet</var> - 0xF0) &times; 188 + 0xE000
+ <dd>0xE000 + (<var title="">octet</var> &minus; 0xF0) &times; 188
 
  <dt>0xFA to 0xFC
- <dd>(<var title="">octet</var> - 0xCF) &times; 188
+ <dd>(<var title="">octet</var> &minus; 0xCF) &times; 188
 
   <dt>0xFD to 0xFF
-  <dd>0xF8F1 + <var title="">octet</var> - 0xFD
+  <dd>0xF7F4 + <var title="">octet</var>
 
   <dt>Otherwise
   <dd>null
 </dl>
 
-<p>The <dfn id="shift_jis-trail-octet-index">shift_jis trail octet index</dfn> for a given
+<p>The <dfn id="shift_jis-offset">shift_jis offset</dfn> for a given
 <var title="">octet</var> is:</p>
 
 <dl class="switch">
  <dt>0x40 to 0x7E</dt>
- <dd><var title="">octet</var> - 0x40
+ <dd><var title="">octet</var> &minus; 0x40
 
  <dt>0x80 to 0x7C</dt>
- <dd><var title="">octet</var> - 0x41
+ <dd><var title="">octet</var> &minus; 0x41
 
  <dt>Otherwise</dt>
  <dd>null
@@ -1131,11 +1130,12 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
  <li><p>If <var title="">octet</var> is in the range 0x00 to 0x80, emit a
  code point whose value is <var title="">octet</var>.
 
- <li><p>Let <var title="">lead index</var> be the
- <a href="#shift_jis-lead-octet-index">shift_jis lead octet index</a> for <var title="">octet</var>.
+ <li><p>Let <var title="">lead</var> be the
+ <a href="#shift_jis-lead-octet-index-or-code-point">shift_jis lead octet index or code point</a> for
+ <var title="">octet</var>.
 
  <li>
-  <p>If <var title="">lead index</var> is less than 0xF8F0 or null, run these
+  <p>If <var title="">lead</var> is less than 0xF8F0 or null, run these
   substeps:
 
   <ol>
@@ -1147,29 +1147,28 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
    <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>,
    emit the <a href="#eof-code-point">EOF code point</a>.
 
-   <li><p>Let <var title="">trail index</var> be the
-   <a href="#shift_jis-trail-octet-index">shift_jis trail octet index</a> for <var title="">trail octet</var>.
+   <li><p>Let <var title="">offset</var> be the
+   <a href="#shift_jis-offset">shift_jis offset</a> for <var title="">trail octet</var>.
 
-   <li><p>If either the <var title="">trail index</var> or
-   <var title="">lead index</var> is null and the <a href="#fatal-flag">fatal flag</a> is
-   set, return failure.
+   <li><p>If either <var title="">offset</var> or <var title="">lead</var> is null
+   and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
-   <li><p>If <var title="">trail index</var> is null, decrease the
+   <li><p>If <var title="">offset</var> is null, decrease the
    <a href="#octet-pointer">octet pointer</a> by one and emit a
    <a href="#fallback-code-point">fallback code point</a>.
 
    <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
 
-   <li><p>If <var title="">lead index</var> is equal or more than 0xE000, emit
-   a code point whose value is <var title="">lead index</var> plus
-   <var title="">trail index</var>.
+   <li><p>If <var title="">lead</var> is equal or more than 0xE000, emit
+   a code point whose value is <var title="">lead</var> plus
+   <var title="">offset</var>.
 
-   <li><p>Otherwise, if <var title="">lead index</var> is null, emit a
+   <li><p>Otherwise, if <var title="">lead</var> is null, emit a
    <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
 
    <li><p>Otherwise, let <var title="">code point</var> be
-   <a href="#japanese-code-point">japanese code point</a> for <var title="">lead index</var> plus
-   <var title="">trail index</var>.
+   <a href="#japanese-code-point">japanese code point</a> for <var title="">lead</var> plus
+   <var title="">offset</var>.
 
    <li><p>If <var title="">code point</var> is null and the
    <a href="#fatal-flag">fatal flag</a> is set, return failure.
@@ -1180,8 +1179,7 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
    <li><p>Otherwise, emit <var title="">code point</var>.
   </ol>
 
- <li><p>Otherwise, emit a code point whose value is
- <var title="">lead index</var>.
+ <li><p>Otherwise, emit a code point whose value is <var title="">lead</var>.
 </ol>
 
 <p>The <a href="#from-unicode">from Unicode</a> algorithm is:
@@ -1223,7 +1221,8 @@ Ms2ger,
 Peter Krefting,
 Philip Taylor,
 Shawn Steele,
-Simon Montagu, and
+Simon Montagu,
+Simon Pieters, and
 &#25104;&#28716;&#12422;&#12356; (Yui Naruse)
 
 for being awesome.
