@@ -447,12 +447,14 @@ as that algorithm is incompatible with legacy content.
  <tbody>
   <tr><th colspan="2">Legacy multi-octet Chinese (traditional) encodings
   <tr>
-   <td rowspan="5"><a href="#big5">big5</a>
+   <td rowspan="4"><a href="#big5">big5</a>
    <td>"<code title="">big5</code>"
-  <tr><td>"<code title="">big5-hkscs</code>"
   <tr><td>"<code title="">cn-big5</code>"
   <tr><td>"<code title="">csbig5</code>"
   <tr><td>"<code title="">x-x-big5</code>"
+  <tr>
+   <td><span>big5-hkscs</span>
+   <td>"<code title="">big5-hkscs</code>"
  <tbody>
   <tr><th colspan="2">Legacy multi-octet Japanese encodings
   <tr>
@@ -460,6 +462,10 @@ as that algorithm is incompatible with legacy content.
    <td>"<code title="">cseucjpkdfmtjapanese</code>"
   <tr><td>"<code title="">euc-jp</code>"
   <tr><td>"<code title="">x-euc-jp</code>"
+  <tr>
+   <td rowspan="2"><span>iso-2022-jp</span>
+   <td>"<code title="">csiso2022jp</code>"
+  <tr><td>"<code title="">iso-2022-jp</code>"
   <tr>
    <td rowspan="6"><a href="#shift_jis">shift_jis</a>
    <td>"<code title="">csshiftjis</code>"
@@ -481,6 +487,10 @@ as that algorithm is incompatible with legacy content.
   <tr><td>"<code title="">ksc5601</code>"
   <tr><td>"<code title="">ksc_5601</code>"
   <tr><td>"<code title="">windows-949</code>"
+  <tr>
+   <td rowspan="2"><span>iso-2022-kr</span>
+   <td>"<code title="">csiso2022kr</code>"
+  <tr><td>"<code title="">iso-2022-kr</code>"
  <tbody>
   <tr><th colspan="2">Legacy utf-16 encodings
   <tr>
@@ -1069,7 +1079,7 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
 
 <h3 id="big5"><span class="secno">7.1 </span><dfn>big5</dfn></h3>
 
-<p class="XXX">http://www.google.com/support/forum/p/Chrome/thread?tid=466c210af3fb6d08 and Internet Explorer supporting it that way suggests it is way better if <a href="#big5">big5</a> includes the Hong Kong extensions.
+<p class="XXX">See https://bugzilla.mozilla.org/show_bug.cgi?id=310299
 
 
 <h2 id="legacy-multi-octet-japanese-encodings"><span class="secno">8 </span>Legacy multi-octet Japanese encodings</h2>

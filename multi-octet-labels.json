@@ -45,12 +45,17 @@
       {
         "labels": [
           "big5",
-          "big5-hkscs",
           "cn-big5",
           "csbig5",
           "x-x-big5"
         ],
         "name": "big5"
+      },
+      {
+        "labels": [
+          "big5-hkscs"
+        ],
+        "name": "big5-hkscs"
       }
     ],
     "heading": "Legacy multi-octet Chinese (traditional) encodings"
@@ -64,6 +69,13 @@
           "x-euc-jp"
         ],
         "name": "euc-jp"
+      },
+      {
+        "labels": [
+          "csiso2022jp",
+          "iso-2022-jp"
+        ],
+        "name": "iso-2022-jp"
       },
       {
         "labels": [
@@ -94,6 +106,13 @@
           "windows-949"
         ],
         "name": "euc-kr"
+      },
+      {
+        "labels": [
+          "csiso2022kr",
+          "iso-2022-kr"
+        ],
+        "name": "iso-2022-kr"
       }
     ],
     "heading": "Legacy multi-octet Korean encodings"
