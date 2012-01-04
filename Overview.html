@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-3-january-2012">Living Draft &mdash; 3 January 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-4-january-2012">Living Draft &mdash; 4 January 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -63,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-3 January 2012, the editors have made this specification available
+4 January 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -117,12 +117,19 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#windows-1257"><span class="secno">5.26 </span>windows-1257</a></li>
    <li><a href="#windows-1258"><span class="secno">5.27 </span>windows-1258</a></li>
    <li><a href="#x-mac-cyrillic"><span class="secno">5.28 </span>x-mac-cyrillic</a></ol></li>
- <li><a href="#legacy-multi-octet-encodings"><span class="secno">6 </span>Legacy multi-octet encodings</a>
+ <li><a href="#legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">6 </span>Legacy multi-octet Chinese (simplified) encodings</a></li>
+ <li><a href="#legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (traditional) encodings</a>
   <ol class="toc">
-   <li><a href="#big5"><span class="secno">6.1 </span>big5</a></li>
-   <li><a href="#euc-jp"><span class="secno">6.2 </span>euc-jp</a></li>
-   <li><a href="#shift_jis"><span class="secno">6.3 </span>shift_jis</a></li>
-   <li><a href="#utf-16"><span class="secno">6.4 </span>utf-16</a></ol></li>
+   <li><a href="#big5"><span class="secno">7.1 </span>big5</a></ol></li>
+ <li><a href="#legacy-multi-octet-japanese-encodings"><span class="secno">8 </span>Legacy multi-octet Japanese encodings</a>
+  <ol class="toc">
+   <li><a href="#euc-jp"><span class="secno">8.1 </span>euc-jp</a></li>
+   <li><a href="#shift_jis"><span class="secno">8.2 </span>shift_jis</a></ol></li>
+ <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</a></li>
+ <li><a href="#legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</a>
+  <ol class="toc">
+   <li><a href="#utf-16"><span class="secno">10.1 </span>utf-16</a></li>
+   <li><a href="#utf-16be"><span class="secno">10.2 </span>utf-16be</a></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
@@ -422,35 +429,9 @@ as that algorithm is incompatible with legacy content.
    <td>"<code title="">x-mac-cyrillic</code>"
   <tr><td>"<code title="">x-mac-ukrainian</code>"
  <tbody>
-  <tr><th colspan="2">Legacy multi-octet encodings
+  <tr><th colspan="2">Legacy multi-octet Chinese (simplified) encodings
   <tr>
-   <td rowspan="5"><a href="#big5">big5</a>
-   <td>"<code title="">big5</code>"
-  <tr><td>"<code title="">big5-hkscs</code>"
-  <tr><td>"<code title="">cn-big5</code>"
-  <tr><td>"<code title="">csbig5</code>"
-  <tr><td>"<code title="">x-x-big5</code>"
-  <tr>
-   <td rowspan="3"><a href="#euc-jp">euc-jp</a>
-   <td>"<code title="">cseucjpkdfmtjapanese</code>"
-  <tr><td>"<code title="">euc-jp</code>"
-  <tr><td>"<code title="">x-euc-jp</code>"
-  <tr>
-   <td rowspan="9"><span>euc-kr</span>
-   <td>"<code title="">csksc56011987</code>"
-  <tr><td>"<code title="">csueckr</code>"
-  <tr><td>"<code title="">euc-kr</code>"
-  <tr><td>"<code title="">iso-ir-149</code>"
-  <tr><td>"<code title="">korean</code>"
-  <tr><td>"<code title="">ks_c_5601-1989</code>"
-  <tr><td>"<code title="">ksc5601</code>"
-  <tr><td>"<code title="">ksc_5601</code>"
-  <tr><td>"<code title="">windows-949</code>"
-  <tr>
-   <td><span>gb18030</span>
-   <td>"<code title="">gb18030</code>"
-  <tr>
-   <td rowspan="9"><span>gbk</span>
+   <td rowspan="9"><a href="#gbk">gbk</a>
    <td>"<code title="">chinese</code>"
   <tr><td>"<code title="">csgb2312</code>"
   <tr><td>"<code title="">csiso58gb231280</code>"
@@ -461,6 +442,25 @@ as that algorithm is incompatible with legacy content.
   <tr><td>"<code title="">iso-ir-58</code>"
   <tr><td>"<code title="">x-gbk</code>"
   <tr>
+   <td><a href="#gb18030">gb18030</a>
+   <td>"<code title="">gb18030</code>"
+ <tbody>
+  <tr><th colspan="2">Legacy multi-octet Chinese (traditional) encodings
+  <tr>
+   <td rowspan="5"><a href="#big5">big5</a>
+   <td>"<code title="">big5</code>"
+  <tr><td>"<code title="">big5-hkscs</code>"
+  <tr><td>"<code title="">cn-big5</code>"
+  <tr><td>"<code title="">csbig5</code>"
+  <tr><td>"<code title="">x-x-big5</code>"
+ <tbody>
+  <tr><th colspan="2">Legacy multi-octet Japanese encodings
+  <tr>
+   <td rowspan="3"><a href="#euc-jp">euc-jp</a>
+   <td>"<code title="">cseucjpkdfmtjapanese</code>"
+  <tr><td>"<code title="">euc-jp</code>"
+  <tr><td>"<code title="">x-euc-jp</code>"
+  <tr>
    <td rowspan="6"><a href="#shift_jis">shift_jis</a>
    <td>"<code title="">csshiftjis</code>"
   <tr><td>"<code title="">ms_kanji</code>"
@@ -468,12 +468,27 @@ as that algorithm is incompatible with legacy content.
   <tr><td>"<code title="">shift_jis</code>"
   <tr><td>"<code title="">windows-31j</code>"
   <tr><td>"<code title="">x-sjis</code>"
+ <tbody>
+  <tr><th colspan="2">Legacy multi-octet Korean encodings
+  <tr>
+   <td rowspan="9"><a href="#euc-kr">euc-kr</a>
+   <td>"<code title="">csksc56011987</code>"
+  <tr><td>"<code title="">csueckr</code>"
+  <tr><td>"<code title="">euc-kr</code>"
+  <tr><td>"<code title="">iso-ir-149</code>"
+  <tr><td>"<code title="">korean</code>"
+  <tr><td>"<code title="">ks_c_5601-1989</code>"
+  <tr><td>"<code title="">ksc5601</code>"
+  <tr><td>"<code title="">ksc_5601</code>"
+  <tr><td>"<code title="">windows-949</code>"
+ <tbody>
+  <tr><th colspan="2">Legacy utf-16 encodings
   <tr>
    <td rowspan="2"><a href="#utf-16">utf-16</a>
    <td>"<code title="">utf-16</code>"
   <tr><td>"<code title="">utf-16le</code>"
   <tr>
-   <td><span>utf-16be</span>
+   <td><a href="#utf-16be">utf-16be</a>
    <td>"<code title="">utf-16be</code>"
 </table>
 
@@ -1044,17 +1059,25 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
 </table>
 
 
-<h2 id="legacy-multi-octet-encodings"><span class="secno">6 </span>Legacy multi-octet encodings</h2>
+<h2 id="legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">6 </span>Legacy multi-octet Chinese (simplified) encodings</h2>
 
-<p class="XXX">There is some data available, but research into these encodings has not been done in detail thus far.
+<p class="XXX"><dfn id="gbk">gbk</dfn> and <dfn id="gb18030">gb18030</dfn>.
 
 
-<h3 id="big5"><span class="secno">6.1 </span><dfn>big5</dfn></h3>
+<h2 id="legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (traditional) encodings</h2>
+
+
+<h3 id="big5"><span class="secno">7.1 </span><dfn>big5</dfn></h3>
 
 <p class="XXX">http://www.google.com/support/forum/p/Chrome/thread?tid=466c210af3fb6d08 and Internet Explorer supporting it that way suggests it is way better if <a href="#big5">big5</a> includes the Hong Kong extensions.
 
 
-<h3 id="euc-jp"><span class="secno">6.2 </span><dfn>euc-jp</dfn></h3>
+<h2 id="legacy-multi-octet-japanese-encodings"><span class="secno">8 </span>Legacy multi-octet Japanese encodings</h2>
+
+<p class="XXX">The <dfn id="japanese-code-point">japanese code point</dfn> for a given number is: ...</p>
+
+
+<h3 id="euc-jp"><span class="secno">8.1 </span><dfn>euc-jp</dfn></h3>
 
 <p>The <dfn id="jis0208-index">jis0208 index</dfn> for a given <var title="">octet</var> is:
 <!-- only valid in range A1-FE -->
@@ -1235,9 +1258,7 @@ null if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than
 <p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 from Unicode is more restrictive.
 
 
-<h3 id="shift_jis"><span class="secno">6.3 </span><dfn>shift_jis</dfn></h3>
-
-<p class="XXX">The <dfn id="japanese-code-point">japanese code point</dfn> for a given number is: ...</p>
+<h3 id="shift_jis"><span class="secno">8.2 </span><dfn>shift_jis</dfn></h3>
 
 <p>The <dfn id="shift_jis-fallback-code-point">shift_jis fallback code point</dfn> is U+30FB.</p>
 
@@ -1365,9 +1386,25 @@ null if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than
 </ol>
 
 
-<h3 id="utf-16"><span class="secno">6.4 </span><dfn>utf-16</dfn></h3>
+<h2 id="legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</h2>
 
-<p class="XXX">Per HTML when there is no BOM it uses <span>utf-16le</span> (rather than <span>utf-16be</span>) for decoding.
+<p class="XXX"><dfn id="euc-kr">euc-kr</dfn>...
+
+
+<h2 id="legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</h2>
+
+<p class="note">Contrary to the Unicode standard, checking for a BOM happens
+before an encoding to decode an octet stream is chosen.
+
+
+<h3 id="utf-16"><span class="secno">10.1 </span><dfn>utf-16</dfn></h3>
+
+<p class="XXX">AKA utf-16le
+
+
+<h3 id="utf-16be"><span class="secno">10.2 </span><dfn>utf-16be</dfn></h3>
+
+<p class="XXX">...
 
 
 <h2 class="no-num" id="references">References</h2>
