@@ -19,44 +19,6 @@
     "encodings": [
       {
         "labels": [
-          "big5",
-          "big5-hkscs",
-          "cn-big5",
-          "csbig5",
-          "x-x-big5"
-        ],
-        "name": "big5"
-      },
-      {
-        "labels": [
-          "cseucjpkdfmtjapanese",
-          "euc-jp",
-          "x-euc-jp"
-        ],
-        "name": "euc-jp"
-      },
-      {
-        "labels": [
-          "csksc56011987",
-          "csueckr",
-          "euc-kr",
-          "iso-ir-149",
-          "korean",
-          "ks_c_5601-1989",
-          "ksc5601",
-          "ksc_5601",
-          "windows-949"
-        ],
-        "name": "euc-kr"
-      },
-      {
-        "labels": [
-          "gb18030"
-        ],
-        "name": "gb18030"
-      },
-      {
-        "labels": [
           "chinese",
           "csgb2312",
           "csiso58gb231280",
@@ -71,6 +33,40 @@
       },
       {
         "labels": [
+          "gb18030"
+        ],
+        "name": "gb18030"
+      }
+    ],
+    "heading": "Legacy multi-octet Chinese (simplified) encodings"
+  },
+  {
+    "encodings": [
+      {
+        "labels": [
+          "big5",
+          "big5-hkscs",
+          "cn-big5",
+          "csbig5",
+          "x-x-big5"
+        ],
+        "name": "big5"
+      }
+    ],
+    "heading": "Legacy multi-octet Chinese (traditional) encodings"
+  },
+  {
+    "encodings": [
+      {
+        "labels": [
+          "cseucjpkdfmtjapanese",
+          "euc-jp",
+          "x-euc-jp"
+        ],
+        "name": "euc-jp"
+      },
+      {
+        "labels": [
           "csshiftjis",
           "ms_kanji",
           "shift-jis",
@@ -79,7 +75,31 @@
           "x-sjis"
         ],
         "name": "shift_jis"
-      },
+      }
+    ],
+    "heading": "Legacy multi-octet Japanese encodings"
+  },
+  {
+    "encodings": [
+      {
+        "labels": [
+          "csksc56011987",
+          "csueckr",
+          "euc-kr",
+          "iso-ir-149",
+          "korean",
+          "ks_c_5601-1989",
+          "ksc5601",
+          "ksc_5601",
+          "windows-949"
+        ],
+        "name": "euc-kr"
+      }
+    ],
+    "heading": "Legacy multi-octet Korean encodings"
+  },
+  {
+    "encodings": [
       {
         "labels": [
           "utf-16",
@@ -94,6 +114,6 @@
         "name": "utf-16be"
       }
     ],
-    "heading": "Legacy multi-octet encodings"
+    "heading": "Legacy utf-16 encodings"
   }
 ]
