@@ -1029,8 +1029,8 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 <p>The <dfn>gb18030 flag</dfn> flag is initially unset. It must be set if
 the <span>gb18030</span> encoding is in use.
 
-<p>The <dfn>gbk first</dfn>, <dfn>gbk second</dfn>, <dfn>gbk third</dfn>,
-and <dfn>gbk fourth</dfn>, are all initially 0x00.
+<p>The <dfn>gbk first</dfn>, <dfn>gbk second</dfn>, and
+<dfn>gbk third</dfn>, are all initially 0x00.
 
 <p class=XXX>...
 
@@ -1202,132 +1202,110 @@ and <dfn>gbk fourth</dfn>, are all initially 0x00.
 null if <var title>octet</var> &minus; 0xA1 is greater than 93 or less than
 0, or otherwise the result of that equation.
 
+<p>The <dfn>euc-jp first</dfn> and <dfn>euc-jp second</dfn> are 0x00.
+
 <p>The <span>to Unicode</span> algorithm is:
 <!-- euc-jp to Unicode -->
 
 <ol>
  <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit the
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <span>euc-jp first</span> and <span>euc-jp second</span> are 0x00, emit the
  <span>EOF code point</span>.
 
- <li><p>Increase the <span>octet pointer</span> by one.
+ <li><p>If <var title>octet</var> is either the <span>EOF octet</span> or is
+ in the range 0x00 to 0x7F, either <span>euc-jp first</span> or
+ <span>euc-jp second</span> is not 0x00, and the <span>fatal flag</span> is
+ set, return failure.
 
- <li><p>If <var title>octet</var> is in the range 0x00 to 0x7E, emit a
- code point whose value is <var title>octet</var>.
+ <li><p>If <var title>octet</var> is either the <span>EOF octet</span> or is
+ in the range 0x00 to 07F, and <span>euc-jp second</span> is 0x00,
+ set <span>euc-jp first</span> to 0x00 and emit the
+ <span>fallback code point</span>.
 
- <li><p>If <var title>octet</var> is not 0x8E, 0x8F, or in the range 0xA1 to
- 0xFE, and the <span>fatal flag</span> is set, return failure.
-
- <li><p>If <var title>octet</var> is not 0x8E, 0x8F, or in the range 0xA1 to
- 0xFE, emit a <span>fallback code point</span>.
-
- <li><p>Let <var title>second octet</var> be <span>octet pointer</span>.
-
- <li><p>If <var title>second octet</var> is the <span>EOF octet</span> and
- the <span>fatal flag</span> is set, return failure.
-
- <li><p>If <var title>second octet</var> is the <span>EOF octet</span>, emit
- the <span>fallback code point</span>.
-
- <li><p>If <var title>second octet</var> is in the range 0x00 to 0x7E and
- the <span>fatal flag</span> is not set, emit a
+ <li><p>If <var title>octet</var> is either the <span>EOF octet</span> or is
+ in the range 0x00 to 0x7F, and <span>euc-jp second</span> is not 0x00, set
+ <span>euc-jp first</span> and <span>euc-jp second</span> to 0x00, decrease
+ the <span>octet pointer</span> by one, and emit the
  <span>fallback code point</span>.
 
  <li><p>Increase the <span>octet pointer</span> by one.
 
  <li>
-  <p>If <var title>octet</var> is:
+  <p>If <span>euc-jp second</span> is not 0x00, run these substeps:
+  <!--euc-jp first must be 0x8E-->
 
-  <dl class=switch>
-   <dt>0x8E
-   <dd>
-    <ol>
-     <li><p>If <var title>second octet</var> is in the range 0xA1 to 0xDF,
-     emit a code point whose value is 0xFEC0 +
-     <var title>second octet</var>.
+  <ol>
+   <li><p>Let <var title>lead</var> be the <span>jis0212 index</span> for
+   <span>euc-jp second</span> and <var title>offset</var> be the
+   <span>euc-jp offset</span> for <var title>octet</var>.
 
-     <li><p>If the <span>fatal flag</span> is set, return failure.
+   <li><p>If either <var title>lead</var> or <var title>octet</var> is null,
+   and the <span>fatal flag</span> is set, return failure.
 
-     <li><p>Emit the <span>fallback code point</span>.
-    </ol>
+   <li><p>If either <var title>lead</var> or <var title>offset</var> is
+   null, emit the <span>fallback code point</span>.
 
-   <dt>0x8F
-   <dd>
-    <ol>
-     <li><p>If <var title>second octet</var> is in the range 0xA1 to 0xFE,
-     let <var title>lead</var> be the <span>jis0212 index</span> for
-     <var title>second octet</var>.
+   <li><p>Let <var title>code point</var> be
+   <span>japanese code point</span> for <var title>lead</var> plus
+   <var title>offset</var>.
 
-     <li><p>If the <span>fatal flag</span> is set and either
-     <var title>second octet</var> is not in the range 0xA1 to 0xFE or
-     <var title>lead</var> is null, return failure.
+   <li><p>If <var title>code point</var> is null and the
+   <span>fatal flag</span> is set, return failure.
 
-     <li><p>If either <var title>second octet</var> is not in the range 0xA1
-     to 0xFE or <var title>lead</var> is null, emit the
-     <span>fallback code point</span>.
+   <li><p>If <var title>code point</var> is null, emit the
+   <span>fallback code point</span>.
 
-     <li><p>Let <var title>trail octet</var> be the
-     <span>octet pointer</span>.
+   <li><p>Emit <var title>code point</var>.
+  </ol>
 
-     <li><p>If <var title>trail octet</var> is the <span>EOF octet</span>
-     and the <span>fatal flag</span> is set, return failure.
+ <li><p>If <span>euc-jp first</span> is 0x8E and <var title>octet</var> is
+ in the range 0xA1 to 0xDF, emit a code point whose value is 0xFEC0 +
+ <var title>octet</var>.
 
-     <li><p>If <var title>trail octet</var> is the <span>EOF octet</span> or
-     is in the range 0x00 to 0x7E, decrease the <span>octet pointer</span>
-     by one and emit the <span>fallback code point</span>.
+ <li><p>If <span>euc-jp first</span> is 0x8F and <var title>octet</var> is
+ in the range 0xA1 to 0xFE, set <span>euc-jp second</span> to
+ <var title>octet</var> and continue.
 
-     <li><p>Otherwise, increase the <span>octet pointer</span> by one.
+ <li>
+  <p>If <span>euc-jp first</span> is in the range 0xA1 to 0xFE, run these
+  substeps:
 
-     <li><p>Let <var title>offset</var> be the <span>euc-jp offset</span>
-     for the <var title>trail octet</var>.
+  <ol>
+   <li><p>Let <var title>lead</var> be the <span>jis0208 index</span> for
+   <span>euc-jp first</span> and <var title>offset</var> the
+   <span>euc-jp offset</span> for <var title>octet</var>.
 
-     <li><p>If <var title>offset</var> is null and the
-     <span>fatal flag</span> is set, return failure.
+   <li><p>If the <span>fatal flag</span> is set and either
+   <var title>lead</var> or <var title>offset</var> is null, return failure.
 
-     <li><p>If <var title>offset</var> is null, emit the
-     <span>fallback code point</span>.
+   <li><p>If either <var title>lead</var> or <var title>offset</var> is
+   null, emit the <span>fallback code point</span>.
 
-     <li><p>Let <var title>code point</var> be
-     <span>japanese code point</span> for <var title>lead</var> plus
-     <var title>offset</var>.
+   <li><p>Let <var title>code point</var> be
+   <span>japanese code point</span> for <var title>lead</var> plus
+   <var title>offset</var>.
 
-     <li><p>If <var title>code point</var> is null and the
-     <span>fatal flag</span> is set, return failure.
+   <li><p>If <var title>code point</var> is null and the
+   <span>fatal flag</span> is set, return failure.
 
-     <li><p>If <var title>code point</var> is null, emit the
-     <span>fallback code point</span>.
+   <li><p>If <var title>code point</var> is null, emit the
+   <span>fallback code point</span>.
 
-     <li><p>Emit <var title>code point</var>.
-    </ol>
+   <li><p>Emit <var title>code point</var>.
+  </ol>
 
-   <dt>0xA1 to 0xFE
-   <dd>
-    <ol>
-     <li><p>Let <var title>lead</var> be the <span>jis0208 index</span> for
-     <var title>octet</var> and <var title>offset</var> the
-     <span>euc-jp offset</span> for <var title>second octet</var>.
+ <li><p>If <var title>octet</var> is in the range 0x00 to 0x7E, emit a
+ code point whose value is <var title>octet</var>.
 
-     <li><p>If the <span>fatal flag</span> is set and either
-     <var title>lead</var> or <var title>offset</var> is null,
-     return failure.
+ <li><p>If <var title>octet</var> is 0x8E, 0x8F, or in the range 0xA1 to
+ 0xFE, set <span>euc-jp first</span> to <var title>octet</var> and continue.
 
-     <li><p>If either <var title>lead</var> or <var title>offset</var> is
-     null, emit the <span>fallback code point</span>.
+ <li><p>If the <span>fatal flag</span> is set, return failure.
 
-     <li><p>Let <var title>code point</var> be
-     <span>japanese code point</span> for <var title>lead</var> plus
-     <var title>offset</var>.
-
-     <li><p>If <var title>code point</var> is null and the
-     <span>fatal flag</span> is set, return failure.
-
-     <li><p>If <var title>code point</var> is null, emit the
-     <span>fallback code point</span>.
-
-     <li><p>Emit <var title>code point</var>.
-    </ol>
-  </dl>
+ <li><p>Set <span>euc-jp first</span> to 0x00 and emit the
+ <span>fallback code point</span>.
 </ol>
 
 <p>The <span>from Unicode</span> algorithm is:
