@@ -1450,58 +1450,62 @@ null if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than
  <dd>null
 </dl>
 
+<p>The <dfn id="shift_jis-lead">shift_jis lead</dfn> is initially 0x00.
+
 <p>The <a href="#to-unicode">to Unicode</a> algorithm is:
 <!-- shift_jis to Unicode -->
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
 
- <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, emit the
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a> and
+ <a href="#shift_jis-lead">shift_jis lead</a> is 0x00, emit the
  <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
+ <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, and the <a href="#fatal-flag">fatal flag</a> is
+ set, return failure.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
+ <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, emit the
+ <a href="#fallback-code-point">fallback code point</a>.
 
  <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
 
- <li><p>If <var title="">octet</var> is in the range 0x00 to 0x80, emit a
- code point whose value is <var title="">octet</var>.
-
- <li><p>Let <var title="">lead</var> be the
- <a href="#shift_jis-lead-octet-index-or-code-point">shift_jis lead octet index or code point</a> for
+ <li><p>If <a href="#shift_jis-lead">shift_jis lead</a> is 0x00 and <var title="">octet</var> is
+ in the range 0x00 to 0x80, emit a code point whose value is
  <var title="">octet</var>.
 
+ <li><p>If <a href="#shift_jis-lead">shift_jis lead</a> is 0x00, set
+ <a href="#shift_jis-lead">shift_jis lead</a> to the
+ <a href="#shift_jis-lead-octet-index-or-code-point">shift_jis lead octet index or code point</a> for
+ <var title="">octet</var> and continue.
+
  <li>
-  <p>If <var title="">lead</var> is less than 0xF8F0 or null, run these
-  substeps:
+  <p>If <a href="#shift_jis-lead">shift_jis lead</a> is either less than 0xF8F0 or null, run
+  these substeps:
 
   <ol>
-   <li><p>Let <var title="">trail octet</var> be <a href="#octet-pointer">octet pointer</a>.
-
-   <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>
-   and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
-
-   <li><p>If <var title="">trail octet</var> is the <a href="#eof-octet">EOF octet</a>,
-   emit the <a href="#eof-code-point">EOF code point</a>.
-
    <li><p>Let <var title="">offset</var> be the
-   <a href="#shift_jis-offset">shift_jis offset</a> for <var title="">trail octet</var>.
+   <a href="#shift_jis-offset">shift_jis offset</a> for <var title="">octet</var>.
 
-   <li><p>If either <var title="">offset</var> or <var title="">lead</var> is null
-   and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+   <li><p>If either <var title="">offset</var> or <a href="#shift_jis-lead">shift_jis lead</a>
+   is null and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
-   <li><p>If <var title="">offset</var> is null, decrease the
-   <a href="#octet-pointer">octet pointer</a> by one and emit a
+   <li><p>If <var title="">offset</var> is null, set
+   <a href="#shift_jis-lead">shift_jis lead</a> to 0x00, decrease the
+   <a href="#octet-pointer">octet pointer</a> by one and emit the
    <a href="#fallback-code-point">fallback code point</a>.
 
-   <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
-
-   <li><p>If <var title="">lead</var> is equal or more than 0xE000, emit
+   <li><p>If <a href="#shift_jis-lead">shift_jis lead</a> is equal or more than 0xE000, emit
    a code point whose value is <var title="">lead</var> plus
    <var title="">offset</var>.
 
-   <li><p>Otherwise, if <var title="">lead</var> is null, emit a
+   <li><p>Otherwise, if <a href="#shift_jis-lead">shift_jis lead</a> is null, emit a
    <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
 
    <li><p>Otherwise, let <var title="">code point</var> be
-   <a href="#japanese-code-point">japanese code point</a> for <var title="">lead</var> plus
+   <a href="#japanese-code-point">japanese code point</a> for <a href="#shift_jis-lead">shift_jis lead</a> plus
    <var title="">offset</var>.
 
    <li><p>If <var title="">code point</var> is null and the
@@ -1510,10 +1514,11 @@ null if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than
    <li><p>If <var title="">code point</var> is null, emit a
    <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
 
-   <li><p>Otherwise, emit <var title="">code point</var>.
+   <li><p>Emit <var title="">code point</var>.
   </ol>
 
- <li><p>Otherwise, emit a code point whose value is <var title="">lead</var>.
+ <li><p>Otherwise, emit a code point whose value is
+ <a href="#shift_jis-lead">shift_jis lead</a>.
 </ol>
 
 <p>The <a href="#from-unicode">from Unicode</a> algorithm is:
