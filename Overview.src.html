@@ -499,12 +499,11 @@ for the table in use.
 
  <li><p>Increase the <span>octet pointer</span> by one.
 
- <li><p>If <var title>octet</var> is listed in the table, its corresponding
- cell is blank, and the <span>fatal flag</span> is set, terminate
- the overall algorithm and return failure.
+ <li><p>If <var title>octet</var>'s corresponding cell is blank, and the
+ <span>fatal flag</span> is set, return failure.
 
- <li><p>If <var title>octet</var> is listed in the table and its
- corresponding cell is blank, emit a <span>fallback code point</span>.
+ <li><p>If <var title>octet</var>'s corresponding cell is blank, emit the
+ <span>fallback code point</span>.
 
  <li><p>Emit a code point whose value is in <var title>octet</var>'s
  corresponding cell.
@@ -520,8 +519,8 @@ for the table in use.
 
  <li><p>Increase the <span>code point pointer</span> by one.
 
- <li><p>If <var title>code point</var> is not listed in the table, terminate
- the overall algorithm and return failure.
+ <li><p>If <var title>code point</var> is not listed in the table,
+ return failure.
 
  <li><p>Emit <var title>code point</var>'s corresponding octet.
 </ol>
