@@ -119,7 +119,8 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#x-mac-cyrillic"><span class="secno">5.28 </span>x-mac-cyrillic</a></ol></li>
  <li><a href="#legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">6 </span>Legacy multi-octet Chinese (simplified) encodings</a>
   <ol class="toc">
-   <li><a href="#hz-gb-2312"><span class="secno">6.1 </span>hz-gb-2312</a></ol></li>
+   <li><a href="#gbk-and-gb18030"><span class="secno">6.1 </span>gbk and gb18030</a></li>
+   <li><a href="#hz-gb-2312"><span class="secno">6.2 </span>hz-gb-2312</a></ol></li>
  <li><a href="#legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (traditional) encodings</a>
   <ol class="toc">
    <li><a href="#big5"><span class="secno">7.1 </span>big5</a></ol></li>
@@ -434,7 +435,7 @@ as that algorithm is incompatible with legacy content.
  <tbody>
   <tr><th colspan="2">Legacy multi-octet Chinese (simplified) encodings
   <tr>
-   <td rowspan="9"><a href="#gbk">gbk</a>
+   <td rowspan="9"><a href="#gbk-and-gb18030">gbk</a>
    <td>"<code title="">chinese</code>"
   <tr><td>"<code title="">csgb2312</code>"
   <tr><td>"<code title="">csiso58gb231280</code>"
@@ -448,7 +449,7 @@ as that algorithm is incompatible with legacy content.
    <td><a href="#hz-gb-2312">hz-gb-2312</a>
    <td>"<code title="">hz-gb-2312</code>"
   <tr>
-   <td><a href="#gb18030">gb18030</a>
+   <td><a href="#gbk-and-gb18030">gb18030</a>
    <td>"<code title="">gb18030</code>"
  <tbody>
   <tr><th colspan="2">Legacy multi-octet Chinese (traditional) encodings
@@ -1077,10 +1078,21 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
 
 <h2 id="legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">6 </span>Legacy multi-octet Chinese (simplified) encodings</h2>
 
-<p class="XXX"><dfn id="gbk">gbk</dfn> and <dfn id="gb18030">gb18030</dfn>.
+<p>The <dfn id="gbk-code-point">gbk code point</dfn> for a given number is: ...
 
 
-<h3 id="hz-gb-2312"><span class="secno">6.1 </span><dfn>hz-gb-2312</dfn></h3>
+<h3 id="gbk-and-gb18030"><span class="secno">6.1 </span><dfn>gbk</dfn> and <dfn>gb18030</dfn></h3>
+
+<p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It must be set if
+the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
+
+<p>The <dfn id="gbk-first">gbk first</dfn>, <dfn id="gbk-second">gbk second</dfn>, <dfn id="gbk-third">gbk third</dfn>,
+and <dfn id="gbk-fourth">gbk fourth</dfn>, are all initially 0x00.
+
+<p class="XXX">...
+
+
+<h3 id="hz-gb-2312"><span class="secno">6.2 </span><dfn>hz-gb-2312</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1842
  http://tools.ietf.org/html/rfc1843
@@ -1142,7 +1154,7 @@ non-normative JSON resource: <a href="./single-octet-encodings.json"><code>singl
 
   <ol>
    <li><p class="XXX">Let <var title="">code point</var> be
-   <span>gbk code point</span> for ...
+   <a href="#gbk-code-point">gbk code point</a> for ...
    <!-- (hz-gb-2312 lead - 1) * 191 + (octet + 0x40) -->
 
    <li><p>If <var title="">octet</var> is in the range 0x20 to 0x7F and
