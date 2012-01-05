@@ -156,9 +156,10 @@ point to other octets in the stream. The <dfn>EOF octet</dfn> is a
 conceptual octet representing the last octet in a stream. The
 <span>octet pointer</span> cannot point beyond the <span>EOF octet</span>.
 The <dfn>EOF code point</dfn> is a conceptual code point that is emitted
-once the <span>to Unicode</span> algorithm is done. As long as the
-<span>EOF code point</span> is not emitted, the <span>to Unicode</span>
-algorithm must be invoked for each code point emitted.
+once the stream of octets is handled in its entirety. Apart from returning
+failure, <span>to Unicode</span> can end by emitting a code point, or the
+word continue. Unless it returns failure, or the <span>EOF code point</span>
+is emitted, the <span>to Unicode</span> algorithm must be invoked again.
 
 <p>The <span>from Unicode</span> algorithm takes a
 stream of code points and emits a stream of octets. It will fail when
@@ -1021,12 +1022,116 @@ non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-
 
 <h2>Legacy multi-octet Chinese (simplified) encodings</h2>
 
-<p class=XXX><dfn>gbk</dfn>, <dfn>hz-gb-2312</dfn> and <dfn>gb18030</dfn>.
+<p class=XXX><dfn>gbk</dfn> and <dfn>gb18030</dfn>.
+
+
+<h3><dfn>hz-gb-2312</dfn></h3>
 <!--
- hz-gb-2312:
  http://tools.ietf.org/html/rfc1842
  http://tools.ietf.org/html/rfc1843
 -->
+
+<p>The <dfn>hz-gb-2312 flag</dfn> is initially unset. The
+<dfn>hz-gb-2312 lead</dfn> is initially 0x00.</p>
+
+<p>The <span>to Unicode</span> algorithm is:
+<!-- hz-gb-2312 to Unicode -->
+
+<ol>
+ <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <span>hz-gb-2312 lead</span> is 0x00, emit the
+ <span>EOF code point</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <span>hz-gb-2312 lead</span> is not 0x00, and the <span>fatal flag</span>
+ is set, return failure.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <span>hz-gb-2312 lead</span> is not 0x00, set <span>hz-gb-2312 lead</span>
+ to 0x00 and emit the <span>fallback code point</span>.
+
+ <li><p>Increase the <span>octet pointer</span>.
+
+ <li>
+  <p>If <span>hz-gb-2312 lead</span> is 0x7E, set
+  <span>hz-gb-2312 lead</span> to 0x00, and based on <var title>octet</var>:
+
+  <dl class=switch>
+   <dt>0x7B<!--{-->
+   <dd>Set the <span>hz-gb-2312 flag</span> and continue.
+
+   <dt>0x7D<!--}-->
+   <dd>Unset the <span>hz-gb-2312 flag</span> and continue.
+   <!--In "ASCII mode" IE outputs ~}, Gecko outputs U+FFFD, Chrome outputs
+   a single U+FFFD for ~}~}. Weird. Opera just skips.-->
+
+   <dt>0x7E<!--~-->
+   <dd>Emit a U+007E code point.
+
+   <dt>0x0A<!--newline-->
+   <dd>Set <span>hz-gb-2312 lead</span> to 0x00 and continue.
+
+   <dt>Otherwise
+   <dd>
+    <p>If the <span>fatal flag</span> is set, return failure.
+
+    <p>Otherwise, decrease the <span>octet pointer</span> by one and emit
+    the <span>fallback code point</span>.
+  </dl>
+
+ <li>
+  <p>If <span>hz-gb-2312 lead</span> is not 0x00, set
+  <span>hz-gb-2312 lead</span> to 0x00 and:
+
+  <ol>
+   <li><p class=XXX>Let <var title>code point</var> be
+   <span>gbk code point</span> for ...
+   <!-- (hz-gb-2312 lead - 1) * 191 + (octet + 0x40) -->
+
+   <li><p>If <var title>octet</var> is in the range 0x20 to 0x7F and
+   <var title>code point</var> is not null, emit
+   <var title>code point</var>.
+
+   <li><p>If the <span>fatal flag</span> is set, return failure.
+
+   <li><p>If <var title>octet</var> is 0x0A, unset the
+   <span>hz-gb-2312 flag</span>.
+
+   <li><p>Emit the <span>fallback code point</span>.
+  </ol>
+
+ <li><p>If <var title>octet</var> is 0x7E<!--~-->, set
+ <span>hz-gb-2312 lead</span> to 0x7E and continue.
+
+ <li>
+  <p>If the <span>hz-gb-2312 flag</span> is set:
+
+  <ol>
+   <li><p>If <var title>octet</var> is in the range 0x20 to 0x7F, set
+   <span>hz-gb-2312 lead</span> to <var title>octet</var> and continue.
+
+   <li><p>If the <span>fatal flag</span> is set, return failure.
+
+   <li><p>If <var title>octet</var> is 0x0A, unset the
+   <span>hz-gb-2312 flag</span>.
+
+   <li><p>Emit the <span>fallback code point</span>.
+  </ol>
+
+ <li><p>If <var title>octet</var> is in the range 0x00 to 0x7F, emit a
+ code point whose value is <var title>octet</var>.
+
+ <li><p>If the <span>fatal flag</span> is set, return failure.
+
+ <li><p>Emit the <span>fallback code point</span>.
+</ol>
+
+<p>The <span>from Unicode</span> algorithm is:
+<!-- hz-gb-2312 from Unicode -->
+
+<ol class=XXX></ol>
 
 
 <h2>Legacy multi-octet Chinese (traditional) encodings</h2>
