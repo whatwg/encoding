@@ -127,7 +127,8 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#legacy-multi-octet-japanese-encodings"><span class="secno">8 </span>Legacy multi-octet Japanese encodings</a>
   <ol class="toc">
    <li><a href="#euc-jp"><span class="secno">8.1 </span>euc-jp</a></li>
-   <li><a href="#shift_jis"><span class="secno">8.2 </span>shift_jis</a></ol></li>
+   <li><a href="#iso-2022-jp"><span class="secno">8.2 </span>iso-2022-jp</a></li>
+   <li><a href="#shift_jis"><span class="secno">8.3 </span>shift_jis</a></ol></li>
  <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</a></li>
  <li><a href="#legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</a>
   <ol class="toc">
@@ -470,7 +471,7 @@ as that algorithm is incompatible with legacy content.
   <tr><td>"<code title="">euc-jp</code>"
   <tr><td>"<code title="">x-euc-jp</code>"
   <tr>
-   <td rowspan="2"><span>iso-2022-jp</span>
+   <td rowspan="2"><a href="#iso-2022-jp">iso-2022-jp</a>
    <td>"<code title="">csiso2022jp</code>"
   <tr><td>"<code title="">iso-2022-jp</code>"
   <tr>
@@ -495,7 +496,7 @@ as that algorithm is incompatible with legacy content.
   <tr><td>"<code title="">ksc_5601</code>"
   <tr><td>"<code title="">windows-949</code>"
   <tr>
-   <td rowspan="2"><span>iso-2022-kr</span>
+   <td rowspan="2"><a href="#iso-2022-kr">iso-2022-kr</a>
    <td>"<code title="">csiso2022kr</code>"
   <tr><td>"<code title="">iso-2022-kr</code>"
  <tbody>
@@ -1372,7 +1373,12 @@ null if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than
 <p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 from Unicode is more restrictive.
 
 
-<h3 id="shift_jis"><span class="secno">8.2 </span><dfn>shift_jis</dfn></h3>
+<h3 id="iso-2022-jp"><span class="secno">8.2 </span><dfn>iso-2022-jp</dfn></h3>
+
+<p class="XXX">...
+
+
+<h3 id="shift_jis"><span class="secno">8.3 </span><dfn>shift_jis</dfn></h3>
 
 <p>The <dfn id="shift_jis-fallback-code-point">shift_jis fallback code point</dfn> is U+30FB.</p>
 
@@ -1507,7 +1513,7 @@ null if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than
 
 <h2 id="legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</h2>
 
-<p class="XXX"><dfn id="euc-kr">euc-kr</dfn>...
+<p class="XXX"><dfn id="euc-kr">euc-kr</dfn> and <dfn id="iso-2022-kr">iso-2022-kr</dfn>.
 
 
 <h2 id="legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</h2>
