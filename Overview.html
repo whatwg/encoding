@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-5-january-2012">Living Draft &mdash; 5 January 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-6-january-2012">Living Draft &mdash; 6 January 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -63,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-5 January 2012, the editors have made this specification available
+6 January 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1213,9 +1213,6 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 
 <p class="XXX">The <dfn id="japanese-code-point">japanese code point</dfn> for a given number is: ...</p>
 
-
-<h3 id="euc-jp"><span class="secno">8.1 </span><dfn>euc-jp</dfn></h3>
-
 <p>The <dfn id="jis0208-index">jis0208 index</dfn> for a given <var title="">octet</var> is:
 <!-- only valid in range A1-FE -->
 
@@ -1255,9 +1252,12 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
  <dd>null
 </dl>
 
-<p>The <dfn id="euc-jp-offset">euc-jp offset</dfn> is for a given <var title="">octet</var> is
-null if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than
-0, or otherwise the result of that equation.
+
+<h3 id="euc-jp"><span class="secno">8.1 </span><dfn>euc-jp</dfn></h3>
+
+<p>The <dfn id="euc-jp-offset">euc-jp offset</dfn> for a given <var title="">octet</var> is null
+if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than 0, or
+otherwise the result of that equation.
 
 <p>The <dfn id="euc-jp-first">euc-jp first</dfn> and <dfn id="euc-jp-second">euc-jp second</dfn> are 0x00.
 
@@ -1375,7 +1375,217 @@ null if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than
 
 <h3 id="iso-2022-jp"><span class="secno">8.2 </span><dfn>iso-2022-jp</dfn></h3>
 
-<p class="XXX">...
+<p>The <dfn id="iso-2022-jp-offset">iso-2022-jp offset</dfn> for a given <var title="">octet</var> is
+null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
+0, or otherwise the result of that equation.
+
+<p>The <dfn id="iso-2022-jp-state">iso-2022-jp state</dfn> is initially <b title="">ASCII state</b>.
+
+<p>The <dfn id="iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</dfn> is initially unset.
+
+<p>The <dfn id="iso-2022-jp-lead">iso-2022-jp lead</dfn> is initially 0x00.
+
+<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
+<!-- iso-2022-jp to Unicode -->
+
+<ol>
+ <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
+
+ <li><p>If <var title="">octet</var> is not the <a href="#eof-octet">EOF octet</a>,
+ increase the <a href="#octet-pointer">octet pointer</a> by one.
+
+ <li>
+  <p>Based on <a href="#iso-2022-jp-state">iso-2022-jp state</a>:
+
+  <dl class="switch">
+   <dt>ASCII state
+
+   <dd>
+    <p>Based on <var title="">octet</var>:
+
+    <dl class="switch">
+     <dt>0xB1
+     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+     <b title="">escape start state</b> and continue.
+
+     <dt>0x00 to 0x7E
+     <dd><p>Emit a code point whose value is <var title="">octet</var>.
+
+     <dt><a href="#eof-octet">EOF octet</a>
+     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
+
+     <dt>Otherwise
+     <dd>
+      <p>If the <span>error flag</span> is set, return failure.
+
+      <p>Otherwise, emit the <a href="#fallback-code-point">fallback code point</a>.
+    </dl>
+
+   <dt>Escape start state
+   <dd>
+    <p>Based on <var title="">octet</var>:
+
+    <dl class="switch">
+     <dt><!--$-->0x24
+     <dt><!--(-->0x28
+     <dd>
+      <p>Set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to <var title="">octet</var>,
+      <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape middle state</b>,
+      and continue.
+
+     <dt>Otherwise
+     <dd>
+      <p>If the <span>error flag</span> is set, return failure.
+
+      <p>If <var title="">octet</var> is not the <a href="#eof-octet">EOF octet</a>,
+      decrease the <a href="#octet-pointer">octet pointer</a> by one.
+
+      <p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b> and
+      emit the <a href="#fallback-code-point">fallback code point</a>.
+    </dl>
+
+   <dt>Escape middle state
+   <dd>
+    <ol>
+     <li><p>Let <var title="">lead</var> be <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and
+     set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to 0x00.
+
+     <li><p>If <var title="">lead</var> is 0x24 and <var title="">octet</var> is
+     either 0x40<!--@--> or 0x42<!--B-->, unset the
+     <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>, set
+     <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and
+     continue.
+
+     <li><p>If <var title="">lead</var> is 0x24 and <var title="">octet</var> is
+     0x28, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+     <b title="">escape final state</b> and continue.
+
+     <li><p>If <var title="">lead</var> is 0x28 and <var title="">octet</var> is
+     either 0x42<!--B--> or 0x4A<!--J-->, set <a href="#iso-2022-jp-state">iso-2022-jp state</a>
+     to <b title="">ASCII state</b> and continue.
+
+     <li><p>If <var title="">lead</var> is 0x28 and <var title="">octet</var> is
+     0x49<!--I-->, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+     <b title="">Katakana state</b> and continue.
+
+     <li><p>If the <span>error flag</span> is set, return failure.
+
+     <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
+     decrease <a href="#octet-pointer">octet pointer</a> by one, or otherwise decrease it by
+     two.
+
+     <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
+     and emit the <a href="#fallback-code-point">fallback code point</a>.
+    </ol>
+
+   <dt>Escape final state
+   <dd>
+    <ol>
+     <li><p>If <var title="">octet</var> is 0x44<!--D-->, set the
+     <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>, set
+     <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and
+     continue.
+
+     <li><p>If the <span>error flag</span> is set, return failure.
+
+     <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
+     decrease <a href="#octet-pointer">octet pointer</a> by two, or otherwise decrease it by
+     three.
+
+     <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
+     and emit the <a href="#fallback-code-point">fallback code point</a>.
+    </ol>
+
+   <dt>Lead state
+   <dd>
+    <p>Based on <var title="">octet</var>:
+    <dl class="switch">
+     <dt>0x0A
+     <dd>
+      <p>If the <span>error flag</span> is set, return failure.
+
+      <p>Otherwise, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+      <b title="">ASCII state</b> and emit a code point whose value is U+000A.
+
+     <dt>0xB1
+     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape state</b>
+     and continue.
+
+     <dt><a href="#eof-octet">EOF octet</a>
+     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
+
+     <dt>Otherwise
+     <dd>
+      <p>If the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a> is set, set
+      <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to the <a href="#jis0212-index">jis0212 index</a> for
+      <var title="">octet</var>, or otherwise set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a>
+      to the <a href="#jis0208-index">jis0208 index</a> for <var title="">octet</var>.
+
+      <p>Then set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+      <b title="">trail state</b>, and continue.
+    </dl>
+
+   <dt>Trail state
+   <dd>
+    <ol>
+     <li><p>Set the <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+     <b title="">lead state</b>.
+
+     <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a> and the
+     <span>error flag</span> is set, return failure.
+
+     <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, emit
+     the <a href="#fallback-code-point">fallback code point</a> and continue.
+
+     <li><p>Let <var title="">lead</var> be the <a href="#iso-2022-jp-lead">iso-2022-jp lead</a>
+     and <var title="">offset</var> the <a href="#iso-2022-jp-offset">iso-2022-jp offset</a> for
+     <var title="">octet</var>.
+
+     <li><p>If the <a href="#fatal-flag">fatal flag</a> is set and either
+     <var title="">lead</var> or <var title="">offset</var> is null,
+     return failure.
+
+     <li><p>If either <var title="">lead</var> or <var title="">offset</var> is
+     null, emit the <a href="#fallback-code-point">fallback code point</a>.
+
+     <li><p>Let <var title="">code point</var> be
+     <a href="#japanese-code-point">japanese code point</a> for <var title="">lead</var> plus
+     <var title="">offset</var>.
+
+     <li><p>If <var title="">code point</var> is null and the
+     <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+     <li><p>If <var title="">code point</var> is null, emit the
+     <a href="#fallback-code-point">fallback code point</a>.
+
+     <li><p>Emit <var title="">code point</var>.
+    </ol>
+
+   <dt>Katakana state
+   <dd>
+    <p>Based on <var title="">octet</var>:
+    <dl class="switch">
+     <dt>0xB1
+     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape state</b>
+     and continue.
+
+     <dt>0x21 to 0x5F
+     <dd><p>Emit a code point whose value is 0xFF40 +
+     <var title="">octet</var>.
+
+     <dt><a href="#eof-octet">EOF octet</a>
+     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
+
+     <dt>Otherwise
+     <dd>
+      <p>If the <span>error flag</span> is set, return failure.
+
+      <p>Otherwise, emit the <a href="#fallback-code-point">fallback code point</a>.
+    </dl>
+  </dl>
+</ol>
+
+<!-- XXX iso-2022-jp from Unicode -->
 
 
 <h3 id="shift_jis"><span class="secno">8.3 </span><dfn>shift_jis</dfn></h3>
