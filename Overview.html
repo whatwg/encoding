@@ -1423,26 +1423,20 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 
    <dt>Escape start state
    <dd>
-    <p>Based on <var title="">octet</var>:
+    <ol>
+     <li><p>If <var title="">octet</var> is either <!--$-->0x24 or
+     <!--(-->0x28, set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to
+     <var title="">octet</var>, <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+     <b title="">escape middle state</b>, and continue.
 
-    <dl class="switch">
-     <dt><!--$-->0x24
-     <dt><!--(-->0x28
-     <dd>
-      <p>Set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to <var title="">octet</var>,
-      <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape middle state</b>,
-      and continue.
+     <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
-     <dt>Otherwise
-     <dd>
-      <p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+     <li><p>If <var title="">octet</var> is not the <a href="#eof-octet">EOF octet</a>,
+     decrease the <a href="#octet-pointer">octet pointer</a> by one.
 
-      <p>If <var title="">octet</var> is not the <a href="#eof-octet">EOF octet</a>,
-      decrease the <a href="#octet-pointer">octet pointer</a> by one.
-
-      <p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b> and
-      emit the <a href="#fallback-code-point">fallback code point</a>.
-    </dl>
+     <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
+     and emit the <a href="#fallback-code-point">fallback code point</a>.
+    </ol>
 
    <dt>Escape middle state
    <dd>
