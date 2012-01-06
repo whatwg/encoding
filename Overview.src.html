@@ -1359,7 +1359,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
      <dt>Otherwise
      <dd>
-      <p>If the <span>error flag</span> is set, return failure.
+      <p>If the <span>fatal flag</span> is set, return failure.
 
       <p>Otherwise, emit the <span>fallback code point</span>.
     </dl>
@@ -1378,7 +1378,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
      <dt>Otherwise
      <dd>
-      <p>If the <span>error flag</span> is set, return failure.
+      <p>If the <span>fatal flag</span> is set, return failure.
 
       <p>If <var title>octet</var> is not the <span>EOF octet</span>,
       decrease the <span>octet pointer</span> by one.
@@ -1411,7 +1411,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
      0x49<!--I-->, set <span>iso-2022-jp state</span> to
      <b title>Katakana state</b> and continue.
 
-     <li><p>If the <span>error flag</span> is set, return failure.
+     <li><p>If the <span>fatal flag</span> is set, return failure.
 
      <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
      decrease <span>octet pointer</span> by one, or otherwise decrease it by
@@ -1429,7 +1429,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
      <span>iso-2022-jp state</span> to <b title>lead state</b>, and
      continue.
 
-     <li><p>If the <span>error flag</span> is set, return failure.
+     <li><p>If the <span>fatal flag</span> is set, return failure.
 
      <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
      decrease <span>octet pointer</span> by two, or otherwise decrease it by
@@ -1445,7 +1445,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
     <dl class=switch>
      <dt>0x0A
      <dd>
-      <p>If the <span>error flag</span> is set, return failure.
+      <p>If the <span>fatal flag</span> is set, return failure.
 
       <p>Otherwise, set <span>iso-2022-jp state</span> to
       <b title>ASCII state</b> and emit a code point whose value is U+000A.
@@ -1475,10 +1475,10 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
      <b title>lead state</b>.
 
      <li><p>If <var title>octet</var> is the <span>EOF octet</span> and the
-     <span>error flag</span> is set, return failure.
+     <span>fatal flag</span> is set, return failure.
 
      <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit
-     the <span>fallback code point</span> and continue.
+     the <span>fallback code point</span>.
 
      <li><p>Let <var title>lead</var> be the <span>iso-2022-jp lead</span>
      and <var title>offset</var> the <span>iso-2022-jp offset</span> for
@@ -1521,7 +1521,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
      <dt>Otherwise
      <dd>
-      <p>If the <span>error flag</span> is set, return failure.
+      <p>If the <span>fatal flag</span> is set, return failure.
 
       <p>Otherwise, emit the <span>fallback code point</span>.
     </dl>
