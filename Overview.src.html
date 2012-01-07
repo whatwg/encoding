@@ -1664,7 +1664,112 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
 <h2>Legacy multi-octet Korean encodings</h2>
 
-<p class=XXX><dfn>euc-kr</dfn> and <dfn>iso-2022-kr</dfn>.
+<p class=XXX><dfn>euc-kr</dfn>
+
+
+<h3><dfn>iso-2022-kr</dfn></h3>
+
+<!--XXX the "ESC $ ) C" sequence is only supported by Gecko at the start of
+a stream. It does exactly nothing. Trying to get away with not supporting it
+at all.-->
+
+<p>The <dfn>iso-2022-kr state</dfn> is initially <b title>ASCII state</b>.
+
+<p>The <dfn>iso-2022-kr lead</dfn> is initially 0x00.
+
+<p>The <span>to Unicode</span> algorithm is:
+<!-- iso-2022-kr to Unicode -->
+
+<ol>
+ <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+
+ <li><p>If <var title>octet</var> is not the <span>EOF octet</span>,
+ increase the <span>octet pointer</span> by one.
+
+ <li>
+  <p>Based on <span>iso-2022-kr state</span>:
+
+  <dl class=switch>
+   <dt>ASCII state
+
+   <dd>
+    <p>Based on <var title>octet</var>:
+
+    <dl class=switch>
+     <dt>0x0E
+     <dd><p>Set <span>iso-2022-kr state</span> to <b title>lead state</b>
+     and continue.
+
+     <dt>0x0F
+     <dd><p>Continue.
+
+     <dt>0x00 to 0x7E
+     <dd><p>Emit a code point whose value is <var title>octet</var>.
+
+     <dt><span>EOF octet</span>
+     <dd><p>Emit the <span>EOF code point</span>.
+
+     <dt>Otherwise
+     <dd>
+      <p>If the <span>fatal flag</span> is set, return failure.
+
+      <p>Otherwise, emit the <span>fallback code point</span>.
+    </dl>
+
+   <dt>Lead state
+   <dd>
+    <p>Based on <var title>octet</var>:
+    <dl class=switch>
+     <dt>0x0A
+     <dd>
+      <p>If the <span>fatal flag</span> is set, return failure.
+
+      <p>Otherwise, set <span>iso-2022-kr state</span> to
+      <b title>ASCII state</b> and emit a code point whose value is U+000A.
+
+     <dt>0x0E
+     <dd><p>Continue.
+
+     <dt>0x0F
+     <dd><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>
+     and continue.
+
+     <dt><span>EOF octet</span>
+     <dd><p>Emit the <span>EOF code point</span>.
+
+     <dt>Otherwise
+     <dd>
+      <p>Set <span>iso-2022-kr lead</span> to <var title>octet</var>, set
+      <span>iso-2022-kr state</span> to <b title>trail state</b>, and
+      continue.
+    </dl>
+
+   <dt>Trail state
+   <dd>
+    <ol>
+     <li><p>Set the <span>iso-2022-kr state</span> to
+     <b title>lead state</b>.
+
+     <li><p>If <var title>octet</var> is the <span>EOF octet</span> and the
+     <span>fatal flag</span> is set, return failure.
+
+     <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit
+     the <span>fallback code point</span>.
+
+     <li><p class=XXX>Get <var title>code point</var> based on
+     <span>iso-2022-kr lead</span> and <var title>octet</var> and then emit
+     it.
+
+     <li><p>If the <span>fatal flag</span> is set, return failure.
+
+     <li><p>Emit the <span>fallback code point</span>.
+    </ol>
+  </dl>
+</ol>
+
+<!-- XXX iso-2022-kr from Unicode -->
+
+
 
 
 <h2>Legacy utf-16 encodings</h2>

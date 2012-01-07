@@ -129,7 +129,9 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#euc-jp"><span class="secno">8.1 </span>euc-jp</a></li>
    <li><a href="#iso-2022-jp"><span class="secno">8.2 </span>iso-2022-jp</a></li>
    <li><a href="#shift_jis"><span class="secno">8.3 </span>shift_jis</a></ol></li>
- <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</a></li>
+ <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</a>
+  <ol class="toc">
+   <li><a href="#iso-2022-kr"><span class="secno">9.1 </span>iso-2022-kr</a></ol></li>
  <li><a href="#legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</a>
   <ol class="toc">
    <li><a href="#utf-16"><span class="secno">10.1 </span>utf-16</a></li>
@@ -1721,7 +1723,112 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 
 <h2 id="legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</h2>
 
-<p class="XXX"><dfn id="euc-kr">euc-kr</dfn> and <dfn id="iso-2022-kr">iso-2022-kr</dfn>.
+<p class="XXX"><dfn id="euc-kr">euc-kr</dfn>
+
+
+<h3 id="iso-2022-kr"><span class="secno">9.1 </span><dfn>iso-2022-kr</dfn></h3>
+
+<!--XXX the "ESC $ ) C" sequence is only supported by Gecko at the start of
+a stream. It does exactly nothing. Trying to get away with not supporting it
+at all.-->
+
+<p>The <dfn id="iso-2022-kr-state">iso-2022-kr state</dfn> is initially <b title="">ASCII state</b>.
+
+<p>The <dfn id="iso-2022-kr-lead">iso-2022-kr lead</dfn> is initially 0x00.
+
+<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
+<!-- iso-2022-kr to Unicode -->
+
+<ol>
+ <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
+
+ <li><p>If <var title="">octet</var> is not the <a href="#eof-octet">EOF octet</a>,
+ increase the <a href="#octet-pointer">octet pointer</a> by one.
+
+ <li>
+  <p>Based on <a href="#iso-2022-kr-state">iso-2022-kr state</a>:
+
+  <dl class="switch">
+   <dt>ASCII state
+
+   <dd>
+    <p>Based on <var title="">octet</var>:
+
+    <dl class="switch">
+     <dt>0x0E
+     <dd><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">lead state</b>
+     and continue.
+
+     <dt>0x0F
+     <dd><p>Continue.
+
+     <dt>0x00 to 0x7E
+     <dd><p>Emit a code point whose value is <var title="">octet</var>.
+
+     <dt><a href="#eof-octet">EOF octet</a>
+     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
+
+     <dt>Otherwise
+     <dd>
+      <p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+      <p>Otherwise, emit the <a href="#fallback-code-point">fallback code point</a>.
+    </dl>
+
+   <dt>Lead state
+   <dd>
+    <p>Based on <var title="">octet</var>:
+    <dl class="switch">
+     <dt>0x0A
+     <dd>
+      <p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+      <p>Otherwise, set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to
+      <b title="">ASCII state</b> and emit a code point whose value is U+000A.
+
+     <dt>0x0E
+     <dd><p>Continue.
+
+     <dt>0x0F
+     <dd><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>
+     and continue.
+
+     <dt><a href="#eof-octet">EOF octet</a>
+     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
+
+     <dt>Otherwise
+     <dd>
+      <p>Set <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> to <var title="">octet</var>, set
+      <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">trail state</b>, and
+      continue.
+    </dl>
+
+   <dt>Trail state
+   <dd>
+    <ol>
+     <li><p>Set the <a href="#iso-2022-kr-state">iso-2022-kr state</a> to
+     <b title="">lead state</b>.
+
+     <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a> and the
+     <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+     <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, emit
+     the <a href="#fallback-code-point">fallback code point</a>.
+
+     <li><p class="XXX">Get <var title="">code point</var> based on
+     <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> and <var title="">octet</var> and then emit
+     it.
+
+     <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+     <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
+    </ol>
+  </dl>
+</ol>
+
+<!-- XXX iso-2022-kr from Unicode -->
+
+
 
 
 <h2 id="legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</h2>
