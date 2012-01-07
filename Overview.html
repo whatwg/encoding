@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-6-january-2012">Living Draft &mdash; 6 January 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-7-january-2012">Living Draft &mdash; 7 January 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -63,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-6 January 2012, the editors have made this specification available
+7 January 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1211,7 +1211,7 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 
 <h2 id="legacy-multi-octet-japanese-encodings"><span class="secno">8 </span>Legacy multi-octet Japanese encodings</h2>
 
-<p class="XXX">The <dfn id="japanese-code-point">japanese code point</dfn> for a given number is: ...</p>
+<p class="XXX">The <dfn id="jis-code-point">jis code point</dfn> for a given number is: ...</p>
 
 <p>The <dfn id="jis0208-index">jis0208 index</dfn> for a given <var title="">octet</var> is:
 <!-- only valid in range A1-FE -->
@@ -1304,8 +1304,8 @@ otherwise the result of that equation.
    <li><p>If either <var title="">lead</var> or <var title="">offset</var> is
    null, emit the <a href="#fallback-code-point">fallback code point</a>.
 
-   <li><p>Let <var title="">code point</var> be
-   <a href="#japanese-code-point">japanese code point</a> for <var title="">lead</var> plus
+   <li><p>Let <var title="">code point</var> be the
+   <a href="#jis-code-point">jis code point</a> for <var title="">lead</var> plus
    <var title="">offset</var>.
 
    <li><p>If <var title="">code point</var> is null and the
@@ -1340,8 +1340,8 @@ otherwise the result of that equation.
    <li><p>If either <var title="">lead</var> or <var title="">offset</var> is
    null, emit the <a href="#fallback-code-point">fallback code point</a>.
 
-   <li><p>Let <var title="">code point</var> be
-   <a href="#japanese-code-point">japanese code point</a> for <var title="">lead</var> plus
+   <li><p>Let <var title="">code point</var> be the
+   <a href="#jis-code-point">jis code point</a> for <var title="">lead</var> plus
    <var title="">offset</var>.
 
    <li><p>If <var title="">code point</var> is null and the
@@ -1374,6 +1374,10 @@ otherwise the result of that equation.
 
 
 <h3 id="iso-2022-jp"><span class="secno">8.2 </span><dfn>iso-2022-jp</dfn></h3>
+<!--
+ http://tools.ietf.org/html/rfc1468
+ http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
+-->
 
 <p>The <dfn id="iso-2022-jp-offset">iso-2022-jp offset</dfn> for a given <var title="">octet</var> is
 null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
@@ -1542,8 +1546,8 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
      <li><p>If either <var title="">lead</var> or <var title="">offset</var> is
      null, emit the <a href="#fallback-code-point">fallback code point</a>.
 
-     <li><p>Let <var title="">code point</var> be
-     <a href="#japanese-code-point">japanese code point</a> for <var title="">lead</var> plus
+     <li><p>Let <var title="">code point</var> be the
+     <a href="#jis-code-point">jis code point</a> for <var title="">lead</var> plus
      <var title="">offset</var>.
 
      <li><p>If <var title="">code point</var> is null and the
@@ -1692,8 +1696,8 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
    <li><p>Otherwise, if <a href="#shift_jis-lead">shift_jis lead</a> is null, emit a
    <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
 
-   <li><p>Otherwise, let <var title="">code point</var> be
-   <a href="#japanese-code-point">japanese code point</a> for <a href="#shift_jis-lead">shift_jis lead</a> plus
+   <li><p>Otherwise, let <var title="">code point</var> be the
+   <a href="#jis-code-point">jis code point</a> for <a href="#shift_jis-lead">shift_jis lead</a> plus
    <var title="">offset</var>.
 
    <li><p>If <var title="">code point</var> is null and the

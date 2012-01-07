@@ -1154,7 +1154,7 @@ the <span>gb18030</span> encoding is in use.
 
 <h2>Legacy multi-octet Japanese encodings</h2>
 
-<p class=XXX>The <dfn>japanese code point</dfn> for a given number is: ...</p>
+<p class=XXX>The <dfn>jis code point</dfn> for a given number is: ...</p>
 
 <p>The <dfn>jis0208 index</dfn> for a given <var title>octet</var> is:
 <!-- only valid in range A1-FE -->
@@ -1247,8 +1247,8 @@ otherwise the result of that equation.
    <li><p>If either <var title>lead</var> or <var title>offset</var> is
    null, emit the <span>fallback code point</span>.
 
-   <li><p>Let <var title>code point</var> be
-   <span>japanese code point</span> for <var title>lead</var> plus
+   <li><p>Let <var title>code point</var> be the
+   <span>jis code point</span> for <var title>lead</var> plus
    <var title>offset</var>.
 
    <li><p>If <var title>code point</var> is null and the
@@ -1283,8 +1283,8 @@ otherwise the result of that equation.
    <li><p>If either <var title>lead</var> or <var title>offset</var> is
    null, emit the <span>fallback code point</span>.
 
-   <li><p>Let <var title>code point</var> be
-   <span>japanese code point</span> for <var title>lead</var> plus
+   <li><p>Let <var title>code point</var> be the
+   <span>jis code point</span> for <var title>lead</var> plus
    <var title>offset</var>.
 
    <li><p>If <var title>code point</var> is null and the
@@ -1317,6 +1317,10 @@ otherwise the result of that equation.
 
 
 <h3><dfn>iso-2022-jp</dfn></h3>
+<!--
+ http://tools.ietf.org/html/rfc1468
+ http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
+-->
 
 <p>The <dfn>iso-2022-jp offset</dfn> for a given <var title>octet</var> is
 null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
@@ -1485,8 +1489,8 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
      <li><p>If either <var title>lead</var> or <var title>offset</var> is
      null, emit the <span>fallback code point</span>.
 
-     <li><p>Let <var title>code point</var> be
-     <span>japanese code point</span> for <var title>lead</var> plus
+     <li><p>Let <var title>code point</var> be the
+     <span>jis code point</span> for <var title>lead</var> plus
      <var title>offset</var>.
 
      <li><p>If <var title>code point</var> is null and the
@@ -1635,8 +1639,8 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
    <li><p>Otherwise, if <span>shift_jis lead</span> is null, emit a
    <span>shift_jis fallback code point</span>.
 
-   <li><p>Otherwise, let <var title>code point</var> be
-   <span>japanese code point</span> for <span>shift_jis lead</span> plus
+   <li><p>Otherwise, let <var title>code point</var> be the
+   <span>jis code point</span> for <span>shift_jis lead</span> plus
    <var title>offset</var>.
 
    <li><p>If <var title>code point</var> is null and the
