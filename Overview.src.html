@@ -1149,7 +1149,61 @@ the <span>gb18030</span> encoding is in use.
 
 <h3><dfn>big5</dfn></h3><!-- cp950 -->
 
-<p class=XXX>See https://bugzilla.mozilla.org/show_bug.cgi?id=310299
+<p class=XXX>The <dfn>big5 code point</dfn> for two octets
+(<var title>octet<sub>1</sub></var>, <var title>octet<sub>2</sub></var>) is
+...
+
+<p class=XXX>Include Gecko extensions? https://bugzilla.mozilla.org/show_bug.cgi?id=310299
+
+<p>The <dfn>big5 lead</dfn> is initially 0x00.
+
+<p>The <span>to Unicode</span> algorithm is:
+<!-- big5 to Unicode; identical to euc-kr -->
+
+<ol>
+ <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <span>big5 lead</span> is 0x00, emit the
+ <span>EOF code point</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <span>big5 lead</span> is not 0x00, and the <span>fatal flag</span> is
+ set, return failure.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <span>big5 lead</span> is not 0x00, emit the
+ <span>fallback code point</span>.
+
+ <li><p>Increase the <span>octet pointer</span> by one.
+
+ <li><p>If <span>big5 lead</span> is 0x00 and <var title>octet</var> is
+ in the range 0x00 to 0x7F, emit a code point whose value is
+ <var title>octet</var>.
+
+ <li><p>If <span>big5 lead</span> is 0x00, set <span>big5 lead</span>
+ to <var title>octet</var> and continue.
+
+ <li><p>Let <var title>code point</var> be the
+ <span>big5 code point</span> for
+ (<span>big5 lead</span>, <var title>octet</var>).
+
+ <li><p>Set <span>big5 lead</span> to 0x00.
+
+ <li><p>If <var title>code point</var> is not null, emit
+ <var title>code point</var>.
+
+ <li><p>If the <span>fatal flag</span> is set, return failure.
+
+ <li><p>If <var title>octet</var> is in the range 0x00 0x7F, decrease the
+ <span>octet pointer</span> by one.
+
+ <li><p>Emit the <span>fallback code point</span>.
+</ol>
+
+<p>The <span>from Unicode</span> algorithm is:
+
+<ol class=XXX></ol>
 
 
 <h2>Legacy multi-octet Japanese encodings</h2>
@@ -1673,7 +1727,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 <p>The <dfn>euc-kr lead</dfn> is initially 0x00.
 
 <p>The <span>to Unicode</span> algorithm is:
-<!-- euc-kr to Unicode -->
+<!-- euc-kr to Unicode; identical to big5 -->
 
 <ol>
  <li><p>Let <var title>octet</var> be <span>octet pointer</span>.

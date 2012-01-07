@@ -1209,7 +1209,61 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 
 <h3 id="big5"><span class="secno">7.1 </span><dfn>big5</dfn></h3><!-- cp950 -->
 
-<p class="XXX">See https://bugzilla.mozilla.org/show_bug.cgi?id=310299
+<p class="XXX">The <dfn id="big5-code-point">big5 code point</dfn> for two octets
+(<var title="">octet<sub>1</sub></var>, <var title="">octet<sub>2</sub></var>) is
+...
+
+<p class="XXX">Include Gecko extensions? https://bugzilla.mozilla.org/show_bug.cgi?id=310299
+
+<p>The <dfn id="big5-lead">big5 lead</dfn> is initially 0x00.
+
+<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
+<!-- big5 to Unicode; identical to euc-kr -->
+
+<ol>
+ <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a> and
+ <a href="#big5-lead">big5 lead</a> is 0x00, emit the
+ <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
+ <a href="#big5-lead">big5 lead</a> is not 0x00, and the <a href="#fatal-flag">fatal flag</a> is
+ set, return failure.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
+ <a href="#big5-lead">big5 lead</a> is not 0x00, emit the
+ <a href="#fallback-code-point">fallback code point</a>.
+
+ <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
+
+ <li><p>If <a href="#big5-lead">big5 lead</a> is 0x00 and <var title="">octet</var> is
+ in the range 0x00 to 0x7F, emit a code point whose value is
+ <var title="">octet</var>.
+
+ <li><p>If <a href="#big5-lead">big5 lead</a> is 0x00, set <a href="#big5-lead">big5 lead</a>
+ to <var title="">octet</var> and continue.
+
+ <li><p>Let <var title="">code point</var> be the
+ <a href="#big5-code-point">big5 code point</a> for
+ (<a href="#big5-lead">big5 lead</a>, <var title="">octet</var>).
+
+ <li><p>Set <a href="#big5-lead">big5 lead</a> to 0x00.
+
+ <li><p>If <var title="">code point</var> is not null, emit
+ <var title="">code point</var>.
+
+ <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+ <li><p>If <var title="">octet</var> is in the range 0x00 0x7F, decrease the
+ <a href="#octet-pointer">octet pointer</a> by one.
+
+ <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
+</ol>
+
+<p>The <a href="#from-unicode">from Unicode</a> algorithm is:
+
+<ol class="XXX"></ol>
 
 
 <h2 id="legacy-multi-octet-japanese-encodings"><span class="secno">8 </span>Legacy multi-octet Japanese encodings</h2>
@@ -1733,7 +1787,7 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 <p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
 
 <p>The <a href="#to-unicode">to Unicode</a> algorithm is:
-<!-- euc-kr to Unicode -->
+<!-- euc-kr to Unicode; identical to big5 -->
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
