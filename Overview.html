@@ -131,7 +131,8 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#shift_jis"><span class="secno">8.3 </span>shift_jis</a></ol></li>
  <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</a>
   <ol class="toc">
-   <li><a href="#iso-2022-kr"><span class="secno">9.1 </span>iso-2022-kr</a></ol></li>
+   <li><a href="#euc-kr"><span class="secno">9.1 </span>euc-kr</a></li>
+   <li><a href="#iso-2022-kr"><span class="secno">9.2 </span>iso-2022-kr</a></ol></li>
  <li><a href="#legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</a>
   <ol class="toc">
    <li><a href="#utf-16"><span class="secno">10.1 </span>utf-16</a></li>
@@ -1206,7 +1207,7 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 <h2 id="legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (traditional) encodings</h2>
 
 
-<h3 id="big5"><span class="secno">7.1 </span><dfn>big5</dfn></h3>
+<h3 id="big5"><span class="secno">7.1 </span><dfn>big5</dfn></h3><!-- cp950 -->
 
 <p class="XXX">See https://bugzilla.mozilla.org/show_bug.cgi?id=310299
 
@@ -1723,10 +1724,60 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 
 <h2 id="legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</h2>
 
-<p class="XXX"><dfn id="euc-kr">euc-kr</dfn>
+<p class="XXX">The <dfn id="euc-kr-code-point">euc-kr code point</dfn> for two octets
+(<var title="">octet<sub>1</sub></var>, <var title="">octet<sub>2</sub></var>) is
+...
+
+<h3 id="euc-kr"><span class="secno">9.1 </span><dfn>euc-kr</dfn></h3><!-- cp949 -->
+
+<p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
+
+<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
+<!-- euc-kr to Unicode -->
+
+<ol>
+ <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a> and
+ <a href="#euc-kr-lead">euc-kr lead</a> is 0x00, emit the
+ <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
+ <a href="#euc-kr-lead">euc-kr lead</a> is not 0x00, and the <a href="#fatal-flag">fatal flag</a> is
+ set, return failure.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
+ <a href="#euc-kr-lead">euc-kr lead</a> is not 0x00, emit the
+ <a href="#fallback-code-point">fallback code point</a>.
+
+ <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
+
+ <li><p>If <a href="#euc-kr-lead">euc-kr lead</a> is 0x00 and <var title="">octet</var> is
+ in the range 0x00 to 0x7F, emit a code point whose value is
+ <var title="">octet</var>.
+
+ <li><p>If <a href="#euc-kr-lead">euc-kr lead</a> is 0x00, set <a href="#euc-kr-lead">euc-kr lead</a>
+ to <var title="">octet</var> and continue.
+
+ <li><p>Let <var title="">code point</var> be the
+ <a href="#euc-kr-code-point">euc-kr code point</a> for
+ (<a href="#euc-kr-lead">euc-kr lead</a>, <var title="">octet</var>).
+
+ <li><p>Set <a href="#euc-kr-lead">euc-kr lead</a> to 0x00.
+
+ <li><p>If <var title="">code point</var> is not null, emit
+ <var title="">code point</var>.
+
+ <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+ <li><p>If <var title="">octet</var> is in the range 0x00 0x7F, decrease the
+ <a href="#octet-pointer">octet pointer</a> by one.
+
+ <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
+</ol>
 
 
-<h3 id="iso-2022-kr"><span class="secno">9.1 </span><dfn>iso-2022-kr</dfn></h3>
+<h3 id="iso-2022-kr"><span class="secno">9.2 </span><dfn>iso-2022-kr</dfn></h3>
 
 <!--XXX the "ESC $ ) C" sequence is only supported by Gecko at the start of
 a stream. It does exactly nothing. Trying to get away with not supporting it
@@ -1815,9 +1866,14 @@ at all.-->
      <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, emit
      the <a href="#fallback-code-point">fallback code point</a>.
 
-     <li><p class="XXX">Get <var title="">code point</var> based on
-     <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> and <var title="">octet</var> and then emit
-     it.
+     <li><p>If either <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> or
+     <var title="">octet</var> is not in the range 0x21 to 0x7E, let
+     <var title="">code point</var> be null, or otherwise let
+     <var title="">code point</var> be the <a href="#euc-kr-code-point">euc-kr code point</a> for
+     (<a href="#iso-2022-kr-lead">iso-2022-kr lead</a> + 0x80, <var title="">octet</var> + 0x80).
+
+     <li><p>If <var title="">code point</var> is not null, emit
+     <var title="">code point</var>.
 
      <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 

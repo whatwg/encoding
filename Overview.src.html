@@ -1147,7 +1147,7 @@ the <span>gb18030</span> encoding is in use.
 <h2>Legacy multi-octet Chinese (traditional) encodings</h2>
 
 
-<h3><dfn>big5</dfn></h3>
+<h3><dfn>big5</dfn></h3><!-- cp950 -->
 
 <p class=XXX>See https://bugzilla.mozilla.org/show_bug.cgi?id=310299
 
@@ -1664,7 +1664,57 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
 <h2>Legacy multi-octet Korean encodings</h2>
 
-<p class=XXX><dfn>euc-kr</dfn>
+<p class=XXX>The <dfn>euc-kr code point</dfn> for two octets
+(<var title>octet<sub>1</sub></var>, <var title>octet<sub>2</sub></var>) is
+...
+
+<h3><dfn>euc-kr</dfn></h3><!-- cp949 -->
+
+<p>The <dfn>euc-kr lead</dfn> is initially 0x00.
+
+<p>The <span>to Unicode</span> algorithm is:
+<!-- euc-kr to Unicode -->
+
+<ol>
+ <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <span>euc-kr lead</span> is 0x00, emit the
+ <span>EOF code point</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <span>euc-kr lead</span> is not 0x00, and the <span>fatal flag</span> is
+ set, return failure.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <span>euc-kr lead</span> is not 0x00, emit the
+ <span>fallback code point</span>.
+
+ <li><p>Increase the <span>octet pointer</span> by one.
+
+ <li><p>If <span>euc-kr lead</span> is 0x00 and <var title>octet</var> is
+ in the range 0x00 to 0x7F, emit a code point whose value is
+ <var title>octet</var>.
+
+ <li><p>If <span>euc-kr lead</span> is 0x00, set <span>euc-kr lead</span>
+ to <var title>octet</var> and continue.
+
+ <li><p>Let <var title>code point</var> be the
+ <span>euc-kr code point</span> for
+ (<span>euc-kr lead</span>, <var title>octet</var>).
+
+ <li><p>Set <span>euc-kr lead</span> to 0x00.
+
+ <li><p>If <var title>code point</var> is not null, emit
+ <var title>code point</var>.
+
+ <li><p>If the <span>fatal flag</span> is set, return failure.
+
+ <li><p>If <var title>octet</var> is in the range 0x00 0x7F, decrease the
+ <span>octet pointer</span> by one.
+
+ <li><p>Emit the <span>fallback code point</span>.
+</ol>
 
 
 <h3><dfn>iso-2022-kr</dfn></h3>
@@ -1756,9 +1806,14 @@ at all.-->
      <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit
      the <span>fallback code point</span>.
 
-     <li><p class=XXX>Get <var title>code point</var> based on
-     <span>iso-2022-kr lead</span> and <var title>octet</var> and then emit
-     it.
+     <li><p>If either <span>iso-2022-kr lead</span> or
+     <var title>octet</var> is not in the range 0x21 to 0x7E, let
+     <var title>code point</var> be null, or otherwise let
+     <var title>code point</var> be the <span>euc-kr code point</span> for
+     (<span>iso-2022-kr lead</span> + 0x80, <var title>octet</var> + 0x80).
+
+     <li><p>If <var title>code point</var> is not null, emit
+     <var title>code point</var>.
 
      <li><p>If the <span>fatal flag</span> is set, return failure.
 
