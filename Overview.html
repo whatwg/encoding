@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-7-january-2012">Living Draft &mdash; 7 January 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-8-january-2012">Living Draft &mdash; 8 January 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -63,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-7 January 2012, the editors have made this specification available
+8 January 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -205,10 +205,10 @@ code point to one or more octets (and vice versa). Each
 <dfn id="concept-encoding-label" title="concept-encoding-label">labels</dfn>.
 
 <p>Each <a href="#concept-encoding" title="concept-encoding">encoding</a> also has a
-<dfn id="to-unicode">to Unicode</dfn> and <dfn id="from-unicode">from Unicode</dfn> algorithm.
+<dfn id="decoder">decoder</dfn> and <dfn id="encoder">encoder</dfn> algorithm.
 
-<p>The <a href="#to-unicode">to Unicode</a> algorithm takes a stream of octets and emits
-a stream of code points. It has an associated
+<p>A <a href="#decoder">decoder</a> algorithm takes a stream of octets and emits a
+stream of code points. It has an associated
 <dfn id="fatal-flag">fatal flag</dfn> that when set will make the algorithm return failure
 if an invalid octet or octet sequence is in the stream. The
 <dfn id="octet-pointer">octet pointer</dfn> is initially zero, pointing to the first octet in
@@ -218,24 +218,24 @@ conceptual octet representing the last octet in a stream. The
 <a href="#octet-pointer">octet pointer</a> cannot point beyond the <a href="#eof-octet">EOF octet</a>.
 The <dfn id="eof-code-point">EOF code point</dfn> is a conceptual code point that is emitted
 once the stream of octets is handled in its entirety. Apart from returning
-failure, <a href="#to-unicode">to Unicode</a> can end by emitting a code point, or the
+failure, a <a href="#decoder">decoder</a> can end by emitting a code point, or the
 word continue. Unless it returns failure, or the <a href="#eof-code-point">EOF code point</a>
-is emitted, the <a href="#to-unicode">to Unicode</a> algorithm must be invoked again.
+is emitted, the <a href="#decoder">decoder</a> algorithm must be invoked again.
 
-<p>The <a href="#from-unicode">from Unicode</a> algorithm takes a
+<p>An <a href="#encoder">encoder</a> algorithm takes a
 stream of code points and emits a stream of octets. It will fail when
 a code point is passed for which it does not have a corresponding octet or
-octet sequence. Analogously to <a href="#to-unicode">to Unicode</a>, it has a
+octet sequence. Analogously to a <a href="#decoder">decoder</a>, it has a
 <dfn id="code-point-pointer">code point pointer</dfn>. Again analogously, as long as the
-<a href="#eof-octet">EOF octet</a> is not emitted, the <a href="#from-unicode">from Unicode</a>
-algorithm must be invoked for each octet emitted.
+<a href="#eof-octet">EOF octet</a> is not emitted, or failure is returned, the
+<a href="#encoder">encoder</a> algorithm must be invoked for each octet emitted.
 
 <p class="note">The <a href="#fatal-flag">fatal flag</a> is for XML, which
 considers such an error a well-formed violation. Other formats such as HTML
 will use <a href="#fallback-code-point" title="fallback code point">fallback code points</a> for
 such errors and carry on.
 
-<p class="note">Pre-processing is required to make <a href="#from-unicode">from Unicode</a>
+<p class="note">Pre-processing is required to make an <a href="#encoder">encoder</a>
 not fail (e.g. for HTML forms).
 
 <hr>
@@ -545,12 +545,8 @@ omitted.
 
 <hr>
 
-<p>The <a href="#to-unicode">to Unicode</a> and <a href="#from-unicode">from Unicode</a> algorithms are
-the same for all
-<a href="#single-octet-encoding" title="single-octet encoding">single-octet encodings</a>, except
-for the table in use.
-
-<p>The <a href="#to-unicode">to Unicode</a> algorithm is as follows:
+<p>The <dfn id="single-octet-decoder">single-octet decoder</dfn> (<a href="#decoder">decoder</a> for
+<a href="#single-octet-encoding" title="single-octet encoding">single-octet encodings</a>) is:
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
@@ -570,7 +566,8 @@ for the table in use.
  corresponding cell.
 </ol>
 
-<p>The <a href="#from-unicode">from Unicode</a> algorithm is as follows:
+<p>The <dfn id="single-octet-encoder">single-octet encoder</dfn> (<a href="#encoder">encoder</a> for
+<a href="#single-octet-encoding" title="single-octet encoding">single-octet encodings</a>) is:
 
 <ol>
  <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
@@ -1105,8 +1102,7 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 <p>The <dfn id="hz-gb-2312-flag">hz-gb-2312 flag</dfn> is initially unset. The
 <dfn id="hz-gb-2312-lead">hz-gb-2312 lead</dfn> is initially 0x00.</p>
 
-<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
-<!-- hz-gb-2312 to Unicode -->
+<p>The <dfn id="hz-gb-2312-decoder">hz-gb-2312 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#hz-gb-2312">hz-gb-2312</a>) is:
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
@@ -1199,8 +1195,7 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
  <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
 </ol>
 
-<p>The <a href="#from-unicode">from Unicode</a> algorithm is:
-<!-- hz-gb-2312 from Unicode -->
+<p>The <dfn id="hz-gb-2312-encoder">hz-gb-2312 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#hz-gb-2312">hz-gb-2312</a>) is:
 
 <ol class="XXX"></ol>
 
@@ -1218,8 +1213,8 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 
 <p>The <dfn id="big5-lead">big5 lead</dfn> is initially 0x00.
 
-<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
-<!-- big5 to Unicode; identical to euc-kr -->
+<p>The <dfn id="big5-decoder">big5 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#big5">big5</a>) is:
+<!-- identical to euc-kr -->
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
@@ -1262,8 +1257,7 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
  <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
 </ol>
 
-<p>The <a href="#from-unicode">from Unicode</a> algorithm is:
-<!-- big5 from Unicode -->
+<p>The <dfn id="big5-encoder">big5 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#big5">big5</a>) is:
 
 <ol class="XXX"></ol>
 
@@ -1328,8 +1322,7 @@ otherwise the result of that equation.
 
 <p>The <dfn id="euc-jp-first">euc-jp first</dfn> and <dfn id="euc-jp-second">euc-jp second</dfn> are 0x00.
 
-<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
-<!-- euc-jp to Unicode -->
+<p>The <dfn id="euc-jp-decoder">euc-jp decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#euc-jp">euc-jp</a>) is:
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
@@ -1432,12 +1425,12 @@ otherwise the result of that equation.
  <a href="#fallback-code-point">fallback code point</a>.
 </ol>
 
-<p>The <a href="#from-unicode">from Unicode</a> algorithm is:
+<p>The <dfn id="euc-jp-encoder">euc-jp encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#euc-jp">euc-jp</a>) is:
 
 <ol class="XXX">
 </ol>
 
-<p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 from Unicode is more restrictive.
+<p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 encoder is more restrictive.
 
 
 <h3 id="iso-2022-jp"><span class="secno">8.2 </span><dfn>iso-2022-jp</dfn></h3>
@@ -1456,8 +1449,7 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 
 <p>The <dfn id="iso-2022-jp-lead">iso-2022-jp lead</dfn> is initially 0x00.
 
-<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
-<!-- iso-2022-jp to Unicode -->
+<p>The <dfn id="iso-2022-jp-decoder">iso-2022-jp decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#iso-2022-jp">iso-2022-jp</a>) is:
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
@@ -1650,7 +1642,9 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
   </dl>
 </ol>
 
-<!-- XXX iso-2022-jp from Unicode -->
+<p>The <dfn id="iso-2022-jp-encoder">iso-2022-jp encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#iso-2022-jp">iso-2022-jp</a>) is:
+
+<ol class="XXX"></ol>
 
 
 <h3 id="shift_jis"><span class="secno">8.3 </span><dfn>shift_jis</dfn></h3>
@@ -1695,8 +1689,7 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
   <dd>null
 </dl>
 
-<p>The <dfn id="shift_jis-offset">shift_jis offset</dfn> for a given
-<var title="">octet</var> is:</p>
+<p>The <dfn id="shift_jis-offset">shift_jis offset</dfn> for a given <var title="">octet</var> is:
 
 <dl class="switch">
  <dt>0x40 to 0x7E</dt>
@@ -1711,8 +1704,7 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 
 <p>The <dfn id="shift_jis-lead">shift_jis lead</dfn> is initially 0x00.
 
-<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
-<!-- shift_jis to Unicode -->
+<p>The <dfn id="shift_jis-decoder">shift_jis decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#shift_jis">shift_jis</a>) is:
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
@@ -1780,10 +1772,9 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
  <a href="#shift_jis-lead">shift_jis lead</a>.
 </ol>
 
-<p>The <a href="#from-unicode">from Unicode</a> algorithm is:
+<p>The <dfn id="shift_jis-encoder">shift_jis encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#shift_jis">shift_jis</a>) is:
 
-<ol class="XXX">
-</ol>
+<ol class="XXX"></ol>
 
 
 <h2 id="legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</h2>
@@ -1796,8 +1787,8 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 
 <p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
 
-<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
-<!-- euc-kr to Unicode; identical to big5 -->
+<p>The <dfn id="euc-kr-decoder">euc-kr decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#euc-kr">euc-kr</a>) is:
+<!-- identical to big5 -->
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
@@ -1840,6 +1831,10 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
  <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
 </ol>
 
+<p>The <dfn id="euc-kr-encoder">euc-kr encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#euc-kr">euc-kr</a>) is:
+
+<ol class="XXX"></ol>
+
 
 <h3 id="iso-2022-kr"><span class="secno">9.2 </span><dfn>iso-2022-kr</dfn></h3>
 
@@ -1851,8 +1846,7 @@ at all.-->
 
 <p>The <dfn id="iso-2022-kr-lead">iso-2022-kr lead</dfn> is initially 0x00.
 
-<p>The <a href="#to-unicode">to Unicode</a> algorithm is:
-<!-- iso-2022-kr to Unicode -->
+<p>The <dfn id="iso-2022-kr-decoder">iso-2022-kr decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#iso-2022-kr">iso-2022-kr</a>) is:
 
 <ol>
  <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
@@ -1946,9 +1940,9 @@ at all.-->
   </dl>
 </ol>
 
-<!-- XXX iso-2022-kr from Unicode -->
+<p>The <dfn id="iso-2022-kr-encoder">iso-2022-kr encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#iso-2022-kr">iso-2022-kr</a>) is:
 
-
+<ol class="XXX"></ol>
 
 
 <h2 id="legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</h2>
