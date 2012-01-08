@@ -140,8 +140,14 @@ considered to also match.
 <p>An <dfn title=concept-encoding>encoding</dfn> defines a mapping from a
 code point to one or more octets (and vice versa). Each
 <span title=concept-encoding>encoding</span> has a
-<dfn title=concept-encoding-name>name</dfn>, and one or more
-<dfn title=concept-encoding-label>labels</dfn>.
+<dfn title=concept-encoding-name>name</dfn>, one or more
+<dfn title=concept-encoding-label>labels</dfn>, and potentially a
+<dfn title=concept-encoding-map>map</dfn>. A
+<span title=concept-encoding-map>map</span> is a newline-separated (U+000A)
+resource, where each line starts with one or more octets, followed by a
+U+0009 code point, followed by a code point, followed by a U+0009
+code point, followed by either the Unicode Character Name or
+"Private Use Area", which is preceded by a U+0023 code point.
 
 <p>Each <span title=concept-encoding>encoding</span> also has a
 <dfn>decoder</dfn> and <dfn>encoder</dfn> algorithm.
@@ -179,11 +185,13 @@ not fail (e.g. for HTML forms).
 
 <hr>
 
-<p>The table below lists all <span title=concept-encoding>encodings</span>
-and their <span title=concept-encoding-label>labels</span> user agents must
+<p>The table below lists all <span title=concept-encoding>encodings</span>,
+their <span title=concept-encoding-label>labels</span>, and their
+<span title=concept-encoding-map>maps</span> (if any), user agents must
 support. User agents must not support any other
-<span title=concept-encoding>encodings</span> or
-<span title=concept-encoding-label>labels</span>.
+<span title=concept-encoding>encodings</span>,
+<span title=concept-encoding-label>labels</span>, or
+<span title=concept-encoding-map>maps</span>.
 
 <p>To <dfn title=concept-encoding-get>get an encoding</dfn> from a string
 <var title>label</var>, run these steps:
@@ -208,27 +216,34 @@ as that algorithm is incompatible with legacy content.
 
 <table>
  <thead>
-  <tr><th><span title=concept-encoding-name>Name</span><th><span title=concept-encoding-label>Labels</span>
+  <tr>
+   <th><span title=concept-encoding-name>Name</span>
+   <th><span title=concept-encoding-label>Labels</span>
+   <th><span title=concept-encoding-map>Map</span>
  <tbody>
-  <tr><th colspan=2>The Encoding
+  <tr><th colspan=3>The Encoding
   <tr>
    <td rowspan=3><span>utf-8</span>
    <td>"<code title>unicode-1-1-utf-8</code>"
+   <td rowspan=3>&mdash;
   <tr><td>"<code title>utf-8</code>"
   <tr><td>"<code title>utf8</code>"
  <tbody>
-  <tr><th colspan=2>Legacy single-octet encodings
+  <tr><th colspan=3>Legacy single-octet encodings
   <tr>
    <td rowspan=2><span>ibm864</span>
    <td>"<code title>cp864</code>"
+   <td rowspan=2><a href=map-ibm864.txt>map-ibm864.txt</a>
   <tr><td>"<code title>ibm864</code>"
   <tr>
    <td rowspan=2><span>ibm866</span>
    <td>"<code title>cp866</code>"
+   <td rowspan=2><a href=map-ibm866.txt>map-ibm866.txt</a>
   <tr><td>"<code title>ibm866</code>"
   <tr>
    <td rowspan=7><span>iso-8859-2</span>
    <td>"<code title>csisolatin2</code>"
+   <td rowspan=7><a href=map-iso-8859-2.txt>map-iso-8859-2.txt</a>
   <tr><td>"<code title>iso-8859-2</code>"
   <tr><td>"<code title>iso-ir-101</code>"
   <tr><td>"<code title>iso8859-2</code>"
@@ -238,6 +253,7 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=6><span>iso-8859-3</span>
    <td>"<code title>csisolatin3</code>"
+   <td rowspan=6><a href=map-iso-8859-3.txt>map-iso-8859-3.txt</a>
   <tr><td>"<code title>iso-8859-3</code>"
   <tr><td>"<code title>iso-ir-109</code>"
   <tr><td>"<code title>iso_8859-3</code>"
@@ -246,6 +262,7 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=6><span>iso-8859-4</span>
    <td>"<code title>csisolatin4</code>"
+   <td rowspan=6><a href=map-iso-8859-4.txt>map-iso-8859-4.txt</a>
   <tr><td>"<code title>iso-8859-4</code>"
   <tr><td>"<code title>iso-ir-110</code>"
   <tr><td>"<code title>iso_8859-4</code>"
@@ -254,6 +271,7 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=5><span>iso-8859-5</span>
    <td>"<code title>csisolatincyrillic</code>"
+   <td rowspan=5><a href=map-iso-8859-5.txt>map-iso-8859-5.txt</a>
   <tr><td>"<code title>cyrillic</code>"
   <tr><td>"<code title>iso-8859-5</code>"
   <tr><td>"<code title>iso-ir-144</code>"
@@ -261,6 +279,7 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=6><span>iso-8859-6</span>
    <td>"<code title>arabic</code>"
+   <td rowspan=6><a href=map-iso-8859-6.txt>map-iso-8859-6.txt</a>
   <tr><td>"<code title>csisolatinarabic</code>"
   <tr><td>"<code title>ecma-114</code>"
   <tr><td>"<code title>iso-8859-6</code>"
@@ -269,6 +288,7 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=8><span>iso-8859-7</span>
    <td>"<code title>csisolatingreek</code>"
+   <td rowspan=8><a href=map-iso-8859-7.txt>map-iso-8859-7.txt</a>
   <tr><td>"<code title>ecma-118</code>"
   <tr><td>"<code title>elot_928</code>"
   <tr><td>"<code title>greek</code>"
@@ -279,6 +299,7 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=7><span>iso-8859-8</span>
    <td>"<code title>csisolatinhebrew</code>"
+   <td rowspan=7><a href=map-iso-8859-8.txt>map-iso-8859-8.txt</a>
   <tr><td>"<code title>hebrew</code>"
   <tr><td>"<code title>iso-8859-8</code>"
   <tr><td>"<code title>iso-8859-8-i</code>"
@@ -288,6 +309,7 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=6><span>iso-8859-10</span>
    <td>"<code title>csisolatin6</code>"
+   <td rowspan=6><a href=map-iso-8859-10.txt>map-iso-8859-10.txt</a>
   <tr><td>"<code title>iso-8859-10</code>"
   <tr><td>"<code title>iso-ir-157</code>"
   <tr><td>"<code title>iso8859-10</code>"
@@ -296,46 +318,57 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td><span>iso-8859-13</span>
    <td>"<code title>iso-8859-13</code>"
+   <td><a href=map-iso-8859-13.txt>map-iso-8859-13.txt</a>
   <tr>
    <td rowspan=2><span>iso-8859-14</span>
    <td>"<code title>iso-8859-14</code>"
+   <td rowspan=2><a href=map-iso-8859-14.txt>map-iso-8859-14.txt</a>
   <tr><td>"<code title>iso8859-14</code>"
   <tr>
    <td rowspan=2><span>iso-8859-15</span>
    <td>"<code title>iso-8859-15</code>"
+   <td rowspan=2><a href=map-iso-8859-15.txt>map-iso-8859-15.txt</a>
   <tr><td>"<code title>iso_8859-15</code>"
   <tr>
    <td><span>iso-8859-16</span>
    <td>"<code title>iso-8859-16</code>"
+   <td><a href=map-iso-8859-16.txt>map-iso-8859-16.txt</a>
   <tr>
    <td rowspan=2><span>koi8-r</span>
    <td>"<code title>koi8-r</code>"
+   <td rowspan=2><a href=map-koi8-r.txt>map-koi8-r.txt</a>
   <tr><td>"<code title>koi8_r</code>"
   <tr>
    <td><span>koi8-u</span>
    <td>"<code title>koi8-u</code>"
+   <td><a href=map-koi8-u.txt>map-koi8-u.txt</a>
   <tr>
    <td rowspan=4><span>macintosh</span>
    <td>"<code title>csmacintosh</code>"
+   <td rowspan=4><a href=map-macintosh.txt>map-macintosh.txt</a>
   <tr><td>"<code title>mac</code>"
   <tr><td>"<code title>macintosh</code>"
   <tr><td>"<code title>x-mac-roman</code>"
   <tr>
    <td rowspan=3><span>windows-874</span>
    <td>"<code title>iso-8859-11</code>"
+   <td rowspan=3><a href=map-windows-874.txt>map-windows-874.txt</a>
   <tr><td>"<code title>tis-620</code>"
   <tr><td>"<code title>windows-874</code>"
   <tr>
    <td rowspan=2><span>windows-1250</span>
    <td>"<code title>windows-1250</code>"
+   <td rowspan=2><a href=map-windows-1250.txt>map-windows-1250.txt</a>
   <tr><td>"<code title>x-cp1250</code>"
   <tr>
    <td rowspan=2><span>windows-1251</span>
    <td>"<code title>windows-1251</code>"
+   <td rowspan=2><a href=map-windows-1251.txt>map-windows-1251.txt</a>
   <tr><td>"<code title>x-cp1251</code>"
   <tr>
    <td rowspan=10><span>windows-1252</span>
    <td>"<code title>ansi_x3.4-1968</code>"
+   <td rowspan=10><a href=map-windows-1252.txt>map-windows-1252.txt</a>
   <tr><td>"<code title>ascii</code>"
   <tr><td>"<code title>csisolatin1</code>"
   <tr><td>"<code title>iso-8859-1</code>"
@@ -348,10 +381,12 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=2><span>windows-1253</span>
    <td>"<code title>cp1253</code>"
+   <td rowspan=2><a href=map-windows-1253.txt>map-windows-1253.txt</a>
   <tr><td>"<code title>windows-1253</code>"
   <tr>
    <td rowspan=6><span>windows-1254</span>
    <td>"<code title>csisolatin5</code>"
+   <td rowspan=6><a href=map-windows-1254.txt>map-windows-1254.txt</a>
   <tr><td>"<code title>iso-8859-9</code>"
   <tr><td>"<code title>iso-ir-148</code>"
   <tr><td>"<code title>l5</code>"
@@ -360,27 +395,33 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=2><span>windows-1255</span>
    <td>"<code title>cp1255</code>"
+   <td rowspan=2><a href=map-windows-1255.txt>map-windows-1255.txt</a>
   <tr><td>"<code title>windows-1255</code>"
   <tr>
    <td rowspan=2><span>windows-1256</span>
    <td>"<code title>cp1256</code>"
+   <td rowspan=2><a href=map-windows-1256.txt>map-windows-1256.txt</a>
   <tr><td>"<code title>windows-1256</code>"
   <tr>
    <td><span>windows-1257</span>
    <td>"<code title>windows-1257</code>"
+   <td><a href=map-windows-1257.txt>map-windows-1257.txt</a>
   <tr>
    <td rowspan=2><span>windows-1258</span>
    <td>"<code title>cp1258</code>"
+   <td rowspan=2><a href=map-windows-1258.txt>map-windows-1258.txt</a>
   <tr><td>"<code title>windows-1258</code>"
   <tr>
    <td rowspan=2><span>x-mac-cyrillic</span>
    <td>"<code title>x-mac-cyrillic</code>"
+   <td rowspan=2><a href=map-x-mac-cyrillic.txt>map-x-mac-cyrillic.txt</a>
   <tr><td>"<code title>x-mac-ukrainian</code>"
  <tbody>
-  <tr><th colspan=2>Legacy multi-octet Chinese (simplified) encodings
+  <tr><th colspan=3>Legacy multi-octet Chinese (simplified) encodings
   <tr>
    <td rowspan=9><span>gbk</span>
    <td>"<code title>chinese</code>"
+   <td rowspan=9>&mdash;
   <tr><td>"<code title>csgb2312</code>"
   <tr><td>"<code title>csiso58gb231280</code>"
   <tr><td>"<code title>gb2312</code>"
@@ -392,44 +433,52 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td><span>hz-gb-2312</span>
    <td>"<code title>hz-gb-2312</code>"
+   <td>&mdash;
   <tr>
    <td><span>gb18030</span>
    <td>"<code title>gb18030</code>"
+   <td>&mdash;
  <tbody>
-  <tr><th colspan=2>Legacy multi-octet Chinese (traditional) encodings
+  <tr><th colspan=3>Legacy multi-octet Chinese (traditional) encodings
   <tr>
    <td rowspan=4><span>big5</span>
    <td>"<code title>big5</code>"
+   <td rowspan=4>&mdash;
   <tr><td>"<code title>cn-big5</code>"
   <tr><td>"<code title>csbig5</code>"
   <tr><td>"<code title>x-x-big5</code>"
   <tr>
    <td><span>big5-hkscs</span>
    <td>"<code title>big5-hkscs</code>"
+   <td>&mdash;
  <tbody>
-  <tr><th colspan=2>Legacy multi-octet Japanese encodings
+  <tr><th colspan=3>Legacy multi-octet Japanese encodings
   <tr>
    <td rowspan=3><span>euc-jp</span>
    <td>"<code title>cseucjpkdfmtjapanese</code>"
+   <td rowspan=3>&mdash;
   <tr><td>"<code title>euc-jp</code>"
   <tr><td>"<code title>x-euc-jp</code>"
   <tr>
    <td rowspan=2><span>iso-2022-jp</span>
    <td>"<code title>csiso2022jp</code>"
+   <td rowspan=2>&mdash;
   <tr><td>"<code title>iso-2022-jp</code>"
   <tr>
    <td rowspan=6><span>shift_jis</span>
    <td>"<code title>csshiftjis</code>"
+   <td rowspan=6>&mdash;
   <tr><td>"<code title>ms_kanji</code>"
   <tr><td>"<code title>shift-jis</code>"
   <tr><td>"<code title>shift_jis</code>"
   <tr><td>"<code title>windows-31j</code>"
   <tr><td>"<code title>x-sjis</code>"
  <tbody>
-  <tr><th colspan=2>Legacy multi-octet Korean encodings
+  <tr><th colspan=3>Legacy multi-octet Korean encodings
   <tr>
    <td rowspan=9><span>euc-kr</span>
    <td>"<code title>csksc56011987</code>"
+   <td rowspan=9>&mdash;
   <tr><td>"<code title>csueckr</code>"
   <tr><td>"<code title>euc-kr</code>"
   <tr><td>"<code title>iso-ir-149</code>"
@@ -441,16 +490,19 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td rowspan=2><span>iso-2022-kr</span>
    <td>"<code title>csiso2022kr</code>"
+   <td rowspan=2>&mdash;
   <tr><td>"<code title>iso-2022-kr</code>"
  <tbody>
-  <tr><th colspan=2>Legacy utf-16 encodings
+  <tr><th colspan=3>Legacy utf-16 encodings
   <tr>
    <td rowspan=2><span>utf-16</span>
    <td>"<code title>utf-16</code>"
+   <td rowspan=2>&mdash;
   <tr><td>"<code title>utf-16le</code>"
   <tr>
    <td><span>utf-16be</span>
    <td>"<code title>utf-16be</code>"
+   <td>&mdash;
 </table>
 
 
@@ -467,20 +519,11 @@ as that algorithm is incompatible with legacy content.
 
 <h2>Legacy single-octet encodings</h2>
 
-<p>An <span title=concept-encoding>encoding</span> where each octet is
-either blank or a code point is a <dfn>single-octet encoding</dfn>.
-<span title=concept-encoding>Encodings</span> defined in subsections of this
-section are
-<span title="single-octet encoding">single-octet encodings</span>.
-
-<p>In a <span>single-octet encoding</span> table the octet can be found by
-concatenating the row and column header respectively. The cell corresponding
-to those headers is either blank or a code point (with "U+" omitted for
-brevity).
-
-<p>In the <span>single-octet encoding</span> tables in this subsections rows
-where each octet's corresponds to a code point of the same value, are
-omitted.
+<p>An <span title=concept-encoding>encoding</span> where each octet higher
+than 0x7F either maps to a code point or nothing is a
+<dfn>single-octet encoding</dfn>. All
+<span title="single-octet encoding">single-octet encodings</span> have a
+<span title=concept-encoding-map>map</span>.
 
 <hr>
 
@@ -495,14 +538,19 @@ omitted.
 
  <li><p>Increase the <span>octet pointer</span> by one.
 
- <li><p>If <var title>octet</var>'s corresponding cell is blank, and the
- <span>fatal flag</span> is set, return failure.
+ <li><p>If <var title>octet</var> is in the range 0x00 to 0x7F, emit a code
+ point whose value is <var title>octet</var>.
 
- <li><p>If <var title>octet</var>'s corresponding cell is blank, emit the
+ <li><p>If <var title>octet</var> is not in the
+ <span title=concept-encoding-map>map</span> and the <span>fatal flag</span>
+ is set, return failure.
+
+ <li><p>If <var title>octet</var> is not in the
+ <span title=concept-encoding-map>map</span>, emit the
  <span>fallback code point</span>.
 
- <li><p>Emit a code point whose value is in <var title>octet</var>'s
- corresponding cell.
+ <li><p>Emit the code point given in the
+ <span title=concept-encoding-map>map</span> for <var title>octet</var>.
 </ol>
 
 <p>The <dfn>single-octet encoder</dfn> (<span>encoder</span> for
@@ -516,10 +564,15 @@ omitted.
 
  <li><p>Increase the <span>code point pointer</span> by one.
 
- <li><p>If <var title>code point</var> is not listed in the table,
- return failure.
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
+ emit an octet whose value is <var title>code point</var>.
 
- <li><p>Emit <var title>code point</var>'s corresponding octet.
+ <li><p>If <var title>code point</var> is not listed in the
+ <span title=concept-encoding-map>map</span>, return failure.
+
+ <li><p>Emit the octet given in the
+ <span title=concept-encoding-map>map</span> for
+ <var title>code point</var>.
 </ol>
 
 <hr>
