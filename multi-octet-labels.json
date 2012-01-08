@@ -42,6 +42,13 @@
           "gb18030"
         ],
         "name": "gb18030"
+      },
+      {
+        "labels": [
+          "iso-2022-cn",
+          "iso-2022-cn-ext"
+        ],
+        "name": "iso-2022-cn"
       }
     ],
     "heading": "Legacy multi-octet Chinese (simplified) encodings"
