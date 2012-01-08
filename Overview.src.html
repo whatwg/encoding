@@ -481,9 +481,9 @@ as that algorithm is incompatible with legacy content.
 
 <h2>Legacy single-octet encodings</h2>
 
-<p>An <span title=concept-encoding>encoding</span> where each octet higher
-than 0x7F is either a code point or nothing, is a
-<dfn>single-octet encoding</dfn>. These are all
+<p>An <span title=concept-encoding>encoding</span> where each octet is
+either a single code point or nothing, is a
+<dfn>single-octet encoding</dfn>. These are the
 <span title="single-octet encoding">single-octet encodings</span> and their
 corresponding <span title=concept-encoding-map>map</span>:
 
@@ -575,7 +575,7 @@ corresponding <span title=concept-encoding-map>map</span>:
 <a href="single-octet-research.html">single-octet research</a>.
 
 <p class=note><span>Single-octet encoding</span> map data is also available as a
-non-normative JSON resource: <a href=./single-octet-encodings.json><code>single-octet-encodings.json</code></a>.
+non-normative JSON resource: <a href=single-octet-encodings.json><code>single-octet-encodings.json</code></a>.
 
 
 <h2>Legacy multi-octet Chinese (simplified) encodings</h2>
@@ -702,6 +702,7 @@ the <span>gb18030</span> encoding is in use.
 
 
 <h3><dfn>iso-2022-cn</dfn></h3>
+<!-- http://tools.ietf.org/html/rfc1922 -->
 
 <p class=XXX>...
 
