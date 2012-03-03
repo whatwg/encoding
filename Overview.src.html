@@ -476,7 +476,115 @@ as that algorithm is incompatible with legacy content.
 
 <h3><dfn>utf-8</dfn></h3>
 
-<p class=XXX>Need to define <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8">decode a byte string as UTF-8, with error handling</a> in a way that avoids external dependencies.
+<!--
+http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8
+Unicode
+-->
+
+<p>The <dfn>utf-8 code point</dfn>, <dfn>utf-8 octets seen</dfn>,
+<dfn>utf-8 octets needed</dfn>, and <dfn>utf-8 lower boundary</dfn> concepts
+are all initially 0.
+
+<p>The <dfn>utf-8 decoder</dfn> (<span>decoder</span> for <span>utf-8</span>) is:
+
+<ol>
+ <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <span>utf-8 octets needed</span> is not 0, and the <span>fatal flag</span>
+ is set, return failure.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit the
+ <span>fallback code point</span>, followed by the
+ <span>EOF code point</span>.
+
+ <li><p>Increase the <span>octet pointer</span>.
+
+ <li>
+  <p>If <span>utf-8 octets needed</span> is 0, based on
+  <var title>octet</var>:
+
+  <dl class=switch>
+   <dt>0x00 to 0x7F
+   <dd><p>Emit <var title>octet</var> as code point.
+
+   <dt>0xC0 to 0xDF
+   <dd><p>Set <span>utf-8 octets needed</span> to 1,
+   <span>utf-8 lower boundary</span> to 0x80, and
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xC0
+
+   <dt>0xE0 to 0xEF
+   <dd><p>Set <span>utf-8 octets needed</span> to 2,
+   <span>utf-8 lower boundary</span> to 0x800, and
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xE0
+
+   <dt>0xF0 to 0xF7
+   <dd><p>Set <span>utf-8 octets needed</span> to 3,
+   <span>utf-8 lower boundary</span> to 0x10000, and
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xF0
+
+   <dt>0xF8 to 0xFB
+   <dd><p>Set <span>utf-8 octets needed</span> to 4,
+   <span>utf-8 lower boundary</span> to 0x200000, and
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xF8
+
+   <dt>0xFC to 0xFD
+   <dd><p>Set <span>utf-8 octets needed</span> to 5,
+   <span>utf-8 lower boundary</span> to 0x4000000, and
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xFC
+
+   <dt>Otherwise
+   <dd><p>Emit the <span>fallback code point</span>.
+  </dl>
+
+  <p>Set <span>utf-8 code point</span> to
+  <span>utf-8 code point</span> &times;
+  64<sup><span>utf-8 octets needed</span></sup> and continue.
+
+ <li>
+  <p>If <var title>octet</var> is not in the range 0x80 to 0xBF, run these
+  substeps:
+
+  <ol>
+   <li><p>If the <span>fatal flag</span> is set, return failure.
+
+   <li><p>Set <span>utf-8 code point</span>,
+   <span>utf-8 octets needed</span>, <span>utf-8 octets seen</span>, and
+   <span>utf-8 lower boundary</span> to 0.
+
+   <li><p>Decrease the <span>octet pointer by one</span>.
+
+   <li><p>Emit the <span>fallback code point</span>.
+  </ol>
+
+ <li>
+  <p>Increase <span>utf-8 octets seen</span> by one and set
+  <span>utf-8 code point</span> to
+  <span>utf-8 code point</span> + (<var title>octet</var> - 0x80) &times;
+  64<sup><span>utf-8 octets needed</span> &minus; <span>utf-8 octets seen</span></sup>
+
+ <li><p>If <span>utf-8 octets seen</span> is not
+ <span>utf-8 octets needed</span>, continue.
+
+ <li><p>Let <var title>code point</var> be <span>utf-8 code point</span>.
+
+ <li><p>Set <span>utf-8 code point</span>,
+ <span>utf-8 octets needed</span>, <span>utf-8 octets seen</span>, and
+ <span>utf-8 lower boundary</span> to 0.
+
+ <li><p>If <var title>code point</var> is equal or greater than
+ <span>utf-8 lower boundary</span>, equal or smaller than 0x10FFFF, and is
+ not in the range 0xD800 to 0xDFFF, emit <var title>code point</var>.
+
+ <li><p>If the <span>fatal flag</span> is set, return failure.
+
+ <li><p>Emit the <span>fallback code point</span>
+</ol>
+
+
+<p>The <dfn>utf-8 encoder</dfn> (<span>encoder</span> for <span>utf-8</span>) is:
+
+<ol class=XXX></ol>
 
 
 <h2>Legacy single-octet encodings</h2>

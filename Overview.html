@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-8-january-2012">Living Draft &mdash; 8 January 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-3-march-2012">Living Draft &mdash; 3 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -63,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-8 January 2012, the editors have made this specification available
+3 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -509,7 +509,115 @@ as that algorithm is incompatible with legacy content.
 
 <h3 id="utf-8"><span class="secno">4.1 </span><dfn>utf-8</dfn></h3>
 
-<p class="XXX">Need to define <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8">decode a byte string as UTF-8, with error handling</a> in a way that avoids external dependencies.
+<!--
+http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8
+Unicode
+-->
+
+<p>The <dfn id="utf-8-code-point">utf-8 code point</dfn>, <dfn id="utf-8-octets-seen">utf-8 octets seen</dfn>,
+<dfn id="utf-8-octets-needed">utf-8 octets needed</dfn>, and <dfn id="utf-8-lower-boundary">utf-8 lower boundary</dfn> concepts
+are all initially 0.
+
+<p>The <dfn id="utf-8-decoder">utf-8 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-8">utf-8</a>) is:
+
+<ol>
+ <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
+ <a href="#utf-8-octets-needed">utf-8 octets needed</a> is not 0, and the <a href="#fatal-flag">fatal flag</a>
+ is set, return failure.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, emit the
+ <a href="#fallback-code-point">fallback code point</a>, followed by the
+ <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>Increase the <a href="#octet-pointer">octet pointer</a>.
+
+ <li>
+  <p>If <a href="#utf-8-octets-needed">utf-8 octets needed</a> is 0, based on
+  <var title="">octet</var>:
+
+  <dl class="switch">
+   <dt>0x00 to 0x7F
+   <dd><p>Emit <var title="">octet</var> as code point.
+
+   <dt>0xC0 to 0xDF
+   <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 1,
+   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80, and
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xC0
+
+   <dt>0xE0 to 0xEF
+   <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 2,
+   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x800, and
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xE0
+
+   <dt>0xF0 to 0xF7
+   <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 3,
+   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x10000, and
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xF0
+
+   <dt>0xF8 to 0xFB
+   <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 4,
+   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x200000, and
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xF8
+
+   <dt>0xFC to 0xFD
+   <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 5,
+   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x4000000, and
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xFC
+
+   <dt>Otherwise
+   <dd><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
+  </dl>
+
+  <p>Set <a href="#utf-8-code-point">utf-8 code point</a> to
+  <a href="#utf-8-code-point">utf-8 code point</a> &times;
+  64<sup><a href="#utf-8-octets-needed"><span>utf-8 octets needed</span></a></sup> and continue.
+
+ <li>
+  <p>If <var title="">octet</var> is not in the range 0x80 to 0xBF, run these
+  substeps:
+
+  <ol>
+   <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+   <li><p>Set <a href="#utf-8-code-point">utf-8 code point</a>,
+   <a href="#utf-8-octets-needed">utf-8 octets needed</a>, <a href="#utf-8-octets-seen">utf-8 octets seen</a>, and
+   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0.
+
+   <li><p>Decrease the <span>octet pointer by one</span>.
+
+   <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
+  </ol>
+
+ <li>
+  <p>Increase <a href="#utf-8-octets-seen">utf-8 octets seen</a> by one and set
+  <a href="#utf-8-code-point">utf-8 code point</a> to
+  <a href="#utf-8-code-point">utf-8 code point</a> + (<var title="">octet</var> - 0x80) &times;
+  64<sup><a href="#utf-8-octets-needed">utf-8 octets needed</a> &minus; <a href="#utf-8-octets-seen">utf-8 octets seen</a></sup>
+
+ <li><p>If <a href="#utf-8-octets-seen">utf-8 octets seen</a> is not
+ <a href="#utf-8-octets-needed">utf-8 octets needed</a>, continue.
+
+ <li><p>Let <var title="">code point</var> be <a href="#utf-8-code-point">utf-8 code point</a>.
+
+ <li><p>Set <a href="#utf-8-code-point">utf-8 code point</a>,
+ <a href="#utf-8-octets-needed">utf-8 octets needed</a>, <a href="#utf-8-octets-seen">utf-8 octets seen</a>, and
+ <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0.
+
+ <li><p>If <var title="">code point</var> is equal or greater than
+ <a href="#utf-8-lower-boundary">utf-8 lower boundary</a>, equal or smaller than 0x10FFFF, and is
+ not in the range 0xD800 to 0xDFFF, emit <var title="">code point</var>.
+
+ <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+ <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>
+</ol>
+
+
+<p>The <dfn id="utf-8-encoder">utf-8 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-8">utf-8</a>) is:
+
+<ol class="XXX"></ol>
 
 
 <h2 id="legacy-single-octet-encodings"><span class="secno">5 </span>Legacy single-octet encodings</h2>
