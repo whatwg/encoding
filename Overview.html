@@ -570,8 +570,8 @@ are all initially 0.
    <dd><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
   </dl>
 
-  <p>Set <a href="#utf-8-code-point">utf-8 code point</a> to
-  <a href="#utf-8-code-point">utf-8 code point</a> &times;
+  <p>Then (<var title="">octet</var> was in the range 0xC0 to 0xFD) set
+  <a href="#utf-8-code-point">utf-8 code point</a> to <a href="#utf-8-code-point">utf-8 code point</a> &times;
   64<sup><a href="#utf-8-octets-needed"><span>utf-8 octets needed</span></a></sup> and continue.
 
  <li>
@@ -585,7 +585,7 @@ are all initially 0.
    <a href="#utf-8-octets-needed">utf-8 octets needed</a>, <a href="#utf-8-octets-seen">utf-8 octets seen</a>, and
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0.
 
-   <li><p>Decrease the <span>octet pointer by one</span>.
+   <li><p>Decrease the <a href="#octet-pointer">octet pointer</a> by one.
 
    <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
   </ol>
@@ -596,22 +596,23 @@ are all initially 0.
   <a href="#utf-8-code-point">utf-8 code point</a> + (<var title="">octet</var> - 0x80) &times;
   64<sup><a href="#utf-8-octets-needed">utf-8 octets needed</a> &minus; <a href="#utf-8-octets-seen">utf-8 octets seen</a></sup>
 
- <li><p>If <a href="#utf-8-octets-seen">utf-8 octets seen</a> is not
+ <li><p>If <a href="#utf-8-octets-seen">utf-8 octets seen</a> is not equal to
  <a href="#utf-8-octets-needed">utf-8 octets needed</a>, continue.
 
- <li><p>Let <var title="">code point</var> be <a href="#utf-8-code-point">utf-8 code point</a>.
+ <li><p>Let <var title="">code point</var> be <a href="#utf-8-code-point">utf-8 code point</a> and
+ <var title="">lower boundary</var> be <a href="#utf-8-lower-boundary">utf-8 lower boundary</a>
 
  <li><p>Set <a href="#utf-8-code-point">utf-8 code point</a>,
  <a href="#utf-8-octets-needed">utf-8 octets needed</a>, <a href="#utf-8-octets-seen">utf-8 octets seen</a>, and
  <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0.
 
  <li><p>If <var title="">code point</var> is equal or greater than
- <a href="#utf-8-lower-boundary">utf-8 lower boundary</a>, equal or smaller than 0x10FFFF, and is
- not in the range 0xD800 to 0xDFFF, emit <var title="">code point</var>.
+ <var title="">lower boundary</var>, equal or smaller than 0x10FFFF, and is not
+ in the range 0xD800 to 0xDFFF, emit <var title="">code point</var>.
 
  <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
- <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>
+ <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
 </ol>
 
 

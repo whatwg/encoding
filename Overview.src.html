@@ -537,8 +537,8 @@ are all initially 0.
    <dd><p>Emit the <span>fallback code point</span>.
   </dl>
 
-  <p>Set <span>utf-8 code point</span> to
-  <span>utf-8 code point</span> &times;
+  <p>Then (<var title>octet</var> was in the range 0xC0 to 0xFD) set
+  <span>utf-8 code point</span> to <span>utf-8 code point</span> &times;
   64<sup><span>utf-8 octets needed</span></sup> and continue.
 
  <li>
@@ -552,7 +552,7 @@ are all initially 0.
    <span>utf-8 octets needed</span>, <span>utf-8 octets seen</span>, and
    <span>utf-8 lower boundary</span> to 0.
 
-   <li><p>Decrease the <span>octet pointer by one</span>.
+   <li><p>Decrease the <span>octet pointer</span> by one.
 
    <li><p>Emit the <span>fallback code point</span>.
   </ol>
@@ -563,22 +563,23 @@ are all initially 0.
   <span>utf-8 code point</span> + (<var title>octet</var> - 0x80) &times;
   64<sup><span>utf-8 octets needed</span> &minus; <span>utf-8 octets seen</span></sup>
 
- <li><p>If <span>utf-8 octets seen</span> is not
+ <li><p>If <span>utf-8 octets seen</span> is not equal to
  <span>utf-8 octets needed</span>, continue.
 
- <li><p>Let <var title>code point</var> be <span>utf-8 code point</span>.
+ <li><p>Let <var title>code point</var> be <span>utf-8 code point</span> and
+ <var title>lower boundary</var> be <span>utf-8 lower boundary</span>
 
  <li><p>Set <span>utf-8 code point</span>,
  <span>utf-8 octets needed</span>, <span>utf-8 octets seen</span>, and
  <span>utf-8 lower boundary</span> to 0.
 
  <li><p>If <var title>code point</var> is equal or greater than
- <span>utf-8 lower boundary</span>, equal or smaller than 0x10FFFF, and is
- not in the range 0xD800 to 0xDFFF, emit <var title>code point</var>.
+ <var title>lower boundary</var>, equal or smaller than 0x10FFFF, and is not
+ in the range 0xD800 to 0xDFFF, emit <var title>code point</var>.
 
  <li><p>If the <span>fatal flag</span> is set, return failure.
 
- <li><p>Emit the <span>fallback code point</span>
+ <li><p>Emit the <span>fallback code point</span>.
 </ol>
 
 
