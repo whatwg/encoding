@@ -527,8 +527,12 @@ are all initially 0.
  <a href="#utf-8-octets-needed">utf-8 octets needed</a> is not 0, and the <a href="#fatal-flag">fatal flag</a>
  is set, return failure.
 
- <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, emit the
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a> and
+ <a href="#utf-8-octets-needed">utf-8 octets needed</a> is not 0, emit the
  <a href="#fallback-code-point">fallback code point</a>, followed by the
+ <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, emit the
  <a href="#eof-code-point">EOF code point</a>.
 
  <li><p>Increase the <a href="#octet-pointer">octet pointer</a>.
