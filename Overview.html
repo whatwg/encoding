@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-4-march-2012">Living Draft &mdash; 4 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-4-march-2012">Living Draft — 4 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -84,29 +84,29 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#terminology"><span class="secno">3 </span>Terminology</a></li>
  <li><a href="#encodings"><span class="secno">4 </span>Encodings</a></li>
  <li><a href="#the-encoding"><span class="secno">5 </span>The encoding</a>
-  <ol class="toc">
+  <ol>
    <li><a href="#utf-8"><span class="secno">5.1 </span>utf-8</a></ol></li>
  <li><a href="#legacy-single-octet-encodings"><span class="secno">6 </span>Legacy single-octet encodings</a></li>
  <li><a href="#legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (simplified) encodings</a>
-  <ol class="toc">
+  <ol>
    <li><a href="#gbk-and-gb18030"><span class="secno">7.1 </span>gbk and gb18030</a></li>
    <li><a href="#hz-gb-2312"><span class="secno">7.2 </span>hz-gb-2312</a></li>
    <li><a href="#iso-2022-cn"><span class="secno">7.3 </span>iso-2022-cn</a></ol></li>
  <li><a href="#legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">8 </span>Legacy multi-octet Chinese (traditional) encodings</a>
-  <ol class="toc">
+  <ol>
    <li><a href="#big5"><span class="secno">8.1 </span>big5</a></li>
    <li><a href="#big5-hkscs"><span class="secno">8.2 </span>big5-hkscs</a></ol></li>
  <li><a href="#legacy-multi-octet-japanese-encodings"><span class="secno">9 </span>Legacy multi-octet Japanese encodings</a>
-  <ol class="toc">
+  <ol>
    <li><a href="#euc-jp"><span class="secno">9.1 </span>euc-jp</a></li>
    <li><a href="#iso-2022-jp"><span class="secno">9.2 </span>iso-2022-jp</a></li>
    <li><a href="#shift_jis"><span class="secno">9.3 </span>shift_jis</a></ol></li>
  <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">10 </span>Legacy multi-octet Korean encodings</a>
-  <ol class="toc">
+  <ol>
    <li><a href="#euc-kr"><span class="secno">10.1 </span>euc-kr</a></li>
    <li><a href="#iso-2022-kr"><span class="secno">10.2 </span>iso-2022-kr</a></ol></li>
  <li><a href="#legacy-utf-16-encodings"><span class="secno">11 </span>Legacy utf-16 encodings</a>
-  <ol class="toc">
+  <ol>
    <li><a href="#utf-16"><span class="secno">11.1 </span>utf-16</a></li>
    <li><a href="#utf-16be"><span class="secno">11.2 </span>utf-16be</a></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
@@ -135,7 +135,7 @@ NOT",--> "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and
 "OPTIONAL" in the normative parts of this document are to be
 interpreted as described in RFC2119. For readability, these words do
 not appear in all uppercase letters in this specification.
-<a href="#refsRFC2119">[RFC2119]</a>
+<a data-anolis-ref="" href="#refsRFC2119">[RFC2119]</a>
 
 <p>Conformance requirements phrased as algorithms or specific steps
 may be implemented in any manner, so long as the end result is
@@ -551,35 +551,35 @@ are all initially 0.
    <dt>0xC0 to 0xDF
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 1,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xC0
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xC0
 
    <dt>0xE0 to 0xEF
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 2,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x800, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xE0
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xE0
 
    <dt>0xF0 to 0xF7
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 3,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x10000, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xF0
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xF0
 
    <dt>0xF8 to 0xFB
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 4,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x200000, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xF8
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xF8
 
    <dt>0xFC to 0xFD
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 5,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x4000000, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> &minus; 0xFC
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xFC
 
    <dt>Otherwise
    <dd><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
   </dl>
 
   <p>Then (<var title="">octet</var> was in the range 0xC0 to 0xFD) set
-  <a href="#utf-8-code-point">utf-8 code point</a> to <a href="#utf-8-code-point">utf-8 code point</a> &times;
-  64<sup><a href="#utf-8-octets-needed"><span>utf-8 octets needed</span></a></sup> and continue.
+  <a href="#utf-8-code-point">utf-8 code point</a> to <a href="#utf-8-code-point">utf-8 code point</a> ×
+  64<sup><a href="#utf-8-octets-needed">utf-8 octets needed</a></sup> and continue.
 
  <li>
   <p>If <var title="">octet</var> is not in the range 0x80 to 0xBF, run these
@@ -600,8 +600,8 @@ are all initially 0.
  <li>
   <p>Increase <a href="#utf-8-octets-seen">utf-8 octets seen</a> by one and set
   <a href="#utf-8-code-point">utf-8 code point</a> to
-  <a href="#utf-8-code-point">utf-8 code point</a> + (<var title="">octet</var> - 0x80) &times;
-  64<sup><a href="#utf-8-octets-needed">utf-8 octets needed</a> &minus; <a href="#utf-8-octets-seen">utf-8 octets seen</a></sup>
+  <a href="#utf-8-code-point">utf-8 code point</a> + (<var title="">octet</var> - 0x80) ×
+  64<sup><a href="#utf-8-octets-needed">utf-8 octets needed</a> − <a href="#utf-8-octets-seen">utf-8 octets seen</a></sup>
 
  <li><p>If <a href="#utf-8-octets-seen">utf-8 octets seen</a> is not equal to
  <a href="#utf-8-octets-needed">utf-8 octets needed</a>, continue.
@@ -935,19 +935,19 @@ http://w3techs.com/technologies/details/en-b5hkscs/all/all
 
 <dl class="switch">
  <dt>0xA1 to 0xA2
- <dd><!--8648-->(<var title="">octet</var> &minus; 0x45) &times; 94
+ <dd><!--8648-->(<var title="">octet</var> − 0x45) × 94
 
  <dt>0xA3 to 0xA8
- <dd><!--376-->(<var title="">octet</var> &minus; 0x9F) &times; 94
+ <dd><!--376-->(<var title="">octet</var> − 0x9F) × 94
 
  <dt>0xAD
  <dd>940
 
  <dt>0xB1 to 0xF4
- <dd><!--1222-->(<var title="">octet</var> &minus; 0xA4) &times; 94
+ <dd><!--1222-->(<var title="">octet</var> − 0xA4) × 94
 
  <dt>0xF9 to 0xFC
- <dd><!--7708-->(<var title="">octet</var> &minus; 0xA7) &times; 94
+ <dd><!--7708-->(<var title="">octet</var> − 0xA7) × 94
 
  <dt>Otherwise
  <dd>null
@@ -960,11 +960,11 @@ http://w3techs.com/technologies/details/en-b5hkscs/all/all
  <dt>0xA2
  <dd>9400
  <dt>0xA6 to 0xA7
- <dd><!--9494-->(<var title="">octet</var> &minus; 0x41) &times; 94
+ <dd><!--9494-->(<var title="">octet</var> − 0x41) × 94
  <dt>0xA9 to 0xAB
- <dd><!--9682-->(<var title="">octet</var> &minus; 0x42) &times; 94
+ <dd><!--9682-->(<var title="">octet</var> − 0x42) × 94
  <dt>0xB0 to 0xED
- <dd><!--9964-->(<var title="">octet</var> &minus; 0x46) &times; 94
+ <dd><!--9964-->(<var title="">octet</var> − 0x46) × 94
  <dt>Otherwise
  <dd>null
 </dl>
@@ -973,7 +973,7 @@ http://w3techs.com/technologies/details/en-b5hkscs/all/all
 <h3 id="euc-jp"><span class="secno">9.1 </span><dfn>euc-jp</dfn></h3>
 
 <p>The <dfn id="euc-jp-offset">euc-jp offset</dfn> for a given <var title="">octet</var> is null
-if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than 0, or
+if <var title="">octet</var> − 0xA1 is greater than 93 or less than 0, or
 otherwise the result of that equation.
 
 <p>The <dfn id="euc-jp-first">euc-jp first</dfn> and <dfn id="euc-jp-second">euc-jp second</dfn> are 0x00.
@@ -1096,7 +1096,7 @@ otherwise the result of that equation.
 -->
 
 <p>The <dfn id="iso-2022-jp-offset">iso-2022-jp offset</dfn> for a given <var title="">octet</var> is
-null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
+null if <var title="">octet</var> − 0x21 is greater than 93 or less than
 0, or otherwise the result of that equation.
 
 <p>The <dfn id="iso-2022-jp-state">iso-2022-jp state</dfn> is initially <b title="">ASCII state</b>.
@@ -1315,10 +1315,10 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
  <dd>8648
 
  <dt>0x82 to 0x84
- <dd>(<var title="">octet</var> &minus; 0x80) &times; 188
+ <dd>(<var title="">octet</var> − 0x80) × 188
 
  <dt>0x87 to 0x9F
- <dd>(<var title="">octet</var> &minus; 0x82) &times; 188
+ <dd>(<var title="">octet</var> − 0x82) × 188
 
  <dt>0xA0
  <dd>0xF8F0
@@ -1327,16 +1327,16 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
  <dd>0xFEC0 + <var title="">octet</var>
 
  <dt>0xE1 to 0xEA
- <dd>(<var title="">octet</var> &minus; 0xC2) &times; 188
+ <dd>(<var title="">octet</var> − 0xC2) × 188
 
  <dt>0xED to 0xEE
- <dd>(<var title="">octet</var> &minus; 0xC4) &times; 188
+ <dd>(<var title="">octet</var> − 0xC4) × 188
 
  <dt>0xF0 to 0xF9
- <dd>0xE000 + (<var title="">octet</var> &minus; 0xF0) &times; 188
+ <dd>0xE000 + (<var title="">octet</var> − 0xF0) × 188
 
  <dt>0xFA to 0xFC
- <dd>(<var title="">octet</var> &minus; 0xCF) &times; 188
+ <dd>(<var title="">octet</var> − 0xCF) × 188
 
   <dt>0xFD to 0xFF
   <dd>0xF7F4 + <var title="">octet</var>
@@ -1349,10 +1349,10 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 
 <dl class="switch">
  <dt>0x40 to 0x7E</dt>
- <dd><var title="">octet</var> &minus; 0x40
+ <dd><var title="">octet</var> − 0x40
 
  <dt>0x80 to 0x7C</dt>
- <dd><var title="">octet</var> &minus; 0x41
+ <dd><var title="">octet</var> − 0x41
 
  <dt>Otherwise</dt>
  <dd>null
@@ -1619,7 +1619,7 @@ before an encoding to decode an octet stream is chosen.
 
 <h2 class="no-num" id="references">References</h2>
 
-<div id="anolis-references-normative"><dl><dt id="refsRFC2119">[RFC2119]
+<div id="anolis-references"><dl><dt id="refsRFC2119">[RFC2119]
 <dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
 
 </dl></div>
@@ -1637,21 +1637,21 @@ omissions.
 <p>With that, many thanks to
 
 Erik van der Poel,
-&#35674;&#27704;&#37586; (Frank Yung-Fong Tang),
+譚永鋒 (Frank Yung-Fong Tang),
 Ian Hickson,
-&#49888;&#51221;&#49885; (Jungshik Shin),
+신정식 (Jungshik Shin),
 Mark Callow,
 Mark Davis,
-Martin D&uuml;rst,
+Martin Dürst,
 Masatoshi Kimura,
 Ms2ger,
-&Oslash;istein E. Andersen,
+Øistein E. Andersen,
 Peter Krefting,
 Philip Taylor,
 Shawn Steele,
 Simon Montagu,
 Simon Pieters, and
-&#25104;&#28716;&#12422;&#12356; (Yui Naruse)
+成瀬ゆい (Yui Naruse)
 
 for being awesome.
 
