@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-&mdash;-3-march-2012">Living Draft &mdash; 3 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-&mdash;-4-march-2012">Living Draft &mdash; 4 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -63,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-3 March 2012, the editors have made this specification available
+4 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -79,61 +79,39 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 
 <!--begin-toc-->
 <ol class="toc">
- <li><a class="no-num" href="#goals">Goals</a></li>
- <li><a class="no-num" href="#notes">Notes</a></li>
  <li><a href="#preface"><span class="secno">1 </span>Preface</a></li>
- <li><a href="#terminology"><span class="secno">2 </span>Terminology</a></li>
- <li><a href="#encodings"><span class="secno">3 </span>Encodings</a></li>
- <li><a href="#the-encoding"><span class="secno">4 </span>The encoding</a>
+ <li><a href="#conformance"><span class="secno">2 </span>Conformance</a></li>
+ <li><a href="#terminology"><span class="secno">3 </span>Terminology</a></li>
+ <li><a href="#encodings"><span class="secno">4 </span>Encodings</a></li>
+ <li><a href="#the-encoding"><span class="secno">5 </span>The encoding</a>
   <ol class="toc">
-   <li><a href="#utf-8"><span class="secno">4.1 </span>utf-8</a></ol></li>
- <li><a href="#legacy-single-octet-encodings"><span class="secno">5 </span>Legacy single-octet encodings</a></li>
- <li><a href="#legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">6 </span>Legacy multi-octet Chinese (simplified) encodings</a>
+   <li><a href="#utf-8"><span class="secno">5.1 </span>utf-8</a></ol></li>
+ <li><a href="#legacy-single-octet-encodings"><span class="secno">6 </span>Legacy single-octet encodings</a></li>
+ <li><a href="#legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (simplified) encodings</a>
   <ol class="toc">
-   <li><a href="#gbk-and-gb18030"><span class="secno">6.1 </span>gbk and gb18030</a></li>
-   <li><a href="#hz-gb-2312"><span class="secno">6.2 </span>hz-gb-2312</a></li>
-   <li><a href="#iso-2022-cn"><span class="secno">6.3 </span>iso-2022-cn</a></ol></li>
- <li><a href="#legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (traditional) encodings</a>
+   <li><a href="#gbk-and-gb18030"><span class="secno">7.1 </span>gbk and gb18030</a></li>
+   <li><a href="#hz-gb-2312"><span class="secno">7.2 </span>hz-gb-2312</a></li>
+   <li><a href="#iso-2022-cn"><span class="secno">7.3 </span>iso-2022-cn</a></ol></li>
+ <li><a href="#legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">8 </span>Legacy multi-octet Chinese (traditional) encodings</a>
   <ol class="toc">
-   <li><a href="#big5"><span class="secno">7.1 </span>big5</a></li>
-   <li><a href="#big5-hkscs"><span class="secno">7.2 </span>big5-hkscs</a></ol></li>
- <li><a href="#legacy-multi-octet-japanese-encodings"><span class="secno">8 </span>Legacy multi-octet Japanese encodings</a>
+   <li><a href="#big5"><span class="secno">8.1 </span>big5</a></li>
+   <li><a href="#big5-hkscs"><span class="secno">8.2 </span>big5-hkscs</a></ol></li>
+ <li><a href="#legacy-multi-octet-japanese-encodings"><span class="secno">9 </span>Legacy multi-octet Japanese encodings</a>
   <ol class="toc">
-   <li><a href="#euc-jp"><span class="secno">8.1 </span>euc-jp</a></li>
-   <li><a href="#iso-2022-jp"><span class="secno">8.2 </span>iso-2022-jp</a></li>
-   <li><a href="#shift_jis"><span class="secno">8.3 </span>shift_jis</a></ol></li>
- <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</a>
+   <li><a href="#euc-jp"><span class="secno">9.1 </span>euc-jp</a></li>
+   <li><a href="#iso-2022-jp"><span class="secno">9.2 </span>iso-2022-jp</a></li>
+   <li><a href="#shift_jis"><span class="secno">9.3 </span>shift_jis</a></ol></li>
+ <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">10 </span>Legacy multi-octet Korean encodings</a>
   <ol class="toc">
-   <li><a href="#euc-kr"><span class="secno">9.1 </span>euc-kr</a></li>
-   <li><a href="#iso-2022-kr"><span class="secno">9.2 </span>iso-2022-kr</a></ol></li>
- <li><a href="#legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</a>
+   <li><a href="#euc-kr"><span class="secno">10.1 </span>euc-kr</a></li>
+   <li><a href="#iso-2022-kr"><span class="secno">10.2 </span>iso-2022-kr</a></ol></li>
+ <li><a href="#legacy-utf-16-encodings"><span class="secno">11 </span>Legacy utf-16 encodings</a>
   <ol class="toc">
-   <li><a href="#utf-16"><span class="secno">10.1 </span>utf-16</a></li>
-   <li><a href="#utf-16be"><span class="secno">10.2 </span>utf-16be</a></ol></li>
+   <li><a href="#utf-16"><span class="secno">11.1 </span>utf-16</a></li>
+   <li><a href="#utf-16be"><span class="secno">11.2 </span>utf-16be</a></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
-
-
-<h2 class="no-num" id="goals">Goals</h2>
-
-<ul>
- <li>Define the finite list of encodings and labels for the web platform so
- the "CHARACTER SETS" registry is no longer needed for it.
- <li>Define error handling for the encodings.
- <li>Mark encodings that are not <span title="">utf-8</span> as legacy.
-</ul>
-
-
-<h2 class="no-num" id="notes">Notes</h2>
-
-<ul>
- <li>Labels defined for each encoding is a conservative list at this point.
- We can extend it as we please provided there is some agreement to do so.
- <li>Mapping for each encoding is done by majority of implementations. If
- the majority wants to change or has to change for compatibility, we can
- change the mapping.
-</ul>
 
 
 <h2 id="preface"><span class="secno">1 </span>Preface</h2>
@@ -146,7 +124,32 @@ implementations do not have to reverse engineer encoding implementations of
 the market leaders.</p>
 
 
-<h2 id="terminology"><span class="secno">2 </span>Terminology</h2>
+<h2 id="conformance"><span class="secno">2 </span>Conformance</h2>
+
+<p>All diagrams, examples, and notes in this specification are
+non-normative, as are all sections explicitly marked non-normative.
+Everything else in this specification is normative.
+
+<p>The key words "MUST", "MUST NOT", "REQUIRED", <!--"SHALL", "SHALL
+NOT",--> "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and
+"OPTIONAL" in the normative parts of this document are to be
+interpreted as described in RFC2119. For readability, these words do
+not appear in all uppercase letters in this specification.
+<a href="#refsRFC2119">[RFC2119]</a>
+
+<p>Conformance requirements phrased as algorithms or specific steps
+may be implemented in any manner, so long as the end result is
+equivalent. (In particular, the algorithms defined in this
+specification are intended to be easy to follow, and not intended to
+be performant.)
+
+<p id="hardwareLimitations">User agents may impose
+implementation-specific limits on otherwise unconstrained inputs,
+e.g. to prevent denial of service attacks, to guard against running
+out of memory, or to work around platform-specific limitations.
+
+
+<h2 id="terminology"><span class="secno">3 </span>Terminology</h2>
 
 <p>A <dfn id="code-point">code point</dfn> is a Unicode code point and is referenced as a
 four-or-more digit hexadecimal value, typically preceded by "U+". E.g. U+0020.
@@ -168,7 +171,7 @@ U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z) are
 considered to also match.
 
 
-<h2 id="encodings"><span class="secno">3 </span>Encodings</h2>
+<h2 id="encodings"><span class="secno">4 </span>Encodings</h2>
 
 <p>An <dfn id="concept-encoding" title="concept-encoding">encoding</dfn> defines a mapping from a
 code point to one or more octets (and vice versa). Each
@@ -501,13 +504,13 @@ as that algorithm is incompatible with legacy content.
 </table>
 
 
-<h2 id="the-encoding"><span class="secno">4 </span>The encoding</h2>
+<h2 id="the-encoding"><span class="secno">5 </span>The encoding</h2>
 
 <p>New content and formats must exclusively use the <a href="#utf-8">utf-8</a>
 <a href="#concept-encoding" title="concept-encoding">encoding</a>.
 
 
-<h3 id="utf-8"><span class="secno">4.1 </span><dfn>utf-8</dfn></h3>
+<h3 id="utf-8"><span class="secno">5.1 </span><dfn>utf-8</dfn></h3>
 
 <!--
 http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8
@@ -625,7 +628,7 @@ are all initially 0.
 <ol class="XXX"></ol>
 
 
-<h2 id="legacy-single-octet-encodings"><span class="secno">5 </span>Legacy single-octet encodings</h2>
+<h2 id="legacy-single-octet-encodings"><span class="secno">6 </span>Legacy single-octet encodings</h2>
 
 <p>An <a href="#concept-encoding" title="concept-encoding">encoding</a> where each octet is
 either a single code point or nothing, is a
@@ -724,12 +727,12 @@ corresponding <a href="#concept-encoding-map" title="concept-encoding-map">map</
 non-normative JSON resource: <a href="single-octet-encodings.json"><code>single-octet-encodings.json</code></a>.
 
 
-<h2 id="legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">6 </span>Legacy multi-octet Chinese (simplified) encodings</h2>
+<h2 id="legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (simplified) encodings</h2>
 
 <p>The <dfn id="gbk-code-point">gbk code point</dfn> for a given number is: ...
 
 
-<h3 id="gbk-and-gb18030"><span class="secno">6.1 </span><dfn>gbk</dfn> and <dfn>gb18030</dfn></h3>
+<h3 id="gbk-and-gb18030"><span class="secno">7.1 </span><dfn>gbk</dfn> and <dfn>gb18030</dfn></h3>
 
 <p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It must be set if
 the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
@@ -740,7 +743,7 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 <p class="XXX">...
 
 
-<h3 id="hz-gb-2312"><span class="secno">6.2 </span><dfn>hz-gb-2312</dfn></h3>
+<h3 id="hz-gb-2312"><span class="secno">7.2 </span><dfn>hz-gb-2312</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1842
  http://tools.ietf.org/html/rfc1843
@@ -847,16 +850,16 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 <ol class="XXX"></ol>
 
 
-<h3 id="iso-2022-cn"><span class="secno">6.3 </span><dfn>iso-2022-cn</dfn></h3>
+<h3 id="iso-2022-cn"><span class="secno">7.3 </span><dfn>iso-2022-cn</dfn></h3>
 <!-- http://tools.ietf.org/html/rfc1922 -->
 
 <p class="XXX">...
 
 
-<h2 id="legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (traditional) encodings</h2>
+<h2 id="legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">8 </span>Legacy multi-octet Chinese (traditional) encodings</h2>
 
 
-<h3 id="big5"><span class="secno">7.1 </span><dfn>big5</dfn></h3><!-- cp950 -->
+<h3 id="big5"><span class="secno">8.1 </span><dfn>big5</dfn></h3><!-- cp950 -->
 
 <p class="XXX">The <dfn id="big5-code-point">big5 code point</dfn> for two octets
 (<var title="">octet<sub>1</sub></var>, <var title="">octet<sub>2</sub></var>) is
@@ -915,7 +918,7 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 <ol class="XXX"></ol>
 
 
-<h3 id="big5-hkscs"><span class="secno">7.2 </span><dfn>big5-hkscs</dfn></h3>
+<h3 id="big5-hkscs"><span class="secno">8.2 </span><dfn>big5-hkscs</dfn></h3>
 
 <p class="XXX">Not supported by IE, supported by everyone else.
 https://bugzilla.mozilla.org/show_bug.cgi?id=310299#c5
@@ -923,7 +926,7 @@ http://www.google.com/support/forum/p/Chrome/thread?tid=466c210af3fb6d08
 http://w3techs.com/technologies/details/en-b5hkscs/all/all
 
 
-<h2 id="legacy-multi-octet-japanese-encodings"><span class="secno">8 </span>Legacy multi-octet Japanese encodings</h2>
+<h2 id="legacy-multi-octet-japanese-encodings"><span class="secno">9 </span>Legacy multi-octet Japanese encodings</h2>
 
 <p class="XXX">The <dfn id="jis-code-point">jis code point</dfn> for a given number is: ...</p>
 
@@ -967,7 +970,7 @@ http://w3techs.com/technologies/details/en-b5hkscs/all/all
 </dl>
 
 
-<h3 id="euc-jp"><span class="secno">8.1 </span><dfn>euc-jp</dfn></h3>
+<h3 id="euc-jp"><span class="secno">9.1 </span><dfn>euc-jp</dfn></h3>
 
 <p>The <dfn id="euc-jp-offset">euc-jp offset</dfn> for a given <var title="">octet</var> is null
 if <var title="">octet</var> &minus; 0xA1 is greater than 93 or less than 0, or
@@ -1086,7 +1089,7 @@ otherwise the result of that equation.
 <p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 encoder is more restrictive.
 
 
-<h3 id="iso-2022-jp"><span class="secno">8.2 </span><dfn>iso-2022-jp</dfn></h3>
+<h3 id="iso-2022-jp"><span class="secno">9.2 </span><dfn>iso-2022-jp</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1468
  http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
@@ -1300,7 +1303,7 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 <ol class="XXX"></ol>
 
 
-<h3 id="shift_jis"><span class="secno">8.3 </span><dfn>shift_jis</dfn></h3>
+<h3 id="shift_jis"><span class="secno">9.3 </span><dfn>shift_jis</dfn></h3>
 
 <p>The <dfn id="shift_jis-fallback-code-point">shift_jis fallback code point</dfn> is U+30FB.</p>
 
@@ -1430,13 +1433,13 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 <ol class="XXX"></ol>
 
 
-<h2 id="legacy-multi-octet-korean-encodings"><span class="secno">9 </span>Legacy multi-octet Korean encodings</h2>
+<h2 id="legacy-multi-octet-korean-encodings"><span class="secno">10 </span>Legacy multi-octet Korean encodings</h2>
 
 <p class="XXX">The <dfn id="euc-kr-code-point">euc-kr code point</dfn> for two octets
 (<var title="">octet<sub>1</sub></var>, <var title="">octet<sub>2</sub></var>) is
 ...
 
-<h3 id="euc-kr"><span class="secno">9.1 </span><dfn>euc-kr</dfn></h3><!-- cp949 -->
+<h3 id="euc-kr"><span class="secno">10.1 </span><dfn>euc-kr</dfn></h3><!-- cp949 -->
 
 <p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
 
@@ -1489,7 +1492,7 @@ null if <var title="">octet</var> &minus; 0x21 is greater than 93 or less than
 <ol class="XXX"></ol>
 
 
-<h3 id="iso-2022-kr"><span class="secno">9.2 </span><dfn>iso-2022-kr</dfn></h3>
+<h3 id="iso-2022-kr"><span class="secno">10.2 </span><dfn>iso-2022-kr</dfn></h3>
 
 <!--XXX the "ESC $ ) C" sequence is only supported by Gecko at the start of
 a stream. It does exactly nothing. Trying to get away with not supporting it
@@ -1598,25 +1601,28 @@ at all.-->
 <ol class="XXX"></ol>
 
 
-<h2 id="legacy-utf-16-encodings"><span class="secno">10 </span>Legacy utf-16 encodings</h2>
+<h2 id="legacy-utf-16-encodings"><span class="secno">11 </span>Legacy utf-16 encodings</h2>
 
 <p class="note">Contrary to the Unicode standard, checking for a BOM happens
 before an encoding to decode an octet stream is chosen.
 
 
-<h3 id="utf-16"><span class="secno">10.1 </span><dfn>utf-16</dfn></h3>
+<h3 id="utf-16"><span class="secno">11.1 </span><dfn>utf-16</dfn></h3>
 
 <p class="XXX">AKA utf-16le
 
 
-<h3 id="utf-16be"><span class="secno">10.2 </span><dfn>utf-16be</dfn></h3>
+<h3 id="utf-16be"><span class="secno">11.2 </span><dfn>utf-16be</dfn></h3>
 
 <p class="XXX">...
 
 
 <h2 class="no-num" id="references">References</h2>
 
-<p class="XXX">There will be a reference to Unicode here. Doh!
+<div id="anolis-references-normative"><dl><dt id="refsRFC2119">[RFC2119]
+<dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
+
+</dl></div>
 
 
 <h2 class="no-num" id="acknowledgments">Acknowledgments</h2>

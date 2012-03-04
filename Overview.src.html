@@ -82,27 +82,6 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 <!--toc-->
 
 
-<h2 class="no-num">Goals</h2>
-
-<ul>
- <li>Define the finite list of encodings and labels for the web platform so
- the "CHARACTER SETS" registry is no longer needed for it.
- <li>Define error handling for the encodings.
- <li>Mark encodings that are not <span title>utf-8</span> as legacy.
-</ul>
-
-
-<h2 class="no-num">Notes</h2>
-
-<ul>
- <li>Labels defined for each encoding is a conservative list at this point.
- We can extend it as we please provided there is some agreement to do so.
- <li>Mapping for each encoding is done by majority of implementations. If
- the majority wants to change or has to change for compatibility, we can
- change the mapping.
-</ul>
-
-
 <h2>Preface</h2>
 
 <p>While encodings for the web platform have been defined to some extent,
@@ -111,6 +90,31 @@ always used the same labels, and often differ in dealing with undefined
 areas of encodings. This standard attempts to fill those gaps so that new
 implementations do not have to reverse engineer encoding implementations of
 the market leaders.</p>
+
+
+<h2>Conformance</h2>
+
+<p>All diagrams, examples, and notes in this specification are
+non-normative, as are all sections explicitly marked non-normative.
+Everything else in this specification is normative.
+
+<p>The key words "MUST", "MUST NOT", "REQUIRED", <!--"SHALL", "SHALL
+NOT",--> "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and
+"OPTIONAL" in the normative parts of this document are to be
+interpreted as described in RFC2119. For readability, these words do
+not appear in all uppercase letters in this specification.
+<span data-anolis-ref>RFC2119</span>
+
+<p>Conformance requirements phrased as algorithms or specific steps
+may be implemented in any manner, so long as the end result is
+equivalent. (In particular, the algorithms defined in this
+specification are intended to be easy to follow, and not intended to
+be performant.)
+
+<p id="hardwareLimitations">User agents may impose
+implementation-specific limits on otherwise unconstrained inputs,
+e.g. to prevent denial of service attacks, to guard against running
+out of memory, or to work around platform-specific limitations.
 
 
 <h2>Terminology</h2>
@@ -1583,7 +1587,7 @@ before an encoding to decode an octet stream is chosen.
 
 <h2 class=no-num>References</h2>
 
-<p class=XXX>There will be a reference to Unicode here. Doh!
+<div id=anolis-references-normative></div>
 
 
 <h2 class=no-num>Acknowledgments</h2>
