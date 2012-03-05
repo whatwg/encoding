@@ -593,7 +593,52 @@ are all initially 0.
 
 <p>The <dfn>utf-8 encoder</dfn> (<span>encoder</span> for <span>utf-8</span>) is:
 
-<ol class=XXX></ol>
+<ol>
+ <li><p>If <var title>code point</var> is in the range 0xD800 to 0xDFFF,
+ return failure.
+
+ <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+
+ <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
+ emit the <span>EOF octet</span>.
+
+ <li><p>Increase the <span>code point pointer</span> by one.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
+ emit an octet whose value is <var title>code point</var>.
+
+ <li>
+  <p>Set <var title>count</var> and <var title>offset</var> based on
+  <var title>code point</var>'s range:
+
+  <dl class=switch>
+   <dt>U+0080 to U+07FF
+   <dd>1 and 0xC0
+   <dt>U+0800 to U+FFFF
+   <dd>2 and 0xE0
+   <dt>U+10000 to U+10FFFF
+   <dd>3 and 0xF0
+  </dl>
+
+ <li><p>Let <var title>octets</var> be a list of octets whose first octet is
+ <var title>code point</var> divided by
+ 64<sup><var title>count</var></sup> (as integers) + <var title>offset</var>.
+
+ <li>
+  <p>Run these substeps while <var title>count</var> is greater than 0:
+
+  <ol>
+   <li><p>Set <var title>temp</var> to <var title>code point</var> divided
+   by 64<sup><var title>count</var> &minus; 1</sup> (as integers)
+
+   <li><p>Append to <var title>octets</var> 0x80 + the remainder of dividing
+   <var title>temp</var> by 64<sup><var title>count</var></sup> (as integers).
+
+   <li><p>Decrease <var title>count</var> by one.
+  </ol>
+
+ <li><p>Emit all octets in <var title>octets</var>, in list order.
+</ol>
 
 
 <h2>Legacy single-octet encodings</h2>

@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-4-march-2012">Living Draft — 4 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-5-march-2012">Living Draft — 5 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -63,7 +63,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-4 March 2012, the editors have made this specification available
+5 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -625,7 +625,52 @@ are all initially 0.
 
 <p>The <dfn id="utf-8-encoder">utf-8 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-8">utf-8</a>) is:
 
-<ol class="XXX"></ol>
+<ol>
+ <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF,
+ return failure.
+
+ <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-octet">EOF octet</a>.
+
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
+ emit an octet whose value is <var title="">code point</var>.
+
+ <li>
+  <p>Set <var title="">count</var> and <var title="">offset</var> based on
+  <var title="">code point</var>'s range:
+
+  <dl class="switch">
+   <dt>U+0080 to U+07FF
+   <dd>1 and 0xC0
+   <dt>U+0800 to U+FFFF
+   <dd>2 and 0xE0
+   <dt>U+10000 to U+10FFFF
+   <dd>3 and 0xF0
+  </dl>
+
+ <li><p>Let <var title="">octets</var> be a list of octets whose first octet is
+ <var title="">code point</var> divided by
+ 64<sup><var title="">count</var></sup> (as integers) + <var title="">offset</var>.
+
+ <li>
+  <p>Run these substeps while <var title="">count</var> is greater than 0:
+
+  <ol>
+   <li><p>Set <var title="">temp</var> to <var title="">code point</var> divided
+   by 64<sup><var title="">count</var> − 1</sup> (as integers)
+
+   <li><p>Append to <var title="">octets</var> 0x80 + the remainder of dividing
+   <var title="">temp</var> by 64<sup><var title="">count</var></sup> (as integers).
+
+   <li><p>Decrease <var title="">count</var> by one.
+  </ol>
+
+ <li><p>Emit all octets in <var title="">octets</var>, in list order.
+</ol>
 
 
 <h2 id="legacy-single-octet-encodings"><span class="secno">6 </span>Legacy single-octet encodings</h2>
