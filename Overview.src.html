@@ -519,27 +519,27 @@ are all initially 0.
    <dt>0xC0 to 0xDF
    <dd><p>Set <span>utf-8 octets needed</span> to 1,
    <span>utf-8 lower boundary</span> to 0x80, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xC0
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xC0.
 
    <dt>0xE0 to 0xEF
    <dd><p>Set <span>utf-8 octets needed</span> to 2,
    <span>utf-8 lower boundary</span> to 0x800, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xE0
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xE0.
 
    <dt>0xF0 to 0xF7
    <dd><p>Set <span>utf-8 octets needed</span> to 3,
    <span>utf-8 lower boundary</span> to 0x10000, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xF0
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xF0.
 
    <dt>0xF8 to 0xFB
    <dd><p>Set <span>utf-8 octets needed</span> to 4,
    <span>utf-8 lower boundary</span> to 0x200000, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xF8
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xF8.
 
    <dt>0xFC to 0xFD
    <dd><p>Set <span>utf-8 octets needed</span> to 5,
    <span>utf-8 lower boundary</span> to 0x4000000, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xFC
+   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xFC.
 
    <dt>Otherwise
    <dd><p>Emit the <span>fallback code point</span>.
@@ -594,10 +594,10 @@ are all initially 0.
 <p>The <dfn>utf-8 encoder</dfn> (<span>encoder</span> for <span>utf-8</span>) is:
 
 <ol>
+ <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+
  <li><p>If <var title>code point</var> is in the range 0xD800 to 0xDFFF,
  return failure.
-
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF octet</span>.
@@ -608,8 +608,8 @@ are all initially 0.
  emit an octet whose value is <var title>code point</var>.
 
  <li>
-  <p>Set <var title>count</var> and <var title>offset</var> based on
-  <var title>code point</var>'s range:
+  <p>Set <var title>count</var> and <var title>offset</var> based on the
+  range <var title>code point</var> is in:
 
   <dl class=switch>
    <dt>U+0080 to U+07FF
@@ -629,7 +629,7 @@ are all initially 0.
 
   <ol>
    <li><p>Set <var title>temp</var> to <var title>code point</var> divided
-   by 64<sup><var title>count</var> &minus; 1</sup> (as integers)
+   by 64<sup><var title>count</var> &minus; 1</sup> (as integers).
 
    <li><p>Append to <var title>octets</var> 0x80 + the remainder of dividing
    <var title>temp</var> by 64<sup><var title>count</var></sup> (as integers).

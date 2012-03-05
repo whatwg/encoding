@@ -551,27 +551,27 @@ are all initially 0.
    <dt>0xC0 to 0xDF
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 1,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xC0
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xC0.
 
    <dt>0xE0 to 0xEF
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 2,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x800, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xE0
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xE0.
 
    <dt>0xF0 to 0xF7
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 3,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x10000, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xF0
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xF0.
 
    <dt>0xF8 to 0xFB
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 4,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x200000, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xF8
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xF8.
 
    <dt>0xFC to 0xFD
    <dd><p>Set <a href="#utf-8-octets-needed">utf-8 octets needed</a> to 5,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x4000000, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xFC
+   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">octet</var> − 0xFC.
 
    <dt>Otherwise
    <dd><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
@@ -626,10 +626,10 @@ are all initially 0.
 <p>The <dfn id="utf-8-encoder">utf-8 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-8">utf-8</a>) is:
 
 <ol>
+ <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+
  <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF,
  return failure.
-
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-octet">EOF octet</a>.
@@ -640,8 +640,8 @@ are all initially 0.
  emit an octet whose value is <var title="">code point</var>.
 
  <li>
-  <p>Set <var title="">count</var> and <var title="">offset</var> based on
-  <var title="">code point</var>'s range:
+  <p>Set <var title="">count</var> and <var title="">offset</var> based on the
+  range <var title="">code point</var> is in:
 
   <dl class="switch">
    <dt>U+0080 to U+07FF
@@ -661,7 +661,7 @@ are all initially 0.
 
   <ol>
    <li><p>Set <var title="">temp</var> to <var title="">code point</var> divided
-   by 64<sup><var title="">count</var> − 1</sup> (as integers)
+   by 64<sup><var title="">count</var> − 1</sup> (as integers).
 
    <li><p>Append to <var title="">octets</var> 0x80 + the remainder of dividing
    <var title="">temp</var> by 64<sup><var title="">count</var></sup> (as integers).
