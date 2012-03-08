@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-6-march-2012">Living Draft — 6 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-8-march-2012">Living Draft — 8 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-6 March 2012, the editors have made this specification available
+8 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -781,8 +781,8 @@ non-normative JSON resource: <a href="single-octet-encodings.json"><code>single-
 
 <h3 id="gbk-and-gb18030"><span class="secno">7.1 </span><dfn>gbk</dfn> and <dfn>gb18030</dfn></h3>
 
-<p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It must be set if
-the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
+<p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It can only be set
+by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-encoder">gb18030 encoder</a>.
 
 <p>The <dfn id="gb18030-range-table">gb18030 range table</dfn> is:
 
@@ -806,7 +806,104 @@ the <a href="#gbk-and-gb18030">gb18030</a> encoding is in use.
 <p>The <dfn id="gbk-first">gbk first</dfn>, <dfn id="gbk-second">gbk second</dfn>, and
 <dfn id="gbk-third">gbk third</dfn>, are all initially 0x00.
 
-<p class="XXX">...
+<p>The <dfn id="gb18030-decoder">gb18030 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gbk-and-gb18030">gb18030</a>) is
+the <a href="#gbk-decoder">gbk decoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
+
+<p>The <dfn id="gbk-decoder">gbk decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gbk-and-gb18030">gbk</a>) is:
+
+<ol>
+ <li><p>Let <var title="">octet</var> be <a href="#octet-pointer">octet pointer</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a> and
+ <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, and <a href="#gbk-third">gbk third</a>
+ are 0x00, emit the <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, and one
+ <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, or <a href="#gbk-third">gbk third</a>
+ is not 0x00, and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+ <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>, and one
+ <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, or <a href="#gbk-third">gbk third</a>
+ is not 0x00, set <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, and
+ <a href="#gbk-third">gbk third</a> to 0x00, and emit the
+ <a href="#fallback-code-point">fallback code point</a>.
+
+ <li><p>Increase the <a href="#octet-pointer">octet pointer</a>.
+
+ <li>
+  <p>If <a href="#gbk-third">gbk third</a> is not 0x00, run these substeps:
+
+  <ol>
+   <li class="XXX"><p>If <var title="">octet</var> is in the range 0x30 to 0x39,
+   ... and there is a code point ...
+   set <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, and
+   <a href="#gbk-third">gbk third</a> to 0x00, and then
+   emit ...
+
+   <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+   <li><p>Decrease the <a href="#octet-pointer">octet pointer</a> by three, set
+   <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, and
+   <a href="#gbk-third">gbk third</a> to 0x00, and emit the
+   <a href="#fallback-code-point">fallback code point</a>.
+  </ol>
+
+ <li>
+  <p>If <a href="#gbk-second">gbk second</a> is not 0x00, run these substeps:
+
+  <ol>
+   <li><p>If <var title="">octet</var> is in the range 0x81 to 0xFE, set
+   <a href="#gbk-third">gbk third</a> to <var title="">octet</var> and continue.
+
+   <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+   <li><p>Decrease the <a href="#octet-pointer">octet pointer</a> by two, set
+   <a href="#gbk-first">gbk first</a> and <a href="#gbk-second">gbk second</a> to 0x00, and emit the
+   <a href="#fallback-code-point">fallback code point</a>.
+  </ol>
+
+ <li>
+  <p>If <a href="#gbk-first">gbk first</a> is not 0x00, run these substeps:
+
+  <ol>
+   <li><p>If <var title="">octet</var> is in the range 0x30 to 0x39 and the
+   <a href="#gb18030-flag">gb18030 flag</a> is set, set <a href="#gbk-second">gbk second</a> to
+   <var title="">octet</var> and continue.
+
+   <li class="XXX"><p>If <var title="">octet</var> is in the range 0x40 to 0xFE,
+   ... and there is a code point ... set <a href="#gbk-first">gbk first</a> to 0x00, and
+   then emit ...
+
+   <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+   <li><p>Decrease the <a href="#octet-pointer">octet pointer</a> by one, set
+   <a href="#gbk-first">gbk first</a> to 0x00, and emit the
+   <a href="#fallback-code-point">fallback code point</a>.
+  </ol>
+
+ <li><p>If <var title="">octet</var> is in the range 0x00 to 0x7E, emit a code
+ point whose value is <var title="">octet</var>.
+
+ <li>
+  <p>If <var title="">octet</var> is 0x80 and the <a href="#gb18030-flag">gb18030 flag</a> is
+  unset, emit a code point whose value is U+20AC.
+
+  <p class="XXX">Gecko emits it regardless of the <a href="#gb18030-flag">gb18030 flag</a>.
+
+ <li><p>If <var title="">octet</var> is in the range 0x81 to 0xFE, set
+ <a href="#gbk-first">gbk first</a> to <var title="">octet</var> and continue.
+
+ <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+ <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
+</ol>
+
+<p>The <dfn id="gb18030-encoder">gb18030 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gbk-and-gb18030">gb18030</a>) is
+the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
+
+<p>The <dfn id="gbk-encoder">gbk encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gbk-and-gb18030">gbk</a>) is:
+
+<ol class="XXX"></ol>
 
 
 <h3 id="hz-gb-2312"><span class="secno">7.2 </span><dfn>hz-gb-2312</dfn></h3>

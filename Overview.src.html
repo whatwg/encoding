@@ -749,8 +749,8 @@ non-normative JSON resource: <a href=single-octet-encodings.json><code>single-oc
 
 <h3><dfn>gbk</dfn> and <dfn>gb18030</dfn></h3>
 
-<p>The <dfn>gb18030 flag</dfn> flag is initially unset. It must be set if
-the <span>gb18030</span> encoding is in use.
+<p>The <dfn>gb18030 flag</dfn> flag is initially unset. It can only be set
+by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
 
 <p>The <dfn>gb18030 range table</dfn> is:
 
@@ -774,7 +774,104 @@ the <span>gb18030</span> encoding is in use.
 <p>The <dfn>gbk first</dfn>, <dfn>gbk second</dfn>, and
 <dfn>gbk third</dfn>, are all initially 0x00.
 
-<p class=XXX>...
+<p>The <dfn>gb18030 decoder</dfn> (<span>decoder</span> for <span>gb18030</span>) is
+the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
+
+<p>The <dfn>gbk decoder</dfn> (<span>decoder</span> for <span>gbk</span>) is:
+
+<ol>
+ <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <span>gbk first</span>, <span>gbk second</span>, and <span>gbk third</span>
+ are 0x00, emit the <span>EOF code point</span>.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>, and one
+ <span>gbk first</span>, <span>gbk second</span>, or <span>gbk third</span>
+ is not 0x00, and the <span>fatal flag</span> is set, return failure.
+
+ <li><p>If <var title>octet</var> is the <span>EOF octet</span>, and one
+ <span>gbk first</span>, <span>gbk second</span>, or <span>gbk third</span>
+ is not 0x00, set <span>gbk first</span>, <span>gbk second</span>, and
+ <span>gbk third</span> to 0x00, and emit the
+ <span>fallback code point</span>.
+
+ <li><p>Increase the <span>octet pointer</span>.
+
+ <li>
+  <p>If <span>gbk third</span> is not 0x00, run these substeps:
+
+  <ol>
+   <li class=XXX><p>If <var title>octet</var> is in the range 0x30 to 0x39,
+   ... and there is a code point ...
+   set <span>gbk first</span>, <span>gbk second</span>, and
+   <span>gbk third</span> to 0x00, and then
+   emit ...
+
+   <li><p>If the <span>fatal flag</span> is set, return failure.
+
+   <li><p>Decrease the <span>octet pointer</span> by three, set
+   <span>gbk first</span>, <span>gbk second</span>, and
+   <span>gbk third</span> to 0x00, and emit the
+   <span>fallback code point</span>.
+  </ol>
+
+ <li>
+  <p>If <span>gbk second</span> is not 0x00, run these substeps:
+
+  <ol>
+   <li><p>If <var title>octet</var> is in the range 0x81 to 0xFE, set
+   <span>gbk third</span> to <var title>octet</var> and continue.
+
+   <li><p>If the <span>fatal flag</span> is set, return failure.
+
+   <li><p>Decrease the <span>octet pointer</span> by two, set
+   <span>gbk first</span> and <span>gbk second</span> to 0x00, and emit the
+   <span>fallback code point</span>.
+  </ol>
+
+ <li>
+  <p>If <span>gbk first</span> is not 0x00, run these substeps:
+
+  <ol>
+   <li><p>If <var title>octet</var> is in the range 0x30 to 0x39 and the
+   <span>gb18030 flag</span> is set, set <span>gbk second</span> to
+   <var title>octet</var> and continue.
+
+   <li class=XXX><p>If <var title>octet</var> is in the range 0x40 to 0xFE,
+   ... and there is a code point ... set <span>gbk first</span> to 0x00, and
+   then emit ...
+
+   <li><p>If the <span>fatal flag</span> is set, return failure.
+
+   <li><p>Decrease the <span>octet pointer</span> by one, set
+   <span>gbk first</span> to 0x00, and emit the
+   <span>fallback code point</span>.
+  </ol>
+
+ <li><p>If <var title>octet</var> is in the range 0x00 to 0x7E, emit a code
+ point whose value is <var title>octet</var>.
+
+ <li>
+  <p>If <var title>octet</var> is 0x80 and the <span>gb18030 flag</span> is
+  unset, emit a code point whose value is U+20AC.
+
+  <p class=XXX>Gecko emits it regardless of the <span>gb18030 flag</span>.
+
+ <li><p>If <var title>octet</var> is in the range 0x81 to 0xFE, set
+ <span>gbk first</span> to <var title>octet</var> and continue.
+
+ <li><p>If the <span>fatal flag</span> is set, return failure.
+
+ <li><p>Emit the <span>fallback code point</span>.
+</ol>
+
+<p>The <dfn>gb18030 encoder</dfn> (<span>encoder</span> for <span>gb18030</span>) is
+the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
+
+<p>The <dfn>gbk encoder</dfn> (<span>encoder</span> for <span>gbk</span>) is:
+
+<ol class=XXX></ol>
 
 
 <h3><dfn>hz-gb-2312</dfn></h3>
