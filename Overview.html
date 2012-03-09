@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-8-march-2012">Living Draft — 8 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-9-march-2012">Living Draft — 9 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-8 March 2012, the editors have made this specification available
+9 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -881,7 +881,7 @@ the <a href="#gbk-decoder">gbk decoder</a> with the <a href="#gb18030-flag">gb18
    <a href="#fallback-code-point">fallback code point</a>.
   </ol>
 
- <li><p>If <var title="">octet</var> is in the range 0x00 to 0x7E, emit a code
+ <li><p>If <var title="">octet</var> is in the range 0x00 to 0x7F, emit a code
  point whose value is <var title="">octet</var>.
 
  <li>
@@ -1047,8 +1047,8 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  set, return failure.
 
  <li><p>If <var title="">octet</var> is the <a href="#eof-octet">EOF octet</a>,
- <a href="#big5-lead">big5 lead</a> is not 0x00, emit the
- <a href="#fallback-code-point">fallback code point</a>.
+ <a href="#big5-lead">big5 lead</a> is not 0x00, set <a href="#big5-lead">big5 lead</a> to 0x00 and
+ emit the <a href="#fallback-code-point">fallback code point</a>.
 
  <li><p>Increase the <a href="#octet-pointer">octet pointer</a> by one.
 
@@ -1156,7 +1156,7 @@ otherwise the result of that equation.
  set, return failure.
 
  <li><p>If <var title="">octet</var> is either the <a href="#eof-octet">EOF octet</a> or is
- in the range 0x00 to 07F, and <a href="#euc-jp-second">euc-jp second</a> is 0x00,
+ in the range 0x00 to 0x7F, and <a href="#euc-jp-second">euc-jp second</a> is 0x00,
  set <a href="#euc-jp-first">euc-jp first</a> to 0x00 and emit the
  <a href="#fallback-code-point">fallback code point</a>.
 
@@ -1232,7 +1232,7 @@ otherwise the result of that equation.
    <li><p>Emit <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">octet</var> is in the range 0x00 to 0x7E, emit a
+ <li><p>If <var title="">octet</var> is in the range 0x00 to 0x7F, emit a
  code point whose value is <var title="">octet</var>.
 
  <li><p>If <var title="">octet</var> is 0x8E, 0x8F, or in the range 0xA1 to

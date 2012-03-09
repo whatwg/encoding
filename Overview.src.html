@@ -849,7 +849,7 @@ the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
    <span>fallback code point</span>.
   </ol>
 
- <li><p>If <var title>octet</var> is in the range 0x00 to 0x7E, emit a code
+ <li><p>If <var title>octet</var> is in the range 0x00 to 0x7F, emit a code
  point whose value is <var title>octet</var>.
 
  <li>
@@ -1015,8 +1015,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  set, return failure.
 
  <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
- <span>big5 lead</span> is not 0x00, emit the
- <span>fallback code point</span>.
+ <span>big5 lead</span> is not 0x00, set <span>big5 lead</span> to 0x00 and
+ emit the <span>fallback code point</span>.
 
  <li><p>Increase the <span>octet pointer</span> by one.
 
@@ -1124,7 +1124,7 @@ otherwise the result of that equation.
  set, return failure.
 
  <li><p>If <var title>octet</var> is either the <span>EOF octet</span> or is
- in the range 0x00 to 07F, and <span>euc-jp second</span> is 0x00,
+ in the range 0x00 to 0x7F, and <span>euc-jp second</span> is 0x00,
  set <span>euc-jp first</span> to 0x00 and emit the
  <span>fallback code point</span>.
 
@@ -1200,7 +1200,7 @@ otherwise the result of that equation.
    <li><p>Emit <var title>code point</var>.
   </ol>
 
- <li><p>If <var title>octet</var> is in the range 0x00 to 0x7E, emit a
+ <li><p>If <var title>octet</var> is in the range 0x00 to 0x7F, emit a
  code point whose value is <var title>octet</var>.
 
  <li><p>If <var title>octet</var> is 0x8E, 0x8F, or in the range 0xA1 to
