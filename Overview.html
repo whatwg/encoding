@@ -85,32 +85,33 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#conformance"><span class="secno">2 </span>Conformance</a></li>
  <li><a href="#terminology"><span class="secno">3 </span>Terminology</a></li>
  <li><a href="#encodings"><span class="secno">4 </span>Encodings</a></li>
- <li><a href="#the-encoding"><span class="secno">5 </span>The encoding</a>
+ <li><a href="#decode-and-encode"><span class="secno">5 </span>Decode and encode</a></li>
+ <li><a href="#the-encoding"><span class="secno">6 </span>The encoding</a>
   <ol>
-   <li><a href="#utf-8"><span class="secno">5.1 </span>utf-8</a></ol></li>
- <li><a href="#legacy-single-octet-encodings"><span class="secno">6 </span>Legacy single-octet encodings</a></li>
- <li><a href="#legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (simplified) encodings</a>
+   <li><a href="#utf-8"><span class="secno">6.1 </span>utf-8</a></ol></li>
+ <li><a href="#legacy-single-octet-encodings"><span class="secno">7 </span>Legacy single-octet encodings</a></li>
+ <li><a href="#legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">8 </span>Legacy multi-octet Chinese (simplified) encodings</a>
   <ol>
-   <li><a href="#gbk-and-gb18030"><span class="secno">7.1 </span>gbk and gb18030</a></li>
-   <li><a href="#hz-gb-2312"><span class="secno">7.2 </span>hz-gb-2312</a></li>
-   <li><a href="#iso-2022-cn"><span class="secno">7.3 </span>iso-2022-cn</a></ol></li>
- <li><a href="#legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">8 </span>Legacy multi-octet Chinese (traditional) encodings</a>
+   <li><a href="#gbk-and-gb18030"><span class="secno">8.1 </span>gbk and gb18030</a></li>
+   <li><a href="#hz-gb-2312"><span class="secno">8.2 </span>hz-gb-2312</a></li>
+   <li><a href="#iso-2022-cn"><span class="secno">8.3 </span>iso-2022-cn</a></ol></li>
+ <li><a href="#legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">9 </span>Legacy multi-octet Chinese (traditional) encodings</a>
   <ol>
-   <li><a href="#big5"><span class="secno">8.1 </span>big5</a></li>
-   <li><a href="#big5-hkscs"><span class="secno">8.2 </span>big5-hkscs</a></ol></li>
- <li><a href="#legacy-multi-octet-japanese-encodings"><span class="secno">9 </span>Legacy multi-octet Japanese encodings</a>
+   <li><a href="#big5"><span class="secno">9.1 </span>big5</a></li>
+   <li><a href="#big5-hkscs"><span class="secno">9.2 </span>big5-hkscs</a></ol></li>
+ <li><a href="#legacy-multi-octet-japanese-encodings"><span class="secno">10 </span>Legacy multi-octet Japanese encodings</a>
   <ol>
-   <li><a href="#euc-jp"><span class="secno">9.1 </span>euc-jp</a></li>
-   <li><a href="#iso-2022-jp"><span class="secno">9.2 </span>iso-2022-jp</a></li>
-   <li><a href="#shift_jis"><span class="secno">9.3 </span>shift_jis</a></ol></li>
- <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">10 </span>Legacy multi-octet Korean encodings</a>
+   <li><a href="#euc-jp"><span class="secno">10.1 </span>euc-jp</a></li>
+   <li><a href="#iso-2022-jp"><span class="secno">10.2 </span>iso-2022-jp</a></li>
+   <li><a href="#shift_jis"><span class="secno">10.3 </span>shift_jis</a></ol></li>
+ <li><a href="#legacy-multi-octet-korean-encodings"><span class="secno">11 </span>Legacy multi-octet Korean encodings</a>
   <ol>
-   <li><a href="#euc-kr"><span class="secno">10.1 </span>euc-kr</a></li>
-   <li><a href="#iso-2022-kr"><span class="secno">10.2 </span>iso-2022-kr</a></ol></li>
- <li><a href="#legacy-utf-16-encodings"><span class="secno">11 </span>Legacy utf-16 encodings</a>
+   <li><a href="#euc-kr"><span class="secno">11.1 </span>euc-kr</a></li>
+   <li><a href="#iso-2022-kr"><span class="secno">11.2 </span>iso-2022-kr</a></ol></li>
+ <li><a href="#legacy-utf-16-encodings"><span class="secno">12 </span>Legacy utf-16 encodings</a>
   <ol>
-   <li><a href="#utf-16"><span class="secno">11.1 </span>utf-16</a></li>
-   <li><a href="#utf-16be"><span class="secno">11.2 </span>utf-16be</a></ol></li>
+   <li><a href="#utf-16"><span class="secno">12.1 </span>utf-16</a></li>
+   <li><a href="#utf-16be"><span class="secno">12.2 </span>utf-16be</a></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
@@ -506,13 +507,62 @@ as that algorithm is incompatible with legacy content.
 </table>
 
 
-<h2 id="the-encoding"><span class="secno">5 </span>The encoding</h2>
+<h2 id="decode-and-encode"><span class="secno">5 </span>Decode and encode</h2>
+
+<p>To <dfn id="decode">decode</dfn> an octet stream <var title="">stream</var> using
+fallback label <var title="">label</var>, these steps must be run:
+
+<ol>
+ <li><p>Let <var title="">encoding</var> be the result of
+ <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> for
+ <var title="">label</var>.
+
+ <li><p>Let <var title="">offset</var> be 0.
+
+ <li>
+  <p>For each of the rows in the following table, starting with the first
+  one and going down, if the first octets of <var title="">stream</var> match
+  all the octets given in the first column, then set
+  <var title="">encoding</var> to the
+  <a href="#concept-encoding" title="concept-encoding">encoding</a> given in the cell in the
+  second column of that row, and set <var title="">offset</var> to the offset
+  given the in the cell in the third column of that row.
+
+  <table>
+   <tr><th>Byte order mark<th>Encoding<th>Offset
+   <tr><td>0xFF 0xFE<td><a href="#utf-16">utf-16</a><td>2
+   <tr><td>0xFE 0xFF<td><a href="#utf-16be">utf-16be</a><td>2
+   <tr><td>0xEF 0xBB 0xBF<td><a href="#utf-8">utf-8</a><td>3
+  </table>
+
+  <p class="note">For compatibility with deployed content, the byte order mark
+  is considered more authoritative than anything else.
+
+ <li><p>Return the result of running <var title="">encoding</var>'s
+ <a href="#decoder">decoder</a> with <a href="#octet-pointer">octet pointer</a> set to
+ <var title="">offset</var>, on <var title="">stream</var>.
+</ol>
+
+<p>To <dfn id="encode">encode</dfn> a code point stream <var title="">stream</var> using
+label <var title="">label</var>, these steps must be run:
+
+<ol>
+ <li><p>Let <var title="">encoding</var> be the result of
+ <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> for
+ <var title="">label</var>.
+
+ <li><p>Return the result of running <var title="">encoding</var>'s
+ <a href="#encoder">encoder</a> on <var title="">stream</var>.
+</ol>
+
+
+<h2 id="the-encoding"><span class="secno">6 </span>The encoding</h2>
 
 <p>New content and formats must exclusively use the <a href="#utf-8">utf-8</a>
 <a href="#concept-encoding" title="concept-encoding">encoding</a>.
 
 
-<h3 id="utf-8"><span class="secno">5.1 </span><dfn>utf-8</dfn></h3>
+<h3 id="utf-8"><span class="secno">6.1 </span><dfn>utf-8</dfn></h3>
 
 <!--
 http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8
@@ -675,7 +725,7 @@ are all initially 0.
 </ol>
 
 
-<h2 id="legacy-single-octet-encodings"><span class="secno">6 </span>Legacy single-octet encodings</h2>
+<h2 id="legacy-single-octet-encodings"><span class="secno">7 </span>Legacy single-octet encodings</h2>
 
 <p>An <a href="#concept-encoding" title="concept-encoding">encoding</a> where each octet is
 either a single code point or nothing, is a
@@ -774,12 +824,12 @@ corresponding <a href="#concept-encoding-map" title="concept-encoding-map">map</
 non-normative JSON resource: <a href="single-octet-encodings.json"><code>single-octet-encodings.json</code></a>.
 
 
-<h2 id="legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">7 </span>Legacy multi-octet Chinese (simplified) encodings</h2>
+<h2 id="legacy-multi-octet-chinese-(simplified)-encodings"><span class="secno">8 </span>Legacy multi-octet Chinese (simplified) encodings</h2>
 
 <p>The <dfn id="gbk-code-point">gbk code point</dfn> for a given number is: ...
 
 
-<h3 id="gbk-and-gb18030"><span class="secno">7.1 </span><dfn>gbk</dfn> and <dfn>gb18030</dfn></h3>
+<h3 id="gbk-and-gb18030"><span class="secno">8.1 </span><dfn>gbk</dfn> and <dfn>gb18030</dfn></h3>
 
 <p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It can only be set
 by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-encoder">gb18030 encoder</a>.
@@ -906,7 +956,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <ol class="XXX"></ol>
 
 
-<h3 id="hz-gb-2312"><span class="secno">7.2 </span><dfn>hz-gb-2312</dfn></h3>
+<h3 id="hz-gb-2312"><span class="secno">8.2 </span><dfn>hz-gb-2312</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1842
  http://tools.ietf.org/html/rfc1843
@@ -1013,16 +1063,16 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <ol class="XXX"></ol>
 
 
-<h3 id="iso-2022-cn"><span class="secno">7.3 </span><dfn>iso-2022-cn</dfn></h3>
+<h3 id="iso-2022-cn"><span class="secno">8.3 </span><dfn>iso-2022-cn</dfn></h3>
 <!-- http://tools.ietf.org/html/rfc1922 -->
 
 <p class="XXX">...
 
 
-<h2 id="legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">8 </span>Legacy multi-octet Chinese (traditional) encodings</h2>
+<h2 id="legacy-multi-octet-chinese-(traditional)-encodings"><span class="secno">9 </span>Legacy multi-octet Chinese (traditional) encodings</h2>
 
 
-<h3 id="big5"><span class="secno">8.1 </span><dfn>big5</dfn></h3><!-- cp950 -->
+<h3 id="big5"><span class="secno">9.1 </span><dfn>big5</dfn></h3><!-- cp950 -->
 
 <p class="XXX">The <dfn id="big5-code-point">big5 code point</dfn> for two octets
 (<var title="">octet<sub>1</sub></var>, <var title="">octet<sub>2</sub></var>) is
@@ -1081,7 +1131,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <ol class="XXX"></ol>
 
 
-<h3 id="big5-hkscs"><span class="secno">8.2 </span><dfn>big5-hkscs</dfn></h3>
+<h3 id="big5-hkscs"><span class="secno">9.2 </span><dfn>big5-hkscs</dfn></h3>
 
 <p class="XXX">Not supported by IE, supported by everyone else.
 https://bugzilla.mozilla.org/show_bug.cgi?id=310299#c5
@@ -1089,7 +1139,7 @@ http://www.google.com/support/forum/p/Chrome/thread?tid=466c210af3fb6d08
 http://w3techs.com/technologies/details/en-b5hkscs/all/all
 
 
-<h2 id="legacy-multi-octet-japanese-encodings"><span class="secno">9 </span>Legacy multi-octet Japanese encodings</h2>
+<h2 id="legacy-multi-octet-japanese-encodings"><span class="secno">10 </span>Legacy multi-octet Japanese encodings</h2>
 
 <p class="XXX">The <dfn id="jis-code-point">jis code point</dfn> for a given number is: ...</p>
 
@@ -1133,7 +1183,7 @@ http://w3techs.com/technologies/details/en-b5hkscs/all/all
 </dl>
 
 
-<h3 id="euc-jp"><span class="secno">9.1 </span><dfn>euc-jp</dfn></h3>
+<h3 id="euc-jp"><span class="secno">10.1 </span><dfn>euc-jp</dfn></h3>
 
 <p>The <dfn id="euc-jp-offset">euc-jp offset</dfn> for a given <var title="">octet</var> is null
 if <var title="">octet</var> − 0xA1 is greater than 93 or less than 0, or
@@ -1252,7 +1302,7 @@ otherwise the result of that equation.
 <p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 encoder is more restrictive.
 
 
-<h3 id="iso-2022-jp"><span class="secno">9.2 </span><dfn>iso-2022-jp</dfn></h3>
+<h3 id="iso-2022-jp"><span class="secno">10.2 </span><dfn>iso-2022-jp</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1468
  http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
@@ -1466,7 +1516,7 @@ null if <var title="">octet</var> − 0x21 is greater than 93 or less than
 <ol class="XXX"></ol>
 
 
-<h3 id="shift_jis"><span class="secno">9.3 </span><dfn>shift_jis</dfn></h3>
+<h3 id="shift_jis"><span class="secno">10.3 </span><dfn>shift_jis</dfn></h3>
 
 <p>The <dfn id="shift_jis-fallback-code-point">shift_jis fallback code point</dfn> is U+30FB.</p>
 
@@ -1596,13 +1646,13 @@ null if <var title="">octet</var> − 0x21 is greater than 93 or less than
 <ol class="XXX"></ol>
 
 
-<h2 id="legacy-multi-octet-korean-encodings"><span class="secno">10 </span>Legacy multi-octet Korean encodings</h2>
+<h2 id="legacy-multi-octet-korean-encodings"><span class="secno">11 </span>Legacy multi-octet Korean encodings</h2>
 
 <p class="XXX">The <dfn id="euc-kr-code-point">euc-kr code point</dfn> for two octets
 (<var title="">octet<sub>1</sub></var>, <var title="">octet<sub>2</sub></var>) is
 ...
 
-<h3 id="euc-kr"><span class="secno">10.1 </span><dfn>euc-kr</dfn></h3><!-- cp949 -->
+<h3 id="euc-kr"><span class="secno">11.1 </span><dfn>euc-kr</dfn></h3><!-- cp949 -->
 
 <p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
 
@@ -1655,7 +1705,7 @@ null if <var title="">octet</var> − 0x21 is greater than 93 or less than
 <ol class="XXX"></ol>
 
 
-<h3 id="iso-2022-kr"><span class="secno">10.2 </span><dfn>iso-2022-kr</dfn></h3>
+<h3 id="iso-2022-kr"><span class="secno">11.2 </span><dfn>iso-2022-kr</dfn></h3>
 
 <!--XXX the "ESC $ ) C" sequence is only supported by Gecko at the start of
 a stream. It does exactly nothing. Trying to get away with not supporting it
@@ -1764,18 +1814,18 @@ at all.-->
 <ol class="XXX"></ol>
 
 
-<h2 id="legacy-utf-16-encodings"><span class="secno">11 </span>Legacy utf-16 encodings</h2>
+<h2 id="legacy-utf-16-encodings"><span class="secno">12 </span>Legacy utf-16 encodings</h2>
 
 <p class="note">Contrary to the Unicode standard, checking for a BOM happens
 before an encoding to decode an octet stream is chosen.
 
 
-<h3 id="utf-16"><span class="secno">11.1 </span><dfn>utf-16</dfn></h3>
+<h3 id="utf-16"><span class="secno">12.1 </span><dfn>utf-16</dfn></h3>
 
 <p class="XXX">AKA utf-16le
 
 
-<h3 id="utf-16be"><span class="secno">11.2 </span><dfn>utf-16be</dfn></h3>
+<h3 id="utf-16be"><span class="secno">12.2 </span><dfn>utf-16be</dfn></h3>
 
 <p class="XXX">...
 

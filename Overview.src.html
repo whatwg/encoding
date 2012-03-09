@@ -474,6 +474,55 @@ as that algorithm is incompatible with legacy content.
 </table>
 
 
+<h2>Decode and encode</h2>
+
+<p>To <dfn>decode</dfn> an octet stream <var title>stream</var> using
+fallback label <var title>label</var>, these steps must be run:
+
+<ol>
+ <li><p>Let <var title>encoding</var> be the result of
+ <span title=concept-encoding-get>get an encoding</span> for
+ <var title>label</var>.
+
+ <li><p>Let <var title>offset</var> be 0.
+
+ <li>
+  <p>For each of the rows in the following table, starting with the first
+  one and going down, if the first octets of <var title>stream</var> match
+  all the octets given in the first column, then set
+  <var title>encoding</var> to the
+  <span title=concept-encoding>encoding</span> given in the cell in the
+  second column of that row, and set <var title>offset</var> to the offset
+  given the in the cell in the third column of that row.
+
+  <table>
+   <tr><th>Byte order mark<th>Encoding<th>Offset
+   <tr><td>0xFF 0xFE<td><span>utf-16</span><td>2
+   <tr><td>0xFE 0xFF<td><span>utf-16be</span><td>2
+   <tr><td>0xEF 0xBB 0xBF<td><span>utf-8</span><td>3
+  </table>
+
+  <p class=note>For compatibility with deployed content, the byte order mark
+  is considered more authoritative than anything else.
+
+ <li><p>Return the result of running <var title>encoding</var>'s
+ <span>decoder</span> with <span>octet pointer</span> set to
+ <var title>offset</var>, on <var title>stream</var>.
+</ol>
+
+<p>To <dfn>encode</dfn> a code point stream <var title>stream</var> using
+label <var title>label</var>, these steps must be run:
+
+<ol>
+ <li><p>Let <var title>encoding</var> be the result of
+ <span title=concept-encoding-get>get an encoding</span> for
+ <var title>label</var>.
+
+ <li><p>Return the result of running <var title>encoding</var>'s
+ <span>encoder</span> on <var title>stream</var>.
+</ol>
+
+
 <h2>The encoding</h2>
 
 <p>New content and formats must exclusively use the <span>utf-8</span>
