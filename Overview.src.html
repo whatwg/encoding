@@ -126,7 +126,7 @@ four-or-more digit hexadecimal value, typically preceded by "U+". E.g. U+0020.
 
 <p>The <dfn>fallback code point</dfn> is U+FFFD.
 
-<p>An octet is referenced as a double-digit hexadecimal value, typically
+<p>A byte is referenced as a double-digit hexadecimal value, typically
 preceded by "0x". E.g. 0xAA.
 
 <p>The <dfn>space characters</dfn>, for the purposes of this specification,
@@ -144,13 +144,13 @@ considered to also match.
 <h2>Encodings</h2>
 
 <p>An <dfn title=concept-encoding>encoding</dfn> defines a mapping from a
-code point to one or more octets (and vice versa). Each
+code point to one or more bytes (and vice versa). Each
 <span title=concept-encoding>encoding</span> has a
 <dfn title=concept-encoding-name>name</dfn>, one or more
 <dfn title=concept-encoding-label>labels</dfn>, and potentially a
 <dfn title=concept-encoding-map>map</dfn>. A
 <span title=concept-encoding-map>map</span> is a newline-separated (U+000A)
-resource, where each line starts with one or more octets, followed by a
+resource, where each line starts with one or more bytes, followed by a
 U+0009 code point, followed by a code point, followed by a U+0009
 code point, followed by either the Unicode Character Name or
 &lt;Private Use>, which is preceded by a U+0023 code point.
@@ -158,28 +158,28 @@ code point, followed by either the Unicode Character Name or
 <p>Each <span title=concept-encoding>encoding</span> also has a
 <dfn>decoder</dfn> and <dfn>encoder</dfn> algorithm.
 
-<p>A <span>decoder</span> algorithm takes a stream of octets and emits a
+<p>A <span>decoder</span> algorithm takes a stream of bytes and emits a
 stream of code points. It has an associated
 <dfn>fatal flag</dfn> that when set will make the algorithm return failure
-if an invalid octet or octet sequence is in the stream. The
-<dfn>octet pointer</dfn> is initially zero, pointing to the first octet in
+if an invalid byte or byte sequence is in the stream. The
+<dfn>byte pointer</dfn> is initially zero, pointing to the first byte in
 the stream. It cannot be negative. It can be increased and decreased to
-point to other octets in the stream. The <dfn>EOF octet</dfn> is a
-conceptual octet representing the last octet in a stream. The
-<span>octet pointer</span> cannot point beyond the <span>EOF octet</span>.
+point to other bytes in the stream. The <dfn>EOF byte</dfn> is a
+conceptual byte representing the last byte in a stream. The
+<span>byte pointer</span> cannot point beyond the <span>EOF byte</span>.
 The <dfn>EOF code point</dfn> is a conceptual code point that is emitted
-once the stream of octets is handled in its entirety. Apart from returning
+once the stream of bytes is handled in its entirety. Apart from returning
 failure, a <span>decoder</span> can end by emitting a code point, or the
 word continue. Unless it returns failure, or the <span>EOF code point</span>
 is emitted, the <span>decoder</span> algorithm must be invoked again.
 
 <p>An <span>encoder</span> algorithm takes a
-stream of code points and emits a stream of octets. It will fail when
-a code point is passed for which it does not have a corresponding octet or
-octet sequence. Analogously to a <span>decoder</span>, it has a
+stream of code points and emits a stream of bytes. It will fail when
+a code point is passed for which it does not have a corresponding byte or
+byte sequence. Analogously to a <span>decoder</span>, it has a
 <dfn>code point pointer</dfn>. Again analogously, as long as the
-<span>EOF octet</span> is not emitted, or failure is returned, the
-<span>encoder</span> algorithm must be invoked for each octet emitted.
+<span>EOF byte</span> is not emitted, or failure is returned, the
+<span>encoder</span> algorithm must be invoked for each byte emitted.
 
 <p class=note>The <span>fatal flag</span> is for XML, which
 considers such an error a well-formed violation. Other formats such as HTML
@@ -233,7 +233,7 @@ as that algorithm is incompatible with legacy content.
   <tr><td>"<code title>utf-8</code>"
   <tr><td>"<code title>utf8</code>"
  <tbody>
-  <tr><th colspan=2>Legacy single-octet encodings
+  <tr><th colspan=2>Legacy single-byte encodings
   <tr>
    <td rowspan=2><span>ibm864</span>
    <td>"<code title>cp864</code>"
@@ -393,7 +393,7 @@ as that algorithm is incompatible with legacy content.
    <td>"<code title>x-mac-cyrillic</code>"
   <tr><td>"<code title>x-mac-ukrainian</code>"
  <tbody>
-  <tr><th colspan=2>Legacy multi-octet Chinese (simplified) encodings
+  <tr><th colspan=2>Legacy multi-byte Chinese (simplified) encodings
   <tr>
    <td rowspan=9><span>gbk</span>
    <td>"<code title>chinese</code>"
@@ -416,7 +416,7 @@ as that algorithm is incompatible with legacy content.
    <td>"<code title>iso-2022-cn</code>"
   <tr><td>"<code title>iso-2022-cn-ext</code>"
  <tbody>
-  <tr><th colspan=2>Legacy multi-octet Chinese (traditional) encodings
+  <tr><th colspan=2>Legacy multi-byte Chinese (traditional) encodings
   <tr>
    <td rowspan=4><span>big5</span>
    <td>"<code title>big5</code>"
@@ -427,7 +427,7 @@ as that algorithm is incompatible with legacy content.
    <td><span>big5-hkscs</span>
    <td>"<code title>big5-hkscs</code>"
  <tbody>
-  <tr><th colspan=2>Legacy multi-octet Japanese encodings
+  <tr><th colspan=2>Legacy multi-byte Japanese encodings
   <tr>
    <td rowspan=3><span>euc-jp</span>
    <td>"<code title>cseucjpkdfmtjapanese</code>"
@@ -446,7 +446,7 @@ as that algorithm is incompatible with legacy content.
   <tr><td>"<code title>windows-31j</code>"
   <tr><td>"<code title>x-sjis</code>"
  <tbody>
-  <tr><th colspan=2>Legacy multi-octet Korean encodings
+  <tr><th colspan=2>Legacy multi-byte Korean encodings
   <tr>
    <td rowspan=9><span>euc-kr</span>
    <td>"<code title>csksc56011987</code>"
@@ -476,7 +476,7 @@ as that algorithm is incompatible with legacy content.
 
 <h2>Decode and encode</h2>
 
-<p>To <dfn>decode</dfn> an octet stream <var title>stream</var> using
+<p>To <dfn>decode</dfn> a byte stream <var title>stream</var> using
 fallback label <var title>label</var>, these steps must be run:
 
 <ol>
@@ -488,8 +488,8 @@ fallback label <var title>label</var>, these steps must be run:
 
  <li>
   <p>For each of the rows in the following table, starting with the first
-  one and going down, if the first octets of <var title>stream</var> match
-  all the octets given in the first column, then set
+  one and going down, if the first bytes of <var title>stream</var> match
+  all the bytes given in the first column, then set
   <var title>encoding</var> to the
   <span title=concept-encoding>encoding</span> given in the cell in the
   second column of that row, and set <var title>offset</var> to the offset
@@ -506,7 +506,7 @@ fallback label <var title>label</var>, these steps must be run:
   is considered more authoritative than anything else.
 
  <li><p>Return the result of running <var title>encoding</var>'s
- <span>decoder</span> with <span>octet pointer</span> set to
+ <span>decoder</span> with <span>byte pointer</span> set to
  <var title>offset</var>, on <var title>stream</var>.
 </ol>
 
@@ -536,100 +536,100 @@ http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#
 Unicode
 -->
 
-<p>The <dfn>utf-8 code point</dfn>, <dfn>utf-8 octets seen</dfn>,
-<dfn>utf-8 octets needed</dfn>, and <dfn>utf-8 lower boundary</dfn> concepts
+<p>The <dfn>utf-8 code point</dfn>, <dfn>utf-8 bytes seen</dfn>,
+<dfn>utf-8 bytes needed</dfn>, and <dfn>utf-8 lower boundary</dfn> concepts
 are all initially 0.
 
 <p>The <dfn>utf-8 decoder</dfn> (<span>decoder</span> for <span>utf-8</span>) is:
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
- <span>utf-8 octets needed</span> is not 0, and the <span>fatal flag</span>
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
+ <span>utf-8 bytes needed</span> is not 0, and the <span>fatal flag</span>
  is set, return failure.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
- <span>utf-8 octets needed</span> is not 0, emit the
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
+ <span>utf-8 bytes needed</span> is not 0, emit the
  <span>fallback code point</span>, followed by the
  <span>EOF code point</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit the
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit the
  <span>EOF code point</span>.
 
- <li><p>Increase the <span>octet pointer</span>.
+ <li><p>Increase the <span>byte pointer</span>.
 
  <li>
-  <p>If <span>utf-8 octets needed</span> is 0, based on
-  <var title>octet</var>:
+  <p>If <span>utf-8 bytes needed</span> is 0, based on
+  <var title>byte</var>:
 
   <dl class=switch>
    <dt>0x00 to 0x7F
-   <dd><p>Emit <var title>octet</var> as code point.
+   <dd><p>Emit <var title>byte</var> as code point.
 
    <dt>0xC0 to 0xDF
-   <dd><p>Set <span>utf-8 octets needed</span> to 1,
+   <dd><p>Set <span>utf-8 bytes needed</span> to 1,
    <span>utf-8 lower boundary</span> to 0x80, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xC0.
+   <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xC0.
 
    <dt>0xE0 to 0xEF
-   <dd><p>Set <span>utf-8 octets needed</span> to 2,
+   <dd><p>Set <span>utf-8 bytes needed</span> to 2,
    <span>utf-8 lower boundary</span> to 0x800, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xE0.
+   <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xE0.
 
    <dt>0xF0 to 0xF7
-   <dd><p>Set <span>utf-8 octets needed</span> to 3,
+   <dd><p>Set <span>utf-8 bytes needed</span> to 3,
    <span>utf-8 lower boundary</span> to 0x10000, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xF0.
+   <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xF0.
 
    <dt>0xF8 to 0xFB
-   <dd><p>Set <span>utf-8 octets needed</span> to 4,
+   <dd><p>Set <span>utf-8 bytes needed</span> to 4,
    <span>utf-8 lower boundary</span> to 0x200000, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xF8.
+   <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xF8.
 
    <dt>0xFC to 0xFD
-   <dd><p>Set <span>utf-8 octets needed</span> to 5,
+   <dd><p>Set <span>utf-8 bytes needed</span> to 5,
    <span>utf-8 lower boundary</span> to 0x4000000, and
-   <span>utf-8 code point</span> to <var title>octet</var> &minus; 0xFC.
+   <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xFC.
 
    <dt>Otherwise
    <dd><p>Emit the <span>fallback code point</span>.
   </dl>
 
-  <p>Then (<var title>octet</var> was in the range 0xC0 to 0xFD) set
+  <p>Then (<var title>byte</var> was in the range 0xC0 to 0xFD) set
   <span>utf-8 code point</span> to <span>utf-8 code point</span> &times;
-  64<sup><span>utf-8 octets needed</span></sup> and continue.
+  64<sup><span>utf-8 bytes needed</span></sup> and continue.
 
  <li>
-  <p>If <var title>octet</var> is not in the range 0x80 to 0xBF, run these
+  <p>If <var title>byte</var> is not in the range 0x80 to 0xBF, run these
   substeps:
 
   <ol>
    <li><p>If the <span>fatal flag</span> is set, return failure.
 
    <li><p>Set <span>utf-8 code point</span>,
-   <span>utf-8 octets needed</span>, <span>utf-8 octets seen</span>, and
+   <span>utf-8 bytes needed</span>, <span>utf-8 bytes seen</span>, and
    <span>utf-8 lower boundary</span> to 0.
 
-   <li><p>Decrease the <span>octet pointer</span> by one.
+   <li><p>Decrease the <span>byte pointer</span> by one.
 
    <li><p>Emit the <span>fallback code point</span>.
   </ol>
 
  <li>
-  <p>Increase <span>utf-8 octets seen</span> by one and set
+  <p>Increase <span>utf-8 bytes seen</span> by one and set
   <span>utf-8 code point</span> to
-  <span>utf-8 code point</span> + (<var title>octet</var> - 0x80) &times;
-  64<sup><span>utf-8 octets needed</span> &minus; <span>utf-8 octets seen</span></sup>
+  <span>utf-8 code point</span> + (<var title>byte</var> - 0x80) &times;
+  64<sup><span>utf-8 bytes needed</span> &minus; <span>utf-8 bytes seen</span></sup>
 
- <li><p>If <span>utf-8 octets seen</span> is not equal to
- <span>utf-8 octets needed</span>, continue.
+ <li><p>If <span>utf-8 bytes seen</span> is not equal to
+ <span>utf-8 bytes needed</span>, continue.
 
  <li><p>Let <var title>code point</var> be <span>utf-8 code point</span> and
  <var title>lower boundary</var> be <span>utf-8 lower boundary</span>
 
  <li><p>Set <span>utf-8 code point</span>,
- <span>utf-8 octets needed</span>, <span>utf-8 octets seen</span>, and
+ <span>utf-8 bytes needed</span>, <span>utf-8 bytes seen</span>, and
  <span>utf-8 lower boundary</span> to 0.
 
  <li><p>If <var title>code point</var> is equal or greater than
@@ -651,12 +651,12 @@ are all initially 0.
  return failure.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
- emit the <span>EOF octet</span>.
+ emit the <span>EOF byte</span>.
 
  <li><p>Increase the <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
- emit an octet whose value is <var title>code point</var>.
+ emit a byte whose value is <var title>code point</var>.
 
  <li>
   <p>Set <var title>count</var> and <var title>offset</var> based on the
@@ -671,7 +671,7 @@ are all initially 0.
    <dd>3 and 0xF0
   </dl>
 
- <li><p>Let <var title>octets</var> be a list of octets whose first octet is
+ <li><p>Let <var title>bytes</var> be a list of bytes whose first byte is
  <var title>code point</var> divided by
  64<sup><var title>count</var></sup> (as integers) + <var title>offset</var>.
 
@@ -682,22 +682,22 @@ are all initially 0.
    <li><p>Set <var title>temp</var> to <var title>code point</var> divided
    by 64<sup><var title>count</var> &minus; 1</sup> (as integers).
 
-   <li><p>Append to <var title>octets</var> 0x80 + the remainder of dividing
+   <li><p>Append to <var title>bytes</var> 0x80 + the remainder of dividing
    <var title>temp</var> by 64<sup><var title>count</var></sup> (as integers).
 
    <li><p>Decrease <var title>count</var> by one.
   </ol>
 
- <li><p>Emit all octets in <var title>octets</var>, in list order.
+ <li><p>Emit all bytes in <var title>bytes</var>, in list order.
 </ol>
 
 
-<h2>Legacy single-octet encodings</h2>
+<h2>Legacy single-byte encodings</h2>
 
-<p>An <span title=concept-encoding>encoding</span> where each octet is
+<p>An <span title=concept-encoding>encoding</span> where each byte is
 either a single code point or nothing, is a
-<dfn>single-octet encoding</dfn>. These are the
-<span title="single-octet encoding">single-octet encodings</span> and their
+<dfn>single-byte encoding</dfn>. These are the
+<span title="single-byte encoding">single-byte encodings</span> and their
 corresponding <span title=concept-encoding-map>map</span>:
 
 <table>
@@ -734,50 +734,50 @@ corresponding <span title=concept-encoding-map>map</span>:
 
 <hr>
 
-<p>The <dfn>single-octet decoder</dfn> (<span>decoder</span> for
-<span title="single-octet encoding">single-octet encodings</span>) is:
+<p>The <dfn>single-byte decoder</dfn> (<span>decoder</span> for
+<span title="single-byte encoding">single-byte encodings</span>) is:
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit the
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit the
  <span>EOF code point</span>.
 
- <li><p>Increase the <span>octet pointer</span> by one.
+ <li><p>Increase the <span>byte pointer</span> by one.
 
- <li><p>If <var title>octet</var> is in the range 0x00 to 0x7F, emit a code
- point whose value is <var title>octet</var>.
+ <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a code
+ point whose value is <var title>byte</var>.
 
- <li><p>If <var title>octet</var> is not in the
+ <li><p>If <var title>byte</var> is not in the
  <span title=concept-encoding-map>map</span> and the <span>fatal flag</span>
  is set, return failure.
 
- <li><p>If <var title>octet</var> is not in the
+ <li><p>If <var title>byte</var> is not in the
  <span title=concept-encoding-map>map</span>, emit the
  <span>fallback code point</span>.
 
  <li><p>Emit the code point given in the
- <span title=concept-encoding-map>map</span> for <var title>octet</var>.
+ <span title=concept-encoding-map>map</span> for <var title>byte</var>.
 </ol>
 
-<p>The <dfn>single-octet encoder</dfn> (<span>encoder</span> for
-<span title="single-octet encoding">single-octet encodings</span>) is:
+<p>The <dfn>single-byte encoder</dfn> (<span>encoder</span> for
+<span title="single-byte encoding">single-byte encodings</span>) is:
 
 <ol>
  <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
- emit the <span>EOF octet</span>.
+ emit the <span>EOF byte</span>.
 
  <li><p>Increase the <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
- emit an octet whose value is <var title>code point</var>.
+ emit a byte whose value is <var title>code point</var>.
 
  <li><p>If <var title>code point</var> is not listed in the
  <span title=concept-encoding-map>map</span>, return failure.
 
- <li><p>Emit the octet given in the
+ <li><p>Emit the byte given in the
  <span title=concept-encoding-map>map</span> for
  <var title>code point</var>.
 </ol>
@@ -785,13 +785,13 @@ corresponding <span title=concept-encoding-map>map</span>:
 <hr>
 
 <p class=note>See also:
-<a href="single-octet-research.html">single-octet research</a>.
+<a href="single-octet-research.html">single-byte research</a>.
 
-<p class=note><span>Single-octet encoding</span> map data is also available as a
+<p class=note><span>Single-byte encoding</span> map data is also available as a
 non-normative JSON resource: <a href=single-octet-encodings.json><code>single-octet-encodings.json</code></a>.
 
 
-<h2>Legacy multi-octet Chinese (simplified) encodings</h2>
+<h2>Legacy multi-byte Chinese (simplified) encodings</h2>
 
 <p>The <dfn>gbk code point</dfn> for a given number is: ...
 
@@ -829,29 +829,29 @@ the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>gbk decoder</dfn> (<span>decoder</span> for <span>gbk</span>) is:
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>gbk first</span>, <span>gbk second</span>, and <span>gbk third</span>
  are 0x00, emit the <span>EOF code point</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>, and one
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>, and one
  <span>gbk first</span>, <span>gbk second</span>, or <span>gbk third</span>
  is not 0x00, and the <span>fatal flag</span> is set, return failure.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>, and one
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>, and one
  <span>gbk first</span>, <span>gbk second</span>, or <span>gbk third</span>
  is not 0x00, set <span>gbk first</span>, <span>gbk second</span>, and
  <span>gbk third</span> to 0x00, and emit the
  <span>fallback code point</span>.
 
- <li><p>Increase the <span>octet pointer</span>.
+ <li><p>Increase the <span>byte pointer</span>.
 
  <li>
   <p>If <span>gbk third</span> is not 0x00, run these substeps:
 
   <ol>
-   <li class=XXX><p>If <var title>octet</var> is in the range 0x30 to 0x39,
+   <li class=XXX><p>If <var title>byte</var> is in the range 0x30 to 0x39,
    ... and there is a code point ...
    set <span>gbk first</span>, <span>gbk second</span>, and
    <span>gbk third</span> to 0x00, and then
@@ -859,7 +859,7 @@ the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
 
    <li><p>If the <span>fatal flag</span> is set, return failure.
 
-   <li><p>Decrease the <span>octet pointer</span> by three, set
+   <li><p>Decrease the <span>byte pointer</span> by three, set
    <span>gbk first</span>, <span>gbk second</span>, and
    <span>gbk third</span> to 0x00, and emit the
    <span>fallback code point</span>.
@@ -869,12 +869,12 @@ the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
   <p>If <span>gbk second</span> is not 0x00, run these substeps:
 
   <ol>
-   <li><p>If <var title>octet</var> is in the range 0x81 to 0xFE, set
-   <span>gbk third</span> to <var title>octet</var> and continue.
+   <li><p>If <var title>byte</var> is in the range 0x81 to 0xFE, set
+   <span>gbk third</span> to <var title>byte</var> and continue.
 
    <li><p>If the <span>fatal flag</span> is set, return failure.
 
-   <li><p>Decrease the <span>octet pointer</span> by two, set
+   <li><p>Decrease the <span>byte pointer</span> by two, set
    <span>gbk first</span> and <span>gbk second</span> to 0x00, and emit the
    <span>fallback code point</span>.
   </ol>
@@ -883,32 +883,32 @@ the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
   <p>If <span>gbk first</span> is not 0x00, run these substeps:
 
   <ol>
-   <li><p>If <var title>octet</var> is in the range 0x30 to 0x39 and the
+   <li><p>If <var title>byte</var> is in the range 0x30 to 0x39 and the
    <span>gb18030 flag</span> is set, set <span>gbk second</span> to
-   <var title>octet</var> and continue.
+   <var title>byte</var> and continue.
 
-   <li class=XXX><p>If <var title>octet</var> is in the range 0x40 to 0xFE,
+   <li class=XXX><p>If <var title>byte</var> is in the range 0x40 to 0xFE,
    ... and there is a code point ... set <span>gbk first</span> to 0x00, and
    then emit ...
 
    <li><p>If the <span>fatal flag</span> is set, return failure.
 
-   <li><p>Decrease the <span>octet pointer</span> by one, set
+   <li><p>Decrease the <span>byte pointer</span> by one, set
    <span>gbk first</span> to 0x00, and emit the
    <span>fallback code point</span>.
   </ol>
 
- <li><p>If <var title>octet</var> is in the range 0x00 to 0x7F, emit a code
- point whose value is <var title>octet</var>.
+ <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a code
+ point whose value is <var title>byte</var>.
 
  <li>
-  <p>If <var title>octet</var> is 0x80 and the <span>gb18030 flag</span> is
+  <p>If <var title>byte</var> is 0x80 and the <span>gb18030 flag</span> is
   unset, emit a code point whose value is U+20AC.
 
   <p class=XXX>Gecko emits it regardless of the <span>gb18030 flag</span>.
 
- <li><p>If <var title>octet</var> is in the range 0x81 to 0xFE, set
- <span>gbk first</span> to <var title>octet</var> and continue.
+ <li><p>If <var title>byte</var> is in the range 0x81 to 0xFE, set
+ <span>gbk first</span> to <var title>byte</var> and continue.
 
  <li><p>If the <span>fatal flag</span> is set, return failure.
 
@@ -935,25 +935,25 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>hz-gb-2312 decoder</dfn> (<span>decoder</span> for <span>hz-gb-2312</span>) is:
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>hz-gb-2312 lead</span> is 0x00, emit the
  <span>EOF code point</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
  <span>hz-gb-2312 lead</span> is not 0x00, and the <span>fatal flag</span>
  is set, return failure.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>hz-gb-2312 lead</span> is not 0x00, set <span>hz-gb-2312 lead</span>
  to 0x00 and emit the <span>fallback code point</span>.
 
- <li><p>Increase the <span>octet pointer</span>.
+ <li><p>Increase the <span>byte pointer</span>.
 
  <li>
   <p>If <span>hz-gb-2312 lead</span> is 0x7E, set
-  <span>hz-gb-2312 lead</span> to 0x00, and based on <var title>octet</var>:
+  <span>hz-gb-2312 lead</span> to 0x00, and based on <var title>byte</var>:
 
   <dl class=switch>
    <dt>0x7B<!--{-->
@@ -974,7 +974,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <dd>
     <p>If the <span>fatal flag</span> is set, return failure.
 
-    <p>Otherwise, decrease the <span>octet pointer</span> by one and emit
+    <p>Otherwise, decrease the <span>byte pointer</span> by one and emit
     the <span>fallback code point</span>.
   </dl>
 
@@ -985,40 +985,40 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
   <ol>
    <li><p class=XXX>Let <var title>code point</var> be
    <span>gbk code point</span> for ...
-   <!-- (hz-gb-2312 lead - 1) * 191 + (octet + 0x40) -->
+   <!-- (hz-gb-2312 lead - 1) * 191 + (byte + 0x40) -->
 
-   <li><p>If <var title>octet</var> is in the range 0x20 to 0x7F and
+   <li><p>If <var title>byte</var> is in the range 0x20 to 0x7F and
    <var title>code point</var> is not null, emit
    <var title>code point</var>.
 
    <li><p>If the <span>fatal flag</span> is set, return failure.
 
-   <li><p>If <var title>octet</var> is 0x0A, unset the
+   <li><p>If <var title>byte</var> is 0x0A, unset the
    <span>hz-gb-2312 flag</span>.
 
    <li><p>Emit the <span>fallback code point</span>.
   </ol>
 
- <li><p>If <var title>octet</var> is 0x7E<!--~-->, set
+ <li><p>If <var title>byte</var> is 0x7E<!--~-->, set
  <span>hz-gb-2312 lead</span> to 0x7E and continue.
 
  <li>
   <p>If the <span>hz-gb-2312 flag</span> is set:
 
   <ol>
-   <li><p>If <var title>octet</var> is in the range 0x20 to 0x7F, set
-   <span>hz-gb-2312 lead</span> to <var title>octet</var> and continue.
+   <li><p>If <var title>byte</var> is in the range 0x20 to 0x7F, set
+   <span>hz-gb-2312 lead</span> to <var title>byte</var> and continue.
 
    <li><p>If the <span>fatal flag</span> is set, return failure.
 
-   <li><p>If <var title>octet</var> is 0x0A, unset the
+   <li><p>If <var title>byte</var> is 0x0A, unset the
    <span>hz-gb-2312 flag</span>.
 
    <li><p>Emit the <span>fallback code point</span>.
   </ol>
 
- <li><p>If <var title>octet</var> is in the range 0x00 to 0x7F, emit a
- code point whose value is <var title>octet</var>.
+ <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a
+ code point whose value is <var title>byte</var>.
 
  <li><p>If the <span>fatal flag</span> is set, return failure.
 
@@ -1036,13 +1036,13 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p class=XXX>...
 
 
-<h2>Legacy multi-octet Chinese (traditional) encodings</h2>
+<h2>Legacy multi-byte Chinese (traditional) encodings</h2>
 
 
 <h3><dfn>big5</dfn></h3><!-- cp950 -->
 
-<p class=XXX>The <dfn>big5 code point</dfn> for two octets
-(<var title>octet<sub>1</sub></var>, <var title>octet<sub>2</sub></var>) is
+<p class=XXX>The <dfn>big5 code point</dfn> for two bytes
+(<var title>byte<sub>1</sub></var>, <var title>byte<sub>2</sub></var>) is
 ...
 
 <p class=XXX>Include Gecko extensions? https://bugzilla.mozilla.org/show_bug.cgi?id=310299
@@ -1053,32 +1053,32 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <!-- identical to euc-kr -->
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>big5 lead</span> is 0x00, emit the
  <span>EOF code point</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
  <span>big5 lead</span> is not 0x00, and the <span>fatal flag</span> is
  set, return failure.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
  <span>big5 lead</span> is not 0x00, set <span>big5 lead</span> to 0x00 and
  emit the <span>fallback code point</span>.
 
- <li><p>Increase the <span>octet pointer</span> by one.
+ <li><p>Increase the <span>byte pointer</span> by one.
 
- <li><p>If <span>big5 lead</span> is 0x00 and <var title>octet</var> is
+ <li><p>If <span>big5 lead</span> is 0x00 and <var title>byte</var> is
  in the range 0x00 to 0x7F, emit a code point whose value is
- <var title>octet</var>.
+ <var title>byte</var>.
 
  <li><p>If <span>big5 lead</span> is 0x00, set <span>big5 lead</span>
- to <var title>octet</var> and continue.
+ to <var title>byte</var> and continue.
 
  <li><p>Let <var title>code point</var> be the
  <span>big5 code point</span> for
- (<span>big5 lead</span>, <var title>octet</var>).
+ (<span>big5 lead</span>, <var title>byte</var>).
 
  <li><p>Set <span>big5 lead</span> to 0x00.
 
@@ -1087,8 +1087,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li><p>If the <span>fatal flag</span> is set, return failure.
 
- <li><p>If <var title>octet</var> is in the range 0x00 0x7F, decrease the
- <span>octet pointer</span> by one.
+ <li><p>If <var title>byte</var> is in the range 0x00 0x7F, decrease the
+ <span>byte pointer</span> by one.
 
  <li><p>Emit the <span>fallback code point</span>.
 </ol>
@@ -1106,45 +1106,45 @@ http://www.google.com/support/forum/p/Chrome/thread?tid=466c210af3fb6d08
 http://w3techs.com/technologies/details/en-b5hkscs/all/all
 
 
-<h2>Legacy multi-octet Japanese encodings</h2>
+<h2>Legacy multi-byte Japanese encodings</h2>
 
 <p class=XXX>The <dfn>jis code point</dfn> for a given number is: ...</p>
 
-<p>The <dfn>jis0208 index</dfn> for a given <var title>octet</var> is:
+<p>The <dfn>jis0208 index</dfn> for a given <var title>byte</var> is:
 <!-- only valid in range A1-FE -->
 
 <dl class=switch>
  <dt>0xA1 to 0xA2
- <dd><!--8648-->(<var title>octet</var> &minus; 0x45) &times; 94
+ <dd><!--8648-->(<var title>byte</var> &minus; 0x45) &times; 94
 
  <dt>0xA3 to 0xA8
- <dd><!--376-->(<var title>octet</var> &minus; 0x9F) &times; 94
+ <dd><!--376-->(<var title>byte</var> &minus; 0x9F) &times; 94
 
  <dt>0xAD
  <dd>940
 
  <dt>0xB1 to 0xF4
- <dd><!--1222-->(<var title>octet</var> &minus; 0xA4) &times; 94
+ <dd><!--1222-->(<var title>byte</var> &minus; 0xA4) &times; 94
 
  <dt>0xF9 to 0xFC
- <dd><!--7708-->(<var title>octet</var> &minus; 0xA7) &times; 94
+ <dd><!--7708-->(<var title>byte</var> &minus; 0xA7) &times; 94
 
  <dt>Otherwise
  <dd>null
 </dl>
 
-<p>The <dfn>jis0212 index</dfn> for a given <var title>octet</var> is:
+<p>The <dfn>jis0212 index</dfn> for a given <var title>byte</var> is:
 <!-- only valid in range A1-FE -->
 
 <dl class=switch>
  <dt>0xA2
  <dd>9400
  <dt>0xA6 to 0xA7
- <dd><!--9494-->(<var title>octet</var> &minus; 0x41) &times; 94
+ <dd><!--9494-->(<var title>byte</var> &minus; 0x41) &times; 94
  <dt>0xA9 to 0xAB
- <dd><!--9682-->(<var title>octet</var> &minus; 0x42) &times; 94
+ <dd><!--9682-->(<var title>byte</var> &minus; 0x42) &times; 94
  <dt>0xB0 to 0xED
- <dd><!--9964-->(<var title>octet</var> &minus; 0x46) &times; 94
+ <dd><!--9964-->(<var title>byte</var> &minus; 0x46) &times; 94
  <dt>Otherwise
  <dd>null
 </dl>
@@ -1152,8 +1152,8 @@ http://w3techs.com/technologies/details/en-b5hkscs/all/all
 
 <h3><dfn>euc-jp</dfn></h3>
 
-<p>The <dfn>euc-jp offset</dfn> for a given <var title>octet</var> is null
-if <var title>octet</var> &minus; 0xA1 is greater than 93 or less than 0, or
+<p>The <dfn>euc-jp offset</dfn> for a given <var title>byte</var> is null
+if <var title>byte</var> &minus; 0xA1 is greater than 93 or less than 0, or
 otherwise the result of that equation.
 
 <p>The <dfn>euc-jp first</dfn> and <dfn>euc-jp second</dfn> are 0x00.
@@ -1161,29 +1161,29 @@ otherwise the result of that equation.
 <p>The <dfn>euc-jp decoder</dfn> (<span>decoder</span> for <span>euc-jp</span>) is:
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>euc-jp first</span> and <span>euc-jp second</span> are 0x00, emit the
  <span>EOF code point</span>.
 
- <li><p>If <var title>octet</var> is either the <span>EOF octet</span> or is
+ <li><p>If <var title>byte</var> is either the <span>EOF byte</span> or is
  in the range 0x00 to 0x7F, either <span>euc-jp first</span> or
  <span>euc-jp second</span> is not 0x00, and the <span>fatal flag</span> is
  set, return failure.
 
- <li><p>If <var title>octet</var> is either the <span>EOF octet</span> or is
+ <li><p>If <var title>byte</var> is either the <span>EOF byte</span> or is
  in the range 0x00 to 0x7F, and <span>euc-jp second</span> is 0x00,
  set <span>euc-jp first</span> to 0x00 and emit the
  <span>fallback code point</span>.
 
- <li><p>If <var title>octet</var> is either the <span>EOF octet</span> or is
+ <li><p>If <var title>byte</var> is either the <span>EOF byte</span> or is
  in the range 0x00 to 0x7F, and <span>euc-jp second</span> is not 0x00, set
  <span>euc-jp first</span> and <span>euc-jp second</span> to 0x00, decrease
- the <span>octet pointer</span> by one, and emit the
+ the <span>byte pointer</span> by one, and emit the
  <span>fallback code point</span>.
 
- <li><p>Increase the <span>octet pointer</span> by one.
+ <li><p>Increase the <span>byte pointer</span> by one.
 
  <li>
   <p>If <span>euc-jp second</span> is not 0x00, run these substeps:
@@ -1192,9 +1192,9 @@ otherwise the result of that equation.
   <ol>
    <li><p>Let <var title>lead</var> be the <span>jis0212 index</span> for
    <span>euc-jp second</span> and <var title>offset</var> be the
-   <span>euc-jp offset</span> for <var title>octet</var>.
+   <span>euc-jp offset</span> for <var title>byte</var>.
 
-   <li><p>If either <var title>lead</var> or <var title>octet</var> is null,
+   <li><p>If either <var title>lead</var> or <var title>byte</var> is null,
    and the <span>fatal flag</span> is set, return failure.
 
    <li><p>If either <var title>lead</var> or <var title>offset</var> is
@@ -1213,13 +1213,13 @@ otherwise the result of that equation.
    <li><p>Emit <var title>code point</var>.
   </ol>
 
- <li><p>If <span>euc-jp first</span> is 0x8E and <var title>octet</var> is
+ <li><p>If <span>euc-jp first</span> is 0x8E and <var title>byte</var> is
  in the range 0xA1 to 0xDF, emit a code point whose value is 0xFEC0 +
- <var title>octet</var>.
+ <var title>byte</var>.
 
- <li><p>If <span>euc-jp first</span> is 0x8F and <var title>octet</var> is
+ <li><p>If <span>euc-jp first</span> is 0x8F and <var title>byte</var> is
  in the range 0xA1 to 0xFE, set <span>euc-jp second</span> to
- <var title>octet</var> and continue.
+ <var title>byte</var> and continue.
 
  <li>
   <p>If <span>euc-jp first</span> is in the range 0xA1 to 0xFE, run these
@@ -1228,7 +1228,7 @@ otherwise the result of that equation.
   <ol>
    <li><p>Let <var title>lead</var> be the <span>jis0208 index</span> for
    <span>euc-jp first</span> and <var title>offset</var> the
-   <span>euc-jp offset</span> for <var title>octet</var>.
+   <span>euc-jp offset</span> for <var title>byte</var>.
 
    <li><p>If the <span>fatal flag</span> is set and either
    <var title>lead</var> or <var title>offset</var> is null, return failure.
@@ -1249,11 +1249,11 @@ otherwise the result of that equation.
    <li><p>Emit <var title>code point</var>.
   </ol>
 
- <li><p>If <var title>octet</var> is in the range 0x00 to 0x7F, emit a
- code point whose value is <var title>octet</var>.
+ <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a
+ code point whose value is <var title>byte</var>.
 
- <li><p>If <var title>octet</var> is 0x8E, 0x8F, or in the range 0xA1 to
- 0xFE, set <span>euc-jp first</span> to <var title>octet</var> and continue.
+ <li><p>If <var title>byte</var> is 0x8E, 0x8F, or in the range 0xA1 to
+ 0xFE, set <span>euc-jp first</span> to <var title>byte</var> and continue.
 
  <li><p>If the <span>fatal flag</span> is set, return failure.
 
@@ -1275,8 +1275,8 @@ otherwise the result of that equation.
  http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
 -->
 
-<p>The <dfn>iso-2022-jp offset</dfn> for a given <var title>octet</var> is
-null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
+<p>The <dfn>iso-2022-jp offset</dfn> for a given <var title>byte</var> is
+null if <var title>byte</var> &minus; 0x21 is greater than 93 or less than
 0, or otherwise the result of that equation.
 
 <p>The <dfn>iso-2022-jp state</dfn> is initially <b title>ASCII state</b>.
@@ -1288,10 +1288,10 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 <p>The <dfn>iso-2022-jp decoder</dfn> (<span>decoder</span> for <span>iso-2022-jp</span>) is:
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is not the <span>EOF octet</span>,
- increase the <span>octet pointer</span> by one.
+ <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
+ increase the <span>byte pointer</span> by one.
 
  <li>
   <p>Based on <span>iso-2022-jp state</span>:
@@ -1300,7 +1300,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
    <dt>ASCII state
 
    <dd>
-    <p>Based on <var title>octet</var>:
+    <p>Based on <var title>byte</var>:
 
     <dl class=switch>
      <dt>0x1B
@@ -1308,9 +1308,9 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
      <b title>escape start state</b> and continue.
 
      <dt>0x00 to 0x7E
-     <dd><p>Emit a code point whose value is <var title>octet</var>.
+     <dd><p>Emit a code point whose value is <var title>byte</var>.
 
-     <dt><span>EOF octet</span>
+     <dt><span>EOF byte</span>
      <dd><p>Emit the <span>EOF code point</span>.
 
      <dt>Otherwise
@@ -1323,15 +1323,15 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
    <dt>Escape start state
    <dd>
     <ol>
-     <li><p>If <var title>octet</var> is either <!--$-->0x24 or
+     <li><p>If <var title>byte</var> is either <!--$-->0x24 or
      <!--(-->0x28, set <span>iso-2022-jp lead</span> to
-     <var title>octet</var>, <span>iso-2022-jp state</span> to
+     <var title>byte</var>, <span>iso-2022-jp state</span> to
      <b title>escape middle state</b>, and continue.
 
      <li><p>If the <span>fatal flag</span> is set, return failure.
 
-     <li><p>If <var title>octet</var> is not the <span>EOF octet</span>,
-     decrease the <span>octet pointer</span> by one.
+     <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
+     decrease the <span>byte pointer</span> by one.
 
      <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>
      and emit the <span>fallback code point</span>.
@@ -1343,28 +1343,28 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
      <li><p>Let <var title>lead</var> be <span>iso-2022-jp lead</span> and
      set <span>iso-2022-jp lead</span> to 0x00.
 
-     <li><p>If <var title>lead</var> is 0x24 and <var title>octet</var> is
+     <li><p>If <var title>lead</var> is 0x24 and <var title>byte</var> is
      either 0x40<!--@--> or 0x42<!--B-->, unset the
      <span>iso-2022-jp jis0212 flag</span>, set
      <span>iso-2022-jp state</span> to <b title>lead state</b>, and
      continue.
 
-     <li><p>If <var title>lead</var> is 0x24 and <var title>octet</var> is
+     <li><p>If <var title>lead</var> is 0x24 and <var title>byte</var> is
      0x28, set <span>iso-2022-jp state</span> to
      <b title>escape final state</b> and continue.
 
-     <li><p>If <var title>lead</var> is 0x28 and <var title>octet</var> is
+     <li><p>If <var title>lead</var> is 0x28 and <var title>byte</var> is
      either 0x42<!--B--> or 0x4A<!--J-->, set <span>iso-2022-jp state</span>
      to <b title>ASCII state</b> and continue.
 
-     <li><p>If <var title>lead</var> is 0x28 and <var title>octet</var> is
+     <li><p>If <var title>lead</var> is 0x28 and <var title>byte</var> is
      0x49<!--I-->, set <span>iso-2022-jp state</span> to
      <b title>Katakana state</b> and continue.
 
      <li><p>If the <span>fatal flag</span> is set, return failure.
 
-     <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
-     decrease <span>octet pointer</span> by one, or otherwise decrease it by
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
+     decrease <span>byte pointer</span> by one, or otherwise decrease it by
      two.
 
      <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>
@@ -1374,15 +1374,15 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
    <dt>Escape final state
    <dd>
     <ol>
-     <li><p>If <var title>octet</var> is 0x44<!--D-->, set the
+     <li><p>If <var title>byte</var> is 0x44<!--D-->, set the
      <span>iso-2022-jp jis0212 flag</span>, set
      <span>iso-2022-jp state</span> to <b title>lead state</b>, and
      continue.
 
      <li><p>If the <span>fatal flag</span> is set, return failure.
 
-     <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
-     decrease <span>octet pointer</span> by two, or otherwise decrease it by
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
+     decrease <span>byte pointer</span> by two, or otherwise decrease it by
      three.
 
      <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>
@@ -1391,7 +1391,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
    <dt>Lead state
    <dd>
-    <p>Based on <var title>octet</var>:
+    <p>Based on <var title>byte</var>:
     <dl class=switch>
      <dt>0x0A
      <dd>
@@ -1404,15 +1404,15 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
      <dd><p>Set <span>iso-2022-jp state</span> to <b title>escape state</b>
      and continue.
 
-     <dt><span>EOF octet</span>
+     <dt><span>EOF byte</span>
      <dd><p>Emit the <span>EOF code point</span>.
 
      <dt>Otherwise
      <dd>
       <p>If the <span>iso-2022-jp jis0212 flag</span> is set, set
       <span>iso-2022-jp lead</span> to the <span>jis0212 index</span> for
-      <var title>octet</var>, or otherwise set <span>iso-2022-jp lead</span>
-      to the <span>jis0208 index</span> for <var title>octet</var>.
+      <var title>byte</var>, or otherwise set <span>iso-2022-jp lead</span>
+      to the <span>jis0208 index</span> for <var title>byte</var>.
 
       <p>Then set <span>iso-2022-jp state</span> to
       <b title>trail state</b>, and continue.
@@ -1424,15 +1424,15 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
      <li><p>Set the <span>iso-2022-jp state</span> to
      <b title>lead state</b>.
 
-     <li><p>If <var title>octet</var> is the <span>EOF octet</span> and the
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span> and the
      <span>fatal flag</span> is set, return failure.
 
-     <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit
      the <span>fallback code point</span>.
 
      <li><p>Let <var title>lead</var> be the <span>iso-2022-jp lead</span>
      and <var title>offset</var> the <span>iso-2022-jp offset</span> for
-     <var title>octet</var>.
+     <var title>byte</var>.
 
      <li><p>If the <span>fatal flag</span> is set and either
      <var title>lead</var> or <var title>offset</var> is null,
@@ -1456,7 +1456,7 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
    <dt>Katakana state
    <dd>
-    <p>Based on <var title>octet</var>:
+    <p>Based on <var title>byte</var>:
     <dl class=switch>
      <dt>0x1B
      <dd><p>Set <span>iso-2022-jp state</span> to <b title>escape state</b>
@@ -1464,9 +1464,9 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
      <dt>0x21 to 0x5F
      <dd><p>Emit a code point whose value is 0xFF40 +
-     <var title>octet</var>.
+     <var title>byte</var>.
 
-     <dt><span>EOF octet</span>
+     <dt><span>EOF byte</span>
      <dd><p>Emit the <span>EOF code point</span>.
 
      <dt>Otherwise
@@ -1487,52 +1487,52 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
 <p>The <dfn>shift_jis fallback code point</dfn> is U+30FB.</p>
 
-<p>The <dfn>shift_jis lead octet index or code point</dfn> for a given
-<var title>octet</var> is:</p>
+<p>The <dfn>shift_jis lead byte index or code point</dfn> for a given
+<var title>byte</var> is:</p>
 
 <dl class=switch>
  <dt>0x81
  <dd>8648
 
  <dt>0x82 to 0x84
- <dd>(<var title>octet</var> &minus; 0x80) &times; 188
+ <dd>(<var title>byte</var> &minus; 0x80) &times; 188
 
  <dt>0x87 to 0x9F
- <dd>(<var title>octet</var> &minus; 0x82) &times; 188
+ <dd>(<var title>byte</var> &minus; 0x82) &times; 188
 
  <dt>0xA0
  <dd>0xF8F0
 
  <dt>0xA1 to 0xDF
- <dd>0xFEC0 + <var title>octet</var>
+ <dd>0xFEC0 + <var title>byte</var>
 
  <dt>0xE1 to 0xEA
- <dd>(<var title>octet</var> &minus; 0xC2) &times; 188
+ <dd>(<var title>byte</var> &minus; 0xC2) &times; 188
 
  <dt>0xED to 0xEE
- <dd>(<var title>octet</var> &minus; 0xC4) &times; 188
+ <dd>(<var title>byte</var> &minus; 0xC4) &times; 188
 
  <dt>0xF0 to 0xF9
- <dd>0xE000 + (<var title>octet</var> &minus; 0xF0) &times; 188
+ <dd>0xE000 + (<var title>byte</var> &minus; 0xF0) &times; 188
 
  <dt>0xFA to 0xFC
- <dd>(<var title>octet</var> &minus; 0xCF) &times; 188
+ <dd>(<var title>byte</var> &minus; 0xCF) &times; 188
 
   <dt>0xFD to 0xFF
-  <dd>0xF7F4 + <var title>octet</var>
+  <dd>0xF7F4 + <var title>byte</var>
 
   <dt>Otherwise
   <dd>null
 </dl>
 
-<p>The <dfn>shift_jis offset</dfn> for a given <var title>octet</var> is:
+<p>The <dfn>shift_jis offset</dfn> for a given <var title>byte</var> is:
 
 <dl class=switch>
  <dt>0x40 to 0x7E</dt>
- <dd><var title>octet</var> &minus; 0x40
+ <dd><var title>byte</var> &minus; 0x40
 
  <dt>0x80 to 0x7C</dt>
- <dd><var title>octet</var> &minus; 0x41
+ <dd><var title>byte</var> &minus; 0x41
 
  <dt>Otherwise</dt>
  <dd>null
@@ -1543,30 +1543,30 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 <p>The <dfn>shift_jis decoder</dfn> (<span>decoder</span> for <span>shift_jis</span>) is:
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>shift_jis lead</span> is 0x00, emit the
  <span>EOF code point</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
  <span>shift_jis lead</span> is not 0x00, and the <span>fatal flag</span> is
  set, return failure.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
  <span>shift_jis lead</span> is not 0x00, emit the
  <span>fallback code point</span>.
 
- <li><p>Increase the <span>octet pointer</span> by one.
+ <li><p>Increase the <span>byte pointer</span> by one.
 
- <li><p>If <span>shift_jis lead</span> is 0x00 and <var title>octet</var> is
+ <li><p>If <span>shift_jis lead</span> is 0x00 and <var title>byte</var> is
  in the range 0x00 to 0x80, emit a code point whose value is
- <var title>octet</var>.
+ <var title>byte</var>.
 
  <li><p>If <span>shift_jis lead</span> is 0x00, set
  <span>shift_jis lead</span> to the
- <span>shift_jis lead octet index or code point</span> for
- <var title>octet</var> and continue.
+ <span>shift_jis lead byte index or code point</span> for
+ <var title>byte</var> and continue.
 
  <li>
   <p>If <span>shift_jis lead</span> is either less than 0xF8F0 or null, run
@@ -1574,14 +1574,14 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
   <ol>
    <li><p>Let <var title>offset</var> be the
-   <span>shift_jis offset</span> for <var title>octet</var>.
+   <span>shift_jis offset</span> for <var title>byte</var>.
 
    <li><p>If either <var title>offset</var> or <span>shift_jis lead</span>
    is null and the <span>fatal flag</span> is set, return failure.
 
    <li><p>If <var title>offset</var> is null, set
    <span>shift_jis lead</span> to 0x00, decrease the
-   <span>octet pointer</span> by one and emit the
+   <span>byte pointer</span> by one and emit the
    <span>fallback code point</span>.
 
    <li><p>If <span>shift_jis lead</span> is equal or more than 0xE000, emit
@@ -1613,10 +1613,10 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 <ol class=XXX></ol>
 
 
-<h2>Legacy multi-octet Korean encodings</h2>
+<h2>Legacy multi-byte Korean encodings</h2>
 
-<p class=XXX>The <dfn>euc-kr code point</dfn> for two octets
-(<var title>octet<sub>1</sub></var>, <var title>octet<sub>2</sub></var>) is
+<p class=XXX>The <dfn>euc-kr code point</dfn> for two bytes
+(<var title>byte<sub>1</sub></var>, <var title>byte<sub>2</sub></var>) is
 ...
 
 <h3><dfn>euc-kr</dfn></h3><!-- cp949 -->
@@ -1627,32 +1627,32 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 <!-- identical to big5 -->
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span> and
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>euc-kr lead</span> is 0x00, emit the
  <span>EOF code point</span>.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
  <span>euc-kr lead</span> is not 0x00, and the <span>fatal flag</span> is
  set, return failure.
 
- <li><p>If <var title>octet</var> is the <span>EOF octet</span>,
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
  <span>euc-kr lead</span> is not 0x00, emit the
  <span>fallback code point</span>.
 
- <li><p>Increase the <span>octet pointer</span> by one.
+ <li><p>Increase the <span>byte pointer</span> by one.
 
- <li><p>If <span>euc-kr lead</span> is 0x00 and <var title>octet</var> is
+ <li><p>If <span>euc-kr lead</span> is 0x00 and <var title>byte</var> is
  in the range 0x00 to 0x7F, emit a code point whose value is
- <var title>octet</var>.
+ <var title>byte</var>.
 
  <li><p>If <span>euc-kr lead</span> is 0x00, set <span>euc-kr lead</span>
- to <var title>octet</var> and continue.
+ to <var title>byte</var> and continue.
 
  <li><p>Let <var title>code point</var> be the
  <span>euc-kr code point</span> for
- (<span>euc-kr lead</span>, <var title>octet</var>).
+ (<span>euc-kr lead</span>, <var title>byte</var>).
 
  <li><p>Set <span>euc-kr lead</span> to 0x00.
 
@@ -1661,8 +1661,8 @@ null if <var title>octet</var> &minus; 0x21 is greater than 93 or less than
 
  <li><p>If the <span>fatal flag</span> is set, return failure.
 
- <li><p>If <var title>octet</var> is in the range 0x00 0x7F, decrease the
- <span>octet pointer</span> by one.
+ <li><p>If <var title>byte</var> is in the range 0x00 0x7F, decrease the
+ <span>byte pointer</span> by one.
 
  <li><p>Emit the <span>fallback code point</span>.
 </ol>
@@ -1685,10 +1685,10 @@ at all.-->
 <p>The <dfn>iso-2022-kr decoder</dfn> (<span>decoder</span> for <span>iso-2022-kr</span>) is:
 
 <ol>
- <li><p>Let <var title>octet</var> be <span>octet pointer</span>.
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
 
- <li><p>If <var title>octet</var> is not the <span>EOF octet</span>,
- increase the <span>octet pointer</span> by one.
+ <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
+ increase the <span>byte pointer</span> by one.
 
  <li>
   <p>Based on <span>iso-2022-kr state</span>:
@@ -1697,7 +1697,7 @@ at all.-->
    <dt>ASCII state
 
    <dd>
-    <p>Based on <var title>octet</var>:
+    <p>Based on <var title>byte</var>:
 
     <dl class=switch>
      <dt>0x0E
@@ -1708,9 +1708,9 @@ at all.-->
      <dd><p>Continue.
 
      <dt>0x00 to 0x7E
-     <dd><p>Emit a code point whose value is <var title>octet</var>.
+     <dd><p>Emit a code point whose value is <var title>byte</var>.
 
-     <dt><span>EOF octet</span>
+     <dt><span>EOF byte</span>
      <dd><p>Emit the <span>EOF code point</span>.
 
      <dt>Otherwise
@@ -1722,7 +1722,7 @@ at all.-->
 
    <dt>Lead state
    <dd>
-    <p>Based on <var title>octet</var>:
+    <p>Based on <var title>byte</var>:
     <dl class=switch>
      <dt>0x0A
      <dd>
@@ -1738,12 +1738,12 @@ at all.-->
      <dd><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>
      and continue.
 
-     <dt><span>EOF octet</span>
+     <dt><span>EOF byte</span>
      <dd><p>Emit the <span>EOF code point</span>.
 
      <dt>Otherwise
      <dd>
-      <p>Set <span>iso-2022-kr lead</span> to <var title>octet</var>, set
+      <p>Set <span>iso-2022-kr lead</span> to <var title>byte</var>, set
       <span>iso-2022-kr state</span> to <b title>trail state</b>, and
       continue.
     </dl>
@@ -1754,17 +1754,17 @@ at all.-->
      <li><p>Set the <span>iso-2022-kr state</span> to
      <b title>lead state</b>.
 
-     <li><p>If <var title>octet</var> is the <span>EOF octet</span> and the
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span> and the
      <span>fatal flag</span> is set, return failure.
 
-     <li><p>If <var title>octet</var> is the <span>EOF octet</span>, emit
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit
      the <span>fallback code point</span>.
 
      <li><p>If either <span>iso-2022-kr lead</span> or
-     <var title>octet</var> is not in the range 0x21 to 0x7E, let
+     <var title>byte</var> is not in the range 0x21 to 0x7E, let
      <var title>code point</var> be null, or otherwise let
      <var title>code point</var> be the <span>euc-kr code point</span> for
-     (<span>iso-2022-kr lead</span> + 0x80, <var title>octet</var> + 0x80).
+     (<span>iso-2022-kr lead</span> + 0x80, <var title>byte</var> + 0x80).
 
      <li><p>If <var title>code point</var> is not null, emit
      <var title>code point</var>.
@@ -1784,7 +1784,7 @@ at all.-->
 <h2>Legacy utf-16 encodings</h2>
 
 <p class=note>Contrary to the Unicode standard, checking for a BOM happens
-before an encoding to decode an octet stream is chosen.
+before an encoding to decode a byte stream is chosen.
 
 
 <h3><dfn>utf-16</dfn></h3>
