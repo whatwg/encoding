@@ -160,7 +160,8 @@ four-or-more digit hexadecimal value, typically preceded by "U+". E.g. U+0020.
 <p>The <dfn id="fallback-code-point">fallback code point</dfn> is U+FFFD.
 
 <p>A byte is referenced as a double-digit hexadecimal value, typically
-preceded by "0x". E.g. 0xAA.
+preceded by "0x". E.g. 0xAA. A byte never consists of more, nor less than
+exactly eight bits (at least as far as the web platform is concerned).
 
 <p>The <dfn id="space-characters">space characters</dfn>, for the purposes of this specification,
 are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
