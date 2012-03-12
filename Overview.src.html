@@ -476,6 +476,10 @@ as that algorithm is incompatible with legacy content.
 
 <h2>Decode and encode</h2>
 
+<p class=note>The algorithms <span>decode</span>, <span>utf-8 decode</span>,
+and <span>encode</span> are intended for usage by other specifications.
+<span>utf-8 decode</span> is to be used by new formats.
+
 <p>To <dfn>decode</dfn> a byte stream <var title>stream</var> using
 fallback label <var title>label</var>, these steps must be run:
 
@@ -508,6 +512,20 @@ fallback label <var title>label</var>, these steps must be run:
  <li><p>Return the result of running <var title>encoding</var>'s
  <span>decoder</span> with <span>byte pointer</span> set to
  <var title>offset</var>, on <var title>stream</var>.
+</ol>
+
+<p>To <dfn>utf-8 decode</dfn> a byte stream <var title>stream</var>, these
+steps must be run:
+
+<ol>
+ <li><p>Let <var title>offset</var> be 0.
+
+ <li><p>If the first three bytes of <var title>stream</var> match
+ 0xEF 0xBB 0xBF, set <var title>offset</var> to 3.
+
+ <li><p>Return the result of running the <span>utf-8 decoder</span> with
+ <span>byte pointer</span> set to <var title>offset</var>, on
+ <var title>stream</var>.
 </ol>
 
 <p>To <dfn>encode</dfn> a code point stream <var title>stream</var> using

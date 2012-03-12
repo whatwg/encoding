@@ -510,6 +510,10 @@ as that algorithm is incompatible with legacy content.
 
 <h2 id="decode-and-encode"><span class="secno">5 </span>Decode and encode</h2>
 
+<p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>,
+and <a href="#encode">encode</a> are intended for usage by other specifications.
+<a href="#utf-8-decode">utf-8 decode</a> is to be used by new formats.
+
 <p>To <dfn id="decode">decode</dfn> a byte stream <var title="">stream</var> using
 fallback label <var title="">label</var>, these steps must be run:
 
@@ -542,6 +546,20 @@ fallback label <var title="">label</var>, these steps must be run:
  <li><p>Return the result of running <var title="">encoding</var>'s
  <a href="#decoder">decoder</a> with <a href="#byte-pointer">byte pointer</a> set to
  <var title="">offset</var>, on <var title="">stream</var>.
+</ol>
+
+<p>To <dfn id="utf-8-decode">utf-8 decode</dfn> a byte stream <var title="">stream</var>, these
+steps must be run:
+
+<ol>
+ <li><p>Let <var title="">offset</var> be 0.
+
+ <li><p>If the first three bytes of <var title="">stream</var> match
+ 0xEF 0xBB 0xBF, set <var title="">offset</var> to 3.
+
+ <li><p>Return the result of running the <a href="#utf-8-decoder">utf-8 decoder</a> with
+ <a href="#byte-pointer">byte pointer</a> set to <var title="">offset</var>, on
+ <var title="">stream</var>.
 </ol>
 
 <p>To <dfn id="encode">encode</dfn> a code point stream <var title="">stream</var> using
