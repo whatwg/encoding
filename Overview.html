@@ -160,9 +160,10 @@ four-or-more digit hexadecimal value, typically preceded by "U+". E.g. U+0020.
 
 <p>The <dfn id="fallback-code-point">fallback code point</dfn> is U+FFFD.
 
-<p>A byte is referenced as a double-digit hexadecimal value, typically
-preceded by "0x". E.g. 0xAA. A byte never consists of more, nor less than
-exactly eight bits (at least as far as the web platform is concerned).
+<p>A <dfn id="byte">byte</dfn> is referenced as a double-digit hexadecimal value,
+typically preceded by "0x". E.g. 0xAA. A byte never consists of more, nor
+less than exactly eight bits (at least as far as the web platform is
+concerned).
 
 <p>The <dfn id="space-characters">space characters</dfn>, for the purposes of this specification,
 are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
@@ -214,7 +215,8 @@ a code point is passed for which it does not have a corresponding byte or
 byte sequence. Analogously to a <a href="#decoder">decoder</a>, it has a
 <dfn id="code-point-pointer">code point pointer</dfn>. Again analogously, as long as the
 <a href="#eof-byte">EOF byte</a> is not emitted, or failure is returned, the
-<a href="#encoder">encoder</a> algorithm must be invoked for each byte emitted.
+<a href="#encoder">encoder</a> algorithm must be invoked for each byte or sequence of
+bytes emitted.
 
 <p class="note">The <a href="#fatal-flag">fatal flag</a> is for XML, which
 considers such an error a well-formed violation. Other formats such as HTML
@@ -720,7 +722,7 @@ are all initially 0.
    <li><p>Decrease <var title="">count</var> by one.
   </ol>
 
- <li><p>Emit all bytes in <var title="">bytes</var>, in list order.
+ <li><p>Emit a sequence of bytes <var title="">bytes</var>, in list order.
 </ol>
 
 
@@ -1894,10 +1896,63 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
  <li><p>Emit code point <var title="">code point</var>.
 </ol>
 
+<p>To <dfn id="convert-a-code-unit-to-bytes">convert a <var title="">code unit</var> to bytes</dfn> run these steps:
+
+<ol>
+ <li><p>Let <var title="">byte1</var> be the arithmetic right shift of
+ <var title="">code point</var> by 8.
+
+ <li><p>Let <var title="">byte2</var> be <var title="">code point</var> bitwise OR
+ 0x00FF.
+
+ <li>
+  <p>Then return the bytes in order:
+
+  <dl class="switch">
+   <dt><a href="#utf-16be-flag">utf-16be flag</a> is set
+   <dd><p><var title="">byte1</var>, then <var title="">byte2</var>.
+   <dt><a href="#utf-16be-flag">utf-16be flag</a> is unset
+   <dd><p><var title="">byte2</var>, then <var title="">byte1</var>.
+  </dl>
+</ol>
+
+<p>The <dfn id="utf-16-encoder">utf-16 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-16">utf-16</a>) is:
+
+<ol>
+ <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+
+ <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF,
+ return failure.
+
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-byte">EOF byte</a>.
+
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+
+ <li><p>If <var title="">code point</var> is in the range 0x00 to 0xFFFF, emit
+ the sequence resulting of
+ <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>.
+
+ <li><p>Let <var title="">lead</var> be
+ (<var title="">code point</var> − 0x10000) divided by 0x400 + 0xD800,
+ <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a>.
+
+ <li><p>Let <var title="">trail</var> be the remainder of dividing
+ (<var title="">code point</var> − 0x10000) by 0x400 + 0xDC00,
+ <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a>.
+
+ <li><p>Emit a sequence of bytes that consists of <var title="">lead</var>
+ followed by <var title="">trail</var>.
+</ol>
+
+
 <h3 id="utf-16be"><span class="secno">12.2 </span><dfn>utf-16be</dfn></h3>
 
 <p>The <dfn id="utf-16be-decoder">utf-16be decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-16be">utf-16be</a>)
 is the <a href="#utf-16-decoder">utf-16 decoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
+
+<p>The <dfn id="utf-16be-encoder">utf-16be encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-16be">utf-16be</a>)
+is the <a href="#utf-16-encoder">utf-16 encoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
 
 
 <h2 class="no-num" id="references">References</h2>
