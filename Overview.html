@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-9-march-2012">Living Draft — 9 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-12-march-2012">Living Draft — 12 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-9 March 2012, the editors have made this specification available
+12 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -92,9 +92,10 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#legacy-single-byte-encodings"><span class="secno">7 </span>Legacy single-byte encodings</a></li>
  <li><a href="#legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">8 </span>Legacy multi-byte Chinese (simplified) encodings</a>
   <ol>
-   <li><a href="#gbk-and-gb18030"><span class="secno">8.1 </span>gbk and gb18030</a></li>
-   <li><a href="#hz-gb-2312"><span class="secno">8.2 </span>hz-gb-2312</a></li>
-   <li><a href="#iso-2022-cn"><span class="secno">8.3 </span>iso-2022-cn</a></ol></li>
+   <li><a href="#gbk"><span class="secno">8.1 </span>gbk</a></li>
+   <li><a href="#gb18030"><span class="secno">8.2 </span>gb18030</a></li>
+   <li><a href="#hz-gb-2312"><span class="secno">8.3 </span>hz-gb-2312</a></li>
+   <li><a href="#iso-2022-cn"><span class="secno">8.4 </span>iso-2022-cn</a></ol></li>
  <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (traditional) encodings</a>
   <ol>
    <li><a href="#big5"><span class="secno">9.1 </span>big5</a></li>
@@ -429,7 +430,7 @@ as that algorithm is incompatible with legacy content.
  <tbody>
   <tr><th colspan="2">Legacy multi-byte Chinese (simplified) encodings
   <tr>
-   <td rowspan="9"><a href="#gbk-and-gb18030">gbk</a>
+   <td rowspan="9"><a href="#gbk">gbk</a>
    <td>"<code title="">chinese</code>"
   <tr><td>"<code title="">csgb2312</code>"
   <tr><td>"<code title="">csiso58gb231280</code>"
@@ -443,7 +444,7 @@ as that algorithm is incompatible with legacy content.
    <td><a href="#hz-gb-2312">hz-gb-2312</a>
    <td>"<code title="">hz-gb-2312</code>"
   <tr>
-   <td><a href="#gbk-and-gb18030">gb18030</a>
+   <td><a href="#gb18030">gb18030</a>
    <td>"<code title="">gb18030</code>"
   <tr>
    <td rowspan="2"><a href="#iso-2022-cn">iso-2022-cn</a>
@@ -830,7 +831,7 @@ non-normative JSON resource: <a href="single-byte-encodings.json"><code>single-b
 <p>The <dfn id="gbk-code-point">gbk code point</dfn> for a given number is: ...
 
 
-<h3 id="gbk-and-gb18030"><span class="secno">8.1 </span><dfn>gbk</dfn> and <dfn>gb18030</dfn></h3>
+<h3 id="gbk"><span class="secno">8.1 </span><dfn>gbk</dfn></h3>
 
 <p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It can only be set
 by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-encoder">gb18030 encoder</a>.
@@ -857,10 +858,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
 <p>The <dfn id="gbk-first">gbk first</dfn>, <dfn id="gbk-second">gbk second</dfn>, and
 <dfn id="gbk-third">gbk third</dfn>, are all initially 0x00.
 
-<p>The <dfn id="gb18030-decoder">gb18030 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gbk-and-gb18030">gb18030</a>) is
-the <a href="#gbk-decoder">gbk decoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
-
-<p>The <dfn id="gbk-decoder">gbk decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gbk-and-gb18030">gbk</a>) is:
+<p>The <dfn id="gbk-decoder">gbk decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gbk">gbk</a>) is:
 
 <ol>
  <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
@@ -949,15 +947,20 @@ the <a href="#gbk-decoder">gbk decoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
 </ol>
 
-<p>The <dfn id="gb18030-encoder">gb18030 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gbk-and-gb18030">gb18030</a>) is
-the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
-
-<p>The <dfn id="gbk-encoder">gbk encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gbk-and-gb18030">gbk</a>) is:
+<p>The <dfn id="gbk-encoder">gbk encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gbk">gbk</a>) is:
 
 <ol class="XXX"></ol>
 
+<h3 id="gb18030"><span class="secno">8.2 </span><dfn>gb18030</dfn></h3>
 
-<h3 id="hz-gb-2312"><span class="secno">8.2 </span><dfn>hz-gb-2312</dfn></h3>
+<p>The <dfn id="gb18030-decoder">gb18030 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gb18030">gb18030</a>) is
+the <a href="#gbk-decoder">gbk decoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
+
+<p>The <dfn id="gb18030-encoder">gb18030 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gb18030">gb18030</a>) is
+the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
+
+
+<h3 id="hz-gb-2312"><span class="secno">8.3 </span><dfn>hz-gb-2312</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1842
  http://tools.ietf.org/html/rfc1843
@@ -1064,7 +1067,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <ol class="XXX"></ol>
 
 
-<h3 id="iso-2022-cn"><span class="secno">8.3 </span><dfn>iso-2022-cn</dfn></h3>
+<h3 id="iso-2022-cn"><span class="secno">8.4 </span><dfn>iso-2022-cn</dfn></h3>
 <!-- http://tools.ietf.org/html/rfc1922 -->
 
 <p class="XXX">...
@@ -1823,12 +1826,81 @@ before an encoding to decode a byte stream is chosen.
 
 <h3 id="utf-16"><span class="secno">12.1 </span><dfn>utf-16</dfn></h3>
 
-<p class="XXX">AKA utf-16le
+<p>The <dfn id="utf-16-lead-byte">utf-16 lead byte</dfn> and <dfn id="utf-16-lead-surrogate">utf-16 lead surrogate</dfn>
+are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initially unset.
 
+<p>The <dfn id="utf-16-decoder">utf-16 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-16">utf-16</a>) is:
+
+<ol>
+ <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+
+ <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
+ <a href="#utf-16-lead-byte">utf-16 lead byte</a> and <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> are
+ null, emit the <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, either
+ <a href="#utf-16-lead-byte">utf-16 lead byte</a> or <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> is not
+ null, and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+ <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, and either
+ <a href="#utf-16-lead-byte">utf-16 lead byte</a> or <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> is not
+ null, emit the <a href="#fallback-code-point">fallback code point</a>, and then emit the
+ <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+
+ <li><p>If <a href="#utf-16-lead-byte">utf-16 lead byte</a> is null, set
+ <a href="#utf-16-lead-byte">utf-16 lead byte</a> to <var title="">byte</var> and continue.
+
+ <li>
+  <p>Let <var title="">code point</var> be the result of:
+
+  <dl class="switch">
+   <dt><a href="#utf-16be-flag">utf-16be flag</a> is set
+   <dd><p>The arithmetic left shift of <a href="#utf-16-lead-byte">utf-16 lead byte</a> by 8 +
+   <var title="">byte</var>.
+   <dt><a href="#utf-16be-flag">utf-16be flag</a> is unset
+   <dd><p>The arithmetic left shift of <var title="">byte</var> by 8 +
+   <a href="#utf-16-lead-byte">utf-16 lead byte</a>.
+  </dl>
+
+  <p>Then set <a href="#utf-16-lead-byte">utf-16 lead byte</a> to null.
+
+ <li>
+  <p>If <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> is not null, let
+  <var title="">lead surrogate</var> be <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a>, set
+  <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to null, and then run these substeps:
+
+  <ol>
+   <li><p>If <var title="">code point</var> is in the range U+DC00 to U+DFFF,
+   emit a code point whose value is
+   0x10000 + (<var title="">lead surrogate</var> − 0xD800) × 0x400 + (<var title="">code point</var> − 0xDC00).
+
+   <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+   <li><p>Decrease the <a href="#byte-pointer">byte pointer</a> by two and emit the
+   <a href="#fallback-code-point">fallback code point</a>.
+   <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
+  </ol>
+
+ <li><p>If <var title="">code point</var> is in the range U+D800 to U+DBFF, set
+ <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to <var title="">code point</var> and
+ continue.
+
+ <li><p>If <var title="">code point</var> is in the range U+DC00 to U+DFFF and
+ the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+ <li><p>If <var title="">code point</var> is in the range U+DC00 to U+DFFF,
+ emit the <a href="#fallback-code-point">fallback code point</a>.
+ <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
+
+ <li><p>Emit code point <var title="">code point</var>.
+</ol>
 
 <h3 id="utf-16be"><span class="secno">12.2 </span><dfn>utf-16be</dfn></h3>
 
-<p class="XXX">...
+<p>The <dfn id="utf-16be-decoder">utf-16be decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-16be">utf-16be</a>)
+is the <a href="#utf-16-decoder">utf-16 decoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
 
 
 <h2 class="no-num" id="references">References</h2>

@@ -797,7 +797,7 @@ non-normative JSON resource: <a href=single-byte-encodings.json><code>single-byt
 <p>The <dfn>gbk code point</dfn> for a given number is: ...
 
 
-<h3><dfn>gbk</dfn> and <dfn>gb18030</dfn></h3>
+<h3><dfn>gbk</dfn></h3>
 
 <p>The <dfn>gb18030 flag</dfn> flag is initially unset. It can only be set
 by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
@@ -823,9 +823,6 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
 
 <p>The <dfn>gbk first</dfn>, <dfn>gbk second</dfn>, and
 <dfn>gbk third</dfn>, are all initially 0x00.
-
-<p>The <dfn>gb18030 decoder</dfn> (<span>decoder</span> for <span>gb18030</span>) is
-the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
 
 <p>The <dfn>gbk decoder</dfn> (<span>decoder</span> for <span>gbk</span>) is:
 
@@ -916,12 +913,17 @@ the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
  <li><p>Emit the <span>fallback code point</span>.
 </ol>
 
-<p>The <dfn>gb18030 encoder</dfn> (<span>encoder</span> for <span>gb18030</span>) is
-the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
-
 <p>The <dfn>gbk encoder</dfn> (<span>encoder</span> for <span>gbk</span>) is:
 
 <ol class=XXX></ol>
+
+<h3><dfn>gb18030</dfn></h3>
+
+<p>The <dfn>gb18030 decoder</dfn> (<span>decoder</span> for <span>gb18030</span>) is
+the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
+
+<p>The <dfn>gb18030 encoder</dfn> (<span>encoder</span> for <span>gb18030</span>) is
+the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
 
 <h3><dfn>hz-gb-2312</dfn></h3>
@@ -1790,12 +1792,81 @@ before an encoding to decode a byte stream is chosen.
 
 <h3><dfn>utf-16</dfn></h3>
 
-<p class=XXX>AKA utf-16le
+<p>The <dfn>utf-16 lead byte</dfn> and <dfn>utf-16 lead surrogate</dfn>
+are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
 
+<p>The <dfn>utf-16 decoder</dfn> (<span>decoder</span> for <span>utf-16</span>) is:
+
+<ol>
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
+ <span>utf-16 lead byte</span> and <span>utf-16 lead surrogate</span> are
+ null, emit the <span>EOF code point</span>.
+
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>, either
+ <span>utf-16 lead byte</span> or <span>utf-16 lead surrogate</span> is not
+ null, and the <span>fatal flag</span> is set, return failure.
+
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>, and either
+ <span>utf-16 lead byte</span> or <span>utf-16 lead surrogate</span> is not
+ null, emit the <span>fallback code point</span>, and then emit the
+ <span>EOF code point</span>.
+
+ <li><p>Increase the <span>byte pointer</span> by one.
+
+ <li><p>If <span>utf-16 lead byte</span> is null, set
+ <span>utf-16 lead byte</span> to <var title>byte</var> and continue.
+
+ <li>
+  <p>Let <var title>code point</var> be the result of:
+
+  <dl class=switch>
+   <dt><span>utf-16be flag</span> is set
+   <dd><p>The arithmetic left shift of <span>utf-16 lead byte</span> by 8 +
+   <var title>byte</var>.
+   <dt><span>utf-16be flag</span> is unset
+   <dd><p>The arithmetic left shift of <var title>byte</var> by 8 +
+   <span>utf-16 lead byte</span>.
+  </dl>
+
+  <p>Then set <span>utf-16 lead byte</span> to null.
+
+ <li>
+  <p>If <span>utf-16 lead surrogate</span> is not null, let
+  <var title>lead surrogate</var> be <span>utf-16 lead surrogate</span>, set
+  <span>utf-16 lead surrogate</span> to null, and then run these substeps:
+
+  <ol>
+   <li><p>If <var title>code point</var> is in the range U+DC00 to U+DFFF,
+   emit a code point whose value is
+   0x10000 + (<var title>lead surrogate</var> &minus; 0xD800) &times; 0x400 + (<var title>code point</var> &minus; 0xDC00).
+
+   <li><p>If the <span>fatal flag</span> is set, return failure.
+
+   <li><p>Decrease the <span>byte pointer</span> by two and emit the
+   <span>fallback code point</span>.
+   <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
+  </ol>
+
+ <li><p>If <var title>code point</var> is in the range U+D800 to U+DBFF, set
+ <span>utf-16 lead surrogate</span> to <var title>code point</var> and
+ continue.
+
+ <li><p>If <var title>code point</var> is in the range U+DC00 to U+DFFF and
+ the <span>fatal flag</span> is set, return failure.
+
+ <li><p>If <var title>code point</var> is in the range U+DC00 to U+DFFF,
+ emit the <span>fallback code point</span>.
+ <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
+
+ <li><p>Emit code point <var title>code point</var>.
+</ol>
 
 <h3><dfn>utf-16be</dfn></h3>
 
-<p class=XXX>...
+<p>The <dfn>utf-16be decoder</dfn> (<span>decoder</span> for <span>utf-16be</span>)
+is the <span>utf-16 decoder</span> with the <span>utf-16be flag</span> set.
 
 
 <h2 class=no-num>References</h2>
