@@ -493,11 +493,11 @@ fallback label <var title>label</var>, these steps must be run:
  <li>
   <p>For each of the rows in the following table, starting with the first
   one and going down, if the first bytes of <var title>stream</var> match
-  all the bytes given in the first column, then set
-  <var title>encoding</var> to the
+  all the bytes given in the first column (ergo <var title>stream</var>
+  contains at least 2 or 3 bytes), then set <var title>encoding</var> to the
   <span title=concept-encoding>encoding</span> given in the cell in the
   second column of that row, and set <var title>offset</var> to the offset
-  given the in the cell in the third column of that row.
+  given in the cell in the third column of that row.
 
   <table>
    <tr><th>Byte order mark<th>Encoding<th>Offset
@@ -520,8 +520,8 @@ steps must be run:
 <ol>
  <li><p>Let <var title>offset</var> be 0.
 
- <li><p>If the first three bytes of <var title>stream</var> match
- 0xEF 0xBB 0xBF, set <var title>offset</var> to 3.
+ <li><p>If <var title>stream</var> contains at least three bytes and its
+ first three bytes match 0xEF 0xBB 0xBF, set <var title>offset</var> to 3.
 
  <li><p>Return the result of running the <span>utf-8 decoder</span> with
  <span>byte pointer</span> set to <var title>offset</var>, on
