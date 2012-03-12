@@ -1886,8 +1886,8 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
  <li><p>Let <var title>byte1</var> be the arithmetic right shift of
  <var title>code point</var> by 8.
 
- <li><p>Let <var title>byte2</var> be <var title>code point</var> bitwise OR
- 0x00FF.
+ <li><p>Let <var title>byte2</var> be <var title>code point</var>
+ bitwise AND 0x00FF.
 
  <li>
   <p>Then return the bytes in order:
