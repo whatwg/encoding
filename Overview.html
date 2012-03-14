@@ -1223,21 +1223,14 @@ otherwise the result of that equation.
  <a href="#euc-jp-first">euc-jp first</a> and <a href="#euc-jp-second">euc-jp second</a> are 0x00, emit the
  <a href="#eof-code-point">EOF code point</a>.
 
- <li><p>If <var title="">byte</var> is either the <a href="#eof-byte">EOF byte</a> or is
- in the range 0x00 to 0x7F, either <a href="#euc-jp-first">euc-jp first</a> or
- <a href="#euc-jp-second">euc-jp second</a> is not 0x00, and the <a href="#fatal-flag">fatal flag</a> is
- set, return failure.
+ <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and either
+ <a href="#euc-jp-first">euc-jp first</a> or <a href="#euc-jp-second">euc-jp second</a> is not 0x00, and
+ the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
- <li><p>If <var title="">byte</var> is either the <a href="#eof-byte">EOF byte</a> or is
- in the range 0x00 to 0x7F, and <a href="#euc-jp-second">euc-jp second</a> is 0x00,
- set <a href="#euc-jp-first">euc-jp first</a> to 0x00 and emit the
- <a href="#fallback-code-point">fallback code point</a>.
-
- <li><p>If <var title="">byte</var> is either the <a href="#eof-byte">EOF byte</a> or is
- in the range 0x00 to 0x7F, and <a href="#euc-jp-second">euc-jp second</a> is not 0x00, set
- <a href="#euc-jp-first">euc-jp first</a> and <a href="#euc-jp-second">euc-jp second</a> to 0x00, decrease
- the <a href="#byte-pointer">byte pointer</a> by one, and emit the
- <a href="#fallback-code-point">fallback code point</a>.
+ <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and either
+ <a href="#euc-jp-first">euc-jp first</a> or <a href="#euc-jp-second">euc-jp second</a> is not 0x00, set
+ <a href="#euc-jp-first">euc-jp first</a> and <a href="#euc-jp-second">euc-jp second</a> to 0x00 and emit
+ the <a href="#fallback-code-point">fallback code point</a>..
 
  <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
 

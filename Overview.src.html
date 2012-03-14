@@ -1189,21 +1189,14 @@ otherwise the result of that equation.
  <span>euc-jp first</span> and <span>euc-jp second</span> are 0x00, emit the
  <span>EOF code point</span>.
 
- <li><p>If <var title>byte</var> is either the <span>EOF byte</span> or is
- in the range 0x00 to 0x7F, either <span>euc-jp first</span> or
- <span>euc-jp second</span> is not 0x00, and the <span>fatal flag</span> is
- set, return failure.
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and either
+ <span>euc-jp first</span> or <span>euc-jp second</span> is not 0x00, and
+ the <span>fatal flag</span> is set, return failure.
 
- <li><p>If <var title>byte</var> is either the <span>EOF byte</span> or is
- in the range 0x00 to 0x7F, and <span>euc-jp second</span> is 0x00,
- set <span>euc-jp first</span> to 0x00 and emit the
- <span>fallback code point</span>.
-
- <li><p>If <var title>byte</var> is either the <span>EOF byte</span> or is
- in the range 0x00 to 0x7F, and <span>euc-jp second</span> is not 0x00, set
- <span>euc-jp first</span> and <span>euc-jp second</span> to 0x00, decrease
- the <span>byte pointer</span> by one, and emit the
- <span>fallback code point</span>.
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and either
+ <span>euc-jp first</span> or <span>euc-jp second</span> is not 0x00, set
+ <span>euc-jp first</span> and <span>euc-jp second</span> to 0x00 and emit
+ the <span>fallback code point</span>..
 
  <li><p>Increase the <span>byte pointer</span> by one.
 
