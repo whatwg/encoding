@@ -1207,21 +1207,18 @@ otherwise the result of that equation.
 
   <ol>
    <li><p>Let <var title>lead</var> be the <span>jis0212 index</span> for
-   <span>euc-jp second</span> and <var title>offset</var> be the
-   <span>euc-jp offset</span> for <var title>byte</var>.
-
-   <li><p>If either <var title>lead</var> or <var title>byte</var> is null,
-   and the <span>fatal flag</span> is set, return failure.
+   <span>euc-jp second</span>.
 
    <li><p>Set <span>euc-jp first</span> and <span>euc-jp second</span> to
    0x00.
 
-   <li><p>If either <var title>lead</var> or <var title>offset</var> is
-   null, emit the <span>fallback code point</span>.
+   <li><p>Let <var title>offset</var> be the <span>euc-jp offset</span> for
+   <var title>byte</var>.
 
    <li><p>Let <var title>code point</var> be the
    <span>jis code point</span> for <var title>lead</var> plus
-   <var title>offset</var>.
+   <var title>offset</var>. If either <var title>lead</var> or
+   <var title>byte</var> is null, let <var title>code point</var> be null.
 
    <li><p>If <var title>code point</var> is null and the
    <span>fatal flag</span> is set, return failure.
@@ -1271,8 +1268,8 @@ otherwise the result of that equation.
    <var title>lead</var> or <var title>offset</var> is null, let
    <var title>code point</var> be null.
 
-   <li><p>If the <span>fatal flag</span> is set and
-   <var title>code point</var> is null, return failure.
+   <li><p>If <var title>code point</var> is null and the
+   <span>fatal flag</span> is set, return failure.
 
    <li><p>If <var title>code point</var> is null, emit the
    <span>fallback code point</span>.
