@@ -1235,17 +1235,12 @@ otherwise the result of that equation.
  <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
 
  <li>
-  <p>If <a href="#euc-jp-second">euc-jp second</a> is not 0x00 and <var title="">byte</var> is
-  in the range 0xA1 to 0xFE, run these substeps:
+  <p>If <a href="#euc-jp-second">euc-jp second</a> is not 0x00, let <var title="">lead</var> be
+  the <a href="#jis0212-index">jis0212 index</a> for <a href="#euc-jp-second">euc-jp second</a>, set
+  <a href="#euc-jp-second">euc-jp second</a> to 0x00 and run these substeps:
   <!--euc-jp first must be 0x8E-->
 
   <ol>
-   <li><p>Let <var title="">lead</var> be the <a href="#jis0212-index">jis0212 index</a> for
-   <a href="#euc-jp-second">euc-jp second</a>.
-
-   <li><p>Set <a href="#euc-jp-first">euc-jp first</a> and <a href="#euc-jp-second">euc-jp second</a> to
-   0x00.
-
    <li><p>Let <var title="">offset</var> be the <a href="#euc-jp-offset">euc-jp offset</a> for
    <var title="">byte</var>.
 
@@ -1257,43 +1252,29 @@ otherwise the result of that equation.
    <li><p>If <var title="">code point</var> is null and the
    <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
+   <li><p>If <var title="">code point</var> is null and <var title="">byte</var>
+   is not in the range 0xA1 to 0xFE, decrease <a href="#byte-pointer">byte pointer</a> by
+   one.
+
    <li><p>If <var title="">code point</var> is null, emit the
    <a href="#fallback-code-point">fallback code point</a>.
 
    <li><p>Emit <var title="">code point</var>.
   </ol>
 
- <li>
-  <p>If <a href="#euc-jp-second">euc-jp second</a> is not 0x00, run these substeps:
-
-  <ol>
-   <li><p>Set <a href="#euc-jp-first">euc-jp first</a> and <a href="#euc-jp-second">euc-jp second</a> to
-   0x00.
-
-   <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
-
-   <li><p>Decrease the <a href="#byte-pointer">byte pointer</a> by one and emit the
-   <a href="#fallback-code-point">fallback code point</a>.
-  </ol>
-
  <li><p>If <a href="#euc-jp-first">euc-jp first</a> is 0x8E and <var title="">byte</var> is
- in the range 0xA1 to 0xDF, emit a code point whose value is 0xFEC0 +
- <var title="">byte</var>.
+ in the range 0xA1 to 0xDF, set <a href="#euc-jp-first">euc-jp first</a> to 0x00 and emit
+ a code point whose value is 0xFEC0 + <var title="">byte</var>.
 
  <li><p>If <a href="#euc-jp-first">euc-jp first</a> is 0x8F and <var title="">byte</var> is
- in the range 0xA1 to 0xFE, set <a href="#euc-jp-second">euc-jp second</a> to
- <var title="">byte</var> and continue.
+ in the range 0xA1 to 0xFE, set <a href="#euc-jp-first">euc-jp first</a> to 0x00,
+ <a href="#euc-jp-second">euc-jp second</a> to <var title="">byte</var>, and continue.
 
- <li>
-  <p>If <a href="#euc-jp-first">euc-jp first</a> and <var title="">byte</var> are both in the
-  range 0xA1 to 0xFE, run these substeps:
+ <li><p>If <a href="#euc-jp-first">euc-jp first</a> is not 0x00, let <var title="">lead</var>
+ be the <a href="#jis0208-index">jis0208 index</a> for <a href="#euc-jp-first">euc-jp first</a>, set
+ <a href="#euc-jp-first">euc-jp first</a> to 0x00, and run these substeps:
 
   <ol>
-   <li><p>Let <var title="">lead</var> be the <a href="#jis0208-index">jis0208 index</a> for
-   <a href="#euc-jp-first">euc-jp first</a>.
-
-   <li><p>Set <a href="#euc-jp-first">euc-jp first</a> to 0x00.
-
    <li><p>Let <var title="">offset</var> be the <a href="#euc-jp-offset">euc-jp offset</a> for
    <var title="">byte</var>.
 
@@ -1305,22 +1286,14 @@ otherwise the result of that equation.
    <li><p>If <var title="">code point</var> is null and the
    <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
+   <li><p>If <var title="">code point</var> is null and <var title="">byte</var>
+   is not in the range 0xA1 to 0xFE, decrease <a href="#byte-pointer">byte pointer</a> by
+   one.
+
    <li><p>If <var title="">code point</var> is null, emit the
    <a href="#fallback-code-point">fallback code point</a>.
 
    <li><p>Emit <var title="">code point</var>.
-  </ol>
-
- <li>
-  <p>If <a href="#euc-jp-first">euc-jp first</a> is not 0x00, run these substeps:
-
-  <ol>
-   <li><p>Set <a href="#euc-jp-first">euc-jp first</a> to 0x00.
-
-   <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
-
-   <li><p>Decrease the <a href="#byte-pointer">byte pointer</a> by one and emit the
-   <a href="#fallback-code-point">fallback code point</a>.
   </ol>
 
  <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a
@@ -1331,8 +1304,7 @@ otherwise the result of that equation.
 
  <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
- <li><p>Set <a href="#euc-jp-first">euc-jp first</a> to 0x00 and emit the
- <a href="#fallback-code-point">fallback code point</a>.
+ <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
 </ol>
 
 <p>The <dfn id="euc-jp-encoder">euc-jp encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#euc-jp">euc-jp</a>) is:

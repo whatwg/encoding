@@ -1201,17 +1201,12 @@ otherwise the result of that equation.
  <li><p>Increase the <span>byte pointer</span> by one.
 
  <li>
-  <p>If <span>euc-jp second</span> is not 0x00 and <var title>byte</var> is
-  in the range 0xA1 to 0xFE, run these substeps:
+  <p>If <span>euc-jp second</span> is not 0x00, let <var title>lead</var> be
+  the <span>jis0212 index</span> for <span>euc-jp second</span>, set
+  <span>euc-jp second</span> to 0x00 and run these substeps:
   <!--euc-jp first must be 0x8E-->
 
   <ol>
-   <li><p>Let <var title>lead</var> be the <span>jis0212 index</span> for
-   <span>euc-jp second</span>.
-
-   <li><p>Set <span>euc-jp first</span> and <span>euc-jp second</span> to
-   0x00.
-
    <li><p>Let <var title>offset</var> be the <span>euc-jp offset</span> for
    <var title>byte</var>.
 
@@ -1223,43 +1218,29 @@ otherwise the result of that equation.
    <li><p>If <var title>code point</var> is null and the
    <span>fatal flag</span> is set, return failure.
 
+   <li><p>If <var title>code point</var> is null and <var title>byte</var>
+   is not in the range 0xA1 to 0xFE, decrease <span>byte pointer</span> by
+   one.
+
    <li><p>If <var title>code point</var> is null, emit the
    <span>fallback code point</span>.
 
    <li><p>Emit <var title>code point</var>.
   </ol>
 
- <li>
-  <p>If <span>euc-jp second</span> is not 0x00, run these substeps:
-
-  <ol>
-   <li><p>Set <span>euc-jp first</span> and <span>euc-jp second</span> to
-   0x00.
-
-   <li><p>If the <span>fatal flag</span> is set, return failure.
-
-   <li><p>Decrease the <span>byte pointer</span> by one and emit the
-   <span>fallback code point</span>.
-  </ol>
-
  <li><p>If <span>euc-jp first</span> is 0x8E and <var title>byte</var> is
- in the range 0xA1 to 0xDF, emit a code point whose value is 0xFEC0 +
- <var title>byte</var>.
+ in the range 0xA1 to 0xDF, set <span>euc-jp first</span> to 0x00 and emit
+ a code point whose value is 0xFEC0 + <var title>byte</var>.
 
  <li><p>If <span>euc-jp first</span> is 0x8F and <var title>byte</var> is
- in the range 0xA1 to 0xFE, set <span>euc-jp second</span> to
- <var title>byte</var> and continue.
+ in the range 0xA1 to 0xFE, set <span>euc-jp first</span> to 0x00,
+ <span>euc-jp second</span> to <var title>byte</var>, and continue.
 
- <li>
-  <p>If <span>euc-jp first</span> and <var title>byte</var> are both in the
-  range 0xA1 to 0xFE, run these substeps:
+ <li><p>If <span>euc-jp first</span> is not 0x00, let <var title>lead</var>
+ be the <span>jis0208 index</span> for <span>euc-jp first</span>, set
+ <span>euc-jp first</span> to 0x00, and run these substeps:
 
   <ol>
-   <li><p>Let <var title>lead</var> be the <span>jis0208 index</span> for
-   <span>euc-jp first</span>.
-
-   <li><p>Set <span>euc-jp first</span> to 0x00.
-
    <li><p>Let <var title>offset</var> be the <span>euc-jp offset</span> for
    <var title>byte</var>.
 
@@ -1271,22 +1252,14 @@ otherwise the result of that equation.
    <li><p>If <var title>code point</var> is null and the
    <span>fatal flag</span> is set, return failure.
 
+   <li><p>If <var title>code point</var> is null and <var title>byte</var>
+   is not in the range 0xA1 to 0xFE, decrease <span>byte pointer</span> by
+   one.
+
    <li><p>If <var title>code point</var> is null, emit the
    <span>fallback code point</span>.
 
    <li><p>Emit <var title>code point</var>.
-  </ol>
-
- <li>
-  <p>If <span>euc-jp first</span> is not 0x00, run these substeps:
-
-  <ol>
-   <li><p>Set <span>euc-jp first</span> to 0x00.
-
-   <li><p>If the <span>fatal flag</span> is set, return failure.
-
-   <li><p>Decrease the <span>byte pointer</span> by one and emit the
-   <span>fallback code point</span>.
   </ol>
 
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a
@@ -1297,8 +1270,7 @@ otherwise the result of that equation.
 
  <li><p>If the <span>fatal flag</span> is set, return failure.
 
- <li><p>Set <span>euc-jp first</span> to 0x00 and emit the
- <span>fallback code point</span>.
+ <li><p>Emit the <span>fallback code point</span>.
 </ol>
 
 <p>The <dfn>euc-jp encoder</dfn> (<span>encoder</span> for <span>euc-jp</span>) is:
