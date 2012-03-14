@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-12-march-2012">Living Draft — 12 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-14-march-2012">Living Draft — 14 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-12 March 2012, the editors have made this specification available
+14 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1206,6 +1206,8 @@ http://w3techs.com/technologies/details/en-b5hkscs/all/all
 
 <h3 id="euc-jp"><span class="secno">10.1 </span><dfn>euc-jp</dfn></h3>
 
+<!-- http://www.iana.org/assignments/charset-reg/CP51932 -->
+
 <p>The <dfn id="euc-jp-offset">euc-jp offset</dfn> for a given <var title="">byte</var> is null
 if <var title="">byte</var> − 0xA1 is greater than 93 or less than 0, or
 otherwise the result of that equation.
@@ -1541,55 +1543,14 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
 
 <p>The <dfn id="shift_jis-fallback-code-point">shift_jis fallback code point</dfn> is U+30FB.</p>
 
-<p>The <dfn id="shift_jis-lead-byte-index-or-code-point">shift_jis lead byte index or code point</dfn> for a given
-<var title="">byte</var> is:</p>
-
-<dl class="switch">
- <dt>0x81
- <dd>8648
-
- <dt>0x82 to 0x84
- <dd>(<var title="">byte</var> − 0x80) × 188
-
- <dt>0x87 to 0x9F
- <dd>(<var title="">byte</var> − 0x82) × 188
-
- <dt>0xA0
- <dd>0xF8F0
-
- <dt>0xA1 to 0xDF
- <dd>0xFEC0 + <var title="">byte</var>
-
- <dt>0xE1 to 0xEA
- <dd>(<var title="">byte</var> − 0xC2) × 188
-
- <dt>0xED to 0xEE
- <dd>(<var title="">byte</var> − 0xC4) × 188
-
- <dt>0xF0 to 0xF9
- <dd>0xE000 + (<var title="">byte</var> − 0xF0) × 188
-
- <dt>0xFA to 0xFC
- <dd>(<var title="">byte</var> − 0xCF) × 188
-
-  <dt>0xFD to 0xFF
-  <dd>0xF7F4 + <var title="">byte</var>
-
-  <dt>Otherwise
-  <dd>null
-</dl>
-
 <p>The <dfn id="shift_jis-offset">shift_jis offset</dfn> for a given <var title="">byte</var> is:
 
 <dl class="switch">
  <dt>0x40 to 0x7E</dt>
  <dd><var title="">byte</var> − 0x40
 
- <dt>0x80 to 0x7C</dt>
+ <dt>0x80 to 0xFC</dt>
  <dd><var title="">byte</var> − 0x41
-
- <dt>Otherwise</dt>
- <dd>null
 </dl>
 
 <p>The <dfn id="shift_jis-lead">shift_jis lead</dfn> is initially 0x00.
@@ -1613,53 +1574,54 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
 
  <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
 
- <li><p>If <a href="#shift_jis-lead">shift_jis lead</a> is 0x00 and <var title="">byte</var> is
- in the range 0x00 to 0x80, emit a code point whose value is
- <var title="">byte</var>.
-
- <li><p>If <a href="#shift_jis-lead">shift_jis lead</a> is 0x00, set
- <a href="#shift_jis-lead">shift_jis lead</a> to the
- <a href="#shift_jis-lead-byte-index-or-code-point">shift_jis lead byte index or code point</a> for
- <var title="">byte</var> and continue.
-
  <li>
-  <p>If <a href="#shift_jis-lead">shift_jis lead</a> is either less than 0xF8F0 or null, run
-  these substeps:
+  <p>If <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, let <var title="">lead</var>
+  be <a href="#shift_jis-lead">shift_jis lead</a>, set <a href="#shift_jis-lead">shift_jis lead</a> to 0x00,
+  and then run these substeps:
 
   <ol>
-   <li><p>Let <var title="">offset</var> be the
-   <a href="#shift_jis-offset">shift_jis offset</a> for <var title="">byte</var>.
+   <li>
+    <p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
+    0x80 to 0xFC, run these substeps:
 
-   <li><p>If either <var title="">offset</var> or <a href="#shift_jis-lead">shift_jis lead</a>
-   is null and the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+    <ol>
+     <li><p>If <var title="">lead</var> is in the range 0xF0 to 0xF9 and the
+     <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
-   <li><p>If <var title="">offset</var> is null, set
-   <a href="#shift_jis-lead">shift_jis lead</a> to 0x00, decrease the
-   <a href="#byte-pointer">byte pointer</a> by one and emit the
-   <a href="#fallback-code-point">fallback code point</a>.
+     <li><p>If <var title="">lead</var> is in the range 0xF0 to 0xF9,
+     emit a code point whose value is
+     0xE000 + (<var title="">lead</var> − 0xF0) × 188 +
+     the <a href="#shift_jis-offset">shift_jis offset</a> of <var title="">byte</var>.
 
-   <li><p>If <a href="#shift_jis-lead">shift_jis lead</a> is equal or more than 0xE000, emit
-   a code point whose value is <var title="">lead</var> plus
-   <var title="">offset</var>.
+     <li><p class="XXX">Find and emit the code point or emit shift_jis fallback ...
+    </ol>
 
-   <li><p>Otherwise, if <a href="#shift_jis-lead">shift_jis lead</a> is null, emit a
-   <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
+   <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
-   <li><p>Otherwise, let <var title="">code point</var> be the
-   <a href="#jis-code-point">jis code point</a> for <a href="#shift_jis-lead">shift_jis lead</a> plus
-   <var title="">offset</var>.
-
-   <li><p>If <var title="">code point</var> is null and the
-   <a href="#fatal-flag">fatal flag</a> is set, return failure.
-
-   <li><p>If <var title="">code point</var> is null, emit a
-   <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
-
-   <li><p>Emit <var title="">code point</var>.
+   <li><p>Otherwise, decrease the <a href="#byte-pointer">byte pointer</a> by one and emit
+   the <a href="#fallback-code-point">fallback code point</a>.
   </ol>
 
- <li><p>Otherwise, emit a code point whose value is
- <a href="#shift_jis-lead">shift_jis lead</a>.
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x80, emit a
+ code point whose value is <var title="">byte</var>.
+ <!-- Opera has 0x7E -->
+
+ <li><p>If <var title="">byte</var> is 0xA0, emit U+F8F0.
+
+ <li><p>If <var title="">byte</var> is in the range 0xA1 to 0xDF, emit a
+ code point whose value is 0xFEC0 + <var title="">byte</var>.
+ <!-- katakana -->
+
+ <li><p>If <var title="">byte</var> is in the range 0xFD to 0xFF, emit a
+ code point whose value is 0xF7F4 + <var title="">byte</var>.
+
+ <li><p>If <var title="">byte</var> is in the range 0x81 to 0x9F or
+ 0xE0 to 0xFC, set <a href="#shift_jis-lead">shift_jis lead</a> to <var title="">byte</var> and
+ continue.
+
+ <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+ <li><p>Emit the <a href="#fallback-code-point">fallback code point</a>.
 </ol>
 
 <p>The <dfn id="shift_jis-encoder">shift_jis encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#shift_jis">shift_jis</a>) is:
@@ -2010,8 +1972,6 @@ Simon Pieters, and
 成瀬ゆい (Yui Naruse)
 
 for being awesome.
-
-<p class="XXX">Clearly not complete at this point, but better than nothing.
 
 
 <script class="dontpublish" id="head" src="http://www.whatwg.org/specs/web-apps/current-work/dfn.js"></script>
