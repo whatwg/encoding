@@ -1208,7 +1208,8 @@ otherwise the result of that equation.
  <li><p>Increase the <span>byte pointer</span> by one.
 
  <li>
-  <p>If <span>euc-jp second</span> is not 0x00, run these substeps:
+  <p>If <span>euc-jp second</span> is not 0x00 and <var title>byte</var> is
+  in the range 0xA1 to 0xFE, run these substeps:
   <!--euc-jp first must be 0x8E-->
 
   <ol>
@@ -1218,6 +1219,9 @@ otherwise the result of that equation.
 
    <li><p>If either <var title>lead</var> or <var title>byte</var> is null,
    and the <span>fatal flag</span> is set, return failure.
+
+   <li><p>Set <span>euc-jp first</span> and <span>euc-jp second</span> to
+   0x00.
 
    <li><p>If either <var title>lead</var> or <var title>offset</var> is
    null, emit the <span>fallback code point</span>.
@@ -1235,6 +1239,19 @@ otherwise the result of that equation.
    <li><p>Emit <var title>code point</var>.
   </ol>
 
+ <li>
+  <p>If <span>euc-jp second</span> is not 0x00, run these substeps:
+
+  <ol>
+   <li><p>Set <span>euc-jp first</span> and <span>euc-jp second</span> to
+   0x00.
+
+   <li><p>If the <span>fatal flag</span> is set, return failure.
+
+   <li><p>Decrease the <span>byte pointer</span> by one and emit the
+   <span>fallback code point</span>.
+  </ol>
+
  <li><p>If <span>euc-jp first</span> is 0x8E and <var title>byte</var> is
  in the range 0xA1 to 0xDF, emit a code point whose value is 0xFEC0 +
  <var title>byte</var>.
@@ -1244,31 +1261,42 @@ otherwise the result of that equation.
  <var title>byte</var> and continue.
 
  <li>
-  <p>If <span>euc-jp first</span> is in the range 0xA1 to 0xFE, run these
-  substeps:
+  <p>If <span>euc-jp first</span> and <var title>byte</var> are both in the
+  range 0xA1 to 0xFE, run these substeps:
 
   <ol>
    <li><p>Let <var title>lead</var> be the <span>jis0208 index</span> for
-   <span>euc-jp first</span> and <var title>offset</var> the
-   <span>euc-jp offset</span> for <var title>byte</var>.
+   <span>euc-jp first</span>.
 
-   <li><p>If the <span>fatal flag</span> is set and either
-   <var title>lead</var> or <var title>offset</var> is null, return failure.
+   <li><p>Set <span>euc-jp first</span> to 0x00.
 
-   <li><p>If either <var title>lead</var> or <var title>offset</var> is
-   null, emit the <span>fallback code point</span>.
+   <li><p>Let <var title>offset</var> be the <span>euc-jp offset</span> for
+   <var title>byte</var>.
 
-   <li><p>Let <var title>code point</var> be the
-   <span>jis code point</span> for <var title>lead</var> plus
-   <var title>offset</var>.
+   <li><p>Let <var title>code point</var> be the <span>jis code point</span>
+   for <var title>lead</var> plus <var title>offset</var>. If either
+   <var title>lead</var> or <var title>offset</var> is null, let
+   <var title>code point</var> be null.
 
-   <li><p>If <var title>code point</var> is null and the
-   <span>fatal flag</span> is set, return failure.
+   <li><p>If the <span>fatal flag</span> is set and
+   <var title>code point</var> is null, return failure.
 
    <li><p>If <var title>code point</var> is null, emit the
    <span>fallback code point</span>.
 
    <li><p>Emit <var title>code point</var>.
+  </ol>
+
+ <li>
+  <p>If <span>euc-jp first</span> is not 0x00, run these substeps:
+
+  <ol>
+   <li><p>Set <span>euc-jp first</span> to 0x00.
+
+   <li><p>If the <span>fatal flag</span> is set, return failure.
+
+   <li><p>Decrease the <span>byte pointer</span> by one and emit the
+   <span>fallback code point</span>.
   </ol>
 
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a
