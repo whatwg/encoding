@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-14-march-2012">Living Draft — 14 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-15-march-2012">Living Draft — 15 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-14 March 2012, the editors have made this specification available
+15 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1162,47 +1162,19 @@ http://w3techs.com/technologies/details/en-b5hkscs/all/all
 
 <h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">10 </span>Legacy multi-byte Japanese encodings</h2>
 
-<p class="XXX">The <dfn id="jis-code-point">jis code point</dfn> for a given number is: ...</p>
+<p>The <dfn id="jis0208-code-point">jis0208 code point</dfn> for
+(<var title="">leadbyte</var>, <var title="">byte</var>) is the code point located
+at index
+(<var title="">leadbyte</var> - 0xA1) * 94 + <var title="">byte</var> - 0xA1
+in the <span class="XXX">jis0208 index</span>, or null if there is no code
+point located at that index.
 
-<p>The <dfn id="jis0208-index">jis0208 index</dfn> for a given <var title="">byte</var> is:
-<!-- only valid in range A1-FE -->
-
-<dl class="switch">
- <dt>0xA1 to 0xA2
- <dd><!--8648-->(<var title="">byte</var> − 0x45) × 94
-
- <dt>0xA3 to 0xA8
- <dd><!--376-->(<var title="">byte</var> − 0x9F) × 94
-
- <dt>0xAD
- <dd>940
-
- <dt>0xB1 to 0xF4
- <dd><!--1222-->(<var title="">byte</var> − 0xA4) × 94
-
- <dt>0xF9 to 0xFC
- <dd><!--7708-->(<var title="">byte</var> − 0xA7) × 94
-
- <dt>Otherwise
- <dd>null
-</dl>
-
-<p>The <dfn id="jis0212-index">jis0212 index</dfn> for a given <var title="">byte</var> is:
-<!-- only valid in range A1-FE -->
-
-<dl class="switch">
- <dt>0xA2
- <dd>9400
- <dt>0xA6 to 0xA7
- <dd><!--9494-->(<var title="">byte</var> − 0x41) × 94
- <dt>0xA9 to 0xAB
- <dd><!--9682-->(<var title="">byte</var> − 0x42) × 94
- <dt>0xB0 to 0xED
- <dd><!--9964-->(<var title="">byte</var> − 0x46) × 94
- <dt>Otherwise
- <dd>null
-</dl>
-
+<p>The <dfn id="jis0212-code-point">jis0212 code point</dfn> for
+(<var title="">leadbyte</var>, <var title="">byte</var>) is the code point located
+at index
+(<var title="">leadbyte</var> - 0xA1) * 94 + <var title="">byte</var> - 0xA1
+in the <span class="XXX">jis0212 index</span>, or null if there is no code
+point located at that index.
 
 <h3 id="euc-jp"><span class="secno">10.1 </span><dfn>euc-jp</dfn></h3>
 
@@ -1236,18 +1208,16 @@ otherwise the result of that equation.
 
  <li>
   <p>If <a href="#euc-jp-second">euc-jp second</a> is not 0x00, let <var title="">lead</var> be
-  the <a href="#jis0212-index">jis0212 index</a> for <a href="#euc-jp-second">euc-jp second</a>, set
-  <a href="#euc-jp-second">euc-jp second</a> to 0x00 and run these substeps:
-  <!--euc-jp first must be 0x8E-->
+  <a href="#euc-jp-second">euc-jp second</a>, set <a href="#euc-jp-second">euc-jp second</a> to 0x00 and run
+  these substeps:
 
   <ol>
-   <li><p>Let <var title="">offset</var> be the <a href="#euc-jp-offset">euc-jp offset</a> for
-   <var title="">byte</var>.
+   <li><p>Let <var title="">code point</var> be null.
 
-   <li><p>Let <var title="">code point</var> be the
-   <a href="#jis-code-point">jis code point</a> for <var title="">lead</var> plus
-   <var title="">offset</var>. If either <var title="">lead</var> or
-   <var title="">byte</var> is null, let <var title="">code point</var> be null.
+   <li><p>If <var title="">lead</var> and <var title="">byte</var> are both in the
+   range 0xA1 to 0xFE, set <var title="">code point</var> to the
+   <a href="#jis0212-code-point">jis0212 code point</a> for
+   (<var title="">lead</var>, <var title="">byte</var>).
 
    <li><p>If <var title="">code point</var> is null and the
    <a href="#fatal-flag">fatal flag</a> is set, return failure.
@@ -1271,17 +1241,16 @@ otherwise the result of that equation.
  <a href="#euc-jp-second">euc-jp second</a> to <var title="">byte</var>, and continue.
 
  <li><p>If <a href="#euc-jp-first">euc-jp first</a> is not 0x00, let <var title="">lead</var>
- be the <a href="#jis0208-index">jis0208 index</a> for <a href="#euc-jp-first">euc-jp first</a>, set
- <a href="#euc-jp-first">euc-jp first</a> to 0x00, and run these substeps:
+ be <a href="#euc-jp-first">euc-jp first</a>, set <a href="#euc-jp-first">euc-jp first</a> to 0x00, and
+ run these substeps:
 
   <ol>
-   <li><p>Let <var title="">offset</var> be the <a href="#euc-jp-offset">euc-jp offset</a> for
-   <var title="">byte</var>.
+   <li><p>Let <var title="">code point</var> be null.
 
-   <li><p>Let <var title="">code point</var> be the <a href="#jis-code-point">jis code point</a>
-   for <var title="">lead</var> plus <var title="">offset</var>. If either
-   <var title="">lead</var> or <var title="">offset</var> is null, let
-   <var title="">code point</var> be null.
+   <li><p>If <var title="">lead</var> and <var title="">byte</var> are both in the
+   range 0xA1 to 0xFE, set <var title="">code point</var> to the
+   <a href="#jis0208-code-point">jis0208 code point</a> for
+   (<var title="">lead</var>, <var title="">byte</var>).
 
    <li><p>If <var title="">code point</var> is null and the
    <a href="#fatal-flag">fatal flag</a> is set, return failure.
@@ -1455,13 +1424,9 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
 
      <dt>Otherwise
      <dd>
-      <p>If the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a> is set, set
-      <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to the <a href="#jis0212-index">jis0212 index</a> for
-      <var title="">byte</var>, or otherwise set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a>
-      to the <a href="#jis0208-index">jis0208 index</a> for <var title="">byte</var>.
-
-      <p>Then set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
-      <b title="">trail state</b>, and continue.
+      <p>Set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to <var title="">byte</var>,
+      <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">trail state</b>, and
+      continue.
     </dl>
 
    <dt>Trail state
@@ -1476,20 +1441,16 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
      <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit
      the <a href="#fallback-code-point">fallback code point</a>.
 
-     <li><p>Let <var title="">lead</var> be the <a href="#iso-2022-jp-lead">iso-2022-jp lead</a>
-     and <var title="">offset</var> the <a href="#iso-2022-jp-offset">iso-2022-jp offset</a> for
-     <var title="">byte</var>.
+     <li><p>Let <var title="">code point</var> be null.
 
-     <li><p>If the <a href="#fatal-flag">fatal flag</a> is set and either
-     <var title="">lead</var> or <var title="">offset</var> is null,
-     return failure.
-
-     <li><p>If either <var title="">lead</var> or <var title="">offset</var> is
-     null, emit the <a href="#fallback-code-point">fallback code point</a>.
-
-     <li><p>Let <var title="">code point</var> be the
-     <a href="#jis-code-point">jis code point</a> for <var title="">lead</var> plus
-     <var title="">offset</var>.
+     <li><p>If <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and <var title="">byte</var> are
+     both in the range 0x21 to 0x7E: Set <var title="">code point</var> to
+     the <a href="#jis0208-code-point">jis0208 code point</a> for
+     (<a href="#iso-2022-jp-lead">iso-2022-jp lead</a> + 0x80, <var title="">byte</var> + 0x80) if
+     the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a> is unset, or to the
+     <a href="#jis0212-code-point">jis0212 code point</a> for
+     (<a href="#iso-2022-jp-lead">iso-2022-jp lead</a> + 0x80, <var title="">byte</var> + 0x80) if
+     the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a> is set.
 
      <li><p>If <var title="">code point</var> is null and the
      <a href="#fatal-flag">fatal flag</a> is set, return failure.
@@ -1509,8 +1470,7 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
      and continue.
 
      <dt>0x21 to 0x5F
-     <dd><p>Emit a code point whose value is 0xFF40 +
-     <var title="">byte</var>.
+     <dd><p>Emit a code point whose value is 0xFF40 + <var title="">byte</var>.
 
      <dt><a href="#eof-byte">EOF byte</a>
      <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
@@ -1583,7 +1543,41 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
      0xE000 + (<var title="">lead</var> − 0xF0) × 188 +
      the <a href="#shift_jis-offset">shift_jis offset</a> of <var title="">byte</var>.
 
-     <li><p class="XXX">Find and emit the code point or emit shift_jis fallback ...
+     <!--JAPANESE DRAGONS (as with most things Japanese, more scary and crazy)-->
+
+     <li><p>Let <var title="">adjust</var> be 0, or 1 if <var title="">byte</var>
+     is less than 0x9F.
+     <!-- adjust = byte < 159 -->
+
+     <li><p>Let <var title="">lead offset</var> be 176, or 112 if
+     <var title="">lead</var> is less than 160.
+     <!-- leadoffset = lead < 160 ? 112 : 176 -->
+
+     <li><p>Let <var title="">offset</var> be 126 if <var title="">adjust</var> is
+     0, 31 if <var title="">adjust</var> is 1 and <var title="">byte</var> is less
+     than 127, or 32 otherwise.
+     <!-- offset = adjust ? (byte > 127 ? 32 : 31) : 126 -->
+
+     <li><p>Let <var title="">byte1</var> be the arithmetic right shift of
+     <var title="">lead</var> − <var title="">lead offset</var> by 1
+     − <var title="">offset</var> + 0x80.
+     <!-- byte1 = ((lead - leadoffset) << 1) - adjust; add 0x80 for euc-jp -->
+
+     <li><p>Let <var title="">byte2</var> be <var title="">byte</var> −
+     <var title="">offset</var> + 0x80.
+     <!-- byte2 = byte - offset; add 0x80 for euc-jp -->
+
+     <li><p>Let <var title="">code point</var>  be the
+     <a href="#jis0208-code-point">jis0208 code point</a> for
+     (<var title="">byte1</var>, <var title="">byte2</var>).
+
+     <li><p>If <var title="">code point</var> is null and the
+     <a href="#fatal-flag">fatal flag</a> is set, return failure.
+
+     <li><p>If <var title="">code point</var> is null, emit the
+     <a href="#fallback-code-point">fallback code point</a>.
+
+     <li><p>Emit <var title="">code point</var>.
     </ol>
 
    <li><p>If the <a href="#fatal-flag">fatal flag</a> is set, return failure.
