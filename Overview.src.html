@@ -637,7 +637,7 @@ are all initially 0.
  <li>
   <p>Increase <span>utf-8 bytes seen</span> by one and set
   <span>utf-8 code point</span> to
-  <span>utf-8 code point</span> + (<var title>byte</var> - 0x80) &times;
+  <span>utf-8 code point</span> + (<var title>byte</var> &minus; 0x80) &times;
   64<sup><span>utf-8 bytes needed</span> &minus; <span>utf-8 bytes seen</span></sup>
 
  <li><p>If <span>utf-8 bytes seen</span> is not equal to
@@ -1182,7 +1182,7 @@ otherwise the result of that equation.
    <li><p>If <var title>lead</var> and <var title>byte</var> are both in the
    range 0xA1 to 0xFE, set <var title>code point</var> to the
    <span>jis0212 code point</span> for
-   (<var title>lead</var> - 0xA1, <var title>byte</var> - 0xA1).
+   (<var title>lead</var> &minus; 0xA1, <var title>byte</var> &minus; 0xA1).
 
    <li><p>If <var title>code point</var> is null and the
    <span>fatal flag</span> is set, return failure.
@@ -1215,7 +1215,7 @@ otherwise the result of that equation.
    <li><p>If <var title>lead</var> and <var title>byte</var> are both in the
    range 0xA1 to 0xFE, set <var title>code point</var> to the
    <span>jis0208 code point</span> for
-   (<var title>lead</var> - 0xA1, <var title>byte</var> - 0xA1).
+   (<var title>lead</var> &minus; 0xA1, <var title>byte</var> &minus; 0xA1).
 
    <li><p>If <var title>code point</var> is null and the
    <span>fatal flag</span> is set, return failure.
@@ -1411,10 +1411,10 @@ null if <var title>byte</var> &minus; 0x21 is greater than 93 or less than
      <li><p>If <span>iso-2022-jp lead</span> and <var title>byte</var> are
      both in the range 0x21 to 0x7E: Set <var title>code point</var> to
      the <span>jis0208 code point</span> for
-     (<span>iso-2022-jp lead</span> - 0x21, <var title>byte</var> - 0x21) if
+     (<span>iso-2022-jp lead</span> &minus; 0x21, <var title>byte</var> &minus; 0x21) if
      the <span>iso-2022-jp jis0212 flag</span> is unset, or to the
      <span>jis0212 code point</span> for
-     (<span>iso-2022-jp lead</span> - 0x21, <var title>byte</var> - 0x21) if
+     (<span>iso-2022-jp lead</span> &minus; 0x21, <var title>byte</var> &minus; 0x21) if
      the <span>iso-2022-jp jis0212 flag</span> is set.
 
      <li><p>If <var title>code point</var> is null and the
@@ -1530,7 +1530,7 @@ null if <var title>byte</var> &minus; 0x21 is greater than 93 or less than
 
      <li><p>Let <var title>code point</var>  be the
      <span>jis0208 code point</span> for
-     (<var title>row</var>, <var title>byte</var> - <var title>offset</var>).
+     (<var title>row</var>, <var title>byte</var> &minus; <var title>offset</var>).
      <!-- cell = byte - offset -->
 
      <li><p>If <var title>code point</var> is null and the
