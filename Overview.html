@@ -1179,10 +1179,6 @@ defined.
 
 <!-- http://www.iana.org/assignments/charset-reg/CP51932 -->
 
-<p>The <dfn id="euc-jp-offset">euc-jp offset</dfn> for a given <var title="">byte</var> is null
-if <var title="">byte</var> − 0xA1 is greater than 93 or less than 0, or
-otherwise the result of that equation.
-
 <p>The <dfn id="euc-jp-first">euc-jp first</dfn> and <dfn id="euc-jp-second">euc-jp second</dfn> are 0x00.
 
 <p>The <dfn id="euc-jp-decoder">euc-jp decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#euc-jp">euc-jp</a>) is:
@@ -1288,10 +1284,6 @@ otherwise the result of that equation.
  http://tools.ietf.org/html/rfc1468
  http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
 -->
-
-<p>The <dfn id="iso-2022-jp-offset">iso-2022-jp offset</dfn> for a given <var title="">byte</var> is
-null if <var title="">byte</var> − 0x21 is greater than 93 or less than
-0, or otherwise the result of that equation.
 
 <p>The <dfn id="iso-2022-jp-state">iso-2022-jp state</dfn> is initially <b title="">ASCII state</b>.
 
@@ -1492,16 +1484,6 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
 
 <p>The <dfn id="shift_jis-fallback-code-point">shift_jis fallback code point</dfn> is U+30FB.</p>
 
-<p>The <dfn id="shift_jis-offset">shift_jis offset</dfn> for a given <var title="">byte</var> is:
-
-<dl class="switch">
- <dt>0x40 to 0x7E</dt>
- <dd><var title="">byte</var> − 0x40
-
- <dt>0x80 to 0xFC</dt>
- <dd><var title="">byte</var> − 0x41
-</dl>
-
 <p>The <dfn id="shift_jis-lead">shift_jis lead</dfn> is initially 0x00.
 
 <p>The <dfn id="shift_jis-decoder">shift_jis decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#shift_jis">shift_jis</a>) is:
@@ -1537,12 +1519,16 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
      <li><p>If <var title="">lead</var> is in the range 0xF0 to 0xF9 and the
      <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
+     <li><p>Set <var title="">offset</var> to 64 if <var title="">byte</var> is
+     less than 0x7F, or 65 otherwise.
+     <!-- offset = byte > 127 ? 65 : 64 -->
+
      <li><p>If <var title="">lead</var> is in the range 0xF0 to 0xF9,
      emit a code point whose value is
      0xE000 + (<var title="">lead</var> − 0xF0) × 188 +
-     the <a href="#shift_jis-offset">shift_jis offset</a> of <var title="">byte</var>.
+     <var title="">byte</var> − <var title="">offset</var>.
 
-     <!--JAPANESE DRAGONS (as with most things Japanese, more scary and crazy)-->
+     <!--JAPANESE DRAGONS (more scary and crazy)-->
 
      <li><p>Let <var title="">adjust</var> be 0, or 1 if <var title="">byte</var>
      is less than 0x9F.
@@ -1552,10 +1538,9 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
      <var title="">lead</var> is less than 160.
      <!-- leadoffset = lead < 160 ? 112 : 176 -->
 
-     <li><p>Let <var title="">offset</var> be 159 if <var title="">adjust</var> is
-     0, 64 if <var title="">adjust</var> is 1 and <var title="">byte</var> is less
-     than 127, or 65 otherwise.
-     <!-- offset = adjust ? (byte > 127 ? 65 : 64) : 159 -->
+     <li><p>If <var title="">adjust</var> is 0, set <var title="">offset</var> to
+     159.
+     <!-- offset = adjust ? offset : 159 -->
 
      <li><p>Let <var title="">row</var> be the arithmetic right shift of
      <var title="">lead</var> − <var title="">lead offset</var> by 1
@@ -1570,8 +1555,11 @@ null if <var title="">byte</var> − 0x21 is greater than 93 or less than
      <li><p>If <var title="">code point</var> is null and the
      <a href="#fatal-flag">fatal flag</a> is set, return failure.
 
-     <li><p>If <var title="">code point</var> is null, emit the
-     <a href="#fallback-code-point">fallback code point</a>.
+     <li>
+      <p>If <var title="">code point</var> is null, emit the
+      <a href="#shift_jis-fallback-code-point">shift_jis fallback code point</a>.
+
+      <p class="note">This is not your normal <a href="#fallback-code-point">fallback code point</a>!
 
      <li><p>Emit <var title="">code point</var>.
     </ol>
