@@ -148,14 +148,8 @@ considered to also match.
 <p>An <dfn title=concept-encoding>encoding</dfn> defines a mapping from a
 code point to one or more bytes (and vice versa). Each
 <span title=concept-encoding>encoding</span> has a
-<dfn title=concept-encoding-name>name</dfn>, one or more
-<dfn title=concept-encoding-label>labels</dfn>, and potentially a
-<dfn title=concept-encoding-map>map</dfn>. A
-<span title=concept-encoding-map>map</span> is a newline-separated (U+000A)
-resource, where each line starts with one or more bytes, followed by a
-U+0009 code point, followed by a code point, followed by a U+0009
-code point, followed by either the Unicode Character Name or
-&lt;Private Use>, which is preceded by a U+0023 code point.
+<dfn title=concept-encoding-name>name</dfn>, and one or more
+<dfn title=concept-encoding-label>labels</dfn>.
 
 <p>Each <span title=concept-encoding>encoding</span> also has a
 <dfn>decoder</dfn> and <dfn>encoder</dfn> algorithm.
@@ -494,10 +488,10 @@ fallback label <var title>label</var>, these steps must be run:
   <p>For each of the rows in the following table, starting with the first
   one and going down, if the first bytes of <var title>stream</var> match
   all the bytes given in the first column (ergo <var title>stream</var>
-  contains at least 2 or 3 bytes), then set <var title>encoding</var> to the
-  <span title=concept-encoding>encoding</span> given in the cell in the
-  second column of that row, and set <var title>offset</var> to the offset
-  given in the cell in the third column of that row.
+  contains at least two or three bytes), then set <var title>encoding</var>
+  to the <span title=concept-encoding>encoding</span> given in the cell in
+  the second column of that row, and set <var title>offset</var> to the
+  offset given in the cell in the third column of that row.
 
   <table>
    <tr><th>Byte order mark<th>Encoding<th>Offset
@@ -714,12 +708,17 @@ are all initially 0.
 
 <p>An <span title=concept-encoding>encoding</span> where each byte is
 either a single code point or nothing, is a
-<dfn>single-byte encoding</dfn>. These are the
-<span title="single-byte encoding">single-byte encodings</span> and their
-corresponding <span title=concept-encoding-map>map</span>:
+<dfn>single-byte encoding</dfn>.
+<span title="single-byte encoding">Single-byte encodings</span> are
+accompanied by a <b title>map</b> as illustrated in the table below. A
+<b title>map</b> is a newline-separated (U+000A) resource, where each line
+starts with a hexadecimal number representing a byte, followed by a U+0009
+code point, followed by another hexadecimal number representing a code point,
+followed by a U+0009 code point, followed by either the
+Unicode Character Name or &lt;Private Use>, preceded by a U+0023 code point.
 
 <table>
- <tr><th><span title=concept-encoding-name>Name</name><th><span title=concept-encoding-map>Map</span>
+ <tr><th><span title=concept-encoding-name>Name</name><th><b title>Map</b>
  <tr><td><dfn>ibm864</dfn><td><a href=map-ibm864.txt>map-ibm864.txt</a>
  <tr><td><dfn>ibm866</dfn><td><a href=map-ibm866.txt>map-ibm866.txt</a>
  <tr><td><dfn>iso-8859-2</dfn><td><a href=map-iso-8859-2.txt>map-iso-8859-2.txt</a>
@@ -766,16 +765,14 @@ corresponding <span title=concept-encoding-map>map</span>:
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a code
  point whose value is <var title>byte</var>.
 
- <li><p>If <var title>byte</var> is not in the
- <span title=concept-encoding-map>map</span> and the <span>fatal flag</span>
- is set, return failure.
+ <li><p>If <var title>byte</var> is not in the <b title>map</b> and the
+ <span>fatal flag</span> is set, return failure.
 
- <li><p>If <var title>byte</var> is not in the
- <span title=concept-encoding-map>map</span>, emit the
+ <li><p>If <var title>byte</var> is not in the <b title>map</b>, emit the
  <span>fallback code point</span>.
 
- <li><p>Emit the code point given in the
- <span title=concept-encoding-map>map</span> for <var title>byte</var>.
+ <li><p>Emit the code point given in the <b title>map</b> for
+ <var title>byte</var>.
 </ol>
 
 <p>The <dfn>single-byte encoder</dfn> (<span>encoder</span> for
@@ -793,10 +790,9 @@ corresponding <span title=concept-encoding-map>map</span>:
  emit a byte whose value is <var title>code point</var>.
 
  <li><p>If <var title>code point</var> is not listed in the
- <span title=concept-encoding-map>map</span>, return failure.
+ <b title>map</b>, return failure.
 
- <li><p>Emit the byte given in the
- <span title=concept-encoding-map>map</span> for
+ <li><p>Emit the byte given in the <b title>map</b> for
  <var title>code point</var>.
 </ol>
 
@@ -805,8 +801,9 @@ corresponding <span title=concept-encoding-map>map</span>:
 <p class=note>See also:
 <a href="single-byte-research.html">single-byte research</a>.
 
-<p class=note><span>Single-byte encoding</span> map data is also available as a
-non-normative JSON resource: <a href=single-byte-encodings.json><code>single-byte-encodings.json</code></a>.
+<p class=note><span>Single-byte encoding</span> map data is also available
+as a non-normative JSON resource:
+<a href=single-byte-encodings.json><code>single-byte-encodings.json</code></a>.
 
 
 <h2>Legacy multi-byte Chinese (simplified) encodings</h2>
