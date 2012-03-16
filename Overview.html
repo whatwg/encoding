@@ -1159,17 +1159,29 @@ http://w3techs.com/technologies/details/en-b5hkscs/all/all
 
 <h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">10 </span>Legacy multi-byte Japanese encodings</h2>
 
+<p>Japanese encodings rely on two indexes,
+<a href="index-jis0208.txt">index-jis0208.txt</a> and
+<a href="index-jis0212.txt">index-jis0212.txt</a>. An index is a
+newline-separated (U+000A) resource, where each line starts with a decimal
+number representing a location, followed by a U+0009 code point, followed by
+a hexadecimal number representing a code point, followed by a U+0009
+code point, followed by the Unicode Character Name preceded by a U+0023
+code point.
+
+<p class="note">These indexes differ from the similarly named JIS X 0208 and
+JIS X 0212 in order to match contemporary implementations.
+
 <p>The <dfn id="jis0208-code-point">jis0208 code point</dfn> for
 (<var title="">row</var>, <var title="">cell</var>) is the code point located
 at <var title="">row</var> * 94 + <var title="">cell</var> in the
-<span class="XXX">jis0208 index</span>, or null if there is no code point
-defined.
+<a href="index-jis0208.txt">index-jis0208.txt</a>, or null if there is no
+code point defined.
 
 <p>The <dfn id="jis0212-code-point">jis0212 code point</dfn> for
 (<var title="">row</var>, <var title="">cell</var>) is the code point located
 at <var title="">row</var> * 94 + <var title="">cell</var> in the
-<span class="XXX">jis0208 index</span>, or null if there is no code point
-defined.
+<a href="index-jis0212.txt">index-jis0212.txt</a>, or null if there is no
+code point defined.
 
 
 <h3 id="euc-jp"><span class="secno">10.1 </span><dfn>euc-jp</dfn></h3>
