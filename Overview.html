@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-16-march-2012">Living Draft — 16 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-22-march-2012">Living Draft — 22 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,15 +65,13 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-16 March 2012, the editors have made this specification available
+22 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
 http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 
 </div>
-
-<hr class="top">
 
 
 <h2 class="no-num no-toc" id="table-of-contents">Table of Contents</h2>
@@ -727,9 +725,11 @@ are all initially 0.
   <ol>
    <li><p>Set <var title="">temp</var> to <var title="">code point</var> divided
    by 64<sup><var title="">count</var> − 1</sup> (as integers).
+   <!--temp = code_point >> ((count - 1) * 6)-->
 
    <li><p>Append to <var title="">bytes</var> 0x80 + the remainder of dividing
-   <var title="">temp</var> by 64<sup><var title="">count</var></sup> (as integers).
+   <var title="">temp</var> by 64<sup></sup> (as integers).
+   <!--0x80 | (temp & 0x3f)-->
 
    <li><p>Decrease <var title="">count</var> by one.
   </ol>
@@ -1934,6 +1934,7 @@ omissions.
 Erik van der Poel,
 譚永鋒 (Frank Yung-Fong Tang),
 Ian Hickson,
+Joshua Bell,
 신정식 (Jungshik Shin),
 Ken Lunde,
 Mark Callow,

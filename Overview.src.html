@@ -76,8 +76,6 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 
 </div>
 
-<hr class="top">
-
 
 <h2 class="no-num no-toc">Table of Contents</h2>
 
@@ -693,9 +691,11 @@ are all initially 0.
   <ol>
    <li><p>Set <var title>temp</var> to <var title>code point</var> divided
    by 64<sup><var title>count</var> &minus; 1</sup> (as integers).
+   <!--temp = code_point >> ((count - 1) * 6)-->
 
    <li><p>Append to <var title>bytes</var> 0x80 + the remainder of dividing
-   <var title>temp</var> by 64<sup><var title>count</var></sup> (as integers).
+   <var title>temp</var> by 64<sup></sup> (as integers).
+   <!--0x80 | (temp & 0x3f)-->
 
    <li><p>Decrease <var title>count</var> by one.
   </ol>
@@ -1897,6 +1897,7 @@ omissions.
 Erik van der Poel,
 譚永鋒 (Frank Yung-Fong Tang),
 Ian Hickson,
+Joshua Bell,
 신정식 (Jungshik Shin),
 Ken Lunde,
 Mark Callow,
