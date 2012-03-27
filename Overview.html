@@ -507,16 +507,15 @@ as that algorithm is incompatible with legacy content.
 
 <p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>,
 and <a href="#encode">encode</a> are intended for usage by other specifications.
-<a href="#utf-8-decode">utf-8 decode</a> is to be used by new formats.
+<a href="#utf-8-decode">utf-8 decode</a> is to be used by new formats. The
+<a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be
+used first to turn a <a href="#concept-encoding-label" title="concept-encoding-label">label</a> into an
+<a href="#concept-encoding" title="concept-encoding">encoding</a>.
 
 <p>To <dfn id="decode">decode</dfn> a byte stream <var title="">stream</var> using
-fallback label <var title="">label</var>, these steps must be run:
+fallback encoding <var title="">encoding</var>, run these steps:
 
 <ol>
- <li><p>Let <var title="">encoding</var> be the result of
- <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> for
- <var title="">label</var>.
-
  <li><p>Let <var title="">offset</var> be 0.
 
  <li>
@@ -543,8 +542,8 @@ fallback label <var title="">label</var>, these steps must be run:
  <var title="">offset</var>, on <var title="">stream</var>.
 </ol>
 
-<p>To <dfn id="utf-8-decode">utf-8 decode</dfn> a byte stream <var title="">stream</var>, these
-steps must be run:
+<p>To <dfn id="utf-8-decode">utf-8 decode</dfn> a byte stream <var title="">stream</var>, run
+these steps:
 
 <ol>
  <li><p>Let <var title="">offset</var> be 0.
@@ -558,16 +557,8 @@ steps must be run:
 </ol>
 
 <p>To <dfn id="encode">encode</dfn> a code point stream <var title="">stream</var> using
-label <var title="">label</var>, these steps must be run:
-
-<ol>
- <li><p>Let <var title="">encoding</var> be the result of
- <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> for
- <var title="">label</var>.
-
- <li><p>Return the result of running <var title="">encoding</var>'s
- <a href="#encoder">encoder</a> on <var title="">stream</var>.
-</ol>
+encoding <var title="">encoding</var>, return the result of running
+<var title="">encoding</var>'s <a href="#encoder">encoder</a> on <var title="">stream</var>.
 
 
 <h2 id="the-encoding"><span class="secno">6 </span>The encoding</h2>

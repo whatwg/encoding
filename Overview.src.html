@@ -473,16 +473,15 @@ as that algorithm is incompatible with legacy content.
 
 <p class=note>The algorithms <span>decode</span>, <span>utf-8 decode</span>,
 and <span>encode</span> are intended for usage by other specifications.
-<span>utf-8 decode</span> is to be used by new formats.
+<span>utf-8 decode</span> is to be used by new formats. The
+<span title=concept-encoding-get>get an encoding</span> algorithm can be
+used first to turn a <span title=concept-encoding-label>label</span> into an
+<span title=concept-encoding>encoding</span>.
 
 <p>To <dfn>decode</dfn> a byte stream <var title>stream</var> using
-fallback label <var title>label</var>, these steps must be run:
+fallback encoding <var title>encoding</var>, run these steps:
 
 <ol>
- <li><p>Let <var title>encoding</var> be the result of
- <span title=concept-encoding-get>get an encoding</span> for
- <var title>label</var>.
-
  <li><p>Let <var title>offset</var> be 0.
 
  <li>
@@ -509,8 +508,8 @@ fallback label <var title>label</var>, these steps must be run:
  <var title>offset</var>, on <var title>stream</var>.
 </ol>
 
-<p>To <dfn>utf-8 decode</dfn> a byte stream <var title>stream</var>, these
-steps must be run:
+<p>To <dfn>utf-8 decode</dfn> a byte stream <var title>stream</var>, run
+these steps:
 
 <ol>
  <li><p>Let <var title>offset</var> be 0.
@@ -524,16 +523,8 @@ steps must be run:
 </ol>
 
 <p>To <dfn>encode</dfn> a code point stream <var title>stream</var> using
-label <var title>label</var>, these steps must be run:
-
-<ol>
- <li><p>Let <var title>encoding</var> be the result of
- <span title=concept-encoding-get>get an encoding</span> for
- <var title>label</var>.
-
- <li><p>Return the result of running <var title>encoding</var>'s
- <span>encoder</span> on <var title>stream</var>.
-</ol>
+encoding <var title>encoding</var>, return the result of running
+<var title>encoding</var>'s <span>encoder</span> on <var title>stream</var>.
 
 
 <h2>The encoding</h2>
