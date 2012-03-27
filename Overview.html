@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-26-march-2012">Living Draft — 26 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-27-march-2012">Living Draft — 27 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-26 March 2012, the editors have made this specification available
+27 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1519,16 +1519,16 @@ code point defined.
 
 <h2 id="legacy-multi-byte-korean-encodings"><span class="secno">11 </span>Legacy multi-byte Korean encodings</h2>
 
-<p class="XXX">The <dfn id="euc-kr-code-point">euc-kr code point</dfn> for two bytes
-(<var title="">byte<sub>1</sub></var>, <var title="">byte<sub>2</sub></var>) is
-...
+<p>The <dfn id="euc-kr-code-point">euc-kr code point</dfn> for <var title="">index</var> is the
+code point located at <var title="">index</var> in
+<a href="index-euc-kr.txt">index-euc-kr.txt</a>, or null if there is no code
+point defined.
 
 <h3 id="euc-kr"><span class="secno">11.1 </span><dfn>euc-kr</dfn></h3><!-- cp949 -->
 
 <p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
 
 <p>The <dfn id="euc-kr-decoder">euc-kr decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#euc-kr">euc-kr</a>) is:
-<!-- identical to big5 -->
 
 <ol>
  <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
@@ -1543,24 +1543,49 @@ code point defined.
 
  <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
 
- <li><p>If <a href="#euc-kr-lead">euc-kr lead</a> is 0x00 and <var title="">byte</var> is
- in the range 0x00 to 0x7F, emit a code point whose value is
- <var title="">byte</var>.
+ <li>
+  <p>If <a href="#euc-kr-lead">euc-kr lead</a> is not 0x00, let <var title="">lead</var> be
+  <a href="#euc-kr-lead">euc-kr lead</a>, let <var title="">index</var> be null,
+  set <a href="#euc-kr-lead">euc-kr lead</a> to 0x00, and then run these substeps:
 
- <li><p>If <a href="#euc-kr-lead">euc-kr lead</a> is 0x00, set <a href="#euc-kr-lead">euc-kr lead</a>
- to <var title="">byte</var> and continue.
+  <ol>
+   <li>
+    <p>If <var title="">lead</var> is in the range 0x81 to 0xC6, let
+    <var title="">temp</var> be (26 + 26 + 126) × (<var title="">lead</var> − 0x81), and then set <var title="">index</var> to the equation,
+    depending on <var title="">byte</var>:
 
- <li><p>Let <var title="">code point</var> be the
- <a href="#euc-kr-code-point">euc-kr code point</a> for
- (<a href="#euc-kr-lead">euc-kr lead</a>, <var title="">byte</var>).
+    <dl class="switch">
+     <dt>0x41 to 0x5A
+     <dd><p><var title="">temp</var> + <var title="">byte</var> − 0x41
+     <dt>0x61 to 0x7A
+     <dd><p><var title="">temp</var> + 26 + <var title="">byte</var> − 0x61
+     <dt>0x81 to 0xFE
+     <dd><p><var title="">temp</var> + 26 + 26 + <var title="">byte</var> − 0x81
+    </dl>
 
- <li><p>Set <a href="#euc-kr-lead">euc-kr lead</a> to 0x00.
+   <li><p>If <var title="">lead</var> is in the range 0xC7 to 0xFD and
+   <var title="">byte</var> is in the range 0xA1 to 0xFE, set
+   <var title="">index</var> to
+   (26 + 26 + 126) × (0xC7 − 0x81) + (<var title="">lead</var> − 0xC7) × 94 + (<var title="">byte</var> − 0xA1).
 
- <li><p>If <var title="">code point</var> is not null, emit
- <var title="">code point</var>.
+   <li><p>Let <var title="">code point</var> be null if <var title="">index</var>
+   is null, or the <a href="#euc-kr-code-point">euc-kr code point</a> at <var title="">index</var>
+   otherwise.
 
- <li><p>If <var title="">byte</var> is in the range 0x00 0x7F, decrease the
- <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p>If <var title="">index</var> is null, decrease the
+   <a href="#byte-pointer">byte pointer</a> by one.
+
+   <li><p>If <var title="">code point</var> is null, this is a
+   <a href="#decoder-error">decoder error</a>.
+
+   <li><p>Emit a code point whose value is <var title="">code point</var>.
+  </ol>
+
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a
+ code point whose value is <var title="">byte</var>.
+
+ <li><p>If <a href="#euc-kr-lead">euc-kr lead</a> is in the range 0x81 to 0xFD, set
+ <a href="#euc-kr-lead">euc-kr lead</a> to <var title="">byte</var> and continue.
 
  <li><p>This is a <a href="#decoder-error">decoder error</a>.
 </ol>
@@ -1647,13 +1672,19 @@ at all.-->
      <b title="">lead state</b>.
 
      <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, this is a
-     <a href="#decoder-error">decoder error</a>..
+     <a href="#decoder-error">decoder error</a>.
 
-     <li><p>If either <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> or
-     <var title="">byte</var> is not in the range 0x21 to 0x7E, let
-     <var title="">code point</var> be null, or otherwise let
-     <var title="">code point</var> be the <a href="#euc-kr-code-point">euc-kr code point</a> for
-     (<a href="#iso-2022-kr-lead">iso-2022-kr lead</a> + 0x80, <var title="">byte</var> + 0x80).
+     <li><p>Let <var title="">code point</var> be null.
+
+     <li><p>If <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> is in the range 0x21 to 0x46
+     and <var title="">byte</var> is in the range 0x21 to 0x7E, set
+     <var title="">code point</var> to the <a href="#euc-kr-code-point">euc-kr code point</a> for
+     (26 + 26 + 126) × (<a href="#iso-2022-kr-lead">iso-2022-kr lead</a> − 1) + 26 + 26 + <var title="">byte</var> − 1.
+
+     <li><p>If <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> is in the range 0x47 to 0x7E
+     and <var title="">byte</var> is in the range 0x21 to 0x7E, set
+     <var title="">code point</var> to the <a href="#euc-kr-code-point">euc-kr code point</a> for
+     (26 + 26 + 126) × (0xC7 − 0x81) + (<a href="#iso-2022-kr-lead">iso-2022-kr lead</a> − 0x47) × 94 + (<var title="">byte</var> − 0x21)
 
      <li><p>If <var title="">code point</var> is not null, emit
      <var title="">code point</var>.

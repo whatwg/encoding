@@ -1485,16 +1485,16 @@ code point defined.
 
 <h2>Legacy multi-byte Korean encodings</h2>
 
-<p class=XXX>The <dfn>euc-kr code point</dfn> for two bytes
-(<var title>byte<sub>1</sub></var>, <var title>byte<sub>2</sub></var>) is
-...
+<p>The <dfn>euc-kr code point</dfn> for <var title>index</var> is the
+code point located at <var title>index</var> in
+<a href=index-euc-kr.txt>index-euc-kr.txt</a>, or null if there is no code
+point defined.
 
 <h3><dfn>euc-kr</dfn></h3><!-- cp949 -->
 
 <p>The <dfn>euc-kr lead</dfn> is initially 0x00.
 
 <p>The <dfn>euc-kr decoder</dfn> (<span>decoder</span> for <span>euc-kr</span>) is:
-<!-- identical to big5 -->
 
 <ol>
  <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
@@ -1509,24 +1509,49 @@ code point defined.
 
  <li><p>Increase the <span>byte pointer</span> by one.
 
- <li><p>If <span>euc-kr lead</span> is 0x00 and <var title>byte</var> is
- in the range 0x00 to 0x7F, emit a code point whose value is
- <var title>byte</var>.
+ <li>
+  <p>If <span>euc-kr lead</span> is not 0x00, let <var title>lead</var> be
+  <span>euc-kr lead</span>, let <var title>index</var> be null,
+  set <span>euc-kr lead</span> to 0x00, and then run these substeps:
 
- <li><p>If <span>euc-kr lead</span> is 0x00, set <span>euc-kr lead</span>
- to <var title>byte</var> and continue.
+  <ol>
+   <li>
+    <p>If <var title>lead</var> is in the range 0x81 to 0xC6, let
+    <var title>temp</var> be (26 + 26 + 126) &times; (<var title>lead</var> &minus; 0x81), and then set <var title>index</var> to the equation,
+    depending on <var title>byte</var>:
 
- <li><p>Let <var title>code point</var> be the
- <span>euc-kr code point</span> for
- (<span>euc-kr lead</span>, <var title>byte</var>).
+    <dl class=switch>
+     <dt>0x41 to 0x5A
+     <dd><p><var title>temp</var> + <var title>byte</var> &minus; 0x41
+     <dt>0x61 to 0x7A
+     <dd><p><var title>temp</var> + 26 + <var title>byte</var> &minus; 0x61
+     <dt>0x81 to 0xFE
+     <dd><p><var title>temp</var> + 26 + 26 + <var title>byte</var> &minus; 0x81
+    </dl>
 
- <li><p>Set <span>euc-kr lead</span> to 0x00.
+   <li><p>If <var title>lead</var> is in the range 0xC7 to 0xFD and
+   <var title>byte</var> is in the range 0xA1 to 0xFE, set
+   <var title>index</var> to
+   (26 + 26 + 126) &times; (0xC7 &minus; 0x81) + (<var title>lead</var> &minus; 0xC7) &times; 94 + (<var title>byte</var> &minus; 0xA1).
 
- <li><p>If <var title>code point</var> is not null, emit
- <var title>code point</var>.
+   <li><p>Let <var title>code point</var> be null if <var title>index</var>
+   is null, or the <span>euc-kr code point</span> at <var title>index</var>
+   otherwise.
 
- <li><p>If <var title>byte</var> is in the range 0x00 0x7F, decrease the
- <span>byte pointer</span> by one.
+   <li><p>If <var title>index</var> is null, decrease the
+   <span>byte pointer</span> by one.
+
+   <li><p>If <var title>code point</var> is null, this is a
+   <span>decoder error</span>.
+
+   <li><p>Emit a code point whose value is <var title>code point</var>.
+  </ol>
+
+ <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a
+ code point whose value is <var title>byte</var>.
+
+ <li><p>If <span>euc-kr lead</span> is in the range 0x81 to 0xFD, set
+ <span>euc-kr lead</span> to <var title>byte</var> and continue.
 
  <li><p>This is a <span>decoder error</span>.
 </ol>
@@ -1613,13 +1638,19 @@ at all.-->
      <b title>lead state</b>.
 
      <li><p>If <var title>byte</var> is the <span>EOF byte</span>, this is a
-     <span>decoder error</span>..
+     <span>decoder error</span>.
 
-     <li><p>If either <span>iso-2022-kr lead</span> or
-     <var title>byte</var> is not in the range 0x21 to 0x7E, let
-     <var title>code point</var> be null, or otherwise let
-     <var title>code point</var> be the <span>euc-kr code point</span> for
-     (<span>iso-2022-kr lead</span> + 0x80, <var title>byte</var> + 0x80).
+     <li><p>Let <var title>code point</var> be null.
+
+     <li><p>If <span>iso-2022-kr lead</span> is in the range 0x21 to 0x46
+     and <var title>byte</var> is in the range 0x21 to 0x7E, set
+     <var title>code point</var> to the <span>euc-kr code point</span> for
+     (26 + 26 + 126) &times; (<span>iso-2022-kr lead</span> &minus; 1) + 26 + 26 + <var title>byte</var> &minus; 1.
+
+     <li><p>If <span>iso-2022-kr lead</span> is in the range 0x47 to 0x7E
+     and <var title>byte</var> is in the range 0x21 to 0x7E, set
+     <var title>code point</var> to the <span>euc-kr code point</span> for
+     (26 + 26 + 126) &times; (0xC7 &minus; 0x81) + (<span>iso-2022-kr lead</span> &minus; 0x47) &times; 94 + (<var title>byte</var> &minus; 0x21)
 
      <li><p>If <var title>code point</var> is not null, emit
      <var title>code point</var>.
