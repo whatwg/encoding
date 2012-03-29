@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-27-march-2012">Living Draft — 27 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-29-march-2012">Living Draft — 29 March 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-27 March 2012, the editors have made this specification available
+29 March 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1043,6 +1043,11 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
 <h2 id="legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (traditional) encodings</h2>
 
+<!--
+ Lead:  0x81 to 0xFE
+ Trail: 0x40 to 0x7E or 0xA1 to 0xFE
+-->
+
 
 <h3 id="big5"><span class="secno">9.1 </span><dfn>big5</dfn></h3><!-- cp950 -->
 
@@ -1453,16 +1458,16 @@ code point defined.
 
      <li><p>Let <var title="">lead offset</var> be 176, or 112 if
      <var title="">lead</var> is less than 160.
-     <!-- leadoffset = lead < 160 ? 112 : 176 -->
+     <!-- lead offset = lead < 160 ? 112 : 176 -->
 
      <li><p>If <var title="">adjust</var> is 0, set <var title="">offset</var> to
      159.
      <!-- offset = adjust ? offset : 159 -->
 
-     <li><p>Let <var title="">row</var> be the arithmetic right shift of
-     <var title="">lead</var> − <var title="">lead offset</var> by 1
-     − <var title="">offset</var> − 33.
-     <!-- row = ((lead - leadoffset) << 1) - adjust - 33 -->
+     <li><p>Let <var title="">row</var> be the arithmetic left shift of
+     <var title="">lead</var> − <var title="">lead offset</var> by 1, then
+     decrease <var title="">row</var> by <var title="">adjust</var> − 33.
+     <!-- row = ((lead - lead offset) << 1) - adjust - 33 -->
 
      <li><p>Let <var title="">code point</var>  be the
      <a href="#jis0208-code-point">jis0208 code point</a> for
@@ -1542,7 +1547,9 @@ point defined.
   <ol>
    <li>
     <p>If <var title="">lead</var> is in the range 0x81 to 0xC6, let
-    <var title="">temp</var> be (26 + 26 + 126) × (<var title="">lead</var> − 0x81), and then set <var title="">index</var> to the equation,
+    <var title="">temp</var> be
+    (26 + 26 + 126) × (<var title="">lead</var> − 0x81), and then
+    set <var title="">index</var> to the result of the equation below,
     depending on <var title="">byte</var>:
 
     <dl class="switch">

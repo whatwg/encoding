@@ -1009,6 +1009,11 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
 <h2>Legacy multi-byte Chinese (traditional) encodings</h2>
 
+<!--
+ Lead:  0x81 to 0xFE
+ Trail: 0x40 to 0x7E or 0xA1 to 0xFE
+-->
+
 
 <h3><dfn>big5</dfn></h3><!-- cp950 -->
 
@@ -1419,16 +1424,16 @@ code point defined.
 
      <li><p>Let <var title>lead offset</var> be 176, or 112 if
      <var title>lead</var> is less than 160.
-     <!-- leadoffset = lead < 160 ? 112 : 176 -->
+     <!-- lead offset = lead < 160 ? 112 : 176 -->
 
      <li><p>If <var title>adjust</var> is 0, set <var title>offset</var> to
      159.
      <!-- offset = adjust ? offset : 159 -->
 
-     <li><p>Let <var title>row</var> be the arithmetic right shift of
-     <var title>lead</var> &minus; <var title>lead offset</var> by 1
-     &minus; <var title>offset</var> &minus; 33.
-     <!-- row = ((lead - leadoffset) << 1) - adjust - 33 -->
+     <li><p>Let <var title>row</var> be the arithmetic left shift of
+     <var title>lead</var> &minus; <var title>lead offset</var> by 1, then
+     decrease <var title>row</var> by <var title>adjust</var> &minus; 33.
+     <!-- row = ((lead - lead offset) << 1) - adjust - 33 -->
 
      <li><p>Let <var title>code point</var>  be the
      <span>jis0208 code point</span> for
@@ -1508,7 +1513,9 @@ point defined.
   <ol>
    <li>
     <p>If <var title>lead</var> is in the range 0x81 to 0xC6, let
-    <var title>temp</var> be (26 + 26 + 126) &times; (<var title>lead</var> &minus; 0x81), and then set <var title>index</var> to the equation,
+    <var title>temp</var> be
+    (26 + 26 + 126) &times; (<var title>lead</var> &minus; 0x81), and then
+    set <var title>index</var> to the result of the equation below,
     depending on <var title>byte</var>:
 
     <dl class=switch>
