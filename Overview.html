@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-29-march-2012">Living Draft — 29 March 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-4-april-2012">Living Draft — 4 April 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-29 March 2012, the editors have made this specification available
+4 April 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1346,8 +1346,8 @@ code point defined.
      U+000A.
 
      <dt>0x1B
-     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape state</b>
-     and continue.
+     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+     <b title="">escape start state</b> and continue.
 
      <dt><a href="#eof-byte">EOF byte</a>
      <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
@@ -1389,8 +1389,8 @@ code point defined.
     <p>Based on <var title="">byte</var>:
     <dl class="switch">
      <dt>0x1B
-     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape state</b>
-     and continue.
+     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+     <b title="">escape start state</b> and continue.
 
      <dt>0x21 to 0x5F
      <dd><p>Emit a code point whose value is 0xFF40 + <var title="">byte</var>.

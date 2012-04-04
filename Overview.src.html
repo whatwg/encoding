@@ -1312,8 +1312,8 @@ code point defined.
      U+000A.
 
      <dt>0x1B
-     <dd><p>Set <span>iso-2022-jp state</span> to <b title>escape state</b>
-     and continue.
+     <dd><p>Set <span>iso-2022-jp state</span> to
+     <b title>escape start state</b> and continue.
 
      <dt><span>EOF byte</span>
      <dd><p>Emit the <span>EOF code point</span>.
@@ -1355,8 +1355,8 @@ code point defined.
     <p>Based on <var title>byte</var>:
     <dl class=switch>
      <dt>0x1B
-     <dd><p>Set <span>iso-2022-jp state</span> to <b title>escape state</b>
-     and continue.
+     <dd><p>Set <span>iso-2022-jp state</span> to
+     <b title>escape start state</b> and continue.
 
      <dt>0x21 to 0x5F
      <dd><p>Emit a code point whose value is 0xFF40 + <var title>byte</var>.
