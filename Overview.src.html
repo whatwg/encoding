@@ -1060,10 +1060,6 @@ Hong Kong Supplementary Character Set.
     </table>
     <!-- we do this to avoid PUA -->
 
-def get_index(lead, trail):
-    cell = (trail-0xA1 + 63) if trail > (0x7F) else trail - 0x40
-    return (lead-0x81) * 157 + cell
-
    <li><p>Let <var title>offset</var> be 0x62 if <var title>byte</var> is
    greater than 0x7F, or 0x40 otherwise.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
