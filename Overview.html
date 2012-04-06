@@ -1205,7 +1205,8 @@ code point defined.
 
  <li><p>If <a href="#euc-jp-first">euc-jp first</a> is 0x8E and <var title="">byte</var> is
  in the range 0xA1 to 0xDF, set <a href="#euc-jp-first">euc-jp first</a> to 0x00 and emit
- a code point whose value is 0xFEC0 + <var title="">byte</var>.
+ a code point whose value is 0xFF61 − 0xA1 + <var title="">byte</var>.
+ <!-- katakana -->
 
  <li><p>If <a href="#euc-jp-first">euc-jp first</a> is 0x8F and <var title="">byte</var> is
  in the range 0xA1 to 0xFE, set <a href="#euc-jp-first">euc-jp first</a> to 0x00,
@@ -1414,7 +1415,9 @@ code point defined.
      <b title="">escape start state</b> and continue.
 
      <dt>0x21 to 0x5F
-     <dd><p>Emit a code point whose value is 0xFF40 + <var title="">byte</var>.
+     <dd><p>Emit a code point whose value is
+     0xFF61 − 0x21 + <var title="">byte</var>.
+     <!-- katakana -->
 
      <dt><a href="#eof-byte">EOF byte</a>
      <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
@@ -1517,7 +1520,7 @@ code point defined.
  <li><p>If <var title="">byte</var> is 0xA0, emit U+F8F0.
 
  <li><p>If <var title="">byte</var> is in the range 0xA1 to 0xDF, emit a
- code point whose value is 0xFEC0 + <var title="">byte</var>.
+ code point whose value is 0xFF61 − 0xA1 + <var title="">byte</var>.
  <!-- katakana -->
 
  <li><p>If <var title="">byte</var> is in the range 0xFD to 0xFF, emit a
