@@ -96,8 +96,7 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#iso-2022-cn"><span class="secno">8.4 </span>iso-2022-cn</a></ol></li>
  <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (traditional) encodings</a>
   <ol>
-   <li><a href="#big5"><span class="secno">9.1 </span>big5</a></li>
-   <li><a href="#big5-hkscs"><span class="secno">9.2 </span>big5-hkscs</a></ol></li>
+   <li><a href="#big5"><span class="secno">9.1 </span>big5</a></ol></li>
  <li><a href="#legacy-multi-byte-japanese-encodings"><span class="secno">10 </span>Legacy multi-byte Japanese encodings</a>
   <ol>
    <li><a href="#euc-jp"><span class="secno">10.1 </span>euc-jp</a></li>
@@ -447,14 +446,12 @@ as that algorithm is incompatible with legacy content.
  <tbody>
   <tr><th colspan="2"><a href="#legacy-multi-byte-chinese-(traditional)-encodings">Legacy multi-byte Chinese (traditional) encodings</a>
   <tr>
-   <td rowspan="4"><a href="#big5">big5</a>
+   <td rowspan="5"><a href="#big5">big5</a>
    <td>"<code title="">big5</code>"
+  <tr><td>"<code title="">big5-hkscs</code>"
   <tr><td>"<code title="">cn-big5</code>"
   <tr><td>"<code title="">csbig5</code>"
   <tr><td>"<code title="">x-x-big5</code>"
-  <tr>
-   <td><a href="#big5-hkscs">big5-hkscs</a>
-   <td>"<code title="">big5-hkscs</code>"
  <tbody>
   <tr><th colspan="2"><a href="#legacy-multi-byte-japanese-encodings">Legacy multi-byte Japanese encodings</a>
   <tr>
@@ -1050,18 +1047,19 @@ altogether as Internet Explorer treats it as unrecognized.
 -->
 
 
-<h3 id="big5"><span class="secno">9.1 </span><dfn>big5</dfn></h3><!-- cp950 -->
+<h3 id="big5"><span class="secno">9.1 </span><dfn>big5</dfn></h3>
 
-<p class="XXX">The <dfn id="big5-code-point">big5 code point</dfn> for two bytes
-(<var title="">byte<sub>1</sub></var>, <var title="">byte<sub>2</sub></var>) is
-...
+<p class="XXX">The <dfn id="big5-code-point">big5 code point</dfn> for <var title="">index</var> is
+the code point located at <var title="">index</var> in ... or null if there is
+no code point defined.
 
-<p class="XXX">Include Gecko extensions? https://bugzilla.mozilla.org/show_bug.cgi?id=310299
+<p class="note">This index is the Big5 standard in combination with the
+Hong Kong Supplementary Character Set.
+
 
 <p>The <dfn id="big5-lead">big5 lead</dfn> is initially 0x00.
 
 <p>The <dfn id="big5-decoder">big5 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#big5">big5</a>) is:
-<!-- identical to euc-kr -->
 
 <ol>
  <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
@@ -1076,24 +1074,55 @@ altogether as Internet Explorer treats it as unrecognized.
 
  <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
 
- <li><p>If <a href="#big5-lead">big5 lead</a> is 0x00 and <var title="">byte</var> is
- in the range 0x00 to 0x7F, emit a code point whose value is
- <var title="">byte</var>.
+ <li>
+  <p>If <a href="#big5-lead">big5 lead</a> is not 0x00, let <var title="">lead</var> be
+  <a href="#big5-lead">big5 lead</a>, let <var title="">index</var> be null, set
+  <a href="#big5-lead">big5 lead</a> to 0x00, and then run these substeps:
 
- <li><p>If <a href="#big5-lead">big5 lead</a> is 0x00, set <a href="#big5-lead">big5 lead</a>
- to <var title="">byte</var> and continue.
+  <ol>
+   <li>
+    <p>If there is a row in the table below whose first column contains
+    <var title="">lead</var> and second column contains <var title="">byte</var>,
+    emit the <em>two</em> code points listed in its third column:
 
- <li><p>Let <var title="">code point</var> be the
- <a href="#big5-code-point">big5 code point</a> for
- (<a href="#big5-lead">big5 lead</a>, <var title="">byte</var>).
+    <table>
+     <tr><td>0x88<td>0x62<td>U+00CA U+0304<!-- Ê̄ -->
+     <tr><td>0x88<td>0x64<td>U+00CA U+030C<!-- Ê̌ -->
+     <tr><td>0x88<td>0xA3<td>U+00EA U+0304<!-- ê̄ -->
+     <tr><td>0x88<td>0xA5<td>U+00EA U+030C<!-- ê̌ -->
+    </table>
+    <!-- we do this to avoid PUA -->
 
- <li><p>Set <a href="#big5-lead">big5 lead</a> to 0x00.
+def get_index(lead, trail):
+    cell = (trail-0xA1 + 63) if trail &gt; (0x7F) else trail - 0x40
+    return (lead-0x81) * 157 + cell
 
- <li><p>If <var title="">code point</var> is not null, emit
- <var title="">code point</var>.
+   <li><p>Let <var title="">offset</var> be 0x62 if <var title="">byte</var> is
+   greater than 0x7F, or 0x40 otherwise.
+   <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
 
- <li><p>If <var title="">byte</var> is in the range 0x00 0x7F, decrease the
- <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
+   0xA1 to 0xFE, set <var title="">index</var> to
+   (<var title="">lead</var> − 0x81) × 157 + (<var title="">byte</var> − <var title="">offset</var>).
+
+   <li><p>Let <var title="">code point</var> be null if <var title="">index</var>
+   is null, or the <a href="#big5-code-point">big5 code point</a> at <var title="">index</var>
+   otherwise.
+
+   <li><p>If <var title="">index</var> is null, decrease the
+   <a href="#byte-pointer">byte pointer</a> by one.
+
+   <li><p>If <var title="">code point</var> is null, this is a
+   <a href="#decoder-error">decoder error</a>.
+
+   <li><p>Emit a code point whose value is <var title="">code point</var>.
+  </ol>
+
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a code
+ point whose value is <var title="">byte</var>.
+
+ <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
+ <a href="#big5-lead">big5 lead</a> to <var title="">byte</var> and continue.
 
  <li><p>This is a <a href="#decoder-error">decoder error</a>.
 </ol>
@@ -1101,14 +1130,6 @@ altogether as Internet Explorer treats it as unrecognized.
 <p>The <dfn id="big5-encoder">big5 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#big5">big5</a>) is:
 
 <ol class="XXX"></ol>
-
-
-<h3 id="big5-hkscs"><span class="secno">9.2 </span><dfn>big5-hkscs</dfn></h3>
-
-<p class="XXX">Not supported by IE, supported by everyone else.
-https://bugzilla.mozilla.org/show_bug.cgi?id=310299#c5
-http://www.google.com/support/forum/p/Chrome/thread?tid=466c210af3fb6d08
-http://w3techs.com/technologies/details/en-b5hkscs/all/all
 
 
 <h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">10 </span>Legacy multi-byte Japanese encodings</h2>
