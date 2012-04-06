@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-4-april-2012">Living Draft — 4 April 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-6-april-2012">Living Draft — 6 April 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-4 April 2012, the editors have made this specification available
+6 April 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1121,8 +1121,10 @@ a hexadecimal number representing a code point, followed by a U+0009
 code point, followed by the Unicode Character Name preceded by a U+0023
 code point.
 
-<p class="note">These indexes differ from the similarly named JIS X 0208 and
-JIS X 0212 in order to match contemporary implementations.
+<p class="note">The first index differs from the similarly named JIS 0208
+standard due to including formerly proprietary extensions from the
+Nippon Electronics Corporation (NEC).
+The second index is identical to the similarly named JIS 0212 standard.
 
 <p>The <dfn id="jis0208-code-point">jis0208 code point</dfn> for
 (<var title="">row</var>, <var title="">cell</var>) is the code point located
@@ -1514,6 +1516,7 @@ code point defined.
 <ol class="XXX"></ol>
 
 
+
 <h2 id="legacy-multi-byte-korean-encodings"><span class="secno">11 </span>Legacy multi-byte Korean encodings</h2>
 
 <p>The <dfn id="euc-kr-code-point">euc-kr code point</dfn> for <var title="">index</var> is the
@@ -1521,7 +1524,11 @@ code point located at <var title="">index</var> in
 <a href="index-euc-kr.txt">index-euc-kr.txt</a>, or null if there is no code
 point defined.
 
-<h3 id="euc-kr"><span class="secno">11.1 </span><dfn>euc-kr</dfn></h3><!-- cp949 -->
+<p class="note">This index is a combination of the KS X 1001 standard and the
+Unified Hangul Code, more commonly known together as Windows Codepage 949.
+
+
+<h3 id="euc-kr"><span class="secno">11.1 </span><dfn>euc-kr</dfn></h3>
 
 <p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
 

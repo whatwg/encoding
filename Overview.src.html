@@ -1087,8 +1087,10 @@ a hexadecimal number representing a code point, followed by a U+0009
 code point, followed by the Unicode Character Name preceded by a U+0023
 code point.
 
-<p class=note>These indexes differ from the similarly named JIS X 0208 and
-JIS X 0212 in order to match contemporary implementations.
+<p class=note>The first index differs from the similarly named JIS 0208
+standard due to including formerly proprietary extensions from the
+Nippon Electronics Corporation (NEC).
+The second index is identical to the similarly named JIS 0212 standard.
 
 <p>The <dfn>jis0208 code point</dfn> for
 (<var title>row</var>, <var title>cell</var>) is the code point located
@@ -1480,6 +1482,7 @@ code point defined.
 <ol class=XXX></ol>
 
 
+
 <h2>Legacy multi-byte Korean encodings</h2>
 
 <p>The <dfn>euc-kr code point</dfn> for <var title>index</var> is the
@@ -1487,7 +1490,11 @@ code point located at <var title>index</var> in
 <a href=index-euc-kr.txt>index-euc-kr.txt</a>, or null if there is no code
 point defined.
 
-<h3><dfn>euc-kr</dfn></h3><!-- cp949 -->
+<p class=note>This index is a combination of the KS X 1001 standard and the
+Unified Hangul Code, more commonly known together as Windows Codepage 949.
+
+
+<h3><dfn>euc-kr</dfn></h3>
 
 <p>The <dfn>euc-kr lead</dfn> is initially 0x00.
 
