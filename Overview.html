@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-6-april-2012">Living Draft — 6 April 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-7-april-2012">Living Draft — 7 April 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-6 April 2012, the editors have made this specification available
+7 April 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1069,7 +1069,7 @@ Hong Kong Supplementary Character Set.
  <a href="#big5-lead">big5 lead</a> is 0x00, emit the
  <a href="#eof-code-point">EOF code point</a>.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>,
+ <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
  <a href="#big5-lead">big5 lead</a> is not 0x00, set <a href="#big5-lead">big5 lead</a> to 0x00;
  this is a <a href="#decoder-error">decoder error</a>.
 
@@ -1140,10 +1140,10 @@ a hexadecimal number representing a code point, followed by a U+0009
 code point, followed by the Unicode Character Name preceded by a U+0023
 code point.
 
-<p class="note">The first index differs from the similarly named JIS 0208
+<p class="note">The first index differs from the similarly named JIS X 0208
 standard due to including formerly proprietary extensions from the
 Nippon Electronics Corporation (NEC).
-The second index is identical to the similarly named JIS 0212 standard.
+The second index is identical to the similarly named JIS X 0212 standard.
 
 <p>The <dfn id="jis0208-code-point">jis0208 code point</dfn> for
 (<var title="">row</var>, <var title="">cell</var>) is the code point located
@@ -1335,8 +1335,8 @@ code point defined.
      <b title="">Katakana state</b> and continue.
 
      <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>,
-     decrease <a href="#byte-pointer">byte pointer</a> by one, or otherwise decrease it by
-     two.
+     decrease <a href="#byte-pointer">byte pointer</a> by one, or decrease it by two
+     otherwise.
 
      <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>;
      this is a <a href="#decoder-error">decoder error</a>.
@@ -1351,8 +1351,8 @@ code point defined.
      continue.
 
      <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>,
-     decrease <a href="#byte-pointer">byte pointer</a> by two, or otherwise decrease it by
-     three.
+     decrease <a href="#byte-pointer">byte pointer</a> by two, or decrease it by three
+     otherwise.
 
      <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>;
      this is a <a href="#decoder-error">decoder error</a>.

@@ -1036,7 +1036,7 @@ Hong Kong Supplementary Character Set.
  <span>big5 lead</span> is 0x00, emit the
  <span>EOF code point</span>.
 
- <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>big5 lead</span> is not 0x00, set <span>big5 lead</span> to 0x00;
  this is a <span>decoder error</span>.
 
@@ -1107,10 +1107,10 @@ a hexadecimal number representing a code point, followed by a U+0009
 code point, followed by the Unicode Character Name preceded by a U+0023
 code point.
 
-<p class=note>The first index differs from the similarly named JIS 0208
+<p class=note>The first index differs from the similarly named JIS X 0208
 standard due to including formerly proprietary extensions from the
 Nippon Electronics Corporation (NEC).
-The second index is identical to the similarly named JIS 0212 standard.
+The second index is identical to the similarly named JIS X 0212 standard.
 
 <p>The <dfn>jis0208 code point</dfn> for
 (<var title>row</var>, <var title>cell</var>) is the code point located
@@ -1302,8 +1302,8 @@ code point defined.
      <b title>Katakana state</b> and continue.
 
      <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
-     decrease <span>byte pointer</span> by one, or otherwise decrease it by
-     two.
+     decrease <span>byte pointer</span> by one, or decrease it by two
+     otherwise.
 
      <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>;
      this is a <span>decoder error</span>.
@@ -1318,8 +1318,8 @@ code point defined.
      continue.
 
      <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
-     decrease <span>byte pointer</span> by two, or otherwise decrease it by
-     three.
+     decrease <span>byte pointer</span> by two, or decrease it by three
+     otherwise.
 
      <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>;
      this is a <span>decoder error</span>.
