@@ -788,7 +788,10 @@ as a non-normative JSON resource:
 
 <h2>Legacy multi-byte Chinese (simplified) encodings</h2>
 
-<p>The <dfn>gbk code point</dfn> for a given number is: ...
+<p>The <dfn>gbk code point</dfn> for <var title>index<var> is the code point
+located at <var title>index</var> in
+<a href=index-gbk.txt>index-gbk.txt</a>, or null if there is no code point
+defined.
 
 
 <h3><dfn>gbk</dfn></h3>
@@ -869,22 +872,33 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
    <span>gb18030 flag</span> is set, set <span>gbk second</span> to
    <var title>byte</var> and continue.
 
-   <li class=XXX><p>If <var title>byte</var> is in the range 0x40 to 0xFE,
-   ... and there is a code point ... set <span>gbk first</span> to 0x00, and
-   then emit ...
+   <li><p>Let <var title>lead</var> be <span>gbk first</span>, let
+   <var title>index</var> be null, and set <span>gbk first</span> to 0x00.
 
-   <li><p>Decrease the <span>byte pointer</span> by one, set
-   <span>gbk first</span> to 0x00; this is a <span>decoder error</span>.
+   <li><p>Let <var title>offset</var> be 0x41 if <var title>byte</var> is
+   greater than 0x7F, or 0x40 otherwise.
+
+   <li><p>If <var title>byte</var> is in the range 0x40 to 0x7E or
+   0x80 to 0xFE, set <var title>index</var> to
+   (<var title>lead</var> &minus; 0x81) &times; 190 + (<var title>byte</var> &minus; <var title>offset</var>)
+
+   <li><p>Let <var title>code point</var> be null if <var title>index</var>
+   is null, or the <span>gbk code point</span> at <var title>index</var>
+   otherwise.
+
+   <li><p>If <var title>index</var> is null, decrease the
+   <span>byte pointer</span> by one.
+
+   <li><p>If <var title>code point</var> is null, this is a
+   <span>decoder error</span>.
+
+   <li><p>Emit a code point whose value is <var title>code point</var>.
   </ol>
 
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a code
  point whose value is <var title>byte</var>.
 
- <li>
-  <p>If <var title>byte</var> is 0x80 and the <span>gb18030 flag</span> is
-  unset, emit a code point whose value is U+20AC.
-
-  <p class=XXX>Gecko emits it regardless of the <span>gb18030 flag</span>.
+ <li><p>If <var title>byte</var> is 0x80, emit U+20AC.
 
  <li><p>If <var title>byte</var> is in the range 0x81 to 0xFE, set
  <span>gbk first</span> to <var title>byte</var> and continue.
@@ -895,6 +909,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
 <p>The <dfn>gbk encoder</dfn> (<span>encoder</span> for <span>gbk</span>) is:
 
 <ol class=XXX></ol>
+
 
 <h3><dfn>gb18030</dfn></h3>
 
@@ -954,22 +969,24 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
   </dl>
 
  <li>
-  <p>If <span>hz-gb-2312 lead</span> is not 0x00, set
-  <span>hz-gb-2312 lead</span> to 0x00 and:
+  <p>If <span>hz-gb-2312 lead</span> is not 0x00, let
+  <var title>lead</var> be <span>hz-gb-2312 lead</span>, set
+  <span>hz-gb-2312 lead</span> to 0x00, and then run these substeps:
 
   <ol>
-   <li><p class=XXX>Let <var title>code point</var> be
-   <span>gbk code point</span> for ...
-   <!-- (hz-gb-2312 lead - 1) * 191 + (byte + 0x40) -->
-
-   <li><p>If <var title>byte</var> is in the range 0x20 to 0x7F and
-   <var title>code point</var> is not null, emit
-   <var title>code point</var>.
+   <li><p>If <var title>byte</var> is in the range 0x21 to 0x7E, let
+   <var title>code point</var> be the <span>gbk code point</span> for
+   (<var title>lead</var> &minus; 1) &times; 190 + (<var title>byte</var> + 0x3F)
+   <!--lead-1    = lead+0x80-0x81
+       byte+0x3F = byte+0x80-0x41-->
 
    <li><p>If <var title>byte</var> is 0x0A, unset the
    <span>hz-gb-2312 flag</span>.
 
-   <li><p>This is a <span>decoder error</span>.
+   <li><p>If <var title>code point</var> is null, this is a
+   <span>decoder error</span>.
+
+   <li><p>Emit a code point whose value is <var title>code point</var>.
   </ol>
 
  <li><p>If <var title>byte</var> is 0x7E<!--~-->, set
@@ -1114,13 +1131,13 @@ The second index is identical to the similarly named JIS X 0212 standard.
 
 <p>The <dfn>jis0208 code point</dfn> for
 (<var title>row</var>, <var title>cell</var>) is the code point located
-at <var title>row</var> * 94 + <var title>cell</var> in
+at <var title>row</var> &times; 94 + <var title>cell</var> in
 <a href="index-jis0208.txt">index-jis0208.txt</a>, or null if there is no
 code point defined.
 
 <p>The <dfn>jis0212 code point</dfn> for
 (<var title>row</var>, <var title>cell</var>) is the code point located
-at <var title>row</var> * 94 + <var title>cell</var> in
+at <var title>row</var> &times; 94 + <var title>cell</var> in
 <a href="index-jis0212.txt">index-jis0212.txt</a>, or null if there is no
 code point defined.
 

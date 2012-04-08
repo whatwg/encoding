@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-7-april-2012">Living Draft — 7 April 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-8-april-2012">Living Draft — 8 April 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-7 April 2012, the editors have made this specification available
+8 April 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -821,10 +821,13 @@ as a non-normative JSON resource:
 
 <h2 id="legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">8 </span>Legacy multi-byte Chinese (simplified) encodings</h2>
 
-<p>The <dfn id="gbk-code-point">gbk code point</dfn> for a given number is: ...
+<p>The <dfn id="gbk-code-point">gbk code point</dfn> for <var title="">index<var> is the code point
+located at <var title="">index</var> in
+<a href="index-gbk.txt">index-gbk.txt</a>, or null if there is no code point
+defined.
 
 
-<h3 id="gbk"><span class="secno">8.1 </span><dfn>gbk</dfn></h3>
+</var></var><h3 id="gbk"><span class="secno">8.1 </span><dfn>gbk</dfn></h3>
 
 <p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It can only be set
 by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-encoder">gb18030 encoder</a>.
@@ -902,22 +905,33 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
    <a href="#gb18030-flag">gb18030 flag</a> is set, set <a href="#gbk-second">gbk second</a> to
    <var title="">byte</var> and continue.
 
-   <li class="XXX"><p>If <var title="">byte</var> is in the range 0x40 to 0xFE,
-   ... and there is a code point ... set <a href="#gbk-first">gbk first</a> to 0x00, and
-   then emit ...
+   <li><p>Let <var title="">lead</var> be <a href="#gbk-first">gbk first</a>, let
+   <var title="">index</var> be null, and set <a href="#gbk-first">gbk first</a> to 0x00.
 
-   <li><p>Decrease the <a href="#byte-pointer">byte pointer</a> by one, set
-   <a href="#gbk-first">gbk first</a> to 0x00; this is a <a href="#decoder-error">decoder error</a>.
+   <li><p>Let <var title="">offset</var> be 0x41 if <var title="">byte</var> is
+   greater than 0x7F, or 0x40 otherwise.
+
+   <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
+   0x80 to 0xFE, set <var title="">index</var> to
+   (<var title="">lead</var> − 0x81) × 190 + (<var title="">byte</var> − <var title="">offset</var>)
+
+   <li><p>Let <var title="">code point</var> be null if <var title="">index</var>
+   is null, or the <a href="#gbk-code-point">gbk code point</a> at <var title="">index</var>
+   otherwise.
+
+   <li><p>If <var title="">index</var> is null, decrease the
+   <a href="#byte-pointer">byte pointer</a> by one.
+
+   <li><p>If <var title="">code point</var> is null, this is a
+   <a href="#decoder-error">decoder error</a>.
+
+   <li><p>Emit a code point whose value is <var title="">code point</var>.
   </ol>
 
  <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a code
  point whose value is <var title="">byte</var>.
 
- <li>
-  <p>If <var title="">byte</var> is 0x80 and the <a href="#gb18030-flag">gb18030 flag</a> is
-  unset, emit a code point whose value is U+20AC.
-
-  <p class="XXX">Gecko emits it regardless of the <a href="#gb18030-flag">gb18030 flag</a>.
+ <li><p>If <var title="">byte</var> is 0x80, emit U+20AC.
 
  <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
  <a href="#gbk-first">gbk first</a> to <var title="">byte</var> and continue.
@@ -928,6 +942,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
 <p>The <dfn id="gbk-encoder">gbk encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gbk">gbk</a>) is:
 
 <ol class="XXX"></ol>
+
 
 <h3 id="gb18030"><span class="secno">8.2 </span><dfn>gb18030</dfn></h3>
 
@@ -987,22 +1002,24 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
   </dl>
 
  <li>
-  <p>If <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is not 0x00, set
-  <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to 0x00 and:
+  <p>If <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is not 0x00, let
+  <var title="">lead</var> be <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a>, set
+  <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to 0x00, and then run these substeps:
 
   <ol>
-   <li><p class="XXX">Let <var title="">code point</var> be
-   <a href="#gbk-code-point">gbk code point</a> for ...
-   <!-- (hz-gb-2312 lead - 1) * 191 + (byte + 0x40) -->
-
-   <li><p>If <var title="">byte</var> is in the range 0x20 to 0x7F and
-   <var title="">code point</var> is not null, emit
-   <var title="">code point</var>.
+   <li><p>If <var title="">byte</var> is in the range 0x21 to 0x7E, let
+   <var title="">code point</var> be the <a href="#gbk-code-point">gbk code point</a> for
+   (<var title="">lead</var> − 1) × 190 + (<var title="">byte</var> + 0x3F)
+   <!--lead-1    = lead+0x80-0x81
+       byte+0x3F = byte+0x80-0x41-->
 
    <li><p>If <var title="">byte</var> is 0x0A, unset the
    <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>.
 
-   <li><p>This is a <a href="#decoder-error">decoder error</a>.
+   <li><p>If <var title="">code point</var> is null, this is a
+   <a href="#decoder-error">decoder error</a>.
+
+   <li><p>Emit a code point whose value is <var title="">code point</var>.
   </ol>
 
  <li><p>If <var title="">byte</var> is 0x7E<!--~-->, set
@@ -1147,13 +1164,13 @@ The second index is identical to the similarly named JIS X 0212 standard.
 
 <p>The <dfn id="jis0208-code-point">jis0208 code point</dfn> for
 (<var title="">row</var>, <var title="">cell</var>) is the code point located
-at <var title="">row</var> * 94 + <var title="">cell</var> in
+at <var title="">row</var> × 94 + <var title="">cell</var> in
 <a href="index-jis0208.txt">index-jis0208.txt</a>, or null if there is no
 code point defined.
 
 <p>The <dfn id="jis0212-code-point">jis0212 code point</dfn> for
 (<var title="">row</var>, <var title="">cell</var>) is the code point located
-at <var title="">row</var> * 94 + <var title="">cell</var> in
+at <var title="">row</var> × 94 + <var title="">cell</var> in
 <a href="index-jis0212.txt">index-jis0212.txt</a>, or null if there is no
 code point defined.
 
