@@ -821,13 +821,13 @@ as a non-normative JSON resource:
 
 <h2 id="legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">8 </span>Legacy multi-byte Chinese (simplified) encodings</h2>
 
-<p>The <dfn id="gbk-code-point">gbk code point</dfn> for <var title="">index<var> is the code point
-located at <var title="">index</var> in
+<p>The <dfn id="gbk-code-point">gbk code point</dfn> for <var title="">index</var> is the
+code point located at <var title="">index</var> in
 <a href="index-gbk.txt">index-gbk.txt</a>, or null if there is no code point
 defined.
 
 
-</var></var><h3 id="gbk"><span class="secno">8.1 </span><dfn>gbk</dfn></h3>
+<h3 id="gbk"><span class="secno">8.1 </span><dfn>gbk</dfn></h3>
 
 <p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It can only be set
 by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-encoder">gb18030 encoder</a>.
@@ -1482,9 +1482,9 @@ code point defined.
     0x80 to 0xFC, run these substeps:
 
     <ol>
-     <li><p>Set <var title="">offset</var> to 64 if <var title="">byte</var> is
-     less than 0x7F, or 65 otherwise.
-     <!-- offset = byte > 127 ? 65 : 64 -->
+     <li><p>Set <var title="">offset</var> to 0x40 if <var title="">byte</var> is
+     less than 0x7F, or 0x41 otherwise.
+     <!-- offset = byte < 0x7F ? 0x40 : 0x41 -->
 
      <li><p>If <var title="">lead</var> is in the range 0xF0 to 0xF9, this is a
      <a href="#decoder-error">decoder error</a>; emit a code point whose value is
@@ -1497,19 +1497,19 @@ code point defined.
      is less than 0x9F.
      <!-- adjust = byte < 159 -->
 
-     <li><p>Let <var title="">lead offset</var> be 176, or 112 if
-     <var title="">lead</var> is less than 160.
-     <!-- lead offset = lead < 160 ? 112 : 176 -->
+     <li><p>Let <var title="">lead offset</var> 0x70 if <var title="">lead</var>
+     is less than 0xA0, or 0xB0 otherwise.
+     <!-- lead offset = lead < 0xA0 ? 0x70 : 0xB0 -->
 
      <li><p>If <var title="">adjust</var> is 0, set <var title="">offset</var> to
-     159.
-     <!-- offset = adjust ? offset : 159 -->
+     0x9F.
+     <!-- offset = adjust ? offset : 0x9F -->
 
      <li><p>Let <var title="">row</var> be the arithmetic left shift of
      <var title="">lead</var> − <var title="">lead offset</var> by 1.
      <li><p>Set <var title="">row</var> to
-     <var title="">row</var> − <var title="">adjust</var> − 33.
-     <!-- row = ((lead - lead offset) << 1) - adjust - 33 -->
+     <var title="">row</var> − <var title="">adjust</var> − 0x21.
+     <!-- row = ((lead - lead offset) << 1) - adjust - 0x21 -->
 
      <li><p>Let <var title="">code point</var>  be the
      <a href="#jis0208-code-point">jis0208 code point</a> for
