@@ -883,7 +883,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
    (<var title>lead</var> &minus; 0x81) &times; 190 + (<var title>byte</var> &minus; <var title>offset</var>)
 
    <li><p>Let <var title>code point</var> be null if <var title>index</var>
-   is null, or the <span>gbk code point</span> at <var title>index</var>
+   is null, or the <span>gbk code point</span> for <var title>index</var>
    otherwise.
 
    <li><p>If <var title>index</var> is null, decrease the
@@ -1087,7 +1087,7 @@ Hong Kong Supplementary Character Set.
    (<var title>lead</var> &minus; 0x81) &times; 157 + (<var title>byte</var> &minus; <var title>offset</var>).
 
    <li><p>Let <var title>code point</var> be null if <var title>index</var>
-   is null, or the <span>big5 code point</span> at <var title>index</var>
+   is null, or the <span>big5 code point</span> for <var title>index</var>
    otherwise.
 
    <li><p>If <var title>index</var> is null, decrease the
@@ -1133,15 +1133,13 @@ The second index is identical to the similarly named JIS X 0212 standard.
 
 <!-- NEC = Nippon Electronics Corporation -->
 
-<p>The <dfn>jis0208 code point</dfn> for
-(<var title>row</var>, <var title>cell</var>) is the code point located
-at <var title>row</var> &times; 94 + <var title>cell</var> in
+<p>The <dfn>jis0208 code point</dfn> for <var title>index</var> is the
+code point located at <var title>index</var> in
 <a href="index-jis0208.txt">index-jis0208.txt</a>, or null if there is no
 code point defined.
 
-<p>The <dfn>jis0212 code point</dfn> for
-(<var title>row</var>, <var title>cell</var>) is the code point located
-at <var title>row</var> &times; 94 + <var title>cell</var> in
+<p>The <dfn>jis0212 code point</dfn> for <var title>index</var> is the
+code point located at <var title>index</var> in
 <a href="index-jis0212.txt">index-jis0212.txt</a>, or null if there is no
 code point defined.
 
@@ -1179,7 +1177,7 @@ code point defined.
    <li><p>If <var title>lead</var> and <var title>byte</var> are both in the
    range 0xA1 to 0xFE, set <var title>code point</var> to the
    <span>jis0212 code point</span> for
-   (<var title>lead</var> &minus; 0xA1, <var title>byte</var> &minus; 0xA1).
+   (<var title>lead</var> &minus; 0xA1) &times; 94 + <var title>byte</var> &minus; 0xA1.
 
    <li><p>If <var title>code point</var> is null and <var title>byte</var>
    is not in the range 0xA1 to 0xFE, decrease <span>byte pointer</span> by
@@ -1210,7 +1208,7 @@ code point defined.
    <li><p>If <var title>lead</var> and <var title>byte</var> are both in the
    range 0xA1 to 0xFE, set <var title>code point</var> to the
    <span>jis0208 code point</span> for
-   (<var title>lead</var> &minus; 0xA1, <var title>byte</var> &minus; 0xA1).
+   (<var title>lead</var> &minus; 0xA1) &times; 94 + <var title>byte</var> &minus; 0xA1.
 
    <li><p>If <var title>code point</var> is null and <var title>byte</var>
    is not in the range 0xA1 to 0xFE, decrease <span>byte pointer</span> by
@@ -1377,15 +1375,15 @@ code point defined.
      <li><p>If <var title>byte</var> is the <span>EOF byte</span>, this is a
      <span>decoder error</span>.
 
-     <li><p>Let <var title>code point</var> be null.
+     <li><p>Let <var title>code point</var> be null and let
+     <var title>index</var> be
+     (<span>iso-2022-jp lead</span> &minus; 0x21) &times; 94 + <var title>byte</var> &minus; 0x21.
 
      <li><p>If <span>iso-2022-jp lead</span> and <var title>byte</var> are
      both in the range 0x21 to 0x7E: Set <var title>code point</var> to
-     the <span>jis0208 code point</span> for
-     (<span>iso-2022-jp lead</span> &minus; 0x21, <var title>byte</var> &minus; 0x21) if
+     the <span>jis0208 code point</span> for <var title>index</var> if
      the <span>iso-2022-jp jis0212 flag</span> is unset, or to the
-     <span>jis0212 code point</span> for
-     (<span>iso-2022-jp lead</span> &minus; 0x21, <var title>byte</var> &minus; 0x21) if
+     <span>jis0212 code point</span> for <var title>index</var> if
      the <span>iso-2022-jp jis0212 flag</span> is set.
 
      <li><p>If <var title>code point</var> is null, this is a
@@ -1451,34 +1449,15 @@ code point defined.
     0x80 to 0xFC, run these substeps:
 
     <ol>
-     <!-- JAPANESE DRAGONS (more scary and crazy) -->
-
-     <li><p>Set <var title>offset</var> to 0x40 if <var title>byte</var> is
+     <li><p>Let <var title>offset</var> be 0x40 if <var title>byte</var> is
      less than 0x7F, or 0x41 otherwise.
-     <!-- offset = byte < 0x7F ? 0x40 : 0x41 -->
 
-     <li><p>Let <var title>adjust</var> be 0, or 1 if <var title>byte</var>
-     is less than 0x9F.
-     <!-- adjust = byte < 159 -->
-
-     <li><p>Let <var title>lead offset</var> 0x70 if <var title>lead</var>
-     is less than 0xA0, or 0xB0 otherwise.
-     <!-- lead offset = lead < 0xA0 ? 0x70 : 0xB0 -->
-
-     <li><p>If <var title>adjust</var> is 0, set <var title>offset</var> to
-     0x9F.
-     <!-- offset = adjust ? offset : 0x9F -->
-
-     <li><p>Let <var title>row</var> be the arithmetic left shift of
-     <var title>lead</var> &minus; <var title>lead offset</var> by 1.
-     <li><p>Set <var title>row</var> to
-     <var title>row</var> &minus; <var title>adjust</var> &minus; 0x21.
-     <!-- row = ((lead - lead offset) << 1) - adjust - 0x21 -->
+     <li><p>Let <var title>lead offset</var> be 0x81 if
+     <var title>lead</var> is less than 0xA0, or 0xC1 otherwise.
 
      <li><p>Let <var title>code point</var>  be the
      <span>jis0208 code point</span> for
-     (<var title>row</var>, <var title>byte</var> &minus; <var title>offset</var>).
-     <!-- cell = byte - offset -->
+     (<var title>lead</var> &minus; <var title>lead offset</var>) &times; 188 + <var title>byte</var> - <var title>offset</var>.
 
      <li><p>If <var title>code point</var> is null, this is a
      <span>decoder error</span>.
@@ -1569,7 +1548,7 @@ Unified Hangul Code, more commonly known together as Windows Codepage 949.
    (26 + 26 + 126) &times; (0xC7 &minus; 0x81) + (<var title>lead</var> &minus; 0xC7) &times; 94 + (<var title>byte</var> &minus; 0xA1).
 
    <li><p>Let <var title>code point</var> be null if <var title>index</var>
-   is null, or the <span>euc-kr code point</span> at <var title>index</var>
+   is null, or the <span>euc-kr code point</span> for <var title>index</var>
    otherwise.
 
    <li><p>If <var title>index</var> is null, decrease the
