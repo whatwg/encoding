@@ -1423,8 +1423,6 @@ code point defined.
 
 <h3><dfn>shift_jis</dfn></h3>
 
-<p>The <dfn>shift_jis fallback code point</dfn> is U+30FB.</p>
-
 <p>The <dfn>shift_jis lead</dfn> is initially 0x00.
 
 <p>The <dfn>shift_jis decoder</dfn> (<span>decoder</span> for <span>shift_jis</span>) is:
@@ -1453,16 +1451,11 @@ code point defined.
     0x80 to 0xFC, run these substeps:
 
     <ol>
+     <!-- JAPANESE DRAGONS (more scary and crazy) -->
+
      <li><p>Set <var title>offset</var> to 0x40 if <var title>byte</var> is
      less than 0x7F, or 0x41 otherwise.
      <!-- offset = byte < 0x7F ? 0x40 : 0x41 -->
-
-     <li><p>If <var title>lead</var> is in the range 0xF0 to 0xF9, this is a
-     <span>decoder error</span>; emit a code point whose value is
-     0xE000 + (<var title>lead</var> &minus; 0xF0) &times; 188 +
-     <var title>byte</var> &minus; <var title>offset</var>.
-
-     <!--JAPANESE DRAGONS (more scary and crazy)-->
 
      <li><p>Let <var title>adjust</var> be 0, or 1 if <var title>byte</var>
      is less than 0x9F.
@@ -1487,12 +1480,8 @@ code point defined.
      (<var title>row</var>, <var title>byte</var> &minus; <var title>offset</var>).
      <!-- cell = byte - offset -->
 
-     <li>
-      <p>If <var title>code point</var> is null, this is a
-      <span>decoder error</span>; emit the
-      <span>shift_jis fallback code point</span>.
-
-      <p class=note>This is not your normal <span>fallback code point</span>!
+     <li><p>If <var title>code point</var> is null, this is a
+     <span>decoder error</span>.
 
      <li><p>Emit <var title>code point</var>.
     </ol>
@@ -1505,14 +1494,9 @@ code point defined.
  code point whose value is <var title>byte</var>.
  <!-- Opera has 0x7E -->
 
- <li><p>If <var title>byte</var> is 0xA0, emit U+F8F0.
-
  <li><p>If <var title>byte</var> is in the range 0xA1 to 0xDF, emit a
  code point whose value is 0xFF61 &minus; 0xA1 + <var title>byte</var>.
  <!-- katakana -->
-
- <li><p>If <var title>byte</var> is in the range 0xFD to 0xFF, emit a
- code point whose value is 0xF7F4 + <var title>byte</var>.
 
  <li><p>If <var title>byte</var> is in the range 0x81 to 0x9F or
  0xE0 to 0xFC, set <span>shift_jis lead</span> to <var title>byte</var> and
