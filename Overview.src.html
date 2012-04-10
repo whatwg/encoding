@@ -793,30 +793,33 @@ code point located at <var title>index</var> in
 <a href=index-gbk.txt>index-gbk.txt</a>, or null if there is no code point
 defined.
 
+<p>The <dfn>gb18030 code point</dfn> for <var title>index</var> is the
+return value of these steps:
+
+<ol>
+ <li><p>If <var title>index</var> is greater than 39419 and less than
+ 189000, or <var title>index</var> is greater than 1237575, return null.
+
+ <li>
+  <p>Let <var title>offset</var> be the last index in
+  <a href=index-gb18030.txt>index-gb18030.txt</a> that is equal to or less
+  than <var title>index</var> and let <var title>code point offset</var> be
+  its corresponding code point.
+
+  <p class=note>This index works different from all others. Listing all
+  code points would result in an index with over a million entries whereas
+  they can be represented neatly in 207 ranges combined with trivial limit
+  checks.
+
+ <li><p>Return a code point whose value is
+ <var title>code point offset</var> + <var title>index</var> &minus; <var title>offset</var>.
+</ol>
+
 
 <h3><dfn>gbk</dfn></h3>
 
 <p>The <dfn>gb18030 flag</dfn> flag is initially unset. It can only be set
 by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
-
-<p>The <dfn>gb18030 range table</dfn> is:
-
-<table>
- <tr><th>Code point offset<th>From<th>To
- <tr><td>0x0452<!--200F--><td>0x81 0x30 0xD3 0x30<td>0x81 0x36 0xA5 0x31
- <tr><td>0x2643<!--2E80--><td>0x81 0x37 0xA8 0x39<td>0x81 0x38 0xFD 0x38
- <tr><td>0x361B<!--3917--><td>0x82 0x30 0xA6 0x33<td>0x82 0x30 0xF2 0x37
- <tr><td>0x3CE1<!--4055--><td>0x82 0x31 0xD4 0x38<td>0x82 0x32 0xAF 0x32
- <tr><td>0x4160<!--4336--><td>0x82 0x32 0xC9 0x37<td>0x82 0x32 0xF8 0x37
- <tr><td>0x44D7<!--464B--><td>0x82 0x33 0xA3 0x39<td>0x82 0x33 0xC9 0x31
- <tr><td>0x478E<!--4946--><td>0x82 0x33 0xE8 0x38<td>0x82 0x34 0x96 0x38
- <tr><td>0x49B8<!--4C76--><td>0x82 0x34 0xA1 0x31<td>0x82 0x34 0xE7 0x33
- <tr><td>0x9FA6<!--D7FF--><td>0x82 0x35 0x8F 0x33<td>0x83 0x36 0xC7 0x38
- <tr><td>0xE865<!--F92B--><td>0x83 0x36 0xD0 0x30<td>0x84 0x30 0x85 0x34
- <tr><td>0xFA2A<!--FE2F--><td>0x84 0x30 0x9C 0x38<td>0x84 0x31 0x85 0x37
- <tr><td>0xFFE6<!--FFFF--><td>0x84 0x31 0xA2 0x34<td>0x84 0x31 0xA4 0x39
- <tr><td>0x10000<!--10FFFF--><td>0x90 0x30 0x81 0x30<td>0xE3 0x32 0x9A 0x35
-</table>
 
 <p>The <dfn>gbk first</dfn>, <dfn>gbk second</dfn>, and
 <dfn>gbk third</dfn>, are all initially 0x00.
@@ -841,15 +844,20 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
   <p>If <span>gbk third</span> is not 0x00, run these substeps:
 
   <ol>
-   <li class=XXX><p>If <var title>byte</var> is in the range 0x30 to 0x39,
-   ... and there is a code point ...
-   set <span>gbk first</span>, <span>gbk second</span>, and
-   <span>gbk third</span> to 0x00, and then
-   emit ...
+   <li><p>Let <var title>code point</var> be null.
 
-   <li><p>Decrease the <span>byte pointer</span> by three, set
-   <span>gbk first</span>, <span>gbk second</span>, and
-   <span>gbk third</span> to 0x00; this is <span>decoder error</span>.
+   <li><p>If <var title>byte</var> is in the range 0x30 to 0x39, set
+   <var title>code point</var> to the
+   <span>gb18030 code point</span> for
+   (((<span>gbk first</span> &minus; 0x81) &times; 10 + (<span>gbk second</span> &minus; 0x30)) &times; 126 + (<span>gbk third</span> &minus; 0x81)) &times; 10 + <var title>byte</var> &minus; 0x30.
+
+   <li><p>Set <span>gbk first</span>, <span>gbk second</span>, and
+   <span>gbk third</span> to 0x00.
+
+   <li><p>If <var title>code point</var> is null, decrease the
+   <span>byte pointer</span> by three; this is <span>decoder error</span>.
+
+   <li><p>Emit a code point whose value is <var title>code point</var>.
   </ol>
 
  <li>
@@ -1822,6 +1830,7 @@ omissions.
 
 <p>With that, many thanks to
 
+Charles McCathieNeville,
 Erik van der Poel,
 譚永鋒 (Frank Yung-Fong Tang),
 Ian Hickson,
