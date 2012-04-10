@@ -1232,7 +1232,7 @@ JIS X 0212 standard.
 
  <li><p>If <a href="#euc-jp-first">euc-jp first</a> is 0x8E and <var title="">byte</var> is
  in the range 0xA1 to 0xDF, set <a href="#euc-jp-first">euc-jp first</a> to 0x00 and emit
- a code point whose value is 0xFF61 − 0xA1 + <var title="">byte</var>.
+ a code point whose value is 0xFF61 + <var title="">byte</var> − 0xA1.
  <!-- katakana -->
 
  <li><p>If <a href="#euc-jp-first">euc-jp first</a> is 0x8F and <var title="">byte</var> is
@@ -1442,7 +1442,7 @@ JIS X 0212 standard.
 
      <dt>0x21 to 0x5F
      <dd><p>Emit a code point whose value is
-     0xFF61 − 0x21 + <var title="">byte</var>.
+     0xFF61 + <var title="">byte</var> − 0x21.
      <!-- katakana -->
 
      <dt><a href="#eof-byte">EOF byte</a>
@@ -1514,7 +1514,7 @@ JIS X 0212 standard.
  <!-- Opera has 0x7E -->
 
  <li><p>If <var title="">byte</var> is in the range 0xA1 to 0xDF, emit a
- code point whose value is 0xFF61 − 0xA1 + <var title="">byte</var>.
+ code point whose value is 0xFF61 + <var title="">byte</var> − 0xA1.
  <!-- katakana -->
 
  <li><p>If <var title="">byte</var> is in the range 0x81 to 0x9F or
