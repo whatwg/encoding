@@ -1128,8 +1128,8 @@ Hong Kong Supplementary Character Set and other common extensions.
     </table>
     <!-- we do this to avoid PUA -->
 
-   <li><p>Let <var title="">offset</var> be 0x62 if <var title="">byte</var> is
-   greater than 0x7F, or 0x40 otherwise.
+   <li><p>Let <var title="">offset</var> be 0x40 if <var title="">byte</var> is
+   less than 0x7F, or 0x62 otherwise.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
 
    <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
