@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-9-april-2012">Living Draft — 9 April 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-10-april-2012">Living Draft — 10 April 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-9 April 2012, the editors have made this specification available
+10 April 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1212,9 +1212,8 @@ code point defined.
    <a href="#jis0212-code-point">jis0212 code point</a> for
    (<var title="">lead</var> − 0xA1) × 94 + <var title="">byte</var> − 0xA1.
 
-   <li><p>If <var title="">code point</var> is null and <var title="">byte</var>
-   is not in the range 0xA1 to 0xFE, decrease <a href="#byte-pointer">byte pointer</a> by
-   one.
+   <li><p>If <var title="">byte</var> is not in the range 0xA1 to 0xFE,
+   decrease <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>If <var title="">code point</var> is null, this is a
    <a href="#decoder-error">decoder error</a>.
@@ -1243,9 +1242,8 @@ code point defined.
    <a href="#jis0208-code-point">jis0208 code point</a> for
    (<var title="">lead</var> − 0xA1) × 94 + <var title="">byte</var> − 0xA1.
 
-   <li><p>If <var title="">code point</var> is null and <var title="">byte</var>
-   is not in the range 0xA1 to 0xFE, decrease <a href="#byte-pointer">byte pointer</a> by
-   one.
+   <li><p>If <var title="">byte</var> is not in the range 0xA1 to 0xFE,
+   decrease <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>If <var title="">code point</var> is null, this is a
    <a href="#decoder-error">decoder error</a>.
@@ -1304,7 +1302,7 @@ code point defined.
      <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
      <b title="">escape start state</b> and continue.
 
-     <dt>0x00 to 0x7E
+     <dt>0x00 to 0x7F
      <dd><p>Emit a code point whose value is <var title="">byte</var>.
 
      <dt><a href="#eof-byte">EOF byte</a>
@@ -1596,7 +1594,7 @@ Unified Hangul Code, more commonly known together as Windows Codepage 949.
  <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a
  code point whose value is <var title="">byte</var>.
 
- <li><p>If <a href="#euc-kr-lead">euc-kr lead</a> is in the range 0x81 to 0xFD, set
+ <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFD, set
  <a href="#euc-kr-lead">euc-kr lead</a> to <var title="">byte</var> and continue.
 
  <li><p>This is a <a href="#decoder-error">decoder error</a>.
@@ -1642,7 +1640,7 @@ at all.-->
      <dt>0x0F
      <dd><p>Continue.
 
-     <dt>0x00 to 0x7E
+     <dt>0x00 to 0x7F
      <dd><p>Emit a code point whose value is <var title="">byte</var>.
 
      <dt><a href="#eof-byte">EOF byte</a>

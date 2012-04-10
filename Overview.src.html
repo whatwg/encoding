@@ -1179,9 +1179,8 @@ code point defined.
    <span>jis0212 code point</span> for
    (<var title>lead</var> &minus; 0xA1) &times; 94 + <var title>byte</var> &minus; 0xA1.
 
-   <li><p>If <var title>code point</var> is null and <var title>byte</var>
-   is not in the range 0xA1 to 0xFE, decrease <span>byte pointer</span> by
-   one.
+   <li><p>If <var title>byte</var> is not in the range 0xA1 to 0xFE,
+   decrease <span>byte pointer</span> by one.
 
    <li><p>If <var title>code point</var> is null, this is a
    <span>decoder error</span>.
@@ -1210,9 +1209,8 @@ code point defined.
    <span>jis0208 code point</span> for
    (<var title>lead</var> &minus; 0xA1) &times; 94 + <var title>byte</var> &minus; 0xA1.
 
-   <li><p>If <var title>code point</var> is null and <var title>byte</var>
-   is not in the range 0xA1 to 0xFE, decrease <span>byte pointer</span> by
-   one.
+   <li><p>If <var title>byte</var> is not in the range 0xA1 to 0xFE,
+   decrease <span>byte pointer</span> by one.
 
    <li><p>If <var title>code point</var> is null, this is a
    <span>decoder error</span>.
@@ -1271,7 +1269,7 @@ code point defined.
      <dd><p>Set <span>iso-2022-jp state</span> to
      <b title>escape start state</b> and continue.
 
-     <dt>0x00 to 0x7E
+     <dt>0x00 to 0x7F
      <dd><p>Emit a code point whose value is <var title>byte</var>.
 
      <dt><span>EOF byte</span>
@@ -1563,7 +1561,7 @@ Unified Hangul Code, more commonly known together as Windows Codepage 949.
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a
  code point whose value is <var title>byte</var>.
 
- <li><p>If <span>euc-kr lead</span> is in the range 0x81 to 0xFD, set
+ <li><p>If <var title>byte</var> is in the range 0x81 to 0xFD, set
  <span>euc-kr lead</span> to <var title>byte</var> and continue.
 
  <li><p>This is a <span>decoder error</span>.
@@ -1609,7 +1607,7 @@ at all.-->
      <dt>0x0F
      <dd><p>Continue.
 
-     <dt>0x00 to 0x7E
+     <dt>0x00 to 0x7F
      <dd><p>Emit a code point whose value is <var title>byte</var>.
 
      <dt><span>EOF byte</span>
