@@ -176,14 +176,12 @@ considered to also match.
 
 <h2 id="encodings"><span class="secno">4 </span>Encodings</h2>
 
-<p>An <dfn id="concept-encoding" title="concept-encoding">encoding</dfn> defines a mapping from a
-code point to one or more bytes (and vice versa). Each
-<a href="#concept-encoding" title="concept-encoding">encoding</a> has a
-<dfn id="concept-encoding-name" title="concept-encoding-name">name</dfn>, and one or more
-<dfn id="concept-encoding-label" title="concept-encoding-label">labels</dfn>.
+<p>An <dfn id="encoding">encoding</dfn> defines a mapping from a code point to one or more
+bytes (and vice versa). Each <a href="#encoding">encoding</a> has a <dfn id="name">name</dfn>,
+and one or more <dfn id="label" title="label">labels</dfn>.
 
-<p>Each <a href="#concept-encoding" title="concept-encoding">encoding</a> also has a
-<dfn id="decoder">decoder</dfn> and <dfn id="encoder">encoder</dfn> algorithm.
+<p>Each <a href="#encoding">encoding</a> also has a <dfn id="decoder">decoder</dfn> and
+<dfn id="encoder">encoder</dfn> algorithm.
 
 <p>A <a href="#decoder">decoder</a> algorithm takes a stream of bytes and emits a
 stream of code points. The <dfn id="byte-pointer">byte pointer</dfn> is initially zero,
@@ -220,7 +218,7 @@ that point.
 <a href="#encoder" title="encoder">encoders</a> and have therefore special handling
 whenever an <a href="#encoder-error">encoder error</a> is reached.
 
-<p>Most legacy <a href="#concept-encoding" title="concept-encoding">encodings</a> make use of
+<p>Most legacy <a href="#encoding" title="encoding">encodings</a> make use of
 an <dfn id="index">index</dfn>. To find the indexes and their corresponding code points
 in an <a href="#index">index</a>, let <var title="">lines</var> be the result of
 splitting it on U+000A. Then remove each item in <var title="">lines</var> that
@@ -238,11 +236,11 @@ slightly different format.)
 
 <hr>
 
-<p>The table below lists all <a href="#concept-encoding" title="concept-encoding">encodings</a>
-and their <a href="#concept-encoding-label" title="concept-encoding-label">labels</a> user agents must
+<p>The table below lists all <a href="#encoding" title="encoding">encodings</a>
+and their <a href="#label" title="label">labels</a> user agents must
 support. User agents must not support any other
-<a href="#concept-encoding" title="concept-encoding">encodings</a> or
-<a href="#concept-encoding-label" title="concept-encoding-label">labels</a>.
+<a href="#encoding" title="encoding">encodings</a> or
+<a href="#label" title="label">labels</a>.
 
 <p>To <dfn id="concept-encoding-get" title="concept-encoding-get">get an encoding</dfn> from a string
 <var title="">label</var>, run these steps:
@@ -252,11 +250,9 @@ support. User agents must not support any other
  <var title="">label</var>.
 
  <li><p>If <var title="">label</var> is an <a href="#ascii-case-insensitive">ASCII case-insensitive</a>
- match for any of the <a href="#concept-encoding-label" title="concept-encoding-label">labels</a>
- listed in the table below, return the corresponding
- <a href="#concept-encoding" title="concept-encoding">encoding</a> and terminate these steps.
-
- <li><p>Return failure.
+ match for any of the <a href="#label" title="label">labels</a> listed in the table
+ below, return the corresponding <a href="#encoding">encoding</a>, or return failure
+ otherwise.
 </ol>
 
 <p class="note">This algorithm is different from the one defined
@@ -267,8 +263,8 @@ as that algorithm is incompatible with legacy content.
 <table>
  <thead>
   <tr>
-   <th><a href="#concept-encoding-name" title="concept-encoding-name">Name</a>
-   <th><a href="#concept-encoding-label" title="concept-encoding-label">Labels</a>
+   <th><a href="#name">Name</a>
+   <th><a href="#label" title="label">Labels</a>
  <tbody>
   <tr><th colspan="2"><a href="#the-encoding">The Encoding</a>
   <tr>
@@ -522,8 +518,7 @@ as that algorithm is incompatible with legacy content.
 and <a href="#encode">encode</a> are intended for usage by other specifications.
 <a href="#utf-8-decode">utf-8 decode</a> is to be used by new formats. The
 <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be
-used first to turn a <a href="#concept-encoding-label" title="concept-encoding-label">label</a> into an
-<a href="#concept-encoding" title="concept-encoding">encoding</a>.
+used first to turn a <a href="#label">label</a> into an <a href="#encoding">encoding</a>.
 
 <p>To <dfn id="decode">decode</dfn> a byte stream <var title="">stream</var> using
 fallback encoding <var title="">encoding</var>, run these steps:
@@ -536,9 +531,9 @@ fallback encoding <var title="">encoding</var>, run these steps:
   one and going down, if the first bytes of <var title="">stream</var> match
   all the bytes given in the first column (ergo <var title="">stream</var>
   contains at least two or three bytes), then set <var title="">encoding</var>
-  to the <a href="#concept-encoding" title="concept-encoding">encoding</a> given in the cell in
-  the second column of that row, and set <var title="">offset</var> to the
-  offset given in the cell in the third column of that row.
+  to the <a href="#encoding">encoding</a> given in the cell in the second column of
+  that row, and set <var title="">offset</var> to the offset given in the cell
+  in the third column of that row.
 
   <table>
    <tr><th>Byte order mark<th>Encoding<th>Offset
@@ -577,7 +572,7 @@ encoding <var title="">encoding</var>, return the result of running
 <h2 id="the-encoding"><span class="secno">6 </span>The encoding</h2>
 
 <p>New content and formats must exclusively use the <a href="#utf-8">utf-8</a>
-<a href="#concept-encoding" title="concept-encoding">encoding</a>.
+<a href="#encoding">encoding</a>.
 
 
 <h3 id="utf-8"><span class="secno">6.1 </span><dfn>utf-8</dfn></h3>
@@ -738,9 +733,8 @@ are all initially 0.
 
 <h2 id="legacy-single-byte-encodings"><span class="secno">7 </span>Legacy single-byte encodings</h2>
 
-<p>An <a href="#concept-encoding" title="concept-encoding">encoding</a> where each byte is
-either a single code point or nothing, is a
-<dfn id="single-byte-encoding">single-byte encoding</dfn>.
+<p>An <a href="#encoding">encoding</a> where each byte is either a single code point or
+nothing, is a <dfn id="single-byte-encoding">single-byte encoding</dfn>.
 
 <p>The <dfn id="single-byte-code-point">single-byte code point</dfn> for <var title="">index</var> is the
 code point located at <var title="">index</var> in the <a href="#index">index</a> as
@@ -751,7 +745,7 @@ index corresponding to <var title="">code point</var> in the <a href="#index">in
 as defined by the tabel below, or null if there is no corresponding index.
 
 <table>
- <tr><th><a href="#concept-encoding-name" title="concept-encoding-name">Name</a><th><a href="#index">Index</a>
+ <tr><th><a href="#name">Name</a><th><a href="#index">Index</a>
  <tr><td><dfn id="ibm864">ibm864</dfn><td><a href="index-ibm864.txt">index-ibm864.txt</a>
  <tr><td><dfn id="ibm866">ibm866</dfn><td><a href="index-ibm866.txt">index-ibm866.txt</a>
  <tr><td><dfn id="iso-8859-2">iso-8859-2</dfn><td><a href="index-iso-8859-2.txt">index-iso-8859-2.txt</a>
@@ -1181,9 +1175,9 @@ code point defined.
 
 <p class="note">The first index differs from the similarly named JIS X 0208
 standard due to including formerly proprietary extensions from IBM and NEC.
-Only the <a href="#shift_jis">shift_jis</a> <a href="#concept-encoding" title="concept-encoding">encoding</a>
-can address the full range of this index, however, the additional
-code points available to it are duplicate mappings.
+Only the <a href="#shift_jis">shift_jis</a> <a href="#encoding">encoding</a> can address the full
+range of this index, however, the additional code points available to it are
+duplicate mappings.
 The second index is identical to the similarly named JIS X 0212 standard.
 
 <!-- NEC = Nippon Electronics Corporation -->

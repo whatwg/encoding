@@ -143,14 +143,12 @@ considered to also match.
 
 <h2>Encodings</h2>
 
-<p>An <dfn title=concept-encoding>encoding</dfn> defines a mapping from a
-code point to one or more bytes (and vice versa). Each
-<span title=concept-encoding>encoding</span> has a
-<dfn title=concept-encoding-name>name</dfn>, and one or more
-<dfn title=concept-encoding-label>labels</dfn>.
+<p>An <dfn>encoding</dfn> defines a mapping from a code point to one or more
+bytes (and vice versa). Each <span>encoding</span> has a <dfn>name</dfn>,
+and one or more <dfn title=label>labels</dfn>.
 
-<p>Each <span title=concept-encoding>encoding</span> also has a
-<dfn>decoder</dfn> and <dfn>encoder</dfn> algorithm.
+<p>Each <span>encoding</span> also has a <dfn>decoder</dfn> and
+<dfn>encoder</dfn> algorithm.
 
 <p>A <span>decoder</span> algorithm takes a stream of bytes and emits a
 stream of code points. The <dfn>byte pointer</dfn> is initially zero,
@@ -187,7 +185,7 @@ that point.
 <span title=encoder>encoders</span> and have therefore special handling
 whenever an <span>encoder error</span> is reached.
 
-<p>Most legacy <span title=concept-encoding>encodings</span> make use of
+<p>Most legacy <span title=encoding>encodings</span> make use of
 an <dfn>index</dfn>. To find the indexes and their corresponding code points
 in an <span>index</span>, let <var title>lines</var> be the result of
 splitting it on U+000A. Then remove each item in <var title>lines</var> that
@@ -205,11 +203,11 @@ slightly different format.)
 
 <hr>
 
-<p>The table below lists all <span title=concept-encoding>encodings</span>
-and their <span title=concept-encoding-label>labels</span> user agents must
+<p>The table below lists all <span title=encoding>encodings</span>
+and their <span title=label>labels</span> user agents must
 support. User agents must not support any other
-<span title=concept-encoding>encodings</span> or
-<span title=concept-encoding-label>labels</span>.
+<span title=encoding>encodings</span> or
+<span title=label>labels</span>.
 
 <p>To <dfn title=concept-encoding-get>get an encoding</dfn> from a string
 <var title>label</var>, run these steps:
@@ -219,11 +217,9 @@ support. User agents must not support any other
  <var title>label</var>.
 
  <li><p>If <var title>label</var> is an <span>ASCII case-insensitive</span>
- match for any of the <span title=concept-encoding-label>labels</span>
- listed in the table below, return the corresponding
- <span title=concept-encoding>encoding</span> and terminate these steps.
-
- <li><p>Return failure.
+ match for any of the <span title=label>labels</span> listed in the table
+ below, return the corresponding <span>encoding</span>, or return failure
+ otherwise.
 </ol>
 
 <p class=note>This algorithm is different from the one defined
@@ -234,8 +230,8 @@ as that algorithm is incompatible with legacy content.
 <table>
  <thead>
   <tr>
-   <th><span title=concept-encoding-name>Name</span>
-   <th><span title=concept-encoding-label>Labels</span>
+   <th><span>Name</span>
+   <th><span title=label>Labels</span>
  <tbody>
   <tr><th colspan=2><a href=#the-encoding>The Encoding</a>
   <tr>
@@ -489,8 +485,7 @@ as that algorithm is incompatible with legacy content.
 and <span>encode</span> are intended for usage by other specifications.
 <span>utf-8 decode</span> is to be used by new formats. The
 <span title=concept-encoding-get>get an encoding</span> algorithm can be
-used first to turn a <span title=concept-encoding-label>label</span> into an
-<span title=concept-encoding>encoding</span>.
+used first to turn a <span>label</span> into an <span>encoding</span>.
 
 <p>To <dfn>decode</dfn> a byte stream <var title>stream</var> using
 fallback encoding <var title>encoding</var>, run these steps:
@@ -503,9 +498,9 @@ fallback encoding <var title>encoding</var>, run these steps:
   one and going down, if the first bytes of <var title>stream</var> match
   all the bytes given in the first column (ergo <var title>stream</var>
   contains at least two or three bytes), then set <var title>encoding</var>
-  to the <span title=concept-encoding>encoding</span> given in the cell in
-  the second column of that row, and set <var title>offset</var> to the
-  offset given in the cell in the third column of that row.
+  to the <span>encoding</span> given in the cell in the second column of
+  that row, and set <var title>offset</var> to the offset given in the cell
+  in the third column of that row.
 
   <table>
    <tr><th>Byte order mark<th>Encoding<th>Offset
@@ -544,7 +539,7 @@ encoding <var title>encoding</var>, return the result of running
 <h2>The encoding</h2>
 
 <p>New content and formats must exclusively use the <span>utf-8</span>
-<span title=concept-encoding>encoding</span>.
+<span>encoding</span>.
 
 
 <h3><dfn>utf-8</dfn></h3>
@@ -705,9 +700,8 @@ are all initially 0.
 
 <h2>Legacy single-byte encodings</h2>
 
-<p>An <span title=concept-encoding>encoding</span> where each byte is
-either a single code point or nothing, is a
-<dfn>single-byte encoding</dfn>.
+<p>An <span>encoding</span> where each byte is either a single code point or
+nothing, is a <dfn>single-byte encoding</dfn>.
 
 <p>The <dfn>single-byte code point</dfn> for <var title>index</var> is the
 code point located at <var title>index</var> in the <span>index</span> as
@@ -718,7 +712,7 @@ index corresponding to <var title>code point</var> in the <span>index</span>
 as defined by the tabel below, or null if there is no corresponding index.
 
 <table>
- <tr><th><span title=concept-encoding-name>Name</name><th><span>Index</span>
+ <tr><th><span>Name</name><th><span>Index</span>
  <tr><td><dfn>ibm864</dfn><td><a href=index-ibm864.txt>index-ibm864.txt</a>
  <tr><td><dfn>ibm866</dfn><td><a href=index-ibm866.txt>index-ibm866.txt</a>
  <tr><td><dfn>iso-8859-2</dfn><td><a href=index-iso-8859-2.txt>index-iso-8859-2.txt</a>
@@ -1148,9 +1142,9 @@ code point defined.
 
 <p class=note>The first index differs from the similarly named JIS X 0208
 standard due to including formerly proprietary extensions from IBM and NEC.
-Only the <span>shift_jis</span> <span title=concept-encoding>encoding</span>
-can address the full range of this index, however, the additional
-code points available to it are duplicate mappings.
+Only the <span>shift_jis</span> <span>encoding</span> can address the full
+range of this index, however, the additional code points available to it are
+duplicate mappings.
 The second index is identical to the similarly named JIS X 0212 standard.
 
 <!-- NEC = Nippon Electronics Corporation -->
