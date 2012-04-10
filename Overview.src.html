@@ -187,6 +187,22 @@ that point.
 <span title=encoder>encoders</span> and have therefore special handling
 whenever an <span>encoder error</span> is reached.
 
+<p>Most legacy <span title=concept-encoding>encodings</span> make use of
+an <dfn>index</dfn>. To find the indexes and their corresponding code points
+in an <span>index</span>, let <var title>lines</var> be the result of
+splitting it on U+000A. Then remove each item in <var title>lines</var> that
+is the empty string or starts with U+0023. Then the indexes and their
+corresponding code points are found by splitting each item in
+<var title>lines</var> on U+0009. The
+first subitem is the index (as decimal number) and the second is the
+corresponding code point (as hexadecimal number). Other subitems are not
+relevant.
+
+<p class=note>All <span title=index>indexes</span> are also available as
+non-normative <a href=indexes.json>indexes.json</a> resource. (As with its
+normative <span>index</span>, "<code title>gb18030</code>" follows a
+slightly different format.)
+
 <hr>
 
 <p>The table below lists all <span title=concept-encoding>encodings</span>
@@ -692,44 +708,45 @@ are all initially 0.
 <p>An <span title=concept-encoding>encoding</span> where each byte is
 either a single code point or nothing, is a
 <dfn>single-byte encoding</dfn>.
-<span title="single-byte encoding">Single-byte encodings</span> are
-accompanied by a <b title>map</b> as illustrated in the table below. A
-<b title>map</b> is a newline-separated (U+000A) resource, where each line
-starts with a hexadecimal number representing a byte, followed by a U+0009
-code point, followed by another hexadecimal number representing a code point,
-followed by a U+0009 code point, followed by either the
-Unicode Character Name or &lt;Private Use>, preceded by a U+0023 code point.
+
+<p>The <dfn>single-byte code point</dfn> for <var title>index</var> is the
+code point located at <var title>index</var> in the <span>index</span> as
+defined by the table below, or null if there is no code point defined.
+
+<p>The <dfn>single-byte index</dfn> for <var title>code point</var> is the
+index corresponding to <var title>code point</var> in the <span>index</span>
+as defined by the tabel below, or null if there is no corresponding index.
 
 <table>
- <tr><th><span title=concept-encoding-name>Name</name><th><b title>Map</b>
- <tr><td><dfn>ibm864</dfn><td><a href=map-ibm864.txt>map-ibm864.txt</a>
- <tr><td><dfn>ibm866</dfn><td><a href=map-ibm866.txt>map-ibm866.txt</a>
- <tr><td><dfn>iso-8859-2</dfn><td><a href=map-iso-8859-2.txt>map-iso-8859-2.txt</a>
- <tr><td><dfn>iso-8859-3</dfn><td><a href=map-iso-8859-3.txt>map-iso-8859-3.txt</a>
- <tr><td><dfn>iso-8859-4</dfn><td><a href=map-iso-8859-4.txt>map-iso-8859-4.txt</a>
- <tr><td><dfn>iso-8859-5</dfn><td><a href=map-iso-8859-5.txt>map-iso-8859-5.txt</a>
- <tr><td><dfn>iso-8859-6</dfn><td><a href=map-iso-8859-6.txt>map-iso-8859-6.txt</a>
- <tr><td><dfn>iso-8859-7</dfn><td><a href=map-iso-8859-7.txt>map-iso-8859-7.txt</a>
- <tr><td><dfn>iso-8859-8</dfn><td><a href=map-iso-8859-8.txt>map-iso-8859-8.txt</a>
- <tr><td><dfn>iso-8859-10</dfn><td><a href=map-iso-8859-10.txt>map-iso-8859-10.txt</a>
- <tr><td><dfn>iso-8859-13</dfn><td><a href=map-iso-8859-13.txt>map-iso-8859-13.txt</a>
- <tr><td><dfn>iso-8859-14</dfn><td><a href=map-iso-8859-14.txt>map-iso-8859-14.txt</a>
- <tr><td><dfn>iso-8859-15</dfn><td><a href=map-iso-8859-15.txt>map-iso-8859-15.txt</a>
- <tr><td><dfn>iso-8859-16</dfn><td><a href=map-iso-8859-16.txt>map-iso-8859-16.txt</a>
- <tr><td><dfn>koi8-r</dfn><td><a href=map-koi8-r.txt>map-koi8-r.txt</a>
- <tr><td><dfn>koi8-u</dfn><td><a href=map-koi8-u.txt>map-koi8-u.txt</a>
- <tr><td><dfn>macintosh</dfn><td><a href=map-macintosh.txt>map-macintosh.txt</a>
- <tr><td><dfn>windows-874</dfn><td><a href=map-windows-874.txt>map-windows-874.txt</a>
- <tr><td><dfn>windows-1250</dfn><td><a href=map-windows-1250.txt>map-windows-1250.txt</a>
- <tr><td><dfn>windows-1251</dfn><td><a href=map-windows-1251.txt>map-windows-1251.txt</a>
- <tr><td><dfn>windows-1252</dfn><td><a href=map-windows-1252.txt>map-windows-1252.txt</a>
- <tr><td><dfn>windows-1253</dfn><td><a href=map-windows-1253.txt>map-windows-1253.txt</a>
- <tr><td><dfn>windows-1254</dfn><td><a href=map-windows-1254.txt>map-windows-1254.txt</a>
- <tr><td><dfn>windows-1255</dfn><td><a href=map-windows-1255.txt>map-windows-1255.txt</a>
- <tr><td><dfn>windows-1256</dfn><td><a href=map-windows-1256.txt>map-windows-1256.txt</a>
- <tr><td><dfn>windows-1257</dfn><td><a href=map-windows-1257.txt>map-windows-1257.txt</a>
- <tr><td><dfn>windows-1258</dfn><td><a href=map-windows-1258.txt>map-windows-1258.txt</a>
- <tr><td><dfn>x-mac-cyrillic</dfn><td><a href=map-x-mac-cyrillic.txt>map-x-mac-cyrillic.txt</a>
+ <tr><th><span title=concept-encoding-name>Name</name><th><span>Index</span>
+ <tr><td><dfn>ibm864</dfn><td><a href=index-ibm864.txt>index-ibm864.txt</a>
+ <tr><td><dfn>ibm866</dfn><td><a href=index-ibm866.txt>index-ibm866.txt</a>
+ <tr><td><dfn>iso-8859-2</dfn><td><a href=index-iso-8859-2.txt>index-iso-8859-2.txt</a>
+ <tr><td><dfn>iso-8859-3</dfn><td><a href=index-iso-8859-3.txt>index-iso-8859-3.txt</a>
+ <tr><td><dfn>iso-8859-4</dfn><td><a href=index-iso-8859-4.txt>index-iso-8859-4.txt</a>
+ <tr><td><dfn>iso-8859-5</dfn><td><a href=index-iso-8859-5.txt>index-iso-8859-5.txt</a>
+ <tr><td><dfn>iso-8859-6</dfn><td><a href=index-iso-8859-6.txt>index-iso-8859-6.txt</a>
+ <tr><td><dfn>iso-8859-7</dfn><td><a href=index-iso-8859-7.txt>index-iso-8859-7.txt</a>
+ <tr><td><dfn>iso-8859-8</dfn><td><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a>
+ <tr><td><dfn>iso-8859-10</dfn><td><a href=index-iso-8859-10.txt>index-iso-8859-10.txt</a>
+ <tr><td><dfn>iso-8859-13</dfn><td><a href=index-iso-8859-13.txt>index-iso-8859-13.txt</a>
+ <tr><td><dfn>iso-8859-14</dfn><td><a href=index-iso-8859-14.txt>index-iso-8859-14.txt</a>
+ <tr><td><dfn>iso-8859-15</dfn><td><a href=index-iso-8859-15.txt>index-iso-8859-15.txt</a>
+ <tr><td><dfn>iso-8859-16</dfn><td><a href=index-iso-8859-16.txt>index-iso-8859-16.txt</a>
+ <tr><td><dfn>koi8-r</dfn><td><a href=index-koi8-r.txt>index-koi8-r.txt</a>
+ <tr><td><dfn>koi8-u</dfn><td><a href=index-koi8-u.txt>index-koi8-u.txt</a>
+ <tr><td><dfn>macintosh</dfn><td><a href=index-macintosh.txt>index-macintosh.txt</a>
+ <tr><td><dfn>windows-874</dfn><td><a href=index-windows-874.txt>index-windows-874.txt</a>
+ <tr><td><dfn>windows-1250</dfn><td><a href=index-windows-1250.txt>index-windows-1250.txt</a>
+ <tr><td><dfn>windows-1251</dfn><td><a href=index-windows-1251.txt>index-windows-1251.txt</a>
+ <tr><td><dfn>windows-1252</dfn><td><a href=index-windows-1252.txt>index-windows-1252.txt</a>
+ <tr><td><dfn>windows-1253</dfn><td><a href=index-windows-1253.txt>index-windows-1253.txt</a>
+ <tr><td><dfn>windows-1254</dfn><td><a href=index-windows-1254.txt>index-windows-1254.txt</a>
+ <tr><td><dfn>windows-1255</dfn><td><a href=index-windows-1255.txt>index-windows-1255.txt</a>
+ <tr><td><dfn>windows-1256</dfn><td><a href=index-windows-1256.txt>index-windows-1256.txt</a>
+ <tr><td><dfn>windows-1257</dfn><td><a href=index-windows-1257.txt>index-windows-1257.txt</a>
+ <tr><td><dfn>windows-1258</dfn><td><a href=index-windows-1258.txt>index-windows-1258.txt</a>
+ <tr><td><dfn>x-mac-cyrillic</dfn><td><a href=index-x-mac-cyrillic.txt>index-x-mac-cyrillic.txt</a>
 </table>
 
 <hr>
@@ -748,11 +765,13 @@ Unicode Character Name or &lt;Private Use>, preceded by a U+0023 code point.
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a code
  point whose value is <var title>byte</var>.
 
- <li><p>If <var title>byte</var> is not in the <b title>map</b>, this is a
+ <li><p>Let <var title>code point</var> be the
+ <span>single-byte code point</span> for <var title>byte</var> &minus; 0x80.
+
+ <li><p>If <var title>code point</var> is null, this is a
  <span>decoder error</span>.
 
- <li><p>Emit the code point given in the <b title>map</b> for
- <var title>byte</var>.
+ <li><p>Emit a code point whose value is <var title>code point</var>.
 </ol>
 
 <p>The <dfn>single-byte encoder</dfn> (<span>encoder</span> for
@@ -769,21 +788,15 @@ Unicode Character Name or &lt;Private Use>, preceded by a U+0023 code point.
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
 
- <li><p>If <var title>code point</var> is not listed in the
- <b title>map</b>, this is an <span>encoder error</span>.
-
- <li><p>Emit the byte given in the <b title>map</b> for
+ <li><p>Let <var title>index</var> be the <span>single-byte index</span> for
  <var title>code point</var>.
+
+ <li><p>If <var title>index</var> is null, this is an
+ <span>encoder error</span>.
+
+ <li><p>Emit a byte whose value is <var title>index</var> + 0x80.
 </ol>
 
-<hr>
-
-<p class=note>See also:
-<a href="single-byte-research.html">single-byte research</a>.
-
-<p class=note><span>Single-byte encoding</span> map data is also available
-as a non-normative JSON resource:
-<a href=single-byte-encodings.json><code>single-byte-encodings.json</code></a>.
 
 
 <h2>Legacy multi-byte Chinese (simplified) encodings</h2>
@@ -1123,24 +1136,6 @@ Hong Kong Supplementary Character Set.
 
 <h2>Legacy multi-byte Japanese encodings</h2>
 
-<p>Japanese encodings rely on two indexes,
-<a href="index-jis0208.txt">index-jis0208.txt</a> and
-<a href="index-jis0212.txt">index-jis0212.txt</a>. An index is a
-newline-separated (U+000A) resource, where each line starts with a decimal
-number representing a location, followed by a U+0009 code point, followed by
-a hexadecimal number representing a code point, followed by a U+0009
-code point, followed by the Unicode Character Name preceded by a U+0023
-code point.
-
-<p class=note>The first index differs from the similarly named JIS X 0208
-standard due to including formerly proprietary extensions from IBM and NEC.
-Only the <span>shift_jis</span> <span title=concept-encoding>encoding</span>
-can address the full range of this index, however, the additional
-code points available to it are duplicate mappings.
-The second index is identical to the similarly named JIS X 0212 standard.
-
-<!-- NEC = Nippon Electronics Corporation -->
-
 <p>The <dfn>jis0208 code point</dfn> for <var title>index</var> is the
 code point located at <var title>index</var> in
 <a href="index-jis0208.txt">index-jis0208.txt</a>, or null if there is no
@@ -1150,6 +1145,15 @@ code point defined.
 code point located at <var title>index</var> in
 <a href="index-jis0212.txt">index-jis0212.txt</a>, or null if there is no
 code point defined.
+
+<p class=note>The first index differs from the similarly named JIS X 0208
+standard due to including formerly proprietary extensions from IBM and NEC.
+Only the <span>shift_jis</span> <span title=concept-encoding>encoding</span>
+can address the full range of this index, however, the additional
+code points available to it are duplicate mappings.
+The second index is identical to the similarly named JIS X 0212 standard.
+
+<!-- NEC = Nippon Electronics Corporation -->
 
 
 <h3><dfn>euc-jp</dfn></h3>
