@@ -83,32 +83,33 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#conformance"><span class="secno">2 </span>Conformance</a></li>
  <li><a href="#terminology"><span class="secno">3 </span>Terminology</a></li>
  <li><a href="#encodings"><span class="secno">4 </span>Encodings</a></li>
- <li><a href="#decode-and-encode"><span class="secno">5 </span>Decode and encode</a></li>
- <li><a href="#the-encoding"><span class="secno">6 </span>The encoding</a>
+ <li><a href="#indexes"><span class="secno">5 </span>Indexes</a></li>
+ <li><a href="#decode-and-encode"><span class="secno">6 </span>Decode and encode</a></li>
+ <li><a href="#the-encoding"><span class="secno">7 </span>The encoding</a>
   <ol>
-   <li><a href="#utf-8"><span class="secno">6.1 </span>utf-8</a></ol></li>
- <li><a href="#legacy-single-byte-encodings"><span class="secno">7 </span>Legacy single-byte encodings</a></li>
- <li><a href="#legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">8 </span>Legacy multi-byte Chinese (simplified) encodings</a>
+   <li><a href="#utf-8"><span class="secno">7.1 </span>utf-8</a></ol></li>
+ <li><a href="#legacy-single-byte-encodings"><span class="secno">8 </span>Legacy single-byte encodings</a></li>
+ <li><a href="#legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (simplified) encodings</a>
   <ol>
-   <li><a href="#gbk"><span class="secno">8.1 </span>gbk</a></li>
-   <li><a href="#gb18030"><span class="secno">8.2 </span>gb18030</a></li>
-   <li><a href="#hz-gb-2312"><span class="secno">8.3 </span>hz-gb-2312</a></ol></li>
- <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (traditional) encodings</a>
+   <li><a href="#gbk"><span class="secno">9.1 </span>gbk</a></li>
+   <li><a href="#gb18030"><span class="secno">9.2 </span>gb18030</a></li>
+   <li><a href="#hz-gb-2312"><span class="secno">9.3 </span>hz-gb-2312</a></ol></li>
+ <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (traditional) encodings</a>
   <ol>
-   <li><a href="#big5"><span class="secno">9.1 </span>big5</a></ol></li>
- <li><a href="#legacy-multi-byte-japanese-encodings"><span class="secno">10 </span>Legacy multi-byte Japanese encodings</a>
+   <li><a href="#big5"><span class="secno">10.1 </span>big5</a></ol></li>
+ <li><a href="#legacy-multi-byte-japanese-encodings"><span class="secno">11 </span>Legacy multi-byte Japanese encodings</a>
   <ol>
-   <li><a href="#euc-jp"><span class="secno">10.1 </span>euc-jp</a></li>
-   <li><a href="#iso-2022-jp"><span class="secno">10.2 </span>iso-2022-jp</a></li>
-   <li><a href="#shift_jis"><span class="secno">10.3 </span>shift_jis</a></ol></li>
- <li><a href="#legacy-multi-byte-korean-encodings"><span class="secno">11 </span>Legacy multi-byte Korean encodings</a>
+   <li><a href="#euc-jp"><span class="secno">11.1 </span>euc-jp</a></li>
+   <li><a href="#iso-2022-jp"><span class="secno">11.2 </span>iso-2022-jp</a></li>
+   <li><a href="#shift_jis"><span class="secno">11.3 </span>shift_jis</a></ol></li>
+ <li><a href="#legacy-multi-byte-korean-encodings"><span class="secno">12 </span>Legacy multi-byte Korean encodings</a>
   <ol>
-   <li><a href="#euc-kr"><span class="secno">11.1 </span>euc-kr</a></li>
-   <li><a href="#iso-2022-kr"><span class="secno">11.2 </span>iso-2022-kr</a></ol></li>
- <li><a href="#legacy-utf-16-encodings"><span class="secno">12 </span>Legacy utf-16 encodings</a>
+   <li><a href="#euc-kr"><span class="secno">12.1 </span>euc-kr</a></li>
+   <li><a href="#iso-2022-kr"><span class="secno">12.2 </span>iso-2022-kr</a></ol></li>
+ <li><a href="#legacy-utf-16-encodings"><span class="secno">13 </span>Legacy utf-16 encodings</a>
   <ol>
-   <li><a href="#utf-16"><span class="secno">12.1 </span>utf-16</a></li>
-   <li><a href="#utf-16be"><span class="secno">12.2 </span>utf-16be</a></ol></li>
+   <li><a href="#utf-16"><span class="secno">13.1 </span>utf-16</a></li>
+   <li><a href="#utf-16be"><span class="secno">13.2 </span>utf-16be</a></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
@@ -216,29 +217,12 @@ that point.
 <a href="#encoder" title="encoder">encoders</a> and have therefore special handling
 whenever an <a href="#encoder-error">encoder error</a> is reached.
 
-<p>Most legacy <a href="#encoding" title="encoding">encodings</a> make use of
-an <dfn id="index">index</dfn>. To find the indexes and their corresponding code points
-in an <a href="#index">index</a>, let <var title="">lines</var> be the result of
-splitting it on U+000A. Then remove each item in <var title="">lines</var> that
-is the empty string or starts with U+0023. Then the indexes and their
-corresponding code points are found by splitting each item in
-<var title="">lines</var> on U+0009. The
-first subitem is the index (as decimal number) and the second is the
-corresponding code point (as hexadecimal number). Other subitems are not
-relevant.
-
-<p class="note">All <a href="#index" title="index">indexes</a> are also available as
-non-normative <a href="indexes.json">indexes.json</a> resource. (As with its
-normative <a href="#index">index</a>, "<code title="">gb18030</code>" follows a
-slightly different format.)
-
 <hr>
 
 <p>The table below lists all <a href="#encoding" title="encoding">encodings</a>
-and their <a href="#label" title="label">labels</a> user agents must
-support. User agents must not support any other
-<a href="#encoding" title="encoding">encodings</a> or
-<a href="#label" title="label">labels</a>.
+and their <a href="#label" title="label">labels</a> user agents must support.
+User agents must not support any other <a href="#encoding" title="encoding">encodings</a>
+or <a href="#label" title="label">labels</a>.
 
 <p>To <dfn id="concept-encoding-get" title="concept-encoding-get">get an encoding</dfn> from a string
 <var title="">label</var>, run these steps:
@@ -505,8 +489,42 @@ as that algorithm is incompatible with legacy content.
    <td>"<code title="">utf-16be</code>"
 </table>
 
+<p class="note">All <a href="#encoding" title="encoding">encodings</a> and their
+<a href="#label" title="label">labels</a> are also available as non-normative
+<a href="encodings.json">encodings.json</a> resource.
 
-<h2 id="decode-and-encode"><span class="secno">5 </span>Decode and encode</h2>
+
+
+<h2 id="indexes"><span class="secno">5 </span>Indexes</h2>
+
+<p>Most legacy <a href="#encoding" title="encoding">encodings</a> make use of
+an <dfn id="index">index</dfn>. An <a href="#index">index</a> is an ordered list of
+pointers and corresponding code points.
+To find the indexes and their corresponding code points in an <a href="#index">index</a>,
+let <var title="">lines</var> be the result of splitting the resource's contents on U+000A.
+Then remove each item in <var title="">lines</var> that is the empty string or starts with U+0023.
+Then the indexes and their corresponding code points are found by splitting each item in <var title="">lines</var> on U+0009.
+The first subitem is the index (as decimal number) and the second is the corresponding code point (as hexadecimal number).
+Other subitems are not relevant.
+
+<p>The <dfn id="code-point-for">code point for</dfn> <var title="">pointer</var> in
+<var title="">index</var> is the code point corresponding to
+<var title="">pointer</var> in <var title="">index</var>, or null if
+<var title="">pointer</var> is not in <var title="">index</var>.
+
+<p>The <dfn id="pointer-for">pointer for</dfn> <var title="">code point</var> in
+<var title="">index</var> is the <em>first</em> pointer corresponding to
+<var title="">code point</var> in <var title="">index</var>, or null if
+<var title="">code point</var> is not in <var title="">index</var>.
+
+<p class="note">All <a href="#index" title="index">indexes</a> are also available as
+non-normative <a href="indexes.json">indexes.json</a> resource. (As with its
+normative <a href="#index">index</a>, "<code title="">gb18030</code>" follows a
+slightly different format.)
+
+
+
+<h2 id="decode-and-encode"><span class="secno">6 </span>Decode and encode</h2>
 
 <p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>,
 and <a href="#encode">encode</a> are intended for usage by other specifications.
@@ -563,13 +581,13 @@ encoding <var title="">encoding</var>, return the result of running
 <var title="">encoding</var>'s <a href="#encoder">encoder</a> on <var title="">stream</var>.
 
 
-<h2 id="the-encoding"><span class="secno">6 </span>The encoding</h2>
+<h2 id="the-encoding"><span class="secno">7 </span>The encoding</h2>
 
 <p>New content and formats must exclusively use the <a href="#utf-8">utf-8</a>
 <a href="#encoding">encoding</a>.
 
 
-<h3 id="utf-8"><span class="secno">6.1 </span><dfn>utf-8</dfn></h3>
+<h3 id="utf-8"><span class="secno">7.1 </span><dfn>utf-8</dfn></h3>
 
 <!--
 http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8
@@ -725,18 +743,16 @@ are all initially 0.
 </ol>
 
 
-<h2 id="legacy-single-byte-encodings"><span class="secno">7 </span>Legacy single-byte encodings</h2>
+<h2 id="legacy-single-byte-encodings"><span class="secno">8 </span>Legacy single-byte encodings</h2>
 
 <p>An <a href="#encoding">encoding</a> where each byte is either a single code point or
 nothing, is a <dfn id="single-byte-encoding">single-byte encoding</dfn>.
-
-<p>The <dfn id="single-byte-code-point">single-byte code point</dfn> for <var title="">index</var> is the
-code point located at <var title="">index</var> in the <a href="#index">index</a> as
-defined by the table below, or null if there is no code point defined.
-
-<p>The <dfn id="single-byte-index">single-byte index</dfn> for <var title="">code point</var> is the
-index corresponding to <var title="">code point</var> in the <a href="#index">index</a>
-as defined by the tabel below, or null if there is no corresponding index.
+All <a href="#single-byte-encoding" title="single-byte encoding">single-byte encodings</a> use the
+same <a href="#decoder">decoder</a> and <a href="#encoder">encoder</a>, but use a different
+<a href="#index">index</a>. The <dfn id="single-byte-index">single-byte index</dfn>, as referenced by the
+<a href="#single-byte-decoder">single-byte decoder</a> and <a href="#single-byte-encoder">single-byte encoder</a>, is
+defined by the following table, and depends on the
+<a href="#single-byte-encoding">single-byte encoding</a> in use.
 
 <table>
  <tr><th><a href="#name">Name</a><th><a href="#index">Index</a>
@@ -786,8 +802,8 @@ as defined by the tabel below, or null if there is no corresponding index.
  <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a code
  point whose value is <var title="">byte</var>.
 
- <li><p>Let <var title="">code point</var> be the
- <a href="#single-byte-code-point">single-byte code point</a> for <var title="">byte</var> − 0x80.
+ <li><p>Let <var title="">code point</var> be the <a href="#code-point-for">code point for</a>
+ <var title="">byte</var> − 0x80 in <a href="#single-byte-index">single-byte index</a>.
 
  <li><p>If <var title="">code point</var> is null, this is a
  <a href="#decoder-error">decoder error</a>.
@@ -809,48 +825,50 @@ as defined by the tabel below, or null if there is no corresponding index.
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
 
- <li><p>Let <var title="">index</var> be the <a href="#single-byte-index">single-byte index</a> for
- <var title="">code point</var>.
+ <li><p>Let <var title="">pointer</var> be the <a href="#pointer-for">pointer for</a>
+ <var title="">code point</var> in <a href="#single-byte-index">single-byte index</a>.
 
- <li><p>If <var title="">index</var> is null, this is an
+ <li><p>If <var title="">pointer</var> is null, this is an
  <a href="#encoder-error">encoder error</a>.
 
- <li><p>Emit a byte whose value is <var title="">index</var> + 0x80.
+ <li><p>Emit a byte whose value is <var title="">pointer</var> + 0x80.
 </ol>
 
 
 
-<h2 id="legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">8 </span>Legacy multi-byte Chinese (simplified) encodings</h2>
+<h2 id="legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (simplified) encodings</h2>
 
-<p>The <dfn id="gbk-code-point">gbk code point</dfn> for <var title="">index</var> is the
-code point located at <var title="">index</var> in
-<a href="index-gbk.txt">index-gbk.txt</a>, or null if there is no code point
-defined.
+<p>The <dfn id="gbk-code-point-for">gbk code point for</dfn> <var title="">pointer</var> is the
+<a href="#code-point-for">code point for</a> <var title="">pointer</var> in
+<a href="index-gbk.txt">index-gbk.txt</a>.
 
-<p>The <dfn id="gb18030-code-point">gb18030 code point</dfn> for <var title="">index</var> is the
+<p class="note">This <a href="#index">index</a> also includes code points introduced
+by the GB18030 standard that are encoded as two bytes for simplicity.
+
+<p>The <dfn id="gb18030-code-point-for">gb18030 code point for</dfn> <var title="">pointer</var> is the
 return value of these steps:
 
 <ol>
- <li><p>If <var title="">index</var> is greater than 39419 and less than
- 189000, or <var title="">index</var> is greater than 1237575, return null.
+ <li><p>If <var title="">pointer</var> is greater than 39419 and less than
+ 189000, or <var title="">pointer</var> is greater than 1237575, return null.
 
  <li>
-  <p>Let <var title="">offset</var> be the last index in
+  <p>Let <var title="">offset</var> be the last pointer in
   <a href="index-gb18030.txt">index-gb18030.txt</a> that is equal to or less
-  than <var title="">index</var> and let <var title="">code point offset</var> be
-  its corresponding code point.
+  than <var title="">pointer</var> and let <var title="">code point offset</var>
+  be its corresponding code point.
 
-  <p class="note">This index works different from all others. Listing all
-  code points would result in an index with over a million entries whereas
-  they can be represented neatly in 207 ranges combined with trivial limit
-  checks.
+  <p class="note">This <a href="#index">index</a> works different from all others.
+  Listing all code points would result in an index with over a million
+  items whereas they can be represented neatly in 207 ranges combined with
+  trivial limit checks.
 
  <li><p>Return a code point whose value is
- <var title="">code point offset</var> + <var title="">index</var> − <var title="">offset</var>.
+ <var title="">code point offset</var> + <var title="">pointer</var> − <var title="">offset</var>.
 </ol>
 
 
-<h3 id="gbk"><span class="secno">8.1 </span><dfn>gbk</dfn></h3>
+<h3 id="gbk"><span class="secno">9.1 </span><dfn>gbk</dfn></h3>
 
 <p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It can only be set
 by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-encoder">gb18030 encoder</a>.
@@ -882,7 +900,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
 
    <li><p>If <var title="">byte</var> is in the range 0x30 to 0x39, set
    <var title="">code point</var> to the
-   <a href="#gb18030-code-point">gb18030 code point</a> for
+   <a href="#gb18030-code-point-for">gb18030 code point for</a>
    (((<a href="#gbk-first">gbk first</a> − 0x81) × 10 + (<a href="#gbk-second">gbk second</a> − 0x30)) × 126 + (<a href="#gbk-third">gbk third</a> − 0x81)) × 10 + <var title="">byte</var> − 0x30.
 
    <li><p>Set <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, and
@@ -915,20 +933,20 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
    <var title="">byte</var> and continue.
 
    <li><p>Let <var title="">lead</var> be <a href="#gbk-first">gbk first</a>, let
-   <var title="">index</var> be null, and set <a href="#gbk-first">gbk first</a> to 0x00.
+   <var title="">pointer</var> be null, and set <a href="#gbk-first">gbk first</a> to 0x00.
 
    <li><p>Let <var title="">offset</var> be 0x41 if <var title="">byte</var> is
    greater than 0x7F, or 0x40 otherwise.
 
    <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
-   0x80 to 0xFE, set <var title="">index</var> to
+   0x80 to 0xFE, set <var title="">pointer</var> to
    (<var title="">lead</var> − 0x81) × 190 + (<var title="">byte</var> − <var title="">offset</var>)
 
-   <li><p>Let <var title="">code point</var> be null if <var title="">index</var>
-   is null, or the <a href="#gbk-code-point">gbk code point</a> for <var title="">index</var>
-   otherwise.
+   <li><p>Let <var title="">code point</var> be null if
+   <var title="">pointer</var> is null, or the <a href="#gbk-code-point-for">gbk code point for</a>
+   <var title="">pointer</var> otherwise.
 
-   <li><p>If <var title="">index</var> is null, decrease the
+   <li><p>If <var title="">pointer</var> is null, decrease the
    <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>If <var title="">code point</var> is null, this is a
@@ -953,7 +971,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
 <ol class="XXX"></ol>
 
 
-<h3 id="gb18030"><span class="secno">8.2 </span><dfn>gb18030</dfn></h3>
+<h3 id="gb18030"><span class="secno">9.2 </span><dfn>gb18030</dfn></h3>
 
 <p>The <dfn id="gb18030-decoder">gb18030 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gb18030">gb18030</a>) is
 the <a href="#gbk-decoder">gbk decoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
@@ -962,7 +980,7 @@ the <a href="#gbk-decoder">gbk decoder</a> with the <a href="#gb18030-flag">gb18
 the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
 
 
-<h3 id="hz-gb-2312"><span class="secno">8.3 </span><dfn>hz-gb-2312</dfn></h3>
+<h3 id="hz-gb-2312"><span class="secno">9.3 </span><dfn>hz-gb-2312</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1842
  http://tools.ietf.org/html/rfc1843
@@ -1017,8 +1035,8 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
   <ol>
    <li><p>If <var title="">byte</var> is in the range 0x21 to 0x7E, let
-   <var title="">code point</var> be the <a href="#gbk-code-point">gbk code point</a> for
-   (<var title="">lead</var> − 1) × 190 + (<var title="">byte</var> + 0x3F)
+   <var title="">code point</var> be the <a href="#gbk-code-point-for">gbk code point for</a>
+   (<var title="">lead</var> − 1) × 190 + (<var title="">byte</var> + 0x3F).
    <!--lead-1    = lead+0x80-0x81
        byte+0x3F = byte+0x80-0x41-->
 
@@ -1059,7 +1077,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
 
 
-<h2 id="legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (traditional) encodings</h2>
+<h2 id="legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (traditional) encodings</h2>
 
 <!--
  Lead:  0x81 to 0xFE
@@ -1067,14 +1085,10 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 -->
 
 
-<h3 id="big5"><span class="secno">9.1 </span><dfn>big5</dfn></h3>
+<h3 id="big5"><span class="secno">10.1 </span><dfn>big5</dfn></h3>
 
-<p>The <dfn id="big5-code-point">big5 code point</dfn> for <var title="">index</var> is the
-code point located at <var title="">index</var> in
-<a href="index-big5.txt">index-big5.txt</a> or null if there is no code point
-defined.
-
-<p class="note">This index is the Big5 standard in combination with the
+<p class="note">The <a href="#index">index</a> used by the <a href="#big5">big5</a>
+<a href="#encoding">encoding</a> is the Big5 standard in combination with the
 Hong Kong Supplementary Character Set and other common extensions.
 
 
@@ -1097,7 +1111,7 @@ Hong Kong Supplementary Character Set and other common extensions.
 
  <li>
   <p>If <a href="#big5-lead">big5 lead</a> is not 0x00, let <var title="">lead</var> be
-  <a href="#big5-lead">big5 lead</a>, let <var title="">index</var> be null, set
+  <a href="#big5-lead">big5 lead</a>, let <var title="">pointer</var> be null, set
   <a href="#big5-lead">big5 lead</a> to 0x00, and then run these substeps:
 
   <ol>
@@ -1119,14 +1133,15 @@ Hong Kong Supplementary Character Set and other common extensions.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
 
    <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
-   0xA1 to 0xFE, set <var title="">index</var> to
+   0xA1 to 0xFE, set <var title="">pointer</var> to
    (<var title="">lead</var> − 0x81) × 157 + (<var title="">byte</var> − <var title="">offset</var>).
 
-   <li><p>Let <var title="">code point</var> be null if <var title="">index</var>
-   is null, or the <a href="#big5-code-point">big5 code point</a> for <var title="">index</var>
+   <li><p>Let <var title="">code point</var> be null if
+   <var title="">pointer</var> is null, or the <a href="#code-point-for">code point for</a>
+   <var title="">pointer</var> in <a href="index-big5.txt">index-big5.txt</a>
    otherwise.
 
-   <li><p>If <var title="">index</var> is null, decrease the
+   <li><p>If <var title="">pointer</var> is null, decrease the
    <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>If <var title="">code point</var> is null, this is a
@@ -1149,29 +1164,29 @@ Hong Kong Supplementary Character Set and other common extensions.
 <ol class="XXX"></ol>
 
 
-<h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">10 </span>Legacy multi-byte Japanese encodings</h2>
+<h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">11 </span>Legacy multi-byte Japanese encodings</h2>
 
-<p>The <dfn id="jis0208-code-point">jis0208 code point</dfn> for <var title="">index</var> is the
-code point located at <var title="">index</var> in
-<a href="index-jis0208.txt">index-jis0208.txt</a>, or null if there is no
-code point defined.
+<p>The <dfn id="jis0208-code-point-for">jis0208 code point for</dfn> <var title="">pointer</var> is the
+<a href="#code-point-for">code point for</a> <var title="">pointer</var> in
+<a href="index-jis0208.txt">index-jis0208.txt</a>.
 
-<p>The <dfn id="jis0212-code-point">jis0212 code point</dfn> for <var title="">index</var> is the
-code point located at <var title="">index</var> in
-<a href="index-jis0212.txt">index-jis0212.txt</a>, or null if there is no
-code point defined.
+<p>The <dfn id="jis0212-code-point-for">jis0212 code point for</dfn> <var title="">pointer</var> is the
+<a href="#code-point-for">code point for</a> <var title="">pointer</var> in
+<a href="index-jis0212.txt">index-jis0212.txt</a>.
 
-<p class="note">The first index differs from the similarly named JIS X 0208
-standard due to including formerly proprietary extensions from IBM and NEC.
+<p class="note">The first <a href="#index">index</a> is different from the similarly
+named JIS X 0208 standard due to including formerly proprietary extensions
+from IBM and NEC.
 Only the <a href="#shift_jis">shift_jis</a> <a href="#encoding">encoding</a> can address the full
-range of this index, however, the additional code points available to it are
-duplicate mappings.
-The second index is identical to the similarly named JIS X 0212 standard.
+range of this <a href="#index">index</a>, however, the additional code points
+available to it are duplicate mappings.
+The second <a href="#index">index</a> is identical to the similarly named
+JIS X 0212 standard.
 
 <!-- NEC = Nippon Electronics Corporation -->
 
 
-<h3 id="euc-jp"><span class="secno">10.1 </span><dfn>euc-jp</dfn></h3>
+<h3 id="euc-jp"><span class="secno">11.1 </span><dfn>euc-jp</dfn></h3>
 
 <!-- http://www.iana.org/assignments/charset-reg/CP51932 -->
 
@@ -1203,7 +1218,7 @@ The second index is identical to the similarly named JIS X 0212 standard.
 
    <li><p>If <var title="">lead</var> and <var title="">byte</var> are both in the
    range 0xA1 to 0xFE, set <var title="">code point</var> to the
-   <a href="#jis0212-code-point">jis0212 code point</a> for
+   <a href="#jis0212-code-point-for">jis0212 code point for</a>
    (<var title="">lead</var> − 0xA1) × 94 + <var title="">byte</var> − 0xA1.
 
    <li><p>If <var title="">byte</var> is not in the range 0xA1 to 0xFE,
@@ -1233,7 +1248,7 @@ The second index is identical to the similarly named JIS X 0212 standard.
 
    <li><p>If <var title="">lead</var> and <var title="">byte</var> are both in the
    range 0xA1 to 0xFE, set <var title="">code point</var> to the
-   <a href="#jis0208-code-point">jis0208 code point</a> for
+   <a href="#jis0208-code-point-for">jis0208 code point for</a>
    (<var title="">lead</var> − 0xA1) × 94 + <var title="">byte</var> − 0xA1.
 
    <li><p>If <var title="">byte</var> is not in the range 0xA1 to 0xFE,
@@ -1262,7 +1277,7 @@ The second index is identical to the similarly named JIS X 0212 standard.
 <p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 encoder is more restrictive.
 
 
-<h3 id="iso-2022-jp"><span class="secno">10.2 </span><dfn>iso-2022-jp</dfn></h3>
+<h3 id="iso-2022-jp"><span class="secno">11.2 </span><dfn>iso-2022-jp</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1468
  http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
@@ -1401,14 +1416,14 @@ The second index is identical to the similarly named JIS X 0212 standard.
      <a href="#decoder-error">decoder error</a>.
 
      <li><p>Let <var title="">code point</var> be null and let
-     <var title="">index</var> be
+     <var title="">pointer</var> be
      (<a href="#iso-2022-jp-lead">iso-2022-jp lead</a> − 0x21) × 94 + <var title="">byte</var> − 0x21.
 
      <li><p>If <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and <var title="">byte</var> are
      both in the range 0x21 to 0x7E: Set <var title="">code point</var> to
-     the <a href="#jis0208-code-point">jis0208 code point</a> for <var title="">index</var> if
+     the <a href="#jis0208-code-point-for">jis0208 code point for</a> <var title="">pointer</var> if
      the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a> is unset, or to the
-     <a href="#jis0212-code-point">jis0212 code point</a> for <var title="">index</var> if
+     <a href="#jis0212-code-point-for">jis0212 code point for</a> <var title="">pointer</var> if
      the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a> is set.
 
      <li><p>If <var title="">code point</var> is null, this is a
@@ -1444,7 +1459,7 @@ The second index is identical to the similarly named JIS X 0212 standard.
 <ol class="XXX"></ol>
 
 
-<h3 id="shift_jis"><span class="secno">10.3 </span><dfn>shift_jis</dfn></h3>
+<h3 id="shift_jis"><span class="secno">11.3 </span><dfn>shift_jis</dfn></h3>
 
 <p>The <dfn id="shift_jis-lead">shift_jis lead</dfn> is initially 0x00.
 
@@ -1481,7 +1496,7 @@ The second index is identical to the similarly named JIS X 0212 standard.
      <var title="">lead</var> is less than 0xA0, or 0xC1 otherwise.
 
      <li><p>Let <var title="">code point</var>  be the
-     <a href="#jis0208-code-point">jis0208 code point</a> for
+     <a href="#jis0208-code-point-for">jis0208 code point for</a>
      (<var title="">lead</var> − <var title="">lead offset</var>) × 188 + <var title="">byte</var> - <var title="">offset</var>.
 
      <li><p>If <var title="">code point</var> is null, this is a
@@ -1515,18 +1530,18 @@ The second index is identical to the similarly named JIS X 0212 standard.
 
 
 
-<h2 id="legacy-multi-byte-korean-encodings"><span class="secno">11 </span>Legacy multi-byte Korean encodings</h2>
+<h2 id="legacy-multi-byte-korean-encodings"><span class="secno">12 </span>Legacy multi-byte Korean encodings</h2>
 
-<p>The <dfn id="euc-kr-code-point">euc-kr code point</dfn> for <var title="">index</var> is the
-code point located at <var title="">index</var> in
-<a href="index-euc-kr.txt">index-euc-kr.txt</a>, or null if there is no code
-point defined.
+<p>The <dfn id="euc-kr-code-point-for">euc-kr code point for</dfn> <var title="">pointer</var> is the
+<a href="#code-point-for">code point for</a> <var title="">pointer</var> in
+<a href="index-euc-kr.txt">index-euc-kr.txt</a>.
 
-<p class="note">This index is a combination of the KS X 1001 standard and the
-Unified Hangul Code, more commonly known together as Windows Codepage 949.
+<p class="note">This <a href="#index">index</a> is a combination of the
+KS X 1001 standard and the Unified Hangul Code, more commonly known together
+as Windows Codepage 949.
 
 
-<h3 id="euc-kr"><span class="secno">11.1 </span><dfn>euc-kr</dfn></h3>
+<h3 id="euc-kr"><span class="secno">12.1 </span><dfn>euc-kr</dfn></h3>
 
 <p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
 
@@ -1547,7 +1562,7 @@ Unified Hangul Code, more commonly known together as Windows Codepage 949.
 
  <li>
   <p>If <a href="#euc-kr-lead">euc-kr lead</a> is not 0x00, let <var title="">lead</var> be
-  <a href="#euc-kr-lead">euc-kr lead</a>, let <var title="">index</var> be null,
+  <a href="#euc-kr-lead">euc-kr lead</a>, let <var title="">pointer</var> be null,
   set <a href="#euc-kr-lead">euc-kr lead</a> to 0x00, and then run these substeps:
 
   <ol>
@@ -1555,7 +1570,7 @@ Unified Hangul Code, more commonly known together as Windows Codepage 949.
     <p>If <var title="">lead</var> is in the range 0x81 to 0xC6, let
     <var title="">temp</var> be
     (26 + 26 + 126) × (<var title="">lead</var> − 0x81), and then
-    set <var title="">index</var> to the result of the equation below,
+    set <var title="">pointer</var> to the result of the equation below,
     depending on <var title="">byte</var>:
 
     <dl class="switch">
@@ -1569,14 +1584,14 @@ Unified Hangul Code, more commonly known together as Windows Codepage 949.
 
    <li><p>If <var title="">lead</var> is in the range 0xC7 to 0xFD and
    <var title="">byte</var> is in the range 0xA1 to 0xFE, set
-   <var title="">index</var> to
+   <var title="">pointer</var> to
    (26 + 26 + 126) × (0xC7 − 0x81) + (<var title="">lead</var> − 0xC7) × 94 + (<var title="">byte</var> − 0xA1).
 
-   <li><p>Let <var title="">code point</var> be null if <var title="">index</var>
-   is null, or the <a href="#euc-kr-code-point">euc-kr code point</a> for <var title="">index</var>
-   otherwise.
+   <li><p>Let <var title="">code point</var> be null if
+   <var title="">pointer</var> is null, or the
+   <a href="#euc-kr-code-point-for">euc-kr code point for</a> <var title="">pointer</var> otherwise.
 
-   <li><p>If <var title="">index</var> is null, decrease the
+   <li><p>If <var title="">pointer</var> is null, decrease the
    <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>If <var title="">code point</var> is null, this is a
@@ -1599,7 +1614,7 @@ Unified Hangul Code, more commonly known together as Windows Codepage 949.
 <ol class="XXX"></ol>
 
 
-<h3 id="iso-2022-kr"><span class="secno">11.2 </span><dfn>iso-2022-kr</dfn></h3>
+<h3 id="iso-2022-kr"><span class="secno">12.2 </span><dfn>iso-2022-kr</dfn></h3>
 
 <!--XXX the "ESC $ ) C" sequence is only supported by Gecko at the start of
 a stream. It does exactly nothing. Trying to get away with not supporting it
@@ -1682,12 +1697,12 @@ at all.-->
 
      <li><p>If <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> is in the range 0x21 to 0x46
      and <var title="">byte</var> is in the range 0x21 to 0x7E, set
-     <var title="">code point</var> to the <a href="#euc-kr-code-point">euc-kr code point</a> for
+     <var title="">code point</var> to the <a href="#euc-kr-code-point-for">euc-kr code point for</a>
      (26 + 26 + 126) × (<a href="#iso-2022-kr-lead">iso-2022-kr lead</a> − 1) + 26 + 26 + <var title="">byte</var> − 1.
 
      <li><p>If <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> is in the range 0x47 to 0x7E
      and <var title="">byte</var> is in the range 0x21 to 0x7E, set
-     <var title="">code point</var> to the <a href="#euc-kr-code-point">euc-kr code point</a> for
+     <var title="">code point</var> to the <a href="#euc-kr-code-point-for">euc-kr code point for</a>
      (26 + 26 + 126) × (0xC7 − 0x81) + (<a href="#iso-2022-kr-lead">iso-2022-kr lead</a> − 0x47) × 94 + (<var title="">byte</var> − 0x21)
 
      <li><p>If <var title="">code point</var> is not null, emit
@@ -1703,13 +1718,13 @@ at all.-->
 <ol class="XXX"></ol>
 
 
-<h2 id="legacy-utf-16-encodings"><span class="secno">12 </span>Legacy utf-16 encodings</h2>
+<h2 id="legacy-utf-16-encodings"><span class="secno">13 </span>Legacy utf-16 encodings</h2>
 
 <p class="note">Contrary to the Unicode standard, checking for a BOM happens
 before an encoding to decode a byte stream is chosen.
 
 
-<h3 id="utf-16"><span class="secno">12.1 </span><dfn>utf-16</dfn></h3>
+<h3 id="utf-16"><span class="secno">13.1 </span><dfn>utf-16</dfn></h3>
 
 <p>The <dfn id="utf-16-lead-byte">utf-16 lead byte</dfn> and <dfn id="utf-16-lead-surrogate">utf-16 lead surrogate</dfn>
 are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initially unset.
@@ -1824,7 +1839,7 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
 </ol>
 
 
-<h3 id="utf-16be"><span class="secno">12.2 </span><dfn>utf-16be</dfn></h3>
+<h3 id="utf-16be"><span class="secno">13.2 </span><dfn>utf-16be</dfn></h3>
 
 <p>The <dfn id="utf-16be-decoder">utf-16be decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-16be">utf-16be</a>)
 is the <a href="#utf-16-decoder">utf-16 decoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
