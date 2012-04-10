@@ -286,13 +286,6 @@
           "hz-gb-2312"
         ],
         "name": "hz-gb-2312"
-      },
-      {
-        "labels": [
-          "iso-2022-cn",
-          "iso-2022-cn-ext"
-        ],
-        "name": "iso-2022-cn"
       }
     ],
     "heading": "Legacy multi-byte Chinese (simplified) encodings"

@@ -92,8 +92,7 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
   <ol>
    <li><a href="#gbk"><span class="secno">8.1 </span>gbk</a></li>
    <li><a href="#gb18030"><span class="secno">8.2 </span>gb18030</a></li>
-   <li><a href="#hz-gb-2312"><span class="secno">8.3 </span>hz-gb-2312</a></li>
-   <li><a href="#iso-2022-cn"><span class="secno">8.4 </span>iso-2022-cn</a></ol></li>
+   <li><a href="#hz-gb-2312"><span class="secno">8.3 </span>hz-gb-2312</a></ol></li>
  <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (traditional) encodings</a>
   <ol>
    <li><a href="#big5"><span class="secno">9.1 </span>big5</a></ol></li>
@@ -450,10 +449,6 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td><a href="#hz-gb-2312">hz-gb-2312</a>
    <td>"<code title="">hz-gb-2312</code>"
-  <tr>
-   <td rowspan="2"><a href="#iso-2022-cn">iso-2022-cn</a>
-   <td>"<code title="">iso-2022-cn</code>"
-  <tr><td>"<code title="">iso-2022-cn-ext</code>"
  <tbody>
   <tr><th colspan="2"><a href="#legacy-multi-byte-chinese-(traditional)-encodings">Legacy multi-byte Chinese (traditional) encodings</a>
   <tr>
@@ -1063,12 +1058,6 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <ol class="XXX"></ol>
 
 
-<h3 id="iso-2022-cn"><span class="secno">8.4 </span><dfn>iso-2022-cn</dfn></h3>
-<!-- http://tools.ietf.org/html/rfc1922 -->
-
-<p class="XXX">It has been suggested to remove this encoding from the platform
-altogether as Internet Explorer treats it as unrecognized.
-
 
 <h2 id="legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (traditional) encodings</h2>
 
@@ -1086,7 +1075,7 @@ code point located at <var title="">index</var> in
 defined.
 
 <p class="note">This index is the Big5 standard in combination with the
-Hong Kong Supplementary Character Set.
+Hong Kong Supplementary Character Set and other common extensions.
 
 
 <p>The <dfn id="big5-lead">big5 lead</dfn> is initially 0x00.
