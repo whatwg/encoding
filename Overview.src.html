@@ -125,7 +125,8 @@ out of memory, or to work around platform-specific limitations.
 subtraction by "&minus;", multiplication by "&times;", division by "/",
 calculating the remainder of a division (also known as modulo) by "%",
 exponentiation by "<var title>b</var><sup><var title>n</var></sup>",
-arithmetic left shifts by "&lt;&lt;", and arithmetic right shifts by ">>".
+arithmetic left shifts by "&lt;&lt;", arithmetic right shifts by ">>",
+bitwise AND by "&amp;", and bitwise OR by "|".
 
 <p>A <dfn>code point</dfn> is a Unicode code point and is referenced as a
 four-or-more digit hexadecimal value, typically preceded by "U+". E.g. U+0020.
@@ -497,7 +498,7 @@ Other subitems are not relevant.
 <var title>code point</var> is not in <var title>index</var>.
 
 <p>These are the <span title=index>indexes</span> defined by this standard,
-excluding the <span>single-byte index</span>:
+excluding <span>index single-byte</span>:
 
 <table>
  <tr><th colspan=2><span>Index</span><th>Notes
@@ -782,7 +783,7 @@ are all initially 0.
    <!--temp = code_point >> ((count - 1) * 6)-->
 
    <li><p>Append to <var title>bytes</var>
-   0x80 + (<var title>temp</var> % by 64)
+   0x80 + (<var title>temp</var> % 64)
    <!--0x80 | (temp & 0x3f)-->
 
    <li><p>Decrease <var title>count</var> by one.
@@ -798,7 +799,7 @@ are all initially 0.
 nothing, is a <dfn>single-byte encoding</dfn>.
 All <span title="single-byte encoding">single-byte encodings</span> use the
 same <span>decoder</span> and <span>encoder</span>, but use a different
-<span>index</span>. The <dfn>single-byte index</dfn>, as referenced by the
+<span>index</span>. <dfn>Index single-byte</dfn>, as referenced by the
 <span>single-byte decoder</span> and <span>single-byte encoder</span>, is
 defined by the following table, and depends on the
 <span>single-byte encoding</span> in use.
@@ -852,7 +853,7 @@ defined by the following table, and depends on the
  point whose value is <var title>byte</var>.
 
  <li><p>Let <var title>code point</var> be the <span>index code point</span>
- for <var title>byte</var> &minus; 0x80 in <span>single-byte index</span>.
+ for <var title>byte</var> &minus; 0x80 in <span>index single-byte</span>.
 
  <li><p>If <var title>code point</var> is null, this is a
  <span>decoder error</span>.
@@ -875,7 +876,7 @@ defined by the following table, and depends on the
  emit a byte whose value is <var title>code point</var>.
 
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
- <var title>code point</var> in <span>single-byte index</span>.
+ <var title>code point</var> in <span>index single-byte</span>.
 
  <li><p>If <var title>pointer</var> is null, this is an
  <span>encoder error</span>.
@@ -1863,7 +1864,6 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>Emit two bytes whose values are <var title>lead</var> and
    <var title>trail</var> + <var title>offset</var>.
   </ol>
- <li>
 
  <li><p>Set <var title>pointer</var> to
  <var title>pointer</var> &minus; (26 + 26 + 126) × (0xC7 − 0x81).
@@ -2057,8 +2057,8 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
 <ol>
  <li><p>Let <var title>byte1</var> be <var title>code point</var> >> 8.
 
- <li><p>Let <var title>byte2</var> be <var title>code point</var>
- bitwise AND 0x00FF.
+ <li><p>Let <var title>byte2</var> be
+ <var title>code point</var> &amp; 0x00FF.
 
  <li>
   <p>Then return the bytes in order:
