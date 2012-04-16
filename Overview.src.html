@@ -1207,11 +1207,6 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
 <h3><dfn>big5</dfn></h3>
 
-<p class=note>The <span>index</span> used by the <span>big5</span>
-<span>encoding</span> is the Big5 standard in combination with the
-Hong Kong Supplementary Character Set and other common extensions.
-
-
 <p>The <dfn>big5 lead</dfn> is initially 0x00.
 
 <p>The <dfn>big5 decoder</dfn> (<span>decoder</span> for <span>big5</span>) is:
@@ -1283,9 +1278,8 @@ Hong Kong Supplementary Character Set and other common extensions.
 <ol class=XXX></ol>
 
 
+
 <h2>Legacy multi-byte Japanese encodings</h2>
-
-
 
 
 <h3><dfn>euc-jp</dfn></h3>
@@ -1598,7 +1592,51 @@ Hong Kong Supplementary Character Set and other common extensions.
 
 <p>The <dfn>iso-2022-jp encoder</dfn> (<span>encoder</span> for <span>iso-2022-jp</span>) is:
 
-<ol class=XXX></ol>
+<ol>
+ <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+
+ <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
+ emit the <span>EOF byte</span>.
+
+ <li><p>Increase the <span>code point pointer</span> by one.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F and
+ <span>iso-2022-jp state</span> is not <b title>ASCII state</b>, decrease
+ the <span>code point pointer</span> by one, set
+ <span>iso-2022-jp state</span> to <b title>ASCII state</b>, and emit three
+ bytes 0x1B 0x28 0x42.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title>code point</var>.
+
+ <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F and
+ <span>iso-2022-jp state</span> is not <b title>Katakana state</b>, decrease
+ the <span>code point pointer</span> by one, set
+ <span>iso-2022-jp state</span> to <b title>Katakana state</b>, and emit
+ three bytes 0x1B 0x28 0x49.
+
+ <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F,
+ emit a byte whose value is
+ <var title>code point</var> &minus; 0xFF61 + 0x21.
+
+ <li><p>If <span>iso-2022-jp state</span> is not <b title>lead state</b>,
+ decrease the <span>code point pointer</span> by one, set
+ <span>iso-2022-jp state</span> to <b title>lead state</b>, and emit three
+ bytes 0x1B 0x24 0x42.
+
+ <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
+ <var title>code point</var> in <span>index jis0208</span>.
+
+ <li><p>If <var title>pointer</var> is null, this is an
+ <span>encoder error</span>.
+
+ <li><p>Let <var title>lead</var> be <var title>pointer</var> / 94 + 0x21.
+
+ <li><p>Let <var title>trail</var> be <var title>pointer</var> % 94 + 0x21.
+
+ <li><p>Emit tho bytes whose values are <var title>lead</var> and
+ <var title>trail</var>.
+</ol>
 
 
 <h3><dfn>shift_jis</dfn></h3>
