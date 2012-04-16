@@ -1860,7 +1860,54 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
 <p>The <dfn id="euc-kr-encoder">euc-kr encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#euc-kr">euc-kr</a>) is:
 
-<ol class="XXX"></ol>
+<ol>
+ <li><p>Let <var title="">code point</var> be the
+ <a href="#code-point-pointer">code point pointer</a>.
+
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-byte">EOF byte</a>.
+
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title="">code point</var>.
+
+ <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
+ <var title="">code point</var> in <a href="#index-euc-kr">index euc-kr</a>.
+
+ <li><p>If <var title="">pointer</var> is null, this is an
+ <a href="#encoder-error">encoder error</a>.
+
+ <li>
+  <p>If <var title="">pointer</var> is less than
+  (26 + 26 + 126) × (0xC7 − 0x81), run these substeps:
+
+  <ol>
+   <li><p>Let <var title="">lead</var> be
+   <var title="">pointer</var> / (26 + 26 + 126) + 0x81.
+
+   <li><p>Let <var title="">trail</var> be
+   <var title="">pointer</var> % (26 + 26 + 126).
+
+   <li><p>Let <var title="">offset</var> be 0x41 if <var title="">pointer</var> is
+   less than 26, 0x61 if <var title="">pointer</var> is less than 26 + 26, or
+   0x81 otherwise.
+
+   <li><p>Emit two bytes whose values are <var title="">lead</var> and
+   <var title="">trail</var> + <var title="">offset</var>.
+  </ol>
+ <li>
+
+ <li><p>Set <var title="">pointer</var> to
+ <var title="">pointer</var> − (26 + 26 + 126) × (0xC7 − 0x81).
+
+ <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 94 + 0xC7.
+
+ <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0xA1.
+
+ <li><p>Emit two bytes whose values are <var title="">lead</var> and
+ <var title="">trail</var>.
+</ol>
 
 
 <h3 id="iso-2022-kr"><span class="secno">12.2 </span><dfn>iso-2022-kr</dfn></h3>
