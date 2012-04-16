@@ -1637,7 +1637,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li><p>Let <var title>trail</var> be <var title>pointer</var> % 94 + 0x21.
 
- <li><p>Emit tho bytes whose values are <var title>lead</var> and
+ <li><p>Emit two bytes whose values are <var title>lead</var> and
  <var title>trail</var>.
 </ol>
 
@@ -1710,8 +1710,47 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
 <p>The <dfn>shift_jis encoder</dfn> (<span>encoder</span> for <span>shift_jis</span>) is:
 
-<ol class=XXX></ol>
+<ol>
+ <li><p>Let <var title>code point</var> be the
+ <span>code point pointer</span>.
 
+ <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
+ emit the <span>EOF byte</span>.
+
+ <li><p>Increase the <span>code point pointer</span> by one.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+0080,
+ emit a byte whose value is <var title>code point</var>.
+
+ <li><p>If <var title>code point</var> is U+00A5, emit byte 0x5C.
+
+ <li><p>If <var title>code point</var> is U+203E, emit byte 0x7E.
+
+ <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F,
+ emit a byte whose value is
+ <var title>code point</var> &minus; 0xFF61 + 0xA1.
+
+ <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
+ <var title>code point</var> in <span>index jis0208</span>.
+
+ <li><p>If <var title>pointer</var> is null, this is an
+ <span>encoder error</span>.
+
+ <li><p>Let <var title>lead</var> be <var title>pointer</var> / 188.
+
+ <li><p>Let <var title>lead offset</var> be 0x81 if <var title>lead</var> is
+ less than 0x1F, or 0xC1 otherwise.
+ <!-- 0xA0 - 0x81 -->
+
+ <li><p>Let <var title>trail</var> be <var title>pointer</var> % 188.
+
+ <li><p>Let <var title>offset</var> be 0x40 if <var title>trail</var> is
+ less than 0x3F, or 0x41 otherwise.
+
+ <li><p>Emit two bytes whose values are
+ <var title>lead</var> + <var title>lead offset</var> and
+ <var title>trail</var> + <var title>offset</var>.
+</ol>
 
 
 <h2>Legacy multi-byte Korean encodings</h2>

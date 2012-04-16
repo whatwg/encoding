@@ -1670,7 +1670,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0x21.
 
- <li><p>Emit tho bytes whose values are <var title="">lead</var> and
+ <li><p>Emit two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
 </ol>
 
@@ -1743,8 +1743,47 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
 <p>The <dfn id="shift_jis-encoder">shift_jis encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#shift_jis">shift_jis</a>) is:
 
-<ol class="XXX"></ol>
+<ol>
+ <li><p>Let <var title="">code point</var> be the
+ <a href="#code-point-pointer">code point pointer</a>.
 
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-byte">EOF byte</a>.
+
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+0080,
+ emit a byte whose value is <var title="">code point</var>.
+
+ <li><p>If <var title="">code point</var> is U+00A5, emit byte 0x5C.
+
+ <li><p>If <var title="">code point</var> is U+203E, emit byte 0x7E.
+
+ <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F,
+ emit a byte whose value is
+ <var title="">code point</var> − 0xFF61 + 0xA1.
+
+ <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
+ <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
+
+ <li><p>If <var title="">pointer</var> is null, this is an
+ <a href="#encoder-error">encoder error</a>.
+
+ <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 188.
+
+ <li><p>Let <var title="">lead offset</var> be 0x81 if <var title="">lead</var> is
+ less than 0x1F, or 0xC1 otherwise.
+ <!-- 0xA0 - 0x81 -->
+
+ <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 188.
+
+ <li><p>Let <var title="">offset</var> be 0x40 if <var title="">trail</var> is
+ less than 0x3F, or 0x41 otherwise.
+
+ <li><p>Emit two bytes whose values are
+ <var title="">lead</var> + <var title="">lead offset</var> and
+ <var title="">trail</var> + <var title="">offset</var>.
+</ol>
 
 
 <h2 id="legacy-multi-byte-korean-encodings"><span class="secno">12 </span>Legacy multi-byte Korean encodings</h2>
