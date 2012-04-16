@@ -1912,6 +1912,10 @@ at all.-->
      <dt>0x0F
      <dd><p>Continue.
 
+     <dt>0x1B
+     <dd><p>Set <span>iso-2022-kr state</span> to
+     <b title>escape start state</b> and continue.
+
      <dt>0x00 to 0x7F
      <dd><p>Emit a code point whose value is <var title>byte</var>.
 
@@ -1921,6 +1925,49 @@ at all.-->
      <dt>Otherwise
      <dd><p>This is a <span>decoder error</span>.
     </dl>
+
+   <dt>Escape start state<!-- 0x24 = $ -->
+   <dd>
+    <ol>
+     <li><p>If <var title>byte</var> is 0x24, set
+     <span>iso-2022-kr state</span> to <b title>escape middle state</b> and
+     continue.
+
+     <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
+     decrease the <span>byte pointer</span> by one.
+
+     <li><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>;
+     this is a <span>decoder error</span>.
+    </ol>
+
+   <dt>Escape middle state<!-- 0x29 = ) -->
+   <dd>
+    <ol>
+     <li><p>If <var title>byte</var> is 0x29, set
+     <span>iso-2022-kr state</span> to <b title>escape end state</b> and
+     continue.
+
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span>, decrease
+     the <span>byte pointer</span> by one, or decrease it by two otherwise.
+
+     <li><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>;
+     this is a <span>decoder error</span>.
+    </ol>
+
+   <dt>Escape end state<!-- 0x43 = C -->
+   <dd>
+    <ol>
+     <li><p>If <var title>byte</var> is 0x43, set
+     <span>iso-2022-kr state</span> to <b title>ASCII state</b> and
+     continue.
+
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span>, decrease
+     the <span>byte pointer</span> by two, or decrease it by three
+     otherwise.
+
+     <li><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>;
+     this is a <span>decoder error</span>.
+    </ol>
 
    <dt>Lead state
    <dd>

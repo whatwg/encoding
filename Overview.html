@@ -1945,6 +1945,10 @@ at all.-->
      <dt>0x0F
      <dd><p>Continue.
 
+     <dt>0x1B
+     <dd><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to
+     <b title="">escape start state</b> and continue.
+
      <dt>0x00 to 0x7F
      <dd><p>Emit a code point whose value is <var title="">byte</var>.
 
@@ -1954,6 +1958,49 @@ at all.-->
      <dt>Otherwise
      <dd><p>This is a <a href="#decoder-error">decoder error</a>.
     </dl>
+
+   <dt>Escape start state<!-- 0x24 = $ -->
+   <dd>
+    <ol>
+     <li><p>If <var title="">byte</var> is 0x24, set
+     <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">escape middle state</b> and
+     continue.
+
+     <li><p>If <var title="">byte</var> is not the <a href="#eof-byte">EOF byte</a>,
+     decrease the <a href="#byte-pointer">byte pointer</a> by one.
+
+     <li><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>;
+     this is a <a href="#decoder-error">decoder error</a>.
+    </ol>
+
+   <dt>Escape middle state<!-- 0x29 = ) -->
+   <dd>
+    <ol>
+     <li><p>If <var title="">byte</var> is 0x29, set
+     <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">escape end state</b> and
+     continue.
+
+     <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, decrease
+     the <a href="#byte-pointer">byte pointer</a> by one, or decrease it by two otherwise.
+
+     <li><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>;
+     this is a <a href="#decoder-error">decoder error</a>.
+    </ol>
+
+   <dt>Escape end state<!-- 0x43 = C -->
+   <dd>
+    <ol>
+     <li><p>If <var title="">byte</var> is 0x43, set
+     <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b> and
+     continue.
+
+     <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, decrease
+     the <a href="#byte-pointer">byte pointer</a> by two, or decrease it by three
+     otherwise.
+
+     <li><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>;
+     this is a <a href="#decoder-error">decoder error</a>.
+    </ol>
 
    <dt>Lead state
    <dd>
