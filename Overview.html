@@ -589,7 +589,15 @@ the return value of these steps:
 <p>The <dfn id="index-gb18030-pointer">index gb18030 pointer</dfn> for <var title="">code point</var> is
 the return value of these steps:
 
-<ol class="XXX"></ol>
+<ol>
+ <li><p>Let <var title="">offset</var> be the last code point in
+ <a href="#index-gb18030">index gb18030</a> that is equal to or less than
+ <var title="">code point</var> and let <var title="">pointer offset</var> be its
+ corresponding code point.
+
+ <li><p>Return a pointer whose value is
+ <var title="">pointer offset</var> + <var title="">code point</var> − <var title="">offset</var>.
+</ol>
 
 
 <p class="note">All <a href="#index" title="index">indexes</a> are also available as
@@ -1013,7 +1021,69 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
 
 <p>The <dfn id="gbk-encoder">gbk encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gbk">gbk</a>) is:
 
-<ol class="XXX"></ol>
+<ol>
+ <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-byte">EOF byte</a>.
+
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title="">code point</var>.
+
+ <!-- also present in index gbk
+ <li><p>If <var title>code point</var> is U+20AC, emit a byte whose value is
+ 0x80.
+ -->
+
+ <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
+ <var title="">code point</var> in <a href="#index-gbk">index gbk</a>.
+
+ <li>
+  <p>If <var title="">pointer</var> is not null, run these substeps:
+
+  <ol>
+   <li><p>Let <var title="">lead</var> be
+   <var title="">pointer</var> / 190 + 0x81.
+
+   <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 190.
+
+   <li><p>Let <var title="">offset</var> be 0x41 if <var title="">trail</var> is
+   greater than 0x3F,<!--0x7F-0x40--> or 0x40 otherwise.
+
+   <li><p>Emit two bytes whose values are <var title="">lead</var> and
+   <var title="">trail</var> + <var title="">offset</var>.
+  </ol>
+
+ <li><p>If <var title="">pointer</var> is null and the
+ <a href="#gb18030-flag">gb18030 flag</a> is unset, this is an <a href="#encoder-error">encoder error</a>.
+
+ <li><p>Set <var title="">pointer</var> to the
+ <a href="#index-gb18030-pointer">index gb18030 pointer</a> for <var title="">code point</var>.
+
+ <li><p>Let <var title="">byte1</var> be
+ <var title="">pointer</var> / 10 / 126 / 10.
+
+ <li><p>Set <var title="">pointer</var> to
+ <var title="">pointer</var> − <var title="">byte1</var> × 10 × 126 × 10.
+
+ <li><p>Let <var title="">byte2</var> be
+ <var title="">pointer</var> / 10 / 126.
+
+ <li><p>Set <var title="">pointer</var> to
+ <var title="">pointer</var> − <var title="">byte1</var> × 10 × 126.
+
+ <li><p>Let <var title="">byte3</var> be
+ <var title="">pointer</var> / 10.
+
+ <li><p>Let <var title="">byte4</var> be
+ <var title="">pointer</var> − <var title="">byte3</var> × 10.
+
+ <li><p>Emit four bytes whose values are <var title="">byte1</var> + 0x81,
+ <var title="">byte2</var> + 0x30, <var title="">byte3</var> + 0x81,
+ <var title="">byte4</var> + 0x30.
+</ol>
 
 
 <h3 id="gb18030"><span class="secno">9.2 </span><dfn>gb18030</dfn></h3>

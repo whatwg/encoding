@@ -556,7 +556,15 @@ the return value of these steps:
 <p>The <dfn>index gb18030 pointer</dfn> for <var title>code point</var> is
 the return value of these steps:
 
-<ol class=XXX></ol>
+<ol>
+ <li><p>Let <var title>offset</var> be the last code point in
+ <span>index gb18030</span> that is equal to or less than
+ <var title>code point</var> and let <var title>pointer offset</var> be its
+ corresponding code point.
+
+ <li><p>Return a pointer whose value is
+ <var title>pointer offset</var> + <var title>code point</var> &minus; <var title>offset</var>.
+</ol>
 
 
 <p class=note>All <span title=index>indexes</span> are also available as
@@ -980,7 +988,69 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
 
 <p>The <dfn>gbk encoder</dfn> (<span>encoder</span> for <span>gbk</span>) is:
 
-<ol class=XXX></ol>
+<ol>
+ <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+
+ <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
+ emit the <span>EOF byte</span>.
+
+ <li><p>Increase the <span>code point pointer</span> by one.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title>code point</var>.
+
+ <!-- also present in index gbk
+ <li><p>If <var title>code point</var> is U+20AC, emit a byte whose value is
+ 0x80.
+ -->
+
+ <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
+ <var title>code point</var> in <span>index gbk</span>.
+
+ <li>
+  <p>If <var title>pointer</var> is not null, run these substeps:
+
+  <ol>
+   <li><p>Let <var title>lead</var> be
+   <var title>pointer</var> / 190 + 0x81.
+
+   <li><p>Let <var title>trail</var> be <var title>pointer</var> % 190.
+
+   <li><p>Let <var title>offset</var> be 0x41 if <var title>trail</var> is
+   greater than 0x3F,<!--0x7F-0x40--> or 0x40 otherwise.
+
+   <li><p>Emit two bytes whose values are <var title>lead</var> and
+   <var title>trail</var> + <var title>offset</var>.
+  </ol>
+
+ <li><p>If <var title>pointer</var> is null and the
+ <span>gb18030 flag</span> is unset, this is an <span>encoder error</span>.
+
+ <li><p>Set <var title>pointer</var> to the
+ <span>index gb18030 pointer</span> for <var title>code point</var>.
+
+ <li><p>Let <var title>byte1</var> be
+ <var title>pointer</var> / 10 / 126 / 10.
+
+ <li><p>Set <var title>pointer</var> to
+ <var title>pointer</var> &minus; <var title>byte1</var> &times; 10 &times; 126 &times; 10.
+
+ <li><p>Let <var title>byte2</var> be
+ <var title>pointer</var> / 10 / 126.
+
+ <li><p>Set <var title>pointer</var> to
+ <var title>pointer</var> &minus; <var title>byte1</var> &times; 10 &times; 126.
+
+ <li><p>Let <var title>byte3</var> be
+ <var title>pointer</var> / 10.
+
+ <li><p>Let <var title>byte4</var> be
+ <var title>pointer</var> &minus; <var title>byte3</var> &times; 10.
+
+ <li><p>Emit four bytes whose values are <var title>byte1</var> + 0x81,
+ <var title>byte2</var> + 0x30, <var title>byte3</var> + 0x81,
+ <var title>byte4</var> + 0x30.
+</ol>
 
 
 <h3><dfn>gb18030</dfn></h3>
