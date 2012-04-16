@@ -1240,10 +1240,53 @@ JIS X 0212 standard.
 
 <p>The <dfn>euc-jp encoder</dfn> (<span>encoder</span> for <span>euc-jp</span>) is:
 
-<ol class=XXX>
+<!--
+ No JIX X 0212 encoder support:
+   https://bugzilla.mozilla.org/show_bug.cgi?id=600715
+   http://code.google.com/p/chromium/issues/detail?id=78847
+-->
+
+<ol>
+ <li><p>Let <var title>code point</var> be the
+ <span>code point pointer</span>.
+
+ <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
+ emit the <span>EOF byte</span>.
+
+ <li><p>Increase the <span>code point pointer</span> by one.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title>code point</var>.
+
+ <li><p>If <var title>code point</var> is U+00A5, emit a byte whose value is
+ 0x5C.
+
+ <li><p>If <var title>code point</var> is U+203E, emit a byte whose value is
+ 0x7E.
+
+ <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F,
+ emit two bytes whose values are 0x8E and
+ <var title>code point</var> &minus; 0xFF61 + 0xA1.
+
+ <li><p>Let <var title>pointer</var> be the <span>pointer for</span>
+ <var title>code point</var> in
+ <a href="index-jis0208.txt">index-jis0208.txt</a>.
+
+ <li><p>If <var title>pointer</var> is null, this is an
+ <span>encoder error</span>.
+
+ <li><p>Let <var title>lead</var> be <var title>pointer</var> divided be 94
+ (as integers) + 0xA1.
+
+ <li><p>Let <var title>trail</var> be the remainder of dividing
+ <var title>pointer</var> by 94 (as integers) + 0xA1.
+
+ <li><p>Emit the two bytes <var title>lead</var> and <var title>trail</var>.
 </ol>
 
-<p class=XXX>https://bugzilla.mozilla.org/show_bug.cgi?id=600715 encoder is more restrictive.
+<p class=note>Contemporary implementations do not care about the
+<a href="index-jis0212.txt">index-jis0212.txt</a> <span>index</span> for the
+<span>euc-jp encoder</span>.
 
 
 <h3><dfn>iso-2022-jp</dfn></h3>

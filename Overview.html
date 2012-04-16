@@ -1273,10 +1273,53 @@ JIS X 0212 standard.
 
 <p>The <dfn id="euc-jp-encoder">euc-jp encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#euc-jp">euc-jp</a>) is:
 
-<ol class="XXX">
+<!--
+ No JIX X 0212 encoder support:
+   https://bugzilla.mozilla.org/show_bug.cgi?id=600715
+   http://code.google.com/p/chromium/issues/detail?id=78847
+-->
+
+<ol>
+ <li><p>Let <var title="">code point</var> be the
+ <a href="#code-point-pointer">code point pointer</a>.
+
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-byte">EOF byte</a>.
+
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title="">code point</var>.
+
+ <li><p>If <var title="">code point</var> is U+00A5, emit a byte whose value is
+ 0x5C.
+
+ <li><p>If <var title="">code point</var> is U+203E, emit a byte whose value is
+ 0x7E.
+
+ <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F,
+ emit two bytes whose values are 0x8E and
+ <var title="">code point</var> − 0xFF61 + 0xA1.
+
+ <li><p>Let <var title="">pointer</var> be the <a href="#pointer-for">pointer for</a>
+ <var title="">code point</var> in
+ <a href="index-jis0208.txt">index-jis0208.txt</a>.
+
+ <li><p>If <var title="">pointer</var> is null, this is an
+ <a href="#encoder-error">encoder error</a>.
+
+ <li><p>Let <var title="">lead</var> be <var title="">pointer</var> divided be 94
+ (as integers) + 0xA1.
+
+ <li><p>Let <var title="">trail</var> be the remainder of dividing
+ <var title="">pointer</var> by 94 (as integers) + 0xA1.
+
+ <li><p>Emit the two bytes <var title="">lead</var> and <var title="">trail</var>.
 </ol>
 
-<p class="XXX">https://bugzilla.mozilla.org/show_bug.cgi?id=600715 encoder is more restrictive.
+<p class="note">Contemporary implementations do not care about the
+<a href="index-jis0212.txt">index-jis0212.txt</a> <a href="#index">index</a> for the
+<a href="#euc-jp-encoder">euc-jp encoder</a>.
 
 
 <h3 id="iso-2022-jp"><span class="secno">11.2 </span><dfn>iso-2022-jp</dfn></h3>
