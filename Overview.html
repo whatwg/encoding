@@ -1217,9 +1217,9 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">pointer</var> is null, this is an
  <a href="#encoder-error">encoder error</a>.
 
- <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 190 + 1
+ <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 190 + 1.
 
- <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 190 + 0x3F
+ <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 190 − 0x3F.
 
  <li><p>If either <var title="">lead</var> or <var>trail</var> is not in the
  range 0x21 to 0x7E, this is an <a href="#encoder-error">encoder error</a>.
