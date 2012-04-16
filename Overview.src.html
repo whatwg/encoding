@@ -466,12 +466,14 @@ as that algorithm is incompatible with legacy content.
 
 <p>Most legacy <span title=encoding>encodings</span> make use of
 an <dfn>index</dfn>. An <span>index</span> is an ordered list of
-pointers and corresponding code points.
-To find the indexes and their corresponding code points in an <span>index</span>,
+pointers and corresponding code points. Within an <span>index</span>
+pointers are unique and code points can be duplicated.
+
+<p>To find the pointers and their corresponding code points in an <span>index</span>,
 let <var title>lines</var> be the result of splitting the resource's contents on U+000A.
 Then remove each item in <var title>lines</var> that is the empty string or starts with U+0023.
-Then the indexes and their corresponding code points are found by splitting each item in <var title>lines</var> on U+0009.
-The first subitem is the index (as decimal number) and the second is the corresponding code point (as hexadecimal number).
+Then the pointers and their corresponding code points are found by splitting each item in <var title>lines</var> on U+0009.
+The first subitem is the pointer (as decimal number) and the second is the corresponding code point (as hexadecimal number).
 Other subitems are not relevant.
 
 <p>The <dfn>code point for</dfn> <var title>pointer</var> in
