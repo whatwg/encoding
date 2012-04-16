@@ -1387,11 +1387,9 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
 
- <li><p>If <var title>code point</var> is U+00A5, emit a byte whose value is
- 0x5C.
+ <li><p>If <var title>code point</var> is U+00A5, emit byte 0x5C.
 
- <li><p>If <var title>code point</var> is U+203E, emit a byte whose value is
- 0x7E.
+ <li><p>If <var title>code point</var> is U+203E, emit byte 0x7E.
 
  <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F,
  emit two bytes whose values are 0x8E and
@@ -1407,7 +1405,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li><p>Let <var title>trail</var> be <var title>pointer</var> % 94 + 0xA1.
 
- <li><p>Emit the two bytes <var title>lead</var> and <var title>trail</var>.
+ <li><p>Emit two bytes whose values are <var title>lead</var> and
+ <var title>trail</var>.
 </ol>
 
 <p class=note>Contemporary implementations do not use
@@ -1600,14 +1599,18 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li><p>Increase the <span>code point pointer</span> by one.
 
- <li><p>If <var title>code point</var> is in the range U+0000 to U+007F and
- <span>iso-2022-jp state</span> is not <b title>ASCII state</b>, decrease
- the <span>code point pointer</span> by one, set
- <span>iso-2022-jp state</span> to <b title>ASCII state</b>, and emit three
- bytes 0x1B 0x28 0x42.
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F, or
+ is U+00A5 or U+203E, and <span>iso-2022-jp state</span> is not
+ <b title>ASCII state</b>, decrease the <span>code point pointer</span> by
+ one, set <span>iso-2022-jp state</span> to <b title>ASCII state</b>, and
+ emit three bytes 0x1B 0x28 0x42.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
+
+ <li><p>If <var title>code point</var> is U+00A5, emit byte 0x5C.
+
+ <li><p>If <var title>code point</var> is U+203E, emit byte 0x7E.
 
  <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F and
  <span>iso-2022-jp state</span> is not <b title>Katakana state</b>, decrease
