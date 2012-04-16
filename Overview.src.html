@@ -1156,7 +1156,44 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
 <p>The <dfn>hz-gb-2312 encoder</dfn> (<span>encoder</span> for <span>hz-gb-2312</span>) is:
 
-<ol class=XXX></ol>
+<ol>
+ <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+
+ <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
+ emit the <span>EOF byte</span>.
+
+ <li><p>Increase the <span>code point pointer</span> by one.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F and
+ the <span>hz-gb-2312 flag</span> is set, decrease the
+ <span>code point pointer</span> by one, unset the
+ <span>hz-gb-2312 flag</span>, and emit two bytes 0x7E 0x7D.
+
+ <li><p>If <var title>code point</var> is 0x007E, emit two bytes 0x7E 0x7E.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title>code point</var>.
+
+ <li><p>If the <span>hz-gb-2312 flag</span> is unset, decrease the
+ <span>code point pointer</span> by one, set the
+ <span>hz-gb-2312 flag</span>, and emit two bytes 0x7E 0x7B.
+
+ <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
+ <var title>code point</var> in <span>index gbk</span>.
+
+ <li><p>If <var title>pointer</var> is null, this is an
+ <span>encoder error</span>.
+
+ <li><p>Let <var title>lead</var> be <var title>pointer</var> / 190 + 1
+
+ <li><p>Let <var title>trail</var> be <var title>pointer</var> % 190 + 0x3F
+
+ <li><p>If either <var title>lead</var> or <var>trail</var> is not in the
+ range 0x21 to 0x7E, this is an <span>encoder error</span>.
+
+ <li><p>Emit tho bytes whose values are <var title>lead</var> and
+ <var title>trail</var>.
+</ol>
 
 
 
