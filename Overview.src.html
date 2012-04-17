@@ -956,8 +956,8 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
    <li><p>Let <var title>lead</var> be <span>gbk first</span>, let
    <var title>pointer</var> be null, and set <span>gbk first</span> to 0x00.
 
-   <li><p>Let <var title>offset</var> be 0x41 if <var title>byte</var> is
-   greater than 0x7F, or 0x40 otherwise.
+   <li><p>Let <var title>offset</var> be 0x40 if <var title>byte</var> is
+   less than 0x7F, or 0x41 otherwise.
 
    <li><p>If <var title>byte</var> is in the range 0x40 to 0x7E or
    0x80 to 0xFE, set <var title>pointer</var> to
@@ -1017,8 +1017,8 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
 
    <li><p>Let <var title>trail</var> be <var title>pointer</var> % 190.
 
-   <li><p>Let <var title>offset</var> be 0x41 if <var title>trail</var> is
-   greater than 0x3F,<!--0x7F-0x40--> or 0x40 otherwise.
+   <li><p>Let <var title>offset</var> be 0x40 if <var title>trail</var> is
+   less than 0x3F,<!--0x7F-0x40--> or 0x41 otherwise.
 
    <li><p>Emit two bytes whose values are <var title>lead</var> and
    <var title>trail</var> + <var title>offset</var>.
@@ -1192,7 +1192,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If either <var title>lead</var> or <var>trail</var> is not in the
  range 0x21 to 0x7E, this is an <span>encoder error</span>.
 
- <li><p>Emit tho bytes whose values are <var title>lead</var> and
+ <li><p>Emit two bytes whose values are <var title>lead</var> and
  <var title>trail</var>.
 </ol>
 

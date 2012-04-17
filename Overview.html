@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-draft-—-16-april-2012">Living Draft — 16 April 2012</h2>
+<h2 class="no-num no-toc" id="living-draft-—-17-april-2012">Living Draft — 17 April 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -65,7 +65,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-16 April 2012, the editors have made this specification available
+17 April 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -989,8 +989,8 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
    <li><p>Let <var title="">lead</var> be <a href="#gbk-first">gbk first</a>, let
    <var title="">pointer</var> be null, and set <a href="#gbk-first">gbk first</a> to 0x00.
 
-   <li><p>Let <var title="">offset</var> be 0x41 if <var title="">byte</var> is
-   greater than 0x7F, or 0x40 otherwise.
+   <li><p>Let <var title="">offset</var> be 0x40 if <var title="">byte</var> is
+   less than 0x7F, or 0x41 otherwise.
 
    <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
    0x80 to 0xFE, set <var title="">pointer</var> to
@@ -1050,8 +1050,8 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
 
    <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 190.
 
-   <li><p>Let <var title="">offset</var> be 0x41 if <var title="">trail</var> is
-   greater than 0x3F,<!--0x7F-0x40--> or 0x40 otherwise.
+   <li><p>Let <var title="">offset</var> be 0x40 if <var title="">trail</var> is
+   less than 0x3F,<!--0x7F-0x40--> or 0x41 otherwise.
 
    <li><p>Emit two bytes whose values are <var title="">lead</var> and
    <var title="">trail</var> + <var title="">offset</var>.
@@ -1225,7 +1225,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If either <var title="">lead</var> or <var>trail</var> is not in the
  range 0x21 to 0x7E, this is an <a href="#encoder-error">encoder error</a>.
 
- <li><p>Emit tho bytes whose values are <var title="">lead</var> and
+ <li><p>Emit two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
 </ol>
 
