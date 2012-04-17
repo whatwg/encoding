@@ -2058,9 +2058,81 @@ at all.-->
   </dl>
 </ol>
 
+<p>The <dfn id="iso-2022-kr-initialization-flag">iso-2022-kr initialization flag</dfn> is initially unset.</p>
+
 <p>The <dfn id="iso-2022-kr-encoder">iso-2022-kr encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#iso-2022-kr">iso-2022-kr</a>) is:
 
-<ol class="XXX"></ol>
+<ol>
+ <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>
+ and <a href="#iso-2022-kr-state">iso-2022-kr state</a> is not <b title="">ASCII state</b>, set
+ <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b> and emit byte
+ 0x0F.
+
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-byte">EOF byte</a>.
+
+ <li><p>If the <a href="#iso-2022-kr-initialization-flag">iso-2022-kr initialization flag</a> is unset, set
+ the <a href="#iso-2022-kr-initialization-flag">iso-2022-kr initialization flag</a> and emit four bytes
+ 0x1B 0x24 0x29 0x43.
+ <!-- ESC $ ) C -->
+
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F and
+ <a href="#iso-2022-kr-state">iso-2022-kr state</a> is not <b title="">ASCII state</b>, decrease
+ the <a href="#code-point-pointer">code point pointer</a> by one, set
+ <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>, and emit byte
+ 0x0F.
+
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title="">code point</var>.
+
+ <li><p>If <a href="#iso-2022-kr-state">iso-2022-kr state</a> is not <b title="">lead state</b>,
+ decrease the <a href="#code-point-pointer">code point pointer</a> by one, set
+ <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">lead state</b>, and emit byte
+ 0x0E.
+
+ <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
+ <var title="">code point</var> in <a href="#index-euc-kr">index euc-kr</a>.
+
+ <li><p>If <var title="">pointer</var> is null, this is an
+ <a href="#encoder-error">encoder error</a>.
+
+ <li>
+  <p>If <var title="">pointer</var> is less than
+  (26 + 26 + 126) × (0xC7 − 0x81), run these substeps:
+
+  <ol>
+   <li><p>Let <var title="">lead</var> be
+   <var title="">pointer</var> / (26 + 26 + 126) + 1.
+
+   <li><p>Let <var title="">trail</var> be
+   <var title="">pointer</var> % (26 + 26 + 126) − 26 − 26 + 1.
+
+   <li><p>If <var title="">lead</var> is not in the range 0x21 to 0x46 or
+   <var title="">byte</var> is not in the range 0x21 to 0x7E, this is an
+   <a href="#encoder-error">encoder error</a>.
+
+   <li><p>Emit two bytes whose values are <var title="">lead</var> and
+   <var title="">trail</var>.
+  </ol>
+
+ <li><p>Set <var title="">pointer</var> to
+ <var title="">pointer</var> − (26 + 26 + 126) × (0xC7 − 0x81).
+
+ <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 94 + 0x47.
+
+ <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0x21.
+
+ <li><p>If <var title="">lead</var> is not in the range 0x47 to 0x7E or
+ <var title="">byte</var> is not in the range 0x21 to 0x7E, this is an
+ <a href="#encoder-error">encoder error</a>.
+
+ <li><p>Emit two bytes whose values are <var title="">lead</var> and
+ <var title="">trail</var>.
+</ol>
 
 
 <h2 id="legacy-utf-16-encodings"><span class="secno">13 </span>Legacy utf-16 encodings</h2>
