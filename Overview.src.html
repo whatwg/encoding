@@ -2079,7 +2079,7 @@ at all.-->
    <var title>pointer</var> % (26 + 26 + 126) &minus; 26 &minus; 26 + 1.
 
    <li><p>If <var title>lead</var> is not in the range 0x21 to 0x46 or
-   <var title>byte</var> is not in the range 0x21 to 0x7E, this is an
+   <var title>trail</var> is not in the range 0x21 to 0x7E, this is an
    <span>encoder error</span>.
 
    <li><p>Emit two bytes whose values are <var title>lead</var> and
@@ -2094,7 +2094,7 @@ at all.-->
  <li><p>Let <var title>trail</var> be <var title>pointer</var> % 94 + 0x21.
 
  <li><p>If <var title>lead</var> is not in the range 0x47 to 0x7E or
- <var title>byte</var> is not in the range 0x21 to 0x7E, this is an
+ <var title>trail</var> is not in the range 0x21 to 0x7E, this is an
  <span>encoder error</span>.
 
  <li><p>Emit two bytes whose values are <var title>lead</var> and
