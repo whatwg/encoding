@@ -192,17 +192,21 @@ A <span>decoder</span> can end by emitting a code point or
 stream of code points and emits a stream of bytes. It will fail when
 a code point is passed for which it does not have a corresponding byte or
 byte sequence. Analogously to a <span>decoder</span>, it has a
-<dfn>code point pointer</dfn>. Again analogously, as long as the
+<dfn>code point pointer</dfn> and <dfn>encoder error</dfn>.
+Unless stated otherwise emitting an <span>encoder error</span> terminates
+the <span>encoder</span>.
+Again analogously, as long as the
 <span>EOF byte</span> is not emitted, the <span>encoder</span> algorithm
 must be invoked for each byte or sequence of bytes emitted.
 
-<p>An <span>encoder</span> contains one or more <dfn>encoder error</dfn>
-points. Unless stated otherwise the <span>encoder</span> is terminated at
-that point.
-
 <p class=note>HTML forms and URLs require non-terminating
 <span title=encoder>encoders</span> and have therefore special handling
-whenever an <span>encoder error</span> is reached.
+whenever an <span>encoder error</span> is reached. Instead of terminating
+the <span>encoder</span> a sequence of one or more code points in the range
+U+0000 to U+007F (representing the code point that caused the
+<span>encoder error</span> to be emitted) are inserted into the stream of
+code points at <span>code point pointer</span> after
+<span>encoder error</span> is emitted.
 
 <hr>
 
@@ -757,7 +761,7 @@ are all initially 0.
  <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is in the range 0xD800 to 0xDFFF,
- this is an <span>encoder error</span>.
+ emit an <span>encoder error</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
@@ -887,7 +891,7 @@ defined by the following table, and depends on the
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index single-byte</span>.
 
- <li><p>If <var title>pointer</var> is null, this is an
+ <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
 
  <li><p>Emit a byte whose value is <var title>pointer</var> + 0x80.
@@ -1034,7 +1038,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
   </ol>
 
  <li><p>If <var title>pointer</var> is null and the
- <span>gb18030 flag</span> is unset, this is an <span>encoder error</span>.
+ <span>gb18030 flag</span> is unset, emit an <span>encoder error</span>.
 
  <li><p>Set <var title>pointer</var> to the
  <span>index gb18030 pointer</span> for <var title>code point</var>.
@@ -1191,7 +1195,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index gbk</span>.
 
- <li><p>If <var title>pointer</var> is null, this is an
+ <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
 
  <li><p>Let <var title>lead</var> be <var title>pointer</var> / 190 + 1.
@@ -1199,7 +1203,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>Let <var title>trail</var> be <var title>pointer</var> % 190 &minus; 0x3F.
 
  <li><p>If either <var title>lead</var> or <var>trail</var> is not in the
- range 0x21 to 0x7E, this is an <span>encoder error</span>.
+ range 0x21 to 0x7E, emit an <span>encoder error</span>.
 
  <li><p>Emit two bytes whose values are <var title>lead</var> and
  <var title>trail</var>.
@@ -1408,7 +1412,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index jis0208</span>.
 
- <li><p>If <var title>pointer</var> is null, this is an
+ <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
 
  <li><p>Let <var title>lead</var> be <var title>pointer</var> / 94 + 0xA1.
@@ -1639,7 +1643,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index jis0208</span>.
 
- <li><p>If <var title>pointer</var> is null, this is an
+ <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
 
  <li><p>Let <var title>lead</var> be <var title>pointer</var> / 94 + 0x21.
@@ -1742,7 +1746,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index jis0208</span>.
 
- <li><p>If <var title>pointer</var> is null, this is an
+ <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
 
  <li><p>Let <var title>lead</var> be <var title>pointer</var> / 188.
@@ -1851,7 +1855,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index euc-kr</span>.
 
- <li><p>If <var title>pointer</var> is null, this is an
+ <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
 
  <li>
@@ -2071,7 +2075,7 @@ at all.-->
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index euc-kr</span>.
 
- <li><p>If <var title>pointer</var> is null, this is an
+ <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
 
  <li>
@@ -2086,7 +2090,7 @@ at all.-->
    <var title>pointer</var> % (26 + 26 + 126) &minus; 26 &minus; 26 + 1.
 
    <li><p>If <var title>lead</var> is not in the range 0x21 to 0x46 or
-   <var title>trail</var> is not in the range 0x21 to 0x7E, this is an
+   <var title>trail</var> is not in the range 0x21 to 0x7E, emit an
    <span>encoder error</span>.
 
    <li><p>Emit two bytes whose values are <var title>lead</var> and
@@ -2101,7 +2105,7 @@ at all.-->
  <li><p>Let <var title>trail</var> be <var title>pointer</var> % 94 + 0x21.
 
  <li><p>If <var title>lead</var> is not in the range 0x47 to 0x7E or
- <var title>trail</var> is not in the range 0x21 to 0x7E, this is an
+ <var title>trail</var> is not in the range 0x21 to 0x7E, emit an
  <span>encoder error</span>.
 
  <li><p>Emit two bytes whose values are <var title>lead</var> and
@@ -2203,7 +2207,7 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
  <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is in the range 0xD800 to 0xDFFF,
- this is an <span>encoder error</span>.
+ emit an <span>encoder error</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.

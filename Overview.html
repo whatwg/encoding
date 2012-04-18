@@ -225,17 +225,21 @@ A <a href="#decoder">decoder</a> can end by emitting a code point or
 stream of code points and emits a stream of bytes. It will fail when
 a code point is passed for which it does not have a corresponding byte or
 byte sequence. Analogously to a <a href="#decoder">decoder</a>, it has a
-<dfn id="code-point-pointer">code point pointer</dfn>. Again analogously, as long as the
+<dfn id="code-point-pointer">code point pointer</dfn> and <dfn id="encoder-error">encoder error</dfn>.
+Unless stated otherwise emitting an <a href="#encoder-error">encoder error</a> terminates
+the <a href="#encoder">encoder</a>.
+Again analogously, as long as the
 <a href="#eof-byte">EOF byte</a> is not emitted, the <a href="#encoder">encoder</a> algorithm
 must be invoked for each byte or sequence of bytes emitted.
 
-<p>An <a href="#encoder">encoder</a> contains one or more <dfn id="encoder-error">encoder error</dfn>
-points. Unless stated otherwise the <a href="#encoder">encoder</a> is terminated at
-that point.
-
 <p class="note">HTML forms and URLs require non-terminating
 <a href="#encoder" title="encoder">encoders</a> and have therefore special handling
-whenever an <a href="#encoder-error">encoder error</a> is reached.
+whenever an <a href="#encoder-error">encoder error</a> is reached. Instead of terminating
+the <a href="#encoder">encoder</a> a sequence of one or more code points in the range
+U+0000 to U+007F (representing the code point that caused the
+<a href="#encoder-error">encoder error</a> to be emitted) are inserted into the stream of
+code points at <a href="#code-point-pointer">code point pointer</a> after
+<a href="#encoder-error">encoder error</a> is emitted.
 
 <hr>
 
@@ -790,7 +794,7 @@ are all initially 0.
  <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF,
- this is an <a href="#encoder-error">encoder error</a>.
+ emit an <a href="#encoder-error">encoder error</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
@@ -920,7 +924,7 @@ defined by the following table, and depends on the
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-single-byte">index single-byte</a>.
 
- <li><p>If <var title="">pointer</var> is null, this is an
+ <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
 
  <li><p>Emit a byte whose value is <var title="">pointer</var> + 0x80.
@@ -1067,7 +1071,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
   </ol>
 
  <li><p>If <var title="">pointer</var> is null and the
- <a href="#gb18030-flag">gb18030 flag</a> is unset, this is an <a href="#encoder-error">encoder error</a>.
+ <a href="#gb18030-flag">gb18030 flag</a> is unset, emit an <a href="#encoder-error">encoder error</a>.
 
  <li><p>Set <var title="">pointer</var> to the
  <a href="#index-gb18030-pointer">index gb18030 pointer</a> for <var title="">code point</var>.
@@ -1224,7 +1228,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-gbk">index gbk</a>.
 
- <li><p>If <var title="">pointer</var> is null, this is an
+ <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 190 + 1.
@@ -1232,7 +1236,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 190 − 0x3F.
 
  <li><p>If either <var title="">lead</var> or <var>trail</var> is not in the
- range 0x21 to 0x7E, this is an <a href="#encoder-error">encoder error</a>.
+ range 0x21 to 0x7E, emit an <a href="#encoder-error">encoder error</a>.
 
  <li><p>Emit two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
@@ -1441,7 +1445,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
 
- <li><p>If <var title="">pointer</var> is null, this is an
+ <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 94 + 0xA1.
@@ -1672,7 +1676,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
 
- <li><p>If <var title="">pointer</var> is null, this is an
+ <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 94 + 0x21.
@@ -1775,7 +1779,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
 
- <li><p>If <var title="">pointer</var> is null, this is an
+ <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 188.
@@ -1884,7 +1888,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-euc-kr">index euc-kr</a>.
 
- <li><p>If <var title="">pointer</var> is null, this is an
+ <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
 
  <li>
@@ -2104,7 +2108,7 @@ at all.-->
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-euc-kr">index euc-kr</a>.
 
- <li><p>If <var title="">pointer</var> is null, this is an
+ <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
 
  <li>
@@ -2119,7 +2123,7 @@ at all.-->
    <var title="">pointer</var> % (26 + 26 + 126) − 26 − 26 + 1.
 
    <li><p>If <var title="">lead</var> is not in the range 0x21 to 0x46 or
-   <var title="">trail</var> is not in the range 0x21 to 0x7E, this is an
+   <var title="">trail</var> is not in the range 0x21 to 0x7E, emit an
    <a href="#encoder-error">encoder error</a>.
 
    <li><p>Emit two bytes whose values are <var title="">lead</var> and
@@ -2134,7 +2138,7 @@ at all.-->
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0x21.
 
  <li><p>If <var title="">lead</var> is not in the range 0x47 to 0x7E or
- <var title="">trail</var> is not in the range 0x21 to 0x7E, this is an
+ <var title="">trail</var> is not in the range 0x21 to 0x7E, emit an
  <a href="#encoder-error">encoder error</a>.
 
  <li><p>Emit two bytes whose values are <var title="">lead</var> and
@@ -2236,7 +2240,7 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
  <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF,
- this is an <a href="#encoder-error">encoder error</a>.
+ emit an <a href="#encoder-error">encoder error</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
