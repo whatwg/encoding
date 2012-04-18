@@ -739,7 +739,7 @@ are all initially 0.
  <span>utf-8 lower boundary</span> to 0.
 
  <li><p>If <var title>code point</var> is equal or greater than
- <var title>lower boundary</var>, equal or smaller than 0x10FFFF, and is not
+ <var title>lower boundary</var>, equal or less than 0x10FFFF, and is not
  in the range 0xD800 to 0xDFFF, emit <var title>code point</var>.
 
  <li><p>This is a <span>decoder error</span>.
@@ -2257,6 +2257,7 @@ Ian Hickson,
 Joshua Bell,
 신정식 (Jungshik Shin),
 Ken Lunde,
+Leif Halvard Silli,
 Mark Callow,
 Mark Davis,
 Martin Dürst,
