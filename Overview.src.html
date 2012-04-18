@@ -176,16 +176,17 @@ increased and decreased to point to other bytes in the stream. The
 stream. The <span>byte pointer</span> cannot point beyond the
 <span>EOF byte</span>. The <dfn>EOF code point</dfn> is a conceptual code
 point that is emitted once the stream of bytes is handled in its entirety.
-A <span>decoder</span> can end by emitting a code point, or the word
-continue. Unless the <span>EOF code point</span> is emitted, the
+A <dfn>decoder error</dfn> indicates an error in the stream of bytes.
+Unless stated otherwise emitting a <span>decoder error</span> must emit a
+<span>fallback code point</span>.
+A <span>decoder</span> can end by emitting a code point or
+<span>decoder error</span>, or the word continue. Unless the
+<span>EOF code point</span> is emitted, the
 <span>decoder</span> algorithm must be invoked again.
 
-<p>A <span>decoder</span> contains one or more <dfn>decoder error</dfn>
-points. Unless stated otherwise a <span>fallback code point</span> must be
-emitted at that point.
 
-<p class=note>An XML processor would halt upon encountering the first
-<span>decoder error</span>.
+<p class=note>An XML processor would halt upon the first
+<span>decoder error</span> emitted.
 
 <p>An <span>encoder</span> algorithm takes a
 stream of code points and emits a stream of bytes. It will fail when
@@ -664,7 +665,7 @@ are all initially 0.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>utf-8 bytes needed</span> is not 0, set
- <span>utf-8 bytes needed</span> to 0; this is a <span>decoder error</span>.
+ <span>utf-8 bytes needed</span> to 0 and emit a <span>decoder error</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit the
  <span>EOF code point</span>.
@@ -705,7 +706,7 @@ are all initially 0.
    <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xFC.
 
    <dt>Otherwise
-   <dd><p>This is a <span>decoder error</span>.
+   <dd><p>Emit a <span>decoder error</span>.
   </dl>
 
   <p>Then (<var title>byte</var> was in the range 0xC0 to 0xFD) set
@@ -723,7 +724,7 @@ are all initially 0.
 
    <li><p>Decrease the <span>byte pointer</span> by one.
 
-   <li><p>This is a <span>decoder error</span>.
+   <li><p>Emit a <span>decoder error</span>.
   </ol>
 
  <li>
@@ -746,7 +747,7 @@ are all initially 0.
  <var title>lower boundary</var>, equal or less than 0x10FFFF, and is not
  in the range 0xD800 to 0xDFFF, emit <var title>code point</var>.
 
- <li><p>This is a <span>decoder error</span>.
+ <li><p>Emit a <span>decoder error</span>.
 </ol>
 
 
@@ -863,7 +864,7 @@ defined by the following table, and depends on the
  <li><p>Let <var title>code point</var> be the <span>index code point</span>
  for <var title>byte</var> &minus; 0x80 in <span>index single-byte</span>.
 
- <li><p>If <var title>code point</var> is null, this is a
+ <li><p>If <var title>code point</var> is null, emit a
  <span>decoder error</span>.
 
  <li><p>Emit a code point whose value is <var title>code point</var>.
@@ -917,7 +918,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
  <li><p>If <var title>byte</var> is the <span>EOF byte</span>, and
  <span>gbk first</span>, <span>gbk second</span>, or <span>gbk third</span>
  is not 0x00, set <span>gbk first</span>, <span>gbk second</span>, and
- <span>gbk third</span> to 0x00; this is a <span>decoder error</span>.
+ <span>gbk third</span> to 0x00, and emit a <span>decoder error</span>.
 
  <li><p>Increase the <span>byte pointer</span>.
 
@@ -936,7 +937,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
    <span>gbk third</span> to 0x00.
 
    <li><p>If <var title>code point</var> is null, decrease the
-   <span>byte pointer</span> by three; this is <span>decoder error</span>.
+   <span>byte pointer</span> by three and emit a <span>decoder error</span>.
 
    <li><p>Emit a code point whose value is <var title>code point</var>.
   </ol>
@@ -949,7 +950,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
    <span>gbk third</span> to <var title>byte</var> and continue.
 
    <li><p>Decrease the <span>byte pointer</span> by two, set
-   <span>gbk first</span> and <span>gbk second</span> to 0x00; this is a
+   <span>gbk first</span> and <span>gbk second</span> to 0x00, and emit a
    <span>decoder error</span>.
   </ol>
 
@@ -978,7 +979,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
    <li><p>If <var title>pointer</var> is null, decrease the
    <span>byte pointer</span> by one.
 
-   <li><p>If <var title>code point</var> is null, this is a
+   <li><p>If <var title>code point</var> is null, emit a
    <span>decoder error</span>.
 
    <li><p>Emit a code point whose value is <var title>code point</var>.
@@ -992,7 +993,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
  <li><p>If <var title>byte</var> is in the range 0x81 to 0xFE, set
  <span>gbk first</span> to <var title>byte</var> and continue.
 
- <li><p>This is a <span>decoder error</span>.
+ <li><p>Emit a <span>decoder error</span>.
 </ol>
 
 <p>The <dfn>gbk encoder</dfn> (<span>encoder</span> for <span>gbk</span>) is:
@@ -1091,7 +1092,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>hz-gb-2312 lead</span> is not 0x00, set <span>hz-gb-2312 lead</span>
- to 0x00; this is a <span>decoder error</span>.
+ to 0x00 and emit a <span>decoder error</span>.
 
  <li><p>Increase the <span>byte pointer</span>.
 
@@ -1115,7 +1116,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <dd><p>Set <span>hz-gb-2312 lead</span> to 0x00 and continue.
 
    <dt>Otherwise
-   <dd><p>Decrease the <span>byte pointer</span> by one; this is a
+   <dd><p>Decrease the <span>byte pointer</span> by one and emit a
    <span>decoder error</span>.
   </dl>
 
@@ -1135,7 +1136,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>byte</var> is 0x0A, unset the
    <span>hz-gb-2312 flag</span>.
 
-   <li><p>If <var title>code point</var> is null, this is a
+   <li><p>If <var title>code point</var> is null, emit a
    <span>decoder error</span>.
 
    <li><p>Emit a code point whose value is <var title>code point</var>.
@@ -1154,13 +1155,13 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>byte</var> is 0x0A, unset the
    <span>hz-gb-2312 flag</span>.
 
-   <li><p>This is a <span>decoder error</span>.
+   <li><p>Emit a <span>decoder error</span>.
   </ol>
 
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a
  code point whose value is <var title>byte</var>.
 
- <li><p>This is a <span>decoder error</span>.
+ <li><p>Emit a <span>decoder error</span>.
 </ol>
 
 <p>The <dfn>hz-gb-2312 encoder</dfn> (<span>encoder</span> for <span>hz-gb-2312</span>) is:
@@ -1228,8 +1229,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <span>EOF code point</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
- <span>big5 lead</span> is not 0x00, set <span>big5 lead</span> to 0x00;
- this is a <span>decoder error</span>.
+ <span>big5 lead</span> is not 0x00, set <span>big5 lead</span> to 0x00 and
+ emit a <span>decoder error</span>.
 
  <li><p>Increase the <span>byte pointer</span> by one.
 
@@ -1267,7 +1268,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>pointer</var> is null, decrease the
    <span>byte pointer</span> by one.
 
-   <li><p>If <var title>code point</var> is null, this is a
+   <li><p>If <var title>code point</var> is null, emit a
    <span>decoder error</span>.
 
    <li><p>Emit a code point whose value is <var title>code point</var>.
@@ -1279,7 +1280,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>byte</var> is in the range 0x81 to 0xFE, set
  <span>big5 lead</span> to <var title>byte</var> and continue.
 
- <li><p>This is a <span>decoder error</span>.
+ <li><p>Emit a <span>decoder error</span>.
 </ol>
 
 <p>The <dfn>big5 encoder</dfn> (<span>encoder</span> for <span>big5</span>) is:
@@ -1308,8 +1309,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and either
  <span>euc-jp first</span> or <span>euc-jp second</span> is not 0x00, set
- <span>euc-jp first</span> and <span>euc-jp second</span> to 0x00;
- this is a <span>decoder error</span>.
+ <span>euc-jp first</span> and <span>euc-jp second</span> to 0x00, and emit
+ a <span>decoder error</span>.
 
  <li><p>Increase the <span>byte pointer</span> by one.
 
@@ -1330,7 +1331,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>byte</var> is not in the range 0xA1 to 0xFE,
    decrease <span>byte pointer</span> by one.
 
-   <li><p>If <var title>code point</var> is null, this is a
+   <li><p>If <var title>code point</var> is null, emit a
    <span>decoder error</span>.
 
    <li><p>Emit <var title>code point</var>.
@@ -1361,7 +1362,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>byte</var> is not in the range 0xA1 to 0xFE,
    decrease <span>byte pointer</span> by one.
 
-   <li><p>If <var title>code point</var> is null, this is a
+   <li><p>If <var title>code point</var> is null, emit a
    <span>decoder error</span>.
 
    <li><p>Emit <var title>code point</var>.
@@ -1373,7 +1374,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>byte</var> is 0x8E, 0x8F, or in the range 0xA1 to
  0xFE, set <span>euc-jp first</span> to <var title>byte</var> and continue.
 
- <li><p>This is a <span>decoder error</span>.
+ <li><p>Emit a <span>decoder error</span>.
 </ol>
 
 <p>The <dfn>euc-jp encoder</dfn> (<span>encoder</span> for <span>euc-jp</span>) is:
@@ -1463,7 +1464,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      <dd><p>Emit the <span>EOF code point</span>.
 
      <dt>Otherwise
-     <dd><p>This is a <span>decoder error</span>.
+     <dd><p>Emit a <span>decoder error</span>.
     </dl>
 
    <dt>Escape start state
@@ -1477,8 +1478,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
      decrease the <span>byte pointer</span> by one.
 
-     <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>;
-     this is a <span>decoder error</span>.
+     <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>
+     and emit a <span>decoder error</span>.
     </ol>
 
    <dt>Escape middle state
@@ -1509,8 +1510,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      decrease <span>byte pointer</span> by one, or decrease it by two
      otherwise.
 
-     <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>;
-     this is a <span>decoder error</span>.
+     <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>
+     and emit a <span>decoder error</span>.
     </ol>
 
    <dt>Escape final state
@@ -1525,8 +1526,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      decrease <span>byte pointer</span> by two, or decrease it by three
      otherwise.
 
-     <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>;
-     this is a <span>decoder error</span>.
+     <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>
+     and emit a <span>decoder error</span>.
     </ol>
 
    <dt>Lead state
@@ -1534,9 +1535,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
     <p>Based on <var title>byte</var>:
     <dl class=switch>
      <dt>0x0A
-     <dd><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>;
-     this is a <span>decoder error</span>; emit a code point whose value is
-     U+000A.
+     <dd><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>
+     and emit a code point U+000A.
 
      <dt>0x1B
      <dd><p>Set <span>iso-2022-jp state</span> to
@@ -1557,7 +1557,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      <li><p>Set the <span>iso-2022-jp state</span> to
      <b title>lead state</b>.
 
-     <li><p>If <var title>byte</var> is the <span>EOF byte</span>, this is a
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit a
      <span>decoder error</span>.
 
      <li><p>Let <var title>code point</var> be null and let
@@ -1570,7 +1570,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      <span>index jis0208</span> if the <span>iso-2022-jp jis0212 flag</span>
      is unset, or in <span>index jis0212</span> otherwise.
 
-     <li><p>If <var title>code point</var> is null, this is a
+     <li><p>If <var title>code point</var> is null, emit a
      <span>decoder error</span>.
 
      <li><p>Emit <var title>code point</var>.
@@ -1593,7 +1593,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      <dd><p>Emit the <span>EOF code point</span>.
 
      <dt>Otherwise
-     <dd><p>This is a <span>decoder error</span>.
+     <dd><p>Emit a <span>decoder error</span>.
     </dl>
   </dl>
 </ol>
@@ -1666,7 +1666,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span>,
  <span>shift_jis lead</span> is not 0x00, set <span>shift_jis lead</span> to
- 0x00; this is a <span>decoder error</span>.
+ 0x00 and emit a <span>decoder error</span>.
 
  <li><p>Increase the <span>byte pointer</span> by one.
 
@@ -1692,13 +1692,13 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      (<var title>lead</var> &minus; <var title>lead offset</var>) &times; 188 + <var title>byte</var> - <var title>offset</var>
      in <span>index jis0208</span>.
 
-     <li><p>If <var title>code point</var> is null, this is a
+     <li><p>If <var title>code point</var> is null, emit a
      <span>decoder error</span>.
 
      <li><p>Emit <var title>code point</var>.
     </ol>
 
-   <li><p>Decrease the <span>byte pointer</span> by one; this is a
+   <li><p>Decrease the <span>byte pointer</span> by one and emit a
    <span>decoder error</span>.
   </ol>
 
@@ -1714,7 +1714,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  0xE0 to 0xFC, set <span>shift_jis lead</span> to <var title>byte</var> and
  continue.
 
- <li><p>This is a <span>decoder error</span>.
+ <li><p>Emit a <span>decoder error</span>.
 </ol>
 
 <p>The <dfn>shift_jis encoder</dfn> (<span>encoder</span> for <span>shift_jis</span>) is:
@@ -1779,8 +1779,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <span>EOF code point</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
- <span>euc-kr lead</span> is not 0x00, set <span>euc-kr lead</span> to 0x00;
- this is a <span>decoder error</span>.
+ <span>euc-kr lead</span> is not 0x00, set <span>euc-kr lead</span> to 0x00
+ and emit a <span>decoder error</span>.
 
  <li><p>Increase the <span>byte pointer</span> by one.
 
@@ -1819,7 +1819,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>pointer</var> is null, decrease the
    <span>byte pointer</span> by one.
 
-   <li><p>If <var title>code point</var> is null, this is a
+   <li><p>If <var title>code point</var> is null, emit a
    <span>decoder error</span>.
 
    <li><p>Emit a code point whose value is <var title>code point</var>.
@@ -1831,7 +1831,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>byte</var> is in the range 0x81 to 0xFD, set
  <span>euc-kr lead</span> to <var title>byte</var> and continue.
 
- <li><p>This is a <span>decoder error</span>.
+ <li><p>Emit a <span>decoder error</span>.
 </ol>
 
 <p>The <dfn>euc-kr encoder</dfn> (<span>encoder</span> for <span>euc-kr</span>) is:
@@ -1931,7 +1931,7 @@ at all.-->
      <dd><p>Emit the <span>EOF code point</span>.
 
      <dt>Otherwise
-     <dd><p>This is a <span>decoder error</span>.
+     <dd><p>Emit a <span>decoder error</span>.
     </dl>
 
    <dt>Escape start state<!-- 0x24 = $ -->
@@ -1944,8 +1944,8 @@ at all.-->
      <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
      decrease the <span>byte pointer</span> by one.
 
-     <li><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>;
-     this is a <span>decoder error</span>.
+     <li><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>
+     and emit a <span>decoder error</span>.
     </ol>
 
    <dt>Escape middle state<!-- 0x29 = ) -->
@@ -1958,8 +1958,8 @@ at all.-->
      <li><p>If <var title>byte</var> is the <span>EOF byte</span>, decrease
      the <span>byte pointer</span> by one, or decrease it by two otherwise.
 
-     <li><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>;
-     this is a <span>decoder error</span>.
+     <li><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>
+     and emit a <span>decoder error</span>.
     </ol>
 
    <dt>Escape end state<!-- 0x43 = C -->
@@ -1973,8 +1973,8 @@ at all.-->
      the <span>byte pointer</span> by two, or decrease it by three
      otherwise.
 
-     <li><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>;
-     this is a <span>decoder error</span>.
+     <li><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>
+     and emit a <span>decoder error</span>.
     </ol>
 
    <dt>Lead state
@@ -1982,9 +1982,8 @@ at all.-->
     <p>Based on <var title>byte</var>:
     <dl class=switch>
      <dt>0x0A
-     <dd><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>;
-     this is a <span>decoder error</span>; emit a code point whose value is
-     U+000A.
+     <dd><p>Set <span>iso-2022-kr state</span> to <b title>ASCII state</b>
+     and emit a code point U+000A.
 
      <dt>0x0E
      <dd><p>Continue.
@@ -2008,7 +2007,7 @@ at all.-->
      <li><p>Set the <span>iso-2022-kr state</span> to
      <b title>lead state</b>.
 
-     <li><p>If <var title>byte</var> is the <span>EOF byte</span>, this is a
+     <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit a
      <span>decoder error</span>.
 
      <li><p>Let <var title>code point</var> be null.
@@ -2028,7 +2027,7 @@ at all.-->
      <li><p>If <var title>code point</var> is not null, emit
      <var title>code point</var>.
 
-     <li><p>This is a <span>decoder error</span>.
+     <li><p>Emit a <span>decoder error</span>.
     </ol>
   </dl>
 </ol>
@@ -2133,7 +2132,7 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and either
  <span>utf-16 lead byte</span> or <span>utf-16 lead surrogate</span> is not
  null, set <span>utf-16 lead byte</span> and
- <span>utf-16 lead surrogate</span> to null; this is a
+ <span>utf-16 lead surrogate</span> to null, and emit a
  <span>decoder error</span>.
 
  <li><p>Increase the <span>byte pointer</span> by one.
@@ -2163,8 +2162,8 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
    emit a code point whose value is
    0x10000 + (<var title>lead surrogate</var> &minus; 0xD800) &times; 0x400 + (<var title>code point</var> &minus; 0xDC00).
 
-   <li><p>Decrease the <span>byte pointer</span> by two;
-   this is a <span>decoder error</span>.
+   <li><p>Decrease the <span>byte pointer</span> by two and emit a
+   <span>decoder error</span>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
@@ -2173,7 +2172,7 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
  continue.
 
  <li><p>If <var title>code point</var> is in the range U+DC00 to U+DFFF,
- this is a <span>decoder error</span>.
+ emit a <span>decoder error</span>.
  <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
 
  <li><p>Emit code point <var title>code point</var>.
