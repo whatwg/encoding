@@ -972,7 +972,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
 
    <li><p>If <var title>byte</var> is in the range 0x40 to 0x7E or
    0x80 to 0xFE, set <var title>pointer</var> to
-   (<var title>lead</var> &minus; 0x81) &times; 190 + (<var title>byte</var> &minus; <var title>offset</var>)
+   (<var title>lead</var> &minus; 0x81) &times; 190 + (<var title>byte</var> &minus; <var title>offset</var>).
 
    <li><p>Let <var title>code point</var> be null if
    <var title>pointer</var> is null, or the <span>index code point</span>
@@ -1114,7 +1114,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <dd><p>Emit code point U+007E.
 
    <dt>0x0A<!--newline-->
-   <dd><p>Set <span>hz-gb-2312 lead</span> to 0x00 and continue.
+   <dd><p>Continue.
 
    <dt>Otherwise
    <dd><p>Decrease the <span>byte pointer</span> by one and emit a
