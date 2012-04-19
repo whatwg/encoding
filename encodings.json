@@ -328,6 +328,7 @@
           "ms_kanji",
           "shift-jis",
           "shift_jis",
+          "sjis",
           "windows-31j",
           "x-sjis"
         ],
@@ -345,6 +346,7 @@
           "euc-kr",
           "iso-ir-149",
           "korean",
+          "ks_c_5601-1987",
           "ks_c_5601-1989",
           "ksc5601",
           "ksc_5601",
