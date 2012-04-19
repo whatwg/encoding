@@ -340,8 +340,8 @@
     "encodings": [
       {
         "labels": [
+          "cseuckr",
           "csksc56011987",
-          "csueckr",
           "euc-kr",
           "iso-ir-149",
           "korean",

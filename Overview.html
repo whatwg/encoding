@@ -487,8 +487,8 @@ as that algorithm is incompatible with legacy content.
   <tr><th colspan="2"><a href="#legacy-multi-byte-korean-encodings">Legacy multi-byte Korean encodings</a>
   <tr>
    <td rowspan="9"><a href="#euc-kr">euc-kr</a>
-   <td>"<code title="">csksc56011987</code>"
-  <tr><td>"<code title="">csueckr</code>"
+   <td>"<code title="">cseuckr</code>"
+  <tr><td>"<code title="">csksc56011987</code>"
   <tr><td>"<code title="">euc-kr</code>"
   <tr><td>"<code title="">iso-ir-149</code>"
   <tr><td>"<code title="">korean</code>"
@@ -762,7 +762,7 @@ are all initially 0.
  <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, continue.
 
  <li><p>Let <var title="">code point</var> be <a href="#utf-8-code-point">utf-8 code point</a> and
- <var title="">lower boundary</var> be <a href="#utf-8-lower-boundary">utf-8 lower boundary</a>
+ <var title="">lower boundary</var> be <a href="#utf-8-lower-boundary">utf-8 lower boundary</a>.
 
  <li><p>Set <a href="#utf-8-code-point">utf-8 code point</a>,
  <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, <a href="#utf-8-bytes-seen">utf-8 bytes seen</a>, and
@@ -817,13 +817,13 @@ are all initially 0.
    <!--temp = code_point >> ((count - 1) * 6)-->
 
    <li><p>Append to <var title="">bytes</var>
-   0x80 + (<var title="">temp</var> % 64)
+   0x80 + (<var title="">temp</var> % 64).
    <!--0x80 | (temp & 0x3f)-->
 
    <li><p>Decrease <var title="">count</var> by one.
   </ol>
 
- <li><p>Emit a sequence of bytes <var title="">bytes</var>, in list order.
+ <li><p>Emit bytes <var title="">bytes</var>, in list order.
 </ol>
 
 
@@ -2292,6 +2292,7 @@ Joshua Bell,
 신정식 (Jungshik Shin),
 Ken Lunde,
 Leif Halvard Silli,
+Makoto Kato,
 Mark Callow,
 Mark Davis,
 Martin Dürst,
