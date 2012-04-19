@@ -730,16 +730,6 @@ are all initially 0.
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x10000, and
    <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xF0.
 
-   <dt>0xF8 to 0xFB
-   <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 4,
-   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x200000, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xF8.
-
-   <dt>0xFC to 0xFD
-   <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 5,
-   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x4000000, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xFC.
-
    <dt>Otherwise
    <dd><p>Emit a <a href="#decoder-error">decoder error</a>.
   </dl>
@@ -778,8 +768,8 @@ are all initially 0.
  <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, <a href="#utf-8-bytes-seen">utf-8 bytes seen</a>, and
  <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0.
 
- <li><p>If <var title="">code point</var> is equal or greater than
- <var title="">lower boundary</var>, equal or less than 0x10FFFF, and is not
+ <li><p>If <var title="">code point</var> is in the range
+ <var title="">lower boundary</var> to 0x10FFFF and is not
  in the range 0xD800 to 0xDFFF, emit <var title="">code point</var>.
 
  <li><p>Emit a <a href="#decoder-error">decoder error</a>.
@@ -2294,6 +2284,7 @@ omissions.
 
 Charles McCathieNeville,
 David Carlisle,
+Doug Ewell,
 Erik van der Poel,
 譚永鋒 (Frank Yung-Fong Tang),
 Ian Hickson,
@@ -2306,6 +2297,7 @@ Mark Davis,
 Martin Dürst,
 Masatoshi Kimura,
 Ms2ger,
+Norbert Lindenberg,
 Øistein E. Andersen,
 Peter Krefting,
 Philip Jägenstedt,

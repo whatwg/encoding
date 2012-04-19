@@ -697,16 +697,6 @@ are all initially 0.
    <span>utf-8 lower boundary</span> to 0x10000, and
    <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xF0.
 
-   <dt>0xF8 to 0xFB
-   <dd><p>Set <span>utf-8 bytes needed</span> to 4,
-   <span>utf-8 lower boundary</span> to 0x200000, and
-   <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xF8.
-
-   <dt>0xFC to 0xFD
-   <dd><p>Set <span>utf-8 bytes needed</span> to 5,
-   <span>utf-8 lower boundary</span> to 0x4000000, and
-   <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xFC.
-
    <dt>Otherwise
    <dd><p>Emit a <span>decoder error</span>.
   </dl>
@@ -745,8 +735,8 @@ are all initially 0.
  <span>utf-8 bytes needed</span>, <span>utf-8 bytes seen</span>, and
  <span>utf-8 lower boundary</span> to 0.
 
- <li><p>If <var title>code point</var> is equal or greater than
- <var title>lower boundary</var>, equal or less than 0x10FFFF, and is not
+ <li><p>If <var title>code point</var> is in the range
+ <var title>lower boundary</var> to 0x10FFFF and is not
  in the range 0xD800 to 0xDFFF, emit <var title>code point</var>.
 
  <li><p>Emit a <span>decoder error</span>.
@@ -2255,6 +2245,7 @@ omissions.
 
 Charles McCathieNeville,
 David Carlisle,
+Doug Ewell,
 Erik van der Poel,
 譚永鋒 (Frank Yung-Fong Tang),
 Ian Hickson,
@@ -2267,6 +2258,7 @@ Mark Davis,
 Martin Dürst,
 Masatoshi Kimura,
 Ms2ger,
+Norbert Lindenberg,
 Øistein E. Andersen,
 Peter Krefting,
 Philip Jägenstedt,
