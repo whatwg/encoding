@@ -2171,9 +2171,9 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
 
   <dl class="switch">
    <dt><a href="#utf-16be-flag">utf-16be flag</a> is set
-   <dd><p><a href="#utf-16-lead-byte">utf-16 lead byte</a> &lt;&lt; 8 + <var title="">byte</var>.
+   <dd><p>(<a href="#utf-16-lead-byte">utf-16 lead byte</a> &lt;&lt; 8) + <var title="">byte</var>.
    <dt><a href="#utf-16be-flag">utf-16be flag</a> is unset
-   <dd><p><var title="">byte</var> &lt;&lt; 8 + <a href="#utf-16-lead-byte">utf-16 lead byte</a>.
+   <dd><p>(<var title="">byte</var> &lt;&lt; 8) + <a href="#utf-16-lead-byte">utf-16 lead byte</a>.
   </dl>
 
   <p>Then set <a href="#utf-16-lead-byte">utf-16 lead byte</a> to null.
@@ -2207,10 +2207,10 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
 <p>To <dfn id="convert-a-code-unit-to-bytes">convert a <var title="">code unit</var> to bytes</dfn> run these steps:
 
 <ol>
- <li><p>Let <var title="">byte1</var> be <var title="">code point</var> &gt;&gt; 8.
+ <li><p>Let <var title="">byte1</var> be <var title="">code unit</var> &gt;&gt; 8.
 
  <li><p>Let <var title="">byte2</var> be
- <var title="">code point</var> &amp; 0x00FF.
+ <var title="">code unit</var> &amp; 0x00FF.
 
  <li>
   <p>Then return the bytes in order:
