@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-19-april-2012">Living Standard — Last Updated 19 April 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-20-april-2012">Living Standard — Last Updated 20 April 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -68,7 +68,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-19 April 2012, the editors have made this specification available
+20 April 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -717,7 +717,7 @@ are all initially 0.
    <dt>0x00 to 0x7F
    <dd><p>Emit <var title="">byte</var> as code point.
 
-   <dt>0xC0 to 0xDF
+   <dt>0xC2 to 0xDF
    <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 1,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80, and
    <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xC0.
@@ -727,7 +727,7 @@ are all initially 0.
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x800, and
    <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xE0.
 
-   <dt>0xF0 to 0xF7
+   <dt>0xF0 to 0xF4
    <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 3,
    <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x10000, and
    <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xF0.
@@ -736,7 +736,7 @@ are all initially 0.
    <dd><p>Emit a <a href="#decoder-error">decoder error</a>.
   </dl>
 
-  <p>Then (<var title="">byte</var> is in the range 0xC0 to 0xF7) set
+  <p>Then (<var title="">byte</var> is in the range 0xC2 to 0xF4) set
   <a href="#utf-8-code-point">utf-8 code point</a> to <a href="#utf-8-code-point">utf-8 code point</a> ×
   64<sup><a href="#utf-8-bytes-needed">utf-8 bytes needed</a></sup> and continue.
 

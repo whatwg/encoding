@@ -684,7 +684,7 @@ are all initially 0.
    <dt>0x00 to 0x7F
    <dd><p>Emit <var title>byte</var> as code point.
 
-   <dt>0xC0 to 0xDF
+   <dt>0xC2 to 0xDF
    <dd><p>Set <span>utf-8 bytes needed</span> to 1,
    <span>utf-8 lower boundary</span> to 0x80, and
    <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xC0.
@@ -694,7 +694,7 @@ are all initially 0.
    <span>utf-8 lower boundary</span> to 0x800, and
    <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xE0.
 
-   <dt>0xF0 to 0xF7
+   <dt>0xF0 to 0xF4
    <dd><p>Set <span>utf-8 bytes needed</span> to 3,
    <span>utf-8 lower boundary</span> to 0x10000, and
    <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xF0.
@@ -703,7 +703,7 @@ are all initially 0.
    <dd><p>Emit a <span>decoder error</span>.
   </dl>
 
-  <p>Then (<var title>byte</var> is in the range 0xC0 to 0xF7) set
+  <p>Then (<var title>byte</var> is in the range 0xC2 to 0xF4) set
   <span>utf-8 code point</span> to <span>utf-8 code point</span> &times;
   64<sup><span>utf-8 bytes needed</span></sup> and continue.
 
