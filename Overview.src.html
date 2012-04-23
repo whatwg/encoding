@@ -1234,19 +1234,6 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
   <span>big5 lead</span> to 0x00, and then run these substeps:
 
   <ol>
-   <li>
-    <p>If there is a row in the table below whose first column contains
-    <var title>lead</var> and second column contains <var title>byte</var>,
-    emit the <em>two</em> code points listed in its third column:
-
-    <table>
-     <tr><td>0x88<td>0x62<td>U+00CA U+0304<!-- Ê̄ -->
-     <tr><td>0x88<td>0x64<td>U+00CA U+030C<!-- Ê̌ -->
-     <tr><td>0x88<td>0xA3<td>U+00EA U+0304<!-- ê̄ -->
-     <tr><td>0x88<td>0xA5<td>U+00EA U+030C<!-- ê̌ -->
-    </table>
-    <!-- we do this to avoid PUA -->
-
    <li><p>Let <var title>offset</var> be 0x40 if <var title>byte</var> is
    less than 0x7F, or 0x62 otherwise.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
@@ -1254,6 +1241,23 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>byte</var> is in the range 0x40 to 0x7E or
    0xA1 to 0xFE, set <var title>pointer</var> to
    (<var title>lead</var> &minus; 0x81) &times; 157 + (<var title>byte</var> &minus; <var title>offset</var>).
+
+   <li>
+    <p>If there is a row in the table below whose first column is
+    <var title>pointer</var>, emit the <em>two</em> code points listed in
+    its second column:
+
+    <table>
+     <tr><th>Pointer<th>Code points
+     <tr><td>1133<!-- 0x88 0x62 --><td>U+00CA U+0304<!-- Ê̄ -->
+     <tr><td>1135<!-- 0x88 0x64 --><td>U+00CA U+030C<!-- Ê̌ -->
+     <tr><td>1164<!-- 0x88 0xA3 --><td>U+00EA U+0304<!-- ê̄ -->
+     <tr><td>1166<!-- 0x88 0xA5 --><td>U+00EA U+030C<!-- ê̌ -->
+    </table>
+    <!-- we do this to avoid PUA -->
+
+    <p class=note>Since <span title=index>indexes</span> are limited to
+    single code points this table is used for these pointers.
 
    <li><p>Let <var title>code point</var> be null if
    <var title>pointer</var> is null, or the <span>index code point</span>
