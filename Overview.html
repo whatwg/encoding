@@ -1316,7 +1316,40 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
 <p>The <dfn id="big5-encoder">big5 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#big5">big5</a>) is:
 
-<ol class="XXX"></ol>
+<ol>
+ <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-byte">EOF byte</a>.
+
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title="">code point</var>.
+
+ <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
+ <var title="">code point</var> in <a href="#index-big5">index big5</a>.
+
+ <li><p>If <var title="">pointer</var> is null, emit an
+ <a href="#encoder-error">encoder error</a>.
+
+ <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 157 + 0x81.
+
+ <li>
+  <p>If <var title="">lead</var> is less than 0xA1, emit an
+  <a href="#encoder-error">encoder error</a>.
+
+  <p class="note">Avoid emitting Hong Kong Supplementary Character Set
+  extensions literally.
+
+ <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 157.
+
+ <li><p>Let <var title="">offset</var> be 0x40 if <var title="">trail</var> is
+   less than 0x3F,<!--0x7F-0x40--> or 0x62<!--0xA1-0x3F--> otherwise.
+
+ <li><p>Emit two bytes whose values are <var title="">lead</var> and
+ <var title="">trail</var> + <var title="">offset</var>.
+</ol>
 
 
 

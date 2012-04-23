@@ -1283,7 +1283,40 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
 <p>The <dfn>big5 encoder</dfn> (<span>encoder</span> for <span>big5</span>) is:
 
-<ol class=XXX></ol>
+<ol>
+ <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+
+ <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
+ emit the <span>EOF byte</span>.
+
+ <li><p>Increase the <span>code point pointer</span> by one.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title>code point</var>.
+
+ <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
+ <var title>code point</var> in <span>index big5</span>.
+
+ <li><p>If <var title>pointer</var> is null, emit an
+ <span>encoder error</span>.
+
+ <li><p>Let <var title>lead</var> be <var title>pointer</var> / 157 + 0x81.
+
+ <li>
+  <p>If <var title>lead</var> is less than 0xA1, emit an
+  <span>encoder error</span>.
+
+  <p class=note>Avoid emitting Hong Kong Supplementary Character Set
+  extensions literally.
+
+ <li><p>Let <var title>trail</var> be <var title>pointer</var> % 157.
+
+ <li><p>Let <var title>offset</var> be 0x40 if <var title>trail</var> is
+   less than 0x3F,<!--0x7F-0x40--> or 0x62<!--0xA1-0x3F--> otherwise.
+
+ <li><p>Emit two bytes whose values are <var title>lead</var> and
+ <var title>trail</var> + <var title>offset</var>.
+</ol>
 
 
 
