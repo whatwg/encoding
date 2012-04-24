@@ -620,7 +620,7 @@ fallback encoding <var title>encoding</var>, run these steps:
   </table>
 
   <p class=note>For compatibility with deployed content, the byte order mark
-  is considered more authoritative than anything else.
+  (also known as BOM) is considered more authoritative than anything else.
 
  <li><p>Return the result of running <var title>encoding</var>'s
  <span>decoder</span> with <span>byte pointer</span> set to
@@ -2142,8 +2142,9 @@ at all.-->
 
 <h2>Legacy utf-16 encodings</h2>
 
-<p class=note>Contrary to the Unicode standard, checking for a BOM happens
-before an encoding to decode a byte stream is chosen.
+<p class=note>Contrary to the Unicode standard, checking for a
+byte order mark happens before an encoding to decode a byte stream is
+chosen.
 
 
 <h3><dfn>utf-16</dfn></h3>

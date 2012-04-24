@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-23-april-2012">Living Standard — Last Updated 23 April 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-24-april-2012">Living Standard — Last Updated 24 April 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -68,7 +68,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-23 April 2012, the editors have made this specification available
+24 April 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -653,7 +653,7 @@ fallback encoding <var title="">encoding</var>, run these steps:
   </table>
 
   <p class="note">For compatibility with deployed content, the byte order mark
-  is considered more authoritative than anything else.
+  (also known as BOM) is considered more authoritative than anything else.
 
  <li><p>Return the result of running <var title="">encoding</var>'s
  <a href="#decoder">decoder</a> with <a href="#byte-pointer">byte pointer</a> set to
@@ -2175,8 +2175,9 @@ at all.-->
 
 <h2 id="legacy-utf-16-encodings"><span class="secno">13 </span>Legacy utf-16 encodings</h2>
 
-<p class="note">Contrary to the Unicode standard, checking for a BOM happens
-before an encoding to decode a byte stream is chosen.
+<p class="note">Contrary to the Unicode standard, checking for a
+byte order mark happens before an encoding to decode a byte stream is
+chosen.
 
 
 <h3 id="utf-16"><span class="secno">13.1 </span><dfn>utf-16</dfn></h3>
