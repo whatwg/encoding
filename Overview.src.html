@@ -752,7 +752,7 @@ are all initially 0.
 
   <dl class=switch>
    <dt>0x00 to 0x7F
-   <dd><p>Emit <var title>byte</var> as code point.
+   <dd><p>Emit a code point whose value is <var title>byte</var>.
 
    <dt>0xC2 to 0xDF
    <dd><p>Set <span>utf-8 bytes needed</span> to 1,
@@ -809,7 +809,8 @@ are all initially 0.
 
  <li><p>If <var title>code point</var> is in the range
  <var title>lower boundary</var> to 0x10FFFF and is not
- in the range 0xD800 to 0xDFFF, emit <var title>code point</var>.
+ in the range 0xD800 to 0xDFFF, emit a code point whose value is
+ <var title>code point</var>.
 
  <li><p>Emit a <span>decoder error</span>.
 </ol>
@@ -995,7 +996,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
    <li><p>If <var title>byte</var> is in the range 0x30 to 0x39, set
    <var title>code point</var> to the
    <span>index gb18030 code point</span> for
-   (((<span>gbk first</span> &minus; 0x81) &times; 10 + (<span>gbk second</span> &minus; 0x30)) &times; 126 + (<span>gbk third</span> &minus; 0x81)) &times; 10 + <var title>byte</var> &minus; 0x30.
+   (((<span>gbk first</span> &minus; 0x81) &times; 10 + <span>gbk second</span> &minus; 0x30) &times; 126 + <span>gbk third</span> &minus; 0x81) &times; 10 + <var title>byte</var> &minus; 0x30.
 
    <li><p>Set <span>gbk first</span>, <span>gbk second</span>, and
    <span>gbk third</span> to 0x00.
@@ -1434,7 +1435,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>code point</var> is null, emit a
    <span>decoder error</span>.
 
-   <li><p>Emit <var title>code point</var>.
+   <li><p>Emit a code point whose value is <var title>code point</var>.
   </ol>
 
  <li><p>If <span>euc-jp first</span> is 0x8E and <var title>byte</var> is
@@ -1465,7 +1466,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>code point</var> is null, emit a
    <span>decoder error</span>.
 
-   <li><p>Emit <var title>code point</var>.
+   <li><p>Emit a code point whose value is <var title>code point</var>.
   </ol>
 
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a
@@ -1673,7 +1674,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      <li><p>If <var title>code point</var> is null, emit a
      <span>decoder error</span>.
 
-     <li><p>Emit <var title>code point</var>.
+     <li><p>Emit a code point whose value is <var title>code point</var>.
     </ol>
 
    <dt>Katakana state
@@ -1772,34 +1773,31 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li>
   <p>If <span>shift_jis lead</span> is not 0x00, let <var title>lead</var>
-  be <span>shift_jis lead</span>, set <span>shift_jis lead</span> to 0x00,
-  and then run these substeps:
+  be <span>shift_jis lead</span>, let <var title>pointer</var> be null, set
+  <span>shift_jis lead</span> to 0x00, and then run these substeps:
 
   <ol>
-   <li>
-    <p>If <var title>byte</var> is in the range 0x40 to 0x7E or
-    0x80 to 0xFC, run these substeps:
+   <li><p>Let <var title>offset</var> be 0x40 if <var title>byte</var> is
+   less than 0x7F, or 0x41 otherwise.
 
-    <ol>
-     <li><p>Let <var title>offset</var> be 0x40 if <var title>byte</var> is
-     less than 0x7F, or 0x41 otherwise.
+   <li><p>Let <var title>lead offset</var> be 0x81 if <var title>lead</var>
+   is less than 0xA0, or 0xC1 otherwise.
 
-     <li><p>Let <var title>lead offset</var> be 0x81 if
-     <var title>lead</var> is less than 0xA0, or 0xC1 otherwise.
+   <li><p>If <var title>byte</var> is in the range 0x40 to 0x7E or
+   0x80 to 0xFC, set <var title>pointer</var> to
+   (<var title>lead</var> &minus; <var title>lead offset</var>) &times; 188 + <var title>byte</var> - <var title>offset</var>.
 
-     <li><p>Let <var title>code point</var>  be the
-     <span>index code point</span> for
-     (<var title>lead</var> &minus; <var title>lead offset</var>) &times; 188 + <var title>byte</var> - <var title>offset</var>
-     in <span>index jis0208</span>.
+   <li><p>Let <var title>code point</var> be null if
+   <var title>pointer</var> is null, or the <span>index code point</span>
+   for <var title>pointer</var> in <span>index jis0208</span> otherwise.
 
-     <li><p>If <var title>code point</var> is null, emit a
-     <span>decoder error</span>.
+   <li><p>If <var title>pointer</var> is null, decrease the
+   <span>byte pointer</span> by one.
 
-     <li><p>Emit <var title>code point</var>.
-    </ol>
-
-   <li><p>Decrease the <span>byte pointer</span> by one and emit a
+   <li><p>If <var title>code point</var> is null, emit a
    <span>decoder error</span>.
+
+   <li><p>Emit a code point whose value is <var title>code point</var>.
   </ol>
 
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x80, emit a

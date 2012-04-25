@@ -785,7 +785,7 @@ are all initially 0.
 
   <dl class="switch">
    <dt>0x00 to 0x7F
-   <dd><p>Emit <var title="">byte</var> as code point.
+   <dd><p>Emit a code point whose value is <var title="">byte</var>.
 
    <dt>0xC2 to 0xDF
    <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 1,
@@ -842,7 +842,8 @@ are all initially 0.
 
  <li><p>If <var title="">code point</var> is in the range
  <var title="">lower boundary</var> to 0x10FFFF and is not
- in the range 0xD800 to 0xDFFF, emit <var title="">code point</var>.
+ in the range 0xD800 to 0xDFFF, emit a code point whose value is
+ <var title="">code point</var>.
 
  <li><p>Emit a <a href="#decoder-error">decoder error</a>.
 </ol>
@@ -1028,7 +1029,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
    <li><p>If <var title="">byte</var> is in the range 0x30 to 0x39, set
    <var title="">code point</var> to the
    <a href="#index-gb18030-code-point">index gb18030 code point</a> for
-   (((<a href="#gbk-first">gbk first</a> − 0x81) × 10 + (<a href="#gbk-second">gbk second</a> − 0x30)) × 126 + (<a href="#gbk-third">gbk third</a> − 0x81)) × 10 + <var title="">byte</var> − 0x30.
+   (((<a href="#gbk-first">gbk first</a> − 0x81) × 10 + <a href="#gbk-second">gbk second</a> − 0x30) × 126 + <a href="#gbk-third">gbk third</a> − 0x81) × 10 + <var title="">byte</var> − 0x30.
 
    <li><p>Set <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, and
    <a href="#gbk-third">gbk third</a> to 0x00.
@@ -1467,7 +1468,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
    <li><p>If <var title="">code point</var> is null, emit a
    <a href="#decoder-error">decoder error</a>.
 
-   <li><p>Emit <var title="">code point</var>.
+   <li><p>Emit a code point whose value is <var title="">code point</var>.
   </ol>
 
  <li><p>If <a href="#euc-jp-first">euc-jp first</a> is 0x8E and <var title="">byte</var> is
@@ -1498,7 +1499,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
    <li><p>If <var title="">code point</var> is null, emit a
    <a href="#decoder-error">decoder error</a>.
 
-   <li><p>Emit <var title="">code point</var>.
+   <li><p>Emit a code point whose value is <var title="">code point</var>.
   </ol>
 
  <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a
@@ -1706,7 +1707,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
      <li><p>If <var title="">code point</var> is null, emit a
      <a href="#decoder-error">decoder error</a>.
 
-     <li><p>Emit <var title="">code point</var>.
+     <li><p>Emit a code point whose value is <var title="">code point</var>.
     </ol>
 
    <dt>Katakana state
@@ -1805,34 +1806,31 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
  <li>
   <p>If <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, let <var title="">lead</var>
-  be <a href="#shift_jis-lead">shift_jis lead</a>, set <a href="#shift_jis-lead">shift_jis lead</a> to 0x00,
-  and then run these substeps:
+  be <a href="#shift_jis-lead">shift_jis lead</a>, let <var title="">pointer</var> be null, set
+  <a href="#shift_jis-lead">shift_jis lead</a> to 0x00, and then run these substeps:
 
   <ol>
-   <li>
-    <p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
-    0x80 to 0xFC, run these substeps:
+   <li><p>Let <var title="">offset</var> be 0x40 if <var title="">byte</var> is
+   less than 0x7F, or 0x41 otherwise.
 
-    <ol>
-     <li><p>Let <var title="">offset</var> be 0x40 if <var title="">byte</var> is
-     less than 0x7F, or 0x41 otherwise.
+   <li><p>Let <var title="">lead offset</var> be 0x81 if <var title="">lead</var>
+   is less than 0xA0, or 0xC1 otherwise.
 
-     <li><p>Let <var title="">lead offset</var> be 0x81 if
-     <var title="">lead</var> is less than 0xA0, or 0xC1 otherwise.
+   <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
+   0x80 to 0xFC, set <var title="">pointer</var> to
+   (<var title="">lead</var> − <var title="">lead offset</var>) × 188 + <var title="">byte</var> - <var title="">offset</var>.
 
-     <li><p>Let <var title="">code point</var>  be the
-     <a href="#index-code-point">index code point</a> for
-     (<var title="">lead</var> − <var title="">lead offset</var>) × 188 + <var title="">byte</var> - <var title="">offset</var>
-     in <a href="#index-jis0208">index jis0208</a>.
+   <li><p>Let <var title="">code point</var> be null if
+   <var title="">pointer</var> is null, or the <a href="#index-code-point">index code point</a>
+   for <var title="">pointer</var> in <a href="#index-jis0208">index jis0208</a> otherwise.
 
-     <li><p>If <var title="">code point</var> is null, emit a
-     <a href="#decoder-error">decoder error</a>.
+   <li><p>If <var title="">pointer</var> is null, decrease the
+   <a href="#byte-pointer">byte pointer</a> by one.
 
-     <li><p>Emit <var title="">code point</var>.
-    </ol>
-
-   <li><p>Decrease the <a href="#byte-pointer">byte pointer</a> by one and emit a
+   <li><p>If <var title="">code point</var> is null, emit a
    <a href="#decoder-error">decoder error</a>.
+
+   <li><p>Emit a code point whose value is <var title="">code point</var>.
   </ol>
 
  <li><p>If <var title="">byte</var> is in the range 0x00 to 0x80, emit a
