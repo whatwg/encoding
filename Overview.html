@@ -1937,7 +1937,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
      <dd><p><var title="">temp</var> + 26 + 26 + <var title="">byte</var> − 0x81
     </dl>
 
-   <li><p>If <var title="">lead</var> is in the range 0xC7 to 0xFD and
+   <li><p>If <var title="">lead</var> is in the range 0xC7 to 0xFE and
    <var title="">byte</var> is in the range 0xA1 to 0xFE, set
    <var title="">pointer</var> to
    (26 + 26 + 126) × (0xC7 − 0x81) + (<var title="">lead</var> − 0xC7) × 94 + (<var title="">byte</var> − 0xA1).
@@ -1959,7 +1959,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a
  code point whose value is <var title="">byte</var>.
 
- <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFD, set
+ <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
  <a href="#euc-kr-lead">euc-kr lead</a> to <var title="">byte</var> and continue.
 
  <li><p>Emit a <a href="#decoder-error">decoder error</a>.
