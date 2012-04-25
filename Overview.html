@@ -1818,7 +1818,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
    <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
    0x80 to 0xFC, set <var title="">pointer</var> to
-   (<var title="">lead</var> − <var title="">lead offset</var>) × 188 + <var title="">byte</var> - <var title="">offset</var>.
+   (<var title="">lead</var> − <var title="">lead offset</var>) × 188 + <var title="">byte</var> − <var title="">offset</var>.
 
    <li><p>Let <var title="">code point</var> be null if
    <var title="">pointer</var> is null, or the <a href="#index-code-point">index code point</a>
@@ -1880,7 +1880,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
  <li><p>Let <var title="">lead offset</var> be 0x81 if <var title="">lead</var> is
  less than 0x1F, or 0xC1 otherwise.
- <!-- 0xA0 - 0x81 -->
+ <!-- 0xA0-0x81 -->
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 188.
 
@@ -1996,9 +1996,11 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
    <li><p>Let <var title="">trail</var> be
    <var title="">pointer</var> % (26 + 26 + 126).
 
-   <li><p>Let <var title="">offset</var> be 0x41 if <var title="">pointer</var> is
-   less than 26, 0x61 if <var title="">pointer</var> is less than 26 + 26, or
-   0x81 otherwise.
+   <li><p>Let <var title="">offset</var> be 0x41 if <var title="">trail</var> is
+   less than 26, 0x47 if <var title="">trail</var> is less than 26 + 26, or
+   0x4D otherwise.
+   <!-- 0x47=0x41+0x61-0x5A-1
+        0x4D=0x47+0x81-0x7A-1 -->
 
    <li><p>Emit two bytes whose values are <var title="">lead</var> and
    <var title="">trail</var> + <var title="">offset</var>.
