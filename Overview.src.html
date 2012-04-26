@@ -127,7 +127,7 @@ out of memory, or to work around platform-specific limitations.
 
 <h2>Terminology</h2>
 
-<p>Hexadecimal numbers are prefixed by "0x".
+<p>Hexadecimal numbers are prefixed with "0x".
 
 <p>In equations, all numbers are integers, addition is represented by "+",
 subtraction by "&minus;", multiplication by "&times;", division by "/",
@@ -136,15 +136,15 @@ exponentiation by "<var title>b</var><sup><var title>n</var></sup>",
 arithmetic left shifts by "&lt;&lt;", arithmetic right shifts by ">>",
 bitwise AND by "&amp;", and bitwise OR by "|".
 
-<p>A <dfn>byte</dfn> is referenced as a hexadecimal number in the range 0x00
-to 0xFF.
+<p>A <dfn>byte</dfn> is referenced as a double-digit hexadecimal number in
+the range 0x00 to 0xFF.
 
 <p class=note>Web platform bytes consist of exactly eight bits.
 
 <p>A <dfn>code point</dfn> is a Unicode code point and is referenced as a
-four-or-more digit hexadecimal value, typically preceded by "U+".
-In equations and <span title=index>indexes</span> a hexadecimal number of at
-least four digits is used. <span data-anolis-ref>UNICODE</span>
+four-to-six digit hexadecimal number, typically prefixed with "U+".
+In equations and <span title=index>indexes</span> it is prefixed with "0x".
+<span data-anolis-ref>UNICODE</span>
 
 <p>The <dfn>space characters</dfn>, for the purposes of this specification,
 are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
@@ -567,7 +567,7 @@ pointers are unique and code points can be duplicated.
 let <var title>lines</var> be the result of splitting the resource's contents on U+000A.
 Then remove each item in <var title>lines</var> that is the empty string or starts with U+0023.
 Then the pointers and their corresponding code points are found by splitting each item in <var title>lines</var> on U+0009.
-The first subitem is the pointer (as decimal number) and the second is the corresponding code point (as hexadecimal number).
+The first subitem is the pointer (as a decimal number) and the second is the corresponding code point (as a hexadecimal number).
 Other subitems are not relevant.
 
 <p>The <dfn>index code point</dfn> for <var title>pointer</var> in

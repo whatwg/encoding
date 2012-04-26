@@ -42,7 +42,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-25-april-2012">Living Standard — Last Updated 25 April 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-26-april-2012">Living Standard — Last Updated 26 April 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -68,7 +68,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/80x15.png"></a>
 To the extent possible under law, the editors have waived all copyright and
 related or neighboring rights to this work. In addition, as of
-25 April 2012, the editors have made this specification available
+26 April 2012, the editors have made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -160,7 +160,7 @@ out of memory, or to work around platform-specific limitations.
 
 <h2 id="terminology"><span class="secno">3 </span>Terminology</h2>
 
-<p>Hexadecimal numbers are prefixed by "0x".
+<p>Hexadecimal numbers are prefixed with "0x".
 
 <p>In equations, all numbers are integers, addition is represented by "+",
 subtraction by "−", multiplication by "×", division by "/",
@@ -169,15 +169,15 @@ exponentiation by "<var title="">b</var><sup><var title="">n</var></sup>",
 arithmetic left shifts by "&lt;&lt;", arithmetic right shifts by "&gt;&gt;",
 bitwise AND by "&amp;", and bitwise OR by "|".
 
-<p>A <dfn id="byte">byte</dfn> is referenced as a hexadecimal number in the range 0x00
-to 0xFF.
+<p>A <dfn id="byte">byte</dfn> is referenced as a double-digit hexadecimal number in
+the range 0x00 to 0xFF.
 
 <p class="note">Web platform bytes consist of exactly eight bits.
 
 <p>A <dfn id="code-point">code point</dfn> is a Unicode code point and is referenced as a
-four-or-more digit hexadecimal value, typically preceded by "U+".
-In equations and <a href="#index" title="index">indexes</a> a hexadecimal number of at
-least four digits is used. <a data-anolis-ref="" href="#refsUNICODE">[UNICODE]</a>
+four-to-six digit hexadecimal number, typically prefixed with "U+".
+In equations and <a href="#index" title="index">indexes</a> it is prefixed with "0x".
+<a data-anolis-ref="" href="#refsUNICODE">[UNICODE]</a>
 
 <p>The <dfn id="space-characters">space characters</dfn>, for the purposes of this specification,
 are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
@@ -600,7 +600,7 @@ pointers are unique and code points can be duplicated.
 let <var title="">lines</var> be the result of splitting the resource's contents on U+000A.
 Then remove each item in <var title="">lines</var> that is the empty string or starts with U+0023.
 Then the pointers and their corresponding code points are found by splitting each item in <var title="">lines</var> on U+0009.
-The first subitem is the pointer (as decimal number) and the second is the corresponding code point (as hexadecimal number).
+The first subitem is the pointer (as a decimal number) and the second is the corresponding code point (as a hexadecimal number).
 Other subitems are not relevant.
 
 <p>The <dfn id="index-code-point">index code point</dfn> for <var title="">pointer</var> in
