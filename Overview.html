@@ -1,50 +1,17 @@
 <!DOCTYPE html><html lang="en-US"><meta charset="utf-8">
 <title>Encoding</title>
 <style>
- pre.idl { border:solid thin; background:#eee; color:#000; padding:0.5em }
- pre.idl :link, pre.idl :visited { color:inherit; background:transparent }
- pre code { color:inherit; background:transparent }
- .example { margin-left:1em; padding-left:1em; border-left:double; color:#222; background:#fcfcfc }
- .note { margin-left:2em; font-weight:bold; font-style:italic; color:#008000 }
- p.note::before { content:"Note: " }
- .XXX { padding:.5em; border:solid #f00 }
- /*p.XXX::before { content:"Issue: " }*/
- dl.switch { padding-left:2em }
- dl.switch > dt { text-indent:-1.5em }
- dl.switch > dt:before { content:'\21AA'; padding:0 0.5em 0 0; display:inline-block; width:1em; text-align:right; line-height:0.5em }
- dl.domintro { color: green; margin: 2em 0 2em 2em; padding: 0.5em 1em; border: none; background: #DDFFDD; }
- dl.domintro dt, dl.domintro dt * { color: black; text-decoration: none; }
- dl.domintro dd { margin: 0.5em 0 1em 2em; padding: 0; }
- dl.domintro dd p { margin: 0.5em 0; }
- dl.domintro:before { display: table; margin: -1em -0.5em -0.5em auto; width: auto; content: 'This box is non-normative. Implementation requirements are given below this box.'; color: red; border: solid 2px; background: white; padding: 0 0.25em; }
- em.ct { text-transform:lowercase; font-variant:small-caps; font-style:normal }
- dfn { font-weight:bold; font-style:normal }
- code { color:orangered }
- code :link, code :visited { color:inherit }
- hr:not(.top) { display:block; background:none; border:none; padding:0; margin:2em 0; height:auto }
- table { border-collapse:collapse; border-style:hidden hidden none hidden }
- table thead { border-bottom:solid }
- table tbody th:first-child { border-left:solid }
- table td, table th { border-left:solid; border-right:solid; border-bottom:solid thin; vertical-align:top; padding:0.2em }
- .encoding th, .encoding td { font-family:monospace }
-
- .warning { color: red; background: transparent; font-weight: bolder; font-style: italic; }
- .warning p:first-child { margin-top: 0; }
- .warning p:last-child { margin-bottom: 0; }
- .warning:before { font-style: normal; }
- p.warning:before { content: '\26A0 Warning! '; }
-</style>
-<style>
  @media print { [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase } }
 </style>
 <link href="http://www.whatwg.org/style/specification" rel="stylesheet">
+<link href="http://www.whatwg.org/images/icon" rel="icon">
 
 <div class="head">
 
 <p><a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a>
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-specification-—-last-updated-18-july-2012">Living Specification — Last Updated 18 July 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-11-september-2012">Living Standard — Last Updated 11 September 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -58,37 +25,27 @@
  <dd><a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
 
  <dt>Version History:
- <dd><a href="http://dvcs.w3.org/hg/encoding/shortlog">http://dvcs.w3.org/hg/encoding/shortlog</a></dd>
+ <dd><a href="https://github.com/whatwg/encoding/commits">https://github.com/whatwg/encoding/commits</a></dd>
 
  <dt>Editor:
  <dd class="vcard h-card">
   <a class="url u-url fn p-fn" href="http://annevankesteren.nl/" lang="nl">Anne van Kesteren</a>
-  (<a class="org h-org" href="http://www.opera.com/">Opera Software ASA</a>)
   &lt;<a class="email u-email" href="mailto:annevk@annevk.nl">annevk@annevk.nl</a>&gt;
 </dl>
 
 <script async="" src="/hg/quirks-mode/raw-file/tip/file-bug.js"></script>
 
-<p class="copyright">Copyright © 2012 the Contributors to the Encoding Specification, published by the <a href="http://www.w3.org/community/whatwg/">WHATCG</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.
-
-<!--
-<p class=copyright>This specification may also be used under the terms of
-<a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Universal</a>.
+<p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-18 July 2012, the editor has made this specification available
+11 September 2012, the editor has made this specification available
 under the
-<a rel="license"
-href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0">Open Web Foundation Agreement Version 1.0</a>,
+<a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
 http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
--->
 
 </div>
 
-<h2 class="no-num no-toc" id="disclaimer">Disclaimer</h2>
-
-<p>This specification was published by the <a href="http://www.w3.org/community/whatwg/">WHATCG</a>. It is not a W3C Standard nor is it on the W3C Standards Track. Please note that under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply. Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>.</p>
 
 
 <h2 class="no-num no-toc" id="table-of-contents">Table of Contents</h2>
