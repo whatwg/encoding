@@ -1,1 +1,1 @@
-The repository for the [Encoding Standard](http://dvcs.w3.org/hg/encoding/raw-file/tip/Overview.html) and related resources.
+The repository for the [Encoding Standard](http://encoding.spec.whatwg.org/) and related resources.
