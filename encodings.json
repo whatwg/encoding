@@ -16,15 +16,6 @@
     "encodings": [
       {
         "labels": [
-          "cp864",
-          "csibm864",
-          "ibm-864",
-          "ibm864"
-        ],
-        "name": "ibm864"
-      },
-      {
-        "labels": [
           "866",
           "cp866",
           "csibm866",
