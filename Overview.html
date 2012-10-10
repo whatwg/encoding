@@ -9,7 +9,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-5-october-2012">Living Standard — Last Updated 5 October 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-10-october-2012">Living Standard — Last Updated 10 October 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-5 October 2012, the editor has made this specification available
+10 October 2012, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -78,10 +78,11 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
   <ol>
    <li><a href="#euc-kr"><span class="secno">12.1 </span>euc-kr</a></li>
    <li><a href="#iso-2022-kr"><span class="secno">12.2 </span>iso-2022-kr</a></ol></li>
- <li><a href="#legacy-utf-16-encodings"><span class="secno">13 </span>Legacy utf-16 encodings</a>
+ <li><a href="#legacy-miscellaneous-encodings"><span class="secno">13 </span>Legacy miscellaneous encodings</a>
   <ol>
    <li><a href="#utf-16"><span class="secno">13.1 </span>utf-16</a></li>
-   <li><a href="#utf-16be"><span class="secno">13.2 </span>utf-16be</a></ol></li>
+   <li><a href="#utf-16be"><span class="secno">13.2 </span>utf-16be</a></li>
+   <li><a href="#x-user-defined"><span class="secno">13.3 </span>x-user-defined</a></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
@@ -536,7 +537,7 @@ as that algorithm is incompatible with legacy content.
    <td>"<code title="">csiso2022kr</code>"
   <tr><td>"<code title="">iso-2022-kr</code>"
  <tbody>
-  <tr><th colspan="2"><a href="#legacy-utf-16-encodings">Legacy utf-16 encodings</a>
+  <tr><th colspan="2"><a href="#legacy-miscellaneous-encodings">Legacy miscellaneous encodings</a>
   <tr>
    <td rowspan="2"><a href="#utf-16">utf-16</a>
    <td>"<code title="">utf-16</code>"
@@ -544,6 +545,9 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td><a href="#utf-16be">utf-16be</a>
    <td>"<code title="">utf-16be</code>"
+  <tr>
+   <td><a href="#x-user-defined">x-user-defined</a>
+   <td>"<code title="">x-user-defined</code>"
 </table>
 
 <p class="note">All <a href="#encoding" title="encoding">encodings</a> and their
@@ -2204,14 +2208,13 @@ at all.-->
 </ol>
 
 
-<h2 id="legacy-utf-16-encodings"><span class="secno">13 </span>Legacy utf-16 encodings</h2>
+<h2 id="legacy-miscellaneous-encodings"><span class="secno">13 </span>Legacy miscellaneous encodings</h2>
+
+<h3 id="utf-16"><span class="secno">13.1 </span><dfn>utf-16</dfn></h3>
 
 <p class="note">Contrary to the Unicode standard, checking for a
 byte order mark happens before an encoding to decode a byte stream is
-chosen.
-
-
-<h3 id="utf-16"><span class="secno">13.1 </span><dfn>utf-16</dfn></h3>
+chosen, as seen in the <a href="#decode">decode</a> algorithm.
 
 <p>The <dfn id="utf-16-lead-byte">utf-16 lead byte</dfn> and <dfn id="utf-16-lead-surrogate">utf-16 lead surrogate</dfn>
 are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initially unset.
@@ -2325,11 +2328,68 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
 
 <h3 id="utf-16be"><span class="secno">13.2 </span><dfn>utf-16be</dfn></h3>
 
+<p class="note">Contrary to the Unicode standard, checking for a
+byte order mark happens before an encoding to decode a byte stream is
+chosen, as seen in the <a href="#decode">decode</a> algorithm.
+
 <p>The <dfn id="utf-16be-decoder">utf-16be decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-16be">utf-16be</a>)
 is the <a href="#utf-16-decoder">utf-16 decoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
 
 <p>The <dfn id="utf-16be-encoder">utf-16be encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-16be">utf-16be</a>)
 is the <a href="#utf-16-encoder">utf-16 encoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
+
+
+<h3 id="x-user-defined"><span class="secno">13.3 </span><dfn>x-user-defined</dfn></h3>
+
+<p class="note">While technically this is a <a href="#single-byte-encoding">single-byte encoding</a>,
+it is defined separately as it does not require an <a href="#index">index</a>.
+Implementations are free to use an <a href="#index">index</a> of course.
+
+<!--
+This encoding is silly, however, the web depends on it:
+
+http://krijnhoetmer.nl/irc-logs/whatwg/20121003#l-461
+http://krijnhoetmer.nl/irc-logs/whatwg/20121010#l-812
+
+http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7-when-using-charset-x-user-defined-with-xm
+-->
+
+<p>The <dfn id="x-user-defined-decoder">x-user-defined decoder</dfn> (<a href="#decoder">decoder</a> for
+<a href="#x-user-defined">x-user-defined</a>) is:
+
+<ol>
+ <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+
+ <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit the
+ <a href="#eof-code-point">EOF code point</a>.
+
+ <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a code
+ point whose value is <var title="">byte</var>.
+
+ <li><p>Emit a code point whose value is
+ 0xF780 + <var title="">byte</var> − 0x80.
+
+ <li><p>Emit a code point whose value is <var title="">code point</var>.
+</ol>
+
+<p>The <dfn id="x-user-defined-encoder">x-user-defined encoder</dfn> (<a href="#encoder">encoder</a> for
+<a href="#x-user-defined">x-user-defined</a>) is:
+
+<ol>
+ <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+
+ <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
+ emit the <a href="#eof-byte">EOF byte</a>.
+
+ <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title="">code point</var>.
+
+ <li><p>Emit an <a href="#encoder-error">encoder error</a>.
+</ol>
 
 
 <h2 class="no-num" id="references">References</h2>

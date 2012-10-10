@@ -438,8 +438,14 @@
           "utf-16be"
         ],
         "name": "utf-16be"
+      },
+      {
+        "labels": [
+          "x-user-defined"
+        ],
+        "name": "x-user-defined"
       }
     ],
-    "heading": "Legacy utf-16 encodings"
+    "heading": "Legacy miscellaneous encodings"
   }
 ]

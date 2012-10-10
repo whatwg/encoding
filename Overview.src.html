@@ -503,7 +503,7 @@ as that algorithm is incompatible with legacy content.
    <td>"<code title>csiso2022kr</code>"
   <tr><td>"<code title>iso-2022-kr</code>"
  <tbody>
-  <tr><th colspan=2><a href=#legacy-utf-16-encodings>Legacy utf-16 encodings</a>
+  <tr><th colspan=2><a href=#legacy-miscellaneous-encodings>Legacy miscellaneous encodings</a>
   <tr>
    <td rowspan=2><span>utf-16</span>
    <td>"<code title>utf-16</code>"
@@ -511,6 +511,9 @@ as that algorithm is incompatible with legacy content.
   <tr>
    <td><span>utf-16be</span>
    <td>"<code title>utf-16be</code>"
+  <tr>
+   <td><span>x-user-defined</span>
+   <td>"<code title>x-user-defined</code>"
 </table>
 
 <p class=note>All <span title=encoding>encodings</span> and their
@@ -2171,14 +2174,13 @@ at all.-->
 </ol>
 
 
-<h2>Legacy utf-16 encodings</h2>
+<h2>Legacy miscellaneous encodings</h2>
+
+<h3><dfn>utf-16</dfn></h3>
 
 <p class=note>Contrary to the Unicode standard, checking for a
 byte order mark happens before an encoding to decode a byte stream is
-chosen.
-
-
-<h3><dfn>utf-16</dfn></h3>
+chosen, as seen in the <span>decode</span> algorithm.
 
 <p>The <dfn>utf-16 lead byte</dfn> and <dfn>utf-16 lead surrogate</dfn>
 are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
@@ -2292,11 +2294,68 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
 
 <h3><dfn>utf-16be</dfn></h3>
 
+<p class=note>Contrary to the Unicode standard, checking for a
+byte order mark happens before an encoding to decode a byte stream is
+chosen, as seen in the <span>decode</span> algorithm.
+
 <p>The <dfn>utf-16be decoder</dfn> (<span>decoder</span> for <span>utf-16be</span>)
 is the <span>utf-16 decoder</span> with the <span>utf-16be flag</span> set.
 
 <p>The <dfn>utf-16be encoder</dfn> (<span>encoder</span> for <span>utf-16be</span>)
 is the <span>utf-16 encoder</span> with the <span>utf-16be flag</span> set.
+
+
+<h3><dfn>x-user-defined</dfn></h3>
+
+<p class=note>While technically this is a <span>single-byte encoding</span>,
+it is defined separately as it does not require an <span>index</span>.
+Implementations are free to use an <span>index</span> of course.
+
+<!--
+This encoding is silly, however, the web depends on it:
+
+http://krijnhoetmer.nl/irc-logs/whatwg/20121003#l-461
+http://krijnhoetmer.nl/irc-logs/whatwg/20121010#l-812
+
+http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7-when-using-charset-x-user-defined-with-xm
+-->
+
+<p>The <dfn>x-user-defined decoder</dfn> (<span>decoder</span> for
+<span>x-user-defined</span>) is:
+
+<ol>
+ <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit the
+ <span>EOF code point</span>.
+
+ <li><p>Increase the <span>byte pointer</span> by one.
+
+ <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a code
+ point whose value is <var title>byte</var>.
+
+ <li><p>Emit a code point whose value is
+ 0xF780 + <var title>byte</var> &minus; 0x80.
+
+ <li><p>Emit a code point whose value is <var title>code point</var>.
+</ol>
+
+<p>The <dfn>x-user-defined encoder</dfn> (<span>encoder</span> for
+<span>x-user-defined</span>) is:
+
+<ol>
+ <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+
+ <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
+ emit the <span>EOF byte</span>.
+
+ <li><p>Increase the <span>code point pointer</span> by one.
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
+ emit a byte whose value is <var title>code point</var>.
+
+ <li><p>Emit an <span>encoder error</span>.
+</ol>
 
 
 <h2 class=no-num>References</h2>
