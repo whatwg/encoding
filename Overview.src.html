@@ -295,21 +295,23 @@ as that algorithm is incompatible with legacy content.
   <tr><td>"<code title>iso_8859-7:1987</code>"
   <tr><td>"<code title>sun_eu_greek</code>"
   <tr>
-   <td rowspan=14><span>iso-8859-8</span>
+   <td rowspan=11><span>iso-8859-8</span>
    <td>"<code title>csiso88598e</code>"
-  <tr><td>"<code title>csiso88598i</code>"
   <tr><td>"<code title>csisolatinhebrew</code>"
   <tr><td>"<code title>hebrew</code>"
   <tr><td>"<code title>iso-8859-8</code>"
   <tr><td>"<code title>iso-8859-8-e</code>"
-  <tr><td>"<code title>iso-8859-8-i</code>"
   <tr><td>"<code title>iso-ir-138</code>"
   <tr><td>"<code title>iso8859-8</code>"
   <tr><td>"<code title>iso88598</code>"
   <tr><td>"<code title>iso_8859-8</code>"
   <tr><td>"<code title>iso_8859-8:1988</code>"
-  <tr><td>"<code title>logical</code>"
   <tr><td>"<code title>visual</code>"
+  <tr>
+   <td rowspan=3><span>iso-8859-8-i</span>
+   <td>"<code title>csiso88598i</code>"
+  <tr><td>"<code title>iso-8859-8-i</code>"
+  <tr><td>"<code title>logical</code>"
   <tr>
    <td rowspan=7><span>iso-8859-10</span>
    <td>"<code title>csisolatin6</code>"
@@ -837,12 +839,13 @@ are all initially 0.
 
 <p>An <span>encoding</span> where each byte is either a single code point or
 nothing, is a <dfn>single-byte encoding</dfn>.
-All <span title="single-byte encoding">single-byte encodings</span> use the
-same <span>decoder</span> and <span>encoder</span>, but use a different
-<span>index</span>. <dfn>Index single-byte</dfn>, as referenced by the
-<span>single-byte decoder</span> and <span>single-byte encoder</span>, is
-defined by the following table, and depends on the
-<span>single-byte encoding</span> in use.
+<span title="single-byte encoding">Single-byte encodings</span> share the
+<span>decoder</span> and <span>encoder</span>. <dfn>Index single-byte</dfn>,
+as referenced by the <span>single-byte decoder</span> and
+<span>single-byte encoder</span>,  is defined by the following table, and
+depends on the <span>single-byte encoding</span> in use. All but two
+<span title="single-byte encoding">single-byte encodings</span> have a
+unique <span>index</span>.
 
 <table>
  <tr><th><span>Name</name><th><span>Index</span>
@@ -854,6 +857,7 @@ defined by the following table, and depends on the
  <tr><td><dfn>iso-8859-6</dfn><td><a href=index-iso-8859-6.txt>index-iso-8859-6.txt</a>
  <tr><td><dfn>iso-8859-7</dfn><td><a href=index-iso-8859-7.txt>index-iso-8859-7.txt</a>
  <tr><td><dfn>iso-8859-8</dfn><td><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a>
+ <tr><td><dfn>iso-8859-8-i</dfn><td><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a>
  <tr><td><dfn>iso-8859-10</dfn><td><a href=index-iso-8859-10.txt>index-iso-8859-10.txt</a>
  <tr><td><dfn>iso-8859-13</dfn><td><a href=index-iso-8859-13.txt>index-iso-8859-13.txt</a>
  <tr><td><dfn>iso-8859-14</dfn><td><a href=index-iso-8859-14.txt>index-iso-8859-14.txt</a>
@@ -874,6 +878,12 @@ defined by the following table, and depends on the
  <tr><td><dfn>windows-1258</dfn><td><a href=index-windows-1258.txt>index-windows-1258.txt</a>
  <tr><td><dfn>x-mac-cyrillic</dfn><td><a href=index-x-mac-cyrillic.txt>index-x-mac-cyrillic.txt</a>
 </table>
+
+<p class=note><span>iso-8859-8</span> and <span>iso-8859-8-i</span> are
+distinct <span>encoding</span> <span title=name>names</span>, because
+<span>iso-8859-8</span> has influence on the layout direction. And although
+historically this might have been the case for <span>iso-8859-6</span> and
+"iso-8859-6-i" as well, that is no longer true.
 
 <hr>
 
@@ -2377,6 +2387,7 @@ David Carlisle,
 Doug Ewell,
 Erik van der Poel,
 譚永鋒 (Frank Yung-Fong Tang),
+Henri Sivonen,
 Ian Hickson,
 James Graham,
 Joshua Bell,

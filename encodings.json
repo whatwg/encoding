@@ -117,21 +117,26 @@
       {
         "labels": [
           "csiso88598e",
-          "csiso88598i",
           "csisolatinhebrew",
           "hebrew",
           "iso-8859-8",
           "iso-8859-8-e",
-          "iso-8859-8-i",
           "iso-ir-138",
           "iso8859-8",
           "iso88598",
           "iso_8859-8",
           "iso_8859-8:1988",
-          "logical",
           "visual"
         ],
         "name": "iso-8859-8"
+      },
+      {
+        "labels": [
+          "csiso88598i",
+          "iso-8859-8-i",
+          "logical"
+        ],
+        "name": "iso-8859-8-i"
       },
       {
         "labels": [
