@@ -751,8 +751,9 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
 };</pre>
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated
-<b>encoding</b>, <b>encoding state</b>, <b>fatal flag</b> (initially unset)
-and <b>streaming flag</b> (also initially unset).
+<b>encoding</b>, <b>encoding state</b>, <b>stream</b>,
+<b>BOM seen flag</b> (initially unset), <b>fatal flag</b> (initially unset)
+and <b>streaming flag</b> (initially unset).
 
 <dl class="domintro">
  <dt><code><var title="">decoder</var> = new <a href="#textdecoder">TextDecoder</a>([<var title="">label</var> = "utf-8" [, <var title="">options</var>]])</code>
@@ -813,25 +814,28 @@ attribute must return the <b>encoding</b>.
 <dfn id="dom-textdecoder-decode" title="dom-TextDecoder-decode"><code>decode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
 method must run these steps:
 
-<!-- XXX this text fails because it does not deal with buffers properly -->
-
 <ol>
- <li><p>If the <b>streaming flag</b> is unset, then set the
- <b>encoding state</b> to the default values of the <b>encoding</b>'s
- <a href="#decoder">decoder</a>'s associated variables.
+ <li><p>If the <b>streaming flag</b> is unset, set the <b>encoding state</b>
+ to the default values of the <b>encoding</b>'s <a href="#decoder">decoder</a>'s
+ associated variables and empty the <b>stream</b>.
 
- <li><p>Let <var title="">stream</var> be the bytes from
+ <li><p>If <var title="">options</var>'s <code title="">stream</code> is true,
+ set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
+ otherwise.
+
+ <li><p>Append the bytes from
  <var title="">view</var>'s <code title="">buffer</code>, starting at
- <var title="">view</var>'s <code title="">byteOffset</code>.
+ <var title="">view</var>'s <code title="">byteOffset</code>, to the <b>stream</b>.
 
  <li>
-  <p>If the <b>streaming flag</b> is unset, then for each of the rows in the
-  following table, starting with the first one and going down, if the first
-  bytes of <var title="">stream</var> match all the bytes given in the first
-  column (ergo <var title="">stream</var> contains at least two or three
-  bytes), and the <b>encoding</b> matches the <a href="#encoding">encoding</a> given in
-  the cell in the second column of that row, then remove those bytes at the
-  start of <var title="">stream</var>.
+  <p>If the <b>BOM seen flag</b> is unset, and the <b>stream</b> either
+  holds at least two bytes, or at least three bytes if the <b>encoding</b>
+  is <a href="#utf-8">utf-8</a>, then set the <b>BOM seen flag</b>, and for each of
+  the rows in the following table, starting with the first one and going
+  down, if the first bytes of the <b>stream</b> match all the bytes given in
+  the first column, and the <b>encoding</b> matches the
+  <a href="#encoding">encoding</a> given in the cell in the second column of that row,
+  then remove those bytes at the start of the <b>stream</b>.
 
   <table>
    <tr><th>Byte order mark<th>Encoding
@@ -844,22 +848,18 @@ method must run these steps:
   <a href="#decode">decode</a> algorithm used by the rest of the platform to give API
   users more control.
 
- <li><p>If <var title="">options</var>'s <code title="">stream</code> is true,
- set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
- otherwise.
-
  <li><p>If the <b>streaming flag</b> is unset, append the
- <a href="#eof-byte">EOF byte</a> to <var title="">stream</var>.
-
- <li><p>If the <b>fatal flag</b> is set, an emitted
- <a href="#decoder-error">decoder error</a> from <b>encoding</b>'s <a href="#decoder">decoder</a>
- makes this algorithm
- <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> a
- "<code title="">EncodingError</code>".
+ <a href="#eof-byte">EOF byte</a> to the <b>stream</b>.
 
  <li>
+  <p>If the <b>fatal flag</b> is set, an emitted
+  <a href="#decoder-error">decoder error</a> from <b>encoding</b>'s <a href="#decoder">decoder</a>
+  makes this algorithm
+  <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> a
+  "<code title="">EncodingError</code>".
+
   <p>Return the output of running <b>encoding</b>'s <a href="#decoder">decoder</a> on
-  <var title="">stream</var>.
+  the <b>stream</b>.
 
   <p class="note">In addition to the reason given above with respect to the
   byte order mark, this also does not use the <a href="#encode">encode</a> algorithm
@@ -883,6 +883,11 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
   <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#7">Uint8Array</a> <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(DOMString <var title="">input</var>, optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
 };</pre>
 
+<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated
+<b>encoding</b>, <b>encoding state</b>, <b>stream</b>, and
+<b>streaming flag</b> (initially unset).
+
+
 <dl class="domintro">
  <dt><code><var title="">encoder</var> = new <a href="#textencoder">TextEncoder</a>([<var title="">label</var> = "utf-8"])</code>
  <dd>
@@ -901,10 +906,6 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
  <code title="">stream</code> is set to true, the method can be invoked
  multiple times to process a fragmented stream.
 </dl>
-
-<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated
-<b>encoding</b>, <b>encoding state</b>, and <b>streaming flag</b>
-(initially unset).
 
 <p>The
 <dfn id="dom-textencoder" title="dom-TextEncoder"><code>TextEncoder(<var title="">label</var>)</code></dfn>
@@ -942,21 +943,22 @@ method must run these steps:
 <ol>
  <li><p>If the <b>streaming flag</b> is unset, then set the
  <b>encoding state</b> to the default values of the <b>encoding</b>'s
- <a href="#encoder">encoder</a>'s associated variables.
+ <a href="#encoder">encoder</a>'s associated variables, and empty the <b>stream</b>.
 
  <li><p>If <var title="">options</var>'s <code title="">stream</code> is true,
  set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
  otherwise.
 
- <li><p>Let <var title="">stream</var> be the result of
- <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-obtain-unicode" title="convert a DOMString to a sequence of Unicode characters">converting <var title="">input</var> to Unicode</a>.
+ <li><p>Append the result of
+ <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-obtain-unicode" title="convert a DOMString to a sequence of Unicode characters">converting <var title="">input</var> to Unicode</a>
+ to the <b>stream</b>.
 
  <li><p>If the <b>streaming flag</b> is unset, append the
- <a href="#eof-code-point">EOF code point</a> to <var title="">stream</var>.
+ <a href="#eof-code-point">EOF code point</a> to the <b>stream</b>.
 
  <li>
   <p>Let <var title="">bytes</var> be the output of running
-  <b>encoding</b>'s <a href="#encoder">encoder</a> on <var title="">stream</var>.
+  <b>encoding</b>'s <a href="#encoder">encoder</a> on the <b>stream</b>.
 
   <p class="note">This does not use the <a href="#encode">encode</a> algorithm as it
   assumes a continuous stream rather than one delivered in fragments.
