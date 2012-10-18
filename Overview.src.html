@@ -746,7 +746,7 @@ constructor must run these steps:
 
 <ol>
  <li><p>Let <var title>encoding</var> be the result of
- <span title="get an encoding">getting an encoding</span> from
+ <span title=concept-encoding-get>getting an encoding</span> from
  <var title>label</var>.
 
  <li><p>If <var title>encoding</var> is failure,
@@ -813,7 +813,8 @@ method must run these steps:
 
  <li><p>If the <b>fatal flag</b> is set, an emitted
  <span>decoder error</span> from <b>encoding</b>'s <span>decoder</span>
- makes this algorithm <span title=concept-throw>throw</span> a
+ makes this algorithm
+ <span data-anolis-spec=dom title=concept-throw>throw</span> a
  "<code title>EncodingError</code>".
 
  <li>
@@ -871,7 +872,7 @@ constructor must run these steps:
 
 <ol>
  <li><p>Let <var title>encoding</var> be the result of
- <span title="get an encoding">getting an encoding</span> from
+ <span title=concept-encoding-get>getting an encoding</span> from
  <var title>label</var>.
 
  <li><p>If <var title>encoding</var> is failure, or is none of
