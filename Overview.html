@@ -9,7 +9,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-17-october-2012">Living Standard — Last Updated 17 October 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-18-october-2012">Living Standard — Last Updated 18 October 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -25,10 +25,11 @@
  <dt>Version History:
  <dd><a href="https://github.com/whatwg/encoding/commits">https://github.com/whatwg/encoding/commits</a></dd>
 
- <dt>Editor:
- <dd class="vcard h-card">
-  <a class="url u-url fn p-fn" href="http://annevankesteren.nl/" lang="nl">Anne van Kesteren</a>
-  &lt;<a class="email u-email" href="mailto:annevk@annevk.nl">annevk@annevk.nl</a>&gt;
+ <dt>Editors:
+ <dd><a href="http://annevankesteren.nl/">Anne van Kesteren</a>
+  &lt;<a href="mailto:annevk@annevk.nl">annevk@annevk.nl</a>&gt;
+
+ <dd>Joshua Bell (Google)
 </dl>
 
 <script async="" src="/hg/quirks-mode/raw-file/tip/file-bug.js"></script>
@@ -36,7 +37,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-17 October 2012, the editor has made this specification available
+18 October 2012, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -57,32 +58,36 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#encodings"><span class="secno">4 </span>Encodings</a></li>
  <li><a href="#indexes"><span class="secno">5 </span>Indexes</a></li>
  <li><a href="#decode-and-encode"><span class="secno">6 </span>Decode and encode</a></li>
- <li><a href="#the-encoding"><span class="secno">7 </span>The encoding</a>
+ <li><a href="#api"><span class="secno">7 </span>API</a>
   <ol>
-   <li><a href="#utf-8"><span class="secno">7.1 </span>utf-8</a></ol></li>
- <li><a href="#legacy-single-byte-encodings"><span class="secno">8 </span>Legacy single-byte encodings</a></li>
- <li><a href="#legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (simplified) encodings</a>
+   <li><a href="#interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></a></li>
+   <li><a href="#interface-textencoder"><span class="secno">7.2 </span>Interface <code title="">TextEncoder</code></a></ol></li>
+ <li><a href="#the-encoding"><span class="secno">8 </span>The encoding</a>
   <ol>
-   <li><a href="#gbk"><span class="secno">9.1 </span>gbk</a></li>
-   <li><a href="#gb18030"><span class="secno">9.2 </span>gb18030</a></li>
-   <li><a href="#hz-gb-2312"><span class="secno">9.3 </span>hz-gb-2312</a></ol></li>
- <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (traditional) encodings</a>
+   <li><a href="#utf-8"><span class="secno">8.1 </span>utf-8</a></ol></li>
+ <li><a href="#legacy-single-byte-encodings"><span class="secno">9 </span>Legacy single-byte encodings</a></li>
+ <li><a href="#legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (simplified) encodings</a>
   <ol>
-   <li><a href="#big5"><span class="secno">10.1 </span>big5</a></ol></li>
- <li><a href="#legacy-multi-byte-japanese-encodings"><span class="secno">11 </span>Legacy multi-byte Japanese encodings</a>
+   <li><a href="#gbk"><span class="secno">10.1 </span>gbk</a></li>
+   <li><a href="#gb18030"><span class="secno">10.2 </span>gb18030</a></li>
+   <li><a href="#hz-gb-2312"><span class="secno">10.3 </span>hz-gb-2312</a></ol></li>
+ <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">11 </span>Legacy multi-byte Chinese (traditional) encodings</a>
   <ol>
-   <li><a href="#euc-jp"><span class="secno">11.1 </span>euc-jp</a></li>
-   <li><a href="#iso-2022-jp"><span class="secno">11.2 </span>iso-2022-jp</a></li>
-   <li><a href="#shift_jis"><span class="secno">11.3 </span>shift_jis</a></ol></li>
- <li><a href="#legacy-multi-byte-korean-encodings"><span class="secno">12 </span>Legacy multi-byte Korean encodings</a>
+   <li><a href="#big5"><span class="secno">11.1 </span>big5</a></ol></li>
+ <li><a href="#legacy-multi-byte-japanese-encodings"><span class="secno">12 </span>Legacy multi-byte Japanese encodings</a>
   <ol>
-   <li><a href="#euc-kr"><span class="secno">12.1 </span>euc-kr</a></li>
-   <li><a href="#iso-2022-kr"><span class="secno">12.2 </span>iso-2022-kr</a></ol></li>
- <li><a href="#legacy-miscellaneous-encodings"><span class="secno">13 </span>Legacy miscellaneous encodings</a>
+   <li><a href="#euc-jp"><span class="secno">12.1 </span>euc-jp</a></li>
+   <li><a href="#iso-2022-jp"><span class="secno">12.2 </span>iso-2022-jp</a></li>
+   <li><a href="#shift_jis"><span class="secno">12.3 </span>shift_jis</a></ol></li>
+ <li><a href="#legacy-multi-byte-korean-encodings"><span class="secno">13 </span>Legacy multi-byte Korean encodings</a>
   <ol>
-   <li><a href="#utf-16"><span class="secno">13.1 </span>utf-16</a></li>
-   <li><a href="#utf-16be"><span class="secno">13.2 </span>utf-16be</a></li>
-   <li><a href="#x-user-defined"><span class="secno">13.3 </span>x-user-defined</a></ol></li>
+   <li><a href="#euc-kr"><span class="secno">13.1 </span>euc-kr</a></li>
+   <li><a href="#iso-2022-kr"><span class="secno">13.2 </span>iso-2022-kr</a></ol></li>
+ <li><a href="#legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</a>
+  <ol>
+   <li><a href="#utf-16"><span class="secno">14.1 </span>utf-16</a></li>
+   <li><a href="#utf-16be"><span class="secno">14.2 </span>utf-16be</a></li>
+   <li><a href="#x-user-defined"><span class="secno">14.3 </span>x-user-defined</a></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
@@ -717,13 +722,256 @@ encoding <var title="">encoding</var>, return the result of running
 <var title="">encoding</var>'s <a href="#encoder">encoder</a> on <var title="">stream</var>.
 
 
-<h2 id="the-encoding"><span class="secno">7 </span>The encoding</h2>
+<h2 id="api"><span class="secno">7 </span>API</h2>
+
+<!-- http://wiki.whatwg.org/wiki/StringEncoding
+     XXX still need to include the examples and maybe write a short introduction -->
+
+<p>This section uses terminology from the DOM, Typed Arrays, and Web IDL.
+Non-browser implementations are not required to implement this API.
+
+<a href="#refsDOM">[DOM]</a>
+<a href="#refsTYPEDARRAY">[TYPEDARRAY]</a>
+<a href="#refsWEBIDL">[WEBIDL]</a>
+
+<h3 id="interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></h3>
+
+<pre class="idl">dictionary <dfn id="textdecoderoptions">TextDecoderOptions</dfn> {
+  boolean fatal = false;
+};
+
+dictionary <dfn id="textdecodeoptions">TextDecodeOptions</dfn> {
+  boolean stream = false;
+};
+
+[<a href="#dom-textdecoder" title="dom-TextDecoder">Constructor</a>(optional DOMString <var title="">label</var> = "utf-8", optional <a href="#textdecoderoptions">TextDecoderOptions</a> <var title="">options</var>)]
+interface <dfn id="textdecoder">TextDecoder</dfn> {
+  readonly attribute DOMString <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a>;
+  DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> <var title="">view</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
+};</pre>
+
+<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated
+<b>encoding</b>, <b>encoding state</b>, <b>fatal flag</b> (initially unset)
+and <b>streaming flag</b> (also initially unset).
+
+<dl class="domintro">
+ <dt><code><var title="">decoder</var> = new <a href="#textdecoder">TextDecoder</a>([<var title="">label</var> = "utf-8" [, <var title="">options</var>]])</code>
+ <dd>
+  <p>Returns a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
+  <p>If <var title="">label</var> is not a <a href="#label">label</a>,
+  <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throws</a> an
+  "<a href="http://dom.spec.whatwg.org/#encodingerror"><code class="external" data-anolis-spec="dom">EncodingError</code></a>".
+
+ <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a></code>
+ <dd><p>Returns the <b>encoding</b>.
+
+ <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(<var title="">input</var> [, <var title="">options</var>])</code>
+ <dd>
+  <p>Returns the result of running <b>encoding</b>'s
+  <a href="#decoder">decoder</a>. If <var title="">options</var>'s
+  <code title="">stream</code> is set to true the method can be invoked
+  multiple times to process a fragmented stream.
+
+  <p>If the <b>fatal flag</b> is set and <b>encoding</b>'s
+  <a href="#decoder">decoder</a> emits a <a href="#decoder-error">decoder error</a>,
+  <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throws</a> an
+  "<a href="http://dom.spec.whatwg.org/#encodingerror"><code class="external" data-anolis-spec="dom">EncodingError</code></a>".
+</dl>
+
+<p>The
+<dfn id="dom-textdecoder" title="dom-TextDecoder"><code>TextDecoder(<var title="">label</var>, <var title="">options</var>)</code></dfn>
+constructor must run these steps:
+
+<ol>
+ <li><p>Let <var title="">encoding</var> be the result of
+ <span title="get an encoding">getting an encoding</span> from
+ <var title="">label</var>.
+
+ <li><p>If <var title="">encoding</var> is failure,
+ <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> a
+ "<a href="http://dom.spec.whatwg.org/#encodingerror"><code class="external" data-anolis-spec="dom">EncodingError</code></a>".
+
+ <li><p>Let <var title="">dec</var> be a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
+
+ <li><p>Set <var title="">dec</var>'s <b>encoding</b> to
+ <var title="">encoding</var>.
+
+ <li><p>Set <var title="">dec</var>'s <b>encoding state</b> to the default
+ values of <var title="">dec</var>'s <b>encoding</b>'s <a href="#decoder">decoder</a>'s
+ associated variables.
+
+ <li><p>If <var title="">options</var>'s <code title="">fatal</code> member is
+ true, set <var title="">dec</var>'s <b>fatal flag</b>.
+
+ <li><p>Return <var title="">dec</var>.
+</ol>
+
+<p>The <dfn id="dom-textdecoder-encoding" title="dom-TextDecoder-encoding"><code>encoding</code></dfn>
+attribute must return the <b>encoding</b>.
+
+<p>The
+<dfn id="dom-textdecoder-decode" title="dom-TextDecoder-decode"><code>decode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
+method must run these steps:
+
+<ol>
+ <li><p>If the <b>streaming flag</b> is unset, then set the
+ <b>encoding state</b> to the default values of the <b>encoding</b>'s
+ <a href="#decoder">decoder</a>'s associated variables.
+
+ <li><p>Let <var title="">stream</var> be the bytes from
+ <var title="">view</var>'s <code title="">buffer</code>, starting at
+ <var title="">view</var>'s <code title="">byteOffset</code>.
+
+ <li>
+  <p>If the <b>streaming flag</b> is unset, then for each of the rows in the
+  following table, starting with the first one and going down, if the first
+  bytes of <var title="">stream</var> match all the bytes given in the first
+  column (ergo <var title="">stream</var> contains at least two or three
+  bytes), and the <b>encoding</b> matches the <a href="#encoding">encoding</a> given in
+  the cell in the second column of that row, then remove those bytes at the
+  start of <var title="">stream</var>.
+
+  <table>
+   <tr><th>Byte order mark<th>Encoding
+   <tr><td>0xFF 0xFE<td><a href="#utf-16">utf-16</a>
+   <tr><td>0xFE 0xFF<td><a href="#utf-16be">utf-16be</a>
+   <tr><td>0xEF 0xBB 0xBF<td><a href="#utf-8">utf-8</a>
+  </table>
+
+  <p class="note">This algorithm is intentionally different from the
+  <a href="#decode">decode</a> algorithm used by the rest of the platform to give API
+  users more control.
+
+ <li><p>If <var title="">options</var>'s <code title="">stream</code> is true,
+ set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
+ otherwise.
+
+ <li><p>If the <b>streaming flag</b> is unset, append the
+ <a href="#eof-byte">EOF byte</a> to <var title="">stream</var>.
+
+ <li><p>If the <b>fatal flag</b> is set, an emitted
+ <a href="#decoder-error">decoder error</a> from <b>encoding</b>'s <a href="#decoder">decoder</a>
+ makes this algorithm <span title="concept-throw">throw</span> a
+ "<code title="">EncodingError</code>".
+
+ <li>
+  <p>Return the output of running <b>encoding</b>'s <a href="#decoder">decoder</a> on
+  <var title="">stream</var>.
+
+  <p class="note">In addition to the reason given above with respect to the
+  byte order mark, this also does not use the <a href="#encode">encode</a> algorithm
+  as it assumes a continuous stream rather than one delivered in fragments.
+</ol>
+
+
+<h3 id="interface-textencoder"><span class="secno">7.2 </span>Interface <code title="">TextEncoder</code></h3>
+
+<p class="XXX">If we support encoding to utf-16/utf-16be, should we then not
+mark those encodings as legacy? Or should we remove support for encoding
+towards them in the API, or is the current tradeoff okay?
+
+<pre class="idl">dictionary <dfn id="textencodeoptions">TextEncodeOptions</dfn> {
+  boolean stream = false;
+};
+
+[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">label</var> = "utf-8")]
+interface <dfn id="textencoder">TextEncoder</dfn> {
+  readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
+  <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#7">Uint8Array</a> <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(DOMString <var title="">input</var>, optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
+};</pre>
+
+<dl class="domintro">
+ <dt><code><var title="">encoder</var> = new <a href="#textencoder">TextEncoder</a>([<var title="">label</var> = "utf-8"])</code>
+ <dd>
+  <p>Returns a new <a href="#textencoder"><code>TextEncoder</code></a> object.
+  <p>If <var title="">label</var> is not a <a href="#label">label</a> for
+  <a href="#utf-8">utf-8</a>, <a href="#utf-16">utf-16</a>, or <a href="#utf-16be">utf-16be</a>,
+  <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throws</a> an
+  "<a href="http://dom.spec.whatwg.org/#encodingerror"><code class="external" data-anolis-spec="dom">EncodingError</code></a>".
+
+ <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a></code>
+ <dd><p>Returns the <b>encoding</b>.
+
+ <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(<var title="">input</var> [, <var title="">options</var>])</code>
+ <dd><p>Returns the result of running <b>encoding</b>'s
+ <a href="#encoder">encoder</a>. If <var title="">options</var>'s
+ <code title="">stream</code> is set to true the method can be invoked multiple
+ times to process a fragmented stream.
+</dl>
+
+<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated
+<b>encoding</b>, <b>encoding state</b>, and <b>streaming flag</b>
+(initially unset).
+
+<p>The
+<dfn id="dom-textencoder" title="dom-TextEncoder"><code>TextEncoder(<var title="">label</var>)</code></dfn>
+constructor must run these steps:
+
+<ol>
+ <li><p>Let <var title="">encoding</var> be the result of
+ <span title="get an encoding">getting an encoding</span> from
+ <var title="">label</var>.
+
+ <li><p>If <var title="">encoding</var> is failure, or is none of
+ <a href="#utf-8">utf-8</a>, <a href="#utf-16">utf-16</a>, and <a href="#utf-16be">utf-16be</a>,
+ <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> a
+ "<a href="http://dom.spec.whatwg.org/#encodingerror"><code class="external" data-anolis-spec="dom">EncodingError</code></a>".
+
+ <li><p>Let <var title="">enc</var> be a new <a href="#textencoder"><code>TextEncoder</code></a> object.
+
+ <li><p>Set <var title="">enc</var>'s <b>encoding</b> to
+ <var title="">encoding</var>.
+
+ <li><p>Set <var title="">enc</var>'s <b>encoding state</b> to the default
+ values of <var title="">enc</var>'s <b>encoding</b>'s <a href="#encoder">encoder</a>'s
+ associated variables.
+
+ <li><p>Return <var title="">enc</var>.
+</ol>
+
+<p>The <dfn id="dom-textencoder-encoding" title="dom-TextEncoder-encoding"><code>encoding</code></dfn>
+attribute must return the <b>encoding</b>.
+
+<p>The
+<dfn id="dom-textencoder-encode" title="dom-TextEncoder-encode"><code>encode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
+method must run these steps:
+
+<ol>
+ <li><p>If the <b>streaming flag</b> is unset, then set the
+ <b>encoding state</b> to the default values of the <b>encoding</b>'s
+ <a href="#encoder">encoder</a>'s associated variables.
+
+ <li><p>If <var title="">options</var>'s <code title="">stream</code> is true,
+ set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
+ otherwise.
+
+ <li><p>Let <var title="">stream</var> be the result of
+ <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-obtain-unicode" title="convert a DOMString to a sequence of Unicode characters">converting <var title="">input</var> to Unicode</a>.
+
+ <li><p>If the <b>streaming flag</b> is unset, append the
+ <a href="#eof-code-point">EOF code point</a> to <var title="">stream</var>.
+
+ <li>
+  <p>Let <var title="">bytes</var> be the output of running
+  <b>encoding</b>'s <a href="#encoder">encoder</a> on <var title="">stream</var>.
+
+  <p class="note">This does not use the <a href="#encode">encode</a> algorithm as it
+  assumes a continuous stream rather than one delivered in fragments.
+
+ <li><p>Return a
+ <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint8Array</code></a> object wrapping an
+ <a href="http://www.khronos.org/registry/typedarray/specs/latest/#5"><code class="external" data-anolis-spec="typedarray">ArrayBuffer</code></a> containing
+ <var title="">bytes</var>.
+</ol>
+
+
+<h2 id="the-encoding"><span class="secno">8 </span>The encoding</h2>
 
 <p>New content and formats must exclusively use the <a href="#utf-8">utf-8</a>
 <a href="#encoding">encoding</a>.
 
 
-<h3 id="utf-8"><span class="secno">7.1 </span><dfn>utf-8</dfn></h3>
+<h3 id="utf-8"><span class="secno">8.1 </span><dfn>utf-8</dfn></h3>
 
 <!--
 http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8
@@ -869,7 +1117,7 @@ are all initially 0.
 </ol>
 
 
-<h2 id="legacy-single-byte-encodings"><span class="secno">8 </span>Legacy single-byte encodings</h2>
+<h2 id="legacy-single-byte-encodings"><span class="secno">9 </span>Legacy single-byte encodings</h2>
 
 <p>An <a href="#encoding">encoding</a> where each byte is either a single code point or
 nothing, is a <dfn id="single-byte-encoding">single-byte encoding</dfn>.
@@ -970,10 +1218,10 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 
 
-<h2 id="legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">9 </span>Legacy multi-byte Chinese (simplified) encodings</h2>
+<h2 id="legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (simplified) encodings</h2>
 
 
-<h3 id="gbk"><span class="secno">9.1 </span><dfn>gbk</dfn></h3>
+<h3 id="gbk"><span class="secno">10.1 </span><dfn>gbk</dfn></h3>
 
 <p>The <dfn id="gb18030-flag">gb18030 flag</dfn> flag is initially unset. It can only be set
 by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-encoder">gb18030 encoder</a>.
@@ -1137,7 +1385,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
 </ol>
 
 
-<h3 id="gb18030"><span class="secno">9.2 </span><dfn>gb18030</dfn></h3>
+<h3 id="gb18030"><span class="secno">10.2 </span><dfn>gb18030</dfn></h3>
 
 <p>The <dfn id="gb18030-decoder">gb18030 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gb18030">gb18030</a>) is
 the <a href="#gbk-decoder">gbk decoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
@@ -1146,7 +1394,7 @@ the <a href="#gbk-decoder">gbk decoder</a> with the <a href="#gb18030-flag">gb18
 the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18030 flag</a> set.
 
 
-<h3 id="hz-gb-2312"><span class="secno">9.3 </span><dfn>hz-gb-2312</dfn></h3>
+<h3 id="hz-gb-2312"><span class="secno">10.3 </span><dfn>hz-gb-2312</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1842
  http://tools.ietf.org/html/rfc1843
@@ -1281,7 +1529,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
 
 
-<h2 id="legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (traditional) encodings</h2>
+<h2 id="legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">11 </span>Legacy multi-byte Chinese (traditional) encodings</h2>
 
 <!--
  Lead:  0x81 to 0xFE
@@ -1289,7 +1537,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 -->
 
 
-<h3 id="big5"><span class="secno">10.1 </span><dfn>big5</dfn></h3>
+<h3 id="big5"><span class="secno">11.1 </span><dfn>big5</dfn></h3>
 
 <p>The <dfn id="big5-lead">big5 lead</dfn> is initially 0x00.
 
@@ -1400,10 +1648,10 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
 
 
-<h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">11 </span>Legacy multi-byte Japanese encodings</h2>
+<h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">12 </span>Legacy multi-byte Japanese encodings</h2>
 
 
-<h3 id="euc-jp"><span class="secno">11.1 </span><dfn>euc-jp</dfn></h3>
+<h3 id="euc-jp"><span class="secno">12.1 </span><dfn>euc-jp</dfn></h3>
 
 <!-- http://www.iana.org/assignments/charset-reg/CP51932 -->
 
@@ -1534,7 +1782,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <a href="#index-jis0212">index jis0212</a> for the <a href="#euc-jp-encoder">euc-jp encoder</a>.
 
 
-<h3 id="iso-2022-jp"><span class="secno">11.2 </span><dfn>iso-2022-jp</dfn></h3>
+<h3 id="iso-2022-jp"><span class="secno">12.2 </span><dfn>iso-2022-jp</dfn></h3>
 <!--
  http://tools.ietf.org/html/rfc1468
  http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
@@ -1762,7 +2010,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 </ol>
 
 
-<h3 id="shift_jis"><span class="secno">11.3 </span><dfn>shift_jis</dfn></h3>
+<h3 id="shift_jis"><span class="secno">12.3 </span><dfn>shift_jis</dfn></h3>
 
 <p>The <dfn id="shift_jis-lead">shift_jis lead</dfn> is initially 0x00.
 
@@ -1870,10 +2118,10 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 </ol>
 
 
-<h2 id="legacy-multi-byte-korean-encodings"><span class="secno">12 </span>Legacy multi-byte Korean encodings</h2>
+<h2 id="legacy-multi-byte-korean-encodings"><span class="secno">13 </span>Legacy multi-byte Korean encodings</h2>
 
 
-<h3 id="euc-kr"><span class="secno">12.1 </span><dfn>euc-kr</dfn></h3>
+<h3 id="euc-kr"><span class="secno">13.1 </span><dfn>euc-kr</dfn></h3>
 
 <p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
 
@@ -1995,7 +2243,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 </ol>
 
 
-<h3 id="iso-2022-kr"><span class="secno">12.2 </span><dfn>iso-2022-kr</dfn></h3>
+<h3 id="iso-2022-kr"><span class="secno">13.2 </span><dfn>iso-2022-kr</dfn></h3>
 
 <!--XXX the "ESC $ ) C" sequence is only supported by Gecko at the start of
 a stream. It does exactly nothing. Trying to get away with not supporting it
@@ -2219,9 +2467,9 @@ at all.-->
 </ol>
 
 
-<h2 id="legacy-miscellaneous-encodings"><span class="secno">13 </span>Legacy miscellaneous encodings</h2>
+<h2 id="legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</h2>
 
-<h3 id="utf-16"><span class="secno">13.1 </span><dfn>utf-16</dfn></h3>
+<h3 id="utf-16"><span class="secno">14.1 </span><dfn>utf-16</dfn></h3>
 
 <p class="note">Contrary to the Unicode standard, checking for a
 byte order mark happens before an encoding to decode a byte stream is
@@ -2337,7 +2585,7 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
 </ol>
 
 
-<h3 id="utf-16be"><span class="secno">13.2 </span><dfn>utf-16be</dfn></h3>
+<h3 id="utf-16be"><span class="secno">14.2 </span><dfn>utf-16be</dfn></h3>
 
 <p class="note">Contrary to the Unicode standard, checking for a
 byte order mark happens before an encoding to decode a byte stream is
@@ -2350,7 +2598,7 @@ is the <a href="#utf-16-decoder">utf-16 decoder</a> with the <a href="#utf-16be-
 is the <a href="#utf-16-encoder">utf-16 encoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
 
 
-<h3 id="x-user-defined"><span class="secno">13.3 </span><dfn>x-user-defined</dfn></h3>
+<h3 id="x-user-defined"><span class="secno">14.3 </span><dfn>x-user-defined</dfn></h3>
 
 <p class="note">While technically this is a <a href="#single-byte-encoding">single-byte encoding</a>,
 it is defined separately as it does not use an <a href="#index">index</a>.
@@ -2402,11 +2650,20 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 
 <h2 class="no-num" id="references">References</h2>
 
-<div id="anolis-references"><dl><dt id="refsRFC2119">[RFC2119]
+<div id="anolis-references"><dl><dt id="refsDOM">[DOM]
+<dd><cite><a href="http://dom.spec.whatwg.org/">DOM</a></cite>, Anne van Kesteren, Aryeh Gregor and Ms2ger. WHATWG.
+
+<dt id="refsRFC2119">[RFC2119]
 <dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
+
+<dt id="refsTYPEDARRAY">[TYPEDARRAY]
+<dd><cite><a href="http://www.khronos.org/registry/typedarray/specs/latest/">Typed Array</a></cite>, David Herman and Kenneth Russell. Khronos.
 
 <dt id="refsUNICODE">[UNICODE]
 <dd><cite><a href="http://www.unicode.org/versions/latest/">Unicode Standard</a></cite>. Unicode Consortium.
+
+<dt id="refsWEBIDL">[WEBIDL]
+<dd><cite><a href="http://dev.w3.org/2006/webapi/WebIDL/">Web IDL</a></cite>, Cameron McCormack. W3C.
 
 </dl></div>
 
@@ -2415,25 +2672,31 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 
 <p>There have been a lot of people that have helped make encodings more
 interoperable over the years and thereby furthered the goals of this
-specification. Likewise people have helped making this specification what it
-is today.
+standard. Likewise many people have helped making this standard what it is
+today.
 
 <p>Ideally they are all listed here so please contact the editor with any
 omissions.
 
 <p>With that, many thanks to
 
+Alan Chaney,
+Ben Noordhuis,
+Cameron McCormack,
 Charles McCathieNeville,
 David Carlisle,
 Doug Ewell,
 Erik van der Poel,
 譚永鋒 (Frank Yung-Fong Tang),
+Glenn Maynard,
 Henri Sivonen,
 Ian Hickson,
 James Graham,
+John Tamplin,
 Joshua Bell,
 신정식 (Jungshik Shin),
 Ken Lunde,
+Kenneth Russell,
 Leif Halvard Silli,
 Makoto Kato,
 Mark Callow,
@@ -2446,12 +2709,13 @@ Norbert Lindenberg,
 Peter Krefting,
 Philip Jägenstedt,
 Philip Taylor,
+Robert Mustacchi,
+Ryan Dahl,
 Shawn Steele,
 Simon Montagu,
 Simon Pieters, and
 成瀬ゆい (Yui Naruse)
 
 for being awesome.
-
 
 <script id="head" src="http://www.whatwg.org/specs/web-apps/current-work/dfn.js"></script>

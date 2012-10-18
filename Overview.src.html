@@ -27,10 +27,11 @@
  <dt>Version History:
  <dd><a href=https://github.com/whatwg/encoding/commits>https://github.com/whatwg/encoding/commits</a></dd>
 
- <dt>Editor:
- <dd class="vcard h-card">
-  <a class="url u-url fn p-fn" lang="nl" href="http://annevankesteren.nl/">Anne van Kesteren</a>
-  &lt;<a class="email u-email" href="mailto:annevk@annevk.nl">annevk@annevk.nl</a>>
+ <dt>Editors:
+ <dd><a href="http://annevankesteren.nl/">Anne van Kesteren</a>
+  &lt;<a href="mailto:annevk@annevk.nl">annevk@annevk.nl</a>>
+
+ <dd>Joshua Bell (Google)
 </dl>
 
 <script src=/hg/quirks-mode/raw-file/tip/file-bug.js async></script>
@@ -681,6 +682,249 @@ these steps:
 <p>To <dfn>encode</dfn> a code point stream <var title>stream</var> using
 encoding <var title>encoding</var>, return the result of running
 <var title>encoding</var>'s <span>encoder</span> on <var title>stream</var>.
+
+
+<h2>API</h2>
+
+<!-- http://wiki.whatwg.org/wiki/StringEncoding
+     XXX still need to include the examples and maybe write a short introduction -->
+
+<p>This section uses terminology from the DOM, Typed Arrays, and Web IDL.
+Non-browser implementations are not required to implement this API.
+
+<span data-anolis-ref>DOM</span>
+<span data-anolis-ref>TYPEDARRAY</span>
+<span data-anolis-ref>WEBIDL</span>
+
+<h3>Interface <code title>TextDecoder</code></h3>
+
+<pre class=idl>dictionary <dfn>TextDecoderOptions</dfn> {
+  boolean fatal = false;
+};
+
+dictionary <dfn>TextDecodeOptions</dfn> {
+  boolean stream = false;
+};
+
+[<span title=dom-TextDecoder>Constructor</span>(optional DOMString <var title>label</var> = "utf-8", optional <span>TextDecoderOptions</span> <var title>options</var>)]
+interface <dfn>TextDecoder</dfn> {
+  readonly attribute DOMString <span title=dom-TextDecoder-encoding>encoding</span>;
+  DOMString <span title=dom-TextDecoder-decode>decode</span>(<span data-anolis-spec=typedarray>ArrayBufferView</span> <var title>view</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
+};</pre>
+
+<p>A <code>TextEncoder</code> object has an associated
+<b>encoding</b>, <b>encoding state</b>, <b>fatal flag</b> (initially unset)
+and <b>streaming flag</b> (also initially unset).
+
+<dl class=domintro>
+ <dt><code><var title>decoder</var> = new <span>TextDecoder</span>([<var title>label</var> = "utf-8" [, <var title>options</var>]])</code>
+ <dd>
+  <p>Returns a new <code>TextDecoder</code> object.
+  <p>If <var title>label</var> is not a <span>label</span>,
+  <span data-anolis-spec=dom title=concept-throw>throws</span> an
+  "<code data-anolis-spec=dom>EncodingError</code>".
+
+ <dt><code><var title>decoder</var> . <span title=dom-TextDecoder-encoding>encoding</span></code>
+ <dd><p>Returns the <b>encoding</b>.
+
+ <dt><code><var title>decoder</var> . <span title=dom-TextDecoder-decode>decode</span>(<var title>input</var> [, <var title>options</var>])</code>
+ <dd>
+  <p>Returns the result of running <b>encoding</b>'s
+  <span>decoder</span>. If <var title>options</var>'s
+  <code title>stream</code> is set to true the method can be invoked
+  multiple times to process a fragmented stream.
+
+  <p>If the <b>fatal flag</b> is set and <b>encoding</b>'s
+  <span>decoder</span> emits a <span>decoder error</span>,
+  <span data-anolis-spec=dom title=concept-throw>throws</span> an
+  "<code data-anolis-spec=dom>EncodingError</code>".
+</dl>
+
+<p>The
+<dfn title=dom-TextDecoder><code>TextDecoder(<var title>label</var>, <var title>options</var>)</code></dfn>
+constructor must run these steps:
+
+<ol>
+ <li><p>Let <var title>encoding</var> be the result of
+ <span title="get an encoding">getting an encoding</span> from
+ <var title>label</var>.
+
+ <li><p>If <var title>encoding</var> is failure,
+ <span data-anolis-spec=dom title=concept-throw>throw</span> a
+ "<code data-anolis-spec=dom>EncodingError</code>".
+
+ <li><p>Let <var title>dec</var> be a new <code>TextDecoder</code> object.
+
+ <li><p>Set <var title>dec</var>'s <b>encoding</b> to
+ <var title>encoding</var>.
+
+ <li><p>Set <var title>dec</var>'s <b>encoding state</b> to the default
+ values of <var title>dec</var>'s <b>encoding</b>'s <span>decoder</span>'s
+ associated variables.
+
+ <li><p>If <var title>options</var>'s <code title>fatal</code> member is
+ true, set <var title>dec</var>'s <b>fatal flag</b>.
+
+ <li><p>Return <var title>dec</var>.
+</ol>
+
+<p>The <dfn title=dom-TextDecoder-encoding><code>encoding</code></dfn>
+attribute must return the <b>encoding</b>.
+
+<p>The
+<dfn title=dom-TextDecoder-decode><code>decode(<var title>input</var>, <var title>options</var>)</code></dfn>
+method must run these steps:
+
+<ol>
+ <li><p>If the <b>streaming flag</b> is unset, then set the
+ <b>encoding state</b> to the default values of the <b>encoding</b>'s
+ <span>decoder</span>'s associated variables.
+
+ <li><p>Let <var title>stream</var> be the bytes from
+ <var title>view</var>'s <code title>buffer</code>, starting at
+ <var title>view</var>'s <code title>byteOffset</code>.
+
+ <li>
+  <p>If the <b>streaming flag</b> is unset, then for each of the rows in the
+  following table, starting with the first one and going down, if the first
+  bytes of <var title>stream</var> match all the bytes given in the first
+  column (ergo <var title>stream</var> contains at least two or three
+  bytes), and the <b>encoding</b> matches the <span>encoding</span> given in
+  the cell in the second column of that row, then remove those bytes at the
+  start of <var title>stream</var>.
+
+  <table>
+   <tr><th>Byte order mark<th>Encoding
+   <tr><td>0xFF 0xFE<td><span>utf-16</span>
+   <tr><td>0xFE 0xFF<td><span>utf-16be</span>
+   <tr><td>0xEF 0xBB 0xBF<td><span>utf-8</span>
+  </table>
+
+  <p class=note>This algorithm is intentionally different from the
+  <span>decode</span> algorithm used by the rest of the platform to give API
+  users more control.
+
+ <li><p>If <var title>options</var>'s <code title>stream</code> is true,
+ set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
+ otherwise.
+
+ <li><p>If the <b>streaming flag</b> is unset, append the
+ <span>EOF byte</span> to <var title>stream</var>.
+
+ <li><p>If the <b>fatal flag</b> is set, an emitted
+ <span>decoder error</span> from <b>encoding</b>'s <span>decoder</span>
+ makes this algorithm <span title=concept-throw>throw</span> a
+ "<code title>EncodingError</code>".
+
+ <li>
+  <p>Return the output of running <b>encoding</b>'s <span>decoder</span> on
+  <var title>stream</var>.
+
+  <p class=note>In addition to the reason given above with respect to the
+  byte order mark, this also does not use the <span>encode</span> algorithm
+  as it assumes a continuous stream rather than one delivered in fragments.
+</ol>
+
+
+<h3>Interface <code title>TextEncoder</code></h3>
+
+<p class=XXX>If we support encoding to utf-16/utf-16be, should we then not
+mark those encodings as legacy? Or should we remove support for encoding
+towards them in the API, or is the current tradeoff okay?
+
+<pre class=idl>dictionary <dfn>TextEncodeOptions</dfn> {
+  boolean stream = false;
+};
+
+[<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var title>label</var> = "utf-8")]
+interface <dfn>TextEncoder</dfn> {
+  readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
+  <span data-anolis-spec=typedarray>Uint8Array</span> <span title=dom-TextEncoder-encode>encode</span>(DOMString <var title>input</var>, optional <span>TextEncodeOptions</span> <var title>options</var>);
+};</pre>
+
+<dl class=domintro>
+ <dt><code><var title>encoder</var> = new <span>TextEncoder</span>([<var title>label</var> = "utf-8"])</code>
+ <dd>
+  <p>Returns a new <code>TextEncoder</code> object.
+  <p>If <var title>label</var> is not a <span>label</span> for
+  <span>utf-8</span>, <span>utf-16</span>, or <span>utf-16be</span>,
+  <span data-anolis-spec=dom title=concept-throw>throws</span> an
+  "<code data-anolis-spec=dom>EncodingError</code>".
+
+ <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encoding>encoding</span></code>
+ <dd><p>Returns the <b>encoding</b>.
+
+ <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encode>encode</span>(<var title>input</var> [, <var title>options</var>])</code>
+ <dd><p>Returns the result of running <b>encoding</b>'s
+ <span>encoder</span>. If <var title>options</var>'s
+ <code title>stream</code> is set to true the method can be invoked multiple
+ times to process a fragmented stream.
+</dl>
+
+<p>A <code>TextEncoder</code> object has an associated
+<b>encoding</b>, <b>encoding state</b>, and <b>streaming flag</b>
+(initially unset).
+
+<p>The
+<dfn title=dom-TextEncoder><code>TextEncoder(<var title>label</var>)</code></dfn>
+constructor must run these steps:
+
+<ol>
+ <li><p>Let <var title>encoding</var> be the result of
+ <span title="get an encoding">getting an encoding</span> from
+ <var title>label</var>.
+
+ <li><p>If <var title>encoding</var> is failure, or is none of
+ <span>utf-8</span>, <span>utf-16</span>, and <span>utf-16be</span>,
+ <span data-anolis-spec=dom title=concept-throw>throw</span> a
+ "<code data-anolis-spec=dom>EncodingError</code>".
+
+ <li><p>Let <var title>enc</var> be a new <code>TextEncoder</code> object.
+
+ <li><p>Set <var title>enc</var>'s <b>encoding</b> to
+ <var title>encoding</var>.
+
+ <li><p>Set <var title>enc</var>'s <b>encoding state</b> to the default
+ values of <var title>enc</var>'s <b>encoding</b>'s <span>encoder</span>'s
+ associated variables.
+
+ <li><p>Return <var title>enc</var>.
+</ol>
+
+<p>The <dfn title=dom-TextEncoder-encoding><code>encoding</code></dfn>
+attribute must return the <b>encoding</b>.
+
+<p>The
+<dfn title=dom-TextEncoder-encode><code>encode(<var title>input</var>, <var title>options</var>)</code></dfn>
+method must run these steps:
+
+<ol>
+ <li><p>If the <b>streaming flag</b> is unset, then set the
+ <b>encoding state</b> to the default values of the <b>encoding</b>'s
+ <span>encoder</span>'s associated variables.
+
+ <li><p>If <var title>options</var>'s <code title>stream</code> is true,
+ set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
+ otherwise.
+
+ <li><p>Let <var title>stream</var> be the result of
+ <span data-anolis-spec=webidl title="convert a DOMString to a sequence of Unicode characters">converting <var title>input</var> to Unicode</span>.
+
+ <li><p>If the <b>streaming flag</b> is unset, append the
+ <span>EOF code point</span> to <var title>stream</var>.
+
+ <li>
+  <p>Let <var title>bytes</var> be the output of running
+  <b>encoding</b>'s <span>encoder</span> on <var title>stream</var>.
+
+  <p class=note>This does not use the <span>encode</span> algorithm as it
+  assumes a continuous stream rather than one delivered in fragments.
+
+ <li><p>Return a
+ <code data-anolis-spec=typedarray>Uint8Array</code> object wrapping an
+ <code data-anolis-spec=typedarray>ArrayBuffer</code> containing
+ <var title>bytes</var>.
+</ol>
 
 
 <h2>The encoding</h2>
@@ -2375,25 +2619,31 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 
 <p>There have been a lot of people that have helped make encodings more
 interoperable over the years and thereby furthered the goals of this
-specification. Likewise people have helped making this specification what it
-is today.
+standard. Likewise many people have helped making this standard what it is
+today.
 
 <p>Ideally they are all listed here so please contact the editor with any
 omissions.
 
 <p>With that, many thanks to
 
+Alan Chaney,
+Ben Noordhuis,
+Cameron McCormack,
 Charles McCathieNeville,
 David Carlisle,
 Doug Ewell,
 Erik van der Poel,
 譚永鋒 (Frank Yung-Fong Tang),
+Glenn Maynard,
 Henri Sivonen,
 Ian Hickson,
 James Graham,
+John Tamplin,
 Joshua Bell,
 신정식 (Jungshik Shin),
 Ken Lunde,
+Kenneth Russell,
 Leif Halvard Silli,
 Makoto Kato,
 Mark Callow,
@@ -2406,12 +2656,13 @@ Norbert Lindenberg,
 Peter Krefting,
 Philip Jägenstedt,
 Philip Taylor,
+Robert Mustacchi,
+Ryan Dahl,
 Shawn Steele,
 Simon Montagu,
 Simon Pieters, and
 成瀬ゆい (Yui Naruse)
 
 for being awesome.
-
 
 <script id=head src=http://www.whatwg.org/specs/web-apps/current-work/dfn.js></script>
