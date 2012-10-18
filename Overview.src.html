@@ -722,8 +722,8 @@ and <b>streaming flag</b> (initially unset).
  <dd>
   <p>Returns a new <code>TextDecoder</code> object.
   <p>If <var title>label</var> is not a <span>label</span>,
-  <span data-anolis-spec=dom title=concept-throw>throws</span> an
-  "<code data-anolis-spec=dom>EncodingError</code>".
+  <span data-anolis-spec=webidl title=throw>throws</span> a
+  <code>TypeError</code>.
 
  <dt><code><var title>decoder</var> . <span title=dom-TextDecoder-encoding>encoding</span></code>
  <dd><p>Returns the <b>encoding</b>.
@@ -751,8 +751,7 @@ constructor must run these steps:
  <var title>label</var>.
 
  <li><p>If <var title>encoding</var> is failure,
- <span data-anolis-spec=dom title=concept-throw>throw</span> a
- "<code data-anolis-spec=dom>EncodingError</code>".
+ <span data-anolis-spec=webidl>throw</span> a <code>TypeError</code>.
 
  <li><p>Let <var title>dec</var> be a new <code>TextDecoder</code> object.
 
@@ -856,8 +855,8 @@ interface <dfn>TextEncoder</dfn> {
   <p>Returns a new <code>TextEncoder</code> object.
   <p>If <var title>label</var> is not a <span>label</span> for
   <span>utf-8</span>, <span>utf-16</span>, or <span>utf-16be</span>,
-  <span data-anolis-spec=dom title=concept-throw>throws</span> an
-  "<code data-anolis-spec=dom>EncodingError</code>".
+  <span data-anolis-spec=webidl title=throw>throws</span> a
+  <code>TypeError</code>.
 
  <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encoding>encoding</span></code>
  <dd><p>Returns the <b>encoding</b>.
@@ -880,8 +879,7 @@ constructor must run these steps:
 
  <li><p>If <var title>encoding</var> is failure, or is none of
  <span>utf-8</span>, <span>utf-16</span>, and <span>utf-16be</span>,
- <span data-anolis-spec=dom title=concept-throw>throw</span> a
- "<code data-anolis-spec=dom>EncodingError</code>".
+ <span data-anolis-spec=webidl>throw</span> a <code>TypeError</code>.
 
  <li><p>Let <var title>enc</var> be a new <code>TextEncoder</code> object.
 
