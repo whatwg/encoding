@@ -48,7 +48,7 @@ for index in data:
     handle.write("# http://creativecommons.org/publicdomain/zero/1.0/\n")
     handle.write("#\n")
     handle.write("# For details on index-" + index + ".txt see the Encoding Standard\n")
-    handle.write("# http://dvcs.w3.org/hg/encoding/raw-file/tip/Overview.html\n\n")
+    handle.write("# http://encoding.spec.whatwg.org/\n\n")
 
     # gb18030 is not like the other indexes, it's an index of ranges
     if index == "gb18030":

@@ -2,7 +2,7 @@
 # http://creativecommons.org/publicdomain/zero/1.0/
 #
 # For details on index-euc-kr.txt see the Encoding Standard
-# http://dvcs.w3.org/hg/encoding/raw-file/tip/Overview.html
+# http://encoding.spec.whatwg.org/
 
     0	0xAC02	갂 (<Hangul Syllable>)
     1	0xAC03	갃 (<Hangul Syllable>)

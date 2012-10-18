@@ -2,7 +2,7 @@
 # http://creativecommons.org/publicdomain/zero/1.0/
 #
 # For details on index-macintosh.txt see the Encoding Standard
-# http://dvcs.w3.org/hg/encoding/raw-file/tip/Overview.html
+# http://encoding.spec.whatwg.org/
 
   0	0x00C4	Ä (LATIN CAPITAL LETTER A WITH DIAERESIS)
   1	0x00C5	Å (LATIN CAPITAL LETTER A WITH RING ABOVE)

@@ -2,7 +2,7 @@
 # http://creativecommons.org/publicdomain/zero/1.0/
 #
 # For details on index-iso-8859-2.txt see the Encoding Standard
-# http://dvcs.w3.org/hg/encoding/raw-file/tip/Overview.html
+# http://encoding.spec.whatwg.org/
 
   0	0x0080	 (<control>)
   1	0x0081	 (<control>)
