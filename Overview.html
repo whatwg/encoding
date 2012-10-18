@@ -32,7 +32,7 @@
  <dd>Joshua Bell (Google)
 </dl>
 
-<script async="" src="/hg/quirks-mode/raw-file/tip/file-bug.js"></script>
+<script async="" src="//dvcs.w3.org/hg/quirks-mode/raw-file/tip/file-bug.js"></script>
 
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
@@ -813,6 +813,8 @@ attribute must return the <b>encoding</b>.
 <dfn id="dom-textdecoder-decode" title="dom-TextDecoder-decode"><code>decode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
 method must run these steps:
 
+<!-- XXX this text fails because it does not deal with buffers properly -->
+
 <ol>
  <li><p>If the <b>streaming flag</b> is unset, then set the
  <b>encoding state</b> to the default values of the <b>encoding</b>'s
@@ -896,8 +898,8 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
  <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(<var title="">input</var> [, <var title="">options</var>])</code>
  <dd><p>Returns the result of running <b>encoding</b>'s
  <a href="#encoder">encoder</a>. If <var title="">options</var>'s
- <code title="">stream</code> is set to true the method can be invoked multiple
- times to process a fragmented stream.
+ <code title="">stream</code> is set to true, the method can be invoked
+ multiple times to process a fragmented stream.
 </dl>
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated
@@ -2719,4 +2721,4 @@ Simon Pieters, and
 
 for being awesome.
 
-<script id="head" src="http://www.whatwg.org/specs/web-apps/current-work/dfn.js"></script>
+<script id="head" src="//www.whatwg.org/specs/web-apps/current-work/dfn.js"></script>
