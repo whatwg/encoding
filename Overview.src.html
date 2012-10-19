@@ -709,7 +709,7 @@ dictionary <dfn>TextDecodeOptions</dfn> {
 [<span title=dom-TextDecoder>Constructor</span>(optional DOMString <var title>label</var> = "utf-8", optional <span>TextDecoderOptions</span> <var title>options</var>)]
 interface <dfn>TextDecoder</dfn> {
   readonly attribute DOMString <span title=dom-TextDecoder-encoding>encoding</span>;
-  DOMString <span title=dom-TextDecoder-decode>decode</span>(<span data-anolis-spec=typedarray>ArrayBufferView</span> <var title>view</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
+  DOMString <span title=dom-TextDecoder-decode>decode</span>(optional <span data-anolis-spec=typedarray>ArrayBufferView</span> <var title>input</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
 };</pre>
 
 <p>A <code>TextEncoder</code> object has an associated
@@ -728,7 +728,7 @@ and <b>streaming flag</b> (initially unset).
  <dt><code><var title>decoder</var> . <span title=dom-TextDecoder-encoding>encoding</span></code>
  <dd><p>Returns the <b>encoding</b>.
 
- <dt><code><var title>decoder</var> . <span title=dom-TextDecoder-decode>decode</span>(<var title>input</var> [, <var title>options</var>])</code>
+ <dt><code><var title>decoder</var> . <span title=dom-TextDecoder-decode>decode</span>([<var title>input</var> [, <var title>options</var>]])</code>
  <dd>
   <p>Returns the result of running <b>encoding</b>'s
   <span>decoder</span>. If <var title>options</var>'s
@@ -784,9 +784,9 @@ method must run these steps:
  set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
  otherwise.
 
- <li><p>Append the bytes from
- <var title>view</var>'s <code title>buffer</code>, starting at
- <var title>view</var>'s <code title>byteOffset</code>, to the <b>stream</b>.
+ <li><p>If <var title>input</var> is given, append the bytes from
+ <var title>input</var>'s <code title>buffer</code>, starting at
+ <var title>input</var>'s <code title>byteOffset</code>, to the <b>stream</b>.
 
  <li>
   <p>If the <b>BOM seen flag</b> is unset, and the <b>stream</b> either
@@ -830,10 +830,6 @@ method must run these steps:
 
 <h3>Interface <code title>TextEncoder</code></h3>
 
-<p class=XXX>If we support encoding to utf-16/utf-16be, should we then not
-mark those encodings as legacy? Or should we remove support for encoding
-towards them in the API, or is the current tradeoff okay?
-
 <pre class=idl>dictionary <dfn>TextEncodeOptions</dfn> {
   boolean stream = false;
 };
@@ -841,7 +837,7 @@ towards them in the API, or is the current tradeoff okay?
 [<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var title>label</var> = "utf-8")]
 interface <dfn>TextEncoder</dfn> {
   readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
-  <span data-anolis-spec=typedarray>Uint8Array</span> <span title=dom-TextEncoder-encode>encode</span>(DOMString <var title>input</var>, optional <span>TextEncodeOptions</span> <var title>options</var>);
+  <span data-anolis-spec=typedarray>Uint8Array</span> <span title=dom-TextEncoder-encode>encode</span>(optional DOMString <var title>input</var>, optional <span>TextEncodeOptions</span> <var title>options</var>);
 };</pre>
 
 <p>A <code>TextEncoder</code> object has an associated
@@ -861,7 +857,7 @@ interface <dfn>TextEncoder</dfn> {
  <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encoding>encoding</span></code>
  <dd><p>Returns the <b>encoding</b>.
 
- <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encode>encode</span>(<var title>input</var> [, <var title>options</var>])</code>
+ <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encode>encode</span>([<var title>input</var> [, <var title>options</var>]])</code>
  <dd><p>Returns the result of running <b>encoding</b>'s
  <span>encoder</span>. If <var title>options</var>'s
  <code title>stream</code> is set to true, the method can be invoked
@@ -909,7 +905,7 @@ method must run these steps:
  set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
  otherwise.
 
- <li><p>Append the result of
+ <li><p>If <var title>input</var> is given, append the result of
  <span data-anolis-spec=webidl title="convert a DOMString to a sequence of Unicode characters">converting <var title>input</var> to Unicode</span>
  to the <b>stream</b>.
 
