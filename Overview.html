@@ -724,8 +724,7 @@ encoding <var title="">encoding</var>, return the result of running
 
 <h2 id="api"><span class="secno">7 </span>API</h2>
 
-<!-- http://wiki.whatwg.org/wiki/StringEncoding
-     XXX still need to include the examples and maybe write a short introduction -->
+<!-- http://wiki.whatwg.org/wiki/StringEncoding  -->
 
 <p>This section uses terminology from the DOM, Typed Arrays, and Web IDL.
 Non-browser implementations are not required to implement this API.
@@ -733,6 +732,71 @@ Non-browser implementations are not required to implement this API.
 <a href="#refsDOM">[DOM]</a>
 <a href="#refsTYPEDARRAY">[TYPEDARRAY]</a>
 <a href="#refsWEBIDL">[WEBIDL]</a>
+
+<div class="example">
+ <p>The following example uses the <a href="#textencoder"><code>TextEncoder</code></a> object to encode
+ an array of strings into an
+ <a href="http://www.khronos.org/registry/typedarray/specs/latest/#5"><code class="external" data-anolis-spec="typedarray">ArrayBuffer</code></a>. The result is a
+ <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint8Array</code></a> containing the number
+ of strings (as a <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint32Array</code></a>),
+ followed by the length of the first string (as a
+ <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint32Array</code></a>), the
+ <a href="#utf-8">utf-8</a> encoded string data, the length of the second string (as
+ a <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint32Array</code></a>), the string data,
+ and so on.
+ <pre><code>function encodeArrayOfStrings(strings, encoding) {
+  var encoder, encoded, len, i, bytes, view, offset;
+
+  encoder = TextEncoder(encoding);
+  encoded = [];
+
+  len = Uint32Array.BYTES_PER_ELEMENT;
+  for (i = 0; i &lt; strings.length; i += 1) {
+    len += Uint32Array.BYTES_PER_ELEMENT;
+    encoded[i] = TextEncoder(encoding).encode(strings[i]);
+    len += encoded[i].byteLength;
+  }
+
+  bytes = new Uint8Array(len);
+  view = new DataView(bytes.buffer);
+  offset = 0;
+
+  view.setUint32(offset, strings.length);
+  offset += Uint32Array.BYTES_PER_ELEMENT;
+  for (i = 0; i &lt; encoded.length; i += 1) {
+    len = encoded[i].byteLength;
+    view.setUint32(offset, len);
+    offset += Uint32Array.BYTES_PER_ELEMENT;
+    bytes.set(encoded[i], offset);
+    offset += len;
+  }
+  return bytes.buffer;
+}</code></pre>
+
+ <p>The following example decodes an
+ <a href="http://www.khronos.org/registry/typedarray/specs/latest/#5"><code class="external" data-anolis-spec="typedarray">ArrayBuffer</code></a> containing data
+ encoded in the format produced by the previous example back into an array
+ of strings.
+ <pre><code>function decodeArrayOfStrings(buffer, encoding) {
+  var decoder, view, offset, num_strings, strings, i, len;
+
+  decoder = TextDecoder(encoding);
+  view = new DataView(buffer);
+  offset = 0;
+  strings = [];
+
+  num_strings = view.getUint32(offset);
+  offset += Uint32Array.BYTES_PER_ELEMENT;
+  for (i = 0; i &lt; num_strings; i += 1) {
+    len = view.getUint32(offset);
+    offset += Uint32Array.BYTES_PER_ELEMENT;
+    strings[i] = decoder.decode(
+      new DataView(view.buffer, offset, len));
+    offset += len;
+  }
+  return strings;
+}</code></pre>
+</div>
 
 <h3 id="interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></h3>
 
