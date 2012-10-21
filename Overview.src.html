@@ -848,9 +848,12 @@ method must run these steps:
  set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
  otherwise.
 
- <li><p>If <var title>input</var> is given, append the bytes from
- <var title>input</var>'s <code title>buffer</code>, starting at
- <var title>input</var>'s <code title>byteOffset</code>, to the <b>stream</b>.
+ <li><p>If <var title>input</var> is given, then given
+ <var title>input</var>'s <code title>buffer</code>,
+ <code title>byteOffset</code>, and <code title>byteLength</code>, append
+ <code title>byteLength</code> bytes from <code title>buffer</code>,
+ starting at <code title>byteOffset</code>, to the <b>stream</b>.
+ <!-- TYPEDARRAY really needs to make this simpler -->
 
  <li>
   <p>If the <b>BOM seen flag</b> is unset, and the <b>stream</b> either

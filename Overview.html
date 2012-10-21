@@ -9,7 +9,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-19-october-2012">Living Standard — Last Updated 19 October 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-21-october-2012">Living Standard — Last Updated 21 October 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -37,7 +37,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-19 October 2012, the editor has made this specification available
+21 October 2012, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -886,9 +886,12 @@ method must run these steps:
  set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
  otherwise.
 
- <li><p>If <var title="">input</var> is given, append the bytes from
- <var title="">input</var>'s <code title="">buffer</code>, starting at
- <var title="">input</var>'s <code title="">byteOffset</code>, to the <b>stream</b>.
+ <li><p>If <var title="">input</var> is given, then given
+ <var title="">input</var>'s <code title="">buffer</code>,
+ <code title="">byteOffset</code>, and <code title="">byteLength</code>, append
+ <code title="">byteLength</code> bytes from <code title="">buffer</code>,
+ starting at <code title="">byteOffset</code>, to the <b>stream</b>.
+ <!-- TYPEDARRAY really needs to make this simpler -->
 
  <li>
   <p>If the <b>BOM seen flag</b> is unset, and the <b>stream</b> either
