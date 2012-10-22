@@ -9,7 +9,7 @@
 <div class="head">
 
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-21-october-2012">Living Standard — Last Updated 21 October 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-22-october-2012">Living Standard — Last Updated 22 October 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -37,7 +37,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-21 October 2012, the editor has made this specification available
+22 October 2012, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -814,13 +814,13 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
   DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(optional <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
 };</pre>
 
-<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated
+<p>A <a href="#textdecoder"><code>TextDecoder</code></a> object has an associated
 <b>encoding</b>, <b>encoding state</b>, <b>stream</b>,
 <b>BOM seen flag</b> (initially unset), <b>fatal flag</b> (initially unset)
 and <b>streaming flag</b> (initially unset).
 
 <dl class="domintro">
- <dt><code><var title="">decoder</var> = new <a href="#textdecoder">TextDecoder</a>([<var title="">label</var> = "utf-8" [, <var title="">options</var>]])</code>
+ <dt><code><var title="">decoder</var> = new <a href="#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>([<var title="">label</var> = "utf-8" [, <var title="">options</var>]])</code>
  <dd>
   <p>Returns a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
   <p>If <var title="">label</var> is not a <a href="#label">label</a>,
@@ -951,7 +951,7 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
 
 
 <dl class="domintro">
- <dt><code><var title="">encoder</var> = new <a href="#textencoder">TextEncoder</a>([<var title="">label</var> = "utf-8"])</code>
+ <dt><code><var title="">encoder</var> = new <a href="#dom-textencoder" title="dom-TextEncoder">TextEncoder</a>([<var title="">label</var> = "utf-8"])</code>
  <dd>
   <p>Returns a new <a href="#textencoder"><code>TextEncoder</code></a> object.
   <p>If <var title="">label</var> is not a <a href="#label">label</a> for
