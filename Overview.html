@@ -93,6 +93,7 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 <!--end-toc-->
 
 
+
 <h2 id="preface"><span class="secno">1 </span>Preface</h2>
 
 <p>While encodings for the web platform have been defined to some extent,
@@ -106,6 +107,7 @@ can become more interoperable.
 <p class="note">This specification is primarily intended for dealing with
 legacy content, it requires new content and formats to use the
 <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a> exclusively.
+
 
 
 <h2 id="conformance"><span class="secno">2 </span>Conformance</h2>
@@ -131,6 +133,7 @@ be performant.)
 implementation-specific limits on otherwise unconstrained inputs,
 e.g. to prevent denial of service attacks, to guard against running
 out of memory, or to work around platform-specific limitations.
+
 
 
 <h2 id="terminology"><span class="secno">3 </span>Terminology</h2>
@@ -164,6 +167,7 @@ characters in the range U+0041 to U+005A (i.e. LATIN CAPITAL LETTER A to
 LATIN CAPITAL LETTER Z) and the corresponding characters in the range
 U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z) are
 considered to also match.
+
 
 
 <h2 id="encodings"><span class="secno">4 </span>Encodings</h2>
@@ -721,6 +725,11 @@ these steps:
 encoding <var title="">encoding</var>, return the result of running
 <var title="">encoding</var>'s <a href="#encoder">encoder</a> on <var title="">stream</var>.
 
+<p class="note">If the input to this algorithm stems from a DOMString, the
+<a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-obtain-unicode">convert a DOMString to a sequence of Unicode characters</a> from
+Web IDL is to be used first.
+
+
 
 <h2 id="api"><span class="secno">7 </span>API</h2>
 
@@ -1031,6 +1040,7 @@ method must run these steps:
 </ol>
 
 
+
 <h2 id="the-encoding"><span class="secno">8 </span>The encoding</h2>
 
 <p>New content and formats must exclusively use the <a href="#utf-8">utf-8</a>
@@ -1181,6 +1191,7 @@ are all initially 0.
 
  <li><p>Emit bytes <var title="">bytes</var>, in list order.
 </ol>
+
 
 
 <h2 id="legacy-single-byte-encodings"><span class="secno">9 </span>Legacy single-byte encodings</h2>
@@ -2184,6 +2195,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 </ol>
 
 
+
 <h2 id="legacy-multi-byte-korean-encodings"><span class="secno">13 </span>Legacy multi-byte Korean encodings</h2>
 
 
@@ -2533,6 +2545,7 @@ at all.-->
 </ol>
 
 
+
 <h2 id="legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</h2>
 
 <h3 id="utf-16"><span class="secno">14.1 </span><dfn>utf-16</dfn></h3>
@@ -2714,6 +2727,7 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 </ol>
 
 
+
 <h2 class="no-num" id="references">References</h2>
 
 <div id="anolis-references"><dl><dt id="refsDOM">[DOM]
@@ -2732,6 +2746,7 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 <dd><cite><a href="http://dev.w3.org/2006/webapi/WebIDL/">Web IDL</a></cite>, Cameron McCormack. W3C.
 
 </dl></div>
+
 
 
 <h2 class="no-num" id="acknowledgments">Acknowledgments</h2>

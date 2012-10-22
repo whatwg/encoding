@@ -55,6 +55,7 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 <!--toc-->
 
 
+
 <h2>Preface</h2>
 
 <p>While encodings for the web platform have been defined to some extent,
@@ -68,6 +69,7 @@ can become more interoperable.
 <p class=note>This specification is primarily intended for dealing with
 legacy content, it requires new content and formats to use the
 <span>utf-8</span> <span>encoding</span> exclusively.
+
 
 
 <h2>Conformance</h2>
@@ -93,6 +95,7 @@ be performant.)
 implementation-specific limits on otherwise unconstrained inputs,
 e.g. to prevent denial of service attacks, to guard against running
 out of memory, or to work around platform-specific limitations.
+
 
 
 <h2>Terminology</h2>
@@ -126,6 +129,7 @@ characters in the range U+0041 to U+005A (i.e. LATIN CAPITAL LETTER A to
 LATIN CAPITAL LETTER Z) and the corresponding characters in the range
 U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z) are
 considered to also match.
+
 
 
 <h2>Encodings</h2>
@@ -683,6 +687,11 @@ these steps:
 encoding <var title>encoding</var>, return the result of running
 <var title>encoding</var>'s <span>encoder</span> on <var title>stream</var>.
 
+<p class=note>If the input to this algorithm stems from a DOMString, the
+<span data-anolis-spec=webidl>convert a DOMString to a sequence of Unicode characters</span> from
+Web IDL is to be used first.
+
+
 
 <h2>API</h2>
 
@@ -993,6 +1002,7 @@ method must run these steps:
 </ol>
 
 
+
 <h2>The encoding</h2>
 
 <p>New content and formats must exclusively use the <span>utf-8</span>
@@ -1143,6 +1153,7 @@ are all initially 0.
 
  <li><p>Emit bytes <var title>bytes</var>, in list order.
 </ol>
+
 
 
 <h2>Legacy single-byte encodings</h2>
@@ -2146,6 +2157,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 </ol>
 
 
+
 <h2>Legacy multi-byte Korean encodings</h2>
 
 
@@ -2495,6 +2507,7 @@ at all.-->
 </ol>
 
 
+
 <h2>Legacy miscellaneous encodings</h2>
 
 <h3><dfn>utf-16</dfn></h3>
@@ -2676,9 +2689,11 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 </ol>
 
 
+
 <h2 class=no-num>References</h2>
 
 <div id=anolis-references></div>
+
 
 
 <h2 class=no-num>Acknowledgments</h2>
