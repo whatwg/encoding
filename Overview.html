@@ -4,13 +4,13 @@
  @media print { [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase } }
 </style>
 <link href="http://www.whatwg.org/style/specification" rel="stylesheet">
-<link href="http://www.whatwg.org/images/icon" rel="icon">
+<link href="logo.png" rel="icon">
 
 <div class="head">
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" src="logo.png"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-23-october-2012">Living Standard — Last Updated 23 October 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-25-october-2012">Living Standard — Last Updated 25 October 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -25,6 +25,7 @@
 
  <dt>Version History:
  <dd><a href="https://github.com/whatwg/encoding/commits">https://github.com/whatwg/encoding/commits</a></dd>
+ <dd><a href="https://twitter.com/encodings">@encodings</a>
 
  <dt>Editors:
  <dd><a href="http://annevankesteren.nl/">Anne van Kesteren</a>
@@ -38,7 +39,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-23 October 2012, the editor has made this specification available
+25 October 2012, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -158,9 +159,10 @@ four-to-six digit hexadecimal number, typically prefixed with "U+".
 In equations and <a href="#index" title="index">indexes</a> it is prefixed with "0x".
 <a href="#refsUNICODE">[UNICODE]</a>
 
-<p>The <dfn id="space-characters">space characters</dfn>, for the purposes of this specification,
-are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
-U+000C FORM FEED (FF), and U+000D CARRIAGE RETURN (CR).
+<p>The <dfn id="ascii-whitespace">ASCII whitespace</dfn> are code points U+0009, U+000A, U+000C,
+U+000D, and U+0020.
+
+<p>A <dfn id="string">string</dfn> is a sequence of code points.
 
 <p>Comparing two strings in an <dfn id="ascii-case-insensitive">ASCII case-insensitive</dfn> manner
 means comparing them exactly, code point for code point, except that the
@@ -231,7 +233,7 @@ or <a href="#label" title="label">labels</a>.
 <var title="">label</var>, run these steps:
 
 <ol>
- <li><p>Remove any leading and trailing <a href="#space-characters">space characters</a> from
+ <li><p>Remove any leading and trailing <a href="#ascii-whitespace">ASCII whitespace</a> from
  <var title="">label</var>.
 
  <li><p>If <var title="">label</var> is an <a href="#ascii-case-insensitive">ASCII case-insensitive</a>
@@ -2791,6 +2793,7 @@ Norbert Lindenberg,
 Peter Krefting,
 Philip Jägenstedt,
 Philip Taylor,
+Robbert Broersma,
 Robert Mustacchi,
 Ryan Dahl,
 Shawn Steele,

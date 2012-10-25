@@ -6,7 +6,7 @@
  @media print { [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase } }
 </style>
 <link rel=stylesheet href=http://www.whatwg.org/style/specification>
-<link rel=icon href=http://www.whatwg.org/images/icon>
+<link rel=icon href=logo.png>
 
 <div class=head>
 
@@ -27,6 +27,7 @@
 
  <dt>Version History:
  <dd><a href=https://github.com/whatwg/encoding/commits>https://github.com/whatwg/encoding/commits</a></dd>
+ <dd><a href=https://twitter.com/encodings>@encodings</a>
 
  <dt>Editors:
  <dd><a href="http://annevankesteren.nl/">Anne van Kesteren</a>
@@ -120,9 +121,10 @@ four-to-six digit hexadecimal number, typically prefixed with "U+".
 In equations and <span title=index>indexes</span> it is prefixed with "0x".
 <span data-anolis-ref>UNICODE</span>
 
-<p>The <dfn>space characters</dfn>, for the purposes of this specification,
-are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF),
-U+000C FORM FEED (FF), and U+000D CARRIAGE RETURN (CR).
+<p>The <dfn>ASCII whitespace</dfn> are code points U+0009, U+000A, U+000C,
+U+000D, and U+0020.
+
+<p>A <dfn>string</dfn> is a sequence of code points.
 
 <p>Comparing two strings in an <dfn>ASCII case-insensitive</dfn> manner
 means comparing them exactly, code point for code point, except that the
@@ -193,7 +195,7 @@ or <span title=label>labels</span>.
 <var title>label</var>, run these steps:
 
 <ol>
- <li><p>Remove any leading and trailing <span>space characters</span> from
+ <li><p>Remove any leading and trailing <span>ASCII whitespace</span> from
  <var title>label</var>.
 
  <li><p>If <var title>label</var> is an <span>ASCII case-insensitive</span>
@@ -2738,6 +2740,7 @@ Norbert Lindenberg,
 Peter Krefting,
 Philip Jägenstedt,
 Philip Taylor,
+Robbert Broersma,
 Robert Mustacchi,
 Ryan Dahl,
 Shawn Steele,
