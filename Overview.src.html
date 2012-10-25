@@ -60,13 +60,12 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 
 <h2>Preface</h2>
 
-<p>While encodings for the web platform have been defined to some extent,
-implementations have not always implemented them in the same way, have not
-always used the same labels, and often differ in dealing with undefined and
-former proprietary areas of encodings. This specification attempts to fill
-those gaps so that new implementations do not have to reverse engineer
-encoding implementations of the market leaders and existing implementations
-can become more interoperable.
+<p>While encodings have been defined to some extent, implementations have
+not always implemented them in the same way, have not always used the same
+labels, and often differ in dealing with undefined and former proprietary
+areas of encodings. This specification attempts to fill those gaps so that
+new implementations do not have to reverse engineer encoding implementations
+of the market leaders and existing implementations can converge.
 
 <p class=note>This specification is primarily intended for dealing with
 legacy content, it requires new content and formats to use the
@@ -111,15 +110,15 @@ exponentiation by "<var title>b</var><sup><var title>n</var></sup>",
 arithmetic left shifts by "&lt;&lt;", arithmetic right shifts by ">>",
 bitwise AND by "&amp;", and bitwise OR by "|".
 
-<p>A <dfn>byte</dfn> is referenced as a double-digit hexadecimal number in
+<p>A <dfn>byte</dfn> is represented as a double-digit hexadecimal number in
 the range 0x00 to 0xFF.
 
-<p class=note>Web platform bytes consist of eight bits.
+<p class=note>Bytes consist of eight bits.
 
-<p>A <dfn>code point</dfn> is a Unicode code point and is referenced as a
+<p>A <dfn>code point</dfn> is a Unicode code point and is represented as a
 four-to-six digit hexadecimal number, typically prefixed with "U+".
-In equations and <span title=index>indexes</span> it is prefixed with "0x".
-<span data-anolis-ref>UNICODE</span>
+In equations and <span title=index>indexes</span> code points are prefixed
+with "0x". <span data-anolis-ref>UNICODE</span>
 
 <p>The <dfn>ASCII whitespace</dfn> are code points U+0009, U+000A, U+000C,
 U+000D, and U+0020.
@@ -913,7 +912,7 @@ method must run these steps:
   boolean stream = false;
 };
 
-[<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var title>label</var> = "utf-8")]
+[<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var title>utfLabel</var> = "utf-8")]
 interface <dfn>TextEncoder</dfn> {
   readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
   <span data-anolis-spec=typedarray>Uint8Array</span> <span title=dom-TextEncoder-encode>encode</span>(optional DOMString <var title>input</var>, optional <span>TextEncodeOptions</span> <var title>options</var>);
@@ -925,10 +924,10 @@ interface <dfn>TextEncoder</dfn> {
 
 
 <dl class=domintro>
- <dt><code><var title>encoder</var> = new <span title=dom-TextEncoder>TextEncoder</span>([<var title>label</var> = "utf-8"])</code>
+ <dt><code><var title>encoder</var> = new <span title=dom-TextEncoder>TextEncoder</span>([<var title>utfLabel</var> = "utf-8"])</code>
  <dd>
   <p>Returns a new <code>TextEncoder</code> object.
-  <p>If <var title>label</var> is not a <span>label</span> for
+  <p>If <var title>utfLabel</var> is not a <span>label</span> for
   <span>utf-8</span>, <span>utf-16</span>, or <span>utf-16be</span>,
   <span data-anolis-spec=webidl title=throw>throws</span> a
   <code>TypeError</code>.
@@ -944,13 +943,13 @@ interface <dfn>TextEncoder</dfn> {
 </dl>
 
 <p>The
-<dfn title=dom-TextEncoder><code>TextEncoder(<var title>label</var>)</code></dfn>
+<dfn title=dom-TextEncoder><code>TextEncoder(<var title>utfLabel</var>)</code></dfn>
 constructor must run these steps:
 
 <ol>
  <li><p>Let <var title>encoding</var> be the result of
  <span title=concept-encoding-get>getting an encoding</span> from
- <var title>label</var>.
+ <var title>utfLabel</var>.
 
  <li><p>If <var title>encoding</var> is failure, or is none of
  <span>utf-8</span>, <span>utf-16</span>, and <span>utf-16be</span>,
@@ -2713,6 +2712,7 @@ omissions.
 
 Alan Chaney,
 Ben Noordhuis,
+Boris Zbarsky,
 Cameron McCormack,
 Charles McCathieNeville,
 David Carlisle,

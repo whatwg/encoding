@@ -98,13 +98,12 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 
 <h2 id="preface"><span class="secno">1 </span>Preface</h2>
 
-<p>While encodings for the web platform have been defined to some extent,
-implementations have not always implemented them in the same way, have not
-always used the same labels, and often differ in dealing with undefined and
-former proprietary areas of encodings. This specification attempts to fill
-those gaps so that new implementations do not have to reverse engineer
-encoding implementations of the market leaders and existing implementations
-can become more interoperable.
+<p>While encodings have been defined to some extent, implementations have
+not always implemented them in the same way, have not always used the same
+labels, and often differ in dealing with undefined and former proprietary
+areas of encodings. This specification attempts to fill those gaps so that
+new implementations do not have to reverse engineer encoding implementations
+of the market leaders and existing implementations can converge.
 
 <p class="note">This specification is primarily intended for dealing with
 legacy content, it requires new content and formats to use the
@@ -149,15 +148,15 @@ exponentiation by "<var title="">b</var><sup><var title="">n</var></sup>",
 arithmetic left shifts by "&lt;&lt;", arithmetic right shifts by "&gt;&gt;",
 bitwise AND by "&amp;", and bitwise OR by "|".
 
-<p>A <dfn id="byte">byte</dfn> is referenced as a double-digit hexadecimal number in
+<p>A <dfn id="byte">byte</dfn> is represented as a double-digit hexadecimal number in
 the range 0x00 to 0xFF.
 
-<p class="note">Web platform bytes consist of eight bits.
+<p class="note">Bytes consist of eight bits.
 
-<p>A <dfn id="code-point">code point</dfn> is a Unicode code point and is referenced as a
+<p>A <dfn id="code-point">code point</dfn> is a Unicode code point and is represented as a
 four-to-six digit hexadecimal number, typically prefixed with "U+".
-In equations and <a href="#index" title="index">indexes</a> it is prefixed with "0x".
-<a href="#refsUNICODE">[UNICODE]</a>
+In equations and <a href="#index" title="index">indexes</a> code points are prefixed
+with "0x". <a href="#refsUNICODE">[UNICODE]</a>
 
 <p>The <dfn id="ascii-whitespace">ASCII whitespace</dfn> are code points U+0009, U+000A, U+000C,
 U+000D, and U+0020.
@@ -951,7 +950,7 @@ method must run these steps:
   boolean stream = false;
 };
 
-[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">label</var> = "utf-8")]
+[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8")]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
   <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#7">Uint8Array</a> <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional DOMString <var title="">input</var>, optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
@@ -963,10 +962,10 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
 
 
 <dl class="domintro">
- <dt><code><var title="">encoder</var> = new <a href="#dom-textencoder" title="dom-TextEncoder">TextEncoder</a>([<var title="">label</var> = "utf-8"])</code>
+ <dt><code><var title="">encoder</var> = new <a href="#dom-textencoder" title="dom-TextEncoder">TextEncoder</a>([<var title="">utfLabel</var> = "utf-8"])</code>
  <dd>
   <p>Returns a new <a href="#textencoder"><code>TextEncoder</code></a> object.
-  <p>If <var title="">label</var> is not a <a href="#label">label</a> for
+  <p>If <var title="">utfLabel</var> is not a <a href="#label">label</a> for
   <a href="#utf-8">utf-8</a>, <a href="#utf-16">utf-16</a>, or <a href="#utf-16be">utf-16be</a>,
   <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-throw" title="throw">throws</a> a
   <code>TypeError</code>.
@@ -982,13 +981,13 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
 </dl>
 
 <p>The
-<dfn id="dom-textencoder" title="dom-TextEncoder"><code>TextEncoder(<var title="">label</var>)</code></dfn>
+<dfn id="dom-textencoder" title="dom-TextEncoder"><code>TextEncoder(<var title="">utfLabel</var>)</code></dfn>
 constructor must run these steps:
 
 <ol>
  <li><p>Let <var title="">encoding</var> be the result of
  <a href="#concept-encoding-get" title="concept-encoding-get">getting an encoding</a> from
- <var title="">label</var>.
+ <var title="">utfLabel</var>.
 
  <li><p>If <var title="">encoding</var> is failure, or is none of
  <a href="#utf-8">utf-8</a>, <a href="#utf-16">utf-16</a>, and <a href="#utf-16be">utf-16be</a>,
@@ -2766,6 +2765,7 @@ omissions.
 
 Alan Chaney,
 Ben Noordhuis,
+Boris Zbarsky,
 Cameron McCormack,
 Charles McCathieNeville,
 David Carlisle,
