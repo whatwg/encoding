@@ -2,9 +2,6 @@
 <html lang=en-US>
 <meta charset=utf-8>
 <title>Encoding Standard</title>
-<style>
- @media print { [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase } }
-</style>
 <link rel=stylesheet href=http://www.whatwg.org/style/specification>
 <link rel=icon href=logo.png>
 
@@ -26,7 +23,7 @@
  <dd><a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
 
  <dt>Version History:
- <dd><a href=https://github.com/whatwg/encoding/commits>https://github.com/whatwg/encoding/commits</a></dd>
+ <dd><a href=https://github.com/whatwg/encoding/commits>https://github.com/whatwg/encoding/commits</a>
  <dd><a href=https://twitter.com/encodings>@encodings</a>
 
  <dt>Editors:
@@ -36,7 +33,7 @@
  <dd>Joshua Bell (Google)
 </dl>
 
-<script src=//dvcs.w3.org/hg/quirks-mode/raw-file/tip/file-bug.js async></script>
+<script src=//resources.whatwg.org/file-bug.js async></script>
 
 <p class=copyright><a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
@@ -1032,7 +1029,7 @@ are all initially 0.
  <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit the
  <span>EOF code point</span>.
 
- <li><p>Increase the <span>byte pointer</span>.
+ <li><p>Increase the <span>byte pointer</span> by one.
 
  <li>
   <p>If <span>utf-8 bytes needed</span> is 0, based on
@@ -1282,7 +1279,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
  is not 0x00, set <span>gbk first</span>, <span>gbk second</span>, and
  <span>gbk third</span> to 0x00, and emit a <span>decoder error</span>.
 
- <li><p>Increase the <span>byte pointer</span>.
+ <li><p>Increase the <span>byte pointer</span> by one.
 
  <li>
   <p>If <span>gbk third</span> is not 0x00, run these substeps:
@@ -1455,7 +1452,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <span>hz-gb-2312 lead</span> is not 0x00, set <span>hz-gb-2312 lead</span>
  to 0x00 and emit a <span>decoder error</span>.
 
- <li><p>Increase the <span>byte pointer</span>.
+ <li><p>Increase the <span>byte pointer</span> by one.
 
  <li>
   <p>If <span>hz-gb-2312 lead</span> is 0x7E, set
@@ -2744,7 +2741,8 @@ Robert Mustacchi,
 Ryan Dahl,
 Shawn Steele,
 Simon Montagu,
-Simon Pieters, and
+Simon Pieters,
+Simon Sapin, and
 成瀬ゆい (Yui Naruse)
 
 for being awesome.

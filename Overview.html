@@ -1,8 +1,5 @@
 <!DOCTYPE html><html lang="en-US"><meta charset="utf-8">
 <title>Encoding Standard</title>
-<style>
- @media print { [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase } }
-</style>
 <link href="http://www.whatwg.org/style/specification" rel="stylesheet">
 <link href="logo.png" rel="icon">
 
@@ -10,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" src="logo.png"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-26-october-2012">Living Standard — Last Updated 26 October 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-4-november-2012">Living Standard — Last Updated 4 November 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -24,7 +21,7 @@
  <dd><a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
 
  <dt>Version History:
- <dd><a href="https://github.com/whatwg/encoding/commits">https://github.com/whatwg/encoding/commits</a></dd>
+ <dd><a href="https://github.com/whatwg/encoding/commits">https://github.com/whatwg/encoding/commits</a>
  <dd><a href="https://twitter.com/encodings">@encodings</a>
 
  <dt>Editors:
@@ -34,12 +31,12 @@
  <dd>Joshua Bell (Google)
 </dl>
 
-<script async="" src="//dvcs.w3.org/hg/quirks-mode/raw-file/tip/file-bug.js"></script>
+<script async="" src="//resources.whatwg.org/file-bug.js"></script>
 
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-26 October 2012, the editor has made this specification available
+4 November 2012, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1070,7 +1067,7 @@ are all initially 0.
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit the
  <a href="#eof-code-point">EOF code point</a>.
 
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
 
  <li>
   <p>If <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> is 0, based on
@@ -1320,7 +1317,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
  is not 0x00, set <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, and
  <a href="#gbk-third">gbk third</a> to 0x00, and emit a <a href="#decoder-error">decoder error</a>.
 
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
 
  <li>
   <p>If <a href="#gbk-third">gbk third</a> is not 0x00, run these substeps:
@@ -1493,7 +1490,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is not 0x00, set <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a>
  to 0x00 and emit a <a href="#decoder-error">decoder error</a>.
 
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
 
  <li>
   <p>If <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is 0x7E, set
@@ -2797,7 +2794,8 @@ Robert Mustacchi,
 Ryan Dahl,
 Shawn Steele,
 Simon Montagu,
-Simon Pieters, and
+Simon Pieters,
+Simon Sapin, and
 成瀬ゆい (Yui Naruse)
 
 for being awesome.
