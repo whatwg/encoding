@@ -433,16 +433,16 @@
     "encodings": [
       {
         "labels": [
-          "utf-16",
-          "utf-16le"
-        ],
-        "name": "utf-16"
-      },
-      {
-        "labels": [
           "utf-16be"
         ],
         "name": "utf-16be"
+      },
+      {
+        "labels": [
+          "utf-16",
+          "utf-16le"
+        ],
+        "name": "utf-16le"
       },
       {
         "labels": [

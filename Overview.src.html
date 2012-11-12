@@ -198,10 +198,10 @@ or <span title=label>labels</span>.
  otherwise.
 </ol>
 
-<p class=note>This algorithm is different from the one defined
-in
+<p class=note>In violation of
 <a href="http://www.unicode.org/reports/tr22/tr22-7.html#Charset_Alias_Matching">section 1.4 of Unicode Technical Standard #22</a>
-as that algorithm is incompatible with legacy content.
+this is a much simpler and more restrictive matching algorithm, as that is
+found to be necessary to be compatible with deployed content.
 
 <table>
  <thead>
@@ -509,12 +509,12 @@ as that algorithm is incompatible with legacy content.
  <tbody>
   <tr><th colspan=2><a href=#legacy-miscellaneous-encodings>Legacy miscellaneous encodings</a>
   <tr>
-   <td rowspan=2><span>utf-16</span>
-   <td>"<code title>utf-16</code>"
-  <tr><td>"<code title>utf-16le</code>"
-  <tr>
    <td><span>utf-16be</span>
    <td>"<code title>utf-16be</code>"
+  <tr>
+   <td rowspan=2><span>utf-16le</span>
+   <td>"<code title>utf-16</code>"
+  <tr><td>"<code title>utf-16le</code>"
   <tr>
    <td><span>x-user-defined</span>
    <td>"<code title>x-user-defined</code>"
@@ -653,7 +653,7 @@ fallback encoding <var title>encoding</var>, run these steps:
 
   <table>
    <tr><th>Byte order mark<th>Encoding<th>Offset
-   <tr><td>0xFF 0xFE<td><span>utf-16</span><td>2
+   <tr><td>0xFF 0xFE<td><span>utf-16le</span><td>2
    <tr><td>0xFE 0xFF<td><span>utf-16be</span><td>2
    <tr><td>0xEF 0xBB 0xBF<td><span>utf-8</span><td>3
   </table>
@@ -873,7 +873,7 @@ method must run these steps:
 
   <table>
    <tr><th>Byte order mark<th>Encoding
-   <tr><td>0xFF 0xFE<td><span>utf-16</span>
+   <tr><td>0xFF 0xFE<td><span>utf-16le</span>
    <tr><td>0xFE 0xFF<td><span>utf-16be</span>
    <tr><td>0xEF 0xBB 0xBF<td><span>utf-8</span>
   </table>
@@ -923,7 +923,7 @@ interface <dfn>TextEncoder</dfn> {
  <dd>
   <p>Returns a new <code>TextEncoder</code> object.
   <p>If <var title>utfLabel</var> is not a <span>label</span> for
-  <span>utf-8</span>, <span>utf-16</span>, or <span>utf-16be</span>,
+  <span>utf-8</span>, <span>utf-16le</span>, or <span>utf-16be</span>,
   <span data-anolis-spec=webidl title=throw>throws</span> a
   <code>TypeError</code>.
 
@@ -947,7 +947,7 @@ constructor must run these steps:
  <var title>utfLabel</var>.
 
  <li><p>If <var title>encoding</var> is failure, or is none of
- <span>utf-8</span>, <span>utf-16</span>, and <span>utf-16be</span>,
+ <span>utf-8</span>, <span>utf-16le</span>, and <span>utf-16be</span>,
  <span data-anolis-spec=webidl>throw</span> a <code>TypeError</code>.
 
  <li><p>Let <var title>enc</var> be a new <code>TextEncoder</code> object.
@@ -2507,16 +2507,17 @@ at all.-->
 
 <h2>Legacy miscellaneous encodings</h2>
 
-<h3><dfn>utf-16</dfn></h3>
 
-<p class=note>Contrary to the Unicode standard, checking for a
+<h3>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></h3>
+
+<p class=note>In violation of the Unicode standard, checking for a
 byte order mark happens before an encoding to decode a byte stream is
 chosen, as seen in the <span>decode</span> algorithm.
 
 <p>The <dfn>utf-16 lead byte</dfn> and <dfn>utf-16 lead surrogate</dfn>
 are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
 
-<p>The <dfn>utf-16 decoder</dfn> (<span>decoder</span> for <span>utf-16</span>) is:
+<p>The <dfn>utf-16 decoder</dfn> is:
 
 <ol>
  <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
@@ -2593,7 +2594,7 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
   </dl>
 </ol>
 
-<p>The <dfn>utf-16 encoder</dfn> (<span>encoder</span> for <span>utf-16</span>) is:
+<p>The <dfn>utf-16 encoder</dfn> is:
 
 <ol>
  <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
@@ -2625,15 +2626,24 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
 
 <h3><dfn>utf-16be</dfn></h3>
 
-<p class=note>Contrary to the Unicode standard, checking for a
-byte order mark happens before an encoding to decode a byte stream is
-chosen, as seen in the <span>decode</span> algorithm.
-
 <p>The <dfn>utf-16be decoder</dfn> (<span>decoder</span> for <span>utf-16be</span>)
 is the <span>utf-16 decoder</span> with the <span>utf-16be flag</span> set.
 
 <p>The <dfn>utf-16be encoder</dfn> (<span>encoder</span> for <span>utf-16be</span>)
 is the <span>utf-16 encoder</span> with the <span>utf-16be flag</span> set.
+
+
+<h3><dfn>utf-16le</dfn></h3>
+
+<p class=note>In violation of the Unicode standard,
+"<code title>utf-16</code>" is a <span>label</span> for
+<span>utf-16le</span> rather than its own standalone <span>encoding</span>.
+
+<p>The <dfn>utf-16le decoder</dfn> (<span>decoder</span> for <span>utf-16le</span>)
+is the <span>utf-16 decoder</span>.
+
+<p>The <dfn>utf-16le encoder</dfn> (<span>encoder</span> for <span>utf-16le</span>)
+is the <span>utf-16 encoder</span>.
 
 
 <h3><dfn>x-user-defined</dfn></h3>
@@ -2722,6 +2732,7 @@ James Graham,
 John Tamplin,
 Joshua Bell,
 신정식 (Jungshik Shin),
+川幡太一 (Kawabata Taichi),
 Ken Lunde,
 Kenneth Russell,
 Leif Halvard Silli,
