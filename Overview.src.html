@@ -2649,7 +2649,7 @@ is the <span>utf-16 encoder</span>.
 <h3><dfn>x-user-defined</dfn></h3>
 
 <p class=note>While technically this is a <span>single-byte encoding</span>,
-it is defined separately as it does not use an <span>index</span>.
+it is defined separately as it can be implemented algorithmically.
 
 <!--
 This encoding is silly, however, the web depends on it:
@@ -2691,6 +2691,9 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
+
+ <li><p>If <var title>code point</var> is in the range U+F780 to U+F7FF,
+ emit a byte whose value is <var title>code point</var> &minus; 0xF780 + 0x80.
 
  <li><p>Emit an <span>encoder error</span>.
 </ol>

@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-12-november-2012">Living Standard — Last Updated 12 November 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-13-november-2012">Living Standard — Last Updated 13 November 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-12 November 2012, the editor has made this specification available
+13 November 2012, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -2688,7 +2688,7 @@ is the <a href="#utf-16-encoder">utf-16 encoder</a>.
 <h3 id="x-user-defined"><span class="secno">14.4 </span><dfn>x-user-defined</dfn></h3>
 
 <p class="note">While technically this is a <a href="#single-byte-encoding">single-byte encoding</a>,
-it is defined separately as it does not use an <a href="#index">index</a>.
+it is defined separately as it can be implemented algorithmically.
 
 <!--
 This encoding is silly, however, the web depends on it:
@@ -2730,6 +2730,9 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
+
+ <li><p>If <var title="">code point</var> is in the range U+F780 to U+F7FF,
+ emit a byte whose value is <var title="">code point</var> − 0xF780 + 0x80.
 
  <li><p>Emit an <a href="#encoder-error">encoder error</a>.
 </ol>
