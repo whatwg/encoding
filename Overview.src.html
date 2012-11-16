@@ -138,45 +138,40 @@ byte sequence (and vice versa). Each <span>encoding</span> has a
 <p>Each <span>encoding</span> also has a <dfn>decoder</dfn> and
 <dfn>encoder</dfn> algorithm.
 
-<p>A <span>decoder</span> algorithm takes a stream of bytes and emits a
-stream of code points. The <dfn>byte pointer</dfn> is initially zero,
+<p>A <span>decoder</span> algorithm takes a byte stream and emits a
+code point stream. The <dfn>byte pointer</dfn> is initially zero,
 pointing to the first byte in the stream. It cannot be negative. It can be
 increased and decreased to point to other bytes in the stream. The
 <dfn>EOF byte</dfn> is a conceptual byte representing the end of the
 stream. The <span>byte pointer</span> cannot point beyond the
 <span>EOF byte</span>. The <dfn>EOF code point</dfn> is a conceptual code
-point that is emitted once the stream of bytes is handled in its entirety.
-A <dfn>decoder error</dfn> indicates an error in the stream of bytes.
+point that is emitted once the byte stream is handled in its entirety.
+A <dfn>decoder error</dfn> indicates an error in the byte stream.
 Unless stated otherwise, emitting a <span>decoder error</span> must emit
 code point U+FFFD.
-A <span>decoder</span> can end by emitting a code point or
-<span>decoder error</span>, or the word continue. Unless the
-<span>EOF code point</span> is emitted, the
-<span>decoder</span> algorithm must be invoked again.
-
+A <span>decoder</span> must be invoked again when the word continue is used,
+when one or more code points are emitted of which none is the
+<span>EOF code point</span>, or when a <span>decoder error</span> is
+emitted.
 
 <p class=note>An XML processor would halt upon the first
 <span>decoder error</span> emitted.
 
-<p>An <span>encoder</span> algorithm takes a
-stream of code points and emits a stream of bytes. It will fail when
-a code point is passed for which it does not have a corresponding byte or
-byte sequence. Analogously to a <span>decoder</span>, it has a
-<dfn>code point pointer</dfn> and <dfn>encoder error</dfn>.
-Unless stated otherwise, emitting an <span>encoder error</span> terminates
-the <span>encoder</span>.
-Again analogously, as long as the
-<span>EOF byte</span> is not emitted, the <span>encoder</span> algorithm
-must be invoked for each byte or sequence of bytes emitted.
+<p>An <span>encoder</span> algorithm takes a code point stream and emits a
+byte stream. It fails when a code point is passed for which it does not have
+a corresponding byte (sequence). Analogously to a <span>decoder</span>, it
+has a <dfn>code point pointer</dfn> and <dfn>encoder error</dfn>.
+An <span>encoder</span> must be invoked again when the word continue is
+used, or when one or more bytes are emitted of which none is the
+<span>EOF byte</span>. Unless stated otherwise, when an
+<span>encoder error</span> is emitted the <span>encoder</span> terminates.
 
 <p class=note>HTML forms and URLs require non-terminating
 <span title=encoder>encoders</span> and have therefore special handling
 whenever an <span>encoder error</span> is reached. Instead of terminating
-the <span>encoder</span> a sequence of one or more code points in the range
-U+0000 to U+007F (representing the code point that caused the
-<span>encoder error</span> to be emitted) are inserted into the stream of
-code points at <span>code point pointer</span> after
-<span>encoder error</span> is emitted.
+the <span>encoder</span> one or more code points in the range
+U+0000 to U+007F are inserted into the code point stream at
+<span>code point pointer</span> after <span>encoder error</span> is emitted.
 
 <hr>
 
