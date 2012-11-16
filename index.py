@@ -5,6 +5,12 @@ data = json.loads(open("indexes.json", "r").read())
 # Copy from ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
 names = open("UnicodeData.txt", "r").readlines()
 
+jamo = [
+  ["G","GG","N","D","DD","R","M","B","BB","S","SS","","J","JJ","C","K","T","P","H"],
+  ["A","AE","YA","YAE","EO","E","YEO","YE","O","WA","WAE","OE","YO","U","WEO","WE","WI","YU","EU","YI","I"],
+  ["","G","GG","GS","N","NJ","NH","D","L","LG","LM","LB","LS","LT","LP","LH","M","B","BS","S","SS","NG","J","C","K","T","P","H"]
+]
+
 def char(cp):
     if cp > 0xFFFF:
         hi, lo = divmod(cp-0x10000, 0x400)
@@ -23,7 +29,10 @@ def get_name(cp):
     elif cp >= 0x4E00 and cp <= 0x9FCB:
         return "<CJK Ideograph>"
     elif cp >= 0xAC00 and cp <= 0xD7A3:
-        return "<Hangul Syllable>"
+        #return "<Hangul Syllable>"
+        i = cp - 0xAC00
+        s = jamo[0][i/21/28] + jamo[1][i/28%21] + jamo[2][i%28]
+        return "HANGUL SYLLABLE " + s
     elif cp >= 0xE000 and cp <= 0xF8FF:
         return "<Private Use>"
     elif cp >= 0x20000 and cp <= 0x2A6D6:
