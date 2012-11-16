@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-13-november-2012">Living Standard — Last Updated 13 November 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-16-november-2012">Living Standard — Last Updated 16 November 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-13 November 2012, the editor has made this specification available
+16 November 2012, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1059,7 +1059,7 @@ are all initially 0.
 <p>The <dfn id="utf-8-decoder">utf-8 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-8">utf-8</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
  <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> is not 0, set
@@ -1143,7 +1143,8 @@ are all initially 0.
 <p>The <dfn id="utf-8-encoder">utf-8 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-8">utf-8</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>Let <var title="">code point</var> be the value at
+ <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF,
  emit an <a href="#encoder-error">encoder error</a>.
@@ -1249,7 +1250,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 <a href="#single-byte-encoding" title="single-byte encoding">single-byte encodings</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit the
  <a href="#eof-code-point">EOF code point</a>.
@@ -1272,7 +1273,8 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 <a href="#single-byte-encoding" title="single-byte encoding">single-byte encodings</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>Let <var title="">code point</var> be the value at
+ <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
@@ -1307,7 +1309,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
 <p>The <dfn id="gbk-decoder">gbk decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gbk">gbk</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
  <a href="#gbk-first">gbk first</a>, <a href="#gbk-second">gbk second</a>, and <a href="#gbk-third">gbk third</a>
@@ -1397,7 +1399,8 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
 <p>The <dfn id="gbk-encoder">gbk encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gbk">gbk</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>Let <var title="">code point</var> be the value at
+ <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
@@ -1481,7 +1484,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="hz-gb-2312-decoder">hz-gb-2312 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#hz-gb-2312">hz-gb-2312</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
  <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is 0x00, emit the
@@ -1564,7 +1567,8 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="hz-gb-2312-encoder">hz-gb-2312 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#hz-gb-2312">hz-gb-2312</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>Let <var title="">code point</var> be the value at
+ <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
@@ -1619,7 +1623,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="big5-decoder">big5 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#big5">big5</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
  <a href="#big5-lead">big5 lead</a> is 0x00, emit the
@@ -1687,7 +1691,8 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="big5-encoder">big5 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#big5">big5</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>Let <var title="">code point</var> be the value at
+ <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
@@ -1735,7 +1740,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="euc-jp-decoder">euc-jp decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#euc-jp">euc-jp</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
  <a href="#euc-jp-first">euc-jp first</a> and <a href="#euc-jp-second">euc-jp second</a> are 0x00, emit the
@@ -1820,7 +1825,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 -->
 
 <ol>
- <li><p>Let <var title="">code point</var> be the
+ <li><p>Let <var title="">code point</var> be the value at
  <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
@@ -1872,7 +1877,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="iso-2022-jp-decoder">iso-2022-jp decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#iso-2022-jp">iso-2022-jp</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is not the <a href="#eof-byte">EOF byte</a>,
  increase the <a href="#byte-pointer">byte pointer</a> by one.
@@ -2035,7 +2040,8 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="iso-2022-jp-encoder">iso-2022-jp encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#iso-2022-jp">iso-2022-jp</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>Let <var title="">code point</var> be the value at
+ <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
@@ -2092,7 +2098,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="shift_jis-decoder">shift_jis decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#shift_jis">shift_jis</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
  <a href="#shift_jis-lead">shift_jis lead</a> is 0x00, emit the
@@ -2151,7 +2157,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="shift_jis-encoder">shift_jis encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#shift_jis">shift_jis</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the
+ <li><p>Let <var title="">code point</var> be the value at
  <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
@@ -2204,7 +2210,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="euc-kr-decoder">euc-kr decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#euc-kr">euc-kr</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
  <a href="#euc-kr-lead">euc-kr lead</a> is 0x00, emit the
@@ -2269,7 +2275,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 <p>The <dfn id="euc-kr-encoder">euc-kr encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#euc-kr">euc-kr</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the
+ <li><p>Let <var title="">code point</var> be the value at
  <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
@@ -2332,7 +2338,7 @@ at all.-->
 <p>The <dfn id="iso-2022-kr-decoder">iso-2022-kr decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#iso-2022-kr">iso-2022-kr</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is not the <a href="#eof-byte">EOF byte</a>,
  increase the <a href="#byte-pointer">byte pointer</a> by one.
@@ -2471,7 +2477,8 @@ at all.-->
 <p>The <dfn id="iso-2022-kr-encoder">iso-2022-kr encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#iso-2022-kr">iso-2022-kr</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>Let <var title="">code point</var> be the value at
+ <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>
  and <a href="#iso-2022-kr-state">iso-2022-kr state</a> is not <b title="">ASCII state</b>, set
@@ -2559,7 +2566,7 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
 <p>The <dfn id="utf-16-decoder">utf-16 decoder</dfn> is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
  <a href="#utf-16-lead-byte">utf-16 lead byte</a> and <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> are
@@ -2636,7 +2643,8 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
 <p>The <dfn id="utf-16-encoder">utf-16 encoder</dfn> is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>Let <var title="">code point</var> be the value at
+ <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF,
  emit an <a href="#encoder-error">encoder error</a>.
@@ -2703,7 +2711,7 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 <a href="#x-user-defined">x-user-defined</a>) is:
 
 <ol>
- <li><p>Let <var title="">byte</var> be <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit the
  <a href="#eof-code-point">EOF code point</a>.
@@ -2721,7 +2729,8 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 <a href="#x-user-defined">x-user-defined</a>) is:
 
 <ol>
- <li><p>Let <var title="">code point</var> be <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>Let <var title="">code point</var> be the value at
+ <a href="#code-point-pointer">code point pointer</a>.
 
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.

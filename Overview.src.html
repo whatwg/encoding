@@ -1020,7 +1020,7 @@ are all initially 0.
 <p>The <dfn>utf-8 decoder</dfn> (<span>decoder</span> for <span>utf-8</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>utf-8 bytes needed</span> is not 0, set
@@ -1104,7 +1104,8 @@ are all initially 0.
 <p>The <dfn>utf-8 encoder</dfn> (<span>encoder</span> for <span>utf-8</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+ <li><p>Let <var title>code point</var> be the value at
+ <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is in the range 0xD800 to 0xDFFF,
  emit an <span>encoder error</span>.
@@ -1210,7 +1211,7 @@ historically this might have been the case for <span>iso-8859-6</span> and
 <span title="single-byte encoding">single-byte encodings</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit the
  <span>EOF code point</span>.
@@ -1233,7 +1234,8 @@ historically this might have been the case for <span>iso-8859-6</span> and
 <span title="single-byte encoding">single-byte encodings</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+ <li><p>Let <var title>code point</var> be the value at
+ <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
@@ -1268,7 +1270,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
 <p>The <dfn>gbk decoder</dfn> (<span>decoder</span> for <span>gbk</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>gbk first</span>, <span>gbk second</span>, and <span>gbk third</span>
@@ -1358,7 +1360,8 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
 <p>The <dfn>gbk encoder</dfn> (<span>encoder</span> for <span>gbk</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+ <li><p>Let <var title>code point</var> be the value at
+ <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
@@ -1442,7 +1445,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>hz-gb-2312 decoder</dfn> (<span>decoder</span> for <span>hz-gb-2312</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>hz-gb-2312 lead</span> is 0x00, emit the
@@ -1525,7 +1528,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>hz-gb-2312 encoder</dfn> (<span>encoder</span> for <span>hz-gb-2312</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+ <li><p>Let <var title>code point</var> be the value at
+ <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
@@ -1580,7 +1584,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>big5 decoder</dfn> (<span>decoder</span> for <span>big5</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>big5 lead</span> is 0x00, emit the
@@ -1648,7 +1652,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>big5 encoder</dfn> (<span>encoder</span> for <span>big5</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+ <li><p>Let <var title>code point</var> be the value at
+ <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
@@ -1696,7 +1701,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>euc-jp decoder</dfn> (<span>decoder</span> for <span>euc-jp</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>euc-jp first</span> and <span>euc-jp second</span> are 0x00, emit the
@@ -1781,7 +1786,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 -->
 
 <ol>
- <li><p>Let <var title>code point</var> be the
+ <li><p>Let <var title>code point</var> be the value at
  <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
@@ -1833,7 +1838,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>iso-2022-jp decoder</dfn> (<span>decoder</span> for <span>iso-2022-jp</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
  increase the <span>byte pointer</span> by one.
@@ -1996,7 +2001,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>iso-2022-jp encoder</dfn> (<span>encoder</span> for <span>iso-2022-jp</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+ <li><p>Let <var title>code point</var> be the value at
+ <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
@@ -2053,7 +2059,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>shift_jis decoder</dfn> (<span>decoder</span> for <span>shift_jis</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>shift_jis lead</span> is 0x00, emit the
@@ -2112,7 +2118,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>shift_jis encoder</dfn> (<span>encoder</span> for <span>shift_jis</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be the
+ <li><p>Let <var title>code point</var> be the value at
  <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
@@ -2165,7 +2171,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>euc-kr decoder</dfn> (<span>decoder</span> for <span>euc-kr</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>euc-kr lead</span> is 0x00, emit the
@@ -2230,7 +2236,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 <p>The <dfn>euc-kr encoder</dfn> (<span>encoder</span> for <span>euc-kr</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be the
+ <li><p>Let <var title>code point</var> be the value at
  <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
@@ -2293,7 +2299,7 @@ at all.-->
 <p>The <dfn>iso-2022-kr decoder</dfn> (<span>decoder</span> for <span>iso-2022-kr</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
  increase the <span>byte pointer</span> by one.
@@ -2432,7 +2438,8 @@ at all.-->
 <p>The <dfn>iso-2022-kr encoder</dfn> (<span>encoder</span> for <span>iso-2022-kr</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+ <li><p>Let <var title>code point</var> be the value at
+ <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>
  and <span>iso-2022-kr state</span> is not <b title>ASCII state</b>, set
@@ -2520,7 +2527,7 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
 <p>The <dfn>utf-16 decoder</dfn> is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
  <span>utf-16 lead byte</span> and <span>utf-16 lead surrogate</span> are
@@ -2597,7 +2604,8 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
 <p>The <dfn>utf-16 encoder</dfn> is:
 
 <ol>
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+ <li><p>Let <var title>code point</var> be the value at
+ <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is in the range 0xD800 to 0xDFFF,
  emit an <span>encoder error</span>.
@@ -2664,7 +2672,7 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 <span>x-user-defined</span>) is:
 
 <ol>
- <li><p>Let <var title>byte</var> be <span>byte pointer</span>.
+ <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit the
  <span>EOF code point</span>.
@@ -2682,7 +2690,8 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 <span>x-user-defined</span>) is:
 
 <ol>
- <li><p>Let <var title>code point</var> be <span>code point pointer</span>.
+ <li><p>Let <var title>code point</var> be the value at
+ <span>code point pointer</span>.
 
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
