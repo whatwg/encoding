@@ -1818,12 +1818,6 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
 <p>The <dfn id="euc-jp-encoder">euc-jp encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#euc-jp">euc-jp</a>) is:
 
-<!--
- No JIX X 0212 encoder support:
-   https://bugzilla.mozilla.org/show_bug.cgi?id=600715
-   http://code.google.com/p/chromium/issues/detail?id=78847
--->
-
 <ol>
  <li><p>Let <var title="">code point</var> be the value at
  <a href="#code-point-pointer">code point pointer</a>.
@@ -1858,8 +1852,14 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <var title="">trail</var>.
 </ol>
 
-<p class="note">Contemporary implementations do not use
-<a href="#index-jis0212">index jis0212</a> for the <a href="#euc-jp-encoder">euc-jp encoder</a>.
+<p class="note">The <a href="#index-jis0212">index jis0212</a> is not used by the
+<a href="#euc-jp-encoder">euc-jp encoder</a> due to lack of widespread support.
+
+<!--
+ No JIX X 0212 encoder support:
+   https://bugzilla.mozilla.org/show_bug.cgi?id=600715
+   http://code.google.com/p/chromium/issues/detail?id=78847
+-->
 
 
 <h3 id="iso-2022-jp"><span class="secno">12.2 </span><dfn>iso-2022-jp</dfn></h3>
@@ -2089,6 +2089,9 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Emit two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
 </ol>
+
+<p class="note">The <a href="#index-jis0212">index jis0212</a> is not used by the
+<a href="#iso-2022-jp-encoder">iso-2022-jp encoder</a> due to lack of widespread support.
 
 
 <h3 id="shift_jis"><span class="secno">12.3 </span><dfn>shift_jis</dfn></h3>

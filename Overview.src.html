@@ -1779,12 +1779,6 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
 <p>The <dfn>euc-jp encoder</dfn> (<span>encoder</span> for <span>euc-jp</span>) is:
 
-<!--
- No JIX X 0212 encoder support:
-   https://bugzilla.mozilla.org/show_bug.cgi?id=600715
-   http://code.google.com/p/chromium/issues/detail?id=78847
--->
-
 <ol>
  <li><p>Let <var title>code point</var> be the value at
  <span>code point pointer</span>.
@@ -1819,8 +1813,14 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <var title>trail</var>.
 </ol>
 
-<p class=note>Contemporary implementations do not use
-<span>index jis0212</span> for the <span>euc-jp encoder</span>.
+<p class=note>The <span>index jis0212</span> is not used by the
+<span>euc-jp encoder</span> due to lack of widespread support.
+
+<!--
+ No JIX X 0212 encoder support:
+   https://bugzilla.mozilla.org/show_bug.cgi?id=600715
+   http://code.google.com/p/chromium/issues/detail?id=78847
+-->
 
 
 <h3><dfn>iso-2022-jp</dfn></h3>
@@ -2050,6 +2050,9 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>Emit two bytes whose values are <var title>lead</var> and
  <var title>trail</var>.
 </ol>
+
+<p class=note>The <span>index jis0212</span> is not used by the
+<span>iso-2022-jp encoder</span> due to lack of widespread support.
 
 
 <h3><dfn>shift_jis</dfn></h3>
