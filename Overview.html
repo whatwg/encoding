@@ -186,7 +186,7 @@ stream. The <a href="#byte-pointer">byte pointer</a> cannot point beyond the
 <a href="#eof-byte">EOF byte</a>. The <dfn id="eof-code-point">EOF code point</dfn> is a conceptual code
 point that is emitted once the stream of bytes is handled in its entirety.
 A <dfn id="decoder-error">decoder error</dfn> indicates an error in the stream of bytes.
-Unless stated otherwise emitting a <a href="#decoder-error">decoder error</a> must emit
+Unless stated otherwise, emitting a <a href="#decoder-error">decoder error</a> must emit
 code point U+FFFD.
 A <a href="#decoder">decoder</a> can end by emitting a code point or
 <a href="#decoder-error">decoder error</a>, or the word continue. Unless the
@@ -202,7 +202,7 @@ stream of code points and emits a stream of bytes. It will fail when
 a code point is passed for which it does not have a corresponding byte or
 byte sequence. Analogously to a <a href="#decoder">decoder</a>, it has a
 <dfn id="code-point-pointer">code point pointer</dfn> and <dfn id="encoder-error">encoder error</dfn>.
-Unless stated otherwise emitting an <a href="#encoder-error">encoder error</a> terminates
+Unless stated otherwise, emitting an <a href="#encoder-error">encoder error</a> terminates
 the <a href="#encoder">encoder</a>.
 Again analogously, as long as the
 <a href="#eof-byte">EOF byte</a> is not emitted, the <a href="#encoder">encoder</a> algorithm
@@ -233,7 +233,7 @@ or <a href="#label" title="label">labels</a>.
 
  <li><p>If <var title="">label</var> is an <a href="#ascii-case-insensitive">ASCII case-insensitive</a>
  match for any of the <a href="#label" title="label">labels</a> listed in the table
- below, return the corresponding <a href="#encoding">encoding</a>, or return failure
+ below, return the corresponding <a href="#encoding">encoding</a>, and return failure
  otherwise.
 </ol>
 
@@ -890,7 +890,7 @@ method must run these steps:
  associated variables and empty the <b>stream</b>.
 
  <li><p>If <var title="">options</var>'s <code title="">stream</code> is true,
- set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
+ set the <b>streaming flag</b>, and unset the <b>streaming flag</b>
  otherwise.
 
  <li><p>If <var title="">input</var> is given, then given
@@ -1014,7 +1014,7 @@ method must run these steps:
  <a href="#encoder">encoder</a>'s associated variables, and empty the <b>stream</b>.
 
  <li><p>If <var title="">options</var>'s <code title="">stream</code> is true,
- set the <b>streaming flag</b>, or unset the <b>streaming flag</b>
+ set the <b>streaming flag</b>, and unset the <b>streaming flag</b>
  otherwise.
 
  <li><p>If <var title="">input</var> is given, append the result of
@@ -1366,14 +1366,14 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
    <var title="">pointer</var> be null, and set <a href="#gbk-first">gbk first</a> to 0x00.
 
    <li><p>Let <var title="">offset</var> be 0x40 if <var title="">byte</var> is
-   less than 0x7F, or 0x41 otherwise.
+   less than 0x7F and 0x41 otherwise.
 
    <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
    0x80 to 0xFE, set <var title="">pointer</var> to
    (<var title="">lead</var> − 0x81) × 190 + (<var title="">byte</var> − <var title="">offset</var>).
 
    <li><p>Let <var title="">code point</var> be null if
-   <var title="">pointer</var> is null, or the <a href="#index-code-point">index code point</a>
+   <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-gbk">index gbk</a> otherwise.
 
    <li><p>If <var title="">pointer</var> is null, decrease the
@@ -1427,7 +1427,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
    <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 190.
 
    <li><p>Let <var title="">offset</var> be 0x40 if <var title="">trail</var> is
-   less than 0x3F,<!--0x7F-0x40--> or 0x41 otherwise.
+   less than 0x3F<!--0x7F-0x40--> and 0x41 otherwise.
 
    <li><p>Emit two bytes whose values are <var title="">lead</var> and
    <var title="">trail</var> + <var title="">offset</var>.
@@ -1642,7 +1642,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
   <ol>
    <li><p>Let <var title="">offset</var> be 0x40 if <var title="">byte</var> is
-   less than 0x7F, or 0x62 otherwise.
+   less than 0x7F and 0x62 otherwise.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
 
    <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
@@ -1667,7 +1667,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
     single code points this table is used for these pointers.
 
    <li><p>Let <var title="">code point</var> be null if
-   <var title="">pointer</var> is null, or the <a href="#index-code-point">index code point</a>
+   <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-big5">index big5</a> otherwise.
 
    <li><p>If <var title="">pointer</var> is null, decrease the
@@ -1720,7 +1720,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 157.
 
  <li><p>Let <var title="">offset</var> be 0x40 if <var title="">trail</var> is
-   less than 0x3F,<!--0x7F-0x40--> or 0x62<!--0xA1-0x3F--> otherwise.
+ less than 0x3F<!--0x7F-0x40--> and 0x62<!--0xA1-0x3F--> otherwise.
 
  <li><p>Emit two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var> + <var title="">offset</var>.
@@ -1946,7 +1946,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
      <b title="">Katakana state</b> and continue.
 
      <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>,
-     decrease <a href="#byte-pointer">byte pointer</a> by one, or decrease it by two
+     decrease <a href="#byte-pointer">byte pointer</a> by one, and decrease it by two
      otherwise.
 
      <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
@@ -1962,7 +1962,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
      continue.
 
      <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>,
-     decrease <a href="#byte-pointer">byte pointer</a> by two, or decrease it by three
+     decrease <a href="#byte-pointer">byte pointer</a> by two, and decrease it by three
      otherwise.
 
      <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
@@ -2007,7 +2007,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
      both in the range 0x21 to 0x7E, set <var title="">code point</var> to
      the <a href="#index-code-point">index code point</a> for <var title="">pointer</var> in
      <a href="#index-jis0208">index jis0208</a> if the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>
-     is unset, or in <a href="#index-jis0212">index jis0212</a> otherwise.
+     is unset and in <a href="#index-jis0212">index jis0212</a> otherwise.
 
      <li><p>If <var title="">code point</var> is null, emit a
      <a href="#decoder-error">decoder error</a>.
@@ -2117,17 +2117,17 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
   <ol>
    <li><p>Let <var title="">offset</var> be 0x40 if <var title="">byte</var> is
-   less than 0x7F, or 0x41 otherwise.
+   less than 0x7F and 0x41 otherwise.
 
    <li><p>Let <var title="">lead offset</var> be 0x81 if <var title="">lead</var>
-   is less than 0xA0, or 0xC1 otherwise.
+   is less than 0xA0 and 0xC1 otherwise.
 
    <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
    0x80 to 0xFC, set <var title="">pointer</var> to
    (<var title="">lead</var> − <var title="">lead offset</var>) × 188 + <var title="">byte</var> − <var title="">offset</var>.
 
    <li><p>Let <var title="">code point</var> be null if
-   <var title="">pointer</var> is null, or the <a href="#index-code-point">index code point</a>
+   <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-jis0208">index jis0208</a> otherwise.
 
    <li><p>If <var title="">pointer</var> is null, decrease the
@@ -2185,13 +2185,13 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 188.
 
  <li><p>Let <var title="">lead offset</var> be 0x81 if <var title="">lead</var> is
- less than 0x1F, or 0xC1 otherwise.
+ less than 0x1F and 0xC1 otherwise.
  <!-- 0xA0-0x81 -->
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 188.
 
  <li><p>Let <var title="">offset</var> be 0x40 if <var title="">trail</var> is
- less than 0x3F, or 0x41 otherwise.
+ less than 0x3F and 0x41 otherwise.
 
  <li><p>Emit two bytes whose values are
  <var title="">lead</var> + <var title="">lead offset</var> and
@@ -2250,7 +2250,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
    (26 + 26 + 126) × (0xC7 − 0x81) + (<var title="">lead</var> − 0xC7) × 94 + (<var title="">byte</var> − 0xA1).
 
    <li><p>Let <var title="">code point</var> be null if
-   <var title="">pointer</var> is null, or the
+   <var title="">pointer</var> is null and the
    <a href="#index-code-point">index code point</a> for <var title="">pointer</var> in
    <a href="#index-euc-kr">index euc-kr</a> otherwise.
 
@@ -2304,7 +2304,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
    <var title="">pointer</var> % (26 + 26 + 126).
 
    <li><p>Let <var title="">offset</var> be 0x41 if <var title="">trail</var> is
-   less than 26, 0x47 if <var title="">trail</var> is less than 26 + 26, or
+   less than 26, 0x47 if <var title="">trail</var> is less than 26 + 26, and
    0x4D otherwise.
    <!-- 0x47=0x41+0x61-0x5A-1
         0x4D=0x47+0x81-0x7A-1 -->
@@ -2396,7 +2396,7 @@ at all.-->
      continue.
 
      <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, decrease
-     the <a href="#byte-pointer">byte pointer</a> by one, or decrease it by two otherwise.
+     the <a href="#byte-pointer">byte pointer</a> by one, and decrease it by two otherwise.
 
      <li><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>
      and emit a <a href="#decoder-error">decoder error</a>.
@@ -2410,7 +2410,7 @@ at all.-->
      continue.
 
      <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, decrease
-     the <a href="#byte-pointer">byte pointer</a> by two, or decrease it by three
+     the <a href="#byte-pointer">byte pointer</a> by two, and decrease it by three
      otherwise.
 
      <li><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>
