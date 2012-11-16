@@ -1047,14 +1047,10 @@ method must run these steps:
 
 <h3 id="utf-8"><span class="secno">8.1 </span><dfn>utf-8</dfn></h3>
 
-<!--
-http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8
-Unicode
--->
-
-<p>The <dfn id="utf-8-code-point">utf-8 code point</dfn>, <dfn id="utf-8-bytes-seen">utf-8 bytes seen</dfn>,
-<dfn id="utf-8-bytes-needed">utf-8 bytes needed</dfn>, and <dfn id="utf-8-lower-boundary">utf-8 lower boundary</dfn> concepts
-are all initially 0.
+<p>The <dfn id="utf-8-code-point">utf-8 code point</dfn>, <dfn id="utf-8-bytes-seen">utf-8 bytes seen</dfn>, and
+<dfn id="utf-8-bytes-needed">utf-8 bytes needed</dfn> concepts are all initially 0. The
+<dfn id="utf-8-lower-boundary">utf-8 lower boundary</dfn> is initially 0x80 and the
+<dfn id="utf-8-upper-boundary">utf-8 upper boundary</dfn> is initially 0xBF.
 
 <p>The <dfn id="utf-8-decoder">utf-8 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-8">utf-8</a>) is:
 
@@ -1079,19 +1075,34 @@ are all initially 0.
    <dd><p>Emit a code point whose value is <var title="">byte</var>.
 
    <dt>0xC2 to 0xDF
-   <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 1,
-   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80, and
+   <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 1 and
    <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xC0.
 
    <dt>0xE0 to 0xEF
-   <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 2,
-   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x800, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xE0.
+   <dd>
+    <ol>
+     <li><p>If <var title="">byte</var> is 0xE0, set
+     <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0xA0.
+
+     <li><p>If <var title="">byte</var> is 0xED, set
+     <a href="#utf-8-upper-boundary">utf-8 upper boundary</a> to 0x9F.
+
+     <li><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 2 and
+     <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xE0.
+    </ol>
 
    <dt>0xF0 to 0xF4
-   <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 3,
-   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x10000, and
-   <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xF0.
+   <dd>
+    <ol>
+     <li><p>If <var title="">byte</var> is 0xF0, set
+     <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x90.
+
+     <li><p>If <var title="">byte</var> is 0xF4, set
+     <a href="#utf-8-upper-boundary">utf-8 upper boundary</a> to 0x8F.
+
+     <li><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 3 and
+     <a href="#utf-8-code-point">utf-8 code point</a> to <var title="">byte</var> − 0xF0.
+    </ol>
 
    <dt>Otherwise
    <dd><p>Emit a <a href="#decoder-error">decoder error</a>.
@@ -1102,18 +1113,23 @@ are all initially 0.
   64<sup><a href="#utf-8-bytes-needed">utf-8 bytes needed</a></sup> and continue.
 
  <li>
-  <p>If <var title="">byte</var> is not in the range 0x80 to 0xBF, run these
-  substeps:
+  <p>If <var title="">byte</var> is not in the range
+  <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to <a href="#utf-8-upper-boundary">utf-8 upper boundary</a>,
+  run these substeps:
 
   <ol>
    <li><p>Set <a href="#utf-8-code-point">utf-8 code point</a>,
-   <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, <a href="#utf-8-bytes-seen">utf-8 bytes seen</a>, and
-   <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0.
+   <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, and <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> to 0,
+   set <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80, and set
+   <a href="#utf-8-upper-boundary">utf-8 upper boundary</a> to 0xBF.
 
    <li><p>Decrease the <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>Emit a <a href="#decoder-error">decoder error</a>.
   </ol>
+
+ <li><p>Set <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80 and
+ <a href="#utf-8-upper-boundary">utf-8 upper boundary</a> to 0xBF.
 
  <li>
   <p>Increase <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> by one and set
@@ -1124,20 +1140,18 @@ are all initially 0.
  <li><p>If <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> is not equal to
  <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, continue.
 
- <li><p>Let <var title="">code point</var> be <a href="#utf-8-code-point">utf-8 code point</a> and
- <var title="">lower boundary</var> be <a href="#utf-8-lower-boundary">utf-8 lower boundary</a>.
+ <li><p>Let <var title="">code point</var> be <a href="#utf-8-code-point">utf-8 code point</a>.
 
  <li><p>Set <a href="#utf-8-code-point">utf-8 code point</a>,
- <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, <a href="#utf-8-bytes-seen">utf-8 bytes seen</a>, and
- <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0.
+ <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, and <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> to 0.
 
- <li><p>If <var title="">code point</var> is in the range
- <var title="">lower boundary</var> to 0x10FFFF and is not
- in the range 0xD800 to 0xDFFF, emit a code point whose value is
- <var title="">code point</var>.
-
- <li><p>Emit a <a href="#decoder-error">decoder error</a>.
+ <li><p>Emit a code point whose value is <var title="">code point</var>.
 </ol>
+
+<p class="note">The constraints in the <a href="#utf-8-decoder">utf-8 decoder</a> above match
+“Best Practices for Using U+FFFD” from the Unicode standard. No other
+behavior is permitted per the Encoding Standard (other algorithms that
+achieve the same result are obviously fine, even encouraged).
 
 
 <p>The <dfn id="utf-8-encoder">utf-8 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-8">utf-8</a>) is:

@@ -1008,14 +1008,10 @@ method must run these steps:
 
 <h3><dfn>utf-8</dfn></h3>
 
-<!--
-http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#utf-8
-Unicode
--->
-
-<p>The <dfn>utf-8 code point</dfn>, <dfn>utf-8 bytes seen</dfn>,
-<dfn>utf-8 bytes needed</dfn>, and <dfn>utf-8 lower boundary</dfn> concepts
-are all initially 0.
+<p>The <dfn>utf-8 code point</dfn>, <dfn>utf-8 bytes seen</dfn>, and
+<dfn>utf-8 bytes needed</dfn> concepts are all initially 0. The
+<dfn>utf-8 lower boundary</dfn> is initially 0x80 and the
+<dfn>utf-8 upper boundary</dfn> is initially 0xBF.
 
 <p>The <dfn>utf-8 decoder</dfn> (<span>decoder</span> for <span>utf-8</span>) is:
 
@@ -1040,19 +1036,34 @@ are all initially 0.
    <dd><p>Emit a code point whose value is <var title>byte</var>.
 
    <dt>0xC2 to 0xDF
-   <dd><p>Set <span>utf-8 bytes needed</span> to 1,
-   <span>utf-8 lower boundary</span> to 0x80, and
+   <dd><p>Set <span>utf-8 bytes needed</span> to 1 and
    <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xC0.
 
    <dt>0xE0 to 0xEF
-   <dd><p>Set <span>utf-8 bytes needed</span> to 2,
-   <span>utf-8 lower boundary</span> to 0x800, and
-   <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xE0.
+   <dd>
+    <ol>
+     <li><p>If <var title>byte</var> is 0xE0, set
+     <span>utf-8 lower boundary</span> to 0xA0.
+
+     <li><p>If <var title>byte</var> is 0xED, set
+     <span>utf-8 upper boundary</span> to 0x9F.
+
+     <li><p>Set <span>utf-8 bytes needed</span> to 2 and
+     <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xE0.
+    </ol>
 
    <dt>0xF0 to 0xF4
-   <dd><p>Set <span>utf-8 bytes needed</span> to 3,
-   <span>utf-8 lower boundary</span> to 0x10000, and
-   <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xF0.
+   <dd>
+    <ol>
+     <li><p>If <var title>byte</var> is 0xF0, set
+     <span>utf-8 lower boundary</span> to 0x90.
+
+     <li><p>If <var title>byte</var> is 0xF4, set
+     <span>utf-8 upper boundary</span> to 0x8F.
+
+     <li><p>Set <span>utf-8 bytes needed</span> to 3 and
+     <span>utf-8 code point</span> to <var title>byte</var> &minus; 0xF0.
+    </ol>
 
    <dt>Otherwise
    <dd><p>Emit a <span>decoder error</span>.
@@ -1063,18 +1074,23 @@ are all initially 0.
   64<sup><span>utf-8 bytes needed</span></sup> and continue.
 
  <li>
-  <p>If <var title>byte</var> is not in the range 0x80 to 0xBF, run these
-  substeps:
+  <p>If <var title>byte</var> is not in the range
+  <span>utf-8 lower boundary</span> to <span>utf-8 upper boundary</span>,
+  run these substeps:
 
   <ol>
    <li><p>Set <span>utf-8 code point</span>,
-   <span>utf-8 bytes needed</span>, <span>utf-8 bytes seen</span>, and
-   <span>utf-8 lower boundary</span> to 0.
+   <span>utf-8 bytes needed</span>, and <span>utf-8 bytes seen</span> to 0,
+   set <span>utf-8 lower boundary</span> to 0x80, and set
+   <span>utf-8 upper boundary</span> to 0xBF.
 
    <li><p>Decrease the <span>byte pointer</span> by one.
 
    <li><p>Emit a <span>decoder error</span>.
   </ol>
+
+ <li><p>Set <span>utf-8 lower boundary</span> to 0x80 and
+ <span>utf-8 upper boundary</span> to 0xBF.
 
  <li>
   <p>Increase <span>utf-8 bytes seen</span> by one and set
@@ -1085,20 +1101,18 @@ are all initially 0.
  <li><p>If <span>utf-8 bytes seen</span> is not equal to
  <span>utf-8 bytes needed</span>, continue.
 
- <li><p>Let <var title>code point</var> be <span>utf-8 code point</span> and
- <var title>lower boundary</var> be <span>utf-8 lower boundary</span>.
+ <li><p>Let <var title>code point</var> be <span>utf-8 code point</span>.
 
  <li><p>Set <span>utf-8 code point</span>,
- <span>utf-8 bytes needed</span>, <span>utf-8 bytes seen</span>, and
- <span>utf-8 lower boundary</span> to 0.
+ <span>utf-8 bytes needed</span>, and <span>utf-8 bytes seen</span> to 0.
 
- <li><p>If <var title>code point</var> is in the range
- <var title>lower boundary</var> to 0x10FFFF and is not
- in the range 0xD800 to 0xDFFF, emit a code point whose value is
- <var title>code point</var>.
-
- <li><p>Emit a <span>decoder error</span>.
+ <li><p>Emit a code point whose value is <var title>code point</var>.
 </ol>
+
+<p class=note>The constraints in the <span>utf-8 decoder</span> above match
+“Best Practices for Using U+FFFD” from the Unicode standard. No other
+behavior is permitted per the Encoding Standard (other algorithms that
+achieve the same result are obviously fine, even encouraged).
 
 
 <p>The <dfn>utf-8 encoder</dfn> (<span>encoder</span> for <span>utf-8</span>) is:
