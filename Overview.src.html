@@ -675,9 +675,15 @@ these steps:
  <var title>stream</var>.
 </ol>
 
+<hr>
+
 <p>To <dfn>encode</dfn> a code point stream <var title>stream</var> using
 encoding <var title>encoding</var>, return the result of running
 <var title>encoding</var>'s <span>encoder</span> on <var title>stream</var>.
+
+<p>To <dfn>utf-8 encode</dfn> a code point stream <var title>stream</var>,
+return the result of <span title=encode>encoding</span>
+<var title>stream</var> using encoding <span>utf-8</span>.
 
 <p class=note>If the input to this algorithm stems from a DOMString, the
 <span data-anolis-spec=webidl>convert a DOMString to a sequence of Unicode characters</span>
