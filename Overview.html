@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-15-december-2012">Living Standard — Last Updated 15 December 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-23-december-2012">Living Standard — Last Updated 23 December 2012</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-15 December 2012, the editor has made this specification available
+23 December 2012, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -836,7 +836,7 @@ and <b>streaming flag</b> (initially unset).
   <code>TypeError</code>.
 
  <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a></code>
- <dd><p>Returns the <b>encoding</b>.
+ <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
 
  <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>([<var title="">input</var> [, <var title="">options</var>]])</code>
  <dd>
@@ -879,7 +879,7 @@ constructor must run these steps:
 </ol>
 
 <p>The <dfn id="dom-textdecoder-encoding" title="dom-TextDecoder-encoding"><code>encoding</code></dfn>
-attribute must return the <b>encoding</b>.
+attribute must return <b>encoding</b>'s <a href="#name">name</a>.
 
 <p>The
 <dfn id="dom-textdecoder-decode" title="dom-TextDecoder-decode"><code>decode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
@@ -968,7 +968,7 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
   <code>TypeError</code>.
 
  <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a></code>
- <dd><p>Returns the <b>encoding</b>.
+ <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
 
  <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>([<var title="">input</var> [, <var title="">options</var>]])</code>
  <dd><p>Returns the result of running <b>encoding</b>'s
@@ -1003,7 +1003,7 @@ constructor must run these steps:
 </ol>
 
 <p>The <dfn id="dom-textencoder-encoding" title="dom-TextEncoder-encoding"><code>encoding</code></dfn>
-attribute must return the <b>encoding</b>.
+attribute must return <b>encoding</b>'s <a href="#name">name</a>.
 
 <p>The
 <dfn id="dom-textencoder-encode" title="dom-TextEncoder-encode"><code>encode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
