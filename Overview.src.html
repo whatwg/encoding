@@ -780,7 +780,8 @@ dictionary <dfn>TextDecodeOptions</dfn> {
 [<span title=dom-TextDecoder>Constructor</span>(optional DOMString <var title>label</var> = "utf-8", optional <span>TextDecoderOptions</span> <var title>options</var>)]
 interface <dfn>TextDecoder</dfn> {
   readonly attribute DOMString <span title=dom-TextDecoder-encoding>encoding</span>;
-  DOMString <span title=dom-TextDecoder-decode>decode</span>(optional <span data-anolis-spec=typedarray>ArrayBufferView</span> <var title>input</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
+  DOMString <span title=dom-TextDecoder-decode>decode</span>();
+  DOMString <span title=dom-TextDecoder-decode>decode</span>(<span data-anolis-spec=typedarray>ArrayBufferView</span> <var title>input</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
 };</pre>
 
 <p>A <code>TextDecoder</code> object has an associated
@@ -911,7 +912,7 @@ method must run these steps:
 [<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var title>utfLabel</var> = "utf-8")]
 interface <dfn>TextEncoder</dfn> {
   readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
-  <span data-anolis-spec=typedarray>Uint8Array</span> <span title=dom-TextEncoder-encode>encode</span>(optional DOMString <var title>input</var>, optional <span>TextEncodeOptions</span> <var title>options</var>);
+  <span data-anolis-spec=typedarray>Uint8Array</span> <span title=dom-TextEncoder-encode>encode</span>(optional DOMString <var title>input</var> = "", optional <span>TextEncodeOptions</span> <var title>options</var>);
 };</pre>
 
 <p>A <code>TextEncoder</code> object has an associated
@@ -979,7 +980,7 @@ method must run these steps:
  set the <b>streaming flag</b>, and unset the <b>streaming flag</b>
  otherwise.
 
- <li><p>If <var title>input</var> is given, append the result of
+ <li><p>Append the result of
  <span data-anolis-spec=webidl title="convert a DOMString to a sequence of Unicode characters">converting <var title>input</var> to Unicode</span>
  to the <b>stream</b>.
 
