@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-28-december-2012">Living Standard — Last Updated 28 December 2012</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-7-january-2013">Living Standard — Last Updated 7 January 2013</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-28 December 2012, the editor has made this specification available
+7 January 2013, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1615,8 +1615,9 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 190 − 0x3F.
 
- <li><p>If either <var title="">lead</var> or <var>trail</var> is not in the
- range 0x21 to 0x7E, emit an <a href="#encoder-error">encoder error</a>.
+ <li><p>If either <var title="">lead</var> or <var>trail</var> is less than
+ 0x21, emit an <a href="#encoder-error">encoder error</a>.
+ <!-- 0x21 to 0x7E -->
 
  <li><p>Emit two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
@@ -2545,9 +2546,9 @@ at all.-->
    <li><p>Let <var title="">trail</var> be
    <var title="">pointer</var> % (26 + 26 + 126) − 26 − 26 + 1.
 
-   <li><p>If <var title="">lead</var> is not in the range 0x21 to 0x46 or
-   <var title="">trail</var> is not in the range 0x21 to 0x7E, emit an
-   <a href="#encoder-error">encoder error</a>.
+   <li><p>If either <var title="">lead</var> or <var title="">trail</var> is less
+   than 0x21, emit an <a href="#encoder-error">encoder error</a>.
+   <!-- 0x21 to 0x46, 0x21 to 0x7E -->
 
    <li><p>Emit two bytes whose values are <var title="">lead</var> and
    <var title="">trail</var>.
@@ -2560,9 +2561,12 @@ at all.-->
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0x21.
 
- <li><p>If <var title="">lead</var> is not in the range 0x47 to 0x7E or
- <var title="">trail</var> is not in the range 0x21 to 0x7E, emit an
- <a href="#encoder-error">encoder error</a>.
+ <!-- unnecessary check, see
+      https://www.w3.org/Bugs/Public/show_bug.cgi?id=19945
+ <li><p>If <var title>lead</var> is not in the range 0x47 to 0x7E or
+ <var title>trail</var> is not in the range 0x21 to 0x7E, emit an
+ <span>encoder error</span>.
+ -->
 
  <li><p>Emit two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.

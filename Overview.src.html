@@ -1576,8 +1576,9 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li><p>Let <var title>trail</var> be <var title>pointer</var> % 190 &minus; 0x3F.
 
- <li><p>If either <var title>lead</var> or <var>trail</var> is not in the
- range 0x21 to 0x7E, emit an <span>encoder error</span>.
+ <li><p>If either <var title>lead</var> or <var>trail</var> is less than
+ 0x21, emit an <span>encoder error</span>.
+ <!-- 0x21 to 0x7E -->
 
  <li><p>Emit two bytes whose values are <var title>lead</var> and
  <var title>trail</var>.
@@ -2506,9 +2507,9 @@ at all.-->
    <li><p>Let <var title>trail</var> be
    <var title>pointer</var> % (26 + 26 + 126) &minus; 26 &minus; 26 + 1.
 
-   <li><p>If <var title>lead</var> is not in the range 0x21 to 0x46 or
-   <var title>trail</var> is not in the range 0x21 to 0x7E, emit an
-   <span>encoder error</span>.
+   <li><p>If either <var title>lead</var> or <var title>trail</var> is less
+   than 0x21, emit an <span>encoder error</span>.
+   <!-- 0x21 to 0x46, 0x21 to 0x7E -->
 
    <li><p>Emit two bytes whose values are <var title>lead</var> and
    <var title>trail</var>.
@@ -2521,9 +2522,12 @@ at all.-->
 
  <li><p>Let <var title>trail</var> be <var title>pointer</var> % 94 + 0x21.
 
+ <!-- unnecessary check, see
+      https://www.w3.org/Bugs/Public/show_bug.cgi?id=19945
  <li><p>If <var title>lead</var> is not in the range 0x47 to 0x7E or
  <var title>trail</var> is not in the range 0x21 to 0x7E, emit an
  <span>encoder error</span>.
+ -->
 
  <li><p>Emit two bytes whose values are <var title>lead</var> and
  <var title>trail</var>.
