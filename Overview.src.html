@@ -1562,15 +1562,15 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
 
- <li><p>If the <span>hz-gb-2312 flag</span> is unset, decrease the
- <span>code point pointer</span> by one, set the
- <span>hz-gb-2312 flag</span>, and emit two bytes 0x7E 0x7B.
-
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index gbk</span>.
 
  <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
+
+ <li><p>If the <span>hz-gb-2312 flag</span> is unset, decrease the
+ <span>code point pointer</span> by one, set the
+ <span>hz-gb-2312 flag</span>, and emit two bytes 0x7E 0x7B.
 
  <li><p>Let <var title>lead</var> be <var title>pointer</var> / 190 + 1.
 
@@ -2049,16 +2049,16 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  emit a byte whose value is
  <var title>code point</var> &minus; 0xFF61 + 0x21.
 
- <li><p>If <span>iso-2022-jp state</span> is not <b title>lead state</b>,
- decrease the <span>code point pointer</span> by one, set
- <span>iso-2022-jp state</span> to <b title>lead state</b>, and emit three
- bytes 0x1B 0x24 0x42.
-
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index jis0208</span>.
 
  <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
+
+ <li><p>If <span>iso-2022-jp state</span> is not <b title>lead state</b>,
+ decrease the <span>code point pointer</span> by one, set
+ <span>iso-2022-jp state</span> to <b title>lead state</b>, and emit three
+ bytes 0x1B 0x24 0x42.
 
  <li><p>Let <var title>lead</var> be <var title>pointer</var> / 94 + 0x21.
 
@@ -2485,16 +2485,16 @@ at all.-->
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
 
- <li><p>If <span>iso-2022-kr state</span> is not <b title>lead state</b>,
- decrease the <span>code point pointer</span> by one, set
- <span>iso-2022-kr state</span> to <b title>lead state</b>, and emit byte
- 0x0E.
-
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index euc-kr</span>.
 
  <li><p>If <var title>pointer</var> is null, emit an
  <span>encoder error</span>.
+
+ <li><p>If <span>iso-2022-kr state</span> is not <b title>lead state</b>,
+ decrease the <span>code point pointer</span> by one, set
+ <span>iso-2022-kr state</span> to <b title>lead state</b>, and emit byte
+ 0x0E.
 
  <li>
   <p>If <var title>pointer</var> is less than

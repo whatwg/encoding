@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-7-january-2013">Living Standard — Last Updated 7 January 2013</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-15-january-2013">Living Standard — Last Updated 15 January 2013</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-7 January 2013, the editor has made this specification available
+15 January 2013, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1601,15 +1601,15 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
 
- <li><p>If the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is unset, decrease the
- <a href="#code-point-pointer">code point pointer</a> by one, set the
- <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>, and emit two bytes 0x7E 0x7B.
-
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-gbk">index gbk</a>.
 
  <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
+
+ <li><p>If the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is unset, decrease the
+ <a href="#code-point-pointer">code point pointer</a> by one, set the
+ <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>, and emit two bytes 0x7E 0x7B.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 190 + 1.
 
@@ -2088,16 +2088,16 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  emit a byte whose value is
  <var title="">code point</var> − 0xFF61 + 0x21.
 
- <li><p>If <a href="#iso-2022-jp-state">iso-2022-jp state</a> is not <b title="">lead state</b>,
- decrease the <a href="#code-point-pointer">code point pointer</a> by one, set
- <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and emit three
- bytes 0x1B 0x24 0x42.
-
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
 
  <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
+
+ <li><p>If <a href="#iso-2022-jp-state">iso-2022-jp state</a> is not <b title="">lead state</b>,
+ decrease the <a href="#code-point-pointer">code point pointer</a> by one, set
+ <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and emit three
+ bytes 0x1B 0x24 0x42.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 94 + 0x21.
 
@@ -2524,16 +2524,16 @@ at all.-->
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
 
- <li><p>If <a href="#iso-2022-kr-state">iso-2022-kr state</a> is not <b title="">lead state</b>,
- decrease the <a href="#code-point-pointer">code point pointer</a> by one, set
- <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">lead state</b>, and emit byte
- 0x0E.
-
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-euc-kr">index euc-kr</a>.
 
  <li><p>If <var title="">pointer</var> is null, emit an
  <a href="#encoder-error">encoder error</a>.
+
+ <li><p>If <a href="#iso-2022-kr-state">iso-2022-kr state</a> is not <b title="">lead state</b>,
+ decrease the <a href="#code-point-pointer">code point pointer</a> by one, set
+ <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">lead state</b>, and emit byte
+ 0x0E.
 
  <li>
   <p>If <var title="">pointer</var> is less than
