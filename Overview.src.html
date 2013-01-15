@@ -1630,14 +1630,14 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li>
     <p>If there is a row in the table below whose first column is
     <var title>pointer</var>, emit the <em>two</em> code points listed in
-    its second column:
+    its second column (the third column is irrelevant):
 
     <table>
-     <tr><th>Pointer<th>Code points
-     <tr><td>1133<!-- 0x88 0x62 --><td>U+00CA U+0304<!-- Ê̄ -->
-     <tr><td>1135<!-- 0x88 0x64 --><td>U+00CA U+030C<!-- Ê̌ -->
-     <tr><td>1164<!-- 0x88 0xA3 --><td>U+00EA U+0304<!-- ê̄ -->
-     <tr><td>1166<!-- 0x88 0xA5 --><td>U+00EA U+030C<!-- ê̌ -->
+     <tr><th>Pointer<th>Code points<th>Notes<!-- http://www.unicode.org/Public/UNIDATA/NamedSequences.txt -->
+     <tr><td>1133<!-- 0x88 0x62 --><td>U+00CA U+0304<td>Ê̄ (LATIN CAPITAL LETTER E WITH CIRCUMFLEX AND MACRON)
+     <tr><td>1135<!-- 0x88 0x64 --><td>U+00CA U+030C<td>Ê̌ (LATIN SMALL LETTER E WITH CIRCUMFLEX AND MACRON)
+     <tr><td>1164<!-- 0x88 0xA3 --><td>U+00EA U+0304<td>ê̄ (LATIN CAPITAL LETTER E WITH CIRCUMFLEX AND CARON)
+     <tr><td>1166<!-- 0x88 0xA5 --><td>U+00EA U+030C<td>ê̌ (LATIN SMALL LETTER E WITH CIRCUMFLEX AND CARON)
     </table>
     <!-- we do this to avoid PUA -->
 
