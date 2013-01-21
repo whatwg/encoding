@@ -180,6 +180,13 @@ and their <span title=label>labels</span> user agents must support.
 User agents must not support any other <span title=encoding>encodings</span>
 or <span title=label>labels</span>.
 
+<p>Authors must use the <span>utf-8</span> <span>encoding</span> and must use the
+"<code title>utf-8</code>" <span>label</span> to identify it.
+
+<p>New protocols and formats must use the <span>utf-8</span> <span>encoding</span> 
+exclusively. If these protocols and formats need to expose the <span>encoding</span>'s
+<span>label</span>, they must expose it as "<code title>utf-8</code>".
+
 <p>To <dfn title=concept-encoding-get>get an encoding</dfn> from a string
 <var title>label</var>, run these steps:
 
@@ -1003,10 +1010,6 @@ method must run these steps:
 
 
 <h2>The encoding</h2>
-
-<p>New content and formats must exclusively use the <span>utf-8</span>
-<span>encoding</span>.
-
 
 <h3><dfn>utf-8</dfn></h3>
 

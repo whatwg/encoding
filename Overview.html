@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-15-january-2013">Living Standard — Last Updated 15 January 2013</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-21-january-2013">Living Standard — Last Updated 21 January 2013</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-15 January 2013, the editor has made this specification available
+21 January 2013, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -218,6 +218,13 @@ U+0000 to U+007F are inserted into the code point stream at
 and their <a href="#label" title="label">labels</a> user agents must support.
 User agents must not support any other <a href="#encoding" title="encoding">encodings</a>
 or <a href="#label" title="label">labels</a>.
+
+<p>Authors must use the <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a> and must use the
+"<code title="">utf-8</code>" <a href="#label">label</a> to identify it.
+
+<p>New protocols and formats must use the <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a> 
+exclusively. If these protocols and formats need to expose the <a href="#encoding">encoding</a>'s
+<a href="#label">label</a>, they must expose it as "<code title="">utf-8</code>".
 
 <p>To <dfn id="concept-encoding-get" title="concept-encoding-get">get an encoding</dfn> from a string
 <var title="">label</var>, run these steps:
@@ -1042,10 +1049,6 @@ method must run these steps:
 
 
 <h2 id="the-encoding"><span class="secno">8 </span>The encoding</h2>
-
-<p>New content and formats must exclusively use the <a href="#utf-8">utf-8</a>
-<a href="#encoding">encoding</a>.
-
 
 <h3 id="utf-8"><span class="secno">8.1 </span><dfn>utf-8</dfn></h3>
 
