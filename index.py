@@ -31,7 +31,7 @@ def get_name(cp):
     elif cp >= 0xAC00 and cp <= 0xD7A3:
         #return "<Hangul Syllable>"
         i = cp - 0xAC00
-        s = jamo[0][i/21/28] + jamo[1][i/28%21] + jamo[2][i%28]
+        s = jamo[0][i/28/21] + jamo[1][i/28%21] + jamo[2][i%28]
         return "HANGUL SYLLABLE " + s
     elif cp >= 0xE000 and cp <= 0xF8FF:
         return "<Private Use>"
