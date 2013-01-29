@@ -895,14 +895,11 @@ method must run these steps:
  <span>EOF byte</span> to the <b>stream</b>.
 
  <li>
-  <p>If the <b>fatal flag</b> is set, an emitted
-  <span>decoder error</span> from <b>encoding</b>'s <span>decoder</span>
-  makes this algorithm
-  <span data-anolis-spec=dom title=concept-throw>throw</span> a
+  <p>Return the output of running <b>encoding</b>'s <span>decoder</span> on 
+  the <b>stream</b>. If the <b>fatal flag</b> is set and 
+  <b>encoding</b>'s <span>decoder</span> emits a <span>decoder error</span>, 
+  <span data-anolis-spec=dom title=concept-throw>throw</span> a 
   "<code title>EncodingError</code>".
-
-  <p>Return the output of running <b>encoding</b>'s <span>decoder</span> on
-  the <b>stream</b>.
 
   <p class=note>In addition to the reason given above with respect to the
   byte order mark, this also does not use the <span>encode</span> algorithm

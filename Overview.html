@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-21-january-2013">Living Standard — Last Updated 21 January 2013</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-29-january-2013">Living Standard — Last Updated 29 January 2013</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-21 January 2013, the editor has made this specification available
+29 January 2013, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -934,14 +934,11 @@ method must run these steps:
  <a href="#eof-byte">EOF byte</a> to the <b>stream</b>.
 
  <li>
-  <p>If the <b>fatal flag</b> is set, an emitted
-  <a href="#decoder-error">decoder error</a> from <b>encoding</b>'s <a href="#decoder">decoder</a>
-  makes this algorithm
-  <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> a
+  <p>Return the output of running <b>encoding</b>'s <a href="#decoder">decoder</a> on 
+  the <b>stream</b>. If the <b>fatal flag</b> is set and 
+  <b>encoding</b>'s <a href="#decoder">decoder</a> emits a <a href="#decoder-error">decoder error</a>, 
+  <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> a 
   "<code title="">EncodingError</code>".
-
-  <p>Return the output of running <b>encoding</b>'s <a href="#decoder">decoder</a> on
-  the <b>stream</b>.
 
   <p class="note">In addition to the reason given above with respect to the
   byte order mark, this also does not use the <a href="#encode">encode</a> algorithm
