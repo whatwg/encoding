@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-29-january-2013">Living Standard — Last Updated 29 January 2013</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-22-february-2013">Living Standard — Last Updated 22 February 2013</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-29 January 2013, the editor has made this specification available
+22 February 2013, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -84,10 +84,11 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#iso-2022-kr"><span class="secno">13.2 </span>iso-2022-kr</a></ol></li>
  <li><a href="#legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</a>
   <ol>
-   <li><a href="#common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.1 </span>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></a></li>
-   <li><a href="#utf-16be"><span class="secno">14.2 </span>utf-16be</a></li>
-   <li><a href="#utf-16le"><span class="secno">14.3 </span>utf-16le</a></li>
-   <li><a href="#x-user-defined"><span class="secno">14.4 </span>x-user-defined</a></ol></li>
+   <li><a href="#replacement"><span class="secno">14.1 </span>replacement</a></li>
+   <li><a href="#common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></a></li>
+   <li><a href="#utf-16be"><span class="secno">14.3 </span>utf-16be</a></li>
+   <li><a href="#utf-16le"><span class="secno">14.4 </span>utf-16le</a></li>
+   <li><a href="#x-user-defined"><span class="secno">14.5 </span>x-user-defined</a></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
@@ -222,7 +223,7 @@ or <a href="#label" title="label">labels</a>.
 <p>Authors must use the <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a> and must use the
 "<code title="">utf-8</code>" <a href="#label">label</a> to identify it.
 
-<p>New protocols and formats must use the <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a> 
+<p>New protocols and formats must use the <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a>
 exclusively. If these protocols and formats need to expose the <a href="#encoding">encoding</a>'s
 <a href="#label">label</a>, they must expose it as "<code title="">utf-8</code>".
 
@@ -550,6 +551,10 @@ found to be necessary to be compatible with deployed content.
  <tbody>
   <tr><th colspan="2"><a href="#legacy-miscellaneous-encodings">Legacy miscellaneous encodings</a>
   <tr>
+   <td rowspan="2"><a href="#replacement">replacement</a>
+   <td>"<code title="">iso-2022-cn</code>"
+  <tr><td>"<code title="">iso-2022-cn-ext</code>"
+  <tr>
    <td><a href="#utf-16be">utf-16be</a>
    <td>"<code title="">utf-16be</code>"
   <tr>
@@ -839,7 +844,8 @@ and <b>streaming flag</b> (initially unset).
  <dt><code><var title="">decoder</var> = new <a href="#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>([<var title="">label</var> = "utf-8" [, <var title="">options</var>]])</code>
  <dd>
   <p>Returns a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
-  <p>If <var title="">label</var> is not a <a href="#label">label</a>,
+  <p>If <var title="">label</var> is either not a <a href="#label">label</a> or is a
+  <a href="#label">label</a> for <a href="#replacement">replacement</a>,
   <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-throw" title="throw">throws</a> a
   <code>TypeError</code>.
 
@@ -868,7 +874,7 @@ constructor must run these steps:
  <a href="#concept-encoding-get" title="concept-encoding-get">getting an encoding</a> from
  <var title="">label</var>.
 
- <li><p>If <var title="">encoding</var> is failure,
+ <li><p>If <var title="">encoding</var> is failure or <a href="#replacement">replacement</a>,
  <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-throw">throw</a> a <code>TypeError</code>.
 
  <li><p>Let <var title="">dec</var> be a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
@@ -934,10 +940,10 @@ method must run these steps:
  <a href="#eof-byte">EOF byte</a> to the <b>stream</b>.
 
  <li>
-  <p>Return the output of running <b>encoding</b>'s <a href="#decoder">decoder</a> on 
-  the <b>stream</b>. If the <b>fatal flag</b> is set and 
-  <b>encoding</b>'s <a href="#decoder">decoder</a> emits a <a href="#decoder-error">decoder error</a>, 
-  <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> a 
+  <p>Return the output of running <b>encoding</b>'s <a href="#decoder">decoder</a> on
+  the <b>stream</b>. If the <b>fatal flag</b> is set and
+  <b>encoding</b>'s <a href="#decoder">decoder</a> emits a <a href="#decoder-error">decoder error</a>,
+  <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> a
   "<code title="">EncodingError</code>".
 
   <p class="note">In addition to the reason given above with respect to the
@@ -2581,7 +2587,20 @@ at all.-->
 <h2 id="legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</h2>
 
 
-<h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.1 </span>Common infrastructure for <a href="#utf-16be">utf-16be</a> and <a href="#utf-16le">utf-16le</a></h3>
+<h3 id="replacement"><span class="secno">14.1 </span><dfn>replacement</dfn></h3>
+
+<p class="note">The <a href="#replacement">replacement</a> <a href="#encoding">encoding</a> exists to prevent certain
+attacks that abuse a mismatch between <a href="#encoding" title="encoding">encodings</a> supported on
+the server and the client.
+
+<p>The <dfn id="replacement-decoder">replacement decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#replacement">replacement</a>)
+is to emit a <a href="#decoder-error">decoder error</a> followed by an <a href="#eof-code-point">EOF code point</a>.
+
+<p>The <dfn id="replacement-encoder">replacement encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#replacement">replacement</a>)
+is the <a href="#utf-8-encoder">utf-8 encoder</a>.
+
+
+<h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <a href="#utf-16be">utf-16be</a> and <a href="#utf-16le">utf-16le</a></h3>
 
 <p class="note">In violation of the Unicode standard, checking for a
 byte order mark happens before an encoding to decode a byte stream is
@@ -2698,7 +2717,7 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
 </ol>
 
 
-<h3 id="utf-16be"><span class="secno">14.2 </span><dfn>utf-16be</dfn></h3>
+<h3 id="utf-16be"><span class="secno">14.3 </span><dfn>utf-16be</dfn></h3>
 
 <p>The <dfn id="utf-16be-decoder">utf-16be decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-16be">utf-16be</a>)
 is the <a href="#utf-16-decoder">utf-16 decoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
@@ -2707,7 +2726,7 @@ is the <a href="#utf-16-decoder">utf-16 decoder</a> with the <a href="#utf-16be-
 is the <a href="#utf-16-encoder">utf-16 encoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
 
 
-<h3 id="utf-16le"><span class="secno">14.3 </span><dfn>utf-16le</dfn></h3>
+<h3 id="utf-16le"><span class="secno">14.4 </span><dfn>utf-16le</dfn></h3>
 
 <p class="note">In violation of the Unicode standard,
 "<code title="">utf-16</code>" is a <a href="#label">label</a> for
@@ -2720,7 +2739,7 @@ is the <a href="#utf-16-decoder">utf-16 decoder</a>.
 is the <a href="#utf-16-encoder">utf-16 encoder</a>.
 
 
-<h3 id="x-user-defined"><span class="secno">14.4 </span><dfn>x-user-defined</dfn></h3>
+<h3 id="x-user-defined"><span class="secno">14.5 </span><dfn>x-user-defined</dfn></h3>
 
 <p class="note">While technically this is a <a href="#single-byte-encoding">single-byte encoding</a>,
 it is defined separately as it can be implemented algorithmically.

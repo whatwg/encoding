@@ -433,6 +433,13 @@
     "encodings": [
       {
         "labels": [
+          "iso-2022-cn",
+          "iso-2022-cn-ext"
+        ],
+        "name": "replacement"
+      },
+      {
+        "labels": [
           "utf-16be"
         ],
         "name": "utf-16be"

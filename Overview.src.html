@@ -183,7 +183,7 @@ or <span title=label>labels</span>.
 <p>Authors must use the <span>utf-8</span> <span>encoding</span> and must use the
 "<code title>utf-8</code>" <span>label</span> to identify it.
 
-<p>New protocols and formats must use the <span>utf-8</span> <span>encoding</span> 
+<p>New protocols and formats must use the <span>utf-8</span> <span>encoding</span>
 exclusively. If these protocols and formats need to expose the <span>encoding</span>'s
 <span>label</span>, they must expose it as "<code title>utf-8</code>".
 
@@ -511,6 +511,10 @@ found to be necessary to be compatible with deployed content.
  <tbody>
   <tr><th colspan=2><a href=#legacy-miscellaneous-encodings>Legacy miscellaneous encodings</a>
   <tr>
+   <td rowspan=2><span>replacement</span>
+   <td>"<code title>iso-2022-cn</code>"
+  <tr><td>"<code title>iso-2022-cn-ext</code>"
+  <tr>
    <td><span>utf-16be</span>
    <td>"<code title>utf-16be</code>"
   <tr>
@@ -800,7 +804,8 @@ and <b>streaming flag</b> (initially unset).
  <dt><code><var title>decoder</var> = new <span title=dom-TextDecoder>TextDecoder</span>([<var title>label</var> = "utf-8" [, <var title>options</var>]])</code>
  <dd>
   <p>Returns a new <code>TextDecoder</code> object.
-  <p>If <var title>label</var> is not a <span>label</span>,
+  <p>If <var title>label</var> is either not a <span>label</span> or is a
+  <span>label</span> for <span>replacement</span>,
   <span data-anolis-spec=webidl title=throw>throws</span> a
   <code>TypeError</code>.
 
@@ -829,7 +834,7 @@ constructor must run these steps:
  <span title=concept-encoding-get>getting an encoding</span> from
  <var title>label</var>.
 
- <li><p>If <var title>encoding</var> is failure,
+ <li><p>If <var title>encoding</var> is failure or <span>replacement</span>,
  <span data-anolis-spec=webidl>throw</span> a <code>TypeError</code>.
 
  <li><p>Let <var title>dec</var> be a new <code>TextDecoder</code> object.
@@ -895,10 +900,10 @@ method must run these steps:
  <span>EOF byte</span> to the <b>stream</b>.
 
  <li>
-  <p>Return the output of running <b>encoding</b>'s <span>decoder</span> on 
-  the <b>stream</b>. If the <b>fatal flag</b> is set and 
-  <b>encoding</b>'s <span>decoder</span> emits a <span>decoder error</span>, 
-  <span data-anolis-spec=dom title=concept-throw>throw</span> a 
+  <p>Return the output of running <b>encoding</b>'s <span>decoder</span> on
+  the <b>stream</b>. If the <b>fatal flag</b> is set and
+  <b>encoding</b>'s <span>decoder</span> emits a <span>decoder error</span>,
+  <span data-anolis-spec=dom title=concept-throw>throw</span> a
   "<code title>EncodingError</code>".
 
   <p class=note>In addition to the reason given above with respect to the
@@ -2540,6 +2545,19 @@ at all.-->
 
 
 <h2>Legacy miscellaneous encodings</h2>
+
+
+<h3><dfn>replacement</dfn></h3>
+
+<p class=note>The <span>replacement</span> <span>encoding</span> exists to prevent certain
+attacks that abuse a mismatch between <span title=encoding>encodings</span> supported on
+the server and the client.
+
+<p>The <dfn>replacement decoder</dfn> (<span>decoder</span> for <span>replacement</span>)
+is to emit a <span>decoder error</span> followed by an <span>EOF code point</span>.
+
+<p>The <dfn>replacement encoder</dfn> (<span>encoder</span> for <span>replacement</span>)
+is the <span>utf-8 encoder</span>.
 
 
 <h3>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></h3>
