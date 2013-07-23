@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-22-february-2013">Living Standard — Last Updated 22 February 2013</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-23-july-2013">Living Standard — Last Updated 23 July 2013</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-22 February 2013, the editor has made this specification available
+23 July 2013, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -961,7 +961,7 @@ method must run these steps:
 [<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8")]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
-  <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#7">Uint8Array</a> <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional DOMString <var title="">input</var> = "", optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
+  <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#7">Uint8Array</a> <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional [EnsureUTF16] DOMString <var title="">input</var> = "", optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
 };</pre>
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated
@@ -1029,9 +1029,7 @@ method must run these steps:
  set the <b>streaming flag</b>, and unset the <b>streaming flag</b>
  otherwise.
 
- <li><p>Append the result of
- <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-obtain-unicode" title="convert a DOMString to a sequence of Unicode characters">converting <var title="">input</var> to Unicode</a>
- to the <b>stream</b>.
+ <li><p>Append <var title="">input</var> to the <b>stream</b>.
 
  <li><p>If the <b>streaming flag</b> is unset, append the
  <a href="#eof-code-point">EOF code point</a> to the <b>stream</b>.
