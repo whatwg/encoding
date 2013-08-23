@@ -418,13 +418,6 @@
           "windows-949"
         ],
         "name": "euc-kr"
-      },
-      {
-        "labels": [
-          "csiso2022kr",
-          "iso-2022-kr"
-        ],
-        "name": "iso-2022-kr"
       }
     ],
     "heading": "Legacy multi-byte Korean encodings"
@@ -433,6 +426,8 @@
     "encodings": [
       {
         "labels": [
+          "csiso2022kr",
+          "iso-2022-kr",
           "iso-2022-cn",
           "iso-2022-cn-ext"
         ],

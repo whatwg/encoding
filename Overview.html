@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-23-july-2013">Living Standard — Last Updated 23 July 2013</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-23-august-2013">Living Standard — Last Updated 23 August 2013</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-23 July 2013, the editor has made this specification available
+23 August 2013, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -80,8 +80,7 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#shift_jis"><span class="secno">12.3 </span>shift_jis</a></ol></li>
  <li><a href="#legacy-multi-byte-korean-encodings"><span class="secno">13 </span>Legacy multi-byte Korean encodings</a>
   <ol>
-   <li><a href="#euc-kr"><span class="secno">13.1 </span>euc-kr</a></li>
-   <li><a href="#iso-2022-kr"><span class="secno">13.2 </span>iso-2022-kr</a></ol></li>
+   <li><a href="#euc-kr"><span class="secno">13.1 </span>euc-kr</a></ol></li>
  <li><a href="#legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</a>
   <ol>
    <li><a href="#replacement"><span class="secno">14.1 </span>replacement</a></li>
@@ -544,16 +543,14 @@ found to be necessary to be compatible with deployed content.
   <tr><td>"<code title="">ksc5601</code>"
   <tr><td>"<code title="">ksc_5601</code>"
   <tr><td>"<code title="">windows-949</code>"
-  <tr>
-   <td rowspan="2"><a href="#iso-2022-kr">iso-2022-kr</a>
-   <td>"<code title="">csiso2022kr</code>"
-  <tr><td>"<code title="">iso-2022-kr</code>"
  <tbody>
   <tr><th colspan="2"><a href="#legacy-miscellaneous-encodings">Legacy miscellaneous encodings</a>
   <tr>
-   <td rowspan="2"><a href="#replacement">replacement</a>
-   <td>"<code title="">iso-2022-cn</code>"
+   <td rowspan="4"><a href="#replacement">replacement</a>
+   <td>"<code title="">csiso2022kr</code>"
+  <tr><td>"<code title="">iso-2022-cn</code>"
   <tr><td>"<code title="">iso-2022-cn-ext</code>"
+  <tr><td>"<code title="">iso-2022-kr</code>"
   <tr>
    <td><a href="#utf-16be">utf-16be</a>
    <td>"<code title="">utf-16be</code>"
@@ -2343,238 +2340,6 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 94 + 0xC7.
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0xA1.
-
- <li><p>Emit two bytes whose values are <var title="">lead</var> and
- <var title="">trail</var>.
-</ol>
-
-
-<h3 id="iso-2022-kr"><span class="secno">13.2 </span><dfn>iso-2022-kr</dfn></h3>
-
-<p class="XXX">This encoding is
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=20599">considered for removal</a>
-from the platform.
-
-<!--XXX the "ESC $ ) C" sequence is only supported by Gecko at the start of
-a stream. It does exactly nothing. Trying to get away with not supporting it
-at all.-->
-
-<p>The <dfn id="iso-2022-kr-state">iso-2022-kr state</dfn> is initially <b title="">ASCII state</b>.
-
-<p>The <dfn id="iso-2022-kr-lead">iso-2022-kr lead</dfn> is initially 0x00.
-
-<p>The <dfn id="iso-2022-kr-decoder">iso-2022-kr decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#iso-2022-kr">iso-2022-kr</a>) is:
-
-<ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
-
- <li><p>If <var title="">byte</var> is not the <a href="#eof-byte">EOF byte</a>,
- increase the <a href="#byte-pointer">byte pointer</a> by one.
-
- <li>
-  <p>Based on <a href="#iso-2022-kr-state">iso-2022-kr state</a>:
-
-  <dl class="switch">
-   <dt>ASCII state
-
-   <dd>
-    <p>Based on <var title="">byte</var>:
-
-    <dl class="switch">
-     <dt>0x0E
-     <dd><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">lead state</b>
-     and continue.
-
-     <dt>0x0F
-     <dd><p>Continue.
-
-     <dt>0x1B
-     <dd><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to
-     <b title="">escape start state</b> and continue.
-
-     <dt>0x00 to 0x7F
-     <dd><p>Emit a code point whose value is <var title="">byte</var>.
-
-     <dt><a href="#eof-byte">EOF byte</a>
-     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
-
-     <dt>Otherwise
-     <dd><p>Emit a <a href="#decoder-error">decoder error</a>.
-    </dl>
-
-   <dt>Escape start state<!-- 0x24 = $ -->
-   <dd>
-    <ol>
-     <li><p>If <var title="">byte</var> is 0x24, set
-     <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">escape middle state</b> and
-     continue.
-
-     <li><p>If <var title="">byte</var> is not the <a href="#eof-byte">EOF byte</a>,
-     decrease the <a href="#byte-pointer">byte pointer</a> by one.
-
-     <li><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>
-     and emit a <a href="#decoder-error">decoder error</a>.
-    </ol>
-
-   <dt>Escape middle state<!-- 0x29 = ) -->
-   <dd>
-    <ol>
-     <li><p>If <var title="">byte</var> is 0x29, set
-     <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">escape end state</b> and
-     continue.
-
-     <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, decrease
-     the <a href="#byte-pointer">byte pointer</a> by one, and decrease it by two otherwise.
-
-     <li><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>
-     and emit a <a href="#decoder-error">decoder error</a>.
-    </ol>
-
-   <dt>Escape end state<!-- 0x43 = C -->
-   <dd>
-    <ol>
-     <li><p>If <var title="">byte</var> is 0x43, set
-     <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b> and
-     continue.
-
-     <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, decrease
-     the <a href="#byte-pointer">byte pointer</a> by two, and decrease it by three
-     otherwise.
-
-     <li><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>
-     and emit a <a href="#decoder-error">decoder error</a>.
-    </ol>
-
-   <dt>Lead state
-   <dd>
-    <p>Based on <var title="">byte</var>:
-    <dl class="switch">
-     <dt>0x0A
-     <dd><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>
-     and emit code point U+000A.
-
-     <dt>0x0E
-     <dd><p>Continue.
-
-     <dt>0x0F
-     <dd><p>Set <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>
-     and continue.
-
-     <dt><a href="#eof-byte">EOF byte</a>
-     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
-
-     <dt>Otherwise
-     <dd><p>Set <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> to <var title="">byte</var>, set
-     <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">trail state</b>, and
-     continue.
-    </dl>
-
-   <dt>Trail state
-   <dd>
-    <ol>
-     <li><p>Set the <a href="#iso-2022-kr-state">iso-2022-kr state</a> to
-     <b title="">lead state</b>.
-
-     <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit a
-     <a href="#decoder-error">decoder error</a>.
-
-     <li><p>Let <var title="">code point</var> be null.
-
-     <li><p>If <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> is in the range 0x21 to 0x46
-     and <var title="">byte</var> is in the range 0x21 to 0x7E, set
-     <var title="">code point</var> to the <a href="#index-code-point">index code point</a> for
-     (26 + 26 + 126) × (<a href="#iso-2022-kr-lead">iso-2022-kr lead</a> − 1) + 26 + 26 + <var title="">byte</var> − 1
-     in <a href="#index-euc-kr">index euc-kr</a>.
-
-     <li><p>If <a href="#iso-2022-kr-lead">iso-2022-kr lead</a> is in the range 0x47 to 0x7E
-     and <var title="">byte</var> is in the range 0x21 to 0x7E, set
-     <var title="">code point</var> to the <a href="#index-code-point">index code point</a> for
-     (26 + 26 + 126) × (0xC7 − 0x81) + (<a href="#iso-2022-kr-lead">iso-2022-kr lead</a> − 0x47) × 94 + (<var title="">byte</var> − 0x21)
-     in <a href="#index-euc-kr">index euc-kr</a>.
-
-     <li><p>If <var title="">code point</var> is not null, emit
-     <var title="">code point</var>.
-
-     <li><p>Emit a <a href="#decoder-error">decoder error</a>.
-    </ol>
-  </dl>
-</ol>
-
-<p>The <dfn id="iso-2022-kr-initialization-flag">iso-2022-kr initialization flag</dfn> is initially unset.</p>
-
-<p>The <dfn id="iso-2022-kr-encoder">iso-2022-kr encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#iso-2022-kr">iso-2022-kr</a>) is:
-
-<ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
-
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>
- and <a href="#iso-2022-kr-state">iso-2022-kr state</a> is not <b title="">ASCII state</b>, set
- <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b> and emit byte
- 0x0F.
-
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
-
- <li><p>If the <a href="#iso-2022-kr-initialization-flag">iso-2022-kr initialization flag</a> is unset, set
- the <a href="#iso-2022-kr-initialization-flag">iso-2022-kr initialization flag</a> and emit four bytes
- 0x1B 0x24 0x29 0x43.
- <!-- ESC $ ) C -->
-
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F and
- <a href="#iso-2022-kr-state">iso-2022-kr state</a> is not <b title="">ASCII state</b>, decrease
- the <a href="#code-point-pointer">code point pointer</a> by one, set
- <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">ASCII state</b>, and emit byte
- 0x0F.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
-
- <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
- <var title="">code point</var> in <a href="#index-euc-kr">index euc-kr</a>.
-
- <li><p>If <var title="">pointer</var> is null, emit an
- <a href="#encoder-error">encoder error</a>.
-
- <li><p>If <a href="#iso-2022-kr-state">iso-2022-kr state</a> is not <b title="">lead state</b>,
- decrease the <a href="#code-point-pointer">code point pointer</a> by one, set
- <a href="#iso-2022-kr-state">iso-2022-kr state</a> to <b title="">lead state</b>, and emit byte
- 0x0E.
-
- <li>
-  <p>If <var title="">pointer</var> is less than
-  (26 + 26 + 126) × (0xC7 − 0x81), run these substeps:
-
-  <ol>
-   <li><p>Let <var title="">lead</var> be
-   <var title="">pointer</var> / (26 + 26 + 126) + 1.
-
-   <li><p>Let <var title="">trail</var> be
-   <var title="">pointer</var> % (26 + 26 + 126) − 26 − 26 + 1.
-
-   <li><p>If either <var title="">lead</var> or <var title="">trail</var> is less
-   than 0x21, emit an <a href="#encoder-error">encoder error</a>.
-   <!-- 0x21 to 0x46, 0x21 to 0x7E -->
-
-   <li><p>Emit two bytes whose values are <var title="">lead</var> and
-   <var title="">trail</var>.
-  </ol>
-
- <li><p>Set <var title="">pointer</var> to
- <var title="">pointer</var> − (26 + 26 + 126) × (0xC7 − 0x81).
-
- <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 94 + 0x47.
-
- <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0x21.
-
- <!-- unnecessary check, see
-      https://www.w3.org/Bugs/Public/show_bug.cgi?id=19945
- <li><p>If <var title>lead</var> is not in the range 0x47 to 0x7E or
- <var title>trail</var> is not in the range 0x21 to 0x7E, emit an
- <span>encoder error</span>.
- -->
 
  <li><p>Emit two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
