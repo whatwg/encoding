@@ -860,7 +860,7 @@ method must run these steps:
 <ol>
  <li><p>If the <b>streaming flag</b> is unset, set the <b>encoding state</b>
  to the default values of the <b>encoding</b>'s <span>decoder</span>'s
- associated variables and empty the <b>stream</b>.
+ associated variables, unset the <b>BOM seen flag</b>, and empty the <b>stream</b>.
 
  <li><p>If <var title>options</var>'s <code title>stream</code> is true,
  set the <b>streaming flag</b>, and unset the <b>streaming flag</b>
