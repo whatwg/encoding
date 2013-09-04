@@ -2326,9 +2326,10 @@ is the <span>utf-8 encoder</span>.
 
 <h3>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></h3>
 
-<p class=note>In violation of the Unicode standard, checking for a
-byte order mark happens before an encoding to decode a byte stream is
-chosen, as seen in the <span>decode</span> algorithm.
+<p class=note>In violation of the Unicode standard, which does not allow for handling a
+byte order mark in its definition of utf-16be and utf-16le, checking and using a
+byte order mark happens before an encoding to decode a byte stream is chosen, as seen in
+the <span>decode</span> algorithm.
 
 <p>The <dfn>utf-16 lead byte</dfn> and <dfn>utf-16 lead surrogate</dfn>
 are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
@@ -2563,6 +2564,7 @@ Mark Davis,
 Martin Dürst,
 Masatoshi Kimura,
 Ms2ger,
+Nigel Tao,
 Norbert Lindenberg,
 Øistein E. Andersen,
 Peter Krefting,

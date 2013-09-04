@@ -2365,9 +2365,10 @@ is the <a href="#utf-8-encoder">utf-8 encoder</a>.
 
 <h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <a href="#utf-16be">utf-16be</a> and <a href="#utf-16le">utf-16le</a></h3>
 
-<p class="note">In violation of the Unicode standard, checking for a
-byte order mark happens before an encoding to decode a byte stream is
-chosen, as seen in the <a href="#decode">decode</a> algorithm.
+<p class="note">In violation of the Unicode standard, which does not allow for handling a
+byte order mark in its definition of utf-16be and utf-16le, checking and using a
+byte order mark happens before an encoding to decode a byte stream is chosen, as seen in
+the <a href="#decode">decode</a> algorithm.
 
 <p>The <dfn id="utf-16-lead-byte">utf-16 lead byte</dfn> and <dfn id="utf-16-lead-surrogate">utf-16 lead surrogate</dfn>
 are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initially unset.
@@ -2617,6 +2618,7 @@ Mark Davis,
 Martin Dürst,
 Masatoshi Kimura,
 Ms2ger,
+Nigel Tao,
 Norbert Lindenberg,
 Øistein E. Andersen,
 Peter Krefting,
