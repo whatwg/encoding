@@ -688,9 +688,9 @@ fallback encoding <var title>encoding</var>, run these steps:
 
   <table>
    <tr><th>Byte order mark<th>Encoding<th>Offset
-   <tr><td>0xFF 0xFE<td><span>utf-16le</span><td>2
-   <tr><td>0xFE 0xFF<td><span>utf-16be</span><td>2
    <tr><td>0xEF 0xBB 0xBF<td><span>utf-8</span><td>3
+   <tr><td>0xFE 0xFF<td><span>utf-16be</span><td>2
+   <tr><td>0xFF 0xFE<td><span>utf-16le</span><td>2
   </table>
 
   <p class=note>For compatibility with deployed content, the byte order mark
@@ -916,9 +916,9 @@ method must run these steps:
 
   <table>
    <tr><th>Byte order mark<th>Encoding
-   <tr><td>0xFF 0xFE<td><span>utf-16le</span>
-   <tr><td>0xFE 0xFF<td><span>utf-16be</span>
    <tr><td>0xEF 0xBB 0xBF<td><span>utf-8</span>
+   <tr><td>0xFE 0xFF<td><span>utf-16be</span>
+   <tr><td>0xFF 0xFE<td><span>utf-16le</span>
   </table>
 
   <p class=note>This algorithm is intentionally different from the
@@ -963,7 +963,7 @@ interface <dfn>TextEncoder</dfn> {
  <dd>
   <p>Returns a new <code>TextEncoder</code> object.
   <p>If <var title>utfLabel</var> is not a <span>label</span> for
-  <span>utf-8</span>, <span>utf-16le</span>, or <span>utf-16be</span>,
+  <span>utf-8</span>, <span>utf-16be</span>, or <span>utf-16le</span>,
   <span data-anolis-spec=webidl title=throw>throws</span> a
   <code>TypeError</code>.
 
@@ -987,7 +987,7 @@ constructor must run these steps:
  <var title>utfLabel</var>.
 
  <li><p>If <var title>encoding</var> is failure, or is none of
- <span>utf-8</span>, <span>utf-16le</span>, and <span>utf-16be</span>,
+ <span>utf-8</span>, <span>utf-16be</span>, and <span>utf-16le</span>,
  <span data-anolis-spec=webidl>throw</span> a <code>TypeError</code>.
 
  <li><p>Let <var title>enc</var> be a new <code>TextEncoder</code> object.

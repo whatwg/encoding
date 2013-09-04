@@ -727,9 +727,9 @@ fallback encoding <var title="">encoding</var>, run these steps:
 
   <table>
    <tr><th>Byte order mark<th>Encoding<th>Offset
-   <tr><td>0xFF 0xFE<td><a href="#utf-16le">utf-16le</a><td>2
-   <tr><td>0xFE 0xFF<td><a href="#utf-16be">utf-16be</a><td>2
    <tr><td>0xEF 0xBB 0xBF<td><a href="#utf-8">utf-8</a><td>3
+   <tr><td>0xFE 0xFF<td><a href="#utf-16be">utf-16be</a><td>2
+   <tr><td>0xFF 0xFE<td><a href="#utf-16le">utf-16le</a><td>2
   </table>
 
   <p class="note">For compatibility with deployed content, the byte order mark
@@ -955,9 +955,9 @@ method must run these steps:
 
   <table>
    <tr><th>Byte order mark<th>Encoding
-   <tr><td>0xFF 0xFE<td><a href="#utf-16le">utf-16le</a>
-   <tr><td>0xFE 0xFF<td><a href="#utf-16be">utf-16be</a>
    <tr><td>0xEF 0xBB 0xBF<td><a href="#utf-8">utf-8</a>
+   <tr><td>0xFE 0xFF<td><a href="#utf-16be">utf-16be</a>
+   <tr><td>0xFF 0xFE<td><a href="#utf-16le">utf-16le</a>
   </table>
 
   <p class="note">This algorithm is intentionally different from the
@@ -1002,7 +1002,7 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
  <dd>
   <p>Returns a new <a href="#textencoder"><code>TextEncoder</code></a> object.
   <p>If <var title="">utfLabel</var> is not a <a href="#label">label</a> for
-  <a href="#utf-8">utf-8</a>, <a href="#utf-16le">utf-16le</a>, or <a href="#utf-16be">utf-16be</a>,
+  <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, or <a href="#utf-16le">utf-16le</a>,
   <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-throw" title="throw">throws</a> a
   <code>TypeError</code>.
 
@@ -1026,7 +1026,7 @@ constructor must run these steps:
  <var title="">utfLabel</var>.
 
  <li><p>If <var title="">encoding</var> is failure, or is none of
- <a href="#utf-8">utf-8</a>, <a href="#utf-16le">utf-16le</a>, and <a href="#utf-16be">utf-16be</a>,
+ <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, and <a href="#utf-16le">utf-16le</a>,
  <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-throw">throw</a> a <code>TypeError</code>.
 
  <li><p>Let <var title="">enc</var> be a new <a href="#textencoder"><code>TextEncoder</code></a> object.
