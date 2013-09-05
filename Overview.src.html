@@ -189,7 +189,7 @@ code point <var title>c</var> and is as follows:
  <var title>fatal</var>, terminate <var title>encoder</var> with failure.
 
  <li><p>Otherwise, if <var title>encoder</var>'s <span>error handling mode</span> is
- <var title>URL</i>, emit byte U+3F<!-- ? -->.
+ <var title>URL</i>, emit byte 0x3F<!-- ? -->.
 
  <li><p>Otherwise, emit the result of running <span>utf-8 encode</span> on U+0026, U+0023,
  followed by the shortest sequence of <span>ASCII digits</span> representing
@@ -227,8 +227,7 @@ exclusively. If these protocols and formats need to expose the <span>encoding</s
 
  <li><p>If <var title>label</var> is an <span>ASCII case-insensitive</span>
  match for any of the <span title=label>labels</span> listed in the table
- below, return the corresponding <span>encoding</span>, and return failure
- otherwise.
+ below, return the corresponding <span>encoding</span>, and failure otherwise.
 </ol>
 
 <p class=note>In violation of
@@ -1740,58 +1739,35 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
 <!-- http://www.iana.org/assignments/charset-reg/CP51932 -->
 
-<p>The <dfn>euc-jp first</dfn> and <dfn>euc-jp second</dfn> are 0x00.
+<p>The <dfn>euc-jp jis0212 flag</dfn> is initially unset.
+
+<p>The <dfn>euc-jp lead</dfn> is initially 0x00.
 
 <p>The <dfn>euc-jp decoder</dfn> (<span>decoder</span> for <span>euc-jp</span>) is:
 
 <ol>
  <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
- <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
- <span>euc-jp first</span> and <span>euc-jp second</span> are 0x00, emit the
- <span>EOF code point</span>.
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and <span>euc-jp lead</span>
+ is 0x00, emit the <span>EOF code point</span>.
 
- <li><p>If <var title>byte</var> is the <span>EOF byte</span> and either
- <span>euc-jp first</span> or <span>euc-jp second</span> is not 0x00, set
- <span>euc-jp first</span> and <span>euc-jp second</span> to 0x00, and run
- <span>error</span>.
+ <li><p>If <var title>byte</var> is the <span>EOF byte</span> and <span>euc-jp lead</span>
+ is not 0x00, set <span>euc-jp lead</span> to 0x00, and run <span>error</span>.
 
  <li><p>Increase the <span>byte pointer</span> by one.
 
- <li>
-  <p>If <span>euc-jp second</span> is not 0x00, let <var title>lead</var> be
-  <span>euc-jp second</span>, set <span>euc-jp second</span> to 0x00 and run
-  these substeps:
-
-  <ol>
-   <li><p>Let <var title>code point</var> be null.
-
-   <li><p>If <var title>lead</var> and <var title>byte</var> are both in the
-   range 0xA1 to 0xFE, set <var title>code point</var> to the
-   <span>index code point</span> for
-   (<var title>lead</var> &minus; 0xA1) &times; 94 + <var title>byte</var> &minus; 0xA1
-   in <span>index jis0212</span>.
-
-   <li><p>If <var title>byte</var> is not in the range 0xA1 to 0xFE,
-   decrease <span>byte pointer</span> by one.
-
-   <li><p>If <var title>code point</var> is null, run <span>error</span>.
-
-   <li><p>Emit a code point whose value is <var title>code point</var>.
-  </ol>
-
- <li><p>If <span>euc-jp first</span> is 0x8E and <var title>byte</var> is
- in the range 0xA1 to 0xDF, set <span>euc-jp first</span> to 0x00 and emit
+ <li><p>If <span>euc-jp lead</span> is 0x8E and <var title>byte</var> is
+ in the range 0xA1 to 0xDF, set <span>euc-jp lead</span> to 0x00 and emit
  a code point whose value is 0xFF61 + <var title>byte</var> &minus; 0xA1.
  <!-- katakana -->
 
- <li><p>If <span>euc-jp first</span> is 0x8F and <var title>byte</var> is
- in the range 0xA1 to 0xFE, set <span>euc-jp first</span> to 0x00,
- <span>euc-jp second</span> to <var title>byte</var>, and continue.
+ <li><p>If <span>euc-jp lead</span> is 0x8F and <var title>byte</var> is in the range
+ 0xA1 to 0xFE, set the <span>euc-jp jis0212 flag</span>, set <span>euc-jp lead</span> to
+ <var title>byte</var>, and continue.
 
- <li><p>If <span>euc-jp first</span> is not 0x00, let <var title>lead</var>
- be <span>euc-jp first</span>, set <span>euc-jp first</span> to 0x00, and
- run these substeps:
+ <li>
+  <p>If <span>euc-jp lead</span> is not 0x00, let <var title>lead</var> be
+  <span>euc-jp lead</span>, set <span>euc-jp lead</span> to 0x00, and run these substeps:
 
   <ol>
    <li><p>Let <var title>code point</var> be null.
@@ -1800,7 +1776,10 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    range 0xA1 to 0xFE, set <var title>code point</var> to the
    <span>index code point</span> for
    (<var title>lead</var> &minus; 0xA1) &times; 94 + <var title>byte</var> &minus; 0xA1
-   in <span>index jis0208</span>.
+   in <span>index jis0208</span> if the <span>euc-jp jis0212 flag</span> is unset and in
+   <span>index jis0212</span> otherwise.
+
+   <li><p>Unset the <span>euc-jp jis0212 flag</span>.
 
    <li><p>If <var title>byte</var> is not in the range 0xA1 to 0xFE,
    decrease <span>byte pointer</span> by one.
