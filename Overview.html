@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-5-september-2013">Living Standard — Last Updated 5 September 2013</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-12-december-2013">Living Standard — Last Updated 12 December 2013</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-5 September 2013, the editor has made this specification available
+12 December 2013, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -764,7 +764,7 @@ return the result of <a href="#encode" title="encode">encoding</a>
 <var title="">stream</var> using encoding <a href="#utf-8">utf-8</a>.
 
 <p class="note">If the input to this algorithm stems from a DOMString, the
-<a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-obtain-unicode">convert a DOMString to a sequence of Unicode characters</a>
+<a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-obtain-unicode">convert a DOMString to a sequence of Unicode characters</a>
 from Web IDL is to be used first.
 
 
@@ -873,7 +873,7 @@ and <b>streaming flag</b> (initially unset).
   <p>Returns a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
   <p>If <var title="">label</var> is either not a <a href="#label">label</a> or is a
   <a href="#label">label</a> for <a href="#replacement">replacement</a>,
-  <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-throw" title="throw">throws</a> a
+  <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
   <code>TypeError</code>.
 
  <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a></code>
@@ -902,7 +902,7 @@ constructor must run these steps:
  <var title="">label</var>.
 
  <li><p>If <var title="">encoding</var> is failure or <a href="#replacement">replacement</a>,
- <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-throw">throw</a> a <code>TypeError</code>.
+ <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>TypeError</code>.
 
  <li><p>Let <var title="">dec</var> be a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
 
@@ -1002,7 +1002,7 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
   <p>Returns a new <a href="#textencoder"><code>TextEncoder</code></a> object.
   <p>If <var title="">utfLabel</var> is not a <a href="#label">label</a> for
   <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, or <a href="#utf-16le">utf-16le</a>,
-  <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-throw" title="throw">throws</a> a
+  <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
   <code>TypeError</code>.
 
  <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a></code>
@@ -1026,7 +1026,7 @@ constructor must run these steps:
 
  <li><p>If <var title="">encoding</var> is failure, or is none of
  <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, and <a href="#utf-16le">utf-16le</a>,
- <a class="external" data-anolis-spec="webidl" href="http://dev.w3.org/2006/webapi/WebIDL/#dfn-throw">throw</a> a <code>TypeError</code>.
+ <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>TypeError</code>.
 
  <li><p>Let <var title="">enc</var> be a new <a href="#textencoder"><code>TextEncoder</code></a> object.
 
@@ -1199,7 +1199,7 @@ achieve the same result are obviously fine, even encouraged).
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
@@ -1325,7 +1325,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
@@ -1449,7 +1449,7 @@ by the <a href="#gb18030-decoder">gb18030 decoder</a> and <a href="#gb18030-enco
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
@@ -1616,12 +1616,11 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F and
- the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is set, decrease the
- <a href="#code-point-pointer">code point pointer</a> by one, unset the
- <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>, and emit two bytes 0x7E 0x7D.
+ the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is set, decrease <a href="#code-point-pointer">code point pointer</a> by one,
+ unset the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>, and emit two bytes 0x7E 0x7D.
 
  <li><p>If <var title="">code point</var> is 0x007E, emit two bytes 0x7E 0x7E.
 
@@ -1634,7 +1633,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">pointer</var> is null, run <a href="#error">error</a> for
  <var title="">code point</var>.
 
- <li><p>If the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is unset, decrease the
+ <li><p>If the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is unset, decrease
  <a href="#code-point-pointer">code point pointer</a> by one, set the
  <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>, and emit two bytes 0x7E 0x7B.
 
@@ -1714,8 +1713,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
    <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-big5">index big5</a> otherwise.
 
-   <li><p>If <var title="">pointer</var> is null, decrease the
-   <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p>If <var title="">pointer</var> is null, decrease <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
 
@@ -1740,7 +1738,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
@@ -1793,7 +1791,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and <a href="#euc-jp-lead">euc-jp lead</a>
  is not 0x00, set <a href="#euc-jp-lead">euc-jp lead</a> to 0x00, and run <a href="#error">error</a>.
 
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
 
  <li><p>If <a href="#euc-jp-lead">euc-jp lead</a> is 0x8E and <var title="">byte</var> is
  in the range 0xA1 to 0xDF, set <a href="#euc-jp-lead">euc-jp lead</a> to 0x00 and emit
@@ -1846,7 +1844,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
@@ -1901,7 +1899,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
 
  <li><p>If <var title="">byte</var> is not the <a href="#eof-byte">EOF byte</a>,
- increase the <a href="#byte-pointer">byte pointer</a> by one.
+ increase <a href="#byte-pointer">byte pointer</a> by one.
 
  <li>
   <p>Based on <a href="#iso-2022-jp-state">iso-2022-jp state</a>:
@@ -1936,7 +1934,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
      <b title="">escape middle state</b>, and continue.
 
      <li><p>If <var title="">byte</var> is not the <a href="#eof-byte">EOF byte</a>,
-     decrease the <a href="#byte-pointer">byte pointer</a> by one.
+     decrease <a href="#byte-pointer">byte pointer</a> by one.
 
      <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
      and run <a href="#error">error</a>.
@@ -2065,11 +2063,11 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, or
  is U+00A5 or U+203E, and <a href="#iso-2022-jp-state">iso-2022-jp state</a> is not
- <b title="">ASCII state</b>, decrease the <a href="#code-point-pointer">code point pointer</a> by
+ <b title="">ASCII state</b>, decrease <a href="#code-point-pointer">code point pointer</a> by
  one, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>, and
  emit three bytes 0x1B 0x28 0x42.
 
@@ -2082,7 +2080,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
 
  <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F and
  <a href="#iso-2022-jp-state">iso-2022-jp state</a> is not <b title="">Katakana state</b>, decrease
- the <a href="#code-point-pointer">code point pointer</a> by one, set
+ <a href="#code-point-pointer">code point pointer</a> by one, set
  <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">Katakana state</b>, and emit
  three bytes 0x1B 0x28 0x49.
 
@@ -2097,7 +2095,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <var title="">code point</var>.
 
  <li><p>If <a href="#iso-2022-jp-state">iso-2022-jp state</a> is not <b title="">lead state</b>,
- decrease the <a href="#code-point-pointer">code point pointer</a> by one, set
+ decrease <a href="#code-point-pointer">code point pointer</a> by one, set
  <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and emit three
  bytes 0x1B 0x24 0x42.
 
@@ -2130,7 +2128,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, set <a href="#shift_jis-lead">shift_jis lead</a> to
  0x00 and run <a href="#error">error</a>.
 
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
 
  <li>
   <p>If <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, let <var title="">lead</var>
@@ -2152,8 +2150,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
    <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-jis0208">index jis0208</a> otherwise.
 
-   <li><p>If <var title="">pointer</var> is null, decrease the
-   <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p>If <var title="">pointer</var> is null, decrease <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
 
@@ -2184,7 +2181,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+0080,
  emit a byte whose value is <var title="">code point</var>.
@@ -2241,7 +2238,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <a href="#euc-kr-lead">euc-kr lead</a> is not 0x00, set <a href="#euc-kr-lead">euc-kr lead</a> to 0x00
  and run <a href="#error">error</a>.
 
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
 
  <li>
   <p>If <a href="#euc-kr-lead">euc-kr lead</a> is not 0x00, let <var title="">lead</var> be
@@ -2275,8 +2272,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
    <a href="#index-code-point">index code point</a> for <var title="">pointer</var> in
    <a href="#index-euc-kr">index euc-kr</a> otherwise.
 
-   <li><p>If <var title="">pointer</var> is null, decrease the
-   <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p>If <var title="">pointer</var> is null, decrease <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
 
@@ -2301,7 +2297,7 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
@@ -2387,7 +2383,7 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
  null, set <a href="#utf-16-lead-byte">utf-16 lead byte</a> and
  <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to null, and run <a href="#error">error</a>.
 
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
 
  <li><p>If <a href="#utf-16-lead-byte">utf-16 lead byte</a> is null, set
  <a href="#utf-16-lead-byte">utf-16 lead byte</a> to <var title="">byte</var> and continue.
@@ -2414,7 +2410,7 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
    emit a code point whose value is
    0x10000 + (<var title="">lead surrogate</var> − 0xD800) × 0x400 + (<var title="">code point</var> − 0xDC00).
 
-   <li><p>Decrease the <a href="#byte-pointer">byte pointer</a> by two and run <a href="#error">error</a>.
+   <li><p>Decrease <a href="#byte-pointer">byte pointer</a> by two and run <a href="#error">error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
@@ -2460,7 +2456,7 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range 0x00 to 0xFFFF, emit
  the sequence resulting of
@@ -2524,7 +2520,7 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
  <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit the
  <a href="#eof-code-point">EOF code point</a>.
 
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
 
  <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a code
  point whose value is <var title="">byte</var>.
@@ -2543,7 +2539,7 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
  <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
  emit the <a href="#eof-byte">EOF byte</a>.
 
- <li><p>Increase the <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title="">code point</var>.
@@ -2577,7 +2573,7 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 <dd>(Non-normative) <cite><a href="http://url.spec.whatwg.org/">URL</a></cite>, Anne van Kesteren. WHATWG.
 
 <dt id="refsWEBIDL">[WEBIDL]
-<dd><cite><a href="http://dev.w3.org/2006/webapi/WebIDL/">Web IDL</a></cite>, Cameron McCormack. W3C.
+<dd><cite><a href="http://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
 
 <dt id="refsXML">[XML]
 <dd>(Non-normative) <cite><a href="http://www.w3.org/TR/xml/">Extensible Markup Language</a></cite>, Tim Bray, Jean Paoli, C. M. Sperberg-McQueen et al.. W3C.

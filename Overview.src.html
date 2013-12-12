@@ -1160,7 +1160,7 @@ achieve the same result are obviously fine, even encouraged).
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
@@ -1286,7 +1286,7 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
@@ -1410,7 +1410,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
@@ -1577,12 +1577,11 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F and
- the <span>hz-gb-2312 flag</span> is set, decrease the
- <span>code point pointer</span> by one, unset the
- <span>hz-gb-2312 flag</span>, and emit two bytes 0x7E 0x7D.
+ the <span>hz-gb-2312 flag</span> is set, decrease <span>code point pointer</span> by one,
+ unset the <span>hz-gb-2312 flag</span>, and emit two bytes 0x7E 0x7D.
 
  <li><p>If <var title>code point</var> is 0x007E, emit two bytes 0x7E 0x7E.
 
@@ -1595,7 +1594,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>pointer</var> is null, run <span>error</span> for
  <var title>code point</var>.
 
- <li><p>If the <span>hz-gb-2312 flag</span> is unset, decrease the
+ <li><p>If the <span>hz-gb-2312 flag</span> is unset, decrease
  <span>code point pointer</span> by one, set the
  <span>hz-gb-2312 flag</span>, and emit two bytes 0x7E 0x7B.
 
@@ -1675,8 +1674,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <var title>pointer</var> is null and the <span>index code point</span>
    for <var title>pointer</var> in <span>index big5</span> otherwise.
 
-   <li><p>If <var title>pointer</var> is null, decrease the
-   <span>byte pointer</span> by one.
+   <li><p>If <var title>pointer</var> is null, decrease <span>byte pointer</span> by one.
 
    <li><p>If <var title>code point</var> is null, run <span>error</span>.
 
@@ -1701,7 +1699,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
@@ -1754,7 +1752,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and <span>euc-jp lead</span>
  is not 0x00, set <span>euc-jp lead</span> to 0x00, and run <span>error</span>.
 
- <li><p>Increase the <span>byte pointer</span> by one.
+ <li><p>Increase <span>byte pointer</span> by one.
 
  <li><p>If <span>euc-jp lead</span> is 0x8E and <var title>byte</var> is
  in the range 0xA1 to 0xDF, set <span>euc-jp lead</span> to 0x00 and emit
@@ -1807,7 +1805,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
@@ -1862,7 +1860,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
- increase the <span>byte pointer</span> by one.
+ increase <span>byte pointer</span> by one.
 
  <li>
   <p>Based on <span>iso-2022-jp state</span>:
@@ -1897,7 +1895,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
      <b title>escape middle state</b>, and continue.
 
      <li><p>If <var title>byte</var> is not the <span>EOF byte</span>,
-     decrease the <span>byte pointer</span> by one.
+     decrease <span>byte pointer</span> by one.
 
      <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b>
      and run <span>error</span>.
@@ -2026,11 +2024,11 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F, or
  is U+00A5 or U+203E, and <span>iso-2022-jp state</span> is not
- <b title>ASCII state</b>, decrease the <span>code point pointer</span> by
+ <b title>ASCII state</b>, decrease <span>code point pointer</span> by
  one, set <span>iso-2022-jp state</span> to <b title>ASCII state</b>, and
  emit three bytes 0x1B 0x28 0x42.
 
@@ -2043,7 +2041,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
  <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F and
  <span>iso-2022-jp state</span> is not <b title>Katakana state</b>, decrease
- the <span>code point pointer</span> by one, set
+ <span>code point pointer</span> by one, set
  <span>iso-2022-jp state</span> to <b title>Katakana state</b>, and emit
  three bytes 0x1B 0x28 0x49.
 
@@ -2058,7 +2056,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <var title>code point</var>.
 
  <li><p>If <span>iso-2022-jp state</span> is not <b title>lead state</b>,
- decrease the <span>code point pointer</span> by one, set
+ decrease <span>code point pointer</span> by one, set
  <span>iso-2022-jp state</span> to <b title>lead state</b>, and emit three
  bytes 0x1B 0x24 0x42.
 
@@ -2091,7 +2089,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <span>shift_jis lead</span> is not 0x00, set <span>shift_jis lead</span> to
  0x00 and run <span>error</span>.
 
- <li><p>Increase the <span>byte pointer</span> by one.
+ <li><p>Increase <span>byte pointer</span> by one.
 
  <li>
   <p>If <span>shift_jis lead</span> is not 0x00, let <var title>lead</var>
@@ -2113,8 +2111,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <var title>pointer</var> is null and the <span>index code point</span>
    for <var title>pointer</var> in <span>index jis0208</span> otherwise.
 
-   <li><p>If <var title>pointer</var> is null, decrease the
-   <span>byte pointer</span> by one.
+   <li><p>If <var title>pointer</var> is null, decrease <span>byte pointer</span> by one.
 
    <li><p>If <var title>code point</var> is null, run <span>error</span>.
 
@@ -2145,7 +2142,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+0080,
  emit a byte whose value is <var title>code point</var>.
@@ -2202,7 +2199,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <span>euc-kr lead</span> is not 0x00, set <span>euc-kr lead</span> to 0x00
  and run <span>error</span>.
 
- <li><p>Increase the <span>byte pointer</span> by one.
+ <li><p>Increase <span>byte pointer</span> by one.
 
  <li>
   <p>If <span>euc-kr lead</span> is not 0x00, let <var title>lead</var> be
@@ -2236,8 +2233,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <span>index code point</span> for <var title>pointer</var> in
    <span>index euc-kr</span> otherwise.
 
-   <li><p>If <var title>pointer</var> is null, decrease the
-   <span>byte pointer</span> by one.
+   <li><p>If <var title>pointer</var> is null, decrease <span>byte pointer</span> by one.
 
    <li><p>If <var title>code point</var> is null, run <span>error</span>.
 
@@ -2262,7 +2258,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
@@ -2348,7 +2344,7 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
  null, set <span>utf-16 lead byte</span> and
  <span>utf-16 lead surrogate</span> to null, and run <span>error</span>.
 
- <li><p>Increase the <span>byte pointer</span> by one.
+ <li><p>Increase <span>byte pointer</span> by one.
 
  <li><p>If <span>utf-16 lead byte</span> is null, set
  <span>utf-16 lead byte</span> to <var title>byte</var> and continue.
@@ -2375,7 +2371,7 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
    emit a code point whose value is
    0x10000 + (<var title>lead surrogate</var> &minus; 0xD800) &times; 0x400 + (<var title>code point</var> &minus; 0xDC00).
 
-   <li><p>Decrease the <span>byte pointer</span> by two and run <span>error</span>.
+   <li><p>Decrease <span>byte pointer</span> by two and run <span>error</span>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
@@ -2421,7 +2417,7 @@ are initially null and the <dfn>utf-16be flag</dfn> is initially unset.
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range 0x00 to 0xFFFF, emit
  the sequence resulting of
@@ -2485,7 +2481,7 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
  <li><p>If <var title>byte</var> is the <span>EOF byte</span>, emit the
  <span>EOF code point</span>.
 
- <li><p>Increase the <span>byte pointer</span> by one.
+ <li><p>Increase <span>byte pointer</span> by one.
 
  <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, emit a code
  point whose value is <var title>byte</var>.
@@ -2504,7 +2500,7 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
  <li><p>If <var title>code point</var> is the <span>EOF code point</span>,
  emit the <span>EOF byte</span>.
 
- <li><p>Increase the <span>code point pointer</span> by one.
+ <li><p>Increase <span>code point pointer</span> by one.
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
