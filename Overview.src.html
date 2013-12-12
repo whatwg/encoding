@@ -1674,7 +1674,8 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <var title>pointer</var> is null and the <span>index code point</span>
    for <var title>pointer</var> in <span>index big5</span> otherwise.
 
-   <li><p>If <var title>pointer</var> is null, decrease <span>byte pointer</span> by one.
+   <li><p>If <var title>pointer</var> is null and <var title>byte</var> is in the range
+   0x00 to 0x7F, decrease <span>byte pointer</span> by one.
 
    <li><p>If <var title>code point</var> is null, run <span>error</span>.
 

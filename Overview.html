@@ -1713,7 +1713,8 @@ the <a href="#gbk-encoder">gbk encoder</a> with the <a href="#gb18030-flag">gb18
    <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-big5">index big5</a> otherwise.
 
-   <li><p>If <var title="">pointer</var> is null, decrease <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p>If <var title="">pointer</var> is null and <var title="">byte</var> is in the range
+   0x00 to 0x7F, decrease <a href="#byte-pointer">byte pointer</a> by one.
 
    <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
 
