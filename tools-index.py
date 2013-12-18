@@ -59,8 +59,8 @@ for index in data:
     handle.write("# For details on index-" + index + ".txt see the Encoding Standard\n")
     handle.write("# http://encoding.spec.whatwg.org/\n\n")
 
-    # gb18030 is not like the other indexes, it's an index of ranges
-    if index == "gb18030":
+    # gb18030-ranges is not like the other indexes, it's an index of ranges
+    if index == "gb18030-ranges":
         for range in data[index]:
             handle.write(format_index(range[0], 6) + "\t" + format_cp(range[1]) + "\n")
         continue

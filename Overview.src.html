@@ -475,19 +475,17 @@ found to be necessary to be compatible with deployed content.
  <tbody>
   <tr><th colspan=2><a href=#legacy-multi-byte-chinese-(simplified)-encodings>Legacy multi-byte Chinese (simplified) encodings</a>
   <tr>
-   <td rowspan=9><span>gbk</span>
+   <td rowspan=10><span>gb18030</span>
    <td>"<code title>chinese</code>"
   <tr><td>"<code title>csgb2312</code>"
   <tr><td>"<code title>csiso58gb231280</code>"
+  <tr><td>"<code title>gb18030</code>"
   <tr><td>"<code title>gb2312</code>"
   <tr><td>"<code title>gb_2312</code>"
   <tr><td>"<code title>gb_2312-80</code>"
   <tr><td>"<code title>gbk</code>"
   <tr><td>"<code title>iso-ir-58</code>"
   <tr><td>"<code title>x-gbk</code>"
-  <tr>
-   <td><span>gb18030</span>
-   <td>"<code title>gb18030</code>"
   <tr>
    <td><span>hz-gb-2312</span>
    <td>"<code title>hz-gb-2312</code>"
@@ -600,19 +598,19 @@ specification, excluding <span>index single-byte</span>:
   <td>This matches the KS X 1001 standard and the Unified Hangul Code, more
   commonly known together as Windows Codepage 949.
  <tr>
-  <td><dfn>index gbk</dfn>
-  <td><a href=index-gbk.txt>index-gbk.txt</a>
+  <td><dfn>index gb18030</dfn>
+  <td><a href=index-gb18030.txt>index-gb18030.txt</a>
   <td>This matches the GB18030 standard for code points encoded as two
   bytes.
  <tr>
-  <td><dfn>index gb18030</dfn>
-  <td><a href=index-gb18030.txt>index-gb18030.txt</a>
+  <td><dfn>index gb18030 ranges</dfn>
+  <td><a href=index-gb18030-ranges.txt>index-gb18030-ranges.txt</a>
   <td>This <span>index</span> works different from all others. Listing all
   code points would result in over a million items whereas they can be
   represented neatly in 207 ranges combined with trivial limit checks. It
   therefore only superficially matches the GB18030 standard for code points
-  encoded as four bytes. See also <span>index gb18030 code point</span> and
-  <span>index gb18030 pointer</span> below.
+  encoded as four bytes. See also <span>index gb18030 ranges code point</span> and
+  <span>index gb18030 ranges pointer</span> below.
  <tr>
   <td><dfn>index jis0208</dfn>
   <td><a href=index-jis0208.txt>index-jis0208.txt</a>
@@ -625,7 +623,7 @@ specification, excluding <span>index single-byte</span>:
   <td>This is the JIS X 0212 standard.
 </table>
 
-<p>The <dfn>index gb18030 code point</dfn> for <var title>pointer</var> is
+<p>The <dfn>index gb18030 ranges code point</dfn> for <var title>pointer</var> is
 the return value of these steps:
 
 <ol>
@@ -633,7 +631,7 @@ the return value of these steps:
  189000, or <var title>pointer</var> is greater than 1237575, return null.
 
  <li><p>Let <var title>offset</var> be the last pointer in
- <span>index gb18030</span> that is equal to or less than
+ <span>index gb18030 ranges</span> that is equal to or less than
  <var title>pointer</var> and let <var title>code point offset</var> be its
  corresponding code point.
 
@@ -641,12 +639,12 @@ the return value of these steps:
  <var title>code point offset</var> + <var title>pointer</var> &minus; <var title>offset</var>.
 </ol>
 
-<p>The <dfn>index gb18030 pointer</dfn> for <var title>code point</var> is
+<p>The <dfn>index gb18030 ranges pointer</dfn> for <var title>code point</var> is
 the return value of these steps:
 
 <ol>
  <li><p>Let <var title>offset</var> be the last code point in
- <span>index gb18030</span> that is equal to or less than
+ <span>index gb18030 ranges</span> that is equal to or less than
  <var title>code point</var> and let <var title>pointer offset</var> be its
  corresponding pointer.
 
@@ -657,7 +655,7 @@ the return value of these steps:
 
 <p class=note>All <span title=index>indexes</span> are also available as
 non-normative <a href=indexes.json>indexes.json</a> resource.
-(<span>index gb18030</span> has a slightly different format here, to be able
+(<span>index gb18030 ranges</span> has a slightly different format here, to be able
 to represent ranges.)
 
 
@@ -1305,43 +1303,40 @@ historically this might have been the case for <span>iso-8859-6</span> and
 <h2>Legacy multi-byte Chinese (simplified) encodings</h2>
 
 
-<h3><dfn>gbk</dfn></h3>
+<h3><dfn>gb18030</dfn></h3>
 
-<p>The <dfn>gb18030 flag</dfn> flag is initially unset. It can only be set
-by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
+<p>The <dfn>gb18030 first</dfn>, <dfn>gb18030 second</dfn>, and
+<dfn>gb18030 third</dfn>, are all initially 0x00.
 
-<p>The <dfn>gbk first</dfn>, <dfn>gbk second</dfn>, and
-<dfn>gbk third</dfn>, are all initially 0x00.
-
-<p>The <dfn>gbk decoder</dfn> (<span>decoder</span> for <span>gbk</span>) is:
+<p>The <dfn>gb18030 decoder</dfn> (<span>decoder</span> for <span>gb18030</span>) is:
 
 <ol>
  <li><p>Let <var title>byte</var> be the value at <span>byte pointer</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span> and
- <span>gbk first</span>, <span>gbk second</span>, and <span>gbk third</span>
+ <span>gb18030 first</span>, <span>gb18030 second</span>, and <span>gb18030 third</span>
  are 0x00, emit the <span>EOF code point</span>.
 
  <li><p>If <var title>byte</var> is the <span>EOF byte</span>, and
- <span>gbk first</span>, <span>gbk second</span>, or <span>gbk third</span>
- is not 0x00, set <span>gbk first</span>, <span>gbk second</span>, and
- <span>gbk third</span> to 0x00, and run <span>error</span>.
+ <span>gb18030 first</span>, <span>gb18030 second</span>, or <span>gb18030 third</span>
+ is not 0x00, set <span>gb18030 first</span>, <span>gb18030 second</span>, and
+ <span>gb18030 third</span> to 0x00, and run <span>error</span>.
 
  <li><p>Increase the <span>byte pointer</span> by one.
 
  <li>
-  <p>If <span>gbk third</span> is not 0x00, run these substeps:
+  <p>If <span>gb18030 third</span> is not 0x00, run these substeps:
 
   <ol>
    <li><p>Let <var title>code point</var> be null.
 
    <li><p>If <var title>byte</var> is in the range 0x30 to 0x39, set
    <var title>code point</var> to the
-   <span>index gb18030 code point</span> for
-   (((<span>gbk first</span> &minus; 0x81) &times; 10 + <span>gbk second</span> &minus; 0x30) &times; 126 + <span>gbk third</span> &minus; 0x81) &times; 10 + <var title>byte</var> &minus; 0x30.
+   <span>index gb18030 ranges code point</span> for
+   (((<span>gb18030 first</span> &minus; 0x81) &times; 10 + <span>gb18030 second</span> &minus; 0x30) &times; 126 + <span>gb18030 third</span> &minus; 0x81) &times; 10 + <var title>byte</var> &minus; 0x30.
 
-   <li><p>Set <span>gbk first</span>, <span>gbk second</span>, and
-   <span>gbk third</span> to 0x00.
+   <li><p>Set <span>gb18030 first</span>, <span>gb18030 second</span>, and
+   <span>gb18030 third</span> to 0x00.
 
    <li><p>If <var title>code point</var> is null, decrease the
    <span>byte pointer</span> by three and run <span>error</span>.
@@ -1350,26 +1345,25 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
   </ol>
 
  <li>
-  <p>If <span>gbk second</span> is not 0x00, run these substeps:
+  <p>If <span>gb18030 second</span> is not 0x00, run these substeps:
 
   <ol>
    <li><p>If <var title>byte</var> is in the range 0x81 to 0xFE, set
-   <span>gbk third</span> to <var title>byte</var> and continue.
+   <span>gb18030 third</span> to <var title>byte</var> and continue.
 
    <li><p>Decrease the <span>byte pointer</span> by two, set
-   <span>gbk first</span> and <span>gbk second</span> to 0x00, and run <span>error</span>.
+   <span>gb18030 first</span> and <span>gb18030 second</span> to 0x00, and run <span>error</span>.
   </ol>
 
  <li>
-  <p>If <span>gbk first</span> is not 0x00, run these substeps:
+  <p>If <span>gb18030 first</span> is not 0x00, run these substeps:
 
   <ol>
-   <li><p>If <var title>byte</var> is in the range 0x30 to 0x39 and the
-   <span>gb18030 flag</span> is set, set <span>gbk second</span> to
-   <var title>byte</var> and continue.
+   <li><p>If <var title>byte</var> is in the range 0x30 to 0x39, set
+   <span>gb18030 second</span> to <var title>byte</var> and continue.
 
-   <li><p>Let <var title>lead</var> be <span>gbk first</span>, let
-   <var title>pointer</var> be null, and set <span>gbk first</span> to 0x00.
+   <li><p>Let <var title>lead</var> be <span>gb18030 first</span>, let
+   <var title>pointer</var> be null, and set <span>gb18030 first</span> to 0x00.
 
    <li><p>Let <var title>offset</var> be 0x40 if <var title>byte</var> is
    less than 0x7F and 0x41 otherwise.
@@ -1380,7 +1374,7 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
 
    <li><p>Let <var title>code point</var> be null if
    <var title>pointer</var> is null and the <span>index code point</span>
-   for <var title>pointer</var> in <span>index gbk</span> otherwise.
+   for <var title>pointer</var> in <span>index gb18030</span> otherwise.
 
    <li><p>If <var title>pointer</var> is null, decrease the
    <span>byte pointer</span> by one.
@@ -1396,12 +1390,12 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
  <li><p>If <var title>byte</var> is 0x80, emit code point U+20AC.
 
  <li><p>If <var title>byte</var> is in the range 0x81 to 0xFE, set
- <span>gbk first</span> to <var title>byte</var> and continue.
+ <span>gb18030 first</span> to <var title>byte</var> and continue.
 
  <li><p>Run <span>error</span>.
 </ol>
 
-<p>The <dfn>gbk encoder</dfn> (<span>encoder</span> for <span>gbk</span>) is:
+<p>The <dfn>gb18030 encoder</dfn> (<span>encoder</span> for <span>gb18030</span>) is:
 
 <ol>
  <li><p>Let <var title>code point</var> be the value at
@@ -1415,12 +1409,8 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F,
  emit a byte whose value is <var title>code point</var>.
 
- <!-- also present in index gbk
- <li><p>If <var title>code point</var> is U+20AC, emit byte 0x80.
- -->
-
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
- <var title>code point</var> in <span>index gbk</span>.
+ <var title>code point</var> in <span>index gb18030</span>.
 
  <li>
   <p>If <var title>pointer</var> is not null, run these substeps:
@@ -1438,12 +1428,8 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
    <var title>trail</var> + <var title>offset</var>.
   </ol>
 
- <li><p>If <var title>pointer</var> is null and the
- <span>gb18030 flag</span> is unset, run <span>error</span> for
- <var title>code point</var>.
-
  <li><p>Set <var title>pointer</var> to the
- <span>index gb18030 pointer</span> for <var title>code point</var>.
+ <span>index gb18030 ranges pointer</span> for <var title>code point</var>.
 
  <li><p>Let <var title>byte1</var> be
  <var title>pointer</var> / 10 / 126 / 10.
@@ -1467,15 +1453,6 @@ by the <span>gb18030 decoder</span> and <span>gb18030 encoder</span>.
  <var title>byte2</var> + 0x30, <var title>byte3</var> + 0x81,
  <var title>byte4</var> + 0x30.
 </ol>
-
-
-<h3><dfn>gb18030</dfn></h3>
-
-<p>The <dfn>gb18030 decoder</dfn> (<span>decoder</span> for <span>gb18030</span>) is
-the <span>gbk decoder</span> with the <span>gb18030 flag</span> set.
-
-<p>The <dfn>gb18030 encoder</dfn> (<span>encoder</span> for <span>gb18030</span>) is
-the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
 
 
 <h3><dfn>hz-gb-2312</dfn></h3>
@@ -1534,7 +1511,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
    <li><p>If <var title>byte</var> is in the range 0x21 to 0x7E, let
    <var title>code point</var> be the <span>index code point</span> for
    (<var title>lead</var> &minus; 1) &times; 190 + (<var title>byte</var> + 0x3F)
-   in <span>index gbk</span>.
+   in <span>index gb18030</span>.
    <!--lead-1    = lead+0x80-0x81
        byte+0x3F = byte+0x80-0x41-->
 
@@ -1589,7 +1566,7 @@ the <span>gbk encoder</span> with the <span>gb18030 flag</span> set.
  emit a byte whose value is <var title>code point</var>.
 
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
- <var title>code point</var> in <span>index gbk</span>.
+ <var title>code point</var> in <span>index gb18030</span>.
 
  <li><p>If <var title>pointer</var> is null, run <span>error</span> for
  <var title>code point</var>.
