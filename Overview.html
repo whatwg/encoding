@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-18-december-2013">Living Standard — Last Updated 18 December 2013</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-11-january-2014">Living Standard — Last Updated 11 January 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-18 December 2013, the editor has made this specification available
+11 January 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -791,13 +791,13 @@ Non-browser implementations are not required to implement this API.
  <pre><code>function encodeArrayOfStrings(strings, encoding) {
   var encoder, encoded, len, i, bytes, view, offset;
 
-  encoder = TextEncoder(encoding);
+  encoder = new TextEncoder(encoding);
   encoded = [];
 
   len = Uint32Array.BYTES_PER_ELEMENT;
   for (i = 0; i &lt; strings.length; i += 1) {
     len += Uint32Array.BYTES_PER_ELEMENT;
-    encoded[i] = TextEncoder(encoding).encode(strings[i]);
+    encoded[i] = new TextEncoder(encoding).encode(strings[i]);
     len += encoded[i].byteLength;
   }
 
@@ -824,7 +824,7 @@ Non-browser implementations are not required to implement this API.
  <pre><code>function decodeArrayOfStrings(buffer, encoding) {
   var decoder, view, offset, num_strings, strings, i, len;
 
-  decoder = TextDecoder(encoding);
+  decoder = new TextDecoder(encoding);
   view = new DataView(buffer);
   offset = 0;
   strings = [];
@@ -2572,6 +2572,7 @@ omissions.
 <p>With that, many thanks to
 
 Alan Chaney,
+Allen Wirfs-Brock,
 Ben Noordhuis,
 Boris Zbarsky,
 Cameron McCormack,
