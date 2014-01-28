@@ -815,7 +815,8 @@ dictionary <dfn>TextDecodeOptions</dfn> {
   boolean stream = false;
 };
 
-[<span title=dom-TextDecoder>Constructor</span>(optional DOMString <var title>label</var> = "utf-8", optional <span>TextDecoderOptions</span> <var title>options</var>)]
+[<span title=dom-TextDecoder>Constructor</span>(optional DOMString <var title>label</var> = "utf-8", optional <span>TextDecoderOptions</span> <var title>options</var>),
+ Exposed=Window,Worker]
 interface <dfn>TextDecoder</dfn> {
   readonly attribute DOMString <span title=dom-TextDecoder-encoding>encoding</span>;
   DOMString <span title=dom-TextDecoder-decode>decode</span>();
@@ -945,7 +946,8 @@ method must run these steps:
   boolean stream = false;
 };
 
-[<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var title>utfLabel</var> = "utf-8")]
+[<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var title>utfLabel</var> = "utf-8"),
+ Exposed=Window,Worker]
 interface <dfn>TextEncoder</dfn> {
   readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
   <span data-anolis-spec=typedarray>Uint8Array</span> <span title=dom-TextEncoder-encode>encode</span>(optional [EnsureUTF16] DOMString <var title>input</var> = "", optional <span>TextEncodeOptions</span> <var title>options</var>);
