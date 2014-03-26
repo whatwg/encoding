@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-24-january-2014">Living Standard — Last Updated 24 January 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-26-march-2014">Living Standard — Last Updated 26 March 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-24 January 2014, the editor has made this specification available
+26 March 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -63,30 +63,72 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
    <li><a href="#interface-textencoder"><span class="secno">7.2 </span>Interface <code title="">TextEncoder</code></a></ol></li>
  <li><a href="#the-encoding"><span class="secno">8 </span>The encoding</a>
   <ol>
-   <li><a href="#utf-8"><span class="secno">8.1 </span>utf-8</a></ol></li>
- <li><a href="#legacy-single-byte-encodings"><span class="secno">9 </span>Legacy single-byte encodings</a></li>
+   <li><a href="#utf-8"><span class="secno">8.1 </span>utf-8</a>
+    <ol>
+     <li><a href="#utf-8-decoder"><span class="secno">8.1.1 </span>utf-8 decoder</a></li>
+     <li><a href="#utf-8-encoder"><span class="secno">8.1.2 </span>utf-8 encoder</a></ol></ol></li>
+ <li><a href="#legacy-single-byte-encodings"><span class="secno">9 </span>Legacy single-byte encodings</a>
+  <ol>
+   <li><a href="#single-byte-decoder"><span class="secno">9.1 </span>single-byte decoder</a></li>
+   <li><a href="#single-byte-encoder"><span class="secno">9.2 </span>single-byte encoder</a></ol></li>
  <li><a href="#legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (simplified) encodings</a>
   <ol>
-   <li><a href="#gb18030"><span class="secno">10.1 </span>gb18030</a></li>
-   <li><a href="#hz-gb-2312"><span class="secno">10.2 </span>hz-gb-2312</a></ol></li>
+   <li><a href="#gb18030"><span class="secno">10.1 </span>gb18030</a>
+    <ol>
+     <li><a href="#gb18030-decoder"><span class="secno">10.1.1 </span>gb18030 decoder</a></li>
+     <li><a href="#gb18030-encoder"><span class="secno">10.1.2 </span>gb18030 encoder</a></ol></li>
+   <li><a href="#hz-gb-2312"><span class="secno">10.2 </span>hz-gb-2312</a>
+    <ol>
+     <li><a href="#hz-gb-2312-decoder"><span class="secno">10.2.1 </span>hz-gb-2312 decoder</a></li>
+     <li><a href="#hz-gb-2312-encoder"><span class="secno">10.2.2 </span>hz-gb-2312 encoder</a></ol></ol></li>
  <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">11 </span>Legacy multi-byte Chinese (traditional) encodings</a>
   <ol>
-   <li><a href="#big5"><span class="secno">11.1 </span>big5</a></ol></li>
+   <li><a href="#big5"><span class="secno">11.1 </span>big5</a>
+    <ol>
+     <li><a href="#big5-decoder"><span class="secno">11.1.1 </span>big5 decoder</a></li>
+     <li><a href="#big5-encoder"><span class="secno">11.1.2 </span>big5 encoder</a></ol></ol></li>
  <li><a href="#legacy-multi-byte-japanese-encodings"><span class="secno">12 </span>Legacy multi-byte Japanese encodings</a>
   <ol>
-   <li><a href="#euc-jp"><span class="secno">12.1 </span>euc-jp</a></li>
-   <li><a href="#iso-2022-jp"><span class="secno">12.2 </span>iso-2022-jp</a></li>
-   <li><a href="#shift_jis"><span class="secno">12.3 </span>shift_jis</a></ol></li>
+   <li><a href="#euc-jp"><span class="secno">12.1 </span>euc-jp</a>
+    <ol>
+     <li><a href="#euc-jp-decoder"><span class="secno">12.1.1 </span>euc-jp decoder</a></li>
+     <li><a href="#euc-jp-encoder"><span class="secno">12.1.2 </span>euc-jp encoder</a></ol></li>
+   <li><a href="#iso-2022-jp"><span class="secno">12.2 </span>iso-2022-jp</a>
+    <ol>
+     <li><a href="#iso-2022-jp-decoder"><span class="secno">12.2.1 </span>iso-2022-jp decoder</a></li>
+     <li><a href="#iso-2022-jp-encoder"><span class="secno">12.2.2 </span>iso-2022-jp encoder</a></ol></li>
+   <li><a href="#shift_jis"><span class="secno">12.3 </span>shift_jis</a>
+    <ol>
+     <li><a href="#shift_jis-decoder"><span class="secno">12.3.1 </span>shift_jis decoder</a></li>
+     <li><a href="#shift_jis-encoder"><span class="secno">12.3.2 </span>shift_jis encoder</a></ol></ol></li>
  <li><a href="#legacy-multi-byte-korean-encodings"><span class="secno">13 </span>Legacy multi-byte Korean encodings</a>
   <ol>
-   <li><a href="#euc-kr"><span class="secno">13.1 </span>euc-kr</a></ol></li>
+   <li><a href="#euc-kr"><span class="secno">13.1 </span>euc-kr</a>
+    <ol>
+     <li><a href="#euc-kr-decoder"><span class="secno">13.1.1 </span>euc-kr decoder</a></li>
+     <li><a href="#euc-kr-encoder"><span class="secno">13.1.2 </span>euc-kr encoder</a></ol></ol></li>
  <li><a href="#legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</a>
   <ol>
-   <li><a href="#replacement"><span class="secno">14.1 </span>replacement</a></li>
-   <li><a href="#common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></a></li>
-   <li><a href="#utf-16be"><span class="secno">14.3 </span>utf-16be</a></li>
-   <li><a href="#utf-16le"><span class="secno">14.4 </span>utf-16le</a></li>
-   <li><a href="#x-user-defined"><span class="secno">14.5 </span>x-user-defined</a></ol></li>
+   <li><a href="#replacement"><span class="secno">14.1 </span>replacement</a>
+    <ol>
+     <li><a href="#replacement-decoder"><span class="secno">14.1.1 </span>replacement decoder</a></li>
+     <li><a href="#replacement-encoder"><span class="secno">14.1.2 </span>replacement encoder</a></ol></li>
+   <li><a href="#common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></a>
+    <ol>
+     <li><a href="#shared-utf-16-decoder"><span class="secno">14.2.1 </span>shared utf-16 decoder</a></li>
+     <li><a href="#shared-utf-16-encoder"><span class="secno">14.2.2 </span>shared utf-16 encoder</a></ol></li>
+   <li><a href="#utf-16be"><span class="secno">14.3 </span>utf-16be</a>
+    <ol>
+     <li><a href="#utf-16be-decoder"><span class="secno">14.3.1 </span>utf-16be decoder</a></li>
+     <li><a href="#utf-16be-encoder"><span class="secno">14.3.2 </span>utf-16be encoder</a></ol></li>
+   <li><a href="#utf-16le"><span class="secno">14.4 </span>utf-16le</a>
+    <ol>
+     <li><a href="#utf-16le-decoder"><span class="secno">14.4.1 </span>utf-16le decoder</a></li>
+     <li><a href="#utf-16le-encoder"><span class="secno">14.4.2 </span>utf-16le encoder</a></ol></li>
+   <li><a href="#x-user-defined"><span class="secno">14.5 </span>x-user-defined</a>
+    <ol>
+     <li><a href="#x-user-defined-decoder"><span class="secno">14.5.1 </span>x-user-defined decoder</a></li>
+     <li><a href="#x-user-defined-encoder"><span class="secno">14.5.2 </span>x-user-defined encoder</a></ol></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
@@ -167,6 +209,38 @@ LATIN CAPITAL LETTER Z) and the corresponding characters in the range
 U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z) are
 considered to also match.
 
+<hr>
+
+<p>A <dfn id="concept-token" title="concept-token">token</dfn> is a piece of data, such as a <a href="#byte">byte</a>
+or <a href="#code-point">code point</a>.
+
+<p>A <dfn id="concept-stream" title="concept-stream">stream</dfn> represents an ordered sequence of
+<a href="#concept-token" title="concept-token">tokens</a>. <dfn id="end-of-stream">End-of-stream</dfn> is a special
+<a href="#concept-token" title="concept-token">token</a> that signifies no more
+<a href="#concept-token" title="concept-token">tokens</a> are in the
+<a href="#concept-stream" title="concept-stream">stream</a>.
+
+<p>When a <a href="#concept-token" title="concept-token">token</a> is
+<dfn id="concept-stream-read" title="concept-stream-read">read</dfn> from a <a href="#concept-stream" title="concept-stream">stream</a>,
+the first token in the stream must be returned and subsequently removed, and
+<a href="#end-of-stream">end-of-stream</a> must be returned otherwise.
+<!-- this means read is blocking on e.g. networking activity;
+     SimonSapin thinks this is fine, curse him if not -->
+
+<p>When one or more <a href="#concept-token" title="concept-token">tokens</a> are
+<dfn id="concept-stream-prepend" title="concept-stream-prepend">prepended</dfn> to a
+<a href="#concept-stream" title="concept-stream">stream</a>, those tokens must be inserted, in given order,
+before the first token in the stream.
+
+<p class="example">Inserting the sequence of tokens <code title="">&amp;#128169;</code> in a
+stream "<code title=""> hello world</code>", results in a stream
+"<code title="">&amp;#128169; hello world</code>". The next token to be read would be
+<code title="">&amp;</code>. <!-- 💩 -->
+
+<p>When one or more <a href="#concept-token" title="concept-token">tokens</a> are
+<dfn id="concept-stream-push" title="concept-stream-push">pushed</dfn> to a <a href="#concept-stream" title="concept-stream">stream</a>,
+those tokens must be inserted, in given order, after the last token in the stream.
+
 
 
 <h2 id="encodings"><span class="secno">4 </span>Encodings</h2>
@@ -175,74 +249,103 @@ considered to also match.
 byte sequence (and vice versa). Each <a href="#encoding">encoding</a> has a
 <dfn id="name">name</dfn>, and one or more <dfn id="label" title="label">labels</dfn>.
 
-<p>Each <a href="#encoding">encoding</a> also has a <dfn id="decoder">decoder</dfn> and
-<dfn id="encoder">encoder</dfn> algorithm.
+<p>Each <a href="#encoding">encoding</a> has an associated <dfn id="decoder">decoder</dfn> and <dfn id="encoder">encoder</dfn>.
+Each <a href="#decoder">decoder</a> and <a href="#encoder">encoder</a> have a <dfn id="handler">handler</dfn> algorithm.
+A <a href="#handler">handler</a> algorithm takes an input <a href="#concept-stream" title="concept-stream">stream</a>
+and a <a href="#concept-token" title="concept-token">token</a>, and returns
+<dfn id="finished">finished</dfn>,
+one or more <a href="#concept-token" title="concept-token">tokens</a>,
+<dfn id="error">error</dfn> optionally with a <a href="#code-point">code point</a>, or
+<dfn id="continue">continue</dfn>.
 
-<p>A <a href="#decoder">decoder</a> algorithm takes a byte stream and emits a
-code point stream. The <dfn id="byte-pointer">byte pointer</dfn> is initially zero,
-pointing to the first byte in the stream. It cannot be negative. It can be
-increased and decreased to point to other bytes in the stream. The
-<dfn id="eof-byte">EOF byte</dfn> is a conceptual byte representing the end of the
-stream. The <a href="#byte-pointer">byte pointer</a> cannot point beyond the
-<a href="#eof-byte">EOF byte</a>. The <dfn id="eof-code-point">EOF code point</dfn> is a conceptual code
-point that is emitted once the byte stream is handled in its entirety.
-A <a href="#decoder">decoder</a> must be invoked again when the word continue is used or
-when one or more code points are emitted of which none is the
-<a href="#eof-code-point">EOF code point</a>.
+<p>An <dfn id="error-mode">error mode</dfn> as used below is either <i title="">replacement</i> (default) or
+<i>fatal</i> for a <a href="#decoder">decoder</a> and one of <i>fatal</i> (default), <i>URL</i>, or
+<i>&lt;form&gt;</i> for an <a href="#encoder">encoder</a>.
 
-<p>An <a href="#encoder">encoder</a> algorithm takes a code point stream and emits a
-byte stream. It fails when a code point is passed for which it does not have
-a corresponding byte (sequence). Analogously to a <a href="#decoder">decoder</a>, it
-has a <dfn id="code-point-pointer">code point pointer</dfn>.
-An <a href="#encoder">encoder</a> must be invoked again when the word continue is
-used or when one or more bytes are emitted of which none is the
-<a href="#eof-byte">EOF byte</a>.
-
-<p>A <a href="#decoder">decoder</a> and <a href="#encoder">encoder</a> both have an associated
-<dfn id="error-handling-mode">error handling mode</dfn> as well as an <dfn id="error">error</dfn> algorithm. For a
-<a href="#decoder">decoder</a> the <a href="#error-handling-mode">error handling mode</a> is either
-<i title="">replacement</i> (default) or <i title="">fatal</i>. For an <a href="#encoder">encoder</a> the
-<a href="#error-handling-mode">error handling mode</a> is one of <i title="">fatal</i> (default), <i title="">URL</i>,
-or <i title="">&lt;form&gt;</i>.
-
-<p>A <a href="#decoder">decoder</a> <var title="">decoder</var>'s <a href="#error">error</a> algorithm is as
-follows:
-
-<ol>
- <li><p>If <var title="">decoder</var>'s <a href="#error-handling-mode">error handling mode</a> is
- <i title="">replacement</i>, emit code point U+FFFD.
-
- <li><p>Otherwise, terminate <var title="">decoder</var> with failure.
-</ol>
-
-<p class="note">An XML processor would set its <a href="#decoder">decoder</a>'s
-<a href="#error-handling-mode">error handling mode</a> to <i title="">fatal</i>.
+<p class="note">An XML processor would set <a href="#error-mode">error mode</a> to <i>fatal</i>.
 <a class="informative" href="#refsXML">[XML]</a>
 
-<p>An <a href="#encoder">encoder</a> <var title="">encoder</var>'s <a href="#error">error</a> algorithm takes a
-code point <var title="">c</var> and is as follows:
-
-<ol>
- <li><p>If <var title="">encoder</var>'s <a href="#error-handling-mode">error handling mode</a> is
- <var title="">fatal</var>, terminate <var title="">encoder</var> with failure.
-
- <li><p>Otherwise, if <var title="">encoder</var>'s <a href="#error-handling-mode">error handling mode</a> is
- <var title="">URL, emit byte 0x3F<!-- ? -->.
-
- </var><li><p>Otherwise, emit the result of running <a href="#utf-8-encode">utf-8 encode</a> on U+0026, U+0023,
- followed by the shortest sequence of <a href="#ascii-digits">ASCII digits</a> representing
- <var title="">c</var> in base ten, followed by U+003B.<!-- &# ... ; -->
-</ol>
-
-<p class="note">The <a href="#encoder">encoder</a>'s
-<a href="#error-handling-mode" title="error handling mode">error handling modes</a> <i title="">URL</i> and
-<i title="">&lt;form&gt;</i> exist because URLs and HTML forms require non-terminating
-<a href="#encoder" title="encoder">encoders</a> and have legacy handling whenever an
-<a href="#error">error</a> is reached.
+<p class="note"><i>URL</i> and <i>&lt;form&gt;</i> exist as <a href="#error-mode">error mode</a> because
+URLs and HTML forms require non-terminating <a href="#encoder" title="encoder">encoders</a> and have
+legacy handling whenever an <a href="#error">error</a> is reached.
 <a class="informative" href="#refsURL">[URL]</a>
 <a class="informative" href="#refsHTML">[HTML]</a>
 
-<hr>
+<p class="XXX">We have an opportunity to merge <i>URL</i> and <i>&lt;form&gt;</i>:
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24845">bug 24845</a>
+
+<p>To <dfn id="concept-encoding-run" title="concept-encoding-run">run</dfn> an <a href="#encoding">encoding</a>'s
+<a href="#decoder">decoder</a> or <a href="#encoder">encoder</a> <var>encoderDecoder</var> with input
+<a href="#concept-stream" title="concept-stream">stream</a> <var>input</var>, output
+<a href="#concept-stream" title="concept-stream">stream</a> <var>output</var>, and <a href="#error-mode">error mode</a>
+<var>mode</var>, run these steps:
+
+<ol>
+ <li><p>If <var>mode</var> is not given, set it to <i title="">replacement</i> if
+ <var>encoderDecoder</var> is a <a href="#decoder">decoder</a>, and <i>fatal</i> otherwise.
+
+ <li><p>Let <var>encoderDecoderInstance</var> be a new <var>encoderDecoder</var>.
+
+ <li>
+  <p>While true:
+
+  <ol>
+   <li><p>Let <var>result</var> be the result of
+   <a href="#concept-encoding-process" title="concept-encoding-process">processing</a> the result of
+   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>input</var> for
+   <var title="">encoderDecoderInstance</var>, <var>input</var>, <var>output</var>, and
+   <var>mode</var>.
+
+   <li><p>If <var>result</var> is not <a href="#continue">continue</a>, return <var>result</var>.
+
+   <li><p>Otherwise, do nothing.
+  </ol>
+</ol>
+
+<p>To <dfn id="concept-encoding-process" title="concept-encoding-process">process</dfn> a
+<a href="#concept-token" title="concept-token">token</a> <var>token</var> for an <a href="#encoding">encoding</a>'s
+<a href="#encoder">encoder</a> or <a href="#decoder">decoder</a> instance <var>encoderDecoderInstance</var>,
+<a href="#concept-stream" title="concept-stream">stream</a> <var>input</var>, output
+<a href="#concept-stream" title="concept-stream">stream</a> <var>output</var>, and
+error mode <var>mode</var>, run these steps:
+
+<ol>
+ <li><p>If <var>mode</var> is not given, set it to <i title="">replacement</i> if
+ <var>encoderDecoder</var> is a <a href="#decoder">decoder</a> instance, and <i>fatal</i> otherwise.
+
+ <li><p>Let <var>result</var> be the result of running <var>encoderDecoderInstance</var>'s
+ <a href="#handler">handler</a> on <var>token</var>.
+
+ <li><p>If <var>result</var> is <a href="#continue">continue</a> or <a href="#finished">finished</a>, return
+ <var>result</var>.
+
+ <li><p>Otherwise, if <var>result</var> is one or more
+ <a href="#concept-token" title="concept-token">tokens</a>, <a href="#concept-stream-push" title="concept-stream-push">push</a>
+ <var title="">result</var> to <var>output</var>.
+
+ <li>
+  <p>Otherwise, if <var>result</var> is <a href="#error">error</a>, switch on <var>mode</var> and
+  run the associated steps:
+
+  <dl class="switch">
+   <dt><i title="">replacement</i>
+   <dd><a href="#concept-stream-push" title="concept-stream-push">Push</a> U+FFFD to <var>output</var>.
+   <dt><i>URL</i>
+   <dd><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> U+003F to <var>input</var>.
+   <!-- ? -->
+   <dt><i>&lt;form&gt;</i>
+   <dd><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> U+0026, U+0023, followed by the
+   shortest sequence of <a href="#ascii-digits">ASCII digits</a> representing <var title="">result</var>'s
+   <a href="#code-point">code point</a> in base ten, followed by U+003B to <var>input</var>.
+   <!-- &# ... ; -->
+   <dt><i>fatal</i>
+   <dd>Return <a href="#error">error</a>.
+  </dl>
+
+ <li>Return <a href="#continue">continue</a>.
+</ol>
+
+<hr> <!-- XXX make this a chapter: "Encoding labels" -->
 
 <p>The table below lists all <a href="#encoding" title="encoding">encodings</a>
 and their <a href="#label" title="label">labels</a> user agents must support.
@@ -707,59 +810,79 @@ and <a href="#encode">encode</a> are intended for usage by other specifications.
 <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be
 used first to turn a <a href="#label">label</a> into an <a href="#encoding">encoding</a>.
 
-<p>To <dfn id="decode">decode</dfn> a byte stream <var title="">stream</var> using
+<p>To <dfn id="decode">decode</dfn> a byte stream <var>stream</var> using
 fallback encoding <var title="">encoding</var>, run these steps:
 
 <ol>
- <li><p>Let <var title="">offset</var> be 0.
+ <li><p>Let <var>buffer</var> be an empty byte sequence.
+
+ <li><p><a href="#concept-stream-read" title="concept-stream-read">Read</a> three bytes from <var>stream</var>
+ into <var>buffer</var>.
 
  <li>
   <p>For each of the rows in the following table, starting with the first
-  one and going down, if the first bytes of <var title="">stream</var> match
-  all the bytes given in the first column (ergo <var title="">stream</var>
-  contains at least two or three bytes), then set <var title="">encoding</var>
+  one and going down, if the first bytes of <var>buffer</var> match
+  all the bytes given in the first column, then set <var title="">encoding</var>
   to the <a href="#encoding">encoding</a> given in the cell in the second column of
-  that row, and set <var title="">offset</var> to the offset given in the cell
-  in the third column of that row.
+  that row and if <var title="">encoding</var> is now <a href="#utf-16be">utf-16be</a> or
+  <a href="#utf-16le">utf-16le</a>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> the last byte
+  of <var>buffer</var> to <var>stream</var>.
 
   <table>
-   <tr><th>Byte order mark<th>Encoding<th>Offset
-   <tr><td>0xEF 0xBB 0xBF<td><a href="#utf-8">utf-8</a><td>3
-   <tr><td>0xFE 0xFF<td><a href="#utf-16be">utf-16be</a><td>2
-   <tr><td>0xFF 0xFE<td><a href="#utf-16le">utf-16le</a><td>2
+   <tr><th>Byte order mark<th>Encoding
+   <tr><td>0xEF 0xBB 0xBF<td><a href="#utf-8">utf-8</a>
+   <tr><td>0xFE 0xFF<td><a href="#utf-16be">utf-16be</a>
+   <tr><td>0xFF 0xFE<td><a href="#utf-16le">utf-16le</a>
   </table>
 
   <p class="note">For compatibility with deployed content, the byte order mark
   (also known as BOM) is considered more authoritative than anything else.
 
- <li><p>Return the result of running <var title="">encoding</var>'s
- <a href="#decoder">decoder</a> with <a href="#byte-pointer">byte pointer</a> set to
- <var title="">offset</var>, on <var title="">stream</var>.
+ <li><p>Let <var>output</var> be a code point <a href="#concept-stream" title="concept-stream">stream</a>.
+
+ <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <var title="">encoding</var>'s
+ <a href="#decoder">decoder</a> with <var>stream</var> and <var>output</var>.
+
+ <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn id="utf-8-decode">utf-8 decode</dfn> a byte stream <var title="">stream</var>, run
+<p>To <dfn id="utf-8-decode">utf-8 decode</dfn> a byte stream <var>stream</var>, run
 these steps:
 
 <ol>
- <li><p>Let <var title="">offset</var> be 0.
+ <li><p>Let <var>buffer</var> be an empty byte sequence.
 
- <li><p>If <var title="">stream</var> contains at least three bytes and its
- first three bytes match 0xEF 0xBB 0xBF, set <var title="">offset</var> to 3.
+ <li><p><a href="#concept-stream-read" title="concept-stream-read">Read</a> three bytes from <var>stream</var>
+ into <var>buffer</var>.
 
- <li><p>Return the result of running the <a href="#utf-8-decoder">utf-8 decoder</a> with
- <a href="#byte-pointer">byte pointer</a> set to <var title="">offset</var>, on
- <var title="">stream</var>.
+ <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF,
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>buffer</var> to <var>stream</var>.
+
+ <li><p>Let <var>output</var> be a code point <a href="#concept-stream" title="concept-stream">stream</a>.
+
+ <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <a href="#utf-8">utf-8</a>'s
+ <a href="#decoder">decoder</a> with <var>stream</var> and <var>output</var>.
+
+ <li><p>Return <var>output</var>.
 </ol>
 
 <hr>
 
-<p>To <dfn id="encode">encode</dfn> a code point stream <var title="">stream</var> using
-encoding <var title="">encoding</var>, return the result of running
-<var title="">encoding</var>'s <a href="#encoder">encoder</a> on <var title="">stream</var>.
+<p>To <dfn id="encode">encode</dfn> a code point stream <var>stream</var> using
+encoding <var title="">encoding</var>, run these steps:
 
-<p>To <dfn id="utf-8-encode">utf-8 encode</dfn> a code point stream <var title="">stream</var>,
+<ol>
+ <li><p>Let <var>output</var> be a code point <a href="#concept-stream" title="concept-stream">stream</a>.
+
+ <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <var title="">encoding</var>'s
+ <a href="#encoder">encoder</a> with <var>stream</var> and <var>output</var>.
+
+ <li><p>Return <var>output</var>.
+</ol>
+
+<p>To <dfn id="utf-8-encode">utf-8 encode</dfn> a code point stream <var>stream</var>,
 return the result of <a href="#encode" title="encode">encoding</a>
-<var title="">stream</var> using encoding <a href="#utf-8">utf-8</a>.
+<var>stream</var> using encoding <a href="#utf-8">utf-8</a>.
 
 <p class="note">If the input to this algorithm stems from a DOMString, the
 <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-obtain-unicode">convert a DOMString to a sequence of Unicode characters</a>
@@ -853,17 +976,57 @@ dictionary <dfn id="textdecodeoptions">TextDecodeOptions</dfn> {
   boolean stream = false;
 };
 
-[<a href="#dom-textdecoder" title="dom-TextDecoder">Constructor</a>(optional DOMString <var title="">label</var> = "utf-8", optional <a href="#textdecoderoptions">TextDecoderOptions</a> <var title="">options</var>)]
+[<a href="#dom-textdecoder" title="dom-TextDecoder">Constructor</a>(optional DOMString <var title="">label</var> = "utf-8", optional <a href="#textdecoderoptions">TextDecoderOptions</a> <var title="">options</var>),
+ Exposed=Window,Worker]
 interface <dfn id="textdecoder">TextDecoder</dfn> {
   readonly attribute DOMString <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a>;
   DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>();
   DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
 };</pre>
 
-<p>A <a href="#textdecoder"><code>TextDecoder</code></a> object has an associated
-<b>encoding</b>, <b>encoding state</b>, <b>stream</b>,
-<b>BOM seen flag</b> (initially unset), <b>fatal flag</b> (initially unset)
-and <b>streaming flag</b> (initially unset).
+<p>A <a href="#textdecoder"><code>TextDecoder</code></a> object has an associated <b>encoding</b>, <b>encoder</b>,
+<b>stream</b>, <b>BOM seen flag</b> (initially unset),
+<b>error mode</b> (initially <i title="">replacement</i>), and
+<b>streaming flag</b> (initially unset).
+
+<p>A <a href="#textdecoder"><code>TextDecoder</code></a> object also has an associated
+<dfn id="concept-td-serialize" title="concept-TD-serialize">serialize stream</dfn> algorithm, that given a
+<a href="#concept-stream" title="concept-stream">stream</a> <var>stream</var>, runs these steps:
+
+<ol>
+ <li><p>Let <var>output</var> be the empty <a href="#string">string</a>.
+
+ <li>
+  <p>While true:
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of
+   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>stream</var>.
+
+   <li>
+    <p>If <b>encoding</b> is one of <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, or
+    <a href="#utf-16le">utf-16le</a>, and <b>BOM seen flag</b> is unset, run these subsubsteps:
+
+    <ol>
+     <li><p>If <var>token</var> is U+FEFF, set <b>BOM seen flag</b>.
+
+     <li><p>Otherwise, if <var>token</var> is not <a href="#end-of-stream">end-of-stream</a>, set
+     <b>BOM seen flag</b> and append <var>token</var> to <var>output</var>.
+
+     <li><p>Otherwise, return <var>output</var>.
+    </ol>
+
+   <li><p>Otherwise, if token is not <a href="#end-of-stream">end-of-stream</a>, append <var>token</var>
+   to <var>output</var>.
+
+   <li><p>Otherwise, return <var>output</var>.
+</ol>
+
+<p class="note">This algorithm is intentionally different with respect to BOM handling from
+the <a href="#decode">decode</a> algorithm used by the rest of the platform to give API users more
+control.
+
+<hr>
 
 <dl class="domintro">
  <dt><code><var title="">decoder</var> = new <a href="#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>([<var title="">label</var> = "utf-8" [, <var title="">options</var>]])</code>
@@ -884,8 +1047,8 @@ and <b>streaming flag</b> (initially unset).
   <code title="">stream</code> is set to true the method can be invoked
   multiple times to process a fragmented stream.
 
-  <p>If the <b>fatal flag</b> is set and <b>encoding</b>'s
-  <a href="#decoder">decoder</a> terminates with failure,
+  <p>If the <b>error mode</b> is <i>fatal</i> set and <b>encoding</b>'s
+  <a href="#decoder">decoder</a> returns <a href="#error">error</a>,
   <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throws</a> an
   "<a href="http://dom.spec.whatwg.org/#encodingerror"><code class="external" data-anolis-spec="dom">EncodingError</code></a>".
 </dl>
@@ -907,73 +1070,64 @@ constructor must run these steps:
  <li><p>Set <var title="">dec</var>'s <b>encoding</b> to
  <var title="">encoding</var>.
 
- <li><p>Set <var title="">dec</var>'s <b>encoding state</b> to the default
- values of <var title="">dec</var>'s <b>encoding</b>'s <a href="#decoder">decoder</a>'s
- associated variables.
-
  <li><p>If <var title="">options</var>'s <code title="">fatal</code> member is
- true, set <var title="">dec</var>'s <b>fatal flag</b>.
+ true, set <var title="">dec</var>'s <b>error mode</b> to <i>fatal</i>.
 
  <li><p>Return <var title="">dec</var>.
 </ol>
 
-<p>The <dfn id="dom-textdecoder-encoding" title="dom-TextDecoder-encoding"><code>encoding</code></dfn>
-attribute must return <b>encoding</b>'s <a href="#name">name</a>.
+<p>The <dfn id="dom-textdecoder-encoding" title="dom-TextDecoder-encoding"><code>encoding</code></dfn> attribute must
+return <b>encoding</b>'s <a href="#name">name</a>.
 
 <p>The
 <dfn id="dom-textdecoder-decode" title="dom-TextDecoder-decode"><code>decode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
 method must run these steps:
 
 <ol>
- <li><p>If the <b>streaming flag</b> is unset, set the <b>encoding state</b>
- to the default values of the <b>encoding</b>'s <a href="#decoder">decoder</a>'s
- associated variables, unset the <b>BOM seen flag</b>, and empty the <b>stream</b>.
+ <li><p>If the <b>streaming flag</b> is unset, set <b>decoder</b> to a new
+ <b>encoding</b>'s <a href="#decoder">decoder</a>, set <b>stream</b> to a new
+ <a href="#concept-stream" title="concept-stream">stream</a>, and unset the <b>BOM seen flag</b>.
 
- <li><p>If <var title="">options</var>'s <code title="">stream</code> is true,
- set the <b>streaming flag</b>, and unset the <b>streaming flag</b>
- otherwise.
+ <li><p>If <var title="">options</var>'s <code title="">stream</code> is true, set the
+ <b>streaming flag</b>, and unset the <b>streaming flag</b> otherwise.
 
  <li><p>If <var title="">input</var> is given, then given
  <var title="">input</var>'s <code title="">buffer</code>,
- <code title="">byteOffset</code>, and <code title="">byteLength</code>, append
- <code title="">byteLength</code> bytes from <code title="">buffer</code>,
- starting at <code title="">byteOffset</code>, to the <b>stream</b>.
- <!-- TYPEDARRAY really needs to make this simpler -->
+ <code title="">byteOffset</code>, and <code title="">byteLength</code>,
+ <a href="#concept-stream-push" title="concept-stream-push">push</a> <code title="">byteLength</code> bytes from
+ <code title="">buffer</code>, starting at <code title="">byteOffset</code>, to <b>stream</b>.
+ <!-- XXX JavaScript / IDL really needs to make this simpler -->
+
+ <li><p>Let <var>output</var> be a new <a href="#concept-stream" title="concept-stream">stream</a>.
 
  <li>
-  <p>If the <b>BOM seen flag</b> is unset, and the <b>stream</b> either
-  holds at least two bytes, or at least three bytes if the <b>encoding</b>
-  is <a href="#utf-8">utf-8</a>, then set the <b>BOM seen flag</b>, and for each of
-  the rows in the following table, starting with the first one and going
-  down, if the first bytes of the <b>stream</b> match all the bytes given in
-  the first column, and the <b>encoding</b> matches the
-  <a href="#encoding">encoding</a> given in the cell in the second column of that row,
-  then remove those bytes at the start of the <b>stream</b>.
+  <p>While true:
 
-  <table>
-   <tr><th>Byte order mark<th>Encoding
-   <tr><td>0xEF 0xBB 0xBF<td><a href="#utf-8">utf-8</a>
-   <tr><td>0xFE 0xFF<td><a href="#utf-16be">utf-16be</a>
-   <tr><td>0xFF 0xFE<td><a href="#utf-16le">utf-16le</a>
-  </table>
+  <ol>
+   <li><p>Let <var>token</var> be the result of
+   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <b>stream</b>.
 
-  <p class="note">This algorithm is intentionally different from the
-  <a href="#decode">decode</a> algorithm used by the rest of the platform to give API
-  users more control.
+   <li><p>If <var>token</var> is <a href="#end-of-stream">end-of-stream</a> and the <b>streaming flag</b>
+   is set, return <var>output</var>, <a href="#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
 
- <li><p>If the <b>streaming flag</b> is unset, append the
- <a href="#eof-byte">EOF byte</a> to the <b>stream</b>.
+   <li>
+    <p>Otherwise, run these subsubsteps:
 
- <li>
-  <p>Return the output of running <b>encoding</b>'s <a href="#decoder">decoder</a>, with its
-  <a href="#error-handling-mode">error handling mode</a> set to <i title="">fatal</i> if the <b>fatal flag</b> is
-  set, on the <b>stream</b>. If <b>encoding</b>'s <a href="#decoder">decoder</a> terminates with
-  failure, <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> an
-  "<code title="">EncodingError</code>".
+    <ol>
+     <li><p>Let <var>result</var> be the result of
+     <a href="#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
+     <b>encoder</b>, <b>stream</b>, <var>output</var>, and <b>error mode</b>.
 
-  <p class="note">In addition to the reason given above with respect to the
-  byte order mark, this also does not use the <a href="#encode">encode</a> algorithm
-  as it assumes a continuous stream rather than one delivered in fragments.
+     <li><p>If <var>result</var> is <a href="#finished">finished</a>, return <var>output</var>,
+     <a href="#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
+
+     <li><p>Otherwise, if <var>result</var> is <a href="#error">error</a>,
+     <a class="external" data-anolis-spec="dom" href="http://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> an
+     "<code title="">EncodingError</code>"
+
+     <li><p>Otherwise, do nothing.
+    </ol>
+  </ol>
 </ol>
 
 
@@ -983,16 +1137,32 @@ method must run these steps:
   boolean stream = false;
 };
 
-[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8")]
+[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8"),
+ Exposed=Window,Worker]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
   <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#7">Uint8Array</a> <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional [EnsureUTF16] DOMString <var title="">input</var> = "", optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
 };</pre>
 
-<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated
-<b>encoding</b>, <b>encoding state</b>, <b>stream</b>, and
-<b>streaming flag</b> (initially unset).
+<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b>, <b>encoder</b>,
+<b>stream</b>, and <b>streaming flag</b> (initially unset).
 
+<p>A <a href="#textencoder"><code>TextEncoder</code></a> object also has an associated
+<dfn id="concept-te-serialize" title="concept-TE-serialize">serialize stream algorithm, that given a
+<span title="concept-stream">stream</span> <var>stream</var>, runs these steps:
+
+</dfn><ol>
+ <li><p>Let <var>buffer</var> be a byte sequence.
+
+ <li><p>Keep <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>stream</var> into
+ <var>buffer</var> until <a href="#end-of-stream">end-of-stream</a>.
+
+ <li><p>Return a <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint8Array</code></a> object wrapping an
+ <a href="http://www.khronos.org/registry/typedarray/specs/latest/#5"><code class="external" data-anolis-spec="typedarray">ArrayBuffer</code></a> containing <var title="">bytes</var>.
+ <!-- XXX JavaScript / IDL hook? -->
+</ol>
+
+<hr>
 
 <dl class="domintro">
  <dt><code><var title="">encoder</var> = new <a href="#dom-textencoder" title="dom-TextEncoder">TextEncoder</a>([<var title="">utfLabel</var> = "utf-8"])</code>
@@ -1028,12 +1198,7 @@ constructor must run these steps:
 
  <li><p>Let <var title="">enc</var> be a new <a href="#textencoder"><code>TextEncoder</code></a> object.
 
- <li><p>Set <var title="">enc</var>'s <b>encoding</b> to
- <var title="">encoding</var>.
-
- <li><p>Set <var title="">enc</var>'s <b>encoding state</b> to the default
- values of <var title="">enc</var>'s <b>encoding</b>'s <a href="#encoder">encoder</a>'s
- associated variables.
+ <li><p>Set <var title="">enc</var>'s <b>encoding</b> to <var title="">encoding</var>.
 
  <li><p>Return <var title="">enc</var>.
 </ol>
@@ -1046,30 +1211,44 @@ attribute must return <b>encoding</b>'s <a href="#name">name</a>.
 method must run these steps:
 
 <ol>
- <li><p>If the <b>streaming flag</b> is unset, then set the
- <b>encoding state</b> to the default values of the <b>encoding</b>'s
- <a href="#encoder">encoder</a>'s associated variables, and empty the <b>stream</b>.
+ <li><p>If the <b>streaming flag</b> is unset, set <b>encoder</b> to a new
+ <b>encoding</b>'s <a href="#encoder">encoder</a> and set <b>stream</b> to a new
+ <a href="#concept-stream" title="concept-stream">stream</a>.
 
- <li><p>If <var title="">options</var>'s <code title="">stream</code> is true,
- set the <b>streaming flag</b>, and unset the <b>streaming flag</b>
- otherwise.
+ <li><p>If <var title="">options</var>'s <code title="">stream</code> is true, set the
+ <b>streaming flag</b>, and unset the <b>streaming flag</b> otherwise.
 
- <li><p>Append <var title="">input</var> to the <b>stream</b>.
+ <li><p><a href="#concept-stream-push" title="concept-stream-push">Push</a> <var title="">input</var> to <b>stream</b>.
 
- <li><p>If the <b>streaming flag</b> is unset, append the
- <a href="#eof-code-point">EOF code point</a> to the <b>stream</b>.
+ <li><p>Let <var>output</var> be a new <a href="#concept-stream" title="concept-stream">stream</a>.
 
  <li>
-  <p>Let <var title="">bytes</var> be the output of running
-  <b>encoding</b>'s <a href="#encoder">encoder</a> on the <b>stream</b>.
+  <p>While true:
 
-  <p class="note">This does not use the <a href="#encode">encode</a> algorithm as it
-  assumes a continuous stream rather than one delivered in fragments.
+  <ol>
+   <li><p>Let <var>token</var> be the result of
+   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <b>stream</b>.
 
- <li><p>Return a
- <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint8Array</code></a> object wrapping an
- <a href="http://www.khronos.org/registry/typedarray/specs/latest/#5"><code class="external" data-anolis-spec="typedarray">ArrayBuffer</code></a> containing
- <var title="">bytes</var>.
+   <li><p>If <var>token</var> is <a href="#end-of-stream">end-of-stream</a> and the <b>streaming flag</b>
+   is set, return <var>output</var>, <a href="#concept-te-serialize" title="concept-TE-serialize">serialized</a>.
+
+   <li>
+    <p>Otherwise, run these subsubsteps:
+
+    <ol>
+     <li><p>Let <var>result</var> be the result of
+     <a href="#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
+     <b>encoder</b>, <b>stream</b>, <var>output</var>.
+
+     <li><p>If <var>result</var> is <a href="#finished">finished</a>, return <var>output</var>,
+     <a href="#concept-te-serialize" title="concept-TE-serialize">serialized</a>.
+
+     <li><p>Otherwise, do nothing.
+    </ol>
+
+    <p class="note">These <a href="#encoding" title="encoding">encodings</a> cannot return
+    <a href="#error">error</a>. <!-- XXX surrogates?! -->
+  </ol>
 </ol>
 
 
@@ -1078,24 +1257,23 @@ method must run these steps:
 
 <h3 id="utf-8"><span class="secno">8.1 </span><dfn>utf-8</dfn></h3>
 
-<p>The <dfn id="utf-8-code-point">utf-8 code point</dfn>, <dfn id="utf-8-bytes-seen">utf-8 bytes seen</dfn>, and
-<dfn id="utf-8-bytes-needed">utf-8 bytes needed</dfn> concepts are all initially 0. The
-<dfn id="utf-8-lower-boundary">utf-8 lower boundary</dfn> is initially 0x80 and the
-<dfn id="utf-8-upper-boundary">utf-8 upper boundary</dfn> is initially 0xBF.
+<h4 id="utf-8-decoder"><span class="secno">8.1.1 </span><dfn>utf-8 decoder</dfn></h4>
 
-<p>The <dfn id="utf-8-decoder">utf-8 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-8">utf-8</a>) is:
+<p><a href="#utf-8">utf-8</a>'s <a href="#decoder">decoder</a>'s has an associated
+<dfn id="utf-8-code-point">utf-8 code point</dfn>, <dfn id="utf-8-bytes-seen">utf-8 bytes seen</dfn>, and
+<dfn id="utf-8-bytes-needed">utf-8 bytes needed</dfn> (all initially 0), a <dfn id="utf-8-lower-boundary">utf-8 lower boundary</dfn>
+(initially 0x80), and a <dfn id="utf-8-upper-boundary">utf-8 upper boundary</dfn> (initially 0xBF).
+
+<p><a href="#utf-8">utf-8</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
-
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
  <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> is not 0, set
- <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 0 and run <a href="#error">error</a>.
+ <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 0 and return <a href="#error">error</a>.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit the
- <a href="#eof-code-point">EOF code point</a>.
-
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
  <li>
   <p>If <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> is 0, based on
@@ -1103,7 +1281,7 @@ method must run these steps:
 
   <dl class="switch">
    <dt>0x00 to 0x7F
-   <dd><p>Emit a code point whose value is <var title="">byte</var>.
+   <dd><p>Return a code point whose value is <var title="">byte</var>.
 
    <dt>0xC2 to 0xDF
    <dd><p>Set <a href="#utf-8-bytes-needed">utf-8 bytes needed</a> to 1 and
@@ -1136,12 +1314,12 @@ method must run these steps:
     </ol>
 
    <dt>Otherwise
-   <dd><p>Run <a href="#error">error</a>.
+   <dd><p>Return <a href="#error">error</a>.
   </dl>
 
   <p>Then (<var title="">byte</var> is in the range 0xC2 to 0xF4) set
   <a href="#utf-8-code-point">utf-8 code point</a> to <a href="#utf-8-code-point">utf-8 code point</a> ×
-  64<sup><a href="#utf-8-bytes-needed">utf-8 bytes needed</a></sup> and continue.
+  64<sup><a href="#utf-8-bytes-needed">utf-8 bytes needed</a></sup> and return <a href="#continue">continue</a>.
 
  <li>
   <p>If <var title="">byte</var> is not in the range
@@ -1154,9 +1332,10 @@ method must run these steps:
    set <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80, and set
    <a href="#utf-8-upper-boundary">utf-8 upper boundary</a> to 0xBF.
 
-   <li><p>Decrease the <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <var title="">byte</var> to
+   <var>stream</var>.
 
-   <li><p>Run <a href="#error">error</a>.
+   <li><p>Return <a href="#error">error</a>.
   </ol>
 
  <li><p>Set <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80 and
@@ -1185,22 +1364,20 @@ behavior is permitted per the Encoding Standard (other algorithms that
 achieve the same result are obviously fine, even encouraged).
 
 
-<p>The <dfn id="utf-8-encoder">utf-8 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-8">utf-8</a>) is:
+<h4 id="utf-8-encoder"><span class="secno">8.1.2 </span><dfn>utf-8 encoder</dfn></h4>
+
+<p><a href="#utf-8">utf-8</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF, return
+ <a href="#error">error</a> with <var title="">code point</var>.
 
- <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF, run
- <a href="#error">error</a> for <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
-
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ a byte whose value is <var title="">code point</var>.
 
  <li>
   <p>Set <var title="">count</var> and <var title="">offset</var> based on the
@@ -1215,7 +1392,7 @@ achieve the same result are obviously fine, even encouraged).
    <dd>3 and 0xF0
   </dl>
 
- <li><p>Let <var title="">bytes</var> be a list of bytes whose first byte is
+ <li><p>Let <var title="">bytes</var> be a byte sequence whose first byte is
  <var title="">code point</var> / 64<sup><var title="">count</var></sup> + <var title="">offset</var>.
 
  <li>
@@ -1233,7 +1410,7 @@ achieve the same result are obviously fine, even encouraged).
    <li><p>Decrease <var title="">count</var> by one.
   </ol>
 
- <li><p>Emit bytes <var title="">bytes</var>, in list order.
+ <li><p>Return bytes <var title="">bytes</var>, in order.
 </ol>
 
 
@@ -1289,52 +1466,47 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 "iso-8859-6-i" as well, that is no longer true.
 <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=19505 -->
 
-<hr>
+<h3 id="single-byte-decoder"><span class="secno">9.1 </span><dfn>single-byte decoder</dfn></h3>
 
-<p>The <dfn id="single-byte-decoder">single-byte decoder</dfn> (<a href="#decoder">decoder</a> for
-<a href="#single-byte-encoding" title="single-byte encoding">single-byte encodings</a>) is:
+<p><a href="#single-byte-encoding" title="single-byte encoding">Single-byte encodings</a>'s
+<a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit the
- <a href="#eof-code-point">EOF code point</a>.
-
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
-
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a code
- point whose value is <var title="">byte</var>.
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ a code point whose value is <var title="">byte</var>.
 
  <li><p>Let <var title="">code point</var> be the <a href="#index-code-point">index code point</a>
  for <var title="">byte</var> − 0x80 in <a href="#index-single-byte">index single-byte</a>.
 
- <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
+ <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
- <li><p>Emit a code point whose value is <var title="">code point</var>.
+ <li><p>Return a code point whose value is <var title="">code point</var>.
 </ol>
 
-<p>The <dfn id="single-byte-encoder">single-byte encoder</dfn> (<a href="#encoder">encoder</a> for
-<a href="#single-byte-encoding" title="single-byte encoding">single-byte encodings</a>) is:
+<h3 id="single-byte-encoder"><span class="secno">9.2 </span><dfn>single-byte encoder</dfn></h3>
+
+<p><a href="#single-byte-encoding" title="single-byte encoding">Single-byte encodings</a>'s
+<a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
-
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ a byte whose value is <var title="">code point</var>.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-single-byte">index single-byte</a>.
 
- <li><p>If <var title="">pointer</var> is null, run <a href="#error">error</a> for
+ <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
  <var title="">code point</var>.
 
- <li><p>Emit a byte whose value is <var title="">pointer</var> + 0x80.
+ <li><p>Return a byte whose value is <var title="">pointer</var> + 0x80.
 </ol>
 
 
@@ -1344,24 +1516,23 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 <h3 id="gb18030"><span class="secno">10.1 </span><dfn>gb18030</dfn></h3>
 
-<p>The <dfn id="gb18030-first">gb18030 first</dfn>, <dfn id="gb18030-second">gb18030 second</dfn>, and
-<dfn id="gb18030-third">gb18030 third</dfn>, are all initially 0x00.
+<h4 id="gb18030-decoder"><span class="secno">10.1.1 </span><dfn>gb18030 decoder</dfn></h4>
 
-<p>The <dfn id="gb18030-decoder">gb18030 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#gb18030">gb18030</a>) is:
+<p><a href="#gb18030">gb18030</a>'s <a href="#decoder">decoder</a> has an associated <dfn id="gb18030-first">gb18030 first</dfn>,
+<dfn id="gb18030-second">gb18030 second</dfn>, and <dfn id="gb18030-third">gb18030 third</dfn> (all initially 0x00).
+
+<p><a href="#gb18030">gb18030</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
-
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
  <a href="#gb18030-first">gb18030 first</a>, <a href="#gb18030-second">gb18030 second</a>, and <a href="#gb18030-third">gb18030 third</a>
- are 0x00, emit the <a href="#eof-code-point">EOF code point</a>.
+ are 0x00, return <a href="#finished">finished</a>.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, and
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>, and
  <a href="#gb18030-first">gb18030 first</a>, <a href="#gb18030-second">gb18030 second</a>, or <a href="#gb18030-third">gb18030 third</a>
  is not 0x00, set <a href="#gb18030-first">gb18030 first</a>, <a href="#gb18030-second">gb18030 second</a>, and
- <a href="#gb18030-third">gb18030 third</a> to 0x00, and run <a href="#error">error</a>.
-
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+ <a href="#gb18030-third">gb18030 third</a> to 0x00, and return <a href="#error">error</a>.
 
  <li>
   <p>If <a href="#gb18030-third">gb18030 third</a> is not 0x00, run these substeps:
@@ -1374,13 +1545,18 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <a href="#index-gb18030-ranges-code-point">index gb18030 ranges code point</a> for
    (((<a href="#gb18030-first">gb18030 first</a> − 0x81) × 10 + <a href="#gb18030-second">gb18030 second</a> − 0x30) × 126 + <a href="#gb18030-third">gb18030 third</a> − 0x81) × 10 + <var title="">byte</var> − 0x30.
 
+   <li><p>Let <var>buffer</var> be a byte sequence consisting of
+   <a href="#gb18030-second">gb18030 second</a>, <a href="#gb18030-third">gb18030 third</a>, and <var title="">byte</var>, in
+   order.
+
    <li><p>Set <a href="#gb18030-first">gb18030 first</a>, <a href="#gb18030-second">gb18030 second</a>, and
    <a href="#gb18030-third">gb18030 third</a> to 0x00.
 
-   <li><p>If <var title="">code point</var> is null, decrease the
-   <a href="#byte-pointer">byte pointer</a> by three and run <a href="#error">error</a>.
+   <li><p>If <var title="">code point</var> is null,
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>buffer</var> to
+   <var>stream</var> and return <a href="#error">error</a>.
 
-   <li><p>Emit a code point whose value is <var title="">code point</var>.
+   <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
  <li>
@@ -1388,10 +1564,12 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
   <ol>
    <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
-   <a href="#gb18030-third">gb18030 third</a> to <var title="">byte</var> and continue.
+   <a href="#gb18030-third">gb18030 third</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
-   <li><p>Decrease the <a href="#byte-pointer">byte pointer</a> by two, set
-   <a href="#gb18030-first">gb18030 first</a> and <a href="#gb18030-second">gb18030 second</a> to 0x00, and run <a href="#error">error</a>.
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <a href="#gb18030-second">gb18030 second</a>
+   followed by <var title="">byte</var> to <var>stream</var>, set
+   <a href="#gb18030-first">gb18030 first</a> and <a href="#gb18030-second">gb18030 second</a> to 0x00, and return
+   <a href="#error">error</a>.
   </ol>
 
  <li>
@@ -1399,7 +1577,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
   <ol>
    <li><p>If <var title="">byte</var> is in the range 0x30 to 0x39, set
-   <a href="#gb18030-second">gb18030 second</a> to <var title="">byte</var> and continue.
+   <a href="#gb18030-second">gb18030 second</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
    <li><p>Let <var title="">lead</var> be <a href="#gb18030-first">gb18030 first</a>, let
    <var title="">pointer</var> be null, and set <a href="#gb18030-first">gb18030 first</a> to 0x00.
@@ -1415,38 +1593,38 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-gb18030">index gb18030</a> otherwise.
 
-   <li><p>If <var title="">pointer</var> is null, decrease the
-   <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p>If <var title="">pointer</var> is null,
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
+   <var>stream</var>.
 
-   <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
+   <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
-   <li><p>Emit a code point whose value is <var title="">code point</var>.
+   <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a code
- point whose value is <var title="">byte</var>.
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ a code point whose value is <var title="">byte</var>.
 
- <li><p>If <var title="">byte</var> is 0x80, emit code point U+20AC.
+ <li><p>If <var title="">byte</var> is 0x80, return code point U+20AC.
 
  <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
- <a href="#gb18030-first">gb18030 first</a> to <var title="">byte</var> and continue.
+ <a href="#gb18030-first">gb18030 first</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
- <li><p>Run <a href="#error">error</a>.
+ <li><p>Return <a href="#error">error</a>.
 </ol>
 
-<p>The <dfn id="gb18030-encoder">gb18030 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#gb18030">gb18030</a>) is:
+
+<h4 id="gb18030-encoder"><span class="secno">10.1.2 </span><dfn>gb18030 encoder</dfn></h4>
+
+<p><a href="#gb18030">gb18030</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
-
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ a byte whose value is <var title="">code point</var>.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-gb18030">index gb18030</a>.
@@ -1463,7 +1641,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <li><p>Let <var title="">offset</var> be 0x40 if <var title="">trail</var> is
    less than 0x3F<!--0x7F-0x40--> and 0x41 otherwise.
 
-   <li><p>Emit two bytes whose values are <var title="">lead</var> and
+   <li><p>Return two bytes whose values are <var title="">lead</var> and
    <var title="">trail</var> + <var title="">offset</var>.
   </ol>
 
@@ -1488,7 +1666,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <li><p>Let <var title="">byte4</var> be
  <var title="">pointer</var> − <var title="">byte3</var> × 10.
 
- <li><p>Emit four bytes whose values are <var title="">byte1</var> + 0x81,
+ <li><p>Return four bytes whose values are <var title="">byte1</var> + 0x81,
  <var title="">byte2</var> + 0x30, <var title="">byte3</var> + 0x81,
  <var title="">byte4</var> + 0x30.
 </ol>
@@ -1500,23 +1678,24 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  http://tools.ietf.org/html/rfc1843
 -->
 
-<p>The <dfn id="hz-gb-2312-flag">hz-gb-2312 flag</dfn> is initially unset. The
-<dfn id="hz-gb-2312-lead">hz-gb-2312 lead</dfn> is initially 0x00.</p>
+<p>The
 
-<p>The <dfn id="hz-gb-2312-decoder">hz-gb-2312 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#hz-gb-2312">hz-gb-2312</a>) is:
+<h4 id="hz-gb-2312-decoder"><span class="secno">10.2.1 </span><dfn>hz-gb-2312 decoder</dfn></h4>
+
+<p><a href="#hz-gb-2312">hz-gb-2312</a>'s <a href="#decoder">decoder</a> has an associated
+<dfn id="hz-gb-2312-flag">hz-gb-2312 flag</dfn> (initially unset) and
+<dfn id="hz-gb-2312-lead">hz-gb-2312 lead</dfn> (initially 0x00).
+
+<p><a href="#hz-gb-2312">hz-gb-2312</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
+ <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is not 0x00, set <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to 0x00 and
+ return <a href="#error">error</a>.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
- <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is 0x00, emit the
- <a href="#eof-code-point">EOF code point</a>.
-
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
- <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is not 0x00, set <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a>
- to 0x00 and run <a href="#error">error</a>.
-
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
+ <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is 0x00, return <a href="#finished">finished</a>.
 
  <li>
   <p>If <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is 0x7E, set
@@ -1524,21 +1703,22 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
   <dl class="switch">
    <dt>0x7B<!--{-->
-   <dd><p>Set the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> and continue.
+   <dd><p>Set the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> and return <a href="#continue">continue</a>.
 
    <dt>0x7D<!--}-->
-   <dd><p>Unset the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> and continue.
+   <dd><p>Unset the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> and return <a href="#continue">continue</a>.
    <!--In "ASCII mode" IE outputs ~}, Gecko outputs U+FFFD, Chrome outputs
    a single U+FFFD for ~}~}. Weird. Opera just skips.-->
 
    <dt>0x7E<!--~-->
-   <dd><p>Emit code point U+007E.
+   <dd><p>Return code point U+007E.
 
    <dt>0x0A<!--newline-->
-   <dd><p>Continue.
+   <dd><p>Return <a href="#continue">continue</a>.
 
    <dt>Otherwise
-   <dd><p>Decrease the <a href="#byte-pointer">byte pointer</a> by one and run <a href="#error">error</a>.
+   <dd><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <var title="">byte</var> to
+   <var>stream</var> and return <a href="#error">error</a>.
   </dl>
 
  <li>
@@ -1554,75 +1734,77 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <!--lead-1    = lead+0x80-0x81
        byte+0x3F = byte+0x80-0x41-->
 
-   <li><p>If <var title="">byte</var> is 0x0A, unset the
-   <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>.
+   <li><p>If <var title="">byte</var> is 0x0A, unset the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>.
 
-   <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
+   <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
-   <li><p>Emit a code point whose value is <var title="">code point</var>.
+   <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
  <li><p>If <var title="">byte</var> is 0x7E<!--~-->, set
- <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to 0x7E and continue.
+ <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to 0x7E and return <a href="#continue">continue</a>.
 
  <li>
   <p>If the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is set:
 
   <ol>
    <li><p>If <var title="">byte</var> is in the range 0x20 to 0x7F, set
-   <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to <var title="">byte</var> and continue.
+   <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
    <li><p>If <var title="">byte</var> is 0x0A, unset the
    <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>.
 
-   <li><p>Run <a href="#error">error</a>.
+   <li><p>Return <a href="#error">error</a>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a
- code point whose value is <var title="">byte</var>.
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ a code point whose value is <var title="">byte</var>.
 
- <li><p>Run <a href="#error">error</a>.
+ <li><p>Return <a href="#error">error</a>.
 </ol>
 
-<p>The <dfn id="hz-gb-2312-encoder">hz-gb-2312 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#hz-gb-2312">hz-gb-2312</a>) is:
+
+<h4 id="hz-gb-2312-encoder"><span class="secno">10.2.2 </span><dfn>hz-gb-2312 encoder</dfn></h4>
+
+<p><a href="#hz-gb-2312">hz-gb-2312</a>'s <a href="#encoder">encoder</a> has an associated
+<a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>.
+
+<p><a href="#hz-gb-2312">hz-gb-2312</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F and the
+ <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is set, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a>
+ <var title="">code point</var> to <var>stream</var>, unset the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>,
+ and return two bytes 0x7E 0x7D.
 
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>If <var title="">code point</var> is 0x007E, return two bytes 0x7E 0x7E.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F and
- the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is set, decrease <a href="#code-point-pointer">code point pointer</a> by one,
- unset the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>, and emit two bytes 0x7E 0x7D.
-
- <li><p>If <var title="">code point</var> is 0x007E, emit two bytes 0x7E 0x7E.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ a byte whose value is <var title="">code point</var>.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-gb18030">index gb18030</a>.
 
- <li><p>If <var title="">pointer</var> is null, run <a href="#error">error</a> for
+ <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
  <var title="">code point</var>.
 
- <li><p>If the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is unset, decrease
- <a href="#code-point-pointer">code point pointer</a> by one, set the
- <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>, and emit two bytes 0x7E 0x7B.
+ <li><p>If the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is unset,
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">code point</var> to
+ <var>stream</var>, set the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>, and return two bytes 0x7E 0x7B.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 190 + 1.
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 190 − 0x3F.
 
  <li><p>If either <var title="">lead</var> or <var>trail</var> is less than
- 0x21, run <a href="#error">error</a> for <var title="">code point</var>.
+ 0x21, return <a href="#error">error</a> with <var title="">code point</var>.
  <!-- 0x21 to 0x7E -->
 
- <li><p>Emit two bytes whose values are <var title="">lead</var> and
+ <li><p>Return two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
 </ol>
 
@@ -1638,22 +1820,20 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 <h3 id="big5"><span class="secno">11.1 </span><dfn>big5</dfn></h3>
 
-<p>The <dfn id="big5-lead">big5 lead</dfn> is initially 0x00.
+<h4 id="big5-decoder"><span class="secno">11.1.1 </span><dfn>big5 decoder</dfn></h4>
 
-<p>The <dfn id="big5-decoder">big5 decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#big5">big5</a>) is:
+<p><a href="#big5">big5</a>'s <a href="#decoder">decoder</a> has an associated
+<dfn id="big5-lead">big5 lead</dfn> (initially 0x00).
+
+<a href="#big5">big5</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and <a href="#big5-lead">big5 lead</a>
+ is not 0x00, set <a href="#big5-lead">big5 lead</a> to 0x00 and return <a href="#error">error</a>.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
- <a href="#big5-lead">big5 lead</a> is 0x00, emit the
- <a href="#eof-code-point">EOF code point</a>.
-
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
- <a href="#big5-lead">big5 lead</a> is not 0x00, set <a href="#big5-lead">big5 lead</a> to 0x00 and run
- <a href="#error">error</a>.
-
- <li><p>Increase the <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and <a href="#big5-lead">big5 lead</a>
+ is 0x00, return <a href="#finished">finished</a>.
 
  <li>
   <p>If <a href="#big5-lead">big5 lead</a> is not 0x00, let <var title="">lead</var> be
@@ -1671,7 +1851,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
    <li>
     <p>If there is a row in the table below whose first column is
-    <var title="">pointer</var>, emit the <em>two</em> code points listed in
+    <var title="">pointer</var>, return the <em>two</em> code points listed in
     its second column (the third column is irrelevant):
 
     <table>
@@ -1691,57 +1871,57 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    for <var title="">pointer</var> in <a href="#index-big5">index big5</a> otherwise.
 
    <li><p>If <var title="">pointer</var> is null and <var title="">byte</var> is in the range
-   0x00 to 0x7F, decrease <a href="#byte-pointer">byte pointer</a> by one.
+   0x00 to 0x7F, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var>
+   to <var>stream</var>.
 
-   <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
+   <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
-   <li><p>Emit a code point whose value is <var title="">code point</var>.
+   <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a code
- point whose value is <var title="">byte</var>.
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ a code point whose value is <var title="">byte</var>.
 
  <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
- <a href="#big5-lead">big5 lead</a> to <var title="">byte</var> and continue.
+ <a href="#big5-lead">big5 lead</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
- <li><p>Run <a href="#error">error</a>.
+ <li><p>Return <a href="#error">error</a>.
 </ol>
 
-<p>The <dfn id="big5-encoder">big5 encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#big5">big5</a>) is:
+
+<h4 id="big5-encoder"><span class="secno">11.1.2 </span><dfn>big5 encoder</dfn></h4>
+
+<p><a href="#big5">big5</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
-
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ a byte whose value is <var title="">code point</var>.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-big5">index big5</a>.
 
- <li><p>If <var title="">pointer</var> is null, run <a href="#error">error</a> for
+ <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
  <var title="">code point</var>.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 157 + 0x81.
 
  <li>
-  <p>If <var title="">lead</var> is less than 0xA1, run <a href="#error">error</a> for
+  <p>If <var title="">lead</var> is less than 0xA1, return <a href="#error">error</a> with
   <var title="">code point</var>.
 
-  <p class="note">Avoid emitting Hong Kong Supplementary Character Set
-  extensions literally.
+  <p class="note">Avoid returning Hong Kong Supplementary Character Set extensions
+  literally.
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 157.
 
  <li><p>Let <var title="">offset</var> be 0x40 if <var title="">trail</var> is
  less than 0x3F<!--0x7F-0x40--> and 0x62<!--0xA1-0x3F--> otherwise.
 
- <li><p>Emit two bytes whose values are <var title="">lead</var> and
+ <li><p>Return two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var> + <var title="">offset</var>.
 </ol>
 
@@ -1749,36 +1929,34 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 <h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">12 </span>Legacy multi-byte Japanese encodings</h2>
 
-
 <h3 id="euc-jp"><span class="secno">12.1 </span><dfn>euc-jp</dfn></h3>
-
 <!-- http://www.iana.org/assignments/charset-reg/CP51932 -->
 
-<p>The <dfn id="euc-jp-jis0212-flag">euc-jp jis0212 flag</dfn> is initially unset.
+<h4 id="euc-jp-decoder"><span class="secno">12.1.1 </span><dfn>euc-jp decoder</dfn></h4>
 
-<p>The <dfn id="euc-jp-lead">euc-jp lead</dfn> is initially 0x00.
+<p><a href="#euc-jp">euc-jp</a>'s <a href="#decoder">decoder</a> has an associated
+<dfn id="euc-jp-jis0212-flag">euc-jp jis0212 flag</dfn> (initially unset) and
+<dfn id="euc-jp-lead">euc-jp lead</dfn> (initially 0x00).
 
-<p>The <dfn id="euc-jp-decoder">euc-jp decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#euc-jp">euc-jp</a>) is:
+<p><a href="#euc-jp">euc-jp</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
+ <a href="#euc-jp-lead">euc-jp lead</a> is not 0x00, set <a href="#euc-jp-lead">euc-jp lead</a> to 0x00, and return
+ <a href="#error">error</a>.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and <a href="#euc-jp-lead">euc-jp lead</a>
- is 0x00, emit the <a href="#eof-code-point">EOF code point</a>.
-
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and <a href="#euc-jp-lead">euc-jp lead</a>
- is not 0x00, set <a href="#euc-jp-lead">euc-jp lead</a> to 0x00, and run <a href="#error">error</a>.
-
- <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
+ <a href="#euc-jp-lead">euc-jp lead</a> is 0x00, return <a href="#finished">finished</a>.
 
  <li><p>If <a href="#euc-jp-lead">euc-jp lead</a> is 0x8E and <var title="">byte</var> is
- in the range 0xA1 to 0xDF, set <a href="#euc-jp-lead">euc-jp lead</a> to 0x00 and emit
+ in the range 0xA1 to 0xDF, set <a href="#euc-jp-lead">euc-jp lead</a> to 0x00 and return
  a code point whose value is 0xFF61 + <var title="">byte</var> − 0xA1.
  <!-- katakana -->
 
  <li><p>If <a href="#euc-jp-lead">euc-jp lead</a> is 0x8F and <var title="">byte</var> is in the range
  0xA1 to 0xFE, set the <a href="#euc-jp-jis0212-flag">euc-jp jis0212 flag</a>, set <a href="#euc-jp-lead">euc-jp lead</a> to
- <var title="">byte</var>, and continue.
+ <var title="">byte</var>, and return <a href="#continue">continue</a>.
 
  <li>
   <p>If <a href="#euc-jp-lead">euc-jp lead</a> is not 0x00, let <var title="">lead</var> be
@@ -1797,55 +1975,55 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <li><p>Unset the <a href="#euc-jp-jis0212-flag">euc-jp jis0212 flag</a>.
 
    <li><p>If <var title="">byte</var> is not in the range 0xA1 to 0xFE,
-   decrease <a href="#byte-pointer">byte pointer</a> by one.
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
+   <var>stream</var>.
 
-   <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
+   <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
-   <li><p>Emit a code point whose value is <var title="">code point</var>.
+   <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a
- code point whose value is <var title="">byte</var>.
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ a code point whose value is <var title="">byte</var>.
 
  <li><p>If <var title="">byte</var> is 0x8E, 0x8F, or in the range 0xA1 to
- 0xFE, set <a href="#euc-jp-lead">euc-jp lead</a> to <var title="">byte</var> and continue.
+ 0xFE, set <a href="#euc-jp-lead">euc-jp lead</a> to <var title="">byte</var> and return
+ <a href="#continue">continue</a>.
 
- <li><p>Run <a href="#error">error</a>.
+ <li><p>Return <a href="#error">error</a>.
 </ol>
 
-<p>The <dfn id="euc-jp-encoder">euc-jp encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#euc-jp">euc-jp</a>) is:
+
+<h4 id="euc-jp-encoder"><span class="secno">12.1.2 </span><dfn>euc-jp encoder</dfn></h4>
+
+<p><a href="#euc-jp">euc-jp</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ a byte whose value is <var title="">code point</var>.
 
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>If <var title="">code point</var> is U+00A5, return byte 0x5C.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is U+203E, return byte 0x7E.
 
- <li><p>If <var title="">code point</var> is U+00A5, emit byte 0x5C.
-
- <li><p>If <var title="">code point</var> is U+203E, emit byte 0x7E.
-
- <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F,
- emit two bytes whose values are 0x8E and
- <var title="">code point</var> − 0xFF61 + 0xA1.
+ <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F, return
+ two bytes whose values are 0x8E and <var title="">code point</var> − 0xFF61 + 0xA1.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
 
- <li><p>If <var title="">pointer</var> is null, run <a href="#error">error</a> for
+ <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
  <var title="">code point</var>.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 94 + 0xA1.
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0xA1.
 
- <li><p>Emit two bytes whose values are <var title="">lead</var> and
+ <li><p>Return two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
 </ol>
 
@@ -1865,223 +2043,219 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
 -->
 
-<p>The <dfn id="iso-2022-jp-state">iso-2022-jp state</dfn> is initially <b title="">ASCII state</b>.
+<h4 id="iso-2022-jp-decoder"><span class="secno">12.2.1 </span><dfn>iso-2022-jp decoder</dfn></h4>
 
-<p>The <dfn id="iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</dfn> is initially unset.
+<p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#decoder">decoder</a> has an associated
+<dfn id="iso-2022-jp-state">iso-2022-jp state</dfn> (initially <b title="">ASCII state</b>),
+<dfn id="iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</dfn> (initially unset), and
+<dfn id="iso-2022-jp-lead">iso-2022-jp lead</dfn> (initially 0x00).
 
-<p>The <dfn id="iso-2022-jp-lead">iso-2022-jp lead</dfn> is initially 0x00.
+<p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps, switching on
+<a href="#iso-2022-jp-state">iso-2022-jp state</a>:
 
-<p>The <dfn id="iso-2022-jp-decoder">iso-2022-jp decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#iso-2022-jp">iso-2022-jp</a>) is:
+<dl class="switch">
+ <dt><b title="">ASCII state</b>
 
-<ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
-
- <li><p>If <var title="">byte</var> is not the <a href="#eof-byte">EOF byte</a>,
- increase <a href="#byte-pointer">byte pointer</a> by one.
-
- <li>
-  <p>Based on <a href="#iso-2022-jp-state">iso-2022-jp state</a>:
+ <dd>
+  <p>Based on <var title="">byte</var>:
 
   <dl class="switch">
-   <dt>ASCII state
+   <dt>0x1B
+   <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b>escape start state</b> and return
+   <a href="#continue">continue</a>.
 
-   <dd>
-    <p>Based on <var title="">byte</var>:
+   <dt>0x00 to 0x7F
+   <dd><p>Return a code point whose value is <var title="">byte</var>.
 
-    <dl class="switch">
-     <dt>0x1B
-     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
-     <b title="">escape start state</b> and continue.
+   <dt><a href="#end-of-stream">end-of-stream</a>
+   <dd><p>Return <a href="#finished">finished</a>.
 
-     <dt>0x00 to 0x7F
-     <dd><p>Emit a code point whose value is <var title="">byte</var>.
-
-     <dt><a href="#eof-byte">EOF byte</a>
-     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
-
-     <dt>Otherwise
-     <dd><p>Run <a href="#error">error</a>.
-    </dl>
-
-   <dt>Escape start state
-   <dd>
-    <ol>
-     <li><p>If <var title="">byte</var> is either <!--$-->0x24 or
-     <!--(-->0x28, set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to
-     <var title="">byte</var>, <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
-     <b title="">escape middle state</b>, and continue.
-
-     <li><p>If <var title="">byte</var> is not the <a href="#eof-byte">EOF byte</a>,
-     decrease <a href="#byte-pointer">byte pointer</a> by one.
-
-     <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
-     and run <a href="#error">error</a>.
-    </ol>
-
-   <dt>Escape middle state
-   <dd>
-    <ol>
-     <li><p>Let <var title="">lead</var> be <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and
-     set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to 0x00.
-
-     <li><p>If <var title="">lead</var> is 0x24 and <var title="">byte</var> is
-     either 0x40<!--@--> or 0x42<!--B-->, unset the
-     <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>, set
-     <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and
-     continue.
-
-     <li><p>If <var title="">lead</var> is 0x24 and <var title="">byte</var> is
-     0x28, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
-     <b title="">escape final state</b> and continue.
-
-     <li><p>If <var title="">lead</var> is 0x28 and <var title="">byte</var> is
-     either 0x42<!--B--> or 0x4A<!--J-->, set <a href="#iso-2022-jp-state">iso-2022-jp state</a>
-     to <b title="">ASCII state</b> and continue.
-
-     <li><p>If <var title="">lead</var> is 0x28 and <var title="">byte</var> is
-     0x49<!--I-->, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
-     <b title="">Katakana state</b> and continue.
-
-     <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>,
-     decrease <a href="#byte-pointer">byte pointer</a> by one, and decrease it by two
-     otherwise.
-
-     <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
-     and run <a href="#error">error</a>.
-    </ol>
-
-   <dt>Escape final state
-   <dd>
-    <ol>
-     <li><p>If <var title="">byte</var> is 0x44<!--D-->, set the
-     <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>, set
-     <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and
-     continue.
-
-     <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>,
-     decrease <a href="#byte-pointer">byte pointer</a> by two, and decrease it by three
-     otherwise.
-
-     <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
-     and run <a href="#error">error</a>.
-    </ol>
-
-   <dt>Lead state
-   <dd>
-    <p>Based on <var title="">byte</var>:
-    <dl class="switch">
-     <dt>0x0A
-     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>
-     and emit code point U+000A.
-
-     <dt>0x1B
-     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
-     <b title="">escape start state</b> and continue.
-
-     <dt><a href="#eof-byte">EOF byte</a>
-     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
-
-     <dt>Otherwise
-     <dd><p>Set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to <var title="">byte</var>,
-     <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">trail state</b>, and
-     continue.
-    </dl>
-
-   <dt>Trail state
-   <dd>
-    <ol>
-     <li><p>Set the <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
-     <b title="">lead state</b>.
-
-     <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, run <a href="#error">error</a>.
-
-     <li><p>Let <var title="">code point</var> be null and let
-     <var title="">pointer</var> be
-     (<a href="#iso-2022-jp-lead">iso-2022-jp lead</a> − 0x21) × 94 + <var title="">byte</var> − 0x21.
-
-     <li><p>If <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and <var title="">byte</var> are
-     both in the range 0x21 to 0x7E, set <var title="">code point</var> to
-     the <a href="#index-code-point">index code point</a> for <var title="">pointer</var> in
-     <a href="#index-jis0208">index jis0208</a> if the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>
-     is unset and in <a href="#index-jis0212">index jis0212</a> otherwise.
-
-     <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
-
-     <li><p>Emit a code point whose value is <var title="">code point</var>.
-    </ol>
-
-   <dt>Katakana state
-   <dd>
-    <p>Based on <var title="">byte</var>:
-    <dl class="switch">
-     <dt>0x1B
-     <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
-     <b title="">escape start state</b> and continue.
-
-     <dt>0x21 to 0x5F
-     <dd><p>Emit a code point whose value is
-     0xFF61 + <var title="">byte</var> − 0x21.
-     <!-- katakana -->
-
-     <dt><a href="#eof-byte">EOF byte</a>
-     <dd><p>Emit the <a href="#eof-code-point">EOF code point</a>.
-
-     <dt>Otherwise
-     <dd><p>Run <a href="#error">error</a>.
-    </dl>
+   <dt>Otherwise
+   <dd><p>Return <a href="#error">error</a>.
   </dl>
-</ol>
 
-<p>The <dfn id="iso-2022-jp-encoder">iso-2022-jp encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#iso-2022-jp">iso-2022-jp</a>) is:
+ <dt><b>Escape start state</b>
+ <dd>
+  <ol>
+   <li><p>If <var title="">byte</var> is either <!--$-->0x24 or <!--(-->0x28, set
+   <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to <var title="">byte</var>, <a href="#iso-2022-jp-state">iso-2022-jp state</a>
+   to <b title="">escape middle state</b>, and return <a href="#continue">continue</a>.
+
+   <li><p>If <var title="">byte</var> is not <a href="#end-of-stream">end-of-stream</a>,
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
+   <var>stream</var>.
+
+   <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b> and return
+   <a href="#error">error</a>.
+  </ol>
+
+ <dt><b>Escape middle state</b>
+ <dd>
+  <ol>
+   <li><p>Let <var title="">lead</var> be <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and set
+   <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to 0x00.
+
+   <li><p>If <var title="">lead</var> is 0x24 and <var title="">byte</var> is either
+   0x40<!--@--> or 0x42<!--B-->, unset the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>, set
+   <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and return
+   <a href="#continue">continue</a>.
+
+   <li><p>If <var title="">lead</var> is 0x24 and <var title="">byte</var> is 0x28, set
+   <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape final state</b> and return
+   <a href="#continue">continue</a>.
+
+   <li><p>If <var title="">lead</var> is 0x28 and <var title="">byte</var> is either
+   0x42<!--B--> or 0x4A<!--J-->, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+   <b title="">ASCII state</b> and return <a href="#continue">continue</a>.
+
+   <li><p>If <var title="">lead</var> is 0x28 and <var title="">byte</var> is 0x49<!--I-->, set
+   <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">Katakana state</b> and return
+   <a href="#continue">continue</a>.
+
+   <li><p>Let <var>buffer</var> be <var title="">byte</var> if <var title="">byte</var> is
+   <a href="#end-of-stream">end-of-stream</a>, and two bytes <var>lead</var> <var title="">byte</var>
+   otherwise.
+
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <var>buffer</var> to
+   <var>stream</var>.
+
+   <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b> and return
+   <a href="#error">error</a>.
+  </ol>
+
+ <dt><b>Escape final state</b>
+ <dd>
+  <ol>
+   <li><p>If <var title="">byte</var> is 0x44<!--D-->, set the
+   <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+   <b title="">lead state</b>, and return <a href="#continue">continue</a>.
+
+   <li><p>Let <var title="">buffer</var> be two bytes 0x28 <var title="">byte</var>, if
+   <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>, and three bytes
+   0x24 0x28 <var title="">byte</var> otherwise.
+
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <var>buffer</var> to
+   <var>stream</var>.
+
+   <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b> and return
+   <a href="#error">error</a>.
+  </ol>
+
+ <dt><b>Lead state</b>
+ <dd>
+  <p>Based on <var title="">byte</var>:
+  <dl class="switch">
+   <dt>0x0A
+   <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b> and return
+   code point U+000A.
+
+   <dt>0x1B
+   <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape start state</b> and return
+   <a href="#continue">continue</a>.
+
+   <dt><a href="#end-of-stream">end-of-stream</a>
+   <dd><p>Return <a href="#finished">finished</a>.
+
+   <dt>Otherwise
+   <dd><p>Set <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to <var title="">byte</var>,
+   <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">trail state</b>, and return
+   <a href="#continue">continue</a>.
+  </dl>
+
+ <dt>Trail state
+ <dd>
+  <ol>
+   <li><p>Set the <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>.
+
+   <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>, return
+   <a href="#error">error</a>.
+
+   <li><p>Let <var title="">code point</var> be null and let <var title="">pointer</var> be
+   (<a href="#iso-2022-jp-lead">iso-2022-jp lead</a> − 0x21) × 94 + <var title="">byte</var> − 0x21.
+
+   <li><p>If <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and <var title="">byte</var> are both in the range
+   0x21 to 0x7E, set <var title="">code point</var> to the <a href="#index-code-point">index code point</a> for
+   <var title="">pointer</var> in <a href="#index-jis0208">index jis0208</a>, if the
+   <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a> is unset, and in <a href="#index-jis0212">index jis0212</a>
+   otherwise.
+
+   <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
+
+   <li><p>Return a code point whose value is <var title="">code point</var>.
+  </ol>
+
+ <dt><b>Katakana state</b>
+ <dd>
+  <p>Based on <var title="">byte</var>:
+  <dl class="switch">
+   <dt>0x1B
+   <dd><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape start state</b> and return
+   <a href="#continue">continue</a>.
+
+   <dt>0x21 to 0x5F
+   <dd><p>Return a code point whose value is 0xFF61 + <var title="">byte</var> − 0x21.
+   <!-- katakana -->
+
+   <dt><a href="#end-of-stream">end-of-stream</a>
+   <dd><p>Return <a href="#finished">finished</a>.
+
+   <dt>Otherwise
+   <dd><p>Return <a href="#error">error</a>.
+  </dl>
+</dl>
+
+
+<h4 id="iso-2022-jp-encoder"><span class="secno">12.2.2 </span><dfn>iso-2022-jp encoder</dfn></h4>
+
+<p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#encoder">encoder</a> has an associated
+<a href="#iso-2022-jp-state">iso-2022-jp state</a>.
+
+<p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
-
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
-
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, or
  is U+00A5 or U+203E, and <a href="#iso-2022-jp-state">iso-2022-jp state</a> is not
- <b title="">ASCII state</b>, decrease <a href="#code-point-pointer">code point pointer</a> by
- one, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b>, and
- emit three bytes 0x1B 0x28 0x42.
+ <b title="">ASCII state</b>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a>
+ <var title="">code point</var> to <var>stream</var>, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
+ <b title="">ASCII state</b>, and return three bytes 0x1B 0x28 0x42.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ a byte whose value is <var title="">code point</var>.
 
- <li><p>If <var title="">code point</var> is U+00A5, emit byte 0x5C.
+ <li><p>If <var title="">code point</var> is U+00A5, return byte 0x5C.
 
- <li><p>If <var title="">code point</var> is U+203E, emit byte 0x7E.
+ <li><p>If <var title="">code point</var> is U+203E, return byte 0x7E.
 
  <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F and
- <a href="#iso-2022-jp-state">iso-2022-jp state</a> is not <b title="">Katakana state</b>, decrease
- <a href="#code-point-pointer">code point pointer</a> by one, set
- <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">Katakana state</b>, and emit
- three bytes 0x1B 0x28 0x49.
+ <a href="#iso-2022-jp-state">iso-2022-jp state</a> is not <b title="">Katakana state</b>,
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">code point</var> to
+ <var>stream</var>, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">Katakana state</b>, and
+ return three bytes 0x1B 0x28 0x49.
 
- <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F,
- emit a byte whose value is
- <var title="">code point</var> − 0xFF61 + 0x21.
+ <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F, return
+ a byte whose value is <var title="">code point</var> − 0xFF61 + 0x21.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
 
- <li><p>If <var title="">pointer</var> is null, run <a href="#error">error</a> for
+ <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
  <var title="">code point</var>.
 
  <li><p>If <a href="#iso-2022-jp-state">iso-2022-jp state</a> is not <b title="">lead state</b>,
- decrease <a href="#code-point-pointer">code point pointer</a> by one, set
- <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and emit three
- bytes 0x1B 0x24 0x42.
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">code point</var> to
+ <var>stream</var>, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and
+ return three bytes 0x1B 0x24 0x42.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 94 + 0x21.
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0x21.
 
- <li><p>Emit two bytes whose values are <var title="">lead</var> and
+ <li><p>Return two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
 </ol>
 
@@ -2091,22 +2265,21 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 <h3 id="shift_jis"><span class="secno">12.3 </span><dfn>shift_jis</dfn></h3>
 
-<p>The <dfn id="shift_jis-lead">shift_jis lead</dfn> is initially 0x00.
+<h4 id="shift_jis-decoder"><span class="secno">12.3.1 </span><dfn>shift_jis decoder</dfn></h4>
 
-<p>The <dfn id="shift_jis-decoder">shift_jis decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#shift_jis">shift_jis</a>) is:
+<p><a href="#shift_jis">shift_jis</a>'s <a href="#decoder">decoder</a> has an associated
+<dfn id="shift_jis-lead">shift_jis lead</dfn> (initially 0x00).
+
+<p><a href="#shift_jis">shift_jis</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>,
+ <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, set <a href="#shift_jis-lead">shift_jis lead</a> to 0x00 and
+ return <a href="#error">error</a>.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
- <a href="#shift_jis-lead">shift_jis lead</a> is 0x00, emit the
- <a href="#eof-code-point">EOF code point</a>.
-
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>,
- <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, set <a href="#shift_jis-lead">shift_jis lead</a> to
- 0x00 and run <a href="#error">error</a>.
-
- <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
+ <a href="#shift_jis-lead">shift_jis lead</a> is 0x00, return <a href="#finished">finished</a>.
 
  <li>
   <p>If <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, let <var title="">lead</var>
@@ -2114,82 +2287,81 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
   <a href="#shift_jis-lead">shift_jis lead</a> to 0x00, and then run these substeps:
 
   <ol>
-   <li><p>Let <var title="">offset</var> be 0x40 if <var title="">byte</var> is
-   less than 0x7F and 0x41 otherwise.
+   <li><p>Let <var title="">offset</var> be 0x40, if <var title="">byte</var> is
+   less than 0x7F, and 0x41 otherwise.
 
-   <li><p>Let <var title="">lead offset</var> be 0x81 if <var title="">lead</var>
-   is less than 0xA0 and 0xC1 otherwise.
+   <li><p>Let <var title="">lead offset</var> be 0x81, if <var title="">lead</var>
+   is less than 0xA0, and 0xC1 otherwise.
 
    <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
    0x80 to 0xFC, set <var title="">pointer</var> to
    (<var title="">lead</var> − <var title="">lead offset</var>) × 188 + <var title="">byte</var> − <var title="">offset</var>.
 
-   <li><p>Let <var title="">code point</var> be null if
-   <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
+   <li><p>Let <var title="">code point</var> be null, if
+   <var title="">pointer</var> is null, and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-jis0208">index jis0208</a> otherwise.
 
-   <li><p>If <var title="">pointer</var> is null, decrease <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p>If <var title="">pointer</var> is null,
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
+   <var>stream</var>.
 
-   <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
+   <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
-   <li><p>Emit a code point whose value is <var title="">code point</var>.
+   <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x80, emit a
- code point whose value is <var title="">byte</var>.
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x80, return
+ a code point whose value is <var title="">byte</var>.
  <!-- Opera has 0x7E -->
 
- <li><p>If <var title="">byte</var> is in the range 0xA1 to 0xDF, emit a
- code point whose value is 0xFF61 + <var title="">byte</var> − 0xA1.
+ <li><p>If <var title="">byte</var> is in the range 0xA1 to 0xDF, return
+ a code point whose value is 0xFF61 + <var title="">byte</var> − 0xA1.
  <!-- katakana -->
 
- <li><p>If <var title="">byte</var> is in the range 0x81 to 0x9F or
- 0xE0 to 0xFC, set <a href="#shift_jis-lead">shift_jis lead</a> to <var title="">byte</var> and
- continue.
+ <li><p>If <var title="">byte</var> is in the range 0x81 to 0x9F or 0xE0 to 0xFC, set
+ <a href="#shift_jis-lead">shift_jis lead</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
- <li><p>Run <a href="#error">error</a>.
+ <li><p>Return <a href="#error">error</a>.
 </ol>
 
-<p>The <dfn id="shift_jis-encoder">shift_jis encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#shift_jis">shift_jis</a>) is:
+
+<h4 id="shift_jis-encoder"><span class="secno">12.3.2 </span><dfn>shift_jis encoder</dfn></h4>
+
+<p><a href="#shift_jis">shift_jis</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+0080, return
+ a byte whose value is <var title="">code point</var>.
 
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>If <var title="">code point</var> is U+00A5, return byte 0x5C.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+0080,
- emit a byte whose value is <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is U+203E, return byte 0x7E.
 
- <li><p>If <var title="">code point</var> is U+00A5, emit byte 0x5C.
-
- <li><p>If <var title="">code point</var> is U+203E, emit byte 0x7E.
-
- <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F,
- emit a byte whose value is
- <var title="">code point</var> − 0xFF61 + 0xA1.
+ <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F, return
+ a byte whose value is <var title="">code point</var> − 0xFF61 + 0xA1.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
 
- <li><p>If <var title="">pointer</var> is null, run <a href="#error">error</a> for
+ <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
  <var title="">code point</var>.
 
  <li><p>Let <var title="">lead</var> be <var title="">pointer</var> / 188.
 
- <li><p>Let <var title="">lead offset</var> be 0x81 if <var title="">lead</var> is
- less than 0x1F and 0xC1 otherwise.
+ <li><p>Let <var title="">lead offset</var> be 0x81, if <var title="">lead</var> is
+ less than 0x1F, and 0xC1 otherwise.
  <!-- 0xA0-0x81 -->
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 188.
 
- <li><p>Let <var title="">offset</var> be 0x40 if <var title="">trail</var> is
- less than 0x3F and 0x41 otherwise.
+ <li><p>Let <var title="">offset</var> be 0x40, if <var title="">trail</var> is
+ less than 0x3F, and 0x41 otherwise.
 
- <li><p>Emit two bytes whose values are
+ <li><p>Return two bytes whose values are
  <var title="">lead</var> + <var title="">lead offset</var> and
  <var title="">trail</var> + <var title="">offset</var>.
 </ol>
@@ -2198,25 +2370,23 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 <h2 id="legacy-multi-byte-korean-encodings"><span class="secno">13 </span>Legacy multi-byte Korean encodings</h2>
 
-
 <h3 id="euc-kr"><span class="secno">13.1 </span><dfn>euc-kr</dfn></h3>
 
-<p>The <dfn id="euc-kr-lead">euc-kr lead</dfn> is initially 0x00.
+<h4 id="euc-kr-decoder"><span class="secno">13.1.1 </span><dfn>euc-kr decoder</dfn></h4>
 
-<p>The <dfn id="euc-kr-decoder">euc-kr decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#euc-kr">euc-kr</a>) is:
+<p><a href="#euc-kr">euc-kr</a>'s <a href="#decoder">decoder</a> has an associated
+<dfn id="euc-kr-lead">euc-kr lead</dfn> (initially 0x00).
+
+<p><a href="#euc-kr">euc-kr</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
-
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
- <a href="#euc-kr-lead">euc-kr lead</a> is 0x00, emit the
- <a href="#eof-code-point">EOF code point</a>.
-
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
  <a href="#euc-kr-lead">euc-kr lead</a> is not 0x00, set <a href="#euc-kr-lead">euc-kr lead</a> to 0x00
- and run <a href="#error">error</a>.
+ and return <a href="#error">error</a>.
 
- <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
+ <a href="#euc-kr-lead">euc-kr lead</a> is 0x00, return <a href="#finished">finished</a>.
 
  <li>
   <p>If <a href="#euc-kr-lead">euc-kr lead</a> is not 0x00, let <var title="">lead</var> be
@@ -2245,45 +2415,46 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <var title="">pointer</var> to
    (26 + 26 + 126) × (0xC7 − 0x81) + (<var title="">lead</var> − 0xC7) × 94 + (<var title="">byte</var> − 0xA1).
 
-   <li><p>Let <var title="">code point</var> be null if
-   <var title="">pointer</var> is null and the
+   <li><p>Let <var title="">code point</var> be null, if
+   <var title="">pointer</var> is null, and the
    <a href="#index-code-point">index code point</a> for <var title="">pointer</var> in
    <a href="#index-euc-kr">index euc-kr</a> otherwise.
 
-   <li><p>If <var title="">pointer</var> is null, decrease <a href="#byte-pointer">byte pointer</a> by one.
+   <li><p>If <var title="">pointer</var> is null,
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
+   <var>stream</var>.
 
-   <li><p>If <var title="">code point</var> is null, run <a href="#error">error</a>.
+   <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
-   <li><p>Emit a code point whose value is <var title="">code point</var>.
+   <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a
- code point whose value is <var title="">byte</var>.
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ a code point whose value is <var title="">byte</var>.
 
  <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
- <a href="#euc-kr-lead">euc-kr lead</a> to <var title="">byte</var> and continue.
+ <a href="#euc-kr-lead">euc-kr lead</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
- <li><p>Run <a href="#error">error</a>.
+ <li><p>Return <a href="#error">error</a>.
 </ol>
 
-<p>The <dfn id="euc-kr-encoder">euc-kr encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#euc-kr">euc-kr</a>) is:
+
+<h4 id="euc-kr-encoder"><span class="secno">13.1.2 </span><dfn>euc-kr encoder</dfn></h4>
+
+<p><a href="#euc-kr">euc-kr</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
-
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ a byte whose value is <var title="">code point</var>.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-euc-kr">index euc-kr</a>.
 
- <li><p>If <var title="">pointer</var> is null, run <a href="#error">error</a> for
+ <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
  <var title="">code point</var>.
 
  <li>
@@ -2303,7 +2474,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <!-- 0x47=0x41+0x61-0x5A-1
         0x4D=0x47+0x81-0x7A-1 -->
 
-   <li><p>Emit two bytes whose values are <var title="">lead</var> and
+   <li><p>Return two bytes whose values are <var title="">lead</var> and
    <var title="">trail</var> + <var title="">offset</var>.
   </ol>
 
@@ -2314,7 +2485,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
  <li><p>Let <var title="">trail</var> be <var title="">pointer</var> % 94 + 0xA1.
 
- <li><p>Emit two bytes whose values are <var title="">lead</var> and
+ <li><p>Return two bytes whose values are <var title="">lead</var> and
  <var title="">trail</var>.
 </ol>
 
@@ -2322,19 +2493,32 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 <h2 id="legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</h2>
 
-
 <h3 id="replacement"><span class="secno">14.1 </span><dfn>replacement</dfn></h3>
 
 <p class="note">The <a href="#replacement">replacement</a> <a href="#encoding">encoding</a> exists to prevent certain
 attacks that abuse a mismatch between <a href="#encoding" title="encoding">encodings</a> supported on
 the server and the client.
 
-<p>The <dfn id="replacement-decoder">replacement decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#replacement">replacement</a>)
-is to run <a href="#error">error</a> and then, if the <a href="#decoder">decoder</a> is not terminated,
-emit the <a href="#eof-code-point">EOF code point</a>.
 
-<p>The <dfn id="replacement-encoder">replacement encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#replacement">replacement</a>)
-is the <a href="#utf-8-encoder">utf-8 encoder</a>.
+<h4 id="replacement-decoder"><span class="secno">14.1.1 </span><dfn>replacement decoder</dfn></h4>
+
+<p><a href="#replacement">replacement</a>'s <a href="#decoder">decoder</a> has an associated
+<dfn id="replacement-error-returned-flag">replacement error returned flag</dfn> (initially unset).
+
+<p><a href="#replacement">replacement</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
+
+<ol>
+ <li><p>If <a href="#replacement-error-returned-flag">replacement error returned flag</a> is unset, set the
+ <a href="#replacement-error-returned-flag">replacement error returned flag</a> and return <a href="#error">error</a>.
+
+ <li><p>Return <a href="#finished">finished</a>.
+</ol>
+
+<h4 id="replacement-encoder"><span class="secno">14.1.2 </span><dfn>replacement encoder</dfn></h4>
+
+<p><a href="#replacement">replacement</a>'s <a href="#encoder">encoder</a> is <a href="#utf-8">utf-8</a>'s
+<a href="#encoder">encoder</a>.
 
 
 <h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <a href="#utf-16be">utf-16be</a> and <a href="#utf-16le">utf-16le</a></h3>
@@ -2344,27 +2528,47 @@ byte order mark in its definition of utf-16be and utf-16le, checking and using a
 byte order mark happens before an encoding to decode a byte stream is chosen, as seen in
 the <a href="#decode">decode</a> algorithm.
 
-<p>The <dfn id="utf-16-lead-byte">utf-16 lead byte</dfn> and <dfn id="utf-16-lead-surrogate">utf-16 lead surrogate</dfn>
-are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initially unset.
-
-<p>The <dfn id="utf-16-decoder">utf-16 decoder</dfn> is:
+<p>To <dfn id="convert-a-code-unit-to-bytes">convert a <var title="">code unit</var> to bytes</dfn> using a
+<i title="">utf-16be flag</i>, run these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
+ <li><p>Let <var title="">byte1</var> be <var title="">code unit</var> &gt;&gt; 8.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and
- <a href="#utf-16-lead-byte">utf-16 lead byte</a> and <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> are
- null, emit the <a href="#eof-code-point">EOF code point</a>.
+ <li><p>Let <var title="">byte2</var> be
+ <var title="">code unit</var> &amp; 0x00FF.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a> and either
- <a href="#utf-16-lead-byte">utf-16 lead byte</a> or <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> is not
- null, set <a href="#utf-16-lead-byte">utf-16 lead byte</a> and
- <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to null, and run <a href="#error">error</a>.
+ <li>
+  <p>Then return the bytes in order:
 
- <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
+  <dl class="switch">
+   <dt><i title="">utf-16be flag</i> is set
+   <dd><p><var title="">byte1</var>, then <var title="">byte2</var>.
+   <dt><i title="">utf-16be flag</i> is unset
+   <dd><p><var title="">byte2</var>, then <var title="">byte1</var>.
+  </dl>
+</ol>
 
- <li><p>If <a href="#utf-16-lead-byte">utf-16 lead byte</a> is null, set
- <a href="#utf-16-lead-byte">utf-16 lead byte</a> to <var title="">byte</var> and continue.
+<h4 id="shared-utf-16-decoder"><span class="secno">14.2.1 </span><dfn>shared utf-16 decoder</dfn></h4>
+
+<p><a href="#shared-utf-16-decoder">shared utf-16 decoder</a> has an associated <dfn id="utf-16-lead-byte">utf-16 lead byte</dfn> and
+<dfn id="utf-16-lead-surrogate">utf-16 lead surrogate</dfn> (both initially null), and
+<dfn id="utf-16be-flag">utf-16be flag</dfn> (no initial value).
+
+<p><a href="#shared-utf-16-decoder">shared utf-16 decoder</a>'s <a href="#handler">handler</a>, given a <var>stream</var>
+and <var title="">byte</var>, runs these steps:
+
+<ol>
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and either
+ <a href="#utf-16-lead-byte">utf-16 lead byte</a> or <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> is not null, set
+ <a href="#utf-16-lead-byte">utf-16 lead byte</a> and <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to null, and return
+ <a href="#error">error</a>.
+
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
+ <a href="#utf-16-lead-byte">utf-16 lead byte</a> and <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> are null, return
+ <a href="#finished">finished</a>.
+
+ <li><p>If <a href="#utf-16-lead-byte">utf-16 lead byte</a> is null, set <a href="#utf-16-lead-byte">utf-16 lead byte</a> to
+ <var title="">byte</var> and return <a href="#continue">continue</a>.
 
  <li>
   <p>Let <var title="">code point</var> be the result of:
@@ -2384,82 +2588,73 @@ are initially null and the <dfn id="utf-16be-flag">utf-16be flag</dfn> is initia
   <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to null, and then run these substeps:
 
   <ol>
-   <li><p>If <var title="">code point</var> is in the range U+DC00 to U+DFFF,
-   emit a code point whose value is
+   <li><p>If <var title="">code point</var> is in the range U+DC00 to U+DFFF, return
+   a code point whose value is
    0x10000 + (<var title="">lead surrogate</var> − 0xD800) × 0x400 + (<var title="">code point</var> − 0xDC00).
 
-   <li><p>Decrease <a href="#byte-pointer">byte pointer</a> by two and run <a href="#error">error</a>.
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> the sequence resulting of
+   <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>
+   using <a href="#utf-16be-flag">utf-16be flag</a> to <var>stream</var> and return <a href="#error">error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
  <li><p>If <var title="">code point</var> is in the range U+D800 to U+DBFF, set
- <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to <var title="">code point</var> and
- continue.
+ <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to <var title="">code point</var> and return
+ <a href="#continue">continue</a>.
 
  <li><p>If <var title="">code point</var> is in the range U+DC00 to U+DFFF,
- run <a href="#error">error</a>.
+ return <a href="#error">error</a>.
  <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
 
- <li><p>Emit code point <var title="">code point</var>.
+ <li><p>Return code point <var title="">code point</var>.
 </ol>
 
-<p>To <dfn id="convert-a-code-unit-to-bytes">convert a <var title="">code unit</var> to bytes</dfn> run these steps:
+
+<h4 id="shared-utf-16-encoder"><span class="secno">14.2.2 </span><dfn>shared utf-16 encoder</dfn></h4>
+
+<p><a href="#shared-utf-16-encoder">shared utf-16 encoder</a> has an associated <a href="#utf-16be-flag">utf-16be flag</a>.
+
+<p><a href="#shared-utf-16-encoder">shared utf-16 encoder</a>'s <a href="#handler">handler</a>, given a <var>stream</var>
+and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte1</var> be <var title="">code unit</var> &gt;&gt; 8.
+ <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF, return
+ <a href="#error">error</a> with <var title="">code point</var>.
 
- <li><p>Let <var title="">byte2</var> be
- <var title="">code unit</var> &amp; 0x00FF.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li>
-  <p>Then return the bytes in order:
-
-  <dl class="switch">
-   <dt><a href="#utf-16be-flag">utf-16be flag</a> is set
-   <dd><p><var title="">byte1</var>, then <var title="">byte2</var>.
-   <dt><a href="#utf-16be-flag">utf-16be flag</a> is unset
-   <dd><p><var title="">byte2</var>, then <var title="">byte1</var>.
-  </dl>
-</ol>
-
-<p>The <dfn id="utf-16-encoder">utf-16 encoder</dfn> is:
-
-<ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
-
- <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF, run
- <a href="#error">error</a> for <var title="">code point</var>.
-
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
-
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
-
- <li><p>If <var title="">code point</var> is in the range 0x00 to 0xFFFF, emit
- the sequence resulting of
- <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>.
+ <li><p>If <var title="">code point</var> is in the range 0x00 to 0xFFFF, return the sequence
+ resulting of
+ <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>
+ using <a href="#utf-16be-flag">utf-16be flag</a>.
 
  <li><p>Let <var title="">lead</var> be
  (<var title="">code point</var> − 0x10000) / 0x400 + 0xD800,
- <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a>.
+ <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
+ <a href="#utf-16be-flag">utf-16be flag</a>.
 
  <li><p>Let <var title="">trail</var> be
  (<var title="">code point</var> − 0x10000) % 0x400 + 0xDC00,
- <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a>.
+ <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
+ <a href="#utf-16be-flag">utf-16be flag</a>.
 
- <li><p>Emit a sequence of bytes that consists of <var title="">lead</var>
- followed by <var title="">trail</var>.
+ <li><p>Return a byte sequence of <var title="">lead</var> followed by <var title="">trail</var>.
 </ol>
 
 
 <h3 id="utf-16be"><span class="secno">14.3 </span><dfn>utf-16be</dfn></h3>
 
-<p>The <dfn id="utf-16be-decoder">utf-16be decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-16be">utf-16be</a>)
-is the <a href="#utf-16-decoder">utf-16 decoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
+<h4 id="utf-16be-decoder"><span class="secno">14.3.1 </span><dfn>utf-16be decoder</dfn></h4>
 
-<p>The <dfn id="utf-16be-encoder">utf-16be encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-16be">utf-16be</a>)
-is the <a href="#utf-16-encoder">utf-16 encoder</a> with the <a href="#utf-16be-flag">utf-16be flag</a> set.
+<p><a href="#utf-16be">utf-16be</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared utf-16 decoder</a> with
+its <a href="#utf-16be-flag">utf-16be flag</a> set.
+
+
+<h4 id="utf-16be-encoder"><span class="secno">14.3.2 </span><dfn>utf-16be encoder</dfn></h4>
+
+<p><a href="#utf-16be">utf-16be</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a> with
+its <a href="#utf-16be-flag">utf-16be flag</a> set.
 
 
 <h3 id="utf-16le"><span class="secno">14.4 </span><dfn>utf-16le</dfn></h3>
@@ -2468,11 +2663,17 @@ is the <a href="#utf-16-encoder">utf-16 encoder</a> with the <a href="#utf-16be-
 "<code title="">utf-16</code>" is a <a href="#label">label</a> for
 <a href="#utf-16le">utf-16le</a> rather than its own standalone <a href="#encoding">encoding</a>.
 
-<p>The <dfn id="utf-16le-decoder">utf-16le decoder</dfn> (<a href="#decoder">decoder</a> for <a href="#utf-16le">utf-16le</a>)
-is the <a href="#utf-16-decoder">utf-16 decoder</a>.
 
-<p>The <dfn id="utf-16le-encoder">utf-16le encoder</dfn> (<a href="#encoder">encoder</a> for <a href="#utf-16le">utf-16le</a>)
-is the <a href="#utf-16-encoder">utf-16 encoder</a>.
+<h4 id="utf-16le-decoder"><span class="secno">14.4.1 </span><dfn>utf-16le decoder</dfn></h4>
+
+<p><a href="#utf-16le">utf-16le</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared utf-16 decoder</a> with
+its <a href="#utf-16be-flag">utf-16be flag</a> unset.
+
+
+<h4 id="utf-16le-encoder"><span class="secno">14.4.2 </span><dfn>utf-16le encoder</dfn></h4>
+
+<p><a href="#utf-16le">utf-16le</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a> with
+its <a href="#utf-16be-flag">utf-16be flag</a> unset.
 
 
 <h3 id="x-user-defined"><span class="secno">14.5 </span><dfn>x-user-defined</dfn></h3>
@@ -2489,43 +2690,38 @@ http://krijnhoetmer.nl/irc-logs/whatwg/20121010#l-812
 http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7-when-using-charset-x-user-defined-with-xm
 -->
 
-<p>The <dfn id="x-user-defined-decoder">x-user-defined decoder</dfn> (<a href="#decoder">decoder</a> for
-<a href="#x-user-defined">x-user-defined</a>) is:
+<h4 id="x-user-defined-decoder"><span class="secno">14.5.1 </span><dfn>x-user-defined decoder</dfn></h4>
+
+<p><a href="#x-user-defined">x-user-defined</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">byte</var> be the value at <a href="#byte-pointer">byte pointer</a>.
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">byte</var> is the <a href="#eof-byte">EOF byte</a>, emit the
- <a href="#eof-code-point">EOF code point</a>.
+ <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ a code point whose value is <var title="">byte</var>.
 
- <li><p>Increase <a href="#byte-pointer">byte pointer</a> by one.
-
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, emit a code
- point whose value is <var title="">byte</var>.
-
- <li><p>Emit a code point whose value is
- 0xF780 + <var title="">byte</var> − 0x80.
+ <li><p>Return a code point whose value is 0xF780 + <var title="">byte</var> − 0x80.
 </ol>
 
-<p>The <dfn id="x-user-defined-encoder">x-user-defined encoder</dfn> (<a href="#encoder">encoder</a> for
-<a href="#x-user-defined">x-user-defined</a>) is:
+
+<h4 id="x-user-defined-encoder"><span class="secno">14.5.2 </span><dfn>x-user-defined encoder</dfn></h4>
+
+<p><a href="#x-user-defined">x-user-defined</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
+<var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>Let <var title="">code point</var> be the value at
- <a href="#code-point-pointer">code point pointer</a>.
+ <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
+ <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is the <a href="#eof-code-point">EOF code point</a>,
- emit the <a href="#eof-byte">EOF byte</a>.
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ a byte whose value is <var title="">code point</var>.
 
- <li><p>Increase <a href="#code-point-pointer">code point pointer</a> by one.
+ <li><p>If <var title="">code point</var> is in the range U+F780 to U+F7FF, return
+ a byte whose value is <var title="">code point</var> − 0xF780 + 0x80.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F,
- emit a byte whose value is <var title="">code point</var>.
-
- <li><p>If <var title="">code point</var> is in the range U+F780 to U+F7FF,
- emit a byte whose value is <var title="">code point</var> − 0xF780 + 0x80.
-
- <li><p>Run <a href="#error">error</a> for <var title="">code point</var>.
+ <li><p>Return <a href="#error">error</a> with <var title="">code point</var>.
 </ol>
 
 
@@ -2619,3 +2815,4 @@ Simon Sapin, and
 for being awesome.
 
 <script id="head" src="//www.whatwg.org/specs/web-apps/current-work/dfn.js"></script>
+</ol>
