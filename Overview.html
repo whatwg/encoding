@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-26-march-2014">Living Standard — Last Updated 26 March 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-27-march-2014">Living Standard — Last Updated 27 March 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-26 March 2014, the editor has made this specification available
+27 March 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -54,9 +54,12 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#preface"><span class="secno">1 </span>Preface</a></li>
  <li><a href="#conformance"><span class="secno">2 </span>Conformance</a></li>
  <li><a href="#terminology"><span class="secno">3 </span>Terminology</a></li>
- <li><a href="#encodings"><span class="secno">4 </span>Encodings</a></li>
+ <li><a href="#encodings"><span class="secno">4 </span>Encodings</a>
+  <ol>
+   <li><a href="#encoders-and-decoders"><span class="secno">4.1 </span>Encoders and decoders</a></li>
+   <li><a href="#names-and-labels"><span class="secno">4.2 </span>Names and labels</a></ol></li>
  <li><a href="#indexes"><span class="secno">5 </span>Indexes</a></li>
- <li><a href="#decode-and-encode"><span class="secno">6 </span>Decode and encode</a></li>
+ <li><a href="#specification-hooks"><span class="secno">6 </span>Specification hooks</a></li>
  <li><a href="#api"><span class="secno">7 </span>API</a>
   <ol>
    <li><a href="#interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></a></li>
@@ -249,6 +252,9 @@ those tokens must be inserted, in given order, after the last token in the strea
 byte sequence (and vice versa). Each <a href="#encoding">encoding</a> has a
 <dfn id="name">name</dfn>, and one or more <dfn id="label" title="label">labels</dfn>.
 
+
+<h3 id="encoders-and-decoders"><span class="secno">4.1 </span>Encoders and decoders</h3>
+
 <p>Each <a href="#encoding">encoding</a> has an associated <dfn id="decoder">decoder</dfn> and <dfn id="encoder">encoder</dfn>.
 Each <a href="#decoder">decoder</a> and <a href="#encoder">encoder</a> have a <dfn id="handler">handler</dfn> algorithm.
 A <a href="#handler">handler</a> algorithm takes an input <a href="#concept-stream" title="concept-stream">stream</a>
@@ -345,7 +351,8 @@ error mode <var>mode</var>, run these steps:
  <li>Return <a href="#continue">continue</a>.
 </ol>
 
-<hr> <!-- XXX make this a chapter: "Encoding labels" -->
+
+<h3 id="names-and-labels"><span class="secno">4.2 </span>Names and labels</h3>
 
 <p>The table below lists all <a href="#encoding" title="encoding">encodings</a>
 and their <a href="#label" title="label">labels</a> user agents must support.
@@ -802,7 +809,7 @@ to represent ranges.)
 
 
 
-<h2 id="decode-and-encode"><span class="secno">6 </span>Decode and encode</h2>
+<h2 id="specification-hooks"><span class="secno">6 </span>Specification hooks</h2>
 
 <p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>,
 and <a href="#encode">encode</a> are intended for usage by other specifications.
@@ -816,17 +823,17 @@ fallback encoding <var title="">encoding</var>, run these steps:
 <ol>
  <li><p>Let <var>buffer</var> be an empty byte sequence.
 
+ <li><p>Let <var>BOM seen flag</var> be unset.
+
  <li><p><a href="#concept-stream-read" title="concept-stream-read">Read</a> three bytes from <var>stream</var>
  into <var>buffer</var>.
 
  <li>
-  <p>For each of the rows in the following table, starting with the first
+  <p>For each of the rows in the table below, starting with the first
   one and going down, if the first bytes of <var>buffer</var> match
   all the bytes given in the first column, then set <var title="">encoding</var>
   to the <a href="#encoding">encoding</a> given in the cell in the second column of
-  that row and if <var title="">encoding</var> is now <a href="#utf-16be">utf-16be</a> or
-  <a href="#utf-16le">utf-16le</a>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> the last byte
-  of <var>buffer</var> to <var>stream</var>.
+  that row and set <var>BOM seen flag</var>.
 
   <table>
    <tr><th>Byte order mark<th>Encoding
@@ -837,6 +844,13 @@ fallback encoding <var title="">encoding</var>, run these steps:
 
   <p class="note">For compatibility with deployed content, the byte order mark
   (also known as BOM) is considered more authoritative than anything else.
+
+ <li><p>If <var>BOM seen flag</var> is unset
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>buffer</var> to <var>stream</var>.
+
+ <li><p>Otherwise, if <var>BOM seen flag</var> is set and <var title="">encoding</var> is not
+ <a href="#utf-8">utf-8</a>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> the last byte of
+ <var>buffer</var> to <var>stream</var>.
 
  <li><p>Let <var>output</var> be a code point <a href="#concept-stream" title="concept-stream">stream</a>.
 
@@ -1148,10 +1162,10 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
 <b>stream</b>, and <b>streaming flag</b> (initially unset).
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object also has an associated
-<dfn id="concept-te-serialize" title="concept-TE-serialize">serialize stream algorithm, that given a
-<span title="concept-stream">stream</span> <var>stream</var>, runs these steps:
+<dfn id="concept-te-serialize" title="concept-TE-serialize">serialize stream</dfn> algorithm, that given a
+<a href="#concept-stream" title="concept-stream">stream</a> <var>stream</var>, runs these steps:
 
-</dfn><ol>
+<ol>
  <li><p>Let <var>buffer</var> be a byte sequence.
 
  <li><p>Keep <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>stream</var> into
@@ -1677,8 +1691,6 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  http://tools.ietf.org/html/rfc1842
  http://tools.ietf.org/html/rfc1843
 -->
-
-<p>The
 
 <h4 id="hz-gb-2312-decoder"><span class="secno">10.2.1 </span><dfn>hz-gb-2312 decoder</dfn></h4>
 
