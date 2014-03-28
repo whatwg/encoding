@@ -64,9 +64,13 @@ areas of encodings. This specification attempts to fill those gaps so that
 new implementations do not have to reverse engineer encoding implementations
 of the market leaders and existing implementations can converge.
 
-<p class=note>This specification is primarily intended for dealing with
-legacy content, it requires new content and formats to use the
-<span>utf-8</span> <span>encoding</span> exclusively.
+<p>In particular, this specification defines the encodings, their algorithms to go from
+bytes to code points and back, and their canonical names and identifying labels. This
+specification also defines an API to expose part of the encoding algorithms to JavaScript.
+
+<p>Historically encodings and their specifications (if any) were kept track of by the
+<a href="http://www.iana.org/assignments/character-sets/character-sets.xhtml">IANA Character Sets registry</a>.
+This specification renders that registry obsolete.
 
 
 
@@ -204,7 +208,7 @@ legacy handling whenever an <span>error</span> is reached.
 <var>mode</var>, run these steps:
 
 <ol>
- <li><p>If <var>mode</var> is not given, set it to <i title>replacement</i> if
+ <li><p>If <var>mode</var> is not given, set it to <i title>replacement</i>, if
  <var>encoderDecoder</var> is a <span>decoder</span>, and <i>fatal</i> otherwise.
 
  <li><p>Let <var>encoderDecoderInstance</var> be a new <var>encoderDecoder</var>.
@@ -233,7 +237,7 @@ legacy handling whenever an <span>error</span> is reached.
 error mode <var>mode</var>, run these steps:
 
 <ol>
- <li><p>If <var>mode</var> is not given, set it to <i title>replacement</i> if
+ <li><p>If <var>mode</var> is not given, set it to <i title>replacement</i>, if
  <var>encoderDecoder</var> is a <span>decoder</span> instance, and <i>fatal</i> otherwise.
 
  <li><p>Let <var>result</var> be the result of running <var>encoderDecoderInstance</var>'s
@@ -954,6 +958,7 @@ interface <dfn>TextDecoder</dfn> {
    to <var>output</var>.
 
    <li><p>Otherwise, return <var>output</var>.
+  </ol>
 </ol>
 
 <p class=note>This algorithm is intentionally different with respect to BOM handling from
