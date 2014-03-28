@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-27-march-2014">Living Standard — Last Updated 27 March 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-28-march-2014">Living Standard — Last Updated 28 March 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-27 March 2014, the editor has made this specification available
+28 March 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -826,8 +826,9 @@ fallback encoding <var title="">encoding</var>, run these steps:
 
  <li><p>Let <var>BOM seen flag</var> be unset.
 
- <li><p><a href="#concept-stream-read" title="concept-stream-read">Read</a> three bytes from <var>stream</var>
- into <var>buffer</var>.
+ <li><p><a href="#concept-stream-read" title="concept-stream-read">Read</a> bytes from <var>stream</var>
+ into <var>buffer</var> until either <var>buffer</var> contains three bytes or
+ <a href="#concept-stream-read" title="concept-stream-read">read</a> returns <a href="#end-of-stream">end-of-stream</a>.
 
  <li>
   <p>For each of the rows in the table below, starting with the first
@@ -849,9 +850,10 @@ fallback encoding <var title="">encoding</var>, run these steps:
  <li><p>If <var>BOM seen flag</var> is unset
  <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>buffer</var> to <var>stream</var>.
 
- <li><p>Otherwise, if <var>BOM seen flag</var> is set and <var title="">encoding</var> is not
- <a href="#utf-8">utf-8</a>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> the last byte of
- <var>buffer</var> to <var>stream</var>.
+ <li><p>Otherwise, if <var>BOM seen flag</var> is set, <var title="">encoding</var> is not
+ <a href="#utf-8">utf-8</a>, and <var>buffer</var> contains three bytes,
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> the last byte of <var>buffer</var> to
+ <var>stream</var>.
 
  <li><p>Let <var>output</var> be a code point <a href="#concept-stream" title="concept-stream">stream</a>.
 

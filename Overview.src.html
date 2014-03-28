@@ -743,8 +743,9 @@ fallback encoding <var title>encoding</var>, run these steps:
 
  <LI><p>Let <var>BOM seen flag</var> be unset.
 
- <li><p><span title=concept-stream-read>Read</span> three bytes from <var>stream</var>
- into <var>buffer</var>.
+ <li><p><span title=concept-stream-read>Read</span> bytes from <var>stream</var>
+ into <var>buffer</var> until either <var>buffer</var> contains three bytes or
+ <span title=concept-stream-read>read</span> returns <span>end-of-stream</span>.
 
  <li>
   <p>For each of the rows in the table below, starting with the first
@@ -766,9 +767,10 @@ fallback encoding <var title>encoding</var>, run these steps:
  <li><p>If <var>BOM seen flag</var> is unset
  <span title=concept-stream-prepend>prepend</span> <var>buffer</var> to <var>stream</var>.
 
- <li><p>Otherwise, if <var>BOM seen flag</var> is set and <var title>encoding</var> is not
- <span>utf-8</span>, <span title=concept-stream-prepend>prepend</span> the last byte of
- <var>buffer</var> to <var>stream</var>.
+ <li><p>Otherwise, if <var>BOM seen flag</var> is set, <var title>encoding</var> is not
+ <span>utf-8</span>, and <var>buffer</var> contains three bytes,
+ <span title=concept-stream-prepend>prepend</span> the last byte of <var>buffer</var> to
+ <var>stream</var>.
 
  <li><p>Let <var>output</var> be a code point <span title=concept-stream>stream</span>.
 
