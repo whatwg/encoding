@@ -701,26 +701,26 @@ the return value of these steps:
  <li><p>If <var title>pointer</var> is greater than 39419 and less than
  189000, or <var title>pointer</var> is greater than 1237575, return null.
 
- <li><p>Let <var title>offset</var> be the last pointer in
+ <li><p>Let <var>offset</var> be the last pointer in
  <span>index gb18030 ranges</span> that is equal to or less than
  <var title>pointer</var> and let <var title>code point offset</var> be its
  corresponding code point.
 
  <li><p>Return a code point whose value is
- <var title>code point offset</var> + <var title>pointer</var> &minus; <var title>offset</var>.
+ <var title>code point offset</var> + <var title>pointer</var> &minus; <var>offset</var>.
 </ol>
 
 <p>The <dfn>index gb18030 ranges pointer</dfn> for <var title>code point</var> is
 the return value of these steps:
 
 <ol>
- <li><p>Let <var title>offset</var> be the last code point in
+ <li><p>Let <var>offset</var> be the last code point in
  <span>index gb18030 ranges</span> that is equal to or less than
  <var title>code point</var> and let <var title>pointer offset</var> be its
  corresponding pointer.
 
  <li><p>Return a pointer whose value is
- <var title>pointer offset</var> + <var title>code point</var> &minus; <var title>offset</var>.
+ <var title>pointer offset</var> + <var title>code point</var> &minus; <var>offset</var>.
 </ol>
 
 
@@ -1319,7 +1319,7 @@ achieve the same result are obviously fine, even encouraged).
  a byte whose value is <var title>code point</var>.
 
  <li>
-  <p>Set <var title>count</var> and <var title>offset</var> based on the
+  <p>Set <var title>count</var> and <var>offset</var> based on the
   range <var title>code point</var> is in:
 
   <dl class=switch>
@@ -1332,7 +1332,7 @@ achieve the same result are obviously fine, even encouraged).
   </dl>
 
  <li><p>Let <var title>bytes</var> be a byte sequence whose first byte is
- <var title>code point</var> / 64<sup><var title>count</var></sup> + <var title>offset</var>.
+ <var title>code point</var> / 64<sup><var title>count</var></sup> + <var>offset</var>.
 
  <li>
   <p>Run these substeps while <var title>count</var> is greater than 0:
@@ -1518,15 +1518,15 @@ historically this might have been the case for <span>iso-8859-6</span> and
    <li><p>If <var title>byte</var> is in the range 0x30 to 0x39, set
    <span>gb18030 second</span> to <var title>byte</var> and return <span>continue</span>.
 
-   <li><p>Let <var title>lead</var> be <span>gb18030 first</span>, let
+   <li><p>Let <var>lead</var> be <span>gb18030 first</span>, let
    <var title>pointer</var> be null, and set <span>gb18030 first</span> to 0x00.
 
-   <li><p>Let <var title>offset</var> be 0x40 if <var title>byte</var> is
+   <li><p>Let <var>offset</var> be 0x40 if <var title>byte</var> is
    less than 0x7F and 0x41 otherwise.
 
    <li><p>If <var title>byte</var> is in the range 0x40 to 0x7E or
    0x80 to 0xFE, set <var title>pointer</var> to
-   (<var title>lead</var> &minus; 0x81) &times; 190 + (<var title>byte</var> &minus; <var title>offset</var>).
+   (<var>lead</var> &minus; 0x81) &times; 190 + (<var title>byte</var> &minus; <var>offset</var>).
 
    <li><p>Let <var title>code point</var> be null if
    <var title>pointer</var> is null and the <span>index code point</span>
@@ -1572,16 +1572,16 @@ historically this might have been the case for <span>iso-8859-6</span> and
   <p>If <var title>pointer</var> is not null, run these substeps:
 
   <ol>
-   <li><p>Let <var title>lead</var> be
+   <li><p>Let <var>lead</var> be
    <var title>pointer</var> / 190 + 0x81.
 
-   <li><p>Let <var title>trail</var> be <var title>pointer</var> % 190.
+   <li><p>Let <var>trail</var> be <var title>pointer</var> % 190.
 
-   <li><p>Let <var title>offset</var> be 0x40 if <var title>trail</var> is
+   <li><p>Let <var>offset</var> be 0x40 if <var>trail</var> is
    less than 0x3F<!--0x7F-0x40--> and 0x41 otherwise.
 
-   <li><p>Return two bytes whose values are <var title>lead</var> and
-   <var title>trail</var> + <var title>offset</var>.
+   <li><p>Return two bytes whose values are <var>lead</var> and
+   <var>trail</var> + <var>offset</var>.
   </ol>
 
  <li><p>Set <var title>pointer</var> to the
@@ -1660,13 +1660,13 @@ historically this might have been the case for <span>iso-8859-6</span> and
 
  <li>
   <p>If <span>hz-gb-2312 lead</span> is not 0x00, let
-  <var title>lead</var> be <span>hz-gb-2312 lead</span>, set
+  <var>lead</var> be <span>hz-gb-2312 lead</span>, set
   <span>hz-gb-2312 lead</span> to 0x00, and then run these substeps:
 
   <ol>
    <li><p>If <var title>byte</var> is in the range 0x21 to 0x7E, let
    <var title>code point</var> be the <span>index code point</span> for
-   (<var title>lead</var> &minus; 1) &times; 190 + (<var title>byte</var> + 0x3F)
+   (<var>lead</var> &minus; 1) &times; 190 + (<var title>byte</var> + 0x3F)
    in <span>index gb18030</span>.
    <!--lead-1    = lead+0x80-0x81
        byte+0x3F = byte+0x80-0x41-->
@@ -1733,16 +1733,16 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <span title=concept-stream-prepend>prepend</span> <var title>code point</var> to
  <var>stream</var>, set the <span>hz-gb-2312 flag</span>, and return two bytes 0x7E 0x7B.
 
- <li><p>Let <var title>lead</var> be <var title>pointer</var> / 190 + 1.
+ <li><p>Let <var>lead</var> be <var title>pointer</var> / 190 + 1.
 
- <li><p>Let <var title>trail</var> be <var title>pointer</var> % 190 &minus; 0x3F.
+ <li><p>Let <var>trail</var> be <var title>pointer</var> % 190 &minus; 0x3F.
 
- <li><p>If either <var title>lead</var> or <var>trail</var> is less than
+ <li><p>If either <var>lead</var> or <var>trail</var> is less than
  0x21, return <span>error</span> with <var title>code point</var>.
  <!-- 0x21 to 0x7E -->
 
- <li><p>Return two bytes whose values are <var title>lead</var> and
- <var title>trail</var>.
+ <li><p>Return two bytes whose values are <var>lead</var> and
+ <var>trail</var>.
 </ol>
 
 
@@ -1773,18 +1773,18 @@ historically this might have been the case for <span>iso-8859-6</span> and
  is 0x00, return <span>finished</span>.
 
  <li>
-  <p>If <span>big5 lead</span> is not 0x00, let <var title>lead</var> be
+  <p>If <span>big5 lead</span> is not 0x00, let <var>lead</var> be
   <span>big5 lead</span>, let <var title>pointer</var> be null, set
   <span>big5 lead</span> to 0x00, and then run these substeps:
 
   <ol>
-   <li><p>Let <var title>offset</var> be 0x40 if <var title>byte</var> is
+   <li><p>Let <var>offset</var> be 0x40 if <var title>byte</var> is
    less than 0x7F and 0x62 otherwise.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
 
    <li><p>If <var title>byte</var> is in the range 0x40 to 0x7E or
    0xA1 to 0xFE, set <var title>pointer</var> to
-   (<var title>lead</var> &minus; 0x81) &times; 157 + (<var title>byte</var> &minus; <var title>offset</var>).
+   (<var>lead</var> &minus; 0x81) &times; 157 + (<var title>byte</var> &minus; <var>offset</var>).
 
    <li>
     <p>If there is a row in the table below whose first column is
@@ -1844,22 +1844,22 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <li><p>If <var title>pointer</var> is null, return <span>error</span> with
  <var title>code point</var>.
 
- <li><p>Let <var title>lead</var> be <var title>pointer</var> / 157 + 0x81.
+ <li><p>Let <var>lead</var> be <var title>pointer</var> / 157 + 0x81.
 
  <li>
-  <p>If <var title>lead</var> is less than 0xA1, return <span>error</span> with
+  <p>If <var>lead</var> is less than 0xA1, return <span>error</span> with
   <var title>code point</var>.
 
   <p class=note>Avoid returning Hong Kong Supplementary Character Set extensions
   literally.
 
- <li><p>Let <var title>trail</var> be <var title>pointer</var> % 157.
+ <li><p>Let <var>trail</var> be <var title>pointer</var> % 157.
 
- <li><p>Let <var title>offset</var> be 0x40 if <var title>trail</var> is
+ <li><p>Let <var>offset</var> be 0x40 if <var>trail</var> is
  less than 0x3F<!--0x7F-0x40--> and 0x62<!--0xA1-0x3F--> otherwise.
 
- <li><p>Return two bytes whose values are <var title>lead</var> and
- <var title>trail</var> + <var title>offset</var>.
+ <li><p>Return two bytes whose values are <var>lead</var> and
+ <var>trail</var> + <var>offset</var>.
 </ol>
 
 
@@ -1896,16 +1896,16 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <var title>byte</var>, and return <span>continue</span>.
 
  <li>
-  <p>If <span>euc-jp lead</span> is not 0x00, let <var title>lead</var> be
+  <p>If <span>euc-jp lead</span> is not 0x00, let <var>lead</var> be
   <span>euc-jp lead</span>, set <span>euc-jp lead</span> to 0x00, and run these substeps:
 
   <ol>
    <li><p>Let <var title>code point</var> be null.
 
-   <li><p>If <var title>lead</var> and <var title>byte</var> are both in the
+   <li><p>If <var>lead</var> and <var title>byte</var> are both in the
    range 0xA1 to 0xFE, set <var title>code point</var> to the
    <span>index code point</span> for
-   (<var title>lead</var> &minus; 0xA1) &times; 94 + <var title>byte</var> &minus; 0xA1
+   (<var>lead</var> &minus; 0xA1) &times; 94 + <var title>byte</var> &minus; 0xA1
    in <span>index jis0208</span> if the <span>euc-jp jis0212 flag</span> is unset and in
    <span>index jis0212</span> otherwise.
 
@@ -1956,12 +1956,12 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <li><p>If <var title>pointer</var> is null, return <span>error</span> with
  <var title>code point</var>.
 
- <li><p>Let <var title>lead</var> be <var title>pointer</var> / 94 + 0xA1.
+ <li><p>Let <var>lead</var> be <var title>pointer</var> / 94 + 0xA1.
 
- <li><p>Let <var title>trail</var> be <var title>pointer</var> % 94 + 0xA1.
+ <li><p>Let <var>trail</var> be <var title>pointer</var> % 94 + 0xA1.
 
- <li><p>Return two bytes whose values are <var title>lead</var> and
- <var title>trail</var>.
+ <li><p>Return two bytes whose values are <var>lead</var> and
+ <var>trail</var>.
 </ol>
 
 <p class=note>The <span>index jis0212</span> is not used by the
@@ -2030,23 +2030,23 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <dt><b>Escape middle state</b>
  <dd>
   <ol>
-   <li><p>Let <var title>lead</var> be <span>iso-2022-jp lead</span> and set
+   <li><p>Let <var>lead</var> be <span>iso-2022-jp lead</span> and set
    <span>iso-2022-jp lead</span> to 0x00.
 
-   <li><p>If <var title>lead</var> is 0x24 and <var title>byte</var> is either
+   <li><p>If <var>lead</var> is 0x24 and <var title>byte</var> is either
    0x40<!--@--> or 0x42<!--B-->, unset the <span>iso-2022-jp jis0212 flag</span>, set
    <span>iso-2022-jp state</span> to <b title>lead state</b>, and return
    <span>continue</span>.
 
-   <li><p>If <var title>lead</var> is 0x24 and <var title>byte</var> is 0x28, set
+   <li><p>If <var>lead</var> is 0x24 and <var title>byte</var> is 0x28, set
    <span>iso-2022-jp state</span> to <b title>escape final state</b> and return
    <span>continue</span>.
 
-   <li><p>If <var title>lead</var> is 0x28 and <var title>byte</var> is either
+   <li><p>If <var>lead</var> is 0x28 and <var title>byte</var> is either
    0x42<!--B--> or 0x4A<!--J-->, set <span>iso-2022-jp state</span> to
    <b title>ASCII state</b> and return <span>continue</span>.
 
-   <li><p>If <var title>lead</var> is 0x28 and <var title>byte</var> is 0x49<!--I-->, set
+   <li><p>If <var>lead</var> is 0x28 and <var title>byte</var> is 0x49<!--I-->, set
    <span>iso-2022-jp state</span> to <b title>Katakana state</b> and return
    <span>continue</span>.
 
@@ -2188,12 +2188,12 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <var>stream</var>, set <span>iso-2022-jp state</span> to <b title>lead state</b>, and
  return three bytes 0x1B 0x24 0x42.
 
- <li><p>Let <var title>lead</var> be <var title>pointer</var> / 94 + 0x21.
+ <li><p>Let <var>lead</var> be <var title>pointer</var> / 94 + 0x21.
 
- <li><p>Let <var title>trail</var> be <var title>pointer</var> % 94 + 0x21.
+ <li><p>Let <var>trail</var> be <var title>pointer</var> % 94 + 0x21.
 
- <li><p>Return two bytes whose values are <var title>lead</var> and
- <var title>trail</var>.
+ <li><p>Return two bytes whose values are <var>lead</var> and
+ <var>trail</var>.
 </ol>
 
 <p class=note>The <span>index jis0212</span> is not used by the
@@ -2219,20 +2219,25 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <span>shift_jis lead</span> is 0x00, return <span>finished</span>.
 
  <li>
-  <p>If <span>shift_jis lead</span> is not 0x00, let <var title>lead</var>
+  <p>If <span>shift_jis lead</span> is not 0x00, let <var>lead</var>
   be <span>shift_jis lead</span>, let <var title>pointer</var> be null, set
   <span>shift_jis lead</span> to 0x00, and then run these substeps:
 
   <ol>
-   <li><p>Let <var title>offset</var> be 0x40, if <var title>byte</var> is
+   <li><p>Let <var>offset</var> be 0x40, if <var title>byte</var> is
    less than 0x7F, and 0x41 otherwise.
 
-   <li><p>Let <var title>lead offset</var> be 0x81, if <var title>lead</var>
+   <li><p>If <var>lead</var> is in the range 0xF0 to 0xF9, return
+   a code point whose value is
+   0xE000 + (<var>lead</var> &minus; 0xF0) &times; 188 + <var title>byte</var> &minus; <var>offset</var>.
+   <!-- EUDC / PUA -->
+
+   <li><p>Let <var>lead offset</var> be 0x81, if <var>lead</var>
    is less than 0xA0, and 0xC1 otherwise.
 
    <li><p>If <var title>byte</var> is in the range 0x40 to 0x7E or
    0x80 to 0xFC, set <var title>pointer</var> to
-   (<var title>lead</var> &minus; <var title>lead offset</var>) &times; 188 + <var title>byte</var> &minus; <var title>offset</var>.
+   (<var>lead</var> &minus; <var>lead offset</var>) &times; 188 + <var title>byte</var> &minus; <var>offset</var>.
 
    <li><p>Let <var title>code point</var> be null, if
    <var title>pointer</var> is null, and the <span>index code point</span>
@@ -2287,20 +2292,20 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <li><p>If <var title>pointer</var> is null, return <span>error</span> with
  <var title>code point</var>.
 
- <li><p>Let <var title>lead</var> be <var title>pointer</var> / 188.
+ <li><p>Let <var>lead</var> be <var title>pointer</var> / 188.
 
- <li><p>Let <var title>lead offset</var> be 0x81, if <var title>lead</var> is
+ <li><p>Let <var>lead offset</var> be 0x81, if <var>lead</var> is
  less than 0x1F, and 0xC1 otherwise.
  <!-- 0xA0-0x81 -->
 
- <li><p>Let <var title>trail</var> be <var title>pointer</var> % 188.
+ <li><p>Let <var>trail</var> be <var title>pointer</var> % 188.
 
- <li><p>Let <var title>offset</var> be 0x40, if <var title>trail</var> is
+ <li><p>Let <var>offset</var> be 0x40, if <var>trail</var> is
  less than 0x3F, and 0x41 otherwise.
 
  <li><p>Return two bytes whose values are
- <var title>lead</var> + <var title>lead offset</var> and
- <var title>trail</var> + <var title>offset</var>.
+ <var>lead</var> + <var>lead offset</var> and
+ <var>trail</var> + <var>offset</var>.
 </ol>
 
 
@@ -2326,15 +2331,15 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <span>euc-kr lead</span> is 0x00, return <span>finished</span>.
 
  <li>
-  <p>If <span>euc-kr lead</span> is not 0x00, let <var title>lead</var> be
+  <p>If <span>euc-kr lead</span> is not 0x00, let <var>lead</var> be
   <span>euc-kr lead</span>, let <var title>pointer</var> be null,
   set <span>euc-kr lead</span> to 0x00, and then run these substeps:
 
   <ol>
    <li>
-    <p>If <var title>lead</var> is in the range 0x81 to 0xC6, let
+    <p>If <var>lead</var> is in the range 0x81 to 0xC6, let
     <var title>temp</var> be
-    (26 + 26 + 126) &times; (<var title>lead</var> &minus; 0x81), and then
+    (26 + 26 + 126) &times; (<var>lead</var> &minus; 0x81), and then
     set <var title>pointer</var> to the result of the equation below,
     depending on <var title>byte</var>:
 
@@ -2347,10 +2352,10 @@ historically this might have been the case for <span>iso-8859-6</span> and
      <dd><p><var title>temp</var> + 26 + 26 + <var title>byte</var> &minus; 0x81
     </dl>
 
-   <li><p>If <var title>lead</var> is in the range 0xC7 to 0xFE and
+   <li><p>If <var>lead</var> is in the range 0xC7 to 0xFE and
    <var title>byte</var> is in the range 0xA1 to 0xFE, set
    <var title>pointer</var> to
-   (26 + 26 + 126) &times; (0xC7 &minus; 0x81) + (<var title>lead</var> &minus; 0xC7) &times; 94 + (<var title>byte</var> &minus; 0xA1).
+   (26 + 26 + 126) &times; (0xC7 &minus; 0x81) + (<var>lead</var> &minus; 0xC7) &times; 94 + (<var title>byte</var> &minus; 0xA1).
 
    <li><p>Let <var title>code point</var> be null, if
    <var title>pointer</var> is null, and the
@@ -2399,31 +2404,31 @@ historically this might have been the case for <span>iso-8859-6</span> and
   (26 + 26 + 126) &times; (0xC7 &minus; 0x81), run these substeps:
 
   <ol>
-   <li><p>Let <var title>lead</var> be
+   <li><p>Let <var>lead</var> be
    <var title>pointer</var> / (26 + 26 + 126) + 0x81.
 
-   <li><p>Let <var title>trail</var> be
+   <li><p>Let <var>trail</var> be
    <var title>pointer</var> % (26 + 26 + 126).
 
-   <li><p>Let <var title>offset</var> be 0x41 if <var title>trail</var> is
-   less than 26, 0x47 if <var title>trail</var> is less than 26 + 26, and
+   <li><p>Let <var>offset</var> be 0x41 if <var>trail</var> is
+   less than 26, 0x47 if <var>trail</var> is less than 26 + 26, and
    0x4D otherwise.
    <!-- 0x47=0x41+0x61-0x5A-1
         0x4D=0x47+0x81-0x7A-1 -->
 
-   <li><p>Return two bytes whose values are <var title>lead</var> and
-   <var title>trail</var> + <var title>offset</var>.
+   <li><p>Return two bytes whose values are <var>lead</var> and
+   <var>trail</var> + <var>offset</var>.
   </ol>
 
  <li><p>Set <var title>pointer</var> to
  <var title>pointer</var> &minus; (26 + 26 + 126) × (0xC7 − 0x81).
 
- <li><p>Let <var title>lead</var> be <var title>pointer</var> / 94 + 0xC7.
+ <li><p>Let <var>lead</var> be <var title>pointer</var> / 94 + 0xC7.
 
- <li><p>Let <var title>trail</var> be <var title>pointer</var> % 94 + 0xA1.
+ <li><p>Let <var>trail</var> be <var title>pointer</var> % 94 + 0xA1.
 
- <li><p>Return two bytes whose values are <var title>lead</var> and
- <var title>trail</var>.
+ <li><p>Return two bytes whose values are <var>lead</var> and
+ <var>trail</var>.
 </ol>
 
 
@@ -2521,13 +2526,13 @@ and <var title>byte</var>, runs these steps:
 
  <li>
   <p>If <span>utf-16 lead surrogate</span> is not null, let
-  <var title>lead surrogate</var> be <span>utf-16 lead surrogate</span>, set
+  <var>lead surrogate</var> be <span>utf-16 lead surrogate</span>, set
   <span>utf-16 lead surrogate</span> to null, and then run these substeps:
 
   <ol>
    <li><p>If <var title>code point</var> is in the range U+DC00 to U+DFFF, return
    a code point whose value is
-   0x10000 + (<var title>lead surrogate</var> &minus; 0xD800) &times; 0x400 + (<var title>code point</var> &minus; 0xDC00).
+   0x10000 + (<var>lead surrogate</var> &minus; 0xD800) &times; 0x400 + (<var title>code point</var> &minus; 0xDC00).
 
    <li><p><span title=concept-stream-prepend>Prepend</span> the sequence resulting of
    <span title="convert a code unit to bytes">converting <var title>code point</var> to bytes</span>
@@ -2566,17 +2571,17 @@ and <var title>code point</var>, runs these steps:
  <span title="convert a code unit to bytes">converting <var title>code point</var> to bytes</span>
  using <span>utf-16be flag</span>.
 
- <li><p>Let <var title>lead</var> be
+ <li><p>Let <var>lead</var> be
  (<var title>code point</var> &minus; 0x10000) / 0x400 + 0xD800,
  <span title="convert a code unit to bytes">converted to bytes</span> using
  <span>utf-16be flag</span>.
 
- <li><p>Let <var title>trail</var> be
+ <li><p>Let <var>trail</var> be
  (<var title>code point</var> &minus; 0x10000) % 0x400 + 0xDC00,
  <span title="convert a code unit to bytes">converted to bytes</span> using
  <span>utf-16be flag</span>.
 
- <li><p>Return a byte sequence of <var title>lead</var> followed by <var title>trail</var>.
+ <li><p>Return a byte sequence of <var>lead</var> followed by <var>trail</var>.
 </ol>
 
 
