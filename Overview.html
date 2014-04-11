@@ -269,20 +269,20 @@ one or more <a href="#concept-token" title="concept-token">tokens</a>,
 <dfn id="continue">continue</dfn>.
 
 <p>An <dfn id="error-mode">error mode</dfn> as used below is either <i title="">replacement</i> (default) or
-<i>fatal</i> for a <a href="#decoder">decoder</a> and one of <i>fatal</i> (default), <i>URL</i>, or
-<i>&lt;form&gt;</i> for an <a href="#encoder">encoder</a>.
+<i>fatal</i> for a <a href="#decoder">decoder</a> and one of <i>fatal</i> (default) or <i>HTML</i>
+for an <a href="#encoder">encoder</a>.
 
 <p class="note">An XML processor would set <a href="#error-mode">error mode</a> to <i>fatal</i>.
 <a class="informative" href="#refsXML">[XML]</a>
 
-<p class="note"><i>URL</i> and <i>&lt;form&gt;</i> exist as <a href="#error-mode">error mode</a> because
-URLs and HTML forms require non-terminating <a href="#encoder" title="encoder">encoders</a> and have
-legacy handling whenever an <a href="#error">error</a> is reached.
+<p class="note"><i>HTML</i> exists as <a href="#error-mode">error mode</a> due to URLs and HTML forms
+requiring a non-terminating legacy <a href="#encoder">encoder</a>. The <i>HTML</i>
+<a href="#error-mode">error mode</a> causes a sequence to be emitted that cannot be distinguished from
+legitimate input and can therefore lead to silent data loss. Developers are strongly
+encouraged to use the <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a> to prevent this from
+happening.
 <a class="informative" href="#refsURL">[URL]</a>
 <a class="informative" href="#refsHTML">[HTML]</a>
-
-<p class="XXX">We have an opportunity to merge <i>URL</i> and <i>&lt;form&gt;</i>:
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24845">bug 24845</a>
 
 <p>To <dfn id="concept-encoding-run" title="concept-encoding-run">run</dfn> an <a href="#encoding">encoding</a>'s
 <a href="#decoder">decoder</a> or <a href="#encoder">encoder</a> <var>encoderDecoder</var> with input
@@ -340,10 +340,7 @@ error mode <var>mode</var>, run these steps:
   <dl class="switch">
    <dt><i title="">replacement</i>
    <dd><a href="#concept-stream-push" title="concept-stream-push">Push</a> U+FFFD to <var>output</var>.
-   <dt><i>URL</i>
-   <dd><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> U+003F to <var>input</var>.
-   <!-- ? -->
-   <dt><i>&lt;form&gt;</i>
+   <dt><i>HTML</i>
    <dd><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> U+0026, U+0023, followed by the
    shortest sequence of <a href="#ascii-digits">ASCII digits</a> representing <var title="">result</var>'s
    <a href="#code-point">code point</a> in base ten, followed by U+003B to <var>input</var>.

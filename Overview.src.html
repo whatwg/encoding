@@ -186,20 +186,20 @@ one or more <span title=concept-token>tokens</span>,
 <dfn>continue</dfn>.
 
 <p>An <dfn>error mode</dfn> as used below is either <i title>replacement</i> (default) or
-<i>fatal</i> for a <span>decoder</span> and one of <i>fatal</i> (default), <i>URL</i>, or
-<i>&lt;form></i> for an <span>encoder</span>.
+<i>fatal</i> for a <span>decoder</span> and one of <i>fatal</i> (default) or <i>HTML</i>
+for an <span>encoder</span>.
 
 <p class=note>An XML processor would set <span>error mode</span> to <i>fatal</i>.
 <span data-anolis-ref class=informative>XML</span>
 
-<p class=note><i>URL</i> and <i>&lt;form></i> exist as <span>error mode</span> because
-URLs and HTML forms require non-terminating <span title=encoder>encoders</span> and have
-legacy handling whenever an <span>error</span> is reached.
+<p class=note><i>HTML</i> exists as <span>error mode</span> due to URLs and HTML forms
+requiring a non-terminating legacy <span>encoder</span>. The <i>HTML</i>
+<span>error mode</span> causes a sequence to be emitted that cannot be distinguished from
+legitimate input and can therefore lead to silent data loss. Developers are strongly
+encouraged to use the <span>utf-8</span> <span>encoding</span> to prevent this from
+happening.
 <span data-anolis-ref class=informative>URL</span>
 <span data-anolis-ref class=informative>HTML</span>
-
-<p class=XXX>We have an opportunity to merge <i>URL</i> and <i>&lt;form></i>:
-<a href=https://www.w3.org/Bugs/Public/show_bug.cgi?id=24845>bug 24845</a>
 
 <p>To <dfn title=concept-encoding-run>run</dfn> an <span>encoding</span>'s
 <span>decoder</span> or <span>encoder</span> <var>encoderDecoder</var> with input
@@ -257,10 +257,7 @@ error mode <var>mode</var>, run these steps:
   <dl class=switch>
    <dt><i title>replacement</i>
    <dd><span title=concept-stream-push>Push</span> U+FFFD to <var>output</var>.
-   <dt><i>URL</i>
-   <dd><span title=concept-stream-prepend>Prepend</span> U+003F to <var>input</var>.
-   <!-- ? -->
-   <dt><i>&lt;form></i>
+   <dt><i>HTML</i>
    <dd><span title=concept-stream-prepend>Prepend</span> U+0026, U+0023, followed by the
    shortest sequence of <span>ASCII digits</span> representing <var title>result</var>'s
    <span>code point</span> in base ten, followed by U+003B to <var>input</var>.
