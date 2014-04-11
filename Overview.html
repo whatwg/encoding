@@ -202,6 +202,9 @@ four-to-six digit hexadecimal number, typically prefixed with "U+".
 In equations and <a href="#index" title="index">indexes</a> code points are prefixed
 with "0x". <a href="#refsUNICODE">[UNICODE]</a>
 
+<p>A <dfn id="scalar-value">scalar value</dfn> is a <a href="#code-point">code point</a> that is not in the range U+D800
+to U+DFFF.
+
 <p>The <dfn id="ascii-whitespace">ASCII whitespace</dfn> are code points U+0009, U+000A, U+000C,
 U+000D, and U+0020.
 
@@ -252,8 +255,8 @@ those tokens must be inserted, in given order, after the last token in the strea
 
 <h2 id="encodings"><span class="secno">4 </span>Encodings</h2>
 
-<p>An <dfn id="encoding">encoding</dfn> defines a mapping from a code point sequence to a
-byte sequence (and vice versa). Each <a href="#encoding">encoding</a> has a
+<p>An <dfn id="encoding">encoding</dfn> defines a mapping from a <a href="#scalar-value">scalar value</a> sequence to a
+<a href="#byte">byte</a> sequence (and vice versa). Each <a href="#encoding">encoding</a> has a
 <dfn id="name">name</dfn>, and one or more <dfn id="label" title="label">labels</dfn>.
 
 
@@ -1413,9 +1416,6 @@ achieve the same result are obviously fine, even encouraged).
 <var>stream</var> and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF, return
- <a href="#error">error</a> with <var title="">code point</var>.
-
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
@@ -2664,9 +2664,6 @@ and <var title="">byte</var>, runs these steps:
 and <var title="">code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var title="">code point</var> is in the range 0xD800 to 0xDFFF, return
- <a href="#error">error</a> with <var title="">code point</var>.
-
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 

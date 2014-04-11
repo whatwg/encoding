@@ -119,6 +119,9 @@ four-to-six digit hexadecimal number, typically prefixed with "U+".
 In equations and <span title=index>indexes</span> code points are prefixed
 with "0x". <span data-anolis-ref>UNICODE</span>
 
+<p>A <dfn>scalar value</dfn> is a <span>code point</span> that is not in the range U+D800
+to U+DFFF.
+
 <p>The <dfn>ASCII whitespace</dfn> are code points U+0009, U+000A, U+000C,
 U+000D, and U+0020.
 
@@ -169,8 +172,8 @@ those tokens must be inserted, in given order, after the last token in the strea
 
 <h2>Encodings</h2>
 
-<p>An <dfn>encoding</dfn> defines a mapping from a code point sequence to a
-byte sequence (and vice versa). Each <span>encoding</span> has a
+<p>An <dfn>encoding</dfn> defines a mapping from a <span>scalar value</span> sequence to a
+<span>byte</span> sequence (and vice versa). Each <span>encoding</span> has a
 <dfn>name</dfn>, and one or more <dfn title=label>labels</dfn>.
 
 
@@ -1330,9 +1333,6 @@ achieve the same result are obviously fine, even encouraged).
 <var>stream</var> and <var title>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var title>code point</var> is in the range 0xD800 to 0xDFFF, return
- <span>error</span> with <var title>code point</var>.
-
  <li><p>If <var title>code point</var> is <span>end-of-stream</span>, return
  <span>finished</span>.
 
@@ -2581,9 +2581,6 @@ and <var title>byte</var>, runs these steps:
 and <var title>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var title>code point</var> is in the range 0xD800 to 0xDFFF, return
- <span>error</span> with <var title>code point</var>.
-
  <li><p>If <var title>code point</var> is <span>end-of-stream</span>, return
  <span>finished</span>.
 
