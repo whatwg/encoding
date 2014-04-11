@@ -1006,6 +1006,7 @@ Non-browser implementations are not required to implement this API.
 
 <pre class="idl">dictionary <dfn id="textdecoderoptions">TextDecoderOptions</dfn> {
   boolean fatal = false;
+  boolean ignoreBOM = false;
 };
 
 dictionary <dfn id="textdecodeoptions">TextDecodeOptions</dfn> {
@@ -1021,7 +1022,8 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
 };</pre>
 
 <p>A <a href="#textdecoder"><code>TextDecoder</code></a> object has an associated <b>encoding</b>, <b>decoder</b>,
-<b>stream</b>, <b>BOM seen flag</b> (initially unset),
+<b>stream</b>, <b>ignore BOM flag</b> (initially unset),
+<b>BOM seen flag</b> (initially unset),
 <b>error mode</b> (initially <i title="">replacement</i>), and
 <b>streaming flag</b> (initially unset).
 
@@ -1040,8 +1042,9 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
    <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>stream</var>.
 
    <li>
-    <p>If <b>encoding</b> is one of <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, or
-    <a href="#utf-16le">utf-16le</a>, and <b>BOM seen flag</b> is unset, run these subsubsteps:
+    <p>If <b>encoding</b> is one of <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, and
+    <a href="#utf-16le">utf-16le</a>, and <b>ignore BOM flag</b> and <b>BOM seen flag</b> are unset,
+    run these subsubsteps:
 
     <ol>
      <li><p>If <var>token</var> is U+FEFF, set <b>BOM seen flag</b>.
@@ -1109,6 +1112,9 @@ constructor must run these steps:
 
  <li><p>If <var title="">options</var>'s <code title="">fatal</code> member is
  true, set <var title="">dec</var>'s <b>error mode</b> to <i>fatal</i>.
+
+ <li><p>If <var title="">options</var>'s <code title="">ignoreBOM</code> member is
+ true, set <var title="">dec</var>'s <b>ignore BOM flag</b>.
 
  <li><p>Return <var title="">dec</var>.
 </ol>
