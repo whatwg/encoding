@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-10-april-2014">Living Standard — Last Updated 10 April 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-11-april-2014">Living Standard — Last Updated 11 April 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-10 April 2014, the editor has made this specification available
+11 April 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -719,6 +719,10 @@ an <dfn id="index">index</dfn>. An <a href="#index">index</a> is an ordered list
 pointers and corresponding code points. Within an <a href="#index">index</a>
 pointers are unique and code points can be duplicated.
 
+<p class="note no-backref">An efficient implementation likely has two
+<a href="#index" title="index">indexes</a> per <a href="#encoding">encoding</a>. One optimized for its
+<a href="#decoder">decoder</a> and one for its <a href="#encoder">encoder</a>.
+
 <p>To find the pointers and their corresponding code points in an <a href="#index">index</a>,
 let <var title="">lines</var> be the result of splitting the resource's contents on U+000A.
 Then remove each item in <var title="">lines</var> that is the empty string or starts with U+0023.
@@ -806,8 +810,22 @@ the return value of these steps:
  <var title="">pointer offset</var> + <var title="">code point</var> − <var>offset</var>.
 </ol>
 
+<p>The <dfn id="index-shift_jis-pointer">index shift_jis pointer</dfn> for <var title="">code point</var> is the return
+value of these steps:
 
-<p class="note">All <a href="#index" title="index">indexes</a> are also available as
+<ol>
+ <li><p>Let <var title="">index</var> be <a href="#index-jis0208">index jis0208</a> excluding all pointers in
+ the range 8272 to 8835.
+ <!-- selected NEC duplicates from IBM extensions later in the index; need to use IBM
+      extensions when going back to bytes -->
+
+ <li><p>Return the <a href="#index-pointer">index pointer</a> for <var title="">code point</var> in
+ <var title="">index</var>.
+</ol>
+
+<hr>
+
+<p class="note no-backref">All <a href="#index" title="index">indexes</a> are also available as
 non-normative <a href="indexes.json">indexes.json</a> resource.
 (<a href="#index-gb18030-ranges">index gb18030 ranges</a> has a slightly different format here, to be able
 to represent ranges.)
@@ -2369,8 +2387,8 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F, return
  a byte whose value is <var title="">code point</var> − 0xFF61 + 0xA1.
 
- <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
- <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
+ <li><p>Let <var title="">pointer</var> be the <a href="#index-shift_jis-pointer">index shift_jis pointer</a> for
+ <var title="">code point</var>.
 
  <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
  <var title="">code point</var>.

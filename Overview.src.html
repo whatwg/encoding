@@ -636,6 +636,10 @@ an <dfn>index</dfn>. An <span>index</span> is an ordered list of
 pointers and corresponding code points. Within an <span>index</span>
 pointers are unique and code points can be duplicated.
 
+<p class="note no-backref">An efficient implementation likely has two
+<span title=index>indexes</span> per <span>encoding</span>. One optimized for its
+<span>decoder</span> and one for its <span>encoder</span>.
+
 <p>To find the pointers and their corresponding code points in an <span>index</span>,
 let <var title>lines</var> be the result of splitting the resource's contents on U+000A.
 Then remove each item in <var title>lines</var> that is the empty string or starts with U+0023.
@@ -723,8 +727,22 @@ the return value of these steps:
  <var title>pointer offset</var> + <var title>code point</var> &minus; <var>offset</var>.
 </ol>
 
+<p>The <dfn>index shift_jis pointer</dfn> for <var title>code point</var> is the return
+value of these steps:
 
-<p class=note>All <span title=index>indexes</span> are also available as
+<ol>
+ <li><p>Let <var title>index</var> be <span>index jis0208</span> excluding all pointers in
+ the range 8272 to 8835.
+ <!-- selected NEC duplicates from IBM extensions later in the index; need to use IBM
+      extensions when going back to bytes -->
+
+ <li><p>Return the <span>index pointer</span> for <var title>code point</var> in
+ <var title>index</var>.
+</ol>
+
+<hr>
+
+<p class="note no-backref">All <span title=index>indexes</span> are also available as
 non-normative <a href=indexes.json>indexes.json</a> resource.
 (<span>index gb18030 ranges</span> has a slightly different format here, to be able
 to represent ranges.)
@@ -2286,8 +2304,8 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F, return
  a byte whose value is <var title>code point</var> &minus; 0xFF61 + 0xA1.
 
- <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
- <var title>code point</var> in <span>index jis0208</span>.
+ <li><p>Let <var title>pointer</var> be the <span>index shift_jis pointer</span> for
+ <var title>code point</var>.
 
  <li><p>If <var title>pointer</var> is null, return <span>error</span> with
  <var title>code point</var>.
