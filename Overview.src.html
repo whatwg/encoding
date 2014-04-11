@@ -752,9 +752,9 @@ to represent ranges.)
 <h2>Specification hooks</h2>
 
 <p class=note>The algorithms <span>decode</span>, <span>utf-8 decode</span>,
-and <span>encode</span> are intended for usage by other specifications.
-<span>utf-8 decode</span> is to be used by new formats. The
-<span title=concept-encoding-get>get an encoding</span> algorithm can be
+<span>utf-8 decode without BOM</span>, <span>encode</span>, and <span>utf-8 encode</span>
+are intended for usage by other specifications. <span>utf-8 decode</span> is to be used by
+new formats. The <span title=concept-encoding-get>get an encoding</span> algorithm can be
 used first to turn a <span>label</span> into an <span>encoding</span>.
 
 <p>To <dfn>decode</dfn> a byte stream <var>stream</var> using
@@ -821,6 +821,19 @@ these steps:
 
  <li><p>Return <var>output</var>.
 </ol>
+
+<p>To <dfn>utf-8 decode without BOM</dfn> a byte stream <var>stream</var>, run these
+steps:
+
+<ol>
+ <li><p>Let <var>output</var> be a code point <span title=concept-stream>stream</span>.
+
+ <li><p><span title=concept-encoding-run>Run</span> <span>utf-8</span>'s
+ <span>decoder</span> with <var>stream</var> and <var>output</var>.
+
+ <li><p>Return <var>output</var>.
+</ol>
+
 
 <hr>
 

@@ -835,9 +835,9 @@ to represent ranges.)
 <h2 id="specification-hooks"><span class="secno">6 </span>Specification hooks</h2>
 
 <p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>,
-and <a href="#encode">encode</a> are intended for usage by other specifications.
-<a href="#utf-8-decode">utf-8 decode</a> is to be used by new formats. The
-<a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be
+<a href="#utf-8-decode-without-bom">utf-8 decode without BOM</a>, <a href="#encode">encode</a>, and <a href="#utf-8-encode">utf-8 encode</a>
+are intended for usage by other specifications. <a href="#utf-8-decode">utf-8 decode</a> is to be used by
+new formats. The <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be
 used first to turn a <a href="#label">label</a> into an <a href="#encoding">encoding</a>.
 
 <p>To <dfn id="decode">decode</dfn> a byte stream <var>stream</var> using
@@ -904,6 +904,19 @@ these steps:
 
  <li><p>Return <var>output</var>.
 </ol>
+
+<p>To <dfn id="utf-8-decode-without-bom">utf-8 decode without BOM</dfn> a byte stream <var>stream</var>, run these
+steps:
+
+<ol>
+ <li><p>Let <var>output</var> be a code point <a href="#concept-stream" title="concept-stream">stream</a>.
+
+ <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <a href="#utf-8">utf-8</a>'s
+ <a href="#decoder">decoder</a> with <var>stream</var> and <var>output</var>.
+
+ <li><p>Return <var>output</var>.
+</ol>
+
 
 <hr>
 
