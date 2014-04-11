@@ -844,16 +844,23 @@ encoding <var title>encoding</var>, run these steps:
  <li><p>Let <var>output</var> be a byte <span title=concept-stream>stream</span>.
 
  <li><p><span title=concept-encoding-run>Run</span> <var title>encoding</var>'s
- <span>encoder</span> with <var>stream</var> and <var>output</var>.
+ <span>encoder</span> with <var>stream</var>, <var>output</var>, and <i>HTML</i>.
 
  <li><p>Return <var>output</var>.
 </ol>
+
+<p class="note no-backref">This is mostly a legacy hook for URLs and HTML forms. Layering
+<span>utf-8 encode</span> on top is safe as it never triggers
+<span title=error>errors</span>.
+<span data-anolis-ref class=informative>URL</span>
+<span data-anolis-ref class=informative>HTML</span>
 
 <p>To <dfn>utf-8 encode</dfn> a code point stream <var>stream</var>,
 return the result of <span title=encode>encoding</span>
 <var>stream</var> using encoding <span>utf-8</span>.
 
-<p class=note>If the input to this algorithm stems from a DOMString, the
+<p class="note no-backref">If the input to <span>encode</span> or
+<span>utf-8 encode</span> stems from a DOMString, the
 <span data-anolis-spec=webidl>convert a DOMString to a sequence of Unicode characters</span>
 from Web IDL is to be used first.
 

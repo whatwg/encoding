@@ -927,16 +927,23 @@ encoding <var title="">encoding</var>, run these steps:
  <li><p>Let <var>output</var> be a byte <a href="#concept-stream" title="concept-stream">stream</a>.
 
  <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <var title="">encoding</var>'s
- <a href="#encoder">encoder</a> with <var>stream</var> and <var>output</var>.
+ <a href="#encoder">encoder</a> with <var>stream</var>, <var>output</var>, and <i>HTML</i>.
 
  <li><p>Return <var>output</var>.
 </ol>
+
+<p class="note no-backref">This is mostly a legacy hook for URLs and HTML forms. Layering
+<a href="#utf-8-encode">utf-8 encode</a> on top is safe as it never triggers
+<a href="#error" title="error">errors</a>.
+<a class="informative" href="#refsURL">[URL]</a>
+<a class="informative" href="#refsHTML">[HTML]</a>
 
 <p>To <dfn id="utf-8-encode">utf-8 encode</dfn> a code point stream <var>stream</var>,
 return the result of <a href="#encode" title="encode">encoding</a>
 <var>stream</var> using encoding <a href="#utf-8">utf-8</a>.
 
-<p class="note">If the input to this algorithm stems from a DOMString, the
+<p class="note no-backref">If the input to <a href="#encode">encode</a> or
+<a href="#utf-8-encode">utf-8 encode</a> stems from a DOMString, the
 <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-obtain-unicode">convert a DOMString to a sequence of Unicode characters</a>
 from Web IDL is to be used first.
 
