@@ -190,7 +190,6 @@ out of memory, or to work around platform-specific limitations.
 <p>In equations, all numbers are integers, addition is represented by "+",
 subtraction by "−", multiplication by "×", division by "/",
 calculating the remainder of a division (also known as modulo) by "%",
-exponentiation by "<var title="">b</var><sup><var title="">n</var></sup>",
 arithmetic left shifts by "&lt;&lt;", arithmetic right shifts by "&gt;&gt;",
 bitwise AND by "&amp;", and bitwise OR by "|".
 
@@ -1384,8 +1383,9 @@ method must run these steps:
   </dl>
 
   <p>Then (<var title="">byte</var> is in the range 0xC2 to 0xF4) set
-  <a href="#utf-8-code-point">utf-8 code point</a> to <a href="#utf-8-code-point">utf-8 code point</a> ×
-  64<sup><a href="#utf-8-bytes-needed">utf-8 bytes needed</a></sup> and return <a href="#continue">continue</a>.
+  <a href="#utf-8-code-point">utf-8 code point</a> to
+  <a href="#utf-8-code-point">utf-8 code point</a> &lt;&lt; (6 × <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>)
+  and return <a href="#continue">continue</a>.
 
  <li>
   <p>If <var title="">byte</var> is not in the range
@@ -1410,8 +1410,8 @@ method must run these steps:
  <li>
   <p>Increase <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> by one and set
   <a href="#utf-8-code-point">utf-8 code point</a> to
-  <a href="#utf-8-code-point">utf-8 code point</a> + (<var title="">byte</var> − 0x80) ×
-  64<sup><a href="#utf-8-bytes-needed">utf-8 bytes needed</a> − <a href="#utf-8-bytes-seen">utf-8 bytes seen</a></sup>.
+  <a href="#utf-8-code-point">utf-8 code point</a> + (<var title="">byte</var> − 0x80) &lt;&lt;
+  (6 × (<a href="#utf-8-bytes-needed">utf-8 bytes needed</a> − <a href="#utf-8-bytes-seen">utf-8 bytes seen</a>)).
 
  <li><p>If <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> is not equal to
  <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, continue.
@@ -1456,19 +1456,16 @@ achieve the same result are obviously fine, even encouraged).
   </dl>
 
  <li><p>Let <var title="">bytes</var> be a byte sequence whose first byte is
- <var title="">code point</var> / 64<sup><var title="">count</var></sup> + <var>offset</var>.
+ (<var title="">code point</var> &gt;&gt; (6 × <var title="">count</var>)) + <var>offset</var>.
 
  <li>
   <p>Run these substeps while <var title="">count</var> is greater than 0:
 
   <ol>
    <li><p>Set <var title="">temp</var> to
-   <var title="">code point</var> / 64<sup><var title="">count</var> − 1</sup>.
-   <!--temp = code_point >> ((count - 1) * 6)-->
+   <var title="">code point</var> &gt;&gt; (6 × (<var title="">count</var> − 1)).
 
-   <li><p>Append to <var title="">bytes</var>
-   0x80 + (<var title="">temp</var> % 64).
-   <!--0x80 | (temp & 0x3f)-->
+   <li><p>Append to <var title="">bytes</var> 0x80 | (<var title="">temp</var> &amp; 0x3F).
 
    <li><p>Decrease <var title="">count</var> by one.
   </ol>
@@ -2659,7 +2656,7 @@ and <var title="">byte</var>, runs these steps:
   <ol>
    <li><p>If <var title="">code point</var> is in the range U+DC00 to U+DFFF, return
    a code point whose value is
-   0x10000 + (<var>lead surrogate</var> − 0xD800) × 0x400 + (<var title="">code point</var> − 0xDC00).
+   0x10000 + ((<var>lead surrogate</var> − 0xD800) &lt;&lt; 10) + (<var title="">code point</var> − 0xDC00).
 
    <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> the sequence resulting of
    <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>
@@ -2696,12 +2693,12 @@ and <var title="">code point</var>, runs these steps:
  using <a href="#utf-16be-flag">utf-16be flag</a>.
 
  <li><p>Let <var>lead</var> be
- (<var title="">code point</var> − 0x10000) / 0x400 + 0xD800,
+ ((<var title="">code point</var> − 0x10000) &gt;&gt; 10) + 0xD800,
  <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
  <a href="#utf-16be-flag">utf-16be flag</a>.
 
  <li><p>Let <var>trail</var> be
- (<var title="">code point</var> − 0x10000) % 0x400 + 0xDC00,
+ ((<var title="">code point</var> − 0x10000) &amp; 0x3FF) + 0xDC00,
  <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
  <a href="#utf-16be-flag">utf-16be flag</a>.
 
