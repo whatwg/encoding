@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-14-april-2014">Living Standard — Last Updated 14 April 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-28-april-2014">Living Standard — Last Updated 28 April 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-14 April 2014, the editor has made this specification available
+28 April 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -2637,7 +2637,7 @@ and <var title="">byte</var>, runs these steps:
  <var title="">byte</var> and return <a href="#continue">continue</a>.
 
  <li>
-  <p>Let <var title="">code point</var> be the result of:
+  <p>Let <var title="">code unit</var> be the result of:
 
   <dl class="switch">
    <dt><a href="#utf-16be-flag">utf-16be flag</a> is set
@@ -2654,25 +2654,25 @@ and <var title="">byte</var>, runs these steps:
   <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to null, and then run these substeps:
 
   <ol>
-   <li><p>If <var title="">code point</var> is in the range U+DC00 to U+DFFF, return
+   <li><p>If <var title="">code unit</var> is in the range U+DC00 to U+DFFF, return
    a code point whose value is
-   0x10000 + ((<var>lead surrogate</var> − 0xD800) &lt;&lt; 10) + (<var title="">code point</var> − 0xDC00).
+   0x10000 + ((<var>lead surrogate</var> − 0xD800) &lt;&lt; 10) + (<var title="">code unit</var> − 0xDC00).
 
    <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> the sequence resulting of
-   <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>
+   <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code unit</var> to bytes</a>
    using <a href="#utf-16be-flag">utf-16be flag</a> to <var>stream</var> and return <a href="#error">error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
- <li><p>If <var title="">code point</var> is in the range U+D800 to U+DBFF, set
- <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to <var title="">code point</var> and return
+ <li><p>If <var title="">code unit</var> is in the range U+D800 to U+DBFF, set
+ <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to <var title="">code unit</var> and return
  <a href="#continue">continue</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+DC00 to U+DFFF,
+ <li><p>If <var title="">code unit</var> is in the range U+DC00 to U+DFFF,
  return <a href="#error">error</a>.
  <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
 
- <li><p>Return code point <var title="">code point</var>.
+ <li><p>Return code point <var title="">code unit</var>.
 </ol>
 
 
