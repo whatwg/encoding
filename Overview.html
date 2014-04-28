@@ -757,8 +757,10 @@ specification, excluding <a href="#index-single-byte">index single-byte</a>:
  <tr>
   <td><dfn id="index-gb18030">index gb18030</dfn>
   <td><a href="index-gb18030.txt">index-gb18030.txt</a>
-  <td>This matches the GB18030 standard for code points encoded as two
-  bytes.
+  <td>This matches the GB18030 standard for code points encoded as two bytes, except
+  0xA3 0xA0 maps to U+3000 to be compatible with deployed content.
+  <!-- https://bugs.webkit.org/show_bug.cgi?id=17014
+       https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396 -->
  <tr>
   <td><dfn id="index-gb18030-ranges">index gb18030 ranges</dfn>
   <td><a href="index-gb18030-ranges.txt">index-gb18030-ranges.txt</a>
