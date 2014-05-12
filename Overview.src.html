@@ -2270,11 +2270,6 @@ historically this might have been the case for <span>iso-8859-6</span> and
    <li><p>Let <var>offset</var> be 0x40, if <var title>byte</var> is
    less than 0x7F, and 0x41 otherwise.
 
-   <li><p>If <var>lead</var> is in the range 0xF0 to 0xF9, return
-   a code point whose value is
-   0xE000 + (<var>lead</var> &minus; 0xF0) &times; 188 + <var title>byte</var> &minus; <var>offset</var>.
-   <!-- EUDC / PUA -->
-
    <li><p>Let <var>lead offset</var> be 0x81, if <var>lead</var>
    is less than 0xA0, and 0xC1 otherwise.
 
@@ -2285,6 +2280,14 @@ historically this might have been the case for <span>iso-8859-6</span> and
    <li><p>Let <var title>code point</var> be null, if
    <var title>pointer</var> is null, and the <span>index code point</span>
    for <var title>pointer</var> in <span>index jis0208</span> otherwise.
+
+   <li>
+    <p>If <var title>code point</var> is null and <var>pointer</var> is in the range
+    8836 to 10528, return a code point whose value is
+    0xE000 + <var>pointer</var> &minus; 8836.
+
+    <p class=note>This is interoperable legacy from Windows known as EUDC.
+    <!-- PUA -->
 
    <li><p>If <var title>pointer</var> is null,
    <span title=concept-stream-prepend>prepend</span> <var title>byte</var> to
@@ -2727,6 +2730,7 @@ omissions.
 <p>With that, many thanks to
 
 Alan Chaney,
+Alexander Shtuchkin,
 Allen Wirfs-Brock,
 Ben Noordhuis,
 Boris Zbarsky,
@@ -2745,6 +2749,7 @@ James Graham,
 John Tamplin,
 Joshua Bell,
 신정식 (Jungshik Shin),
+강 성훈 (Kang Seonghoon),
 川幡太一 (Kawabata Taichi),
 Ken Lunde,
 Kenneth Russell,
