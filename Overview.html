@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-12-may-2014">Living Standard — Last Updated 12 May 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-19-may-2014">Living Standard — Last Updated 19 May 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-12 May 2014, the editor has made this specification available
+19 May 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -62,8 +62,9 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
  <li><a href="#specification-hooks"><span class="secno">6 </span>Specification hooks</a></li>
  <li><a href="#api"><span class="secno">7 </span>API</a>
   <ol>
-   <li><a href="#interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></a></li>
-   <li><a href="#interface-textencoder"><span class="secno">7.2 </span>Interface <code title="">TextEncoder</code></a></ol></li>
+   <li><a href="#type-scalarvaluestring"><span class="secno">7.1 </span>Type <code title="">ScalarValueString</code></a></li>
+   <li><a href="#interface-textdecoder"><span class="secno">7.2 </span>Interface <code title="">TextDecoder</code></a></li>
+   <li><a href="#interface-textencoder"><span class="secno">7.3 </span>Interface <code title="">TextEncoder</code></a></ol></li>
  <li><a href="#the-encoding"><span class="secno">8 </span>The encoding</a>
   <ol>
    <li><a href="#utf-8"><span class="secno">8.1 </span>utf-8</a>
@@ -1026,7 +1027,26 @@ Non-browser implementations are not required to implement this API.
 }</code></pre>
 </div>
 
-<h3 id="interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></h3>
+
+<h3 id="type-scalarvaluestring"><span class="secno">7.1 </span>Type <code title="">ScalarValueString</code></h3>
+
+<p class="XXX">This is a temporary definition until IDL proper is updated to include it.
+<code title="">typedef</code> is used for now to keep IDL validity.
+
+<pre class="idl">typedef DOMString <dfn id="scalarvaluestring">ScalarValueString</dfn>;</pre>
+
+<p><a href="#scalarvaluestring"><code>ScalarValueString</code></a> is identical to DOMString except that
+<a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-obtain-unicode">convert a DOMString to a sequence of Unicode characters</a>
+is used subsequently when converting to an IDL value. Ergo, the IDL value is a sequence
+of <a href="#scalar-value" title="scalar value">scalar values</a>.
+
+<p class="warning">Only use <a href="#scalarvaluestring"><code>ScalarValueString</code></a> if the subsystem deals in
+<a href="#scalar-value" title="scalar value">scalar values</a> rather than
+<a href="#code-point" title="code point">code points</a>. When in doubt, use
+<code title="">DOMString</code>.
+
+
+<h3 id="interface-textdecoder"><span class="secno">7.2 </span>Interface <code title="">TextDecoder</code></h3>
 
 <pre class="idl">dictionary <dfn id="textdecoderoptions">TextDecoderOptions</dfn> {
   boolean fatal = false;
@@ -1198,7 +1218,7 @@ method must run these steps:
 </ol>
 
 
-<h3 id="interface-textencoder"><span class="secno">7.2 </span>Interface <code title="">TextEncoder</code></h3>
+<h3 id="interface-textencoder"><span class="secno">7.3 </span>Interface <code title="">TextEncoder</code></h3>
 
 <pre class="idl">dictionary <dfn id="textencodeoptions">TextEncodeOptions</dfn> {
   boolean stream = false;
@@ -1208,7 +1228,7 @@ method must run these steps:
  Exposed=Window,Worker]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
-  <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#7">Uint8Array</a> <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional [EnsureUTF16] DOMString <var title="">input</var> = "", optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
+  <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#7">Uint8Array</a> <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional <a href="#scalarvaluestring">ScalarValueString</a> <var title="">input</var> = "", optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
 };</pre>
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b>, <b>encoder</b>,
