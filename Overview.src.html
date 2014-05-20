@@ -977,6 +977,8 @@ dictionary <dfn>TextDecodeOptions</dfn> {
  Exposed=Window,Worker]
 interface <dfn>TextDecoder</dfn> {
   readonly attribute DOMString <span title=dom-TextDecoder-encoding>encoding</span>;
+  readonly attribute boolean <span title=dom-TextDecoder-fatal>fatal</span>;
+  readonly attribute boolean <span title=dom-TextDecoder-ignoreBOM>ignoreBOM</span>;
   DOMString <span title=dom-TextDecoder-decode>decode</span>();
   DOMString <span title=dom-TextDecoder-decode>decode</span>(<span data-anolis-spec=typedarray>ArrayBufferView</span> <var title>input</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
 };</pre>
@@ -1040,6 +1042,12 @@ control.
  <dt><code><var title>decoder</var> . <span title=dom-TextDecoder-encoding>encoding</span></code>
  <dd><p>Returns <b>encoding</b>'s <span>name</span>.
 
+ <dt><code><var title>fatal</var> . <span title=dom-TextDecoder-fatal>fatal</span></code>
+ <dd><p>Returns true if the <b>error mode</b> is <i>fatal</i>, and returns false otherwise.</span>.
+
+ <dt><code><var title>ignoreBOM</var> . <span title=dom-TextDecoder-ignoreBOM>ignoreBOM</span></code>
+ <dd><p>Returns true if the <b>ignore BOM flag</b> is set, and returns false otherwise</span>.
+
  <dt><code><var title>decoder</var> . <span title=dom-TextDecoder-decode>decode</span>([<var title>input</var> [, <var title>options</var>]])</code>
  <dd>
   <p>Returns the result of running <b>encoding</b>'s
@@ -1081,6 +1089,12 @@ constructor must run these steps:
 
 <p>The <dfn title=dom-TextDecoder-encoding><code>encoding</code></dfn> attribute must
 return <b>encoding</b>'s <span>name</span>.
+
+<p>The <dfn title=dom-TextDecoder-fatal><code>fatal</code></dfn> attribute must
+return true if <b>error mode</b> is <i>fatal</i>, and return false otherwise.
+
+<p>The <dfn title=dom-TextDecoder-ignoreBOM><code>ignoreBOM</code></dfn> attribute must
+return true if the <b>ignore BOM flag</b> is set, and return false otherwise.
 
 <p>The
 <dfn title=dom-TextDecoder-decode><code>decode(<var title>input</var>, <var title>options</var>)</code></dfn>
