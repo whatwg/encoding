@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-19-may-2014">Living Standard — Last Updated 19 May 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-21-may-2014">Living Standard — Last Updated 21 May 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-19 May 2014, the editor has made this specification available
+21 May 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1061,6 +1061,8 @@ dictionary <dfn id="textdecodeoptions">TextDecodeOptions</dfn> {
  Exposed=Window,Worker]
 interface <dfn id="textdecoder">TextDecoder</dfn> {
   readonly attribute DOMString <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a>;
+  readonly attribute boolean <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a>;
+  readonly attribute boolean <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a>;
   DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>();
   DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
 };</pre>
@@ -1124,6 +1126,12 @@ control.
  <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a></code>
  <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
 
+ <dt><code><var title="">fatal</var> . <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a></code>
+ <dd><p>Returns true if <b>error mode</b> is <i>fatal</i>, and false otherwise.
+
+ <dt><code><var title="">ignoreBOM</var> . <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a></code>
+ <dd><p>Returns true if <b>ignore BOM flag</b> is set, and false otherwise.
+
  <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>([<var title="">input</var> [, <var title="">options</var>]])</code>
  <dd>
   <p>Returns the result of running <b>encoding</b>'s
@@ -1165,6 +1173,12 @@ constructor must run these steps:
 
 <p>The <dfn id="dom-textdecoder-encoding" title="dom-TextDecoder-encoding"><code>encoding</code></dfn> attribute must
 return <b>encoding</b>'s <a href="#name">name</a>.
+
+<p>The <dfn id="dom-textdecoder-fatal" title="dom-TextDecoder-fatal"><code>fatal</code></dfn> attribute must
+return true if <b>error mode</b> is <i>fatal</i>, and false otherwise.
+
+<p>The <dfn id="dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM"><code>ignoreBOM</code></dfn> attribute must
+return true if <b>ignore BOM flag</b> is set, and false otherwise.
 
 <p>The
 <dfn id="dom-textdecoder-decode" title="dom-TextDecoder-decode"><code>decode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
