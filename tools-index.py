@@ -1,8 +1,16 @@
+from ftplib import FTP
+import os
 import json
 
 data = json.loads(open("indexes.json", "r").read())
 
-# Copy from ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
+if not os.path.exists("UnicodeData.txt"):
+  # Download UnicodeData.txt via FTP if it doesn't exist yet
+  ftp = FTP("ftp.unicode.org")
+  ftp.login()
+  ftp.retrbinary("RETR /Public/UNIDATA/UnicodeData.txt", open("UnicodeData.txt","wb").write)
+  ftp.quit()
+
 names = open("UnicodeData.txt", "r").readlines()
 
 jamo = [
