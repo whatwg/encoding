@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-21-may-2014">Living Standard — Last Updated 21 May 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-3-july-2014">Living Standard — Last Updated 3 July 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-21 May 2014, the editor has made this specification available
+3 July 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -955,23 +955,22 @@ from Web IDL is to be used first.
 
 <!-- http://wiki.whatwg.org/wiki/StringEncoding  -->
 
-<p>This section uses terminology from the DOM, Typed Arrays, and Web IDL.
+<p>This section uses terminology from the DOM and Web IDL.
 Non-browser implementations are not required to implement this API.
 
 <a href="#refsDOM">[DOM]</a>
-<a href="#refsTYPEDARRAY">[TYPEDARRAY]</a>
 <a href="#refsWEBIDL">[WEBIDL]</a>
 
 <div class="example">
  <p>The following example uses the <a href="#textencoder"><code>TextEncoder</code></a> object to encode
  an array of strings into an
- <a href="http://www.khronos.org/registry/typedarray/specs/latest/#5"><code class="external" data-anolis-spec="typedarray">ArrayBuffer</code></a>. The result is a
- <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint8Array</code></a> containing the number
- of strings (as a <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint32Array</code></a>),
+ <code title="">ArrayBuffer</code>. The result is a
+ <code title="">Uint8Array</code> containing the number
+ of strings (as a <code title="">Uint32Array</code>),
  followed by the length of the first string (as a
- <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint32Array</code></a>), the
+ <code title="">Uint32Array</code>), the
  <a href="#utf-8">utf-8</a> encoded string data, the length of the second string (as
- a <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint32Array</code></a>), the string data,
+ a <code title="">Uint32Array</code>), the string data,
  and so on.
  <pre><code>function encodeArrayOfStrings(strings, encoding) {
   var encoder, encoded, len, i, bytes, view, offset;
@@ -1003,7 +1002,7 @@ Non-browser implementations are not required to implement this API.
 }</code></pre>
 
  <p>The following example decodes an
- <a href="http://www.khronos.org/registry/typedarray/specs/latest/#5"><code class="external" data-anolis-spec="typedarray">ArrayBuffer</code></a> containing data
+ <code title="">ArrayBuffer</code> containing data
  encoded in the format produced by the previous example back into an array
  of strings.
  <pre><code>function decodeArrayOfStrings(buffer, encoding) {
@@ -1063,8 +1062,7 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
   readonly attribute DOMString <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a>;
   readonly attribute boolean <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a>;
   readonly attribute boolean <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a>;
-  DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>();
-  DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
+  DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(optional ArrayBufferView <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
 };</pre>
 
 <p>A <a href="#textdecoder"><code>TextDecoder</code></a> object has an associated <b>encoding</b>, <b>decoder</b>,
@@ -1242,7 +1240,7 @@ method must run these steps:
  Exposed=Window,Worker]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
-  <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#7">Uint8Array</a> <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional <a href="#scalarvaluestring">ScalarValueString</a> <var title="">input</var> = "", optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
+  Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional <a href="#scalarvaluestring">ScalarValueString</a> <var title="">input</var> = "", optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
 };</pre>
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b>, <b>encoder</b>,
@@ -1258,8 +1256,8 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
  <li><p>Keep <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>stream</var> into
  <var>buffer</var> until <a href="#end-of-stream">end-of-stream</a>.
 
- <li><p>Return a <a href="http://www.khronos.org/registry/typedarray/specs/latest/#7"><code class="external" data-anolis-spec="typedarray">Uint8Array</code></a> object wrapping an
- <a href="http://www.khronos.org/registry/typedarray/specs/latest/#5"><code class="external" data-anolis-spec="typedarray">ArrayBuffer</code></a> containing <var title="">bytes</var>.
+ <li><p>Return a <code title="">Uint8Array</code> object wrapping an
+ <code title="">ArrayBuffer</code> containing <var title="">bytes</var>.
  <!-- XXX JavaScript / IDL hook? -->
 </ol>
 
@@ -2838,9 +2836,6 @@ http://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7
 
 <dt id="refsRFC2119">[RFC2119]
 <dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
-
-<dt id="refsTYPEDARRAY">[TYPEDARRAY]
-<dd><cite><a href="http://www.khronos.org/registry/typedarray/specs/latest/">Typed Array</a></cite>, David Herman and Kenneth Russell. Khronos.
 
 <dt id="refsUNICODE">[UNICODE]
 <dd><cite><a href="http://www.unicode.org/versions/latest/">Unicode Standard</a></cite>. Unicode Consortium.

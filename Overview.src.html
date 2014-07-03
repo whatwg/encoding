@@ -871,23 +871,22 @@ from Web IDL is to be used first.
 
 <!-- http://wiki.whatwg.org/wiki/StringEncoding  -->
 
-<p>This section uses terminology from the DOM, Typed Arrays, and Web IDL.
+<p>This section uses terminology from the DOM and Web IDL.
 Non-browser implementations are not required to implement this API.
 
 <span data-anolis-ref>DOM</span>
-<span data-anolis-ref>TYPEDARRAY</span>
 <span data-anolis-ref>WEBIDL</span>
 
 <div class=example>
  <p>The following example uses the <code>TextEncoder</code> object to encode
  an array of strings into an
- <code data-anolis-spec=typedarray>ArrayBuffer</code>. The result is a
- <code data-anolis-spec=typedarray>Uint8Array</code> containing the number
- of strings (as a <code data-anolis-spec=typedarray>Uint32Array</code>),
+ <code title>ArrayBuffer</code>. The result is a
+ <code title>Uint8Array</code> containing the number
+ of strings (as a <code title>Uint32Array</code>),
  followed by the length of the first string (as a
- <code data-anolis-spec=typedarray>Uint32Array</code>), the
+ <code title>Uint32Array</code>), the
  <span>utf-8</span> encoded string data, the length of the second string (as
- a <code data-anolis-spec=typedarray>Uint32Array</code>), the string data,
+ a <code title>Uint32Array</code>), the string data,
  and so on.
  <pre><code>function encodeArrayOfStrings(strings, encoding) {
   var encoder, encoded, len, i, bytes, view, offset;
@@ -919,7 +918,7 @@ Non-browser implementations are not required to implement this API.
 }</code></pre>
 
  <p>The following example decodes an
- <code data-anolis-spec=typedarray>ArrayBuffer</code> containing data
+ <code title>ArrayBuffer</code> containing data
  encoded in the format produced by the previous example back into an array
  of strings.
  <pre><code>function decodeArrayOfStrings(buffer, encoding) {
@@ -979,8 +978,7 @@ interface <dfn>TextDecoder</dfn> {
   readonly attribute DOMString <span title=dom-TextDecoder-encoding>encoding</span>;
   readonly attribute boolean <span title=dom-TextDecoder-fatal>fatal</span>;
   readonly attribute boolean <span title=dom-TextDecoder-ignoreBOM>ignoreBOM</span>;
-  DOMString <span title=dom-TextDecoder-decode>decode</span>();
-  DOMString <span title=dom-TextDecoder-decode>decode</span>(<span data-anolis-spec=typedarray>ArrayBufferView</span> <var title>input</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
+  DOMString <span title=dom-TextDecoder-decode>decode</span>(optional ArrayBufferView <var title>input</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
 };</pre>
 
 <p>A <code>TextDecoder</code> object has an associated <b>encoding</b>, <b>decoder</b>,
@@ -1158,7 +1156,7 @@ method must run these steps:
  Exposed=Window,Worker]
 interface <dfn>TextEncoder</dfn> {
   readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
-  <span data-anolis-spec=typedarray>Uint8Array</span> <span title=dom-TextEncoder-encode>encode</span>(optional <span>ScalarValueString</span> <var title>input</var> = "", optional <span>TextEncodeOptions</span> <var title>options</var>);
+  Uint8Array <span title=dom-TextEncoder-encode>encode</span>(optional <span>ScalarValueString</span> <var title>input</var> = "", optional <span>TextEncodeOptions</span> <var title>options</var>);
 };</pre>
 
 <p>A <code>TextEncoder</code> object has an associated <b>encoding</b>, <b>encoder</b>,
@@ -1174,8 +1172,8 @@ interface <dfn>TextEncoder</dfn> {
  <li><p>Keep <span title=concept-stream-read>reading</span> from <var>stream</var> into
  <var>buffer</var> until <span>end-of-stream</span>.
 
- <li><p>Return a <code data-anolis-spec=typedarray>Uint8Array</code> object wrapping an
- <code data-anolis-spec=typedarray>ArrayBuffer</code> containing <var title>bytes</var>.
+ <li><p>Return a <code title>Uint8Array</code> object wrapping an
+ <code title>ArrayBuffer</code> containing <var title>bytes</var>.
  <!-- XXX JavaScript / IDL hook? -->
 </ol>
 
