@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-3-july-2014">Living Standard — Last Updated 3 July 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-11-july-2014">Living Standard — Last Updated 11 July 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-3 July 2014, the editor has made this specification available
+11 July 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -1232,34 +1232,14 @@ method must run these steps:
 
 <h3 id="interface-textencoder"><span class="secno">7.3 </span>Interface <code title="">TextEncoder</code></h3>
 
-<pre class="idl">dictionary <dfn id="textencodeoptions">TextEncodeOptions</dfn> {
-  boolean stream = false;
-};
-
-[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8"),
+<pre class="idl">[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8"),
  Exposed=Window,Worker]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
-  Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional <a href="#scalarvaluestring">ScalarValueString</a> <var title="">input</var> = "", optional <a href="#textencodeoptions">TextEncodeOptions</a> <var title="">options</var>);
+  Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional <a href="#scalarvaluestring">ScalarValueString</a> <var title="">input</var> = "");
 };</pre>
 
-<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b>, <b>encoder</b>,
-<b>stream</b>, and <b>streaming flag</b> (initially unset).
-
-<p>A <a href="#textencoder"><code>TextEncoder</code></a> object also has an associated
-<dfn id="concept-te-serialize" title="concept-TE-serialize">serialize stream</dfn> algorithm, that given a
-<a href="#concept-stream" title="concept-stream">stream</a> <var>stream</var>, runs these steps:
-
-<ol>
- <li><p>Let <var>buffer</var> be a byte sequence.
-
- <li><p>Keep <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>stream</var> into
- <var>buffer</var> until <a href="#end-of-stream">end-of-stream</a>.
-
- <li><p>Return a <code title="">Uint8Array</code> object wrapping an
- <code title="">ArrayBuffer</code> containing <var title="">bytes</var>.
- <!-- XXX JavaScript / IDL hook? -->
-</ol>
+<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b> and <b>encoder</b>.
 
 <hr>
 
@@ -1275,7 +1255,7 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
  <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a></code>
  <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
 
- <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>([<var title="">input</var> [, <var title="">options</var>]])</code>
+ <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>([<var title="">input</var> = ""])</code>
  <dd><p>Returns the result of running <b>encoding</b>'s
  <a href="#encoder">encoder</a>. If <var title="">options</var>'s
  <code title="">stream</code> is set to true, the method can be invoked
@@ -1299,6 +1279,9 @@ constructor must run these steps:
 
  <li><p>Set <var title="">enc</var>'s <b>encoding</b> to <var title="">encoding</var>.
 
+ <li><p>Set <var title="">enc</var>'s <b>encoder</b> to a new
+ <var title="">enc</var>'s <b>encoding</b>'s <a href="#encoder">encoder</a>.
+
  <li><p>Return <var title="">enc</var>.
 </ol>
 
@@ -1310,43 +1293,29 @@ attribute must return <b>encoding</b>'s <a href="#name">name</a>.
 method must run these steps:
 
 <ol>
- <li><p>If the <b>streaming flag</b> is unset, set <b>encoder</b> to a new
- <b>encoding</b>'s <a href="#encoder">encoder</a> and set <b>stream</b> to a new
- <a href="#concept-stream" title="concept-stream">stream</a>.
-
- <li><p>If <var title="">options</var>'s <code title="">stream</code> is true, set the
- <b>streaming flag</b>, and unset the <b>streaming flag</b> otherwise.
-
- <li><p><a href="#concept-stream-push" title="concept-stream-push">Push</a> <var title="">input</var> to <b>stream</b>.
+ <li><p>Convert <var>input</var> to a <a href="#concept-stream" title="concept-stream">stream</a>.
 
  <li><p>Let <var>output</var> be a new <a href="#concept-stream" title="concept-stream">stream</a>.
 
  <li>
-  <p>While true:
+  <p>While true, run these substeps:
 
   <ol>
    <li><p>Let <var>token</var> be the result of
-   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <b>stream</b>.
+   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>input</var>.
 
-   <li><p>If <var>token</var> is <a href="#end-of-stream">end-of-stream</a> and the <b>streaming flag</b>
-   is set, return <var>output</var>, <a href="#concept-te-serialize" title="concept-TE-serialize">serialized</a>.
+   <li><p>Let <var>result</var> be the result of
+   <a href="#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
+   <b>encoder</b>, <var>input</var>, <var>output</var>.
 
    <li>
-    <p>Otherwise, run these subsubsteps:
-
-    <ol>
-     <li><p>Let <var>result</var> be the result of
-     <a href="#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
-     <b>encoder</b>, <b>stream</b>, <var>output</var>.
-
-     <li><p>If <var>result</var> is <a href="#finished">finished</a>, return <var>output</var>,
-     <a href="#concept-te-serialize" title="concept-TE-serialize">serialized</a>.
-
-     <li><p>Otherwise, do nothing.
-    </ol>
+    <p>If <var>result</var> is <a href="#finished">finished</a>, convert <var>output</var> into a
+    byte sequence, and then return a <code title="">Uint8Array</code> object wrapping an
+    <code title="">ArrayBuffer</code> containing <var title="">output</var>.
+    <!-- XXX JavaScript / IDL hook? -->
 
     <p class="note">These <a href="#encoding" title="encoding">encodings</a> cannot return
-    <a href="#error">error</a>. <!-- XXX surrogates?! -->
+    <a href="#error">error</a>.
   </ol>
 </ol>
 

@@ -1148,34 +1148,14 @@ method must run these steps:
 
 <h3>Interface <code title>TextEncoder</code></h3>
 
-<pre class=idl>dictionary <dfn>TextEncodeOptions</dfn> {
-  boolean stream = false;
-};
-
-[<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var title>utfLabel</var> = "utf-8"),
+<pre class=idl>[<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var title>utfLabel</var> = "utf-8"),
  Exposed=Window,Worker]
 interface <dfn>TextEncoder</dfn> {
   readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
-  Uint8Array <span title=dom-TextEncoder-encode>encode</span>(optional <span>ScalarValueString</span> <var title>input</var> = "", optional <span>TextEncodeOptions</span> <var title>options</var>);
+  Uint8Array <span title=dom-TextEncoder-encode>encode</span>(optional <span>ScalarValueString</span> <var title>input</var> = "");
 };</pre>
 
-<p>A <code>TextEncoder</code> object has an associated <b>encoding</b>, <b>encoder</b>,
-<b>stream</b>, and <b>streaming flag</b> (initially unset).
-
-<p>A <code>TextEncoder</code> object also has an associated
-<dfn title=concept-TE-serialize>serialize stream</dfn> algorithm, that given a
-<span title=concept-stream>stream</span> <var>stream</var>, runs these steps:
-
-<ol>
- <li><p>Let <var>buffer</var> be a byte sequence.
-
- <li><p>Keep <span title=concept-stream-read>reading</span> from <var>stream</var> into
- <var>buffer</var> until <span>end-of-stream</span>.
-
- <li><p>Return a <code title>Uint8Array</code> object wrapping an
- <code title>ArrayBuffer</code> containing <var title>bytes</var>.
- <!-- XXX JavaScript / IDL hook? -->
-</ol>
+<p>A <code>TextEncoder</code> object has an associated <b>encoding</b> and <b>encoder</b>.
 
 <hr>
 
@@ -1191,7 +1171,7 @@ interface <dfn>TextEncoder</dfn> {
  <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encoding>encoding</span></code>
  <dd><p>Returns <b>encoding</b>'s <span>name</span>.
 
- <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encode>encode</span>([<var title>input</var> [, <var title>options</var>]])</code>
+ <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encode>encode</span>([<var title>input</var> = ""])</code>
  <dd><p>Returns the result of running <b>encoding</b>'s
  <span>encoder</span>. If <var title>options</var>'s
  <code title>stream</code> is set to true, the method can be invoked
@@ -1215,6 +1195,9 @@ constructor must run these steps:
 
  <li><p>Set <var title>enc</var>'s <b>encoding</b> to <var title>encoding</var>.
 
+ <li><p>Set <var title>enc</var>'s <b>encoder</b> to a new
+ <var title>enc</var>'s <b>encoding</b>'s <span>encoder</span>.
+
  <li><p>Return <var title>enc</var>.
 </ol>
 
@@ -1226,43 +1209,29 @@ attribute must return <b>encoding</b>'s <span>name</span>.
 method must run these steps:
 
 <ol>
- <li><p>If the <b>streaming flag</b> is unset, set <b>encoder</b> to a new
- <b>encoding</b>'s <span>encoder</span> and set <b>stream</b> to a new
- <span title=concept-stream>stream</span>.
-
- <li><p>If <var title>options</var>'s <code title>stream</code> is true, set the
- <b>streaming flag</b>, and unset the <b>streaming flag</b> otherwise.
-
- <li><p><span title=concept-stream-push>Push</span> <var title>input</var> to <b>stream</b>.
+ <li><p>Convert <var>input</var> to a <span title=concept-stream>stream</span>.
 
  <li><p>Let <var>output</var> be a new <span title=concept-stream>stream</span>.
 
  <li>
-  <p>While true:
+  <p>While true, run these substeps:
 
   <ol>
    <li><p>Let <var>token</var> be the result of
-   <span title=concept-stream-read>reading</span> from <b>stream</b>.
+   <span title=concept-stream-read>reading</span> from <var>input</var>.
 
-   <li><p>If <var>token</var> is <span>end-of-stream</span> and the <b>streaming flag</b>
-   is set, return <var>output</var>, <span title=concept-TE-serialize>serialized</span>.
+   <li><p>Let <var>result</var> be the result of
+   <span title=concept-encoding-process>processing</span> <var>token</var> for
+   <b>encoder</b>, <var>input</var>, <var>output</var>.
 
    <li>
-    <p>Otherwise, run these subsubsteps:
-
-    <ol>
-     <li><p>Let <var>result</var> be the result of
-     <span title=concept-encoding-process>processing</span> <var>token</var> for
-     <b>encoder</b>, <b>stream</b>, <var>output</var>.
-
-     <li><p>If <var>result</var> is <span>finished</span>, return <var>output</var>,
-     <span title=concept-TE-serialize>serialized</span>.
-
-     <li><p>Otherwise, do nothing.
-    </ol>
+    <p>If <var>result</var> is <span>finished</span>, convert <var>output</var> into a
+    byte sequence, and then return a <code title>Uint8Array</code> object wrapping an
+    <code title>ArrayBuffer</code> containing <var title>output</var>.
+    <!-- XXX JavaScript / IDL hook? -->
 
     <p class=note>These <span title=encoding>encodings</span> cannot return
-    <span>error</span>. <!-- XXX surrogates?! -->
+    <span>error</span>.
   </ol>
 </ol>
 
