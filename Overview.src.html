@@ -302,10 +302,10 @@ formats need to expose the <span>encoding</span>'s <span>name</span> or
  below, return the corresponding <span>encoding</span>, and failure otherwise.
 </ol>
 
-<p class=note>In violation of
+<p class="note no-backref">This is a much simpler and more restrictive algorithm of
+mapping <span title=label>labels</span> to <span title=encoding>encodings</span> than
 <a href="http://www.unicode.org/reports/tr22/tr22-7.html#Charset_Alias_Matching">section 1.4 of Unicode Technical Standard #22</a>
-this is a much simpler and more restrictive matching algorithm, as that is
-found to be necessary to be compatible with deployed content.
+prescribes, as that is found to be necessary to be compatible with deployed content.
 
 <table>
  <thead>
@@ -2513,10 +2513,9 @@ the server and the client.
 
 <h3>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></h3>
 
-<p class=note>In violation of the Unicode standard, which does not allow for handling a
-byte order mark in its definition of utf-16be and utf-16le, checking and using a
-byte order mark happens before an encoding to decode a byte stream is chosen, as seen in
-the <span>decode</span> algorithm.
+<p class="note no-backref">Checking for and using a byte order mark happens before an
+<span>encoding</span> to decode a byte stream is chosen, as seen in the
+<span>decode</span> algorithm, as is deemed more accurate than any <span>label</span>.
 
 <p>To <dfn>convert a <var title>code unit</var> to bytes</dfn> using a
 <i title>utf-16be flag</i>, run these steps:
@@ -2646,9 +2645,9 @@ its <span>utf-16be flag</span> set.
 
 <h3><dfn>utf-16le</dfn></h3>
 
-<p class=note>In violation of the Unicode standard,
-"<code title>utf-16</code>" is a <span>label</span> for
-<span>utf-16le</span> rather than its own standalone <span>encoding</span>.
+<p class="note no-backref">Both "<code title>utf-16</code>" and
+"<code title>utf-16le</code>" are <span title=label>labels</span> for
+<span>utf-16le</span> to deal with deployed content.
 
 
 <h4><dfn>utf-16le decoder</dfn></h4>
@@ -2755,6 +2754,7 @@ Joshua Bell,
 강 성훈 (Kang Seonghoon),
 川幡太一 (Kawabata Taichi),
 Ken Lunde,
+Ken Whistler,
 Kenneth Russell,
 Leif Halvard Silli,
 Makoto Kato,
