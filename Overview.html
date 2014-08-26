@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-22-august-2014">Living Standard — Last Updated 22 August 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-26-august-2014">Living Standard — Last Updated 26 August 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-22 August 2014, the editor has made this specification available
+26 August 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -732,6 +732,10 @@ Then the pointers and their corresponding code points are found by splitting eac
 The first subitem is the pointer (as a decimal number) and the second is the corresponding code point (as a hexadecimal number).
 Other subitems are not relevant.
 
+<p class="note no-backref">To signify changes an <a href="#index">index</a> includes an
+<i title="">Identifier</i> and a <i title="">Date</i>. If an <i title="">Identifier</i> has
+changed, so has the <a href="#index">index</a>.
+
 <p>The <dfn id="index-code-point">index code point</dfn> for <var title="">pointer</var> in
 <var title="">index</var> is the code point corresponding to
 <var title="">pointer</var> in <var title="">index</var>, or null if
@@ -743,7 +747,7 @@ Other subitems are not relevant.
 <var title="">code point</var> is not in <var title="">index</var>.
 
 <p>These are the <a href="#index" title="index">indexes</a> defined by this
-specification, excluding <a href="#index-single-byte">index single-byte</a>:
+specification, excluding <a href="#index-single-byte">index single-byte</a>, which have their own table:
 
 <table>
  <tr><th colspan="2"><a href="#index">Index</a><th>Notes
@@ -1501,8 +1505,8 @@ unique <a href="#index">index</a>.
  <tr><td><dfn id="iso-8859-5">iso-8859-5</dfn><td><a href="index-iso-8859-5.txt">index-iso-8859-5.txt</a>
  <tr><td><dfn id="iso-8859-6">iso-8859-6</dfn><td><a href="index-iso-8859-6.txt">index-iso-8859-6.txt</a>
  <tr><td><dfn id="iso-8859-7">iso-8859-7</dfn><td><a href="index-iso-8859-7.txt">index-iso-8859-7.txt</a>
- <tr><td><dfn id="iso-8859-8">iso-8859-8</dfn><td><a href="index-iso-8859-8.txt">index-iso-8859-8.txt</a>
- <tr><td><dfn id="iso-8859-8-i">iso-8859-8-i</dfn><td><a href="index-iso-8859-8.txt">index-iso-8859-8.txt</a>
+ <tr><td><dfn id="iso-8859-8">iso-8859-8</dfn><td rowspan="2"><a href="index-iso-8859-8.txt">index-iso-8859-8.txt</a>
+ <tr><td><dfn id="iso-8859-8-i">iso-8859-8-i</dfn>
  <tr><td><dfn id="iso-8859-10">iso-8859-10</dfn><td><a href="index-iso-8859-10.txt">index-iso-8859-10.txt</a>
  <tr><td><dfn id="iso-8859-13">iso-8859-13</dfn><td><a href="index-iso-8859-13.txt">index-iso-8859-13.txt</a>
  <tr><td><dfn id="iso-8859-14">iso-8859-14</dfn><td><a href="index-iso-8859-14.txt">index-iso-8859-14.txt</a>
@@ -2874,6 +2878,7 @@ Norbert Lindenberg,
 Peter Krefting,
 Philip Jägenstedt,
 Philip Taylor,
+Richard Ishida,
 Robbert Broersma,
 Robert Mustacchi,
 Ryan Dahl,

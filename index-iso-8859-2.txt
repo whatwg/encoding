@@ -1,8 +1,11 @@
 # Any copyright is dedicated to the Public Domain.
 # http://creativecommons.org/publicdomain/zero/1.0/
 #
-# For details on index-iso-8859-2.txt see the Encoding Standard
+# For details on index index-iso-8859-2.txt see the Encoding Standard
 # http://encoding.spec.whatwg.org/
+#
+# Identifier: 9569c67f22d0b57790e1c407c6eecf227e4562322dc296de43cdab7a0152ec73
+# Date: 2014-08-26
 
   0	0x0080	 (<control>)
   1	0x0081	 (<control>)

@@ -1,8 +1,11 @@
 # Any copyright is dedicated to the Public Domain.
 # http://creativecommons.org/publicdomain/zero/1.0/
 #
-# For details on index-gb18030.txt see the Encoding Standard
+# For details on index index-gb18030.txt see the Encoding Standard
 # http://encoding.spec.whatwg.org/
+#
+# Identifier: 7cc86532fd6516482e5b36c2aab29dcce5d67ebdef05b291f0ff52736172934b
+# Date: 2014-08-26
 
     0	0x4E02	丂 (<CJK Ideograph>)
     1	0x4E04	丄 (<CJK Ideograph>)

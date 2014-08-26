@@ -648,6 +648,10 @@ Then the pointers and their corresponding code points are found by splitting eac
 The first subitem is the pointer (as a decimal number) and the second is the corresponding code point (as a hexadecimal number).
 Other subitems are not relevant.
 
+<p class="note no-backref">To signify changes an <span>index</span> includes an
+<i title>Identifier</i> and a <i title>Date</i>. If an <i title>Identifier</i> has
+changed, so has the <span>index</span>.
+
 <p>The <dfn>index code point</dfn> for <var title>pointer</var> in
 <var title>index</var> is the code point corresponding to
 <var title>pointer</var> in <var title>index</var>, or null if
@@ -659,7 +663,7 @@ Other subitems are not relevant.
 <var title>code point</var> is not in <var title>index</var>.
 
 <p>These are the <span title=index>indexes</span> defined by this
-specification, excluding <span>index single-byte</span>:
+specification, excluding <span>index single-byte</span>, which have their own table:
 
 <table>
  <tr><th colspan=2><span>Index</span><th>Notes
@@ -1417,8 +1421,8 @@ unique <span>index</span>.
  <tr><td><dfn>iso-8859-5</dfn><td><a href=index-iso-8859-5.txt>index-iso-8859-5.txt</a>
  <tr><td><dfn>iso-8859-6</dfn><td><a href=index-iso-8859-6.txt>index-iso-8859-6.txt</a>
  <tr><td><dfn>iso-8859-7</dfn><td><a href=index-iso-8859-7.txt>index-iso-8859-7.txt</a>
- <tr><td><dfn>iso-8859-8</dfn><td><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a>
- <tr><td><dfn>iso-8859-8-i</dfn><td><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a>
+ <tr><td><dfn>iso-8859-8</dfn><td rowspan=2><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a>
+ <tr><td><dfn>iso-8859-8-i</dfn>
  <tr><td><dfn>iso-8859-10</dfn><td><a href=index-iso-8859-10.txt>index-iso-8859-10.txt</a>
  <tr><td><dfn>iso-8859-13</dfn><td><a href=index-iso-8859-13.txt>index-iso-8859-13.txt</a>
  <tr><td><dfn>iso-8859-14</dfn><td><a href=index-iso-8859-14.txt>index-iso-8859-14.txt</a>
@@ -2769,6 +2773,7 @@ Norbert Lindenberg,
 Peter Krefting,
 Philip Jägenstedt,
 Philip Taylor,
+Richard Ishida,
 Robbert Broersma,
 Robert Mustacchi,
 Ryan Dahl,
