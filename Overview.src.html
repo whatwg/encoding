@@ -57,20 +57,27 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 
 <h2>Preface</h2>
 
-<p>While encodings have been defined to some extent, implementations have
-not always implemented them in the same way, have not always used the same
-labels, and often differ in dealing with undefined and former proprietary
-areas of encodings. This specification attempts to fill those gaps so that
-new implementations do not have to reverse engineer encoding implementations
-of the market leaders and existing implementations can converge.
+<p>Unicode is the universal alphabet and utf-8 is its encoding. This specification turns
+that into a requirement for new protocols and formats, as well as existing formats
+deployed in new contexts.
 
-<p>In particular, this specification defines the encodings, their algorithms to go from
-bytes to code points and back, and their canonical names and identifying labels. This
-specification also defines an API to expose part of the encoding algorithms to JavaScript.
+<p>There are other (legacy) encodings and while they have been defined to some extent,
+implementations have not always implemented them in the same way, have not always used the
+same labels, and often differ in dealing with undefined and former proprietary areas of
+encodings. This specification attempts to fill those gaps so that new implementations do
+not have to reverse engineer encoding implementations of the market leaders and existing
+implementations can converge.
 
-<p>Historically encodings and their specifications (if any) were kept track of by the
+<p>In particular, this specification defines all the encodings, their algorithms to go
+from bytes to scalar values and back, and their canonical names and identifying labels.
+This specification also defines an API to expose part of the encoding algorithms to
+JavaScript.
+
+<p>Implementations have significantly deviated from the labels listed in the
 <a href="http://www.iana.org/assignments/character-sets/character-sets.xhtml">IANA Character Sets registry</a>.
-This specification renders that registry obsolete.
+Combined with the desire to stop legacy encodings from spreading further, this
+specification is exhaustive about the aforementioned details and thereby renders the
+registry irrelevant.
 
 
 
