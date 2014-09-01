@@ -2517,10 +2517,6 @@ the server and the client.
 
 <h3>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></h3>
 
-<p class="note no-backref">Checking for and using a byte order mark happens before an
-<span>encoding</span> to decode a byte stream is chosen, as seen in the
-<span>decode</span> algorithm, as is deemed more accurate than any <span>label</span>.
-
 <p>To <dfn>convert a <var title>code unit</var> to bytes</dfn> using a
 <i title>utf-16be flag</i>, run these steps:
 
@@ -2542,6 +2538,10 @@ the server and the client.
 </ol>
 
 <h4><dfn>shared utf-16 decoder</dfn></h4>
+
+<p class="note no-backref">A byte order mark has priority over a <span>label</span> as it
+has been found to be more accurate in deployed content. Therefore it is not part of the
+<span>shared utf-16 decoder</span> algorithm but rather the <span>decode</span> algorithm.
 
 <p><span>shared utf-16 decoder</span> has an associated <dfn>utf-16 lead byte</dfn> and
 <dfn>utf-16 lead surrogate</dfn> (both initially null), and
@@ -2737,6 +2737,7 @@ omissions.
 Alan Chaney,
 Alexander Shtuchkin,
 Allen Wirfs-Brock,
+Asmus Freytag,
 Ben Noordhuis,
 Boris Zbarsky,
 Cameron McCormack,

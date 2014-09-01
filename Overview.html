@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//www.whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-26-august-2014">Living Standard — Last Updated 26 August 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-1-september-2014">Living Standard — Last Updated 1 September 2014</h2>
 
 <dl>
  <dt>This Version:
@@ -36,7 +36,7 @@
 <p class="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0 1.0 Universal</a>.
 To the extent possible under law, the editor has waived all copyright and
 related or neighboring rights to this work. In addition, as of
-26 August 2014, the editor has made this specification available
+1 September 2014, the editor has made this specification available
 under the
 <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at
@@ -2601,10 +2601,6 @@ the server and the client.
 
 <h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <a href="#utf-16be">utf-16be</a> and <a href="#utf-16le">utf-16le</a></h3>
 
-<p class="note no-backref">Checking for and using a byte order mark happens before an
-<a href="#encoding">encoding</a> to decode a byte stream is chosen, as seen in the
-<a href="#decode">decode</a> algorithm, as is deemed more accurate than any <a href="#label">label</a>.
-
 <p>To <dfn id="convert-a-code-unit-to-bytes">convert a <var title="">code unit</var> to bytes</dfn> using a
 <i title="">utf-16be flag</i>, run these steps:
 
@@ -2626,6 +2622,10 @@ the server and the client.
 </ol>
 
 <h4 id="shared-utf-16-decoder"><span class="secno">14.2.1 </span><dfn>shared utf-16 decoder</dfn></h4>
+
+<p class="note no-backref">A byte order mark has priority over a <a href="#label">label</a> as it
+has been found to be more accurate in deployed content. Therefore it is not part of the
+<a href="#shared-utf-16-decoder">shared utf-16 decoder</a> algorithm but rather the <a href="#decode">decode</a> algorithm.
 
 <p><a href="#shared-utf-16-decoder">shared utf-16 decoder</a> has an associated <dfn id="utf-16-lead-byte">utf-16 lead byte</dfn> and
 <dfn id="utf-16-lead-surrogate">utf-16 lead surrogate</dfn> (both initially null), and
@@ -2842,6 +2842,7 @@ omissions.
 Alan Chaney,
 Alexander Shtuchkin,
 Allen Wirfs-Brock,
+Asmus Freytag,
 Ben Noordhuis,
 Boris Zbarsky,
 Cameron McCormack,
