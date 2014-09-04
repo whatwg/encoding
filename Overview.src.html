@@ -57,25 +57,27 @@ http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 
 <h2>Preface</h2>
 
-<p>For new protocols and formats, as well as existing formats deployed in new contexts,
-this specification requires (and defines) the utf-8 encoding.
+<p>The utf-8 encoding is the most appropriate encoding for interchange of Unicode, the
+universal coded character set. Therefore for new protocols and formats, as well as
+existing formats deployed in new contexts, this specification requires (and defines) the
+utf-8 encoding.
 
-<p>There are other (legacy) encodings and while they have been defined to some extent in
-the past, user agents have not always implemented them in the same way, have not
-always used the same labels, and often differ in dealing with undefined and former
-proprietary areas of encodings. This specification attempts to fill those gaps so that new
-user agents do not have to reverse engineer encoding implementations and existing user
-agents can converge.
+<p>The other (legacy) encodings have been defined to some extent in the past. However,
+user agents have not always implemented them in the same way, have not always used the
+same labels, and often differ in dealing with undefined and former proprietary areas of
+encodings. This specification addresses those gaps so that new user agents do not have to
+reverse engineer encoding implementations and existing user agents can converge.
 
 <p>In particular, this specification defines all those encodings, their algorithms to go
 from bytes to scalar values and back, and their canonical names and identifying labels.
 This specification also defines an API to expose part of the encoding algorithms to
 JavaScript.
 
-<p>User agents have significantly deviated from the labels listed in the
+<p>User agents have also significantly deviated from the labels listed in the
 <a href="http://www.iana.org/assignments/character-sets/character-sets.xhtml">IANA Character Sets registry</a>.
 To stop spreading legacy encodings further, this specification is exhaustive about the
-aforementioned details and therefore has no need for the registry.
+aforementioned details and therefore has no need for the registry. In particular, this
+specification does not provide a mechanism for extending any aspect of encodings.
 
 
 
