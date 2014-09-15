@@ -1,11 +1,11 @@
 # Any copyright is dedicated to the Public Domain.
-# http://creativecommons.org/publicdomain/zero/1.0/
+# https://creativecommons.org/publicdomain/zero/1.0/
 #
 # For details on index index-ibm866.txt see the Encoding Standard
-# http://encoding.spec.whatwg.org/
+# https://encoding.spec.whatwg.org/
 #
 # Identifier: db6fe14a559d1601a7667338d83704773d5708dbc641e1ad3c5e21405770f05e
-# Date: 2014-08-26
+# Date: 2014-09-15
 
   0	0x0410	А (CYRILLIC CAPITAL LETTER A)
   1	0x0411	Б (CYRILLIC CAPITAL LETTER BE)
