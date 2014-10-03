@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-30-september-2014">Living Standard — Last Updated 30 September 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-3-october-2014">Living Standard — Last Updated 3 October 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -44,9 +44,8 @@
  <li><a href="#specification-hooks"><span class="secno">6 </span>Specification hooks</a></li>
  <li><a href="#api"><span class="secno">7 </span>API</a>
   <ol>
-   <li><a href="#type-scalarvaluestring"><span class="secno">7.1 </span>Type <code title="">ScalarValueString</code></a></li>
-   <li><a href="#interface-textdecoder"><span class="secno">7.2 </span>Interface <code title="">TextDecoder</code></a></li>
-   <li><a href="#interface-textencoder"><span class="secno">7.3 </span>Interface <code title="">TextEncoder</code></a></ol></li>
+   <li><a href="#interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></a></li>
+   <li><a href="#interface-textencoder"><span class="secno">7.2 </span>Interface <code title="">TextEncoder</code></a></ol></li>
  <li><a href="#the-encoding"><span class="secno">8 </span>The encoding</a>
   <ol>
    <li><a href="#utf-8"><span class="secno">8.1 </span>utf-8</a>
@@ -939,11 +938,6 @@ encoding <var title="">encoding</var>, run these steps:
 return the result of <a href="#encode" title="encode">encoding</a>
 <var>stream</var> using encoding <a href="#utf-8">utf-8</a>.
 
-<p class="note no-backref">If the input to <a href="#encode">encode</a> or
-<a href="#utf-8-encode">utf-8 encode</a> stems from a DOMString, the
-<a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-obtain-unicode">convert a DOMString to a sequence of Unicode characters</a>
-from Web IDL is to be used first.
-
 
 
 <h2 id="api"><span class="secno">7 </span>API</h2>
@@ -1022,25 +1016,7 @@ Non-browser user agents are not required to support this API.
 </div>
 
 
-<h3 id="type-scalarvaluestring"><span class="secno">7.1 </span>Type <code title="">ScalarValueString</code></h3>
-
-<p class="XXX">This is a temporary definition until IDL proper is updated to include it.
-<code title="">typedef</code> is used for now to keep IDL validity.
-
-<pre class="idl">typedef DOMString <dfn id="scalarvaluestring">ScalarValueString</dfn>;</pre>
-
-<p><a href="#scalarvaluestring"><code>ScalarValueString</code></a> is identical to DOMString except that
-<a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-obtain-unicode">convert a DOMString to a sequence of Unicode characters</a>
-is used subsequently when converting to an IDL value. Ergo, the IDL value is a sequence
-of <a href="#scalar-value" title="scalar value">scalar values</a>.
-
-<p class="warning">Only use <a href="#scalarvaluestring"><code>ScalarValueString</code></a> if the subsystem deals in
-<a href="#scalar-value" title="scalar value">scalar values</a> rather than
-<a href="#code-point" title="code point">code points</a>. When in doubt, use
-<code title="">DOMString</code>.
-
-
-<h3 id="interface-textdecoder"><span class="secno">7.2 </span>Interface <code title="">TextDecoder</code></h3>
+<h3 id="interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></h3>
 
 <pre class="idl">dictionary <dfn id="textdecoderoptions">TextDecoderOptions</dfn> {
   boolean fatal = false;
@@ -1057,7 +1033,7 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
   readonly attribute DOMString <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a>;
   readonly attribute boolean <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a>;
   readonly attribute boolean <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a>;
-  DOMString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(optional ArrayBufferView <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
+  USVString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(optional ArrayBufferView <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
 };</pre>
 
 <p>A <a href="#textdecoder"><code>TextDecoder</code></a> object has an associated <b>encoding</b>, <b>decoder</b>,
@@ -1134,8 +1110,7 @@ control.
 
   <p>If the <b>error mode</b> is <i>fatal</i> set and <b>encoding</b>'s
   <a href="#decoder">decoder</a> returns <a href="#error">error</a>,
-  <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throws</a> an
-  "<a href="https://dom.spec.whatwg.org/#encodingerror"><code class="external" data-anolis-spec="dom">EncodingError</code></a>".
+  <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> an <code>EncodingError</code>.
 </dl>
 
 <p>The
@@ -1216,8 +1191,7 @@ method must run these steps:
      <a href="#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
 
      <li><p>Otherwise, if <var>result</var> is <a href="#error">error</a>,
-     <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#concept-throw" title="concept-throw">throw</a> an
-     "<code title="">EncodingError</code>"
+     <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> an <code>EncodingError</code>.
 
      <li><p>Otherwise, do nothing.
     </ol>
@@ -1225,13 +1199,13 @@ method must run these steps:
 </ol>
 
 
-<h3 id="interface-textencoder"><span class="secno">7.3 </span>Interface <code title="">TextEncoder</code></h3>
+<h3 id="interface-textencoder"><span class="secno">7.2 </span>Interface <code title="">TextEncoder</code></h3>
 
 <pre class="idl">[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8"),
  Exposed=Window,Worker]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
-  Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional <a href="#scalarvaluestring">ScalarValueString</a> <var title="">input</var> = "");
+  Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional USVString <var title="">input</var> = "");
 };</pre>
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b> and <b>encoder</b>.

@@ -854,11 +854,6 @@ encoding <var title>encoding</var>, run these steps:
 return the result of <span title=encode>encoding</span>
 <var>stream</var> using encoding <span>utf-8</span>.
 
-<p class="note no-backref">If the input to <span>encode</span> or
-<span>utf-8 encode</span> stems from a DOMString, the
-<span data-anolis-spec=webidl>convert a DOMString to a sequence of Unicode characters</span>
-from Web IDL is to be used first.
-
 
 
 <h2>API</h2>
@@ -937,24 +932,6 @@ Non-browser user agents are not required to support this API.
 </div>
 
 
-<h3>Type <code title>ScalarValueString</code></h3>
-
-<p class=XXX>This is a temporary definition until IDL proper is updated to include it.
-<code title>typedef</code> is used for now to keep IDL validity.
-
-<pre class=idl>typedef DOMString <dfn>ScalarValueString</dfn>;</pre>
-
-<p><code>ScalarValueString</code> is identical to DOMString except that
-<span data-anolis-spec=webidl>convert a DOMString to a sequence of Unicode characters</span>
-is used subsequently when converting to an IDL value. Ergo, the IDL value is a sequence
-of <span title="scalar value">scalar values</span>.
-
-<p class=warning>Only use <code>ScalarValueString</code> if the subsystem deals in
-<span title="scalar value">scalar values</span> rather than
-<span title="code point">code points</span>. When in doubt, use
-<code title>DOMString</code>.
-
-
 <h3>Interface <code title>TextDecoder</code></h3>
 
 <pre class=idl>dictionary <dfn>TextDecoderOptions</dfn> {
@@ -972,7 +949,7 @@ interface <dfn>TextDecoder</dfn> {
   readonly attribute DOMString <span title=dom-TextDecoder-encoding>encoding</span>;
   readonly attribute boolean <span title=dom-TextDecoder-fatal>fatal</span>;
   readonly attribute boolean <span title=dom-TextDecoder-ignoreBOM>ignoreBOM</span>;
-  DOMString <span title=dom-TextDecoder-decode>decode</span>(optional ArrayBufferView <var title>input</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
+  USVString <span title=dom-TextDecoder-decode>decode</span>(optional ArrayBufferView <var title>input</var>, optional <span>TextDecodeOptions</span> <var title>options</var>);
 };</pre>
 
 <p>A <code>TextDecoder</code> object has an associated <b>encoding</b>, <b>decoder</b>,
@@ -1049,8 +1026,7 @@ control.
 
   <p>If the <b>error mode</b> is <i>fatal</i> set and <b>encoding</b>'s
   <span>decoder</span> returns <span>error</span>,
-  <span data-anolis-spec=dom title=concept-throw>throws</span> an
-  "<code data-anolis-spec=dom>EncodingError</code>".
+  <span data-anolis-spec=webidl title=throw>throws</span> an <code>EncodingError</code>.
 </dl>
 
 <p>The
@@ -1131,8 +1107,7 @@ method must run these steps:
      <span title=concept-TD-serialize>serialized</span>.
 
      <li><p>Otherwise, if <var>result</var> is <span>error</span>,
-     <span data-anolis-spec=dom title=concept-throw>throw</span> an
-     "<code title>EncodingError</code>"
+     <span data-anolis-spec=webidl title=throw>throw</span> an <code>EncodingError</code>.
 
      <li><p>Otherwise, do nothing.
     </ol>
@@ -1146,7 +1121,7 @@ method must run these steps:
  Exposed=Window,Worker]
 interface <dfn>TextEncoder</dfn> {
   readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
-  Uint8Array <span title=dom-TextEncoder-encode>encode</span>(optional <span>ScalarValueString</span> <var title>input</var> = "");
+  Uint8Array <span title=dom-TextEncoder-encode>encode</span>(optional USVString <var title>input</var> = "");
 };</pre>
 
 <p>A <code>TextEncoder</code> object has an associated <b>encoding</b> and <b>encoder</b>.
