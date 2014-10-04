@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-3-october-2014">Living Standard — Last Updated 3 October 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-4-october-2014">Living Standard — Last Updated 4 October 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -1033,7 +1033,7 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
   readonly attribute DOMString <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a>;
   readonly attribute boolean <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a>;
   readonly attribute boolean <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a>;
-  USVString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(optional ArrayBufferView <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
+  USVString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(optional BufferSource <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
 };</pre>
 
 <p>A <a href="#textdecoder"><code>TextDecoder</code></a> object has an associated <b>encoding</b>, <b>decoder</b>,
@@ -1160,12 +1160,9 @@ method must run these steps:
  <li><p>If <var title="">options</var>'s <code title="">stream</code> is true, set the
  <b>streaming flag</b>, and unset the <b>streaming flag</b> otherwise.
 
- <li><p>If <var title="">input</var> is given, then given
- <var title="">input</var>'s <code title="">buffer</code>,
- <code title="">byteOffset</code>, and <code title="">byteLength</code>,
- <a href="#concept-stream-push" title="concept-stream-push">push</a> <code title="">byteLength</code> bytes from
- <code title="">buffer</code>, starting at <code title="">byteOffset</code>, to <b>stream</b>.
- <!-- XXX JavaScript / IDL really needs to make this simpler -->
+ <li><p>If <var title="">input</var> is given, <a href="#concept-stream-push" title="concept-stream-push">push</a> a
+ <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-get-buffer-source-copy" title="get a copy of the bytes held by the buffer source">copy of</a>
+ <var title="">input</var> to <b>stream</b>.
 
  <li><p>Let <var>output</var> be a new <a href="#concept-stream" title="concept-stream">stream</a>.
 
