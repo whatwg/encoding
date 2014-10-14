@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-4-october-2014">Living Standard — Last Updated 4 October 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-14-october-2014">Living Standard — Last Updated 14 October 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -1115,7 +1115,7 @@ control.
 
 <p>The
 <dfn id="dom-textdecoder" title="dom-TextDecoder"><code>TextDecoder(<var title="">label</var>, <var title="">options</var>)</code></dfn>
-constructor must run these steps:
+constructor, when invoked, must run these steps:
 
 <ol>
  <li><p>Let <var title="">encoding</var> be the result of
@@ -1139,18 +1139,18 @@ constructor must run these steps:
  <li><p>Return <var title="">dec</var>.
 </ol>
 
-<p>The <dfn id="dom-textdecoder-encoding" title="dom-TextDecoder-encoding"><code>encoding</code></dfn> attribute must
-return <b>encoding</b>'s <a href="#name">name</a>.
+<p>The <dfn id="dom-textdecoder-encoding" title="dom-TextDecoder-encoding"><code>encoding</code></dfn> attribute's getter
+must return <b>encoding</b>'s <a href="#name">name</a>.
 
-<p>The <dfn id="dom-textdecoder-fatal" title="dom-TextDecoder-fatal"><code>fatal</code></dfn> attribute must
+<p>The <dfn id="dom-textdecoder-fatal" title="dom-TextDecoder-fatal"><code>fatal</code></dfn> attribute's getter must
 return true if <b>error mode</b> is <i>fatal</i>, and false otherwise.
 
-<p>The <dfn id="dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM"><code>ignoreBOM</code></dfn> attribute must
-return true if <b>ignore BOM flag</b> is set, and false otherwise.
+<p>The <dfn id="dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM"><code>ignoreBOM</code></dfn> attribute's
+getter must return true if <b>ignore BOM flag</b> is set, and false otherwise.
 
 <p>The
 <dfn id="dom-textdecoder-decode" title="dom-TextDecoder-decode"><code>decode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
-method must run these steps:
+method, when invoked, must run these steps:
 
 <ol>
  <li><p>If the <b>streaming flag</b> is unset, set <b>decoder</b> to a new
@@ -1230,7 +1230,7 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
 
 <p>The
 <dfn id="dom-textencoder" title="dom-TextEncoder"><code>TextEncoder(<var title="">utfLabel</var>)</code></dfn>
-constructor must run these steps:
+constructor, when invoked, must run these steps:
 
 <ol>
  <li><p>Let <var title="">encoding</var> be the result of
@@ -1252,11 +1252,11 @@ constructor must run these steps:
 </ol>
 
 <p>The <dfn id="dom-textencoder-encoding" title="dom-TextEncoder-encoding"><code>encoding</code></dfn>
-attribute must return <b>encoding</b>'s <a href="#name">name</a>.
+attribute's getter must return <b>encoding</b>'s <a href="#name">name</a>.
 
 <p>The
 <dfn id="dom-textencoder-encode" title="dom-TextEncoder-encode"><code>encode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
-method must run these steps:
+method, when invoked, must run these steps:
 
 <ol>
  <li><p>Convert <var>input</var> to a <a href="#concept-stream" title="concept-stream">stream</a>.

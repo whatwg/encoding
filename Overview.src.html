@@ -1031,7 +1031,7 @@ control.
 
 <p>The
 <dfn title=dom-TextDecoder><code>TextDecoder(<var title>label</var>, <var title>options</var>)</code></dfn>
-constructor must run these steps:
+constructor, when invoked, must run these steps:
 
 <ol>
  <li><p>Let <var title>encoding</var> be the result of
@@ -1055,18 +1055,18 @@ constructor must run these steps:
  <li><p>Return <var title>dec</var>.
 </ol>
 
-<p>The <dfn title=dom-TextDecoder-encoding><code>encoding</code></dfn> attribute must
-return <b>encoding</b>'s <span>name</span>.
+<p>The <dfn title=dom-TextDecoder-encoding><code>encoding</code></dfn> attribute's getter
+must return <b>encoding</b>'s <span>name</span>.
 
-<p>The <dfn title=dom-TextDecoder-fatal><code>fatal</code></dfn> attribute must
+<p>The <dfn title=dom-TextDecoder-fatal><code>fatal</code></dfn> attribute's getter must
 return true if <b>error mode</b> is <i>fatal</i>, and false otherwise.
 
-<p>The <dfn title=dom-TextDecoder-ignoreBOM><code>ignoreBOM</code></dfn> attribute must
-return true if <b>ignore BOM flag</b> is set, and false otherwise.
+<p>The <dfn title=dom-TextDecoder-ignoreBOM><code>ignoreBOM</code></dfn> attribute's
+getter must return true if <b>ignore BOM flag</b> is set, and false otherwise.
 
 <p>The
 <dfn title=dom-TextDecoder-decode><code>decode(<var title>input</var>, <var title>options</var>)</code></dfn>
-method must run these steps:
+method, when invoked, must run these steps:
 
 <ol>
  <li><p>If the <b>streaming flag</b> is unset, set <b>decoder</b> to a new
@@ -1146,7 +1146,7 @@ interface <dfn>TextEncoder</dfn> {
 
 <p>The
 <dfn title=dom-TextEncoder><code>TextEncoder(<var title>utfLabel</var>)</code></dfn>
-constructor must run these steps:
+constructor, when invoked, must run these steps:
 
 <ol>
  <li><p>Let <var title>encoding</var> be the result of
@@ -1168,11 +1168,11 @@ constructor must run these steps:
 </ol>
 
 <p>The <dfn title=dom-TextEncoder-encoding><code>encoding</code></dfn>
-attribute must return <b>encoding</b>'s <span>name</span>.
+attribute's getter must return <b>encoding</b>'s <span>name</span>.
 
 <p>The
 <dfn title=dom-TextEncoder-encode><code>encode(<var title>input</var>, <var title>options</var>)</code></dfn>
-method must run these steps:
+method, when invoked, must run these steps:
 
 <ol>
  <li><p>Convert <var>input</var> to a <span title=concept-stream>stream</span>.
