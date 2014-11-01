@@ -1123,6 +1123,9 @@ interface <dfn>TextEncoder</dfn> {
 
 <p>A <code>TextEncoder</code> object has an associated <b>encoding</b> and <b>encoder</b>.
 
+<p class="note no-backref">A <code>TextEncoder</code> object offers no <code>stream</code>
+option as no <span>encoder</span> requires buffering of scalar values.
+
 <hr>
 
 <dl class=domintro>
@@ -1138,10 +1141,7 @@ interface <dfn>TextEncoder</dfn> {
  <dd><p>Returns <b>encoding</b>'s <span>name</span>.
 
  <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encode>encode</span>([<var title>input</var> = ""])</code>
- <dd><p>Returns the result of running <b>encoding</b>'s
- <span>encoder</span>. If <var title>options</var>'s
- <code title>stream</code> is set to true, the method can be invoked
- multiple times to process a fragmented stream.
+ <dd><p>Returns the result of running <b>encoding</b>'s <span>encoder</span>.
 </dl>
 
 <p>The
@@ -1171,7 +1171,7 @@ constructor, when invoked, must run these steps:
 attribute's getter must return <b>encoding</b>'s <span>name</span>.
 
 <p>The
-<dfn title=dom-TextEncoder-encode><code>encode(<var title>input</var>, <var title>options</var>)</code></dfn>
+<dfn title=dom-TextEncoder-encode><code>encode(<var title>input</var>)</code></dfn>
 method, when invoked, must run these steps:
 
 <ol>
@@ -1194,7 +1194,7 @@ method, when invoked, must run these steps:
     <p>If <var>result</var> is <span>finished</span>, convert <var>output</var> into a
     byte sequence, and then return a <code title>Uint8Array</code> object wrapping an
     <code title>ArrayBuffer</code> containing <var title>output</var>.
-    <!-- XXX JavaScript / IDL hook? -->
+    <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
 
     <p class=note>These <span title=encoding>encodings</span> cannot return
     <span>error</span>.
@@ -2695,6 +2695,7 @@ today.
 Alan Chaney,
 Alexander Shtuchkin,
 Allen Wirfs-Brock,
+Arkadiusz Michalski,
 Asmus Freytag,
 Ben Noordhuis,
 Boris Zbarsky,

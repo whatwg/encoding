@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-14-october-2014">Living Standard — Last Updated 14 October 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-1-november-2014">Living Standard — Last Updated 1 November 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -1207,6 +1207,9 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b> and <b>encoder</b>.
 
+<p class="note no-backref">A <a href="#textencoder"><code>TextEncoder</code></a> object offers no <code>stream</code>
+option as no <a href="#encoder">encoder</a> requires buffering of scalar values.
+
 <hr>
 
 <dl class="domintro">
@@ -1222,10 +1225,7 @@ interface <dfn id="textencoder">TextEncoder</dfn> {
  <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
 
  <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>([<var title="">input</var> = ""])</code>
- <dd><p>Returns the result of running <b>encoding</b>'s
- <a href="#encoder">encoder</a>. If <var title="">options</var>'s
- <code title="">stream</code> is set to true, the method can be invoked
- multiple times to process a fragmented stream.
+ <dd><p>Returns the result of running <b>encoding</b>'s <a href="#encoder">encoder</a>.
 </dl>
 
 <p>The
@@ -1255,7 +1255,7 @@ constructor, when invoked, must run these steps:
 attribute's getter must return <b>encoding</b>'s <a href="#name">name</a>.
 
 <p>The
-<dfn id="dom-textencoder-encode" title="dom-TextEncoder-encode"><code>encode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
+<dfn id="dom-textencoder-encode" title="dom-TextEncoder-encode"><code>encode(<var title="">input</var>)</code></dfn>
 method, when invoked, must run these steps:
 
 <ol>
@@ -1278,7 +1278,7 @@ method, when invoked, must run these steps:
     <p>If <var>result</var> is <a href="#finished">finished</a>, convert <var>output</var> into a
     byte sequence, and then return a <code title="">Uint8Array</code> object wrapping an
     <code title="">ArrayBuffer</code> containing <var title="">output</var>.
-    <!-- XXX JavaScript / IDL hook? -->
+    <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
 
     <p class="note">These <a href="#encoding" title="encoding">encodings</a> cannot return
     <a href="#error">error</a>.
@@ -2800,6 +2800,7 @@ today.
 Alan Chaney,
 Alexander Shtuchkin,
 Allen Wirfs-Brock,
+Arkadiusz Michalski,
 Asmus Freytag,
 Ben Noordhuis,
 Boris Zbarsky,
