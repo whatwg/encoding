@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-1-november-2014">Living Standard — Last Updated 1 November 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-3-november-2014">Living Standard — Last Updated 3 November 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -61,11 +61,7 @@
    <li><a href="#gb18030"><span class="secno">10.1 </span>gb18030</a>
     <ol>
      <li><a href="#gb18030-decoder"><span class="secno">10.1.1 </span>gb18030 decoder</a></li>
-     <li><a href="#gb18030-encoder"><span class="secno">10.1.2 </span>gb18030 encoder</a></ol></li>
-   <li><a href="#hz-gb-2312"><span class="secno">10.2 </span>hz-gb-2312</a>
-    <ol>
-     <li><a href="#hz-gb-2312-decoder"><span class="secno">10.2.1 </span>hz-gb-2312 decoder</a></li>
-     <li><a href="#hz-gb-2312-encoder"><span class="secno">10.2.2 </span>hz-gb-2312 encoder</a></ol></ol></li>
+     <li><a href="#gb18030-encoder"><span class="secno">10.1.2 </span>gb18030 encoder</a></ol></ol></li>
  <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">11 </span>Legacy multi-byte Chinese (traditional) encodings</a>
   <ol>
    <li><a href="#big5"><span class="secno">11.1 </span>big5</a>
@@ -630,9 +626,6 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title="">gbk</code>"
   <tr><td>"<code title="">iso-ir-58</code>"
   <tr><td>"<code title="">x-gbk</code>"
-  <tr>
-   <td><a href="#hz-gb-2312">hz-gb-2312</a>
-   <td>"<code title="">hz-gb-2312</code>"
  <tbody>
   <tr><th colspan="2"><a href="#legacy-multi-byte-chinese-(traditional)-encodings">Legacy multi-byte Chinese (traditional) encodings</a>
   <tr>
@@ -679,8 +672,9 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan="2"><a href="#legacy-miscellaneous-encodings">Legacy miscellaneous encodings</a>
   <tr>
-   <td rowspan="4"><a href="#replacement">replacement</a>
+   <td rowspan="5"><a href="#replacement">replacement</a>
    <td>"<code title="">csiso2022kr</code>"
+  <tr><td>"<code title="">hz-gb-2312</code>"
   <tr><td>"<code title="">iso-2022-cn</code>"
   <tr><td>"<code title="">iso-2022-cn-ext</code>"
   <tr><td>"<code title="">iso-2022-kr</code>"
@@ -1698,146 +1692,6 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <li><p>Return four bytes whose values are <var title="">byte1</var> + 0x81,
  <var title="">byte2</var> + 0x30, <var title="">byte3</var> + 0x81,
  <var title="">byte4</var> + 0x30.
-</ol>
-
-
-<h3 id="hz-gb-2312"><span class="secno">10.2 </span><dfn>hz-gb-2312</dfn></h3>
-
-<p class="critical">This encoding will almost certainly be
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25339">removed</a>.
-<!-- XXX --->
-
-<!--
- http://tools.ietf.org/html/rfc1842
- http://tools.ietf.org/html/rfc1843
--->
-
-<h4 id="hz-gb-2312-decoder"><span class="secno">10.2.1 </span><dfn>hz-gb-2312 decoder</dfn></h4>
-
-<p><a href="#hz-gb-2312">hz-gb-2312</a>'s <a href="#decoder">decoder</a> has an associated
-<dfn id="hz-gb-2312-flag">hz-gb-2312 flag</dfn> (initially unset) and
-<dfn id="hz-gb-2312-lead">hz-gb-2312 lead</dfn> (initially 0x00).
-
-<p><a href="#hz-gb-2312">hz-gb-2312</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
-<var>stream</var> and <var title="">byte</var>, runs these steps:
-
-<ol>
- <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
- <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is not 0x00, set <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to 0x00 and
- return <a href="#error">error</a>.
-
- <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
- <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is 0x00, return <a href="#finished">finished</a>.
-
- <li>
-  <p>If <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is 0x7E, set
-  <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to 0x00, and based on <var title="">byte</var>:
-
-  <dl class="switch">
-   <dt>0x7B<!--{-->
-   <dd><p>Set the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> and return <a href="#continue">continue</a>.
-
-   <dt>0x7D<!--}-->
-   <dd><p>Unset the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> and return <a href="#continue">continue</a>.
-   <!--In "ASCII mode" IE outputs ~}, Gecko outputs U+FFFD, Chrome outputs
-   a single U+FFFD for ~}~}. Weird. Opera just skips.-->
-
-   <dt>0x7E<!--~-->
-   <dd><p>Return code point U+007E.
-
-   <dt>0x0A<!--newline-->
-   <dd><p>Return <a href="#continue">continue</a>.
-
-   <dt>Otherwise
-   <dd><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <var title="">byte</var> to
-   <var>stream</var> and return <a href="#error">error</a>.
-  </dl>
-
- <li>
-  <p>If <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> is not 0x00, let
-  <var>lead</var> be <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a>, set
-  <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to 0x00, and then run these substeps:
-
-  <ol>
-   <li><p>If <var title="">byte</var> is in the range 0x21 to 0x7E, let
-   <var title="">code point</var> be the <a href="#index-code-point">index code point</a> for
-   (<var>lead</var> − 1) × 190 + (<var title="">byte</var> + 0x3F)
-   in <a href="#index-gb18030">index gb18030</a>.
-   <!--lead-1    = lead+0x80-0x81
-       byte+0x3F = byte+0x80-0x41-->
-
-   <li><p>If <var title="">byte</var> is 0x0A, unset the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>.
-
-   <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
-
-   <li><p>Return a code point whose value is <var title="">code point</var>.
-  </ol>
-
- <li><p>If <var title="">byte</var> is 0x7E<!--~-->, set
- <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to 0x7E and return <a href="#continue">continue</a>.
-
- <li>
-  <p>If the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is set:
-
-  <ol>
-   <li><p>If <var title="">byte</var> is in the range 0x20 to 0x7F, set
-   <a href="#hz-gb-2312-lead">hz-gb-2312 lead</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
-
-   <li><p>If <var title="">byte</var> is 0x0A, unset the
-   <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>.
-
-   <li><p>Return <a href="#error">error</a>.
-  </ol>
-
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
- a code point whose value is <var title="">byte</var>.
-
- <li><p>Return <a href="#error">error</a>.
-</ol>
-
-
-<h4 id="hz-gb-2312-encoder"><span class="secno">10.2.2 </span><dfn>hz-gb-2312 encoder</dfn></h4>
-
-<p><a href="#hz-gb-2312">hz-gb-2312</a>'s <a href="#encoder">encoder</a> has an associated
-<a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>.
-
-<p><a href="#hz-gb-2312">hz-gb-2312</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
-<var>stream</var> and <var title="">code point</var>, runs these steps:
-
-<ol>
- <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
- <a href="#finished">finished</a>.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F and the
- <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is set, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a>
- <var title="">code point</var> to <var>stream</var>, unset the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>,
- and return two bytes 0x7E 0x7D.
-
- <li><p>If <var title="">code point</var> is 0x007E, return two bytes 0x7E 0x7E.
-
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
- a byte whose value is <var title="">code point</var>.
-
- <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
- <var title="">code point</var> in <a href="#index-gb18030">index gb18030</a>.
-
- <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
- <var title="">code point</var>.
-
- <li><p>If the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a> is unset,
- <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">code point</var> to
- <var>stream</var>, set the <a href="#hz-gb-2312-flag">hz-gb-2312 flag</a>, and return two bytes 0x7E 0x7B.
-
- <li><p>Let <var>lead</var> be <var title="">pointer</var> / 190 + 1.
-
- <li><p>Let <var>trail</var> be <var title="">pointer</var> % 190 − 0x3F.
-
- <li><p>If either <var>lead</var> or <var>trail</var> is less than
- 0x21, return <a href="#error">error</a> with <var title="">code point</var>.
- <!-- 0x21 to 0x7E -->
-
- <li><p>Return two bytes whose values are <var>lead</var> and
- <var>trail</var>.
 </ol>
 
 

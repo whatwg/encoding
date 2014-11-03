@@ -546,9 +546,6 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>gbk</code>"
   <tr><td>"<code title>iso-ir-58</code>"
   <tr><td>"<code title>x-gbk</code>"
-  <tr>
-   <td><span>hz-gb-2312</span>
-   <td>"<code title>hz-gb-2312</code>"
  <tbody>
   <tr><th colspan=2><a href=#legacy-multi-byte-chinese-(traditional)-encodings>Legacy multi-byte Chinese (traditional) encodings</a>
   <tr>
@@ -595,8 +592,9 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan=2><a href=#legacy-miscellaneous-encodings>Legacy miscellaneous encodings</a>
   <tr>
-   <td rowspan=4><span>replacement</span>
+   <td rowspan=5><span>replacement</span>
    <td>"<code title>csiso2022kr</code>"
+  <tr><td>"<code title>hz-gb-2312</code>"
   <tr><td>"<code title>iso-2022-cn</code>"
   <tr><td>"<code title>iso-2022-cn-ext</code>"
   <tr><td>"<code title>iso-2022-kr</code>"
@@ -1614,146 +1612,6 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <li><p>Return four bytes whose values are <var title>byte1</var> + 0x81,
  <var title>byte2</var> + 0x30, <var title>byte3</var> + 0x81,
  <var title>byte4</var> + 0x30.
-</ol>
-
-
-<h3><dfn>hz-gb-2312</dfn></h3>
-
-<p class=critical>This encoding will almost certainly be
-<a href=https://www.w3.org/Bugs/Public/show_bug.cgi?id=25339>removed</a>.
-<!-- XXX --->
-
-<!--
- http://tools.ietf.org/html/rfc1842
- http://tools.ietf.org/html/rfc1843
--->
-
-<h4><dfn>hz-gb-2312 decoder</dfn></h4>
-
-<p><span>hz-gb-2312</span>'s <span>decoder</span> has an associated
-<dfn>hz-gb-2312 flag</dfn> (initially unset) and
-<dfn>hz-gb-2312 lead</dfn> (initially 0x00).
-
-<p><span>hz-gb-2312</span>'s <span>decoder</span>'s <span>handler</span>, given a
-<var>stream</var> and <var title>byte</var>, runs these steps:
-
-<ol>
- <li><p>If <var title>byte</var> is <span>end-of-stream</span> and
- <span>hz-gb-2312 lead</span> is not 0x00, set <span>hz-gb-2312 lead</span> to 0x00 and
- return <span>error</span>.
-
- <li><p>If <var title>byte</var> is <span>end-of-stream</span> and
- <span>hz-gb-2312 lead</span> is 0x00, return <span>finished</span>.
-
- <li>
-  <p>If <span>hz-gb-2312 lead</span> is 0x7E, set
-  <span>hz-gb-2312 lead</span> to 0x00, and based on <var title>byte</var>:
-
-  <dl class=switch>
-   <dt>0x7B<!--{-->
-   <dd><p>Set the <span>hz-gb-2312 flag</span> and return <span>continue</span>.
-
-   <dt>0x7D<!--}-->
-   <dd><p>Unset the <span>hz-gb-2312 flag</span> and return <span>continue</span>.
-   <!--In "ASCII mode" IE outputs ~}, Gecko outputs U+FFFD, Chrome outputs
-   a single U+FFFD for ~}~}. Weird. Opera just skips.-->
-
-   <dt>0x7E<!--~-->
-   <dd><p>Return code point U+007E.
-
-   <dt>0x0A<!--newline-->
-   <dd><p>Return <span>continue</span>.
-
-   <dt>Otherwise
-   <dd><p><span title=concept-stream-prepend>Prepend</span> <var title>byte</var> to
-   <var>stream</var> and return <span>error</span>.
-  </dl>
-
- <li>
-  <p>If <span>hz-gb-2312 lead</span> is not 0x00, let
-  <var>lead</var> be <span>hz-gb-2312 lead</span>, set
-  <span>hz-gb-2312 lead</span> to 0x00, and then run these substeps:
-
-  <ol>
-   <li><p>If <var title>byte</var> is in the range 0x21 to 0x7E, let
-   <var title>code point</var> be the <span>index code point</span> for
-   (<var>lead</var> &minus; 1) &times; 190 + (<var title>byte</var> + 0x3F)
-   in <span>index gb18030</span>.
-   <!--lead-1    = lead+0x80-0x81
-       byte+0x3F = byte+0x80-0x41-->
-
-   <li><p>If <var title>byte</var> is 0x0A, unset the <span>hz-gb-2312 flag</span>.
-
-   <li><p>If <var title>code point</var> is null, return <span>error</span>.
-
-   <li><p>Return a code point whose value is <var title>code point</var>.
-  </ol>
-
- <li><p>If <var title>byte</var> is 0x7E<!--~-->, set
- <span>hz-gb-2312 lead</span> to 0x7E and return <span>continue</span>.
-
- <li>
-  <p>If the <span>hz-gb-2312 flag</span> is set:
-
-  <ol>
-   <li><p>If <var title>byte</var> is in the range 0x20 to 0x7F, set
-   <span>hz-gb-2312 lead</span> to <var title>byte</var> and return <span>continue</span>.
-
-   <li><p>If <var title>byte</var> is 0x0A, unset the
-   <span>hz-gb-2312 flag</span>.
-
-   <li><p>Return <span>error</span>.
-  </ol>
-
- <li><p>If <var title>byte</var> is in the range 0x00 to 0x7F, return
- a code point whose value is <var title>byte</var>.
-
- <li><p>Return <span>error</span>.
-</ol>
-
-
-<h4><dfn>hz-gb-2312 encoder</dfn></h4>
-
-<p><span>hz-gb-2312</span>'s <span>encoder</span> has an associated
-<span>hz-gb-2312 flag</span>.
-
-<p><span>hz-gb-2312</span>'s <span>encoder</span>'s <span>handler</span>, given a
-<var>stream</var> and <var title>code point</var>, runs these steps:
-
-<ol>
- <li><p>If <var title>code point</var> is <span>end-of-stream</span>, return
- <span>finished</span>.
-
- <li><p>If <var title>code point</var> is in the range U+0000 to U+007F and the
- <span>hz-gb-2312 flag</span> is set, <span title=concept-stream-prepend>prepend</span>
- <var title>code point</var> to <var>stream</var>, unset the <span>hz-gb-2312 flag</span>,
- and return two bytes 0x7E 0x7D.
-
- <li><p>If <var title>code point</var> is 0x007E, return two bytes 0x7E 0x7E.
-
- <li><p>If <var title>code point</var> is in the range U+0000 to U+007F, return
- a byte whose value is <var title>code point</var>.
-
- <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
- <var title>code point</var> in <span>index gb18030</span>.
-
- <li><p>If <var title>pointer</var> is null, return <span>error</span> with
- <var title>code point</var>.
-
- <li><p>If the <span>hz-gb-2312 flag</span> is unset,
- <span title=concept-stream-prepend>prepend</span> <var title>code point</var> to
- <var>stream</var>, set the <span>hz-gb-2312 flag</span>, and return two bytes 0x7E 0x7B.
-
- <li><p>Let <var>lead</var> be <var title>pointer</var> / 190 + 1.
-
- <li><p>Let <var>trail</var> be <var title>pointer</var> % 190 &minus; 0x3F.
-
- <li><p>If either <var>lead</var> or <var>trail</var> is less than
- 0x21, return <span>error</span> with <var title>code point</var>.
- <!-- 0x21 to 0x7E -->
-
- <li><p>Return two bytes whose values are <var>lead</var> and
- <var>trail</var>.
 </ol>
 
 
