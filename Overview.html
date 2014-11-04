@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-3-november-2014">Living Standard — Last Updated 3 November 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-4-november-2014">Living Standard — Last Updated 4 November 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -768,7 +768,16 @@ specification, excluding <a href="#index-single-byte">index single-byte</a>, whi
  <tr>
   <td><dfn id="index-jis0212">index jis0212</dfn>
   <td><a href="index-jis0212.txt">index-jis0212.txt</a>
-  <td>This is the JIS X 0212 standard.
+  <td>This is the JIS X 0212 standard. It is only used by the <a href="#euc-jp-decoder">euc-jp decoder</a>
+  due to lack of widespread support elsewhere.
+  <!--
+   No JIX X 0212 euc-jp encoder support:
+     https://bugzilla.mozilla.org/show_bug.cgi?id=600715
+     https://code.google.com/p/chromium/issues/detail?id=78847
+
+   No JIX X 0212 iso-2022-jp support:
+     https://www.w3.org/Bugs/Public/show_bug.cgi?id=26885
+  -->
 </table>
 
 <p>The <dfn id="index-gb18030-ranges-code-point">index gb18030 ranges code point</dfn> for <var title="">pointer</var> is
@@ -1913,15 +1922,6 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <var>trail</var>.
 </ol>
 
-<p class="note">The <a href="#index-jis0212">index jis0212</a> is not used by the
-<a href="#euc-jp-encoder">euc-jp encoder</a> due to lack of widespread support.
-
-<!--
- No JIX X 0212 encoder support:
-   https://bugzilla.mozilla.org/show_bug.cgi?id=600715
-   https://code.google.com/p/chromium/issues/detail?id=78847
--->
-
 
 <h3 id="iso-2022-jp"><span class="secno">12.2 </span><dfn>iso-2022-jp</dfn></h3>
 <!--
@@ -1932,8 +1932,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 <h4 id="iso-2022-jp-decoder"><span class="secno">12.2.1 </span><dfn>iso-2022-jp decoder</dfn></h4>
 
 <p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#decoder">decoder</a> has an associated
-<dfn id="iso-2022-jp-state">iso-2022-jp state</dfn> (initially <b title="">ASCII state</b>),
-<dfn id="iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</dfn> (initially unset), and
+<dfn id="iso-2022-jp-state">iso-2022-jp state</dfn> (initially <b title="">ASCII state</b>), and
 <dfn id="iso-2022-jp-lead">iso-2022-jp lead</dfn> (initially 0x00).
 
 <p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
@@ -1966,7 +1965,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
   <ol>
    <li><p>If <var title="">byte</var> is either <!--$-->0x24 or <!--(-->0x28, set
    <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to <var title="">byte</var>, <a href="#iso-2022-jp-state">iso-2022-jp state</a>
-   to <b title="">escape middle state</b>, and return <a href="#continue">continue</a>.
+   to <b title="">escape state</b>, and return <a href="#continue">continue</a>.
 
    <li><p>If <var title="">byte</var> is not <a href="#end-of-stream">end-of-stream</a>,
    <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
@@ -1976,19 +1975,15 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <a href="#error">error</a>.
   </ol>
 
- <dt><b>Escape middle state</b>
+ <dt><b>Escape state</b>
  <dd>
   <ol>
    <li><p>Let <var>lead</var> be <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and set
    <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to 0x00.
 
    <li><p>If <var>lead</var> is 0x24 and <var title="">byte</var> is either
-   0x40<!--@--> or 0x42<!--B-->, unset the <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>, set
+   0x40<!--@--> or 0x42<!--B-->, set
    <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">lead state</b>, and return
-   <a href="#continue">continue</a>.
-
-   <li><p>If <var>lead</var> is 0x24 and <var title="">byte</var> is 0x28, set
-   <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">escape final state</b> and return
    <a href="#continue">continue</a>.
 
    <li><p>If <var>lead</var> is 0x28 and <var title="">byte</var> is either
@@ -2002,24 +1997,6 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <li><p>Let <var>buffer</var> be <var title="">byte</var> if <var title="">byte</var> is
    <a href="#end-of-stream">end-of-stream</a>, and two bytes <var>lead</var> <var title="">byte</var>
    otherwise.
-
-   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <var>buffer</var> to
-   <var>stream</var>.
-
-   <li><p>Set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to <b title="">ASCII state</b> and return
-   <a href="#error">error</a>.
-  </ol>
-
- <dt><b>Escape final state</b>
- <dd>
-  <ol>
-   <li><p>If <var title="">byte</var> is 0x44<!--D-->, set the
-   <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a>, set <a href="#iso-2022-jp-state">iso-2022-jp state</a> to
-   <b title="">lead state</b>, and return <a href="#continue">continue</a>.
-
-   <li><p>Let <var title="">buffer</var> be two bytes 0x28 <var title="">byte</var>, if
-   <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>, and three bytes
-   0x24 0x28 <var title="">byte</var> otherwise.
 
    <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <var>buffer</var> to
    <var>stream</var>.
@@ -2062,9 +2039,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
    <li><p>If <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and <var title="">byte</var> are both in the range
    0x21 to 0x7E, set <var title="">code point</var> to the <a href="#index-code-point">index code point</a> for
-   <var title="">pointer</var> in <a href="#index-jis0208">index jis0208</a>, if the
-   <a href="#iso-2022-jp-jis0212-flag">iso-2022-jp jis0212 flag</a> is unset, and in <a href="#index-jis0212">index jis0212</a>
-   otherwise.
+   <var title="">pointer</var> in <a href="#index-jis0208">index jis0208</a>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
@@ -2144,9 +2119,6 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <li><p>Return two bytes whose values are <var>lead</var> and
  <var>trail</var>.
 </ol>
-
-<p class="note">The <a href="#index-jis0212">index jis0212</a> is not used by the
-<a href="#iso-2022-jp-encoder">iso-2022-jp encoder</a> due to lack of widespread support.
 
 
 <h3 id="shift_jis"><span class="secno">12.3 </span><dfn>shift_jis</dfn></h3>

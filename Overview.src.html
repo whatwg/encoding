@@ -688,7 +688,16 @@ specification, excluding <span>index single-byte</span>, which have their own ta
  <tr>
   <td><dfn>index jis0212</dfn>
   <td><a href=index-jis0212.txt>index-jis0212.txt</a>
-  <td>This is the JIS X 0212 standard.
+  <td>This is the JIS X 0212 standard. It is only used by the <span>euc-jp decoder</span>
+  due to lack of widespread support elsewhere.
+  <!--
+   No JIX X 0212 euc-jp encoder support:
+     https://bugzilla.mozilla.org/show_bug.cgi?id=600715
+     https://code.google.com/p/chromium/issues/detail?id=78847
+
+   No JIX X 0212 iso-2022-jp support:
+     https://www.w3.org/Bugs/Public/show_bug.cgi?id=26885
+  -->
 </table>
 
 <p>The <dfn>index gb18030 ranges code point</dfn> for <var title>pointer</var> is
@@ -1833,15 +1842,6 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <var>trail</var>.
 </ol>
 
-<p class=note>The <span>index jis0212</span> is not used by the
-<span>euc-jp encoder</span> due to lack of widespread support.
-
-<!--
- No JIX X 0212 encoder support:
-   https://bugzilla.mozilla.org/show_bug.cgi?id=600715
-   https://code.google.com/p/chromium/issues/detail?id=78847
--->
-
 
 <h3><dfn>iso-2022-jp</dfn></h3>
 <!--
@@ -1852,8 +1852,7 @@ historically this might have been the case for <span>iso-8859-6</span> and
 <h4><dfn>iso-2022-jp decoder</dfn></h4>
 
 <p><span>iso-2022-jp</span>'s <span>decoder</span> has an associated
-<dfn>iso-2022-jp state</dfn> (initially <b title>ASCII state</b>),
-<dfn>iso-2022-jp jis0212 flag</dfn> (initially unset), and
+<dfn>iso-2022-jp state</dfn> (initially <b title>ASCII state</b>), and
 <dfn>iso-2022-jp lead</dfn> (initially 0x00).
 
 <p><span>iso-2022-jp</span>'s <span>decoder</span>'s <span>handler</span>, given a
@@ -1886,7 +1885,7 @@ historically this might have been the case for <span>iso-8859-6</span> and
   <ol>
    <li><p>If <var title>byte</var> is either <!--$-->0x24 or <!--(-->0x28, set
    <span>iso-2022-jp lead</span> to <var title>byte</var>, <span>iso-2022-jp state</span>
-   to <b title>escape middle state</b>, and return <span>continue</span>.
+   to <b title>escape state</b>, and return <span>continue</span>.
 
    <li><p>If <var title>byte</var> is not <span>end-of-stream</span>,
    <span title=concept-stream-prepend>prepend</span> <var title>byte</var> to
@@ -1896,19 +1895,15 @@ historically this might have been the case for <span>iso-8859-6</span> and
    <span>error</span>.
   </ol>
 
- <dt><b>Escape middle state</b>
+ <dt><b>Escape state</b>
  <dd>
   <ol>
    <li><p>Let <var>lead</var> be <span>iso-2022-jp lead</span> and set
    <span>iso-2022-jp lead</span> to 0x00.
 
    <li><p>If <var>lead</var> is 0x24 and <var title>byte</var> is either
-   0x40<!--@--> or 0x42<!--B-->, unset the <span>iso-2022-jp jis0212 flag</span>, set
+   0x40<!--@--> or 0x42<!--B-->, set
    <span>iso-2022-jp state</span> to <b title>lead state</b>, and return
-   <span>continue</span>.
-
-   <li><p>If <var>lead</var> is 0x24 and <var title>byte</var> is 0x28, set
-   <span>iso-2022-jp state</span> to <b title>escape final state</b> and return
    <span>continue</span>.
 
    <li><p>If <var>lead</var> is 0x28 and <var title>byte</var> is either
@@ -1922,24 +1917,6 @@ historically this might have been the case for <span>iso-8859-6</span> and
    <li><p>Let <var>buffer</var> be <var title>byte</var> if <var title>byte</var> is
    <span>end-of-stream</span>, and two bytes <var>lead</var> <var title>byte</var>
    otherwise.
-
-   <li><p><span title=concept-stream-prepend>Prepend</span> <var>buffer</var> to
-   <var>stream</var>.
-
-   <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b> and return
-   <span>error</span>.
-  </ol>
-
- <dt><b>Escape final state</b>
- <dd>
-  <ol>
-   <li><p>If <var title>byte</var> is 0x44<!--D-->, set the
-   <span>iso-2022-jp jis0212 flag</span>, set <span>iso-2022-jp state</span> to
-   <b title>lead state</b>, and return <span>continue</span>.
-
-   <li><p>Let <var title>buffer</var> be two bytes 0x28 <var title>byte</var>, if
-   <var title>byte</var> is <span>end-of-stream</span>, and three bytes
-   0x24 0x28 <var title>byte</var> otherwise.
 
    <li><p><span title=concept-stream-prepend>Prepend</span> <var>buffer</var> to
    <var>stream</var>.
@@ -1982,9 +1959,7 @@ historically this might have been the case for <span>iso-8859-6</span> and
 
    <li><p>If <span>iso-2022-jp lead</span> and <var title>byte</var> are both in the range
    0x21 to 0x7E, set <var title>code point</var> to the <span>index code point</span> for
-   <var title>pointer</var> in <span>index jis0208</span>, if the
-   <span>iso-2022-jp jis0212 flag</span> is unset, and in <span>index jis0212</span>
-   otherwise.
+   <var title>pointer</var> in <span>index jis0208</span>.
 
    <li><p>If <var title>code point</var> is null, return <span>error</span>.
 
@@ -2064,9 +2039,6 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <li><p>Return two bytes whose values are <var>lead</var> and
  <var>trail</var>.
 </ol>
-
-<p class=note>The <span>index jis0212</span> is not used by the
-<span>iso-2022-jp encoder</span> due to lack of widespread support.
 
 
 <h3><dfn>shift_jis</dfn></h3>
