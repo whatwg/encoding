@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-4-november-2014">Living Standard — Last Updated 4 November 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-6-november-2014">Living Standard — Last Updated 6 November 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -2260,35 +2260,17 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
   set <a href="#euc-kr-lead">euc-kr lead</a> to 0x00, and then run these substeps:
 
   <ol>
-   <li>
-    <p>If <var>lead</var> is in the range 0x81 to 0xC6, let
-    <var title="">temp</var> be
-    (26 + 26 + 126) × (<var>lead</var> − 0x81), and then
-    set <var title="">pointer</var> to the result of the equation below,
-    depending on <var title="">byte</var>:
-
-    <dl class="switch">
-     <dt>0x41 to 0x5A
-     <dd><p><var title="">temp</var> + <var title="">byte</var> − 0x41
-     <dt>0x61 to 0x7A
-     <dd><p><var title="">temp</var> + 26 + <var title="">byte</var> − 0x61
-     <dt>0x81 to 0xFE
-     <dd><p><var title="">temp</var> + 26 + 26 + <var title="">byte</var> − 0x81
-    </dl>
-
-   <li><p>If <var>lead</var> is in the range 0xC7 to 0xFE and
-   <var title="">byte</var> is in the range 0xA1 to 0xFE, set
+   <li><p>If <var title="">byte</var> is in the range  0x41 to 0xFE, set
    <var title="">pointer</var> to
-   (26 + 26 + 126) × (0xC7 − 0x81) + (<var>lead</var> − 0xC7) × 94 + (<var title="">byte</var> − 0xA1).
+   (<var>lead</var> − 0x81) × 190 + (<var title="">byte</var> − 0x41).
 
-   <li><p>Let <var title="">code point</var> be null, if
-   <var title="">pointer</var> is null, and the
-   <a href="#index-code-point">index code point</a> for <var title="">pointer</var> in
+   <li><p>Let <var title="">code point</var> be null, if <var title="">pointer</var> is null,
+   and the <a href="#index-code-point">index code point</a> for <var title="">pointer</var> in
    <a href="#index-euc-kr">index euc-kr</a> otherwise.
 
-   <li><p>If <var title="">pointer</var> is null,
-   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
-   <var>stream</var>.
+   <li><p>If <var title="">pointer</var> is null and <var title="">byte</var> is in the range
+   0x00 to 0x7F, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var>
+   to <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
@@ -2323,36 +2305,11 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <li><p>If <var title="">pointer</var> is null, return <a href="#error">error</a> with
  <var title="">code point</var>.
 
- <li>
-  <p>If <var title="">pointer</var> is less than
-  (26 + 26 + 126) × (0xC7 − 0x81), run these substeps:
+ <li><p>Let <var>lead</var> be <var title="">pointer</var> / 190 + 0x81.
 
-  <ol>
-   <li><p>Let <var>lead</var> be
-   <var title="">pointer</var> / (26 + 26 + 126) + 0x81.
+ <li><p>Let <var>trail</var> be <var title="">pointer</var> % 190 + 0x41.
 
-   <li><p>Let <var>trail</var> be
-   <var title="">pointer</var> % (26 + 26 + 126).
-
-   <li><p>Let <var>offset</var> be 0x41 if <var>trail</var> is
-   less than 26, 0x47 if <var>trail</var> is less than 26 + 26, and
-   0x4D otherwise.
-   <!-- 0x47=0x41+0x61-0x5A-1
-        0x4D=0x47+0x81-0x7A-1 -->
-
-   <li><p>Return two bytes whose values are <var>lead</var> and
-   <var>trail</var> + <var>offset</var>.
-  </ol>
-
- <li><p>Set <var title="">pointer</var> to
- <var title="">pointer</var> − (26 + 26 + 126) × (0xC7 − 0x81).
-
- <li><p>Let <var>lead</var> be <var title="">pointer</var> / 94 + 0xC7.
-
- <li><p>Let <var>trail</var> be <var title="">pointer</var> % 94 + 0xA1.
-
- <li><p>Return two bytes whose values are <var>lead</var> and
- <var>trail</var>.
+ <li><p>Return two bytes whose values are <var>lead</var> and <var>trail</var>.
 </ol>
 
 

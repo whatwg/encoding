@@ -5,7 +5,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: c5497cd9071cb352c0e56b219154e539badf63de40b71578f09e2e11fe7d50ae
-# Date: 2014-09-15
+# Date: 2014-11-06
 
   0	0x2500	─ (BOX DRAWINGS LIGHT HORIZONTAL)
   1	0x2502	│ (BOX DRAWINGS LIGHT VERTICAL)
