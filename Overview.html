@@ -280,8 +280,8 @@ happening.
 <p>To <dfn id="concept-encoding-run" title="concept-encoding-run">run</dfn> an <a href="#encoding">encoding</a>'s
 <a href="#decoder">decoder</a> or <a href="#encoder">encoder</a> <var>encoderDecoder</var> with input
 <a href="#concept-stream" title="concept-stream">stream</a> <var>input</var>, output
-<a href="#concept-stream" title="concept-stream">stream</a> <var>output</var>, and <a href="#error-mode">error mode</a>
-<var>mode</var>, run these steps:
+<a href="#concept-stream" title="concept-stream">stream</a> <var>output</var>, and optional
+<a href="#error-mode">error mode</a> <var>mode</var>, run these steps:
 
 <ol>
  <li><p>If <var>mode</var> is not given, set it to <i title="">replacement</i>, if
@@ -309,15 +309,16 @@ happening.
 <a href="#concept-token" title="concept-token">token</a> <var>token</var> for an <a href="#encoding">encoding</a>'s
 <a href="#encoder">encoder</a> or <a href="#decoder">decoder</a> instance <var>encoderDecoderInstance</var>,
 <a href="#concept-stream" title="concept-stream">stream</a> <var>input</var>, output
-<a href="#concept-stream" title="concept-stream">stream</a> <var>output</var>, and
-error mode <var>mode</var>, run these steps:
+<a href="#concept-stream" title="concept-stream">stream</a> <var>output</var>, and optional
+<a href="#error-mode">error mode</a> <var>mode</var>, run these steps:
 
 <ol>
  <li><p>If <var>mode</var> is not given, set it to <i title="">replacement</i>, if
- <var>encoderDecoder</var> is a <a href="#decoder">decoder</a> instance, and <i>fatal</i> otherwise.
+ <var>encoderDecoderInstance</var> is a <a href="#decoder">decoder</a> instance, and <i>fatal</i>
+ otherwise.
 
  <li><p>Let <var>result</var> be the result of running <var>encoderDecoderInstance</var>'s
- <a href="#handler">handler</a> on <var>token</var>.
+ <a href="#handler">handler</a> on <var>input</var> and <var>token</var>.
 
  <li><p>If <var>result</var> is <a href="#continue">continue</a> or <a href="#finished">finished</a>, return
  <var>result</var>.
@@ -971,15 +972,15 @@ Non-browser user agents are not required to support this API.
  a <code title="">Uint32Array</code>), the string data,
  and so on.
  <pre><code>function encodeArrayOfStrings(strings, encoding) {
-  var encoder, encoded, len, i, bytes, view, offset;
+  var encoder, encoded, len, bytes, view, offset;
 
   encoder = new TextEncoder(encoding);
   encoded = [];
 
   len = Uint32Array.BYTES_PER_ELEMENT;
-  for (i = 0; i &lt; strings.length; i += 1) {
+  for (var i = 0; i &lt; strings.length; i++) {
     len += Uint32Array.BYTES_PER_ELEMENT;
-    encoded[i] = new TextEncoder(encoding).encode(strings[i]);
+    encoded[i] = encoder.encode(strings[i]);
     len += encoded[i].byteLength;
   }
 
@@ -989,7 +990,7 @@ Non-browser user agents are not required to support this API.
 
   view.setUint32(offset, strings.length);
   offset += Uint32Array.BYTES_PER_ELEMENT;
-  for (i = 0; i &lt; encoded.length; i += 1) {
+  for (var i = 0; i &lt; encoded.length; i += 1) {
     len = encoded[i].byteLength;
     view.setUint32(offset, len);
     offset += Uint32Array.BYTES_PER_ELEMENT;
@@ -1004,7 +1005,7 @@ Non-browser user agents are not required to support this API.
  encoded in the format produced by the previous example back into an array
  of strings.
  <pre><code>function decodeArrayOfStrings(buffer, encoding) {
-  var decoder, view, offset, num_strings, strings, i, len;
+  var decoder, view, offset, num_strings, strings, len;
 
   decoder = new TextDecoder(encoding);
   view = new DataView(buffer);
@@ -1013,7 +1014,7 @@ Non-browser user agents are not required to support this API.
 
   num_strings = view.getUint32(offset);
   offset += Uint32Array.BYTES_PER_ELEMENT;
-  for (i = 0; i &lt; num_strings; i += 1) {
+  for (var i = 0; i &lt; num_strings; i++) {
     len = view.getUint32(offset);
     offset += Uint32Array.BYTES_PER_ELEMENT;
     strings[i] = decoder.decode(
@@ -1079,8 +1080,8 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
      <li><p>Otherwise, return <var>output</var>.
     </ol>
 
-   <li><p>Otherwise, if token is not <a href="#end-of-stream">end-of-stream</a>, append <var>token</var>
-   to <var>output</var>.
+   <li><p>Otherwise, if <var>token</var> is not <a href="#end-of-stream">end-of-stream</a>, append
+   <var>token</var> to <var>output</var>.
 
    <li><p>Otherwise, return <var>output</var>.
   </ol>
@@ -1104,22 +1105,21 @@ control.
  <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a></code>
  <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
 
- <dt><code><var title="">fatal</var> . <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a></code>
+ <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a></code>
  <dd><p>Returns true if <b>error mode</b> is <i>fatal</i>, and false otherwise.
 
- <dt><code><var title="">ignoreBOM</var> . <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a></code>
+ <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a></code>
  <dd><p>Returns true if <b>ignore BOM flag</b> is set, and false otherwise.
 
  <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>([<var title="">input</var> [, <var title="">options</var>]])</code>
  <dd>
-  <p>Returns the result of running <b>encoding</b>'s
-  <a href="#decoder">decoder</a>. If <var title="">options</var>'s
-  <code title="">stream</code> is set to true the method can be invoked
+  <p>Returns the result of running <b>encoding</b>'s <a href="#decoder">decoder</a>. If
+  <var title="">options</var>'s <code title="">stream</code> is true, the method can be invoked
   multiple times to process a fragmented stream.
 
-  <p>If the <b>error mode</b> is <i>fatal</i> set and <b>encoding</b>'s
-  <a href="#decoder">decoder</a> returns <a href="#error">error</a>,
-  <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> an <code>EncodingError</code>.
+  <p>If the <b>error mode</b> is <i>fatal</i> and <b>encoding</b>'s <a href="#decoder">decoder</a>
+  returns <a href="#error">error</a>, <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> an
+  <code>EncodingError</code>.
 </dl>
 
 <p>The
@@ -1211,7 +1211,7 @@ method, when invoked, must run these steps:
  Exposed=Window,Worker]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
-  Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional USVString <var title="">input</var> = "");
+  [NewObject] Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional USVString <var title="">input</var> = "");
 };</pre>
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b> and <b>encoder</b>.
@@ -1399,7 +1399,7 @@ method, when invoked, must run these steps:
  <li><p>Set <a href="#utf-8-code-point">utf-8 code point</a>,
  <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, and <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> to 0.
 
- <li><p>Emit a code point whose value is <var title="">code point</var>.
+ <li><p>Return a code point whose value is <var title="">code point</var>.
 </ol>
 
 <p class="note">The constraints in the <a href="#utf-8-decoder">utf-8 decoder</a> above match
@@ -2264,7 +2264,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 <var>stream</var> and <var title="">byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>,
+ <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a> and
  <a href="#shift_jis-lead">shift_jis lead</a> is not 0x00, set <a href="#shift_jis-lead">shift_jis lead</a> to 0x00 and
  return <a href="#error">error</a>.
 
@@ -2576,8 +2576,8 @@ and <var title="">code point</var>, runs these steps:
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range 0x00 to 0xFFFF, return the sequence
- resulting of
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+FFFF, return the
+ sequence resulting of
  <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>
  using <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a>.
 
