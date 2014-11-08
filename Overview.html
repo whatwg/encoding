@@ -58,10 +58,14 @@
    <li><a href="#single-byte-encoder"><span class="secno">9.2 </span>single-byte encoder</a></ol></li>
  <li><a href="#legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (simplified) encodings</a>
   <ol>
-   <li><a href="#gb18030"><span class="secno">10.1 </span>gb18030</a>
+   <li><a href="#gbk"><span class="secno">10.1 </span>gbk</a>
     <ol>
-     <li><a href="#gb18030-decoder"><span class="secno">10.1.1 </span>gb18030 decoder</a></li>
-     <li><a href="#gb18030-encoder"><span class="secno">10.1.2 </span>gb18030 encoder</a></ol></ol></li>
+     <li><a href="#gbk-decoder"><span class="secno">10.1.1 </span>gbk decoder</a></li>
+     <li><a href="#gbk-encoder"><span class="secno">10.1.2 </span>gbk encoder</a></ol></li>
+   <li><a href="#gb18030"><span class="secno">10.2 </span>gb18030</a>
+    <ol>
+     <li><a href="#gb18030-decoder"><span class="secno">10.2.1 </span>gb18030 decoder</a></li>
+     <li><a href="#gb18030-encoder"><span class="secno">10.2.2 </span>gb18030 encoder</a></ol></ol></li>
  <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">11 </span>Legacy multi-byte Chinese (traditional) encodings</a>
   <ol>
    <li><a href="#big5"><span class="secno">11.1 </span>big5</a>
@@ -615,17 +619,19 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan="2"><a href="#legacy-multi-byte-chinese-(simplified)-encodings">Legacy multi-byte Chinese (simplified) encodings</a>
   <tr>
-   <td rowspan="10"><a href="#gb18030">gb18030</a>
+   <td rowspan="9"><a href="#gbk">gbk</a>
    <td>"<code title="">chinese</code>"
   <tr><td>"<code title="">csgb2312</code>"
   <tr><td>"<code title="">csiso58gb231280</code>"
-  <tr><td>"<code title="">gb18030</code>"
   <tr><td>"<code title="">gb2312</code>"
   <tr><td>"<code title="">gb_2312</code>"
   <tr><td>"<code title="">gb_2312-80</code>"
   <tr><td>"<code title="">gbk</code>"
   <tr><td>"<code title="">iso-ir-58</code>"
   <tr><td>"<code title="">x-gbk</code>"
+  <tr>
+   <td><a href="#gb18030">gb18030</a>
+   <td>"<code title="">gb18030</code>"
  <tbody>
   <tr><th colspan="2"><a href="#legacy-multi-byte-chinese-(traditional)-encodings">Legacy multi-byte Chinese (traditional) encodings</a>
   <tr>
@@ -1545,10 +1551,26 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 <h2 id="legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (simplified) encodings</h2>
 
+<h3 id="gbk"><span class="secno">10.1 </span><dfn>gbk</dfn></h3>
 
-<h3 id="gb18030"><span class="secno">10.1 </span><dfn>gb18030</dfn></h3>
+<h4 id="gbk-decoder"><span class="secno">10.1.1 </span><dfn>gbk decoder</dfn></h4>
 
-<h4 id="gb18030-decoder"><span class="secno">10.1.1 </span><dfn>gb18030 decoder</dfn></h4>
+<p><a href="#gbk">gbk</a>'s <a href="#decoder">decoder</a> is <a href="#gb18030">gb18030</a>'s <a href="#decoder">decoder</a>.
+
+
+<h4 id="gbk-encoder"><span class="secno">10.1.2 </span><dfn>gbk encoder</dfn></h4>
+
+<p><a href="#gbk">gbk</a>'s <a href="#encoder">encoder</a> is <a href="#gb18030">gb18030</a>'s <a href="#encoder">encoder</a>
+with its <a href="#gbk-flag">gbk flag</a> set.
+
+<p class="note no-backref">Not fully aliasing <a href="#gbk">gbk</a> with <a href="#gb18030">gb18030</a>
+is a conservative move to decrease the chances of breaking legacy servers and other
+consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">encoder</a>.
+
+
+<h3 id="gb18030"><span class="secno">10.2 </span><dfn>gb18030</dfn></h3>
+
+<h4 id="gb18030-decoder"><span class="secno">10.2.1 </span><dfn>gb18030 decoder</dfn></h4>
 
 <p><a href="#gb18030">gb18030</a>'s <a href="#decoder">decoder</a> has an associated <dfn id="gb18030-first">gb18030 first</dfn>,
 <dfn id="gb18030-second">gb18030 second</dfn>, and <dfn id="gb18030-third">gb18030 third</dfn> (all initially 0x00).
@@ -1646,7 +1668,10 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 </ol>
 
 
-<h4 id="gb18030-encoder"><span class="secno">10.1.2 </span><dfn>gb18030 encoder</dfn></h4>
+<h4 id="gb18030-encoder"><span class="secno">10.2.2 </span><dfn>gb18030 encoder</dfn></h4>
+
+<p><a href="#gb18030">gb18030</a>'s <a href="#decoder">decoder</a> has an associated <dfn id="gbk-flag">gbk flag</dfn>
+(initially unset).
 
 <p><a href="#gb18030">gb18030</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">code point</var>, runs these steps:
@@ -1657,6 +1682,9 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
  a byte whose value is <var title="">code point</var>.
+
+ <li><p>If the <a href="#gbk-flag">gbk flag</a> is set and <var title="">code point</var> is
+ U+20AC, return byte 0x80.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-gb18030">index gb18030</a>.
@@ -1676,6 +1704,9 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
    <li><p>Return two bytes whose values are <var>lead</var> and
    <var>trail</var> + <var>offset</var>.
   </ol>
+
+ <li><p>If <a href="#gbk-flag">gbk flag</a> is set, return <a href="#error">error</a> with
+ <var title="">code point</var>.
 
  <li><p>Set <var title="">pointer</var> to the
  <a href="#index-gb18030-ranges-pointer">index gb18030 ranges pointer</a> for <var title="">code point</var>.

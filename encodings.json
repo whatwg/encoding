@@ -331,13 +331,18 @@
           "chinese",
           "csgb2312",
           "csiso58gb231280",
-          "gb18030",
           "gb2312",
           "gb_2312",
           "gb_2312-80",
           "gbk",
           "iso-ir-58",
           "x-gbk"
+        ],
+        "name": "gbk"
+      },
+      {
+        "labels": [
+          "gb18030"
         ],
         "name": "gb18030"
       }

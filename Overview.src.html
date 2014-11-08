@@ -535,17 +535,19 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan=2><a href=#legacy-multi-byte-chinese-(simplified)-encodings>Legacy multi-byte Chinese (simplified) encodings</a>
   <tr>
-   <td rowspan=10><span>gb18030</span>
+   <td rowspan=9><span>gbk</span>
    <td>"<code title>chinese</code>"
   <tr><td>"<code title>csgb2312</code>"
   <tr><td>"<code title>csiso58gb231280</code>"
-  <tr><td>"<code title>gb18030</code>"
   <tr><td>"<code title>gb2312</code>"
   <tr><td>"<code title>gb_2312</code>"
   <tr><td>"<code title>gb_2312-80</code>"
   <tr><td>"<code title>gbk</code>"
   <tr><td>"<code title>iso-ir-58</code>"
   <tr><td>"<code title>x-gbk</code>"
+  <tr>
+   <td><span>gb18030</span>
+   <td>"<code title>gb18030</code>"
  <tbody>
   <tr><th colspan=2><a href=#legacy-multi-byte-chinese-(traditional)-encodings>Legacy multi-byte Chinese (traditional) encodings</a>
   <tr>
@@ -1465,6 +1467,22 @@ historically this might have been the case for <span>iso-8859-6</span> and
 
 <h2>Legacy multi-byte Chinese (simplified) encodings</h2>
 
+<h3><dfn>gbk</dfn></h3>
+
+<h4><dfn>gbk decoder</dfn></h4>
+
+<p><span>gbk</span>'s <span>decoder</span> is <span>gb18030</span>'s <span>decoder</span>.
+
+
+<h4><dfn>gbk encoder</dfn></h4>
+
+<p><span>gbk</span>'s <span>encoder</span> is <span>gb18030</span>'s <span>encoder</span>
+with its <span>gbk flag</span> set.
+
+<p class="note no-backref">Not fully aliasing <span>gbk</span> with <span>gb18030</span>
+is a conservative move to decrease the chances of breaking legacy servers and other
+consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
+
 
 <h3><dfn>gb18030</dfn></h3>
 
@@ -1568,6 +1586,9 @@ historically this might have been the case for <span>iso-8859-6</span> and
 
 <h4><dfn>gb18030 encoder</dfn></h4>
 
+<p><span>gb18030</span>'s <span>decoder</span> has an associated <dfn>gbk flag</dfn>
+(initially unset).
+
 <p><span>gb18030</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var title>code point</var>, runs these steps:
 
@@ -1577,6 +1598,9 @@ historically this might have been the case for <span>iso-8859-6</span> and
 
  <li><p>If <var title>code point</var> is in the range U+0000 to U+007F, return
  a byte whose value is <var title>code point</var>.
+
+ <li><p>If the <span>gbk flag</span> is set and <var title>code point</var> is
+ U+20AC, return byte 0x80.
 
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index gb18030</span>.
@@ -1596,6 +1620,9 @@ historically this might have been the case for <span>iso-8859-6</span> and
    <li><p>Return two bytes whose values are <var>lead</var> and
    <var>trail</var> + <var>offset</var>.
   </ol>
+
+ <li><p>If <span>gbk flag</span> is set, return <span>error</span> with
+ <var title>code point</var>.
 
  <li><p>Set <var title>pointer</var> to the
  <span>index gb18030 ranges pointer</span> for <var title>code point</var>.
