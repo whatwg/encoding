@@ -1845,181 +1845,280 @@ historically this might have been the case for <span>iso-8859-6</span> and
 
 <h3><dfn>iso-2022-jp</dfn></h3>
 <!--
- http://tools.ietf.org/html/rfc1468
- http://tools.ietf.org/html/rfc2237 (iso-2022-jp-1)
+ https://tools.ietf.org/html/rfc1468
+ https://tools.ietf.org/html/rfc2237 (iso-2022-jp-1; not used)
+ "ESC ) I" is from iso-2022-jp-3 reportedly
 -->
 
 <h4><dfn>iso-2022-jp decoder</dfn></h4>
 
 <p><span>iso-2022-jp</span>'s <span>decoder</span> has an associated
-<dfn>iso-2022-jp state</dfn> (initially <b title>ASCII state</b>), and
-<dfn>iso-2022-jp lead</dfn> (initially 0x00).
+<dfn>iso-2022-jp decoder state</dfn> (initially
+<span title="iso-2022-jp decoder ASCII">ASCII</span>),
+<dfn>iso-2022-jp decoder output state</dfn> (initially
+<span title="iso-2022-jp decoder ASCII">ASCII</span>),
+<dfn>iso-2022-jp lead</dfn> (initially 0x00), and
+<dfn>iso-2022-jp output flag</dfn> (initially unset).
 
 <p><span>iso-2022-jp</span>'s <span>decoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var title>byte</var>, runs these steps, switching on
-<span>iso-2022-jp state</span>:
+<span>iso-2022-jp decoder state</span>:
 
 <dl class=switch>
- <dt><b title>ASCII state</b>
-
+ <dt><dfn title="iso-2022-jp decoder ASCII">ASCII</dfn>
  <dd>
   <p>Based on <var title>byte</var>:
 
   <dl class=switch>
    <dt>0x1B
-   <dd><p>Set <span>iso-2022-jp state</span> to <b>escape start state</b> and return
+   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <span title="iso-2022-jp decoder escape start">escape start</span> and return
    <span>continue</span>.
 
-   <dt>0x00 to 0x7F
-   <dd><p>Return a code point whose value is <var title>byte</var>.
+   <dt>0x00 to 0x7F, excluding 0x0E, 0x0F, and 0x1B
+   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return a code point whose
+   value is <var title>byte</var>.
 
    <dt><span>end-of-stream</span>
    <dd><p>Return <span>finished</span>.
 
    <dt>Otherwise
-   <dd><p>Return <span>error</span>.
+   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return <span>error</span>.
   </dl>
 
- <dt><b>Escape start state</b>
- <dd>
-  <ol>
-   <li><p>If <var title>byte</var> is either <!--$-->0x24 or <!--(-->0x28, set
-   <span>iso-2022-jp lead</span> to <var title>byte</var>, <span>iso-2022-jp state</span>
-   to <b title>escape state</b>, and return <span>continue</span>.
-
-   <li><p>If <var title>byte</var> is not <span>end-of-stream</span>,
-   <span title=concept-stream-prepend>prepend</span> <var title>byte</var> to
-   <var>stream</var>.
-
-   <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b> and return
-   <span>error</span>.
-  </ol>
-
- <dt><b>Escape state</b>
- <dd>
-  <ol>
-   <li><p>Let <var>lead</var> be <span>iso-2022-jp lead</span> and set
-   <span>iso-2022-jp lead</span> to 0x00.
-
-   <li><p>If <var>lead</var> is 0x24 and <var title>byte</var> is either
-   0x40<!--@--> or 0x42<!--B-->, set
-   <span>iso-2022-jp state</span> to <b title>lead state</b>, and return
-   <span>continue</span>.
-
-   <li><p>If <var>lead</var> is 0x28 and <var title>byte</var> is either
-   0x42<!--B--> or 0x4A<!--J-->, set <span>iso-2022-jp state</span> to
-   <b title>ASCII state</b> and return <span>continue</span>.
-
-   <li><p>If <var>lead</var> is 0x28 and <var title>byte</var> is 0x49<!--I-->, set
-   <span>iso-2022-jp state</span> to <b title>Katakana state</b> and return
-   <span>continue</span>.
-
-   <li><p>Let <var>buffer</var> be <var title>byte</var> if <var title>byte</var> is
-   <span>end-of-stream</span>, and two bytes <var>lead</var> <var title>byte</var>
-   otherwise.
-
-   <li><p><span title=concept-stream-prepend>Prepend</span> <var>buffer</var> to
-   <var>stream</var>.
-
-   <li><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b> and return
-   <span>error</span>.
-  </ol>
-
- <dt><b>Lead state</b>
+ <dt><dfn title="iso-2022-jp decoder Roman">Roman</dfn>
  <dd>
   <p>Based on <var title>byte</var>:
-  <dl class=switch>
-   <dt>0x0A
-   <dd><p>Set <span>iso-2022-jp state</span> to <b title>ASCII state</b> and return
-   code point U+000A.
 
+  <dl class=switch>
    <dt>0x1B
-   <dd><p>Set <span>iso-2022-jp state</span> to <b title>escape start state</b> and return
+   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <span title="iso-2022-jp decoder escape start">escape start</span> and return
    <span>continue</span>.
+
+   <dt>0x5C
+   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return code point U+00A5.
+
+   <dt>0x7E
+   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return code point U+203E.
+
+   <dt>0x00 to 0x7F, excluding 0x0E, 0x0F, 0x1B, 0x5C, and 0x7E
+   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return a code point whose
+   value is <var title>byte</var>.
 
    <dt><span>end-of-stream</span>
    <dd><p>Return <span>finished</span>.
 
    <dt>Otherwise
-   <dd><p>Set <span>iso-2022-jp lead</span> to <var title>byte</var>,
-   <span>iso-2022-jp state</span> to <b title>trail state</b>, and return
-   <span>continue</span>.
+   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return <span>error</span>.
   </dl>
 
- <dt>Trail state
- <dd>
-  <ol>
-   <li><p>Set the <span>iso-2022-jp state</span> to <b title>lead state</b>.
-
-   <li><p>If <var title>byte</var> is <span>end-of-stream</span>, return
-   <span>error</span>.
-
-   <li><p>Let <var title>code point</var> be null and let <var title>pointer</var> be
-   (<span>iso-2022-jp lead</span> &minus; 0x21) &times; 94 + <var title>byte</var> &minus; 0x21.
-
-   <li><p>If <span>iso-2022-jp lead</span> and <var title>byte</var> are both in the range
-   0x21 to 0x7E, set <var title>code point</var> to the <span>index code point</span> for
-   <var title>pointer</var> in <span>index jis0208</span>.
-
-   <li><p>If <var title>code point</var> is null, return <span>error</span>.
-
-   <li><p>Return a code point whose value is <var title>code point</var>.
-  </ol>
-
- <dt><b>Katakana state</b>
+ <dt><dfn title="iso-2022-jp decoder Katakana">Katakana</dfn>
  <dd>
   <p>Based on <var title>byte</var>:
   <dl class=switch>
    <dt>0x1B
-   <dd><p>Set <span>iso-2022-jp state</span> to <b title>escape start state</b> and return
+   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <span title="iso-2022-jp decoder escape start">escape start</span> and return
    <span>continue</span>.
 
    <dt>0x21 to 0x5F
-   <dd><p>Return a code point whose value is 0xFF61 + <var title>byte</var> &minus; 0x21.
+   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return a code point whose
+   value is 0xFF61 + <var title>byte</var> &minus; 0x21.
    <!-- katakana -->
 
    <dt><span>end-of-stream</span>
    <dd><p>Return <span>finished</span>.
 
    <dt>Otherwise
-   <dd><p>Return <span>error</span>.
+   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return <span>error</span>.
   </dl>
+
+ <dt><dfn title="iso-2022-jp decoder lead byte">Lead byte</dfn>
+ <dd>
+  <p>Based on <var title>byte</var>:
+  <dl class=switch>
+   <dt>0x1B
+   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <span title="iso-2022-jp decoder escape start">escape start</span> and return
+   <span>continue</span>.
+
+   <dt>0x21 to 0x7E
+   <dd><p>Unset the <span>iso-2022-jp output flag</span>, set
+   <span>iso-2022-jp lead</span> to <var title>byte</var>,
+   <span>iso-2022-jp decoder state</span> to
+   <span title="iso-2022-jp decoder trail byte">trail byte</span>, and return
+   <span>continue</span>.
+
+   <dt><span>end-of-stream</span>
+   <dd><p>Return <span>finished</span>.
+
+   <dt>Otherwise
+   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return <span>error</span>.
+  </dl>
+
+ <dt><dfn title="iso-2022-jp decoder trail byte">Trail byte</dfn>
+ <dd>
+  <p>Based on <var title>byte</var>:
+  <dl class=switch>
+   <dt>0x1B
+   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <span title="iso-2022-jp decoder escape start">escape start</span> and return
+   <span>error</span>.
+   <!-- iso-2022-jp decoder output state is still lead byte -->
+
+   <dt>0x21 to 0x7E
+   <dd>
+    <ol>
+     <li><p>Set the <span>iso-2022-jp decoder state</span> to
+     <span title="iso-2022-jp decoder lead byte">lead byte</span>.
+
+     <li><p>Let <var title>pointer</var> be
+     (<span>iso-2022-jp lead</span> &minus; 0x21) &times; 94 + <var title>byte</var> &minus; 0x21.
+
+     <li><p>Let <var title>code point</var> be the <span>index code point</span> for
+     <var title>pointer</var> in <span>index jis0208</span>.
+
+     <li><p>If <var title>code point</var> is null, return <span>error</span>.
+
+     <li><p>Return a code point whose value is <var title>code point</var>.
+    </ol>
+
+   <dt><span>end-of-stream</span>
+   <dd><p>Set the <span>iso-2022-jp decoder state</span> to
+   <span title="iso-2022-jp decoder lead byte">lead byte</span>,
+   <span title=concept-stream-prepend>prepend</span> <var title>byte</var> to
+   <var>stream</var>, and return <span>error</span>.
+
+   <dt>Otherwise
+   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <span title="iso-2022-jp decoder lead byte">lead byte</span> and return
+   <span>error</span>.
+   <!-- iso-2022-jp decoder output state is still lead byte -->
+  </dl>
+
+ <dt><dfn title="iso-2022-jp decoder escape start">Escape start</dfn>
+ <dd>
+  <ol>
+   <li><p>If <var title>byte</var> is either <!--$-->0x24 or <!--(-->0x28, set
+   <span>iso-2022-jp lead</span> to <var title>byte</var>,
+   <span>iso-2022-jp decoder state</span> to
+   <span title="iso-2022-jp decoder escape">escape</span>, and return
+   <span>continue</span>.
+
+   <li><p><span title=concept-stream-prepend>Prepend</span> <var title>byte</var> to
+   <var>stream</var>.
+
+   <li><p>Unset the <span>iso-2022-jp output flag</span>, set
+   <span>iso-2022-jp decoder state</span> to
+   <span>iso-2022-jp decoder output state</span>, and return <span>error</span>.
+  </ol>
+
+ <dt><dfn title="iso-2022-jp decoder escape">Escape</dfn>
+ <dd>
+  <ol>
+   <li><p>Let <var>lead</var> be <span>iso-2022-jp lead</span> and set
+   <span>iso-2022-jp lead</span> to 0x00.
+
+   <li><p>Let <var>state</var> be null.
+
+   <li><p>If <var>lead</var> is 0x28 and <var title>byte</var> is 0x42<!--B-->, set
+   <var>state</var> to <span title="iso-2022-jp decoder ASCII">ASCII</span>.
+
+   <li><p>If <var>lead</var> is 0x28 and <var title>byte</var> is 0x4A<!--J-->, set
+   <var>state</var> to <span tilte="iso-2022-jp decoder Roman">Roman</span>.
+
+   <li><p>If <var>lead</var> is 0x28 and <var title>byte</var> is 0x49<!--I-->, set
+   <var>state</var> to <span title="iso-2022-jp decoder Katakana">Katakana</span>.
+
+   <li><p>If <var>lead</var> is 0x24 and <var title>byte</var> is either
+   0x40<!--@--> or 0x42<!--B-->, set <var>state</var> to
+   <span title="iso-2022-jp decoder lead byte">lead byte</span>.
+
+   <li>
+    <p>If <var>state</var> is non-null, run these substeps:
+
+    <ol>
+     <li><p>Set <span>iso-2022-jp decoder state</span> and
+     <span>iso-2022-jp decoder output state</span> to <var>state</var>.
+
+     <li><p>Let <var>output flag</var> be the <span>iso-2022-jp output flag</span>.
+
+     <li><p>Set the <span>iso-2022-jp output flag</span>.
+
+     <li><p>Return <span>continue</span>, if <var>output flag</var> is unset, and
+     <span>error</span> otherwise.
+    </ol>
+
+   <li><p><span title=concept-stream-prepend>Prepend</span>
+   <var>lead</var> and <var title>byte</var> to <var>stream</var>.
+
+   <li><p>Unset the <span>iso-2022-jp output flag</span>, set
+   <span>iso-2022-jp decoder state</span> to <span>iso-2022-jp decoder output state</span>
+   and return <span>error</span>.
+  </ol>
 </dl>
 
 
 <h4><dfn>iso-2022-jp encoder</dfn></h4>
 
 <p><span>iso-2022-jp</span>'s <span>encoder</span> has an associated
-<span>iso-2022-jp state</span>.
+<dfn>iso-2022-jp encoder state</dfn> which is one of
+<dfn title="iso-2022-jp encoder ASCII">ASCII</dfn>,
+<dfn title="iso-2022-jp encoder Roman">Roman</dfn>, and
+<dfn title="iso-2022-jp encoder jis0208">jis0208</dfn> (initially
+<span title="iso-2022-jp encoder ASCII">ASCII</span>).
 
 <p><span>iso-2022-jp</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var title>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var title>code point</var> is <span>end-of-stream</span>, return
- <span>finished</span>.
-
- <li><p>If <var title>code point</var> is in the range U+0000 to U+007F, or
- is U+00A5 or U+203E, and <span>iso-2022-jp state</span> is not
- <b title>ASCII state</b>, <span title=concept-stream-prepend>prepend</span>
- <var title>code point</var> to <var>stream</var>, set <span>iso-2022-jp state</span> to
- <b title>ASCII state</b>, and return three bytes 0x1B 0x28 0x42.
-
- <li><p>If <var title>code point</var> is in the range U+0000 to U+007F, return
- a byte whose value is <var title>code point</var>.
-
- <li><p>If <var title>code point</var> is U+00A5, return byte 0x5C.
-
- <li><p>If <var title>code point</var> is U+203E, return byte 0x7E.
-
- <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F and
- <span>iso-2022-jp state</span> is not <b title>Katakana state</b>,
+ <li><p>If <var title>code point</var> is <span>end-of-stream</span> and
+ <span>iso-2022-jp encoder state</span> is not
+ <span title="iso-2022-jp encoder ASCII">ASCII</span>,
  <span title=concept-stream-prepend>prepend</span> <var title>code point</var> to
- <var>stream</var>, set <span>iso-2022-jp state</span> to <b title>Katakana state</b>, and
- return three bytes 0x1B 0x28 0x49.
+ <var>stream</var>, set <span>iso-2022-jp encoder state</span> to
+ <span title="iso-2022-jp encoder ASCII">ASCII</span>, and return three bytes
+ 0x1B 0x28 0x42.
 
- <li><p>If <var title>code point</var> is in the range U+FF61 to U+FF9F, return
- a byte whose value is <var title>code point</var> &minus; 0xFF61 + 0x21.
+ <li><p>If <var title>code point</var> is <span>end-of-stream</span> and
+ <span>iso-2022-jp encoder state</span> is
+ <span title="iso-2022-jp encoder ASCII">ASCII</span>, return <span>finished</span>.
+
+ <li><p>If <span>iso-2022-jp encoder state</span> is
+ <span title="iso-2022-jp encoder ASCII">ASCII</span> and <var title>code point</var> is
+ in the range U+0000 to U+007F, return a byte whose value is <var title>code point</var>.
+
+ <li>
+  <p>If <span>iso-2022-jp encoder state</span> is
+  <span title="iso-2022-jp encoder Roman">Roman</span> and <var title>code point</var> is
+  in the range U+0000 to U+007F, excluding U+005C and U+007E, or is U+00A5 or U+203E, run
+  these substeps:
+
+  <ol>
+   <li><p>If <var title>code point</var> is in the range U+0000 to U+007F, return a byte
+   whose value is <var title>code point</var>.
+
+   <li><p>If <var title>code point</var> is U+00A5, return byte 0x5C.
+
+   <li><p>If <var title>code point</var> is U+203E, return byte 0x7E.
+  </ol>
+
+ <li><p>If <var title>code point</var> is in the range U+0000 to U+007F, and
+ <span>iso-2022-jp encoder state</span> is not
+ <span title="iso-2022-jp encoder ASCII">ASCII</span>,
+ <span title=concept-stream-prepend>prepend</span> <var title>code point</var> to
+ <var>stream</var>, set <span>iso-2022-jp encoder state</span> to
+ <span title="iso-2022-jp encoder ASCII">ASCII</span>, and return three bytes
+ 0x1B 0x28 0x42.
+
+ <li><p>If <var title>code point</var> is either U+00A5 or U+203E, and
+ <span>iso-2022-jp encoder state</span> is not
+ <span title="iso-2022-jp encoder Roman">Roman</span>,
+ <span title=concept-stream-prepend>prepend</span> <var title>code point</var> to
+ <var>stream</var>, set <span>iso-2022-jp encoder state</span> to
+ <span title="iso-2022-jp encoder Roman">Roman</span>, and return three bytes
+ 0x1B 0x28 0x4A.
 
  <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
  <var title>code point</var> in <span>index jis0208</span>.
@@ -2027,10 +2126,12 @@ historically this might have been the case for <span>iso-8859-6</span> and
  <li><p>If <var title>pointer</var> is null, return <span>error</span> with
  <var title>code point</var>.
 
- <li><p>If <span>iso-2022-jp state</span> is not <b title>lead state</b>,
+ <li><p>If <span>iso-2022-jp encoder state</span> is not
+ <span title="iso-2022-jp encoder jis0208">jis0208</span>,
  <span title=concept-stream-prepend>prepend</span> <var title>code point</var> to
- <var>stream</var>, set <span>iso-2022-jp state</span> to <b title>lead state</b>, and
- return three bytes 0x1B 0x24 0x42.
+ <var>stream</var>, set <span>iso-2022-jp encoder state</span> to
+ <span title="iso-2022-jp encoder jis0208">jis0208</span>, and return three bytes
+ 0x1B 0x24 0x42.
 
  <li><p>Let <var>lead</var> be <var title>pointer</var> / 94 + 0x21.
 
@@ -2501,6 +2602,7 @@ Ian Hickson,
 James Graham,
 John Tamplin,
 Joshua Bell,
+村井純 (Jun Murai),
 신정식 (Jungshik Shin),
 강 성훈 (Kang Seonghoon),
 川幡太一 (Kawabata Taichi),
@@ -2510,6 +2612,7 @@ Kenneth Russell,
 Leif Halvard Silli,
 Makoto Kato,
 Mark Callow,
+Mark Crispin,
 Mark Davis,
 Martin Dürst,
 Masatoshi Kimura,
