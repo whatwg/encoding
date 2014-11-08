@@ -2395,7 +2395,7 @@ the server and the client.
 <h3>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></h3>
 
 <p>To <dfn>convert a <var title>code unit</var> to bytes</dfn> using a
-<i title>utf-16be flag</i>, run these steps:
+<var>utf-16be flag</var>, run these steps:
 
 <ol>
  <li><p>Let <var title>byte1</var> be <var title>code unit</var> >> 8.
@@ -2407,9 +2407,9 @@ the server and the client.
   <p>Then return the bytes in order:
 
   <dl class=switch>
-   <dt><i title>utf-16be flag</i> is set
+   <dt><var>utf-16be flag</var> is set
    <dd><p><var title>byte1</var>, then <var title>byte2</var>.
-   <dt><i title>utf-16be flag</i> is unset
+   <dt><var>utf-16be flag</var> is unset
    <dd><p><var title>byte2</var>, then <var title>byte1</var>.
   </dl>
 </ol>
@@ -2422,7 +2422,7 @@ has been found to be more accurate in deployed content. Therefore it is not part
 
 <p><span>shared utf-16 decoder</span> has an associated <dfn>utf-16 lead byte</dfn> and
 <dfn>utf-16 lead surrogate</dfn> (both initially null), and
-<dfn>utf-16be flag</dfn> (no initial value).
+<dfn>utf-16be decoder flag</dfn> (no initial value).
 
 <p><span>shared utf-16 decoder</span>'s <span>handler</span>, given a <var>stream</var>
 and <var title>byte</var>, runs these steps:
@@ -2444,9 +2444,9 @@ and <var title>byte</var>, runs these steps:
   <p>Let <var title>code unit</var> be the result of:
 
   <dl class=switch>
-   <dt><span>utf-16be flag</span> is set
+   <dt><span>utf-16be decoder flag</span> is set
    <dd><p>(<span>utf-16 lead byte</span> &lt;&lt; 8) + <var title>byte</var>.
-   <dt><span>utf-16be flag</span> is unset
+   <dt><span>utf-16be decoder flag</span> is unset
    <dd><p>(<var title>byte</var> &lt;&lt; 8) + <span>utf-16 lead byte</span>.
   </dl>
 
@@ -2464,7 +2464,8 @@ and <var title>byte</var>, runs these steps:
 
    <li><p><span title=concept-stream-prepend>Prepend</span> the sequence resulting of
    <span title="convert a code unit to bytes">converting <var title>code unit</var> to bytes</span>
-   using <span>utf-16be flag</span> to <var>stream</var> and return <span>error</span>.
+   using <span>utf-16be decoder flag</span> to <var>stream</var> and return
+   <span>error</span>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
@@ -2482,7 +2483,7 @@ and <var title>byte</var>, runs these steps:
 
 <h4><dfn>shared utf-16 encoder</dfn></h4>
 
-<p><span>shared utf-16 encoder</span> has an associated <span>utf-16be flag</span>.
+<p><span>shared utf-16 encoder</span> has an associated <dfn>utf-16be encoder flag</dfn>.
 
 <p><span>shared utf-16 encoder</span>'s <span>handler</span>, given a <var>stream</var>
 and <var title>code point</var>, runs these steps:
@@ -2494,17 +2495,17 @@ and <var title>code point</var>, runs these steps:
  <li><p>If <var title>code point</var> is in the range 0x00 to 0xFFFF, return the sequence
  resulting of
  <span title="convert a code unit to bytes">converting <var title>code point</var> to bytes</span>
- using <span>utf-16be flag</span>.
+ using <span>utf-16be encoder flag</span>.
 
  <li><p>Let <var>lead</var> be
  ((<var title>code point</var> &minus; 0x10000) >> 10) + 0xD800,
  <span title="convert a code unit to bytes">converted to bytes</span> using
- <span>utf-16be flag</span>.
+ <span>utf-16be encoder flag</span>.
 
  <li><p>Let <var>trail</var> be
  ((<var title>code point</var> &minus; 0x10000) &amp; 0x3FF) + 0xDC00,
  <span title="convert a code unit to bytes">converted to bytes</span> using
- <span>utf-16be flag</span>.
+ <span>utf-16be encoder flag</span>.
 
  <li><p>Return a byte sequence of <var>lead</var> followed by <var>trail</var>.
 </ol>
@@ -2515,13 +2516,13 @@ and <var title>code point</var>, runs these steps:
 <h4><dfn>utf-16be decoder</dfn></h4>
 
 <p><span>utf-16be</span>'s <span>decoder</span> is <span>shared utf-16 decoder</span> with
-its <span>utf-16be flag</span> set.
+its <span>utf-16be decoder flag</span> set.
 
 
 <h4><dfn>utf-16be encoder</dfn></h4>
 
 <p><span>utf-16be</span>'s <span>encoder</span> is <span>shared utf-16 encoder</span> with
-its <span>utf-16be flag</span> set.
+its <span>utf-16be encoder flag</span> set.
 
 
 <h3><dfn>utf-16le</dfn></h3>
@@ -2534,13 +2535,13 @@ its <span>utf-16be flag</span> set.
 <h4><dfn>utf-16le decoder</dfn></h4>
 
 <p><span>utf-16le</span>'s <span>decoder</span> is <span>shared utf-16 decoder</span> with
-its <span>utf-16be flag</span> unset.
+its <span>utf-16be decoder flag</span> unset.
 
 
 <h4><dfn>utf-16le encoder</dfn></h4>
 
 <p><span>utf-16le</span>'s <span>encoder</span> is <span>shared utf-16 encoder</span> with
-its <span>utf-16be flag</span> unset.
+its <span>utf-16be encoder flag</span> unset.
 
 
 <h3><dfn>x-user-defined</dfn></h3>

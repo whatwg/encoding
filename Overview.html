@@ -2479,7 +2479,7 @@ the server and the client.
 <h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <a href="#utf-16be">utf-16be</a> and <a href="#utf-16le">utf-16le</a></h3>
 
 <p>To <dfn id="convert-a-code-unit-to-bytes">convert a <var title="">code unit</var> to bytes</dfn> using a
-<i title="">utf-16be flag</i>, run these steps:
+<var>utf-16be flag</var>, run these steps:
 
 <ol>
  <li><p>Let <var title="">byte1</var> be <var title="">code unit</var> &gt;&gt; 8.
@@ -2491,9 +2491,9 @@ the server and the client.
   <p>Then return the bytes in order:
 
   <dl class="switch">
-   <dt><i title="">utf-16be flag</i> is set
+   <dt><var>utf-16be flag</var> is set
    <dd><p><var title="">byte1</var>, then <var title="">byte2</var>.
-   <dt><i title="">utf-16be flag</i> is unset
+   <dt><var>utf-16be flag</var> is unset
    <dd><p><var title="">byte2</var>, then <var title="">byte1</var>.
   </dl>
 </ol>
@@ -2506,7 +2506,7 @@ has been found to be more accurate in deployed content. Therefore it is not part
 
 <p><a href="#shared-utf-16-decoder">shared utf-16 decoder</a> has an associated <dfn id="utf-16-lead-byte">utf-16 lead byte</dfn> and
 <dfn id="utf-16-lead-surrogate">utf-16 lead surrogate</dfn> (both initially null), and
-<dfn id="utf-16be-flag">utf-16be flag</dfn> (no initial value).
+<dfn id="utf-16be-decoder-flag">utf-16be decoder flag</dfn> (no initial value).
 
 <p><a href="#shared-utf-16-decoder">shared utf-16 decoder</a>'s <a href="#handler">handler</a>, given a <var>stream</var>
 and <var title="">byte</var>, runs these steps:
@@ -2528,9 +2528,9 @@ and <var title="">byte</var>, runs these steps:
   <p>Let <var title="">code unit</var> be the result of:
 
   <dl class="switch">
-   <dt><a href="#utf-16be-flag">utf-16be flag</a> is set
+   <dt><a href="#utf-16be-decoder-flag">utf-16be decoder flag</a> is set
    <dd><p>(<a href="#utf-16-lead-byte">utf-16 lead byte</a> &lt;&lt; 8) + <var title="">byte</var>.
-   <dt><a href="#utf-16be-flag">utf-16be flag</a> is unset
+   <dt><a href="#utf-16be-decoder-flag">utf-16be decoder flag</a> is unset
    <dd><p>(<var title="">byte</var> &lt;&lt; 8) + <a href="#utf-16-lead-byte">utf-16 lead byte</a>.
   </dl>
 
@@ -2548,7 +2548,8 @@ and <var title="">byte</var>, runs these steps:
 
    <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> the sequence resulting of
    <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code unit</var> to bytes</a>
-   using <a href="#utf-16be-flag">utf-16be flag</a> to <var>stream</var> and return <a href="#error">error</a>.
+   using <a href="#utf-16be-decoder-flag">utf-16be decoder flag</a> to <var>stream</var> and return
+   <a href="#error">error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
@@ -2566,7 +2567,7 @@ and <var title="">byte</var>, runs these steps:
 
 <h4 id="shared-utf-16-encoder"><span class="secno">14.2.2 </span><dfn>shared utf-16 encoder</dfn></h4>
 
-<p><a href="#shared-utf-16-encoder">shared utf-16 encoder</a> has an associated <a href="#utf-16be-flag">utf-16be flag</a>.
+<p><a href="#shared-utf-16-encoder">shared utf-16 encoder</a> has an associated <dfn id="utf-16be-encoder-flag">utf-16be encoder flag</dfn>.
 
 <p><a href="#shared-utf-16-encoder">shared utf-16 encoder</a>'s <a href="#handler">handler</a>, given a <var>stream</var>
 and <var title="">code point</var>, runs these steps:
@@ -2578,17 +2579,17 @@ and <var title="">code point</var>, runs these steps:
  <li><p>If <var title="">code point</var> is in the range 0x00 to 0xFFFF, return the sequence
  resulting of
  <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>
- using <a href="#utf-16be-flag">utf-16be flag</a>.
+ using <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a>.
 
  <li><p>Let <var>lead</var> be
  ((<var title="">code point</var> − 0x10000) &gt;&gt; 10) + 0xD800,
  <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
- <a href="#utf-16be-flag">utf-16be flag</a>.
+ <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a>.
 
  <li><p>Let <var>trail</var> be
  ((<var title="">code point</var> − 0x10000) &amp; 0x3FF) + 0xDC00,
  <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
- <a href="#utf-16be-flag">utf-16be flag</a>.
+ <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a>.
 
  <li><p>Return a byte sequence of <var>lead</var> followed by <var>trail</var>.
 </ol>
@@ -2599,13 +2600,13 @@ and <var title="">code point</var>, runs these steps:
 <h4 id="utf-16be-decoder"><span class="secno">14.3.1 </span><dfn>utf-16be decoder</dfn></h4>
 
 <p><a href="#utf-16be">utf-16be</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared utf-16 decoder</a> with
-its <a href="#utf-16be-flag">utf-16be flag</a> set.
+its <a href="#utf-16be-decoder-flag">utf-16be decoder flag</a> set.
 
 
 <h4 id="utf-16be-encoder"><span class="secno">14.3.2 </span><dfn>utf-16be encoder</dfn></h4>
 
 <p><a href="#utf-16be">utf-16be</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a> with
-its <a href="#utf-16be-flag">utf-16be flag</a> set.
+its <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a> set.
 
 
 <h3 id="utf-16le"><span class="secno">14.4 </span><dfn>utf-16le</dfn></h3>
@@ -2618,13 +2619,13 @@ its <a href="#utf-16be-flag">utf-16be flag</a> set.
 <h4 id="utf-16le-decoder"><span class="secno">14.4.1 </span><dfn>utf-16le decoder</dfn></h4>
 
 <p><a href="#utf-16le">utf-16le</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared utf-16 decoder</a> with
-its <a href="#utf-16be-flag">utf-16be flag</a> unset.
+its <a href="#utf-16be-decoder-flag">utf-16be decoder flag</a> unset.
 
 
 <h4 id="utf-16le-encoder"><span class="secno">14.4.2 </span><dfn>utf-16le encoder</dfn></h4>
 
 <p><a href="#utf-16le">utf-16le</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a> with
-its <a href="#utf-16be-flag">utf-16be flag</a> unset.
+its <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a> unset.
 
 
 <h3 id="x-user-defined"><span class="secno">14.5 </span><dfn>x-user-defined</dfn></h3>
