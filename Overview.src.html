@@ -2422,7 +2422,7 @@ has been found to be more accurate in deployed content. Therefore it is not part
 
 <p><span>shared utf-16 decoder</span> has an associated <dfn>utf-16 lead byte</dfn> and
 <dfn>utf-16 lead surrogate</dfn> (both initially null), and
-<dfn>utf-16be decoder flag</dfn> (no initial value).
+<dfn>utf-16be decoder flag</dfn> (initially unset).
 
 <p><span>shared utf-16 decoder</span>'s <span>handler</span>, given a <var>stream</var>
 and <var title>byte</var>, runs these steps:
@@ -2483,7 +2483,8 @@ and <var title>byte</var>, runs these steps:
 
 <h4><dfn>shared utf-16 encoder</dfn></h4>
 
-<p><span>shared utf-16 encoder</span> has an associated <dfn>utf-16be encoder flag</dfn>.
+<p><span>shared utf-16 encoder</span> has an associated <dfn>utf-16be encoder flag</dfn>
+(initially unset).
 
 <p><span>shared utf-16 encoder</span>'s <span>handler</span>, given a <var>stream</var>
 and <var title>code point</var>, runs these steps:
@@ -2534,14 +2535,12 @@ its <span>utf-16be encoder flag</span> set.
 
 <h4><dfn>utf-16le decoder</dfn></h4>
 
-<p><span>utf-16le</span>'s <span>decoder</span> is <span>shared utf-16 decoder</span> with
-its <span>utf-16be decoder flag</span> unset.
+<p><span>utf-16le</span>'s <span>decoder</span> is <span>shared utf-16 decoder</span>.
 
 
 <h4><dfn>utf-16le encoder</dfn></h4>
 
-<p><span>utf-16le</span>'s <span>encoder</span> is <span>shared utf-16 encoder</span> with
-its <span>utf-16be encoder flag</span> unset.
+<p><span>utf-16le</span>'s <span>encoder</span> is <span>shared utf-16 encoder</span>.
 
 
 <h3><dfn>x-user-defined</dfn></h3>

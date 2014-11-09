@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-8-november-2014">Living Standard — Last Updated 8 November 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-9-november-2014">Living Standard — Last Updated 9 November 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -2506,7 +2506,7 @@ has been found to be more accurate in deployed content. Therefore it is not part
 
 <p><a href="#shared-utf-16-decoder">shared utf-16 decoder</a> has an associated <dfn id="utf-16-lead-byte">utf-16 lead byte</dfn> and
 <dfn id="utf-16-lead-surrogate">utf-16 lead surrogate</dfn> (both initially null), and
-<dfn id="utf-16be-decoder-flag">utf-16be decoder flag</dfn> (no initial value).
+<dfn id="utf-16be-decoder-flag">utf-16be decoder flag</dfn> (initially unset).
 
 <p><a href="#shared-utf-16-decoder">shared utf-16 decoder</a>'s <a href="#handler">handler</a>, given a <var>stream</var>
 and <var title="">byte</var>, runs these steps:
@@ -2567,7 +2567,8 @@ and <var title="">byte</var>, runs these steps:
 
 <h4 id="shared-utf-16-encoder"><span class="secno">14.2.2 </span><dfn>shared utf-16 encoder</dfn></h4>
 
-<p><a href="#shared-utf-16-encoder">shared utf-16 encoder</a> has an associated <dfn id="utf-16be-encoder-flag">utf-16be encoder flag</dfn>.
+<p><a href="#shared-utf-16-encoder">shared utf-16 encoder</a> has an associated <dfn id="utf-16be-encoder-flag">utf-16be encoder flag</dfn>
+(initially unset).
 
 <p><a href="#shared-utf-16-encoder">shared utf-16 encoder</a>'s <a href="#handler">handler</a>, given a <var>stream</var>
 and <var title="">code point</var>, runs these steps:
@@ -2618,14 +2619,12 @@ its <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a> set.
 
 <h4 id="utf-16le-decoder"><span class="secno">14.4.1 </span><dfn>utf-16le decoder</dfn></h4>
 
-<p><a href="#utf-16le">utf-16le</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared utf-16 decoder</a> with
-its <a href="#utf-16be-decoder-flag">utf-16be decoder flag</a> unset.
+<p><a href="#utf-16le">utf-16le</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared utf-16 decoder</a>.
 
 
 <h4 id="utf-16le-encoder"><span class="secno">14.4.2 </span><dfn>utf-16le encoder</dfn></h4>
 
-<p><a href="#utf-16le">utf-16le</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a> with
-its <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a> unset.
+<p><a href="#utf-16le">utf-16le</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a>.
 
 
 <h3 id="x-user-defined"><span class="secno">14.5 </span><dfn>x-user-defined</dfn></h3>
