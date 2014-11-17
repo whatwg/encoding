@@ -1016,7 +1016,7 @@ control.
   <p>If <var title>label</var> is either not a <span>label</span> or is a
   <span>label</span> for <span>replacement</span>,
   <span data-anolis-spec=webidl title=throw>throws</span> a
-  <code>TypeError</code>.
+  <code>RangeError</code>.
 
  <dt><code><var title>decoder</var> . <span title=dom-TextDecoder-encoding>encoding</span></code>
  <dd><p>Returns <b>encoding</b>'s <span>name</span>.
@@ -1034,8 +1034,8 @@ control.
   multiple times to process a fragmented stream.
 
   <p>If the <b>error mode</b> is <i>fatal</i> and <b>encoding</b>'s <span>decoder</span>
-  returns <span>error</span>, <span data-anolis-spec=webidl title=throw>throws</span> an
-  <code>EncodingError</code>.
+  returns <span>error</span>, <span data-anolis-spec=webidl title=throw>throws</span> a
+  <code>TypeError</code>.
 </dl>
 
 <p>The
@@ -1048,7 +1048,7 @@ constructor, when invoked, must run these steps:
  <var title>label</var>.
 
  <li><p>If <var title>encoding</var> is failure or <span>replacement</span>,
- <span data-anolis-spec=webidl>throw</span> a <code>TypeError</code>.
+ <span data-anolis-spec=webidl>throw</span> a <code>RangeError</code>.
 
  <li><p>Let <var title>dec</var> be a new <code>TextDecoder</code> object.
 
@@ -1113,7 +1113,7 @@ method, when invoked, must run these steps:
      <span title=concept-TD-serialize>serialized</span>.
 
      <li><p>Otherwise, if <var>result</var> is <span>error</span>,
-     <span data-anolis-spec=webidl title=throw>throw</span> an <code>EncodingError</code>.
+     <span data-anolis-spec=webidl title=throw>throw</span> a <code>TypeError</code>.
 
      <li><p>Otherwise, do nothing.
     </ol>
@@ -1144,7 +1144,7 @@ option as no <span>encoder</span> requires buffering of scalar values.
   <p>If <var title>utfLabel</var> is not a <span>label</span> for
   <span>utf-8</span>, <span>utf-16be</span>, or <span>utf-16le</span>,
   <span data-anolis-spec=webidl title=throw>throws</span> a
-  <code>TypeError</code>.
+  <code>RangeError</code>.
 
  <dt><code><var title>encoder</var> . <span title=dom-TextEncoder-encoding>encoding</span></code>
  <dd><p>Returns <b>encoding</b>'s <span>name</span>.
@@ -1164,7 +1164,7 @@ constructor, when invoked, must run these steps:
 
  <li><p>If <var title>encoding</var> is failure, or is none of
  <span>utf-8</span>, <span>utf-16be</span>, and <span>utf-16le</span>,
- <span data-anolis-spec=webidl>throw</span> a <code>TypeError</code>.
+ <span data-anolis-spec=webidl>throw</span> a <code>RangeError</code>.
 
  <li><p>Let <var title>enc</var> be a new <code>TextEncoder</code> object.
 
@@ -2617,6 +2617,7 @@ Boris Zbarsky,
 Cameron McCormack,
 Charles McCathieNeville,
 David Carlisle,
+Domenic Denicola,
 Dominique Hazaël-Massieux,
 Doug Ewell,
 Erik van der Poel,

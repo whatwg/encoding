@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-9-november-2014">Living Standard — Last Updated 9 November 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-17-november-2014">Living Standard — Last Updated 17 November 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -1100,7 +1100,7 @@ control.
   <p>If <var title="">label</var> is either not a <a href="#label">label</a> or is a
   <a href="#label">label</a> for <a href="#replacement">replacement</a>,
   <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
-  <code>TypeError</code>.
+  <code>RangeError</code>.
 
  <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a></code>
  <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
@@ -1118,8 +1118,8 @@ control.
   multiple times to process a fragmented stream.
 
   <p>If the <b>error mode</b> is <i>fatal</i> and <b>encoding</b>'s <a href="#decoder">decoder</a>
-  returns <a href="#error">error</a>, <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> an
-  <code>EncodingError</code>.
+  returns <a href="#error">error</a>, <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
+  <code>TypeError</code>.
 </dl>
 
 <p>The
@@ -1132,7 +1132,7 @@ constructor, when invoked, must run these steps:
  <var title="">label</var>.
 
  <li><p>If <var title="">encoding</var> is failure or <a href="#replacement">replacement</a>,
- <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>TypeError</code>.
+ <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
 
  <li><p>Let <var title="">dec</var> be a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
 
@@ -1197,7 +1197,7 @@ method, when invoked, must run these steps:
      <a href="#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
 
      <li><p>Otherwise, if <var>result</var> is <a href="#error">error</a>,
-     <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> an <code>EncodingError</code>.
+     <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> a <code>TypeError</code>.
 
      <li><p>Otherwise, do nothing.
     </ol>
@@ -1228,7 +1228,7 @@ option as no <a href="#encoder">encoder</a> requires buffering of scalar values.
   <p>If <var title="">utfLabel</var> is not a <a href="#label">label</a> for
   <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, or <a href="#utf-16le">utf-16le</a>,
   <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
-  <code>TypeError</code>.
+  <code>RangeError</code>.
 
  <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a></code>
  <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
@@ -1248,7 +1248,7 @@ constructor, when invoked, must run these steps:
 
  <li><p>If <var title="">encoding</var> is failure, or is none of
  <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, and <a href="#utf-16le">utf-16le</a>,
- <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>TypeError</code>.
+ <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
 
  <li><p>Let <var title="">enc</var> be a new <a href="#textencoder"><code>TextEncoder</code></a> object.
 
