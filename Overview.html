@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-17-november-2014">Living Standard — Last Updated 17 November 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-6-december-2014">Living Standard — Last Updated 6 December 2014</h2>
 
 <dl>
  <dt>Participate:
@@ -34,86 +34,88 @@
 <!--begin-toc-->
 <ol class="toc">
  <li><a href="#preface"><span class="secno">1 </span>Preface</a></li>
- <li><a href="#conformance"><span class="secno">2 </span>Conformance</a></li>
- <li><a href="#terminology"><span class="secno">3 </span>Terminology</a></li>
- <li><a href="#encodings"><span class="secno">4 </span>Encodings</a>
+ <li><a href="#security-background"><span class="secno">2 </span>Security background</a></li>
+ <li><a href="#conformance"><span class="secno">3 </span>Conformance</a></li>
+ <li><a href="#terminology"><span class="secno">4 </span>Terminology</a></li>
+ <li><a href="#encodings"><span class="secno">5 </span>Encodings</a>
   <ol>
-   <li><a href="#encoders-and-decoders"><span class="secno">4.1 </span>Encoders and decoders</a></li>
-   <li><a href="#names-and-labels"><span class="secno">4.2 </span>Names and labels</a></ol></li>
- <li><a href="#indexes"><span class="secno">5 </span>Indexes</a></li>
- <li><a href="#specification-hooks"><span class="secno">6 </span>Specification hooks</a></li>
- <li><a href="#api"><span class="secno">7 </span>API</a>
+   <li><a href="#encoders-and-decoders"><span class="secno">5.1 </span>Encoders and decoders</a></li>
+   <li><a href="#names-and-labels"><span class="secno">5.2 </span>Names and labels</a></ol></li>
+ <li><a href="#indexes"><span class="secno">6 </span>Indexes</a></li>
+ <li><a href="#specification-hooks"><span class="secno">7 </span>Specification hooks</a></li>
+ <li><a href="#api"><span class="secno">8 </span>API</a>
   <ol>
-   <li><a href="#interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></a></li>
-   <li><a href="#interface-textencoder"><span class="secno">7.2 </span>Interface <code title="">TextEncoder</code></a></ol></li>
- <li><a href="#the-encoding"><span class="secno">8 </span>The encoding</a>
+   <li><a href="#interface-textdecoder"><span class="secno">8.1 </span>Interface <code title="">TextDecoder</code></a></li>
+   <li><a href="#interface-textencoder"><span class="secno">8.2 </span>Interface <code title="">TextEncoder</code></a></ol></li>
+ <li><a href="#the-encoding"><span class="secno">9 </span>The encoding</a>
   <ol>
-   <li><a href="#utf-8"><span class="secno">8.1 </span>utf-8</a>
+   <li><a href="#utf-8"><span class="secno">9.1 </span>utf-8</a>
     <ol>
-     <li><a href="#utf-8-decoder"><span class="secno">8.1.1 </span>utf-8 decoder</a></li>
-     <li><a href="#utf-8-encoder"><span class="secno">8.1.2 </span>utf-8 encoder</a></ol></ol></li>
- <li><a href="#legacy-single-byte-encodings"><span class="secno">9 </span>Legacy single-byte encodings</a>
+     <li><a href="#utf-8-decoder"><span class="secno">9.1.1 </span>utf-8 decoder</a></li>
+     <li><a href="#utf-8-encoder"><span class="secno">9.1.2 </span>utf-8 encoder</a></ol></ol></li>
+ <li><a href="#legacy-single-byte-encodings"><span class="secno">10 </span>Legacy single-byte encodings</a>
   <ol>
-   <li><a href="#single-byte-decoder"><span class="secno">9.1 </span>single-byte decoder</a></li>
-   <li><a href="#single-byte-encoder"><span class="secno">9.2 </span>single-byte encoder</a></ol></li>
- <li><a href="#legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (simplified) encodings</a>
+   <li><a href="#single-byte-decoder"><span class="secno">10.1 </span>single-byte decoder</a></li>
+   <li><a href="#single-byte-encoder"><span class="secno">10.2 </span>single-byte encoder</a></ol></li>
+ <li><a href="#legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">11 </span>Legacy multi-byte Chinese (simplified) encodings</a>
   <ol>
-   <li><a href="#gbk"><span class="secno">10.1 </span>gbk</a>
+   <li><a href="#gbk"><span class="secno">11.1 </span>gbk</a>
     <ol>
-     <li><a href="#gbk-decoder"><span class="secno">10.1.1 </span>gbk decoder</a></li>
-     <li><a href="#gbk-encoder"><span class="secno">10.1.2 </span>gbk encoder</a></ol></li>
-   <li><a href="#gb18030"><span class="secno">10.2 </span>gb18030</a>
+     <li><a href="#gbk-decoder"><span class="secno">11.1.1 </span>gbk decoder</a></li>
+     <li><a href="#gbk-encoder"><span class="secno">11.1.2 </span>gbk encoder</a></ol></li>
+   <li><a href="#gb18030"><span class="secno">11.2 </span>gb18030</a>
     <ol>
-     <li><a href="#gb18030-decoder"><span class="secno">10.2.1 </span>gb18030 decoder</a></li>
-     <li><a href="#gb18030-encoder"><span class="secno">10.2.2 </span>gb18030 encoder</a></ol></ol></li>
- <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">11 </span>Legacy multi-byte Chinese (traditional) encodings</a>
+     <li><a href="#gb18030-decoder"><span class="secno">11.2.1 </span>gb18030 decoder</a></li>
+     <li><a href="#gb18030-encoder"><span class="secno">11.2.2 </span>gb18030 encoder</a></ol></ol></li>
+ <li><a href="#legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">12 </span>Legacy multi-byte Chinese (traditional) encodings</a>
   <ol>
-   <li><a href="#big5"><span class="secno">11.1 </span>big5</a>
+   <li><a href="#big5"><span class="secno">12.1 </span>big5</a>
     <ol>
-     <li><a href="#big5-decoder"><span class="secno">11.1.1 </span>big5 decoder</a></li>
-     <li><a href="#big5-encoder"><span class="secno">11.1.2 </span>big5 encoder</a></ol></ol></li>
- <li><a href="#legacy-multi-byte-japanese-encodings"><span class="secno">12 </span>Legacy multi-byte Japanese encodings</a>
+     <li><a href="#big5-decoder"><span class="secno">12.1.1 </span>big5 decoder</a></li>
+     <li><a href="#big5-encoder"><span class="secno">12.1.2 </span>big5 encoder</a></ol></ol></li>
+ <li><a href="#legacy-multi-byte-japanese-encodings"><span class="secno">13 </span>Legacy multi-byte Japanese encodings</a>
   <ol>
-   <li><a href="#euc-jp"><span class="secno">12.1 </span>euc-jp</a>
+   <li><a href="#euc-jp"><span class="secno">13.1 </span>euc-jp</a>
     <ol>
-     <li><a href="#euc-jp-decoder"><span class="secno">12.1.1 </span>euc-jp decoder</a></li>
-     <li><a href="#euc-jp-encoder"><span class="secno">12.1.2 </span>euc-jp encoder</a></ol></li>
-   <li><a href="#iso-2022-jp"><span class="secno">12.2 </span>iso-2022-jp</a>
+     <li><a href="#euc-jp-decoder"><span class="secno">13.1.1 </span>euc-jp decoder</a></li>
+     <li><a href="#euc-jp-encoder"><span class="secno">13.1.2 </span>euc-jp encoder</a></ol></li>
+   <li><a href="#iso-2022-jp"><span class="secno">13.2 </span>iso-2022-jp</a>
     <ol>
-     <li><a href="#iso-2022-jp-decoder"><span class="secno">12.2.1 </span>iso-2022-jp decoder</a></li>
-     <li><a href="#iso-2022-jp-encoder"><span class="secno">12.2.2 </span>iso-2022-jp encoder</a></ol></li>
-   <li><a href="#shift_jis"><span class="secno">12.3 </span>shift_jis</a>
+     <li><a href="#iso-2022-jp-decoder"><span class="secno">13.2.1 </span>iso-2022-jp decoder</a></li>
+     <li><a href="#iso-2022-jp-encoder"><span class="secno">13.2.2 </span>iso-2022-jp encoder</a></ol></li>
+   <li><a href="#shift_jis"><span class="secno">13.3 </span>shift_jis</a>
     <ol>
-     <li><a href="#shift_jis-decoder"><span class="secno">12.3.1 </span>shift_jis decoder</a></li>
-     <li><a href="#shift_jis-encoder"><span class="secno">12.3.2 </span>shift_jis encoder</a></ol></ol></li>
- <li><a href="#legacy-multi-byte-korean-encodings"><span class="secno">13 </span>Legacy multi-byte Korean encodings</a>
+     <li><a href="#shift_jis-decoder"><span class="secno">13.3.1 </span>shift_jis decoder</a></li>
+     <li><a href="#shift_jis-encoder"><span class="secno">13.3.2 </span>shift_jis encoder</a></ol></ol></li>
+ <li><a href="#legacy-multi-byte-korean-encodings"><span class="secno">14 </span>Legacy multi-byte Korean encodings</a>
   <ol>
-   <li><a href="#euc-kr"><span class="secno">13.1 </span>euc-kr</a>
+   <li><a href="#euc-kr"><span class="secno">14.1 </span>euc-kr</a>
     <ol>
-     <li><a href="#euc-kr-decoder"><span class="secno">13.1.1 </span>euc-kr decoder</a></li>
-     <li><a href="#euc-kr-encoder"><span class="secno">13.1.2 </span>euc-kr encoder</a></ol></ol></li>
- <li><a href="#legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</a>
+     <li><a href="#euc-kr-decoder"><span class="secno">14.1.1 </span>euc-kr decoder</a></li>
+     <li><a href="#euc-kr-encoder"><span class="secno">14.1.2 </span>euc-kr encoder</a></ol></ol></li>
+ <li><a href="#legacy-miscellaneous-encodings"><span class="secno">15 </span>Legacy miscellaneous encodings</a>
   <ol>
-   <li><a href="#replacement"><span class="secno">14.1 </span>replacement</a>
+   <li><a href="#replacement"><span class="secno">15.1 </span>replacement</a>
     <ol>
-     <li><a href="#replacement-decoder"><span class="secno">14.1.1 </span>replacement decoder</a></li>
-     <li><a href="#replacement-encoder"><span class="secno">14.1.2 </span>replacement encoder</a></ol></li>
-   <li><a href="#common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></a>
+     <li><a href="#replacement-decoder"><span class="secno">15.1.1 </span>replacement decoder</a></li>
+     <li><a href="#replacement-encoder"><span class="secno">15.1.2 </span>replacement encoder</a></ol></li>
+   <li><a href="#common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">15.2 </span>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></a>
     <ol>
-     <li><a href="#shared-utf-16-decoder"><span class="secno">14.2.1 </span>shared utf-16 decoder</a></li>
-     <li><a href="#shared-utf-16-encoder"><span class="secno">14.2.2 </span>shared utf-16 encoder</a></ol></li>
-   <li><a href="#utf-16be"><span class="secno">14.3 </span>utf-16be</a>
+     <li><a href="#shared-utf-16-decoder"><span class="secno">15.2.1 </span>shared utf-16 decoder</a></li>
+     <li><a href="#shared-utf-16-encoder"><span class="secno">15.2.2 </span>shared utf-16 encoder</a></ol></li>
+   <li><a href="#utf-16be"><span class="secno">15.3 </span>utf-16be</a>
     <ol>
-     <li><a href="#utf-16be-decoder"><span class="secno">14.3.1 </span>utf-16be decoder</a></li>
-     <li><a href="#utf-16be-encoder"><span class="secno">14.3.2 </span>utf-16be encoder</a></ol></li>
-   <li><a href="#utf-16le"><span class="secno">14.4 </span>utf-16le</a>
+     <li><a href="#utf-16be-decoder"><span class="secno">15.3.1 </span>utf-16be decoder</a></li>
+     <li><a href="#utf-16be-encoder"><span class="secno">15.3.2 </span>utf-16be encoder</a></ol></li>
+   <li><a href="#utf-16le"><span class="secno">15.4 </span>utf-16le</a>
     <ol>
-     <li><a href="#utf-16le-decoder"><span class="secno">14.4.1 </span>utf-16le decoder</a></li>
-     <li><a href="#utf-16le-encoder"><span class="secno">14.4.2 </span>utf-16le encoder</a></ol></li>
-   <li><a href="#x-user-defined"><span class="secno">14.5 </span>x-user-defined</a>
+     <li><a href="#utf-16le-decoder"><span class="secno">15.4.1 </span>utf-16le decoder</a></li>
+     <li><a href="#utf-16le-encoder"><span class="secno">15.4.2 </span>utf-16le encoder</a></ol></li>
+   <li><a href="#x-user-defined"><span class="secno">15.5 </span>x-user-defined</a>
     <ol>
-     <li><a href="#x-user-defined-decoder"><span class="secno">14.5.1 </span>x-user-defined decoder</a></li>
-     <li><a href="#x-user-defined-encoder"><span class="secno">14.5.2 </span>x-user-defined encoder</a></ol></ol></li>
+     <li><a href="#x-user-defined-decoder"><span class="secno">15.5.1 </span>x-user-defined decoder</a></li>
+     <li><a href="#x-user-defined-encoder"><span class="secno">15.5.2 </span>x-user-defined encoder</a></ol></ol></li>
+ <li><a href="#browser-ui"><span class="secno">16 </span>Browser UI</a></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgments">Acknowledgments</a></ol>
 <!--end-toc-->
@@ -146,7 +148,43 @@ specification does not provide a mechanism for extending any aspect of encodings
 
 
 
-<h2 id="conformance"><span class="secno">2 </span>Conformance</h2>
+<h2 id="security-background"><span class="secno">2 </span>Security background</h2>
+
+<p>There is a set of encoding security issues when the producer and consumer do not agree
+on the encoding in use, or on the way a given encoding is to be implemented. For instance,
+an attack was reported in 2011 where a <a href="#shift_jis">shift_jis</a> lead byte 0x82 was used to
+“mask” a 0x22 trail byte in a JSON resource of which an attacker could control some field.
+The producer did not see the problem even though this is an illegal byte combination. The
+consumer decoded it as a single U+FFFD and therefore changed the overall interpretation as
+U+0022 is an important delimiter. Decoders of encodings that use multiple bytes for scalar
+values now require that in case of an illegal byte combination, a scalar value in the
+U+0000 to U+007F range cannot be “masked”. For the aforementioned sequence the output
+would be U+FFFD U+0022.
+
+<p>This is a larger issue for encodings that map anything in the 0x00 to 0x7F byte range
+to something other than U+0000 to U+007F, when there is no lead byte present. These are
+“ASCII-incompatible” encodings and other than <a href="#iso-2022-jp">iso-2022-jp</a>,
+<a href="#utf-16be">utf-16be</a>, and <span>utf16-le</span>, which are unfortunately required due to
+deployed content, they are not supported. (Investigation is
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21057" title="Introduce additional labels for the replacement encoding">ongoing</a>
+whether more labels of other such encodings can be mapped to the <a href="#replacement">replacement</a>
+encoding, rather than the unknown encoding fallback.) An example attack is injecting
+carefully crafted content into a resource and then encouraging the user to override the
+encoding, resulting in e.g. script execution.
+
+<p>Encoders used by URLs found in HTML and HTML's form feature can also result in slight
+information loss when an encoding is used that cannot represent all scalar values. E.g.
+when a resource uses the <a href="#windows-1252">windows-1252</a> encoding a server will not be able to
+distinguish between an end user entering “💩” and “&amp;#128169;” into a form.
+
+<p>The problems outlined here go away when exclusively using utf-8, which is one of the
+many reasons that is now the mandatory encoding for all things.
+
+<p class="note">See also the <a href="#browser-ui">Browser UI</a> chapter.
+
+
+
+<h2 id="conformance"><span class="secno">3 </span>Conformance</h2>
 
 <p>All diagrams, examples, and notes in this specification are
 non-normative, as are all sections explicitly marked non-normative.
@@ -172,7 +210,7 @@ out of memory, or to work around platform-specific limitations.
 
 
 
-<h2 id="terminology"><span class="secno">3 </span>Terminology</h2>
+<h2 id="terminology"><span class="secno">4 </span>Terminology</h2>
 
 <p>Hexadecimal numbers are prefixed with "0x".
 
@@ -243,14 +281,14 @@ those tokens must be inserted, in given order, after the last token in the strea
 
 
 
-<h2 id="encodings"><span class="secno">4 </span>Encodings</h2>
+<h2 id="encodings"><span class="secno">5 </span>Encodings</h2>
 
 <p>An <dfn id="encoding">encoding</dfn> defines a mapping from a <a href="#scalar-value">scalar value</a> sequence to a
 <a href="#byte">byte</a> sequence (and vice versa). Each <a href="#encoding">encoding</a> has a
 <dfn id="name">name</dfn>, and one or more <dfn id="label" title="label">labels</dfn>.
 
 
-<h3 id="encoders-and-decoders"><span class="secno">4.1 </span>Encoders and decoders</h3>
+<h3 id="encoders-and-decoders"><span class="secno">5.1 </span>Encoders and decoders</h3>
 
 <p>Each <a href="#encoding">encoding</a> has an associated <dfn id="decoder">decoder</dfn> and <dfn id="encoder">encoder</dfn>.
 Each <a href="#decoder">decoder</a> and <a href="#encoder">encoder</a> have a <dfn id="handler">handler</dfn> algorithm.
@@ -347,7 +385,7 @@ happening.
 </ol>
 
 
-<h3 id="names-and-labels"><span class="secno">4.2 </span>Names and labels</h3>
+<h3 id="names-and-labels"><span class="secno">5.2 </span>Names and labels</h3>
 
 <p>The table below lists all <a href="#encoding" title="encoding">encodings</a>
 and their <a href="#label" title="label">labels</a> user agents must support.
@@ -703,7 +741,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
 
 
 
-<h2 id="indexes"><span class="secno">5 </span>Indexes</h2>
+<h2 id="indexes"><span class="secno">6 </span>Indexes</h2>
 
 <p>Most legacy <a href="#encoding" title="encoding">encodings</a> make use of
 an <dfn id="index">index</dfn>. An <a href="#index">index</a> is an ordered list of
@@ -838,7 +876,7 @@ to represent ranges.)
 
 
 
-<h2 id="specification-hooks"><span class="secno">6 </span>Specification hooks</h2>
+<h2 id="specification-hooks"><span class="secno">7 </span>Specification hooks</h2>
 
 <p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>,
 <a href="#utf-8-decode-without-bom">utf-8 decode without BOM</a>, <a href="#encode">encode</a>, and <a href="#utf-8-encode">utf-8 encode</a>
@@ -950,7 +988,7 @@ return the result of <a href="#encode" title="encode">encoding</a>
 
 
 
-<h2 id="api"><span class="secno">7 </span>API</h2>
+<h2 id="api"><span class="secno">8 </span>API</h2>
 
 <!-- https://wiki.whatwg.org/wiki/StringEncoding  -->
 
@@ -1026,7 +1064,7 @@ Non-browser user agents are not required to support this API.
 </div>
 
 
-<h3 id="interface-textdecoder"><span class="secno">7.1 </span>Interface <code title="">TextDecoder</code></h3>
+<h3 id="interface-textdecoder"><span class="secno">8.1 </span>Interface <code title="">TextDecoder</code></h3>
 
 <pre class="idl">dictionary <dfn id="textdecoderoptions">TextDecoderOptions</dfn> {
   boolean fatal = false;
@@ -1205,7 +1243,7 @@ method, when invoked, must run these steps:
 </ol>
 
 
-<h3 id="interface-textencoder"><span class="secno">7.2 </span>Interface <code title="">TextEncoder</code></h3>
+<h3 id="interface-textencoder"><span class="secno">8.2 </span>Interface <code title="">TextEncoder</code></h3>
 
 <pre class="idl">[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8"),
  Exposed=Window,Worker]
@@ -1296,11 +1334,11 @@ method, when invoked, must run these steps:
 
 
 
-<h2 id="the-encoding"><span class="secno">8 </span>The encoding</h2>
+<h2 id="the-encoding"><span class="secno">9 </span>The encoding</h2>
 
-<h3 id="utf-8"><span class="secno">8.1 </span><dfn>utf-8</dfn></h3>
+<h3 id="utf-8"><span class="secno">9.1 </span><dfn>utf-8</dfn></h3>
 
-<h4 id="utf-8-decoder"><span class="secno">8.1.1 </span><dfn>utf-8 decoder</dfn></h4>
+<h4 id="utf-8-decoder"><span class="secno">9.1.1 </span><dfn>utf-8 decoder</dfn></h4>
 
 <p><a href="#utf-8">utf-8</a>'s <a href="#decoder">decoder</a>'s has an associated
 <dfn id="utf-8-code-point">utf-8 code point</dfn>, <dfn id="utf-8-bytes-seen">utf-8 bytes seen</dfn>, and
@@ -1408,7 +1446,7 @@ behavior is permitted per the Encoding Standard (other algorithms that
 achieve the same result are obviously fine, even encouraged).
 
 
-<h4 id="utf-8-encoder"><span class="secno">8.1.2 </span><dfn>utf-8 encoder</dfn></h4>
+<h4 id="utf-8-encoder"><span class="secno">9.1.2 </span><dfn>utf-8 encoder</dfn></h4>
 
 <p><a href="#utf-8">utf-8</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">code point</var>, runs these steps:
@@ -1453,7 +1491,7 @@ achieve the same result are obviously fine, even encouraged).
 
 
 
-<h2 id="legacy-single-byte-encodings"><span class="secno">9 </span>Legacy single-byte encodings</h2>
+<h2 id="legacy-single-byte-encodings"><span class="secno">10 </span>Legacy single-byte encodings</h2>
 
 <p>An <a href="#encoding">encoding</a> where each byte is either a single code point or
 nothing, is a <dfn id="single-byte-encoding">single-byte encoding</dfn>.
@@ -1504,7 +1542,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 "iso-8859-6-i" as well, that is no longer true.
 <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=19505 -->
 
-<h3 id="single-byte-decoder"><span class="secno">9.1 </span><dfn>single-byte decoder</dfn></h3>
+<h3 id="single-byte-decoder"><span class="secno">10.1 </span><dfn>single-byte decoder</dfn></h3>
 
 <p><a href="#single-byte-encoding" title="single-byte encoding">Single-byte encodings</a>'s
 <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
@@ -1525,7 +1563,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <li><p>Return a code point whose value is <var title="">code point</var>.
 </ol>
 
-<h3 id="single-byte-encoder"><span class="secno">9.2 </span><dfn>single-byte encoder</dfn></h3>
+<h3 id="single-byte-encoder"><span class="secno">10.2 </span><dfn>single-byte encoder</dfn></h3>
 
 <p><a href="#single-byte-encoding" title="single-byte encoding">Single-byte encodings</a>'s
 <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
@@ -1549,16 +1587,16 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 
 
-<h2 id="legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">10 </span>Legacy multi-byte Chinese (simplified) encodings</h2>
+<h2 id="legacy-multi-byte-chinese-(simplified)-encodings"><span class="secno">11 </span>Legacy multi-byte Chinese (simplified) encodings</h2>
 
-<h3 id="gbk"><span class="secno">10.1 </span><dfn>gbk</dfn></h3>
+<h3 id="gbk"><span class="secno">11.1 </span><dfn>gbk</dfn></h3>
 
-<h4 id="gbk-decoder"><span class="secno">10.1.1 </span><dfn>gbk decoder</dfn></h4>
+<h4 id="gbk-decoder"><span class="secno">11.1.1 </span><dfn>gbk decoder</dfn></h4>
 
 <p><a href="#gbk">gbk</a>'s <a href="#decoder">decoder</a> is <a href="#gb18030">gb18030</a>'s <a href="#decoder">decoder</a>.
 
 
-<h4 id="gbk-encoder"><span class="secno">10.1.2 </span><dfn>gbk encoder</dfn></h4>
+<h4 id="gbk-encoder"><span class="secno">11.1.2 </span><dfn>gbk encoder</dfn></h4>
 
 <p><a href="#gbk">gbk</a>'s <a href="#encoder">encoder</a> is <a href="#gb18030">gb18030</a>'s <a href="#encoder">encoder</a>
 with its <a href="#gbk-flag">gbk flag</a> set.
@@ -1568,9 +1606,9 @@ is a conservative move to decrease the chances of breaking legacy servers and ot
 consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">encoder</a>.
 
 
-<h3 id="gb18030"><span class="secno">10.2 </span><dfn>gb18030</dfn></h3>
+<h3 id="gb18030"><span class="secno">11.2 </span><dfn>gb18030</dfn></h3>
 
-<h4 id="gb18030-decoder"><span class="secno">10.2.1 </span><dfn>gb18030 decoder</dfn></h4>
+<h4 id="gb18030-decoder"><span class="secno">11.2.1 </span><dfn>gb18030 decoder</dfn></h4>
 
 <p><a href="#gb18030">gb18030</a>'s <a href="#decoder">decoder</a> has an associated <dfn id="gb18030-first">gb18030 first</dfn>,
 <dfn id="gb18030-second">gb18030 second</dfn>, and <dfn id="gb18030-third">gb18030 third</dfn> (all initially 0x00).
@@ -1668,7 +1706,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 </ol>
 
 
-<h4 id="gb18030-encoder"><span class="secno">10.2.2 </span><dfn>gb18030 encoder</dfn></h4>
+<h4 id="gb18030-encoder"><span class="secno">11.2.2 </span><dfn>gb18030 encoder</dfn></h4>
 
 <p><a href="#gb18030">gb18030</a>'s <a href="#decoder">decoder</a> has an associated <dfn id="gbk-flag">gbk flag</dfn>
 (initially unset).
@@ -1736,7 +1774,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
 
 
-<h2 id="legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">11 </span>Legacy multi-byte Chinese (traditional) encodings</h2>
+<h2 id="legacy-multi-byte-chinese-(traditional)-encodings"><span class="secno">12 </span>Legacy multi-byte Chinese (traditional) encodings</h2>
 
 <!--
  Lead:  0x81 to 0xFE
@@ -1744,9 +1782,9 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 -->
 
 
-<h3 id="big5"><span class="secno">11.1 </span><dfn>big5</dfn></h3>
+<h3 id="big5"><span class="secno">12.1 </span><dfn>big5</dfn></h3>
 
-<h4 id="big5-decoder"><span class="secno">11.1.1 </span><dfn>big5 decoder</dfn></h4>
+<h4 id="big5-decoder"><span class="secno">12.1.1 </span><dfn>big5 decoder</dfn></h4>
 
 <p><a href="#big5">big5</a>'s <a href="#decoder">decoder</a> has an associated
 <dfn id="big5-lead">big5 lead</dfn> (initially 0x00).
@@ -1815,7 +1853,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 </ol>
 
 
-<h4 id="big5-encoder"><span class="secno">11.1.2 </span><dfn>big5 encoder</dfn></h4>
+<h4 id="big5-encoder"><span class="secno">12.1.2 </span><dfn>big5 encoder</dfn></h4>
 
 <p><a href="#big5">big5</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">code point</var>, runs these steps:
@@ -1853,12 +1891,12 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
 
 
-<h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">12 </span>Legacy multi-byte Japanese encodings</h2>
+<h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">13 </span>Legacy multi-byte Japanese encodings</h2>
 
-<h3 id="euc-jp"><span class="secno">12.1 </span><dfn>euc-jp</dfn></h3>
+<h3 id="euc-jp"><span class="secno">13.1 </span><dfn>euc-jp</dfn></h3>
 <!-- http://www.iana.org/assignments/charset-reg/CP51932 -->
 
-<h4 id="euc-jp-decoder"><span class="secno">12.1.1 </span><dfn>euc-jp decoder</dfn></h4>
+<h4 id="euc-jp-decoder"><span class="secno">13.1.1 </span><dfn>euc-jp decoder</dfn></h4>
 
 <p><a href="#euc-jp">euc-jp</a>'s <a href="#decoder">decoder</a> has an associated
 <dfn id="euc-jp-jis0212-flag">euc-jp jis0212 flag</dfn> (initially unset) and
@@ -1920,7 +1958,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 </ol>
 
 
-<h4 id="euc-jp-encoder"><span class="secno">12.1.2 </span><dfn>euc-jp encoder</dfn></h4>
+<h4 id="euc-jp-encoder"><span class="secno">13.1.2 </span><dfn>euc-jp encoder</dfn></h4>
 
 <p><a href="#euc-jp">euc-jp</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">code point</var>, runs these steps:
@@ -1954,14 +1992,14 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 </ol>
 
 
-<h3 id="iso-2022-jp"><span class="secno">12.2 </span><dfn>iso-2022-jp</dfn></h3>
+<h3 id="iso-2022-jp"><span class="secno">13.2 </span><dfn>iso-2022-jp</dfn></h3>
 <!--
  https://tools.ietf.org/html/rfc1468
  https://tools.ietf.org/html/rfc2237 (iso-2022-jp-1; not used)
  "ESC ) I" is from iso-2022-jp-3 reportedly
 -->
 
-<h4 id="iso-2022-jp-decoder"><span class="secno">12.2.1 </span><dfn>iso-2022-jp decoder</dfn></h4>
+<h4 id="iso-2022-jp-decoder"><span class="secno">13.2.1 </span><dfn>iso-2022-jp decoder</dfn></h4>
 
 <p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#decoder">decoder</a> has an associated
 <dfn id="iso-2022-jp-decoder-state">iso-2022-jp decoder state</dfn> (initially
@@ -2171,7 +2209,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 </dl>
 
 
-<h4 id="iso-2022-jp-encoder"><span class="secno">12.2.2 </span><dfn>iso-2022-jp encoder</dfn></h4>
+<h4 id="iso-2022-jp-encoder"><span class="secno">13.2.2 </span><dfn>iso-2022-jp encoder</dfn></h4>
 
 <p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#encoder">encoder</a> has an associated
 <dfn id="iso-2022-jp-encoder-state">iso-2022-jp encoder state</dfn> which is one of
@@ -2253,9 +2291,9 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 </ol>
 
 
-<h3 id="shift_jis"><span class="secno">12.3 </span><dfn>shift_jis</dfn></h3>
+<h3 id="shift_jis"><span class="secno">13.3 </span><dfn>shift_jis</dfn></h3>
 
-<h4 id="shift_jis-decoder"><span class="secno">12.3.1 </span><dfn>shift_jis decoder</dfn></h4>
+<h4 id="shift_jis-decoder"><span class="secno">13.3.1 </span><dfn>shift_jis decoder</dfn></h4>
 
 <p><a href="#shift_jis">shift_jis</a>'s <a href="#decoder">decoder</a> has an associated
 <dfn id="shift_jis-lead">shift_jis lead</dfn> (initially 0x00).
@@ -2323,7 +2361,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 </ol>
 
 
-<h4 id="shift_jis-encoder"><span class="secno">12.3.2 </span><dfn>shift_jis encoder</dfn></h4>
+<h4 id="shift_jis-encoder"><span class="secno">13.3.2 </span><dfn>shift_jis encoder</dfn></h4>
 
 <p><a href="#shift_jis">shift_jis</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">code point</var>, runs these steps:
@@ -2366,11 +2404,11 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
 
 
-<h2 id="legacy-multi-byte-korean-encodings"><span class="secno">13 </span>Legacy multi-byte Korean encodings</h2>
+<h2 id="legacy-multi-byte-korean-encodings"><span class="secno">14 </span>Legacy multi-byte Korean encodings</h2>
 
-<h3 id="euc-kr"><span class="secno">13.1 </span><dfn>euc-kr</dfn></h3>
+<h3 id="euc-kr"><span class="secno">14.1 </span><dfn>euc-kr</dfn></h3>
 
-<h4 id="euc-kr-decoder"><span class="secno">13.1.1 </span><dfn>euc-kr decoder</dfn></h4>
+<h4 id="euc-kr-decoder"><span class="secno">14.1.1 </span><dfn>euc-kr decoder</dfn></h4>
 
 <p><a href="#euc-kr">euc-kr</a>'s <a href="#decoder">decoder</a> has an associated
 <dfn id="euc-kr-lead">euc-kr lead</dfn> (initially 0x00).
@@ -2419,7 +2457,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 </ol>
 
 
-<h4 id="euc-kr-encoder"><span class="secno">13.1.2 </span><dfn>euc-kr encoder</dfn></h4>
+<h4 id="euc-kr-encoder"><span class="secno">14.1.2 </span><dfn>euc-kr encoder</dfn></h4>
 
 <p><a href="#euc-kr">euc-kr</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">code point</var>, runs these steps:
@@ -2446,16 +2484,16 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
 
 
-<h2 id="legacy-miscellaneous-encodings"><span class="secno">14 </span>Legacy miscellaneous encodings</h2>
+<h2 id="legacy-miscellaneous-encodings"><span class="secno">15 </span>Legacy miscellaneous encodings</h2>
 
-<h3 id="replacement"><span class="secno">14.1 </span><dfn>replacement</dfn></h3>
+<h3 id="replacement"><span class="secno">15.1 </span><dfn>replacement</dfn></h3>
 
 <p class="note">The <a href="#replacement">replacement</a> <a href="#encoding">encoding</a> exists to prevent certain
 attacks that abuse a mismatch between <a href="#encoding" title="encoding">encodings</a> supported on
 the server and the client.
 
 
-<h4 id="replacement-decoder"><span class="secno">14.1.1 </span><dfn>replacement decoder</dfn></h4>
+<h4 id="replacement-decoder"><span class="secno">15.1.1 </span><dfn>replacement decoder</dfn></h4>
 
 <p><a href="#replacement">replacement</a>'s <a href="#decoder">decoder</a> has an associated
 <dfn id="replacement-error-returned-flag">replacement error returned flag</dfn> (initially unset).
@@ -2470,13 +2508,13 @@ the server and the client.
  <li><p>Return <a href="#finished">finished</a>.
 </ol>
 
-<h4 id="replacement-encoder"><span class="secno">14.1.2 </span><dfn>replacement encoder</dfn></h4>
+<h4 id="replacement-encoder"><span class="secno">15.1.2 </span><dfn>replacement encoder</dfn></h4>
 
 <p><a href="#replacement">replacement</a>'s <a href="#encoder">encoder</a> is <a href="#utf-8">utf-8</a>'s
 <a href="#encoder">encoder</a>.
 
 
-<h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">14.2 </span>Common infrastructure for <a href="#utf-16be">utf-16be</a> and <a href="#utf-16le">utf-16le</a></h3>
+<h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">15.2 </span>Common infrastructure for <a href="#utf-16be">utf-16be</a> and <a href="#utf-16le">utf-16le</a></h3>
 
 <p>To <dfn id="convert-a-code-unit-to-bytes">convert a <var title="">code unit</var> to bytes</dfn> using a
 <var>utf-16be flag</var>, run these steps:
@@ -2498,7 +2536,7 @@ the server and the client.
   </dl>
 </ol>
 
-<h4 id="shared-utf-16-decoder"><span class="secno">14.2.1 </span><dfn>shared utf-16 decoder</dfn></h4>
+<h4 id="shared-utf-16-decoder"><span class="secno">15.2.1 </span><dfn>shared utf-16 decoder</dfn></h4>
 
 <p class="note no-backref">A byte order mark has priority over a <a href="#label">label</a> as it
 has been found to be more accurate in deployed content. Therefore it is not part of the
@@ -2565,7 +2603,7 @@ and <var title="">byte</var>, runs these steps:
 </ol>
 
 
-<h4 id="shared-utf-16-encoder"><span class="secno">14.2.2 </span><dfn>shared utf-16 encoder</dfn></h4>
+<h4 id="shared-utf-16-encoder"><span class="secno">15.2.2 </span><dfn>shared utf-16 encoder</dfn></h4>
 
 <p><a href="#shared-utf-16-encoder">shared utf-16 encoder</a> has an associated <dfn id="utf-16be-encoder-flag">utf-16be encoder flag</dfn>
 (initially unset).
@@ -2596,38 +2634,38 @@ and <var title="">code point</var>, runs these steps:
 </ol>
 
 
-<h3 id="utf-16be"><span class="secno">14.3 </span><dfn>utf-16be</dfn></h3>
+<h3 id="utf-16be"><span class="secno">15.3 </span><dfn>utf-16be</dfn></h3>
 
-<h4 id="utf-16be-decoder"><span class="secno">14.3.1 </span><dfn>utf-16be decoder</dfn></h4>
+<h4 id="utf-16be-decoder"><span class="secno">15.3.1 </span><dfn>utf-16be decoder</dfn></h4>
 
 <p><a href="#utf-16be">utf-16be</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared utf-16 decoder</a> with
 its <a href="#utf-16be-decoder-flag">utf-16be decoder flag</a> set.
 
 
-<h4 id="utf-16be-encoder"><span class="secno">14.3.2 </span><dfn>utf-16be encoder</dfn></h4>
+<h4 id="utf-16be-encoder"><span class="secno">15.3.2 </span><dfn>utf-16be encoder</dfn></h4>
 
 <p><a href="#utf-16be">utf-16be</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a> with
 its <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a> set.
 
 
-<h3 id="utf-16le"><span class="secno">14.4 </span><dfn>utf-16le</dfn></h3>
+<h3 id="utf-16le"><span class="secno">15.4 </span><dfn>utf-16le</dfn></h3>
 
 <p class="note no-backref">Both "<code title="">utf-16</code>" and
 "<code title="">utf-16le</code>" are <a href="#label" title="label">labels</a> for
 <a href="#utf-16le">utf-16le</a> to deal with deployed content.
 
 
-<h4 id="utf-16le-decoder"><span class="secno">14.4.1 </span><dfn>utf-16le decoder</dfn></h4>
+<h4 id="utf-16le-decoder"><span class="secno">15.4.1 </span><dfn>utf-16le decoder</dfn></h4>
 
 <p><a href="#utf-16le">utf-16le</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared utf-16 decoder</a>.
 
 
-<h4 id="utf-16le-encoder"><span class="secno">14.4.2 </span><dfn>utf-16le encoder</dfn></h4>
+<h4 id="utf-16le-encoder"><span class="secno">15.4.2 </span><dfn>utf-16le encoder</dfn></h4>
 
 <p><a href="#utf-16le">utf-16le</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a>.
 
 
-<h3 id="x-user-defined"><span class="secno">14.5 </span><dfn>x-user-defined</dfn></h3>
+<h3 id="x-user-defined"><span class="secno">15.5 </span><dfn>x-user-defined</dfn></h3>
 
 <p class="note">While technically this is a <a href="#single-byte-encoding">single-byte encoding</a>,
 it is defined separately as it can be implemented algorithmically.
@@ -2641,7 +2679,7 @@ http://krijnhoetmer.nl/irc-logs/whatwg/20121010#l-812
 https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7-when-using-charset-x-user-defined-with-xm
 -->
 
-<h4 id="x-user-defined-decoder"><span class="secno">14.5.1 </span><dfn>x-user-defined decoder</dfn></h4>
+<h4 id="x-user-defined-decoder"><span class="secno">15.5.1 </span><dfn>x-user-defined decoder</dfn></h4>
 
 <p><a href="#x-user-defined">x-user-defined</a>'s <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">byte</var>, runs these steps:
@@ -2657,7 +2695,7 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 </ol>
 
 
-<h4 id="x-user-defined-encoder"><span class="secno">14.5.2 </span><dfn>x-user-defined encoder</dfn></h4>
+<h4 id="x-user-defined-encoder"><span class="secno">15.5.2 </span><dfn>x-user-defined encoder</dfn></h4>
 
 <p><a href="#x-user-defined">x-user-defined</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">code point</var>, runs these steps:
@@ -2674,6 +2712,16 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 
  <li><p>Return <a href="#error">error</a> with <var title="">code point</var>.
 </ol>
+
+
+
+<h2 id="browser-ui"><span class="secno">16 </span>Browser UI</h2>
+
+<p>Browsers are encouraged to not enable overriding the encoding of a resource. If such a
+feature is nonetheless present, browsers should not offer either
+<a href="#utf-16be">utf-16be</a> or <a href="#utf-16le">utf-16le</a> as option due to aforementioned security
+issues. Browsers also should disable this feature if the resource was decoded using either
+<a href="#utf-16be">utf-16be</a> or <a href="#utf-16le">utf-16le</a>.
 
 
 
@@ -2722,6 +2770,7 @@ Boris Zbarsky,
 Cameron McCormack,
 Charles McCathieNeville,
 David Carlisle,
+Domenic Denicola,
 Dominique Hazaël-Massieux,
 Doug Ewell,
 Erik van der Poel,
