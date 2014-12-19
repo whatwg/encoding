@@ -5,7 +5,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 8dfc771062e7be0810919082c2c06baa2236147909e0ecc235b1cb9ad782ac82
-# Date: 2014-11-06
+# Date: 2014-12-19
 
   942	0x43F0	䏰 (<CJK Ideograph Extension A>)
   943	0x4C32	䰲 (<CJK Ideograph Extension A>)
