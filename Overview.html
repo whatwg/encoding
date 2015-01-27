@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="//whatwg.org/"><img height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100" alt="WHATWG"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-20-december-2014">Living Standard — Last Updated 20 December 2014</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-27-january-2015">Living Standard — Last Updated 27 January 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -1430,7 +1430,7 @@ method, when invoked, must run these steps:
   (6 × (<a href="#utf-8-bytes-needed">utf-8 bytes needed</a> − <a href="#utf-8-bytes-seen">utf-8 bytes seen</a>)).
 
  <li><p>If <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> is not equal to
- <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, continue.
+ <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, return <a href="#continue">continue</a>.
 
  <li><p>Let <var title="">code point</var> be <a href="#utf-8-code-point">utf-8 code point</a>.
 
@@ -2785,6 +2785,7 @@ John Tamplin,
 Joshua Bell,
 村井純 (Jun Murai),
 신정식 (Jungshik Shin),
+Jxck,
 강 성훈 (Kang Seonghoon),<!-- space is intentional: https://www.w3.org/Bugs/Public/show_bug.cgi?id=27675#c2 -->
 川幡太一 (Kawabata Taichi),
 Ken Lunde,
