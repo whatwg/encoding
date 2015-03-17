@@ -1,18 +1,18 @@
 <!DOCTYPE html><html lang="en-US"><meta charset="utf-8">
 <title>Encoding Standard</title>
-<link rel="stylesheet" href="//whatwg.org/style/specification">
-<link rel="icon" href="//resources.whatwg.org/logo-encoding.svg">
+<link href="//whatwg.org/style/specification" rel="stylesheet">
+<link href="//resources.whatwg.org/logo-encoding.svg" rel="icon">
 
 <div class="head">
 
-<p><a class="logo" href="//whatwg.org/"><img height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100" alt="WHATWG"></a></p>
+<p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-27-january-2015">Living Standard — Last Updated 27 January 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-17-march-2015">Living Standard — Last Updated 17 March 2015</h2>
 
 <dl>
  <dt>Participate:
  <dd>Send feedback to <a href="mailto:www-international@w3.org?subject=Encoding:%20">www-international@w3.org</a>
- (<a href="http://lists.w3.org/Archives/Public/www-international/">archives</a>) or
+ (<a href="https://lists.w3.org/Archives/Public/www-international/">archives</a>) or
  <a href="https://www.w3.org/Bugs/Public/enter_bug.cgi?product=WHATWG&amp;component=Encoding">file a bug</a>
  (<a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=WHATWG&amp;component=Encoding&amp;resolution=---">open bugs</a>)
  <dd><a href="//wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
@@ -141,7 +141,7 @@ This specification also defines an API to expose part of the encoding algorithms
 JavaScript.
 
 <p>User agents have also significantly deviated from the labels listed in the
-<a href="http://www.iana.org/assignments/character-sets/character-sets.xhtml">IANA Character Sets registry</a>.
+<a href="https://www.iana.org/assignments/character-sets/character-sets.xhtml">IANA Character Sets registry</a>.
 To stop spreading legacy encodings further, this specification is exhaustive about the
 aforementioned details and therefore has no need for the registry. In particular, this
 specification does not provide a mechanism for extending any aspect of encodings.
@@ -166,7 +166,7 @@ to something other than U+0000 to U+007F, when there is no lead byte present. Th
 “ASCII-incompatible” encodings and other than <a href="#iso-2022-jp">iso-2022-jp</a>,
 <a href="#utf-16be">utf-16be</a>, and <span>utf16-le</span>, which are unfortunately required due to
 deployed content, they are not supported. (Investigation is
-<a title="Introduce additional labels for the replacement encoding" href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21057">ongoing</a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21057" title="Introduce additional labels for the replacement encoding">ongoing</a>
 whether more labels of other such encodings can be mapped to the <a href="#replacement">replacement</a>
 encoding, rather than the unknown encoding fallback.) An example attack is injecting
 carefully crafted content into a resource and then encouraging the user to override the
@@ -227,7 +227,7 @@ double-digit hexadecimal number in the range 0x00 to 0xFF.
 
 <p>A <dfn id="code-point">code point</dfn> is a Unicode code point and is represented as a
 four-to-six digit hexadecimal number, typically prefixed with "U+".
-In equations and <a title="index" href="#index">indexes</a> code points are prefixed
+In equations and <a href="#index" title="index">indexes</a> code points are prefixed
 with "0x". <a href="#refsUNICODE">[UNICODE]</a>
 
 <p>A <dfn id="scalar-value">scalar value</dfn> is a <a href="#code-point">code point</a> that is not in the range U+D800
@@ -249,25 +249,25 @@ considered to also match.
 
 <hr>
 
-<p>A <dfn title="concept-token" id="concept-token">token</dfn> is a piece of data, such as a <a href="#byte">byte</a>
+<p>A <dfn id="concept-token" title="concept-token">token</dfn> is a piece of data, such as a <a href="#byte">byte</a>
 or <a href="#code-point">code point</a>.
 
-<p>A <dfn title="concept-stream" id="concept-stream">stream</dfn> represents an ordered sequence of
-<a title="concept-token" href="#concept-token">tokens</a>. <dfn id="end-of-stream">End-of-stream</dfn> is a special
-<a title="concept-token" href="#concept-token">token</a> that signifies no more
-<a title="concept-token" href="#concept-token">tokens</a> are in the
-<a title="concept-stream" href="#concept-stream">stream</a>.
+<p>A <dfn id="concept-stream" title="concept-stream">stream</dfn> represents an ordered sequence of
+<a href="#concept-token" title="concept-token">tokens</a>. <dfn id="end-of-stream">End-of-stream</dfn> is a special
+<a href="#concept-token" title="concept-token">token</a> that signifies no more
+<a href="#concept-token" title="concept-token">tokens</a> are in the
+<a href="#concept-stream" title="concept-stream">stream</a>.
 
-<p>When a <a title="concept-token" href="#concept-token">token</a> is
-<dfn title="concept-stream-read" id="concept-stream-read">read</dfn> from a <a title="concept-stream" href="#concept-stream">stream</a>,
+<p>When a <a href="#concept-token" title="concept-token">token</a> is
+<dfn id="concept-stream-read" title="concept-stream-read">read</dfn> from a <a href="#concept-stream" title="concept-stream">stream</a>,
 the first token in the stream must be returned and subsequently removed, and
 <a href="#end-of-stream">end-of-stream</a> must be returned otherwise.
 <!-- this means read is blocking on e.g. networking activity;
      SimonSapin thinks this is fine, curse him if not -->
 
-<p>When one or more <a title="concept-token" href="#concept-token">tokens</a> are
-<dfn title="concept-stream-prepend" id="concept-stream-prepend">prepended</dfn> to a
-<a title="concept-stream" href="#concept-stream">stream</a>, those tokens must be inserted, in given order,
+<p>When one or more <a href="#concept-token" title="concept-token">tokens</a> are
+<dfn id="concept-stream-prepend" title="concept-stream-prepend">prepended</dfn> to a
+<a href="#concept-stream" title="concept-stream">stream</a>, those tokens must be inserted, in given order,
 before the first token in the stream.
 
 <p class="example">Inserting the sequence of tokens <code title="">&amp;#128169;</code> in a
@@ -275,8 +275,8 @@ stream "<code title=""> hello world</code>", results in a stream
 "<code title="">&amp;#128169; hello world</code>". The next token to be read would be
 <code title="">&amp;</code>. <!-- 💩 -->
 
-<p>When one or more <a title="concept-token" href="#concept-token">tokens</a> are
-<dfn title="concept-stream-push" id="concept-stream-push">pushed</dfn> to a <a title="concept-stream" href="#concept-stream">stream</a>,
+<p>When one or more <a href="#concept-token" title="concept-token">tokens</a> are
+<dfn id="concept-stream-push" title="concept-stream-push">pushed</dfn> to a <a href="#concept-stream" title="concept-stream">stream</a>,
 those tokens must be inserted, in given order, after the last token in the stream.
 
 
@@ -285,17 +285,17 @@ those tokens must be inserted, in given order, after the last token in the strea
 
 <p>An <dfn id="encoding">encoding</dfn> defines a mapping from a <a href="#scalar-value">scalar value</a> sequence to a
 <a href="#byte">byte</a> sequence (and vice versa). Each <a href="#encoding">encoding</a> has a
-<dfn id="name">name</dfn>, and one or more <dfn title="label" id="label">labels</dfn>.
+<dfn id="name">name</dfn>, and one or more <dfn id="label" title="label">labels</dfn>.
 
 
 <h3 id="encoders-and-decoders"><span class="secno">5.1 </span>Encoders and decoders</h3>
 
 <p>Each <a href="#encoding">encoding</a> has an associated <dfn id="decoder">decoder</dfn> and <dfn id="encoder">encoder</dfn>.
 Each <a href="#decoder">decoder</a> and <a href="#encoder">encoder</a> have a <dfn id="handler">handler</dfn> algorithm.
-A <a href="#handler">handler</a> algorithm takes an input <a title="concept-stream" href="#concept-stream">stream</a>
-and a <a title="concept-token" href="#concept-token">token</a>, and returns
+A <a href="#handler">handler</a> algorithm takes an input <a href="#concept-stream" title="concept-stream">stream</a>
+and a <a href="#concept-token" title="concept-token">token</a>, and returns
 <dfn id="finished">finished</dfn>,
-one or more <a title="concept-token" href="#concept-token">tokens</a>,
+one or more <a href="#concept-token" title="concept-token">tokens</a>,
 <dfn id="error">error</dfn> optionally with a <a href="#code-point">code point</a>, or
 <dfn id="continue">continue</dfn>.
 
@@ -315,10 +315,10 @@ happening.
 <a class="informative" href="#refsURL">[URL]</a>
 <a class="informative" href="#refsHTML">[HTML]</a>
 
-<p>To <dfn title="concept-encoding-run" id="concept-encoding-run">run</dfn> an <a href="#encoding">encoding</a>'s
+<p>To <dfn id="concept-encoding-run" title="concept-encoding-run">run</dfn> an <a href="#encoding">encoding</a>'s
 <a href="#decoder">decoder</a> or <a href="#encoder">encoder</a> <var>encoderDecoder</var> with input
-<a title="concept-stream" href="#concept-stream">stream</a> <var>input</var>, output
-<a title="concept-stream" href="#concept-stream">stream</a> <var>output</var>, and optional
+<a href="#concept-stream" title="concept-stream">stream</a> <var>input</var>, output
+<a href="#concept-stream" title="concept-stream">stream</a> <var>output</var>, and optional
 <a href="#error-mode">error mode</a> <var>mode</var>, run these steps:
 
 <ol>
@@ -332,8 +332,8 @@ happening.
 
   <ol>
    <li><p>Let <var>result</var> be the result of
-   <a title="concept-encoding-process" href="#concept-encoding-process">processing</a> the result of
-   <a title="concept-stream-read" href="#concept-stream-read">reading</a> from <var>input</var> for
+   <a href="#concept-encoding-process" title="concept-encoding-process">processing</a> the result of
+   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>input</var> for
    <var title="">encoderDecoderInstance</var>, <var>input</var>, <var>output</var>, and
    <var>mode</var>.
 
@@ -343,11 +343,11 @@ happening.
   </ol>
 </ol>
 
-<p>To <dfn title="concept-encoding-process" id="concept-encoding-process">process</dfn> a
-<a title="concept-token" href="#concept-token">token</a> <var>token</var> for an <a href="#encoding">encoding</a>'s
+<p>To <dfn id="concept-encoding-process" title="concept-encoding-process">process</dfn> a
+<a href="#concept-token" title="concept-token">token</a> <var>token</var> for an <a href="#encoding">encoding</a>'s
 <a href="#encoder">encoder</a> or <a href="#decoder">decoder</a> instance <var>encoderDecoderInstance</var>,
-<a title="concept-stream" href="#concept-stream">stream</a> <var>input</var>, output
-<a title="concept-stream" href="#concept-stream">stream</a> <var>output</var>, and optional
+<a href="#concept-stream" title="concept-stream">stream</a> <var>input</var>, output
+<a href="#concept-stream" title="concept-stream">stream</a> <var>output</var>, and optional
 <a href="#error-mode">error mode</a> <var>mode</var>, run these steps:
 
 <ol>
@@ -362,7 +362,7 @@ happening.
  <var>result</var>.
 
  <li><p>Otherwise, if <var>result</var> is one or more
- <a title="concept-token" href="#concept-token">tokens</a>, <a title="concept-stream-push" href="#concept-stream-push">push</a>
+ <a href="#concept-token" title="concept-token">tokens</a>, <a href="#concept-stream-push" title="concept-stream-push">push</a>
  <var title="">result</var> to <var>output</var>.
 
  <li>
@@ -371,9 +371,9 @@ happening.
 
   <dl class="switch">
    <dt><i title="">replacement</i>
-   <dd><a title="concept-stream-push" href="#concept-stream-push">Push</a> U+FFFD to <var>output</var>.
+   <dd><a href="#concept-stream-push" title="concept-stream-push">Push</a> U+FFFD to <var>output</var>.
    <dt><i>HTML</i>
-   <dd><a title="concept-stream-prepend" href="#concept-stream-prepend">Prepend</a> U+0026, U+0023, followed by the
+   <dd><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> U+0026, U+0023, followed by the
    shortest sequence of <a href="#ascii-digits">ASCII digits</a> representing <var title="">result</var>'s
    <a href="#code-point">code point</a> in base ten, followed by U+003B to <var>input</var>.
    <!-- &# ... ; -->
@@ -387,10 +387,10 @@ happening.
 
 <h3 id="names-and-labels"><span class="secno">5.2 </span>Names and labels</h3>
 
-<p>The table below lists all <a title="encoding" href="#encoding">encodings</a>
-and their <a title="label" href="#label">labels</a> user agents must support.
-User agents must not support any other <a title="encoding" href="#encoding">encodings</a>
-or <a title="label" href="#label">labels</a>.
+<p>The table below lists all <a href="#encoding" title="encoding">encodings</a>
+and their <a href="#label" title="label">labels</a> user agents must support.
+User agents must not support any other <a href="#encoding" title="encoding">encodings</a>
+or <a href="#label" title="label">labels</a>.
 
 <p>Authors must use the <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a> and must use the
 <a href="#ascii-case-insensitive">ASCII case-insensitive</a> "<code title="">utf-8</code>" <a href="#label">label</a> to
@@ -401,7 +401,7 @@ use the <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a> exclusively.
 formats need to expose the <a href="#encoding">encoding</a>'s <a href="#name">name</a> or
 <a href="#label">label</a>, they must expose it as "<code title="">utf-8</code>".
 
-<p>To <dfn title="concept-encoding-get" id="concept-encoding-get">get an encoding</dfn> from a string
+<p>To <dfn id="concept-encoding-get" title="concept-encoding-get">get an encoding</dfn> from a string
 <var title="">label</var>, run these steps:
 
 <ol>
@@ -409,12 +409,12 @@ formats need to expose the <a href="#encoding">encoding</a>'s <a href="#name">na
  <var title="">label</var>.
 
  <li><p>If <var title="">label</var> is an <a href="#ascii-case-insensitive">ASCII case-insensitive</a>
- match for any of the <a title="label" href="#label">labels</a> listed in the table
+ match for any of the <a href="#label" title="label">labels</a> listed in the table
  below, return the corresponding <a href="#encoding">encoding</a>, and failure otherwise.
 </ol>
 
 <p class="note no-backref">This is a much simpler and more restrictive algorithm of
-mapping <a title="label" href="#label">labels</a> to <a title="encoding" href="#encoding">encodings</a> than
+mapping <a href="#label" title="label">labels</a> to <a href="#encoding" title="encoding">encodings</a> than
 <a href="http://www.unicode.org/reports/tr22/tr22-7.html#Charset_Alias_Matching">section 1.4 of Unicode Technical Standard #22</a>
 prescribes, as that is found to be necessary to be compatible with deployed content.
 
@@ -422,7 +422,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <thead>
   <tr>
    <th><a href="#name">Name</a>
-   <th><a title="label" href="#label">Labels</a>
+   <th><a href="#label" title="label">Labels</a>
  <tbody>
   <tr><th colspan="2"><a href="#the-encoding">The Encoding</a>
   <tr>
@@ -735,21 +735,21 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
    <td>"<code title="">x-user-defined</code>"
 </table>
 
-<p class="note">All <a title="encoding" href="#encoding">encodings</a> and their
-<a title="label" href="#label">labels</a> are also available as non-normative
+<p class="note">All <a href="#encoding" title="encoding">encodings</a> and their
+<a href="#label" title="label">labels</a> are also available as non-normative
 <a href="encodings.json">encodings.json</a> resource.
 
 
 
 <h2 id="indexes"><span class="secno">6 </span>Indexes</h2>
 
-<p>Most legacy <a title="encoding" href="#encoding">encodings</a> make use of
+<p>Most legacy <a href="#encoding" title="encoding">encodings</a> make use of
 an <dfn id="index">index</dfn>. An <a href="#index">index</a> is an ordered list of
 pointers and corresponding code points. Within an <a href="#index">index</a>
 pointers are unique and code points can be duplicated.
 
 <p class="note no-backref">An efficient implementation likely has two
-<a title="index" href="#index">indexes</a> per <a href="#encoding">encoding</a>. One optimized for its
+<a href="#index" title="index">indexes</a> per <a href="#encoding">encoding</a>. One optimized for its
 <a href="#decoder">decoder</a> and one for its <a href="#encoder">encoder</a>.
 
 <p>To find the pointers and their corresponding code points in an <a href="#index">index</a>,
@@ -773,7 +773,7 @@ changed, so has the <a href="#index">index</a>.
 <var title="">code point</var> in <var title="">index</var>, or null if
 <var title="">code point</var> is not in <var title="">index</var>.
 
-<p>These are the <a title="index" href="#index">indexes</a> defined by this
+<p>These are the <a href="#index" title="index">indexes</a> defined by this
 specification, excluding <a href="#index-single-byte">index single-byte</a>, which have their own table:
 
 <table>
@@ -869,7 +869,7 @@ value of these steps:
 
 <hr>
 
-<p class="note no-backref">All <a title="index" href="#index">indexes</a> are also available as
+<p class="note no-backref">All <a href="#index" title="index">indexes</a> are also available as
 non-normative <a href="indexes.json">indexes.json</a> resource.
 (<a href="#index-gb18030-ranges">index gb18030 ranges</a> has a slightly different format here, to be able
 to represent ranges.)
@@ -881,7 +881,7 @@ to represent ranges.)
 <p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>,
 <a href="#utf-8-decode-without-bom">utf-8 decode without BOM</a>, <a href="#encode">encode</a>, and <a href="#utf-8-encode">utf-8 encode</a>
 are intended for usage by other specifications. <a href="#utf-8-decode">utf-8 decode</a> is to be used by
-new formats. The <a title="concept-encoding-get" href="#concept-encoding-get">get an encoding</a> algorithm can be
+new formats. The <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be
 used first to turn a <a href="#label">label</a> into an <a href="#encoding">encoding</a>.
 
 <p>To <dfn id="decode">decode</dfn> a byte stream <var>stream</var> using
@@ -892,9 +892,9 @@ fallback encoding <var title="">encoding</var>, run these steps:
 
  <li><p>Let <var>BOM seen flag</var> be unset.
 
- <li><p><a title="concept-stream-read" href="#concept-stream-read">Read</a> bytes from <var>stream</var>
+ <li><p><a href="#concept-stream-read" title="concept-stream-read">Read</a> bytes from <var>stream</var>
  into <var>buffer</var> until either <var>buffer</var> contains three bytes or
- <a title="concept-stream-read" href="#concept-stream-read">read</a> returns <a href="#end-of-stream">end-of-stream</a>.
+ <a href="#concept-stream-read" title="concept-stream-read">read</a> returns <a href="#end-of-stream">end-of-stream</a>.
 
  <li>
   <p>For each of the rows in the table below, starting with the first
@@ -914,16 +914,16 @@ fallback encoding <var title="">encoding</var>, run these steps:
   (also known as BOM) is considered more authoritative than anything else.
 
  <li><p>If <var>BOM seen flag</var> is unset
- <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var>buffer</var> to <var>stream</var>.
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>buffer</var> to <var>stream</var>.
 
  <li><p>Otherwise, if <var>BOM seen flag</var> is set, <var title="">encoding</var> is not
  <a href="#utf-8">utf-8</a>, and <var>buffer</var> contains three bytes,
- <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> the last byte of <var>buffer</var> to
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> the last byte of <var>buffer</var> to
  <var>stream</var>.
 
- <li><p>Let <var>output</var> be a code point <a title="concept-stream" href="#concept-stream">stream</a>.
+ <li><p>Let <var>output</var> be a code point <a href="#concept-stream" title="concept-stream">stream</a>.
 
- <li><p><a title="concept-encoding-run" href="#concept-encoding-run">Run</a> <var title="">encoding</var>'s
+ <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <var title="">encoding</var>'s
  <a href="#decoder">decoder</a> with <var>stream</var> and <var>output</var>.
 
  <li><p>Return <var>output</var>.
@@ -935,15 +935,15 @@ these steps:
 <ol>
  <li><p>Let <var>buffer</var> be an empty byte sequence.
 
- <li><p><a title="concept-stream-read" href="#concept-stream-read">Read</a> three bytes from <var>stream</var>
+ <li><p><a href="#concept-stream-read" title="concept-stream-read">Read</a> three bytes from <var>stream</var>
  into <var>buffer</var>.
 
  <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF,
- <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var>buffer</var> to <var>stream</var>.
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>buffer</var> to <var>stream</var>.
 
- <li><p>Let <var>output</var> be a code point <a title="concept-stream" href="#concept-stream">stream</a>.
+ <li><p>Let <var>output</var> be a code point <a href="#concept-stream" title="concept-stream">stream</a>.
 
- <li><p><a title="concept-encoding-run" href="#concept-encoding-run">Run</a> <a href="#utf-8">utf-8</a>'s
+ <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <a href="#utf-8">utf-8</a>'s
  <a href="#decoder">decoder</a> with <var>stream</var> and <var>output</var>.
 
  <li><p>Return <var>output</var>.
@@ -953,9 +953,9 @@ these steps:
 steps:
 
 <ol>
- <li><p>Let <var>output</var> be a code point <a title="concept-stream" href="#concept-stream">stream</a>.
+ <li><p>Let <var>output</var> be a code point <a href="#concept-stream" title="concept-stream">stream</a>.
 
- <li><p><a title="concept-encoding-run" href="#concept-encoding-run">Run</a> <a href="#utf-8">utf-8</a>'s
+ <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <a href="#utf-8">utf-8</a>'s
  <a href="#decoder">decoder</a> with <var>stream</var> and <var>output</var>.
 
  <li><p>Return <var>output</var>.
@@ -968,9 +968,9 @@ steps:
 encoding <var title="">encoding</var>, run these steps:
 
 <ol>
- <li><p>Let <var>output</var> be a byte <a title="concept-stream" href="#concept-stream">stream</a>.
+ <li><p>Let <var>output</var> be a byte <a href="#concept-stream" title="concept-stream">stream</a>.
 
- <li><p><a title="concept-encoding-run" href="#concept-encoding-run">Run</a> <var title="">encoding</var>'s
+ <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <var title="">encoding</var>'s
  <a href="#encoder">encoder</a> with <var>stream</var>, <var>output</var>, and <i>HTML</i>.
 
  <li><p>Return <var>output</var>.
@@ -978,12 +978,12 @@ encoding <var title="">encoding</var>, run these steps:
 
 <p class="note no-backref">This is mostly a legacy hook for URLs and HTML forms. Layering
 <a href="#utf-8-encode">utf-8 encode</a> on top is safe as it never triggers
-<a title="error" href="#error">errors</a>.
+<a href="#error" title="error">errors</a>.
 <a class="informative" href="#refsURL">[URL]</a>
 <a class="informative" href="#refsHTML">[HTML]</a>
 
 <p>To <dfn id="utf-8-encode">utf-8 encode</dfn> a code point stream <var>stream</var>,
-return the result of <a title="encode" href="#encode">encoding</a>
+return the result of <a href="#encode" title="encode">encoding</a>
 <var>stream</var> using encoding <a href="#utf-8">utf-8</a>.
 
 
@@ -1075,13 +1075,13 @@ dictionary <dfn id="textdecodeoptions">TextDecodeOptions</dfn> {
   boolean stream = false;
 };
 
-[<a title="dom-TextDecoder" href="#dom-textdecoder">Constructor</a>(optional DOMString <var title="">label</var> = "utf-8", optional <a href="#textdecoderoptions">TextDecoderOptions</a> <var title="">options</var>),
+[<a href="#dom-textdecoder" title="dom-TextDecoder">Constructor</a>(optional DOMString <var title="">label</var> = "utf-8", optional <a href="#textdecoderoptions">TextDecoderOptions</a> <var title="">options</var>),
  Exposed=Window,Worker]
 interface <dfn id="textdecoder">TextDecoder</dfn> {
-  readonly attribute DOMString <a title="dom-TextDecoder-encoding" href="#dom-textdecoder-encoding">encoding</a>;
-  readonly attribute boolean <a title="dom-TextDecoder-fatal" href="#dom-textdecoder-fatal">fatal</a>;
-  readonly attribute boolean <a title="dom-TextDecoder-ignoreBOM" href="#dom-textdecoder-ignorebom">ignoreBOM</a>;
-  USVString <a title="dom-TextDecoder-decode" href="#dom-textdecoder-decode">decode</a>(optional BufferSource <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
+  readonly attribute DOMString <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a>;
+  readonly attribute boolean <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a>;
+  readonly attribute boolean <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a>;
+  USVString <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>(optional BufferSource <var title="">input</var>, optional <a href="#textdecodeoptions">TextDecodeOptions</a> <var title="">options</var>);
 };</pre>
 
 <p>A <a href="#textdecoder"><code>TextDecoder</code></a> object has an associated <b>encoding</b>, <b>decoder</b>,
@@ -1091,8 +1091,8 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
 <b>streaming flag</b> (initially unset).
 
 <p>A <a href="#textdecoder"><code>TextDecoder</code></a> object also has an associated
-<dfn title="concept-TD-serialize" id="concept-td-serialize">serialize stream</dfn> algorithm, that given a
-<a title="concept-stream" href="#concept-stream">stream</a> <var>stream</var>, runs these steps:
+<dfn id="concept-td-serialize" title="concept-TD-serialize">serialize stream</dfn> algorithm, that given a
+<a href="#concept-stream" title="concept-stream">stream</a> <var>stream</var>, runs these steps:
 
 <ol>
  <li><p>Let <var>output</var> be the empty <a href="#string">string</a>.
@@ -1102,7 +1102,7 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
 
   <ol>
    <li><p>Let <var>token</var> be the result of
-   <a title="concept-stream-read" href="#concept-stream-read">reading</a> from <var>stream</var>.
+   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>stream</var>.
 
    <li>
     <p>If <b>encoding</b> is one of <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, and
@@ -1132,45 +1132,45 @@ control.
 <hr>
 
 <dl class="domintro">
- <dt><code><var title="">decoder</var> = new <a title="dom-TextDecoder" href="#dom-textdecoder">TextDecoder</a>([<var title="">label</var> = "utf-8" [, <var title="">options</var>]])</code>
+ <dt><code><var title="">decoder</var> = new <a href="#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>([<var title="">label</var> = "utf-8" [, <var title="">options</var>]])</code>
  <dd>
   <p>Returns a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
   <p>If <var title="">label</var> is either not a <a href="#label">label</a> or is a
   <a href="#label">label</a> for <a href="#replacement">replacement</a>,
-  <a title="throw" data-anolis-spec="webidl" class="external" href="http://heycam.github.io/webidl/#dfn-throw">throws</a> a
+  <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
   <code>RangeError</code>.
 
- <dt><code><var title="">decoder</var> . <a title="dom-TextDecoder-encoding" href="#dom-textdecoder-encoding">encoding</a></code>
+ <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a></code>
  <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
 
- <dt><code><var title="">decoder</var> . <a title="dom-TextDecoder-fatal" href="#dom-textdecoder-fatal">fatal</a></code>
+ <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a></code>
  <dd><p>Returns true if <b>error mode</b> is <i>fatal</i>, and false otherwise.
 
- <dt><code><var title="">decoder</var> . <a title="dom-TextDecoder-ignoreBOM" href="#dom-textdecoder-ignorebom">ignoreBOM</a></code>
+ <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a></code>
  <dd><p>Returns true if <b>ignore BOM flag</b> is set, and false otherwise.
 
- <dt><code><var title="">decoder</var> . <a title="dom-TextDecoder-decode" href="#dom-textdecoder-decode">decode</a>([<var title="">input</var> [, <var title="">options</var>]])</code>
+ <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-decode" title="dom-TextDecoder-decode">decode</a>([<var title="">input</var> [, <var title="">options</var>]])</code>
  <dd>
   <p>Returns the result of running <b>encoding</b>'s <a href="#decoder">decoder</a>. If
   <var title="">options</var>'s <code title="">stream</code> is true, the method can be invoked
   multiple times to process a fragmented stream.
 
   <p>If the <b>error mode</b> is <i>fatal</i> and <b>encoding</b>'s <a href="#decoder">decoder</a>
-  returns <a href="#error">error</a>, <a title="throw" data-anolis-spec="webidl" class="external" href="http://heycam.github.io/webidl/#dfn-throw">throws</a> a
+  returns <a href="#error">error</a>, <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
   <code>TypeError</code>.
 </dl>
 
 <p>The
-<dfn title="dom-TextDecoder" id="dom-textdecoder"><code>TextDecoder(<var title="">label</var>, <var title="">options</var>)</code></dfn>
+<dfn id="dom-textdecoder" title="dom-TextDecoder"><code>TextDecoder(<var title="">label</var>, <var title="">options</var>)</code></dfn>
 constructor, when invoked, must run these steps:
 
 <ol>
  <li><p>Let <var title="">encoding</var> be the result of
- <a title="concept-encoding-get" href="#concept-encoding-get">getting an encoding</a> from
+ <a href="#concept-encoding-get" title="concept-encoding-get">getting an encoding</a> from
  <var title="">label</var>.
 
  <li><p>If <var title="">encoding</var> is failure or <a href="#replacement">replacement</a>,
- <a data-anolis-spec="webidl" class="external" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
+ <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
 
  <li><p>Let <var title="">dec</var> be a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
 
@@ -1186,56 +1186,56 @@ constructor, when invoked, must run these steps:
  <li><p>Return <var title="">dec</var>.
 </ol>
 
-<p>The <dfn title="dom-TextDecoder-encoding" id="dom-textdecoder-encoding"><code>encoding</code></dfn> attribute's getter
+<p>The <dfn id="dom-textdecoder-encoding" title="dom-TextDecoder-encoding"><code>encoding</code></dfn> attribute's getter
 must return <b>encoding</b>'s <a href="#name">name</a>.
 
-<p>The <dfn title="dom-TextDecoder-fatal" id="dom-textdecoder-fatal"><code>fatal</code></dfn> attribute's getter must
+<p>The <dfn id="dom-textdecoder-fatal" title="dom-TextDecoder-fatal"><code>fatal</code></dfn> attribute's getter must
 return true if <b>error mode</b> is <i>fatal</i>, and false otherwise.
 
-<p>The <dfn title="dom-TextDecoder-ignoreBOM" id="dom-textdecoder-ignorebom"><code>ignoreBOM</code></dfn> attribute's
+<p>The <dfn id="dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM"><code>ignoreBOM</code></dfn> attribute's
 getter must return true if <b>ignore BOM flag</b> is set, and false otherwise.
 
 <p>The
-<dfn title="dom-TextDecoder-decode" id="dom-textdecoder-decode"><code>decode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
+<dfn id="dom-textdecoder-decode" title="dom-TextDecoder-decode"><code>decode(<var title="">input</var>, <var title="">options</var>)</code></dfn>
 method, when invoked, must run these steps:
 
 <ol>
  <li><p>If the <b>streaming flag</b> is unset, set <b>decoder</b> to a new
  <b>encoding</b>'s <a href="#decoder">decoder</a>, set <b>stream</b> to a new
- <a title="concept-stream" href="#concept-stream">stream</a>, and unset the <b>BOM seen flag</b>.
+ <a href="#concept-stream" title="concept-stream">stream</a>, and unset the <b>BOM seen flag</b>.
 
  <li><p>If <var title="">options</var>'s <code title="">stream</code> is true, set the
  <b>streaming flag</b>, and unset the <b>streaming flag</b> otherwise.
 
- <li><p>If <var title="">input</var> is given, <a title="concept-stream-push" href="#concept-stream-push">push</a> a
- <a title="get a copy of the bytes held by the buffer source" data-anolis-spec="webidl" class="external" href="http://heycam.github.io/webidl/#dfn-get-buffer-source-copy">copy of</a>
+ <li><p>If <var title="">input</var> is given, <a href="#concept-stream-push" title="concept-stream-push">push</a> a
+ <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-get-buffer-source-copy" title="get a copy of the bytes held by the buffer source">copy of</a>
  <var title="">input</var> to <b>stream</b>.
 
- <li><p>Let <var>output</var> be a new <a title="concept-stream" href="#concept-stream">stream</a>.
+ <li><p>Let <var>output</var> be a new <a href="#concept-stream" title="concept-stream">stream</a>.
 
  <li>
   <p>While true:
 
   <ol>
    <li><p>Let <var>token</var> be the result of
-   <a title="concept-stream-read" href="#concept-stream-read">reading</a> from <b>stream</b>.
+   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <b>stream</b>.
 
    <li><p>If <var>token</var> is <a href="#end-of-stream">end-of-stream</a> and the <b>streaming flag</b>
-   is set, return <var>output</var>, <a title="concept-TD-serialize" href="#concept-td-serialize">serialized</a>.
+   is set, return <var>output</var>, <a href="#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
 
    <li>
     <p>Otherwise, run these subsubsteps:
 
     <ol>
      <li><p>Let <var>result</var> be the result of
-     <a title="concept-encoding-process" href="#concept-encoding-process">processing</a> <var>token</var> for
+     <a href="#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
      <b>decoder</b>, <b>stream</b>, <var>output</var>, and <b>error mode</b>.
 
      <li><p>If <var>result</var> is <a href="#finished">finished</a>, return <var>output</var>,
-     <a title="concept-TD-serialize" href="#concept-td-serialize">serialized</a>.
+     <a href="#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
 
      <li><p>Otherwise, if <var>result</var> is <a href="#error">error</a>,
-     <a title="throw" data-anolis-spec="webidl" class="external" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>TypeError</code>.
+     <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> a <code>TypeError</code>.
 
      <li><p>Otherwise, do nothing.
     </ol>
@@ -1245,11 +1245,11 @@ method, when invoked, must run these steps:
 
 <h3 id="interface-textencoder"><span class="secno">8.2 </span>Interface <code title="">TextEncoder</code></h3>
 
-<pre class="idl">[<a title="dom-TextEncoder" href="#dom-textencoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8"),
+<pre class="idl">[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var title="">utfLabel</var> = "utf-8"),
  Exposed=Window,Worker]
 interface <dfn id="textencoder">TextEncoder</dfn> {
-  readonly attribute DOMString <a title="dom-TextEncoder-encoding" href="#dom-textencoder-encoding">encoding</a>;
-  [NewObject] Uint8Array <a title="dom-TextEncoder-encode" href="#dom-textencoder-encode">encode</a>(optional USVString <var title="">input</var> = "");
+  readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
+  [NewObject] Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional USVString <var title="">input</var> = "");
 };</pre>
 
 <p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b> and <b>encoder</b>.
@@ -1260,33 +1260,33 @@ option as no <a href="#encoder">encoder</a> requires buffering of scalar values.
 <hr>
 
 <dl class="domintro">
- <dt><code><var title="">encoder</var> = new <a title="dom-TextEncoder" href="#dom-textencoder">TextEncoder</a>([<var title="">utfLabel</var> = "utf-8"])</code>
+ <dt><code><var title="">encoder</var> = new <a href="#dom-textencoder" title="dom-TextEncoder">TextEncoder</a>([<var title="">utfLabel</var> = "utf-8"])</code>
  <dd>
   <p>Returns a new <a href="#textencoder"><code>TextEncoder</code></a> object.
   <p>If <var title="">utfLabel</var> is not a <a href="#label">label</a> for
   <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, or <a href="#utf-16le">utf-16le</a>,
-  <a title="throw" data-anolis-spec="webidl" class="external" href="http://heycam.github.io/webidl/#dfn-throw">throws</a> a
+  <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
   <code>RangeError</code>.
 
- <dt><code><var title="">encoder</var> . <a title="dom-TextEncoder-encoding" href="#dom-textencoder-encoding">encoding</a></code>
+ <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a></code>
  <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
 
- <dt><code><var title="">encoder</var> . <a title="dom-TextEncoder-encode" href="#dom-textencoder-encode">encode</a>([<var title="">input</var> = ""])</code>
+ <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>([<var title="">input</var> = ""])</code>
  <dd><p>Returns the result of running <b>encoding</b>'s <a href="#encoder">encoder</a>.
 </dl>
 
 <p>The
-<dfn title="dom-TextEncoder" id="dom-textencoder"><code>TextEncoder(<var title="">utfLabel</var>)</code></dfn>
+<dfn id="dom-textencoder" title="dom-TextEncoder"><code>TextEncoder(<var title="">utfLabel</var>)</code></dfn>
 constructor, when invoked, must run these steps:
 
 <ol>
  <li><p>Let <var title="">encoding</var> be the result of
- <a title="concept-encoding-get" href="#concept-encoding-get">getting an encoding</a> from
+ <a href="#concept-encoding-get" title="concept-encoding-get">getting an encoding</a> from
  <var title="">utfLabel</var>.
 
  <li><p>If <var title="">encoding</var> is failure, or is none of
  <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, and <a href="#utf-16le">utf-16le</a>,
- <a data-anolis-spec="webidl" class="external" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
+ <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
 
  <li><p>Let <var title="">enc</var> be a new <a href="#textencoder"><code>TextEncoder</code></a> object.
 
@@ -1298,27 +1298,27 @@ constructor, when invoked, must run these steps:
  <li><p>Return <var title="">enc</var>.
 </ol>
 
-<p>The <dfn title="dom-TextEncoder-encoding" id="dom-textencoder-encoding"><code>encoding</code></dfn>
+<p>The <dfn id="dom-textencoder-encoding" title="dom-TextEncoder-encoding"><code>encoding</code></dfn>
 attribute's getter must return <b>encoding</b>'s <a href="#name">name</a>.
 
 <p>The
-<dfn title="dom-TextEncoder-encode" id="dom-textencoder-encode"><code>encode(<var title="">input</var>)</code></dfn>
+<dfn id="dom-textencoder-encode" title="dom-TextEncoder-encode"><code>encode(<var title="">input</var>)</code></dfn>
 method, when invoked, must run these steps:
 
 <ol>
- <li><p>Convert <var>input</var> to a <a title="concept-stream" href="#concept-stream">stream</a>.
+ <li><p>Convert <var>input</var> to a <a href="#concept-stream" title="concept-stream">stream</a>.
 
- <li><p>Let <var>output</var> be a new <a title="concept-stream" href="#concept-stream">stream</a>.
+ <li><p>Let <var>output</var> be a new <a href="#concept-stream" title="concept-stream">stream</a>.
 
  <li>
   <p>While true, run these substeps:
 
   <ol>
    <li><p>Let <var>token</var> be the result of
-   <a title="concept-stream-read" href="#concept-stream-read">reading</a> from <var>input</var>.
+   <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>input</var>.
 
    <li><p>Let <var>result</var> be the result of
-   <a title="concept-encoding-process" href="#concept-encoding-process">processing</a> <var>token</var> for
+   <a href="#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
    <b>encoder</b>, <var>input</var>, <var>output</var>.
 
    <li>
@@ -1327,7 +1327,7 @@ method, when invoked, must run these steps:
     <code title="">ArrayBuffer</code> containing <var title="">output</var>.
     <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
 
-    <p class="note">These <a title="encoding" href="#encoding">encodings</a> cannot return
+    <p class="note">These <a href="#encoding" title="encoding">encodings</a> cannot return
     <a href="#error">error</a>.
   </ol>
 </ol>
@@ -1414,7 +1414,7 @@ method, when invoked, must run these steps:
    set <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80, and set
    <a href="#utf-8-upper-boundary">utf-8 upper boundary</a> to 0xBF.
 
-   <li><p><a title="concept-stream-prepend" href="#concept-stream-prepend">Prepend</a> <var title="">byte</var> to
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <var title="">byte</var> to
    <var>stream</var>.
 
    <li><p>Return <a href="#error">error</a>.
@@ -1495,12 +1495,12 @@ achieve the same result are obviously fine, even encouraged).
 
 <p>An <a href="#encoding">encoding</a> where each byte is either a single code point or
 nothing, is a <dfn id="single-byte-encoding">single-byte encoding</dfn>.
-<a title="single-byte encoding" href="#single-byte-encoding">Single-byte encodings</a> share the
+<a href="#single-byte-encoding" title="single-byte encoding">Single-byte encodings</a> share the
 <a href="#decoder">decoder</a> and <a href="#encoder">encoder</a>. <dfn id="index-single-byte">Index single-byte</dfn>,
 as referenced by the <a href="#single-byte-decoder">single-byte decoder</a> and
 <a href="#single-byte-encoder">single-byte encoder</a>,  is defined by the following table, and
 depends on the <a href="#single-byte-encoding">single-byte encoding</a> in use. All but two
-<a title="single-byte encoding" href="#single-byte-encoding">single-byte encodings</a> have a
+<a href="#single-byte-encoding" title="single-byte encoding">single-byte encodings</a> have a
 unique <a href="#index">index</a>.
 
 <table>
@@ -1536,7 +1536,7 @@ unique <a href="#index">index</a>.
 </table>
 
 <p class="note"><a href="#iso-8859-8">iso-8859-8</a> and <a href="#iso-8859-8-i">iso-8859-8-i</a> are
-distinct <a href="#encoding">encoding</a> <a title="name" href="#name">names</a>, because
+distinct <a href="#encoding">encoding</a> <a href="#name" title="name">names</a>, because
 <a href="#iso-8859-8">iso-8859-8</a> has influence on the layout direction. And although
 historically this might have been the case for <a href="#iso-8859-6">iso-8859-6</a> and
 "iso-8859-6-i" as well, that is no longer true.
@@ -1544,7 +1544,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 <h3 id="single-byte-decoder"><span class="secno">10.1 </span><dfn>single-byte decoder</dfn></h3>
 
-<p><a title="single-byte encoding" href="#single-byte-encoding">Single-byte encodings</a>'s
+<p><a href="#single-byte-encoding" title="single-byte encoding">Single-byte encodings</a>'s
 <a href="#decoder">decoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">byte</var>, runs these steps:
 
@@ -1565,7 +1565,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
 
 <h3 id="single-byte-encoder"><span class="secno">10.2 </span><dfn>single-byte encoder</dfn></h3>
 
-<p><a title="single-byte encoding" href="#single-byte-encoding">Single-byte encodings</a>'s
+<p><a href="#single-byte-encoding" title="single-byte encoding">Single-byte encodings</a>'s
 <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">code point</var>, runs these steps:
 
@@ -1645,7 +1645,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <a href="#gb18030-third">gb18030 third</a> to 0x00.
 
    <li><p>If <var title="">code point</var> is null,
-   <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var>buffer</var> to
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>buffer</var> to
    <var>stream</var> and return <a href="#error">error</a>.
 
    <li><p>Return a code point whose value is <var title="">code point</var>.
@@ -1658,7 +1658,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
    <a href="#gb18030-third">gb18030 third</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
-   <li><p><a title="concept-stream-prepend" href="#concept-stream-prepend">Prepend</a> <a href="#gb18030-second">gb18030 second</a>
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <a href="#gb18030-second">gb18030 second</a>
    followed by <var title="">byte</var> to <var>stream</var>, set
    <a href="#gb18030-first">gb18030 first</a> and <a href="#gb18030-second">gb18030 second</a> to 0x00, and return
    <a href="#error">error</a>.
@@ -1686,7 +1686,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    for <var title="">pointer</var> in <a href="#index-gb18030">index gb18030</a> otherwise.
 
    <li><p>If <var title="">pointer</var> is null,
-   <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">byte</var> to
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
    <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
@@ -1827,7 +1827,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
     </table>
     <!-- we do this to avoid PUA -->
 
-    <p class="note">Since <a title="index" href="#index">indexes</a> are limited to
+    <p class="note">Since <a href="#index" title="index">indexes</a> are limited to
     single code points this table is used for these pointers.
 
    <li><p>Let <var title="">code point</var> be null if
@@ -1835,7 +1835,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    for <var title="">pointer</var> in <a href="#index-big5">index big5</a> otherwise.
 
    <li><p>If <var title="">pointer</var> is null and <var title="">byte</var> is in the range
-   0x00 to 0x7F, <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">byte</var>
+   0x00 to 0x7F, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var>
    to <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
@@ -1894,7 +1894,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 <h2 id="legacy-multi-byte-japanese-encodings"><span class="secno">13 </span>Legacy multi-byte Japanese encodings</h2>
 
 <h3 id="euc-jp"><span class="secno">13.1 </span><dfn>euc-jp</dfn></h3>
-<!-- http://www.iana.org/assignments/charset-reg/CP51932 -->
+<!-- https://www.iana.org/assignments/charset-reg/CP51932 -->
 
 <h4 id="euc-jp-decoder"><span class="secno">13.1.1 </span><dfn>euc-jp decoder</dfn></h4>
 
@@ -1939,7 +1939,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <li><p>Unset the <a href="#euc-jp-jis0212-flag">euc-jp jis0212 flag</a>.
 
    <li><p>If <var title="">byte</var> is not in the range 0xA1 to 0xFE,
-   <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">byte</var> to
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
    <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
@@ -2003,9 +2003,9 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
 <p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#decoder">decoder</a> has an associated
 <dfn id="iso-2022-jp-decoder-state">iso-2022-jp decoder state</dfn> (initially
-<a title="iso-2022-jp decoder ASCII" href="#iso-2022-jp-decoder-ascii">ASCII</a>),
+<a href="#iso-2022-jp-decoder-ascii" title="iso-2022-jp decoder ASCII">ASCII</a>),
 <dfn id="iso-2022-jp-decoder-output-state">iso-2022-jp decoder output state</dfn> (initially
-<a title="iso-2022-jp decoder ASCII" href="#iso-2022-jp-decoder-ascii">ASCII</a>),
+<a href="#iso-2022-jp-decoder-ascii" title="iso-2022-jp decoder ASCII">ASCII</a>),
 <dfn id="iso-2022-jp-lead">iso-2022-jp lead</dfn> (initially 0x00), and
 <dfn id="iso-2022-jp-output-flag">iso-2022-jp output flag</dfn> (initially unset).
 
@@ -2014,14 +2014,14 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a>:
 
 <dl class="switch">
- <dt><dfn title="iso-2022-jp decoder ASCII" id="iso-2022-jp-decoder-ascii">ASCII</dfn>
+ <dt><dfn id="iso-2022-jp-decoder-ascii" title="iso-2022-jp decoder ASCII">ASCII</dfn>
  <dd>
   <p>Based on <var title="">byte</var>:
 
   <dl class="switch">
    <dt>0x1B
    <dd><p>Set <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-   <a title="iso-2022-jp decoder escape start" href="#iso-2022-jp-decoder-escape-start">escape start</a> and return
+   <a href="#iso-2022-jp-decoder-escape-start" title="iso-2022-jp decoder escape start">escape start</a> and return
    <a href="#continue">continue</a>.
 
    <dt>0x00 to 0x7F, excluding 0x0E, 0x0F, and 0x1B
@@ -2035,14 +2035,14 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <dd><p>Unset the <a href="#iso-2022-jp-output-flag">iso-2022-jp output flag</a> and return <a href="#error">error</a>.
   </dl>
 
- <dt><dfn title="iso-2022-jp decoder Roman" id="iso-2022-jp-decoder-roman">Roman</dfn>
+ <dt><dfn id="iso-2022-jp-decoder-roman" title="iso-2022-jp decoder Roman">Roman</dfn>
  <dd>
   <p>Based on <var title="">byte</var>:
 
   <dl class="switch">
    <dt>0x1B
    <dd><p>Set <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-   <a title="iso-2022-jp decoder escape start" href="#iso-2022-jp-decoder-escape-start">escape start</a> and return
+   <a href="#iso-2022-jp-decoder-escape-start" title="iso-2022-jp decoder escape start">escape start</a> and return
    <a href="#continue">continue</a>.
 
    <dt>0x5C
@@ -2062,13 +2062,13 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <dd><p>Unset the <a href="#iso-2022-jp-output-flag">iso-2022-jp output flag</a> and return <a href="#error">error</a>.
   </dl>
 
- <dt><dfn title="iso-2022-jp decoder Katakana" id="iso-2022-jp-decoder-katakana">Katakana</dfn>
+ <dt><dfn id="iso-2022-jp-decoder-katakana" title="iso-2022-jp decoder Katakana">Katakana</dfn>
  <dd>
   <p>Based on <var title="">byte</var>:
   <dl class="switch">
    <dt>0x1B
    <dd><p>Set <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-   <a title="iso-2022-jp decoder escape start" href="#iso-2022-jp-decoder-escape-start">escape start</a> and return
+   <a href="#iso-2022-jp-decoder-escape-start" title="iso-2022-jp decoder escape start">escape start</a> and return
    <a href="#continue">continue</a>.
 
    <dt>0x21 to 0x5F
@@ -2083,20 +2083,20 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <dd><p>Unset the <a href="#iso-2022-jp-output-flag">iso-2022-jp output flag</a> and return <a href="#error">error</a>.
   </dl>
 
- <dt><dfn title="iso-2022-jp decoder lead byte" id="iso-2022-jp-decoder-lead-byte">Lead byte</dfn>
+ <dt><dfn id="iso-2022-jp-decoder-lead-byte" title="iso-2022-jp decoder lead byte">Lead byte</dfn>
  <dd>
   <p>Based on <var title="">byte</var>:
   <dl class="switch">
    <dt>0x1B
    <dd><p>Set <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-   <a title="iso-2022-jp decoder escape start" href="#iso-2022-jp-decoder-escape-start">escape start</a> and return
+   <a href="#iso-2022-jp-decoder-escape-start" title="iso-2022-jp decoder escape start">escape start</a> and return
    <a href="#continue">continue</a>.
 
    <dt>0x21 to 0x7E
    <dd><p>Unset the <a href="#iso-2022-jp-output-flag">iso-2022-jp output flag</a>, set
    <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to <var title="">byte</var>,
    <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-   <a title="iso-2022-jp decoder trail byte" href="#iso-2022-jp-decoder-trail-byte">trail byte</a>, and return
+   <a href="#iso-2022-jp-decoder-trail-byte" title="iso-2022-jp decoder trail byte">trail byte</a>, and return
    <a href="#continue">continue</a>.
 
    <dt><a href="#end-of-stream">end-of-stream</a>
@@ -2106,13 +2106,13 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <dd><p>Unset the <a href="#iso-2022-jp-output-flag">iso-2022-jp output flag</a> and return <a href="#error">error</a>.
   </dl>
 
- <dt><dfn title="iso-2022-jp decoder trail byte" id="iso-2022-jp-decoder-trail-byte">Trail byte</dfn>
+ <dt><dfn id="iso-2022-jp-decoder-trail-byte" title="iso-2022-jp decoder trail byte">Trail byte</dfn>
  <dd>
   <p>Based on <var title="">byte</var>:
   <dl class="switch">
    <dt>0x1B
    <dd><p>Set <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-   <a title="iso-2022-jp decoder escape start" href="#iso-2022-jp-decoder-escape-start">escape start</a> and return
+   <a href="#iso-2022-jp-decoder-escape-start" title="iso-2022-jp decoder escape start">escape start</a> and return
    <a href="#error">error</a>.
    <!-- iso-2022-jp decoder output state is still lead byte -->
 
@@ -2120,7 +2120,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <dd>
     <ol>
      <li><p>Set the <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-     <a title="iso-2022-jp decoder lead byte" href="#iso-2022-jp-decoder-lead-byte">lead byte</a>.
+     <a href="#iso-2022-jp-decoder-lead-byte" title="iso-2022-jp decoder lead byte">lead byte</a>.
 
      <li><p>Let <var title="">pointer</var> be
      (<a href="#iso-2022-jp-lead">iso-2022-jp lead</a> − 0x21) × 94 + <var title="">byte</var> − 0x21.
@@ -2135,27 +2135,27 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
    <dt><a href="#end-of-stream">end-of-stream</a>
    <dd><p>Set the <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-   <a title="iso-2022-jp decoder lead byte" href="#iso-2022-jp-decoder-lead-byte">lead byte</a>,
-   <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">byte</var> to
+   <a href="#iso-2022-jp-decoder-lead-byte" title="iso-2022-jp decoder lead byte">lead byte</a>,
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
    <var>stream</var>, and return <a href="#error">error</a>.
 
    <dt>Otherwise
    <dd><p>Set <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-   <a title="iso-2022-jp decoder lead byte" href="#iso-2022-jp-decoder-lead-byte">lead byte</a> and return
+   <a href="#iso-2022-jp-decoder-lead-byte" title="iso-2022-jp decoder lead byte">lead byte</a> and return
    <a href="#error">error</a>.
    <!-- iso-2022-jp decoder output state is still lead byte -->
   </dl>
 
- <dt><dfn title="iso-2022-jp decoder escape start" id="iso-2022-jp-decoder-escape-start">Escape start</dfn>
+ <dt><dfn id="iso-2022-jp-decoder-escape-start" title="iso-2022-jp decoder escape start">Escape start</dfn>
  <dd>
   <ol>
    <li><p>If <var title="">byte</var> is either <!--$-->0x24 or <!--(-->0x28, set
    <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> to <var title="">byte</var>,
    <a href="#iso-2022-jp-decoder-state">iso-2022-jp decoder state</a> to
-   <a title="iso-2022-jp decoder escape" href="#iso-2022-jp-decoder-escape">escape</a>, and return
+   <a href="#iso-2022-jp-decoder-escape" title="iso-2022-jp decoder escape">escape</a>, and return
    <a href="#continue">continue</a>.
 
-   <li><p><a title="concept-stream-prepend" href="#concept-stream-prepend">Prepend</a> <var title="">byte</var> to
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <var title="">byte</var> to
    <var>stream</var>.
 
    <li><p>Unset the <a href="#iso-2022-jp-output-flag">iso-2022-jp output flag</a>, set
@@ -2163,7 +2163,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <a href="#iso-2022-jp-decoder-output-state">iso-2022-jp decoder output state</a>, and return <a href="#error">error</a>.
   </ol>
 
- <dt><dfn title="iso-2022-jp decoder escape" id="iso-2022-jp-decoder-escape">Escape</dfn>
+ <dt><dfn id="iso-2022-jp-decoder-escape" title="iso-2022-jp decoder escape">Escape</dfn>
  <dd>
   <ol>
    <li><p>Let <var>lead</var> be <a href="#iso-2022-jp-lead">iso-2022-jp lead</a> and set
@@ -2172,17 +2172,17 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <li><p>Let <var>state</var> be null.
 
    <li><p>If <var>lead</var> is 0x28 and <var title="">byte</var> is 0x42<!--B-->, set
-   <var>state</var> to <a title="iso-2022-jp decoder ASCII" href="#iso-2022-jp-decoder-ascii">ASCII</a>.
+   <var>state</var> to <a href="#iso-2022-jp-decoder-ascii" title="iso-2022-jp decoder ASCII">ASCII</a>.
 
    <li><p>If <var>lead</var> is 0x28 and <var title="">byte</var> is 0x4A<!--J-->, set
-   <var>state</var> to <a title="iso-2022-jp decoder Roman" href="#iso-2022-jp-decoder-roman">Roman</a>.
+   <var>state</var> to <a href="#iso-2022-jp-decoder-roman" title="iso-2022-jp decoder Roman">Roman</a>.
 
    <li><p>If <var>lead</var> is 0x28 and <var title="">byte</var> is 0x49<!--I-->, set
-   <var>state</var> to <a title="iso-2022-jp decoder Katakana" href="#iso-2022-jp-decoder-katakana">Katakana</a>.
+   <var>state</var> to <a href="#iso-2022-jp-decoder-katakana" title="iso-2022-jp decoder Katakana">Katakana</a>.
 
    <li><p>If <var>lead</var> is 0x24 and <var title="">byte</var> is either
    0x40<!--@--> or 0x42<!--B-->, set <var>state</var> to
-   <a title="iso-2022-jp decoder lead byte" href="#iso-2022-jp-decoder-lead-byte">lead byte</a>.
+   <a href="#iso-2022-jp-decoder-lead-byte" title="iso-2022-jp decoder lead byte">lead byte</a>.
 
    <li>
     <p>If <var>state</var> is non-null, run these substeps:
@@ -2199,7 +2199,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
      <a href="#error">error</a> otherwise.
     </ol>
 
-   <li><p><a title="concept-stream-prepend" href="#concept-stream-prepend">Prepend</a>
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a>
    <var>lead</var> and <var title="">byte</var> to <var>stream</var>.
 
    <li><p>Unset the <a href="#iso-2022-jp-output-flag">iso-2022-jp output flag</a>, set
@@ -2213,10 +2213,10 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
 <p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#encoder">encoder</a> has an associated
 <dfn id="iso-2022-jp-encoder-state">iso-2022-jp encoder state</dfn> which is one of
-<dfn title="iso-2022-jp encoder ASCII" id="iso-2022-jp-encoder-ascii">ASCII</dfn>,
-<dfn title="iso-2022-jp encoder Roman" id="iso-2022-jp-encoder-roman">Roman</dfn>, and
-<dfn title="iso-2022-jp encoder jis0208" id="iso-2022-jp-encoder-jis0208">jis0208</dfn> (initially
-<a title="iso-2022-jp encoder ASCII" href="#iso-2022-jp-encoder-ascii">ASCII</a>).
+<dfn id="iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</dfn>,
+<dfn id="iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</dfn>, and
+<dfn id="iso-2022-jp-encoder-jis0208" title="iso-2022-jp encoder jis0208">jis0208</dfn> (initially
+<a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>).
 
 <p><a href="#iso-2022-jp">iso-2022-jp</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
 <var>stream</var> and <var title="">code point</var>, runs these steps:
@@ -2224,23 +2224,23 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 <ol>
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a> and
  <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is not
- <a title="iso-2022-jp encoder ASCII" href="#iso-2022-jp-encoder-ascii">ASCII</a>,
- <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">code point</var> to
+ <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>,
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">code point</var> to
  <var>stream</var>, set <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> to
- <a title="iso-2022-jp encoder ASCII" href="#iso-2022-jp-encoder-ascii">ASCII</a>, and return three bytes
+ <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>, and return three bytes
  0x1B 0x28 0x42.
 
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a> and
  <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is
- <a title="iso-2022-jp encoder ASCII" href="#iso-2022-jp-encoder-ascii">ASCII</a>, return <a href="#finished">finished</a>.
+ <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>, return <a href="#finished">finished</a>.
 
  <li><p>If <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is
- <a title="iso-2022-jp encoder ASCII" href="#iso-2022-jp-encoder-ascii">ASCII</a> and <var title="">code point</var> is
+ <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a> and <var title="">code point</var> is
  in the range U+0000 to U+007F, return a byte whose value is <var title="">code point</var>.
 
  <li>
   <p>If <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is
-  <a title="iso-2022-jp encoder Roman" href="#iso-2022-jp-encoder-roman">Roman</a> and <var title="">code point</var> is
+  <a href="#iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</a> and <var title="">code point</var> is
   in the range U+0000 to U+007F, excluding U+005C and U+007E, or is U+00A5 or U+203E, run
   these substeps:
 
@@ -2255,18 +2255,18 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, and
  <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is not
- <a title="iso-2022-jp encoder ASCII" href="#iso-2022-jp-encoder-ascii">ASCII</a>,
- <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">code point</var> to
+ <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>,
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">code point</var> to
  <var>stream</var>, set <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> to
- <a title="iso-2022-jp encoder ASCII" href="#iso-2022-jp-encoder-ascii">ASCII</a>, and return three bytes
+ <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>, and return three bytes
  0x1B 0x28 0x42.
 
  <li><p>If <var title="">code point</var> is either U+00A5 or U+203E, and
  <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is not
- <a title="iso-2022-jp encoder Roman" href="#iso-2022-jp-encoder-roman">Roman</a>,
- <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">code point</var> to
+ <a href="#iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</a>,
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">code point</var> to
  <var>stream</var>, set <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> to
- <a title="iso-2022-jp encoder Roman" href="#iso-2022-jp-encoder-roman">Roman</a>, and return three bytes
+ <a href="#iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</a>, and return three bytes
  0x1B 0x28 0x4A.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
@@ -2276,10 +2276,10 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <var title="">code point</var>.
 
  <li><p>If <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is not
- <a title="iso-2022-jp encoder jis0208" href="#iso-2022-jp-encoder-jis0208">jis0208</a>,
- <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">code point</var> to
+ <a href="#iso-2022-jp-encoder-jis0208" title="iso-2022-jp encoder jis0208">jis0208</a>,
+ <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">code point</var> to
  <var>stream</var>, set <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> to
- <a title="iso-2022-jp encoder jis0208" href="#iso-2022-jp-encoder-jis0208">jis0208</a>, and return three bytes
+ <a href="#iso-2022-jp-encoder-jis0208" title="iso-2022-jp encoder jis0208">jis0208</a>, and return three bytes
  0x1B 0x24 0x42.
 
  <li><p>Let <var>lead</var> be <var title="">pointer</var> / 94 + 0x21.
@@ -2338,7 +2338,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
     <!-- PUA -->
 
    <li><p>If <var title="">pointer</var> is null,
-   <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">byte</var> to
+   <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
    <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
@@ -2439,7 +2439,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <a href="#index-euc-kr">index euc-kr</a> otherwise.
 
    <li><p>If <var title="">pointer</var> is null and <var title="">byte</var> is in the range
-   0x00 to 0x7F, <a title="concept-stream-prepend" href="#concept-stream-prepend">prepend</a> <var title="">byte</var>
+   0x00 to 0x7F, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var>
    to <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
@@ -2489,7 +2489,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 <h3 id="replacement"><span class="secno">15.1 </span><dfn>replacement</dfn></h3>
 
 <p class="note">The <a href="#replacement">replacement</a> <a href="#encoding">encoding</a> exists to prevent certain
-attacks that abuse a mismatch between <a title="encoding" href="#encoding">encodings</a> supported on
+attacks that abuse a mismatch between <a href="#encoding" title="encoding">encodings</a> supported on
 the server and the client.
 
 
@@ -2584,8 +2584,8 @@ and <var title="">byte</var>, runs these steps:
    a code point whose value is
    0x10000 + ((<var>lead surrogate</var> − 0xD800) &lt;&lt; 10) + (<var title="">code unit</var> − 0xDC00).
 
-   <li><p><a title="concept-stream-prepend" href="#concept-stream-prepend">Prepend</a> the sequence resulting of
-   <a title="convert a code unit to bytes" href="#convert-a-code-unit-to-bytes">converting <var title="">code unit</var> to bytes</a>
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> the sequence resulting of
+   <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code unit</var> to bytes</a>
    using <a href="#utf-16be-decoder-flag">utf-16be decoder flag</a> to <var>stream</var> and return
    <a href="#error">error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
@@ -2617,17 +2617,17 @@ and <var title="">code point</var>, runs these steps:
 
  <li><p>If <var title="">code point</var> is in the range U+0000 to U+FFFF, return the
  sequence resulting of
- <a title="convert a code unit to bytes" href="#convert-a-code-unit-to-bytes">converting <var title="">code point</var> to bytes</a>
+ <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>
  using <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a>.
 
  <li><p>Let <var>lead</var> be
  ((<var title="">code point</var> − 0x10000) &gt;&gt; 10) + 0xD800,
- <a title="convert a code unit to bytes" href="#convert-a-code-unit-to-bytes">converted to bytes</a> using
+ <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
  <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a>.
 
  <li><p>Let <var>trail</var> be
  ((<var title="">code point</var> − 0x10000) &amp; 0x3FF) + 0xDC00,
- <a title="convert a code unit to bytes" href="#convert-a-code-unit-to-bytes">converted to bytes</a> using
+ <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
  <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a>.
 
  <li><p>Return a byte sequence of <var>lead</var> followed by <var>trail</var>.
@@ -2651,7 +2651,7 @@ its <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a> set.
 <h3 id="utf-16le"><span class="secno">15.4 </span><dfn>utf-16le</dfn></h3>
 
 <p class="note no-backref">Both "<code title="">utf-16</code>" and
-"<code title="">utf-16le</code>" are <a title="label" href="#label">labels</a> for
+"<code title="">utf-16le</code>" are <a href="#label" title="label">labels</a> for
 <a href="#utf-16le">utf-16le</a> to deal with deployed content.
 
 
@@ -2818,12 +2818,12 @@ Vyacheslav Matva, and
 for being awesome.
 
 <p>This standard is written by
-<a lang="nl" href="//annevankesteren.nl/">Anne van Kesteren</a>
+<a href="//annevankesteren.nl/" lang="nl">Anne van Kesteren</a>
 (<a href="//www.mozilla.org/">Mozilla</a>,
 <a href="mailto:annevk@annevk.nl">annevk@annevk.nl</a>). The <a href="#api">API</a> chapter
 was initially written by Joshua Bell (<a href="//www.google.com/">Google</a>).
 
-<p>Per <a rel="license" href="//creativecommons.org/publicdomain/zero/1.0/">CC0</a>, to
+<p>Per <a href="//creativecommons.org/publicdomain/zero/1.0/" rel="license">CC0</a>, to
 the extent possible under law, the editors have waived all copyright and related or
 neighboring rights to this work.
 
