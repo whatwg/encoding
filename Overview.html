@@ -1,13 +1,13 @@
 <!DOCTYPE html><html lang="en-US"><meta charset="utf-8">
 <title>Encoding Standard</title>
-<link href="//whatwg.org/style/specification" rel="stylesheet">
-<link href="//resources.whatwg.org/logo-encoding.svg" rel="icon">
+<link href="https://whatwg.org/style/specification" rel="stylesheet">
+<link href="https://resources.whatwg.org/logo-encoding.svg" rel="icon">
 
 <div class="head">
 
-<p><a class="logo" href="//whatwg.org/"><img alt="WHATWG" height="100" src="//resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
+<p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-17-march-2015">Living Standard — Last Updated 17 March 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-13-april-2015">Living Standard — Last Updated 13 April 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -1137,7 +1137,7 @@ control.
   <p>Returns a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
   <p>If <var title="">label</var> is either not a <a href="#label">label</a> or is a
   <a href="#label">label</a> for <a href="#replacement">replacement</a>,
-  <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
+  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
   <code>RangeError</code>.
 
  <dt><code><var title="">decoder</var> . <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a></code>
@@ -1156,7 +1156,7 @@ control.
   multiple times to process a fragmented stream.
 
   <p>If the <b>error mode</b> is <i>fatal</i> and <b>encoding</b>'s <a href="#decoder">decoder</a>
-  returns <a href="#error">error</a>, <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
+  returns <a href="#error">error</a>, <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
   <code>TypeError</code>.
 </dl>
 
@@ -1170,7 +1170,7 @@ constructor, when invoked, must run these steps:
  <var title="">label</var>.
 
  <li><p>If <var title="">encoding</var> is failure or <a href="#replacement">replacement</a>,
- <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
+ <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
 
  <li><p>Let <var title="">dec</var> be a new <a href="#textdecoder"><code>TextDecoder</code></a> object.
 
@@ -1208,7 +1208,7 @@ method, when invoked, must run these steps:
  <b>streaming flag</b>, and unset the <b>streaming flag</b> otherwise.
 
  <li><p>If <var title="">input</var> is given, <a href="#concept-stream-push" title="concept-stream-push">push</a> a
- <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-get-buffer-source-copy" title="get a copy of the bytes held by the buffer source">copy of</a>
+ <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy" title="get a copy of the bytes held by the buffer source">copy of</a>
  <var title="">input</var> to <b>stream</b>.
 
  <li><p>Let <var>output</var> be a new <a href="#concept-stream" title="concept-stream">stream</a>.
@@ -1235,7 +1235,7 @@ method, when invoked, must run these steps:
      <a href="#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
 
      <li><p>Otherwise, if <var>result</var> is <a href="#error">error</a>,
-     <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> a <code>TypeError</code>.
+     <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> a <code>TypeError</code>.
 
      <li><p>Otherwise, do nothing.
     </ol>
@@ -1265,7 +1265,7 @@ option as no <a href="#encoder">encoder</a> requires buffering of scalar values.
   <p>Returns a new <a href="#textencoder"><code>TextEncoder</code></a> object.
   <p>If <var title="">utfLabel</var> is not a <a href="#label">label</a> for
   <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, or <a href="#utf-16le">utf-16le</a>,
-  <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
+  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
   <code>RangeError</code>.
 
  <dt><code><var title="">encoder</var> . <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a></code>
@@ -1286,7 +1286,7 @@ constructor, when invoked, must run these steps:
 
  <li><p>If <var title="">encoding</var> is failure, or is none of
  <a href="#utf-8">utf-8</a>, <a href="#utf-16be">utf-16be</a>, and <a href="#utf-16le">utf-16le</a>,
- <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
+ <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
 
  <li><p>Let <var title="">enc</var> be a new <a href="#textencoder"><code>TextEncoder</code></a> object.
 
@@ -1708,7 +1708,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
 <h4 id="gb18030-encoder"><span class="secno">11.2.2 </span><dfn>gb18030 encoder</dfn></h4>
 
-<p><a href="#gb18030">gb18030</a>'s <a href="#decoder">decoder</a> has an associated <dfn id="gbk-flag">gbk flag</dfn>
+<p><a href="#gb18030">gb18030</a>'s <a href="#encoder">encoder</a> has an associated <dfn id="gbk-flag">gbk flag</dfn>
 (initially unset).
 
 <p><a href="#gb18030">gb18030</a>'s <a href="#encoder">encoder</a>'s <a href="#handler">handler</a>, given a
@@ -2734,7 +2734,7 @@ issues. Browsers also should disable this feature if the resource was decoded us
 <dd>(Non-normative) <cite><a href="https://html.spec.whatwg.org/multipage/">HTML</a></cite>, Ian Hickson. WHATWG.
 
 <dt id="refsRFC2119">[RFC2119]
-<dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
+<dd><cite><a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
 
 <dt id="refsUNICODE">[UNICODE]
 <dd><cite><a href="http://www.unicode.org/versions/latest/">Unicode Standard</a></cite>. Unicode Consortium.
@@ -2743,7 +2743,7 @@ issues. Browsers also should disable this feature if the resource was decoded us
 <dd>(Non-normative) <cite><a href="https://url.spec.whatwg.org/">URL</a></cite>, Anne van Kesteren. WHATWG.
 
 <dt id="refsWEBIDL">[WEBIDL]
-<dd><cite><a href="http://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
+<dd><cite><a href="https://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
 
 <dt id="refsXML">[XML]
 <dd>(Non-normative) <cite><a href="http://www.w3.org/TR/xml/">Extensible Markup Language</a></cite>, Tim Bray, Jean Paoli, C. M. Sperberg-McQueen et al.. W3C.
@@ -2763,6 +2763,7 @@ today.
 Alan Chaney,
 Alexander Shtuchkin,
 Allen Wirfs-Brock,
+Aneesh Agrawal,
 Arkadiusz Michalski,
 Asmus Freytag,
 Ben Noordhuis,
