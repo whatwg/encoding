@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-17-june-2015">Living Standard — Last Updated 17 June 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-16-august-2015">Living Standard — Last Updated 16 August 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -165,7 +165,7 @@ would be U+FFFD U+0022.
 <p>This is a larger issue for encodings that map anything in the 0x00 to 0x7F byte range
 to something other than U+0000 to U+007F, when there is no lead byte present. These are
 “ASCII-incompatible” encodings and other than <a href="#iso-2022-jp">iso-2022-jp</a>,
-<a href="#utf-16be">utf-16be</a>, and <span>utf16-le</span>, which are unfortunately required due to
+<a href="#utf-16be">utf-16be</a>, and <a href="#utf-16le">utf-16le</a>, which are unfortunately required due to
 deployed content, they are not supported. (Investigation is
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21057" title="Introduce additional labels for the replacement encoding">ongoing</a>
 whether more labels of other such encodings can be mapped to the <a href="#replacement">replacement</a>

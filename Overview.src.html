@@ -79,7 +79,7 @@ would be U+FFFD U+0022.
 <p>This is a larger issue for encodings that map anything in the 0x00 to 0x7F byte range
 to something other than U+0000 to U+007F, when there is no lead byte present. These are
 “ASCII-incompatible” encodings and other than <span>iso-2022-jp</span>,
-<span>utf-16be</span>, and <span>utf16-le</span>, which are unfortunately required due to
+<span>utf-16be</span>, and <span>utf-16le</span>, which are unfortunately required due to
 deployed content, they are not supported. (Investigation is
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21057" title="Introduce additional labels for the replacement encoding">ongoing</a>
 whether more labels of other such encodings can be mapped to the <span>replacement</span>
