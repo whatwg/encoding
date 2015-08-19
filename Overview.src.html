@@ -1601,8 +1601,8 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
    <var title>pointer</var> is null and the <span>index code point</span>
    for <var title>pointer</var> in <span>index gb18030</span> otherwise.
 
-   <li><p>If <var title>pointer</var> is null,
-   <span title=concept-stream-prepend>prepend</span> <var title>byte</var> to
+   <li><p>If <var>code point</var> is null and <var>byte</var> is in the range
+   0x00 to 0x7F, <span title=concept-stream-prepend>prepend</span> <var>byte</var> to
    <var>stream</var>.
 
    <li><p>If <var title>code point</var> is null, return <span>error</span>.
@@ -2253,8 +2253,8 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
     <p class=note>This is interoperable legacy from Windows known as EUDC.
     <!-- PUA -->
 
-   <li><p>If <var title>pointer</var> is null,
-   <span title=concept-stream-prepend>prepend</span> <var title>byte</var> to
+   <li><p>If <var>code point</var> is null and <var>byte</var> is in the range
+   0x00 to 0x7F, <span title=concept-stream-prepend>prepend</span> <var>byte</var> to
    <var>stream</var>.
 
    <li><p>If <var title>code point</var> is null, return <span>error</span>.
@@ -2354,8 +2354,8 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
    and the <span>index code point</span> for <var title>pointer</var> in
    <span>index euc-kr</span> otherwise.
 
-   <li><p>If <var title>pointer</var> is null and <var title>byte</var> is in the range
-   0x00 to 0x7F, <span title=concept-stream-prepend>prepend</span> <var title>byte</var>
+   <li><p>If <var>code point</var> is null and <var>byte</var> is in the range
+   0x00 to 0x7F, <span title=concept-stream-prepend>prepend</span> <var>byte</var>
    to <var>stream</var>.
 
    <li><p>If <var title>code point</var> is null, return <span>error</span>.
