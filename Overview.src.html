@@ -789,6 +789,21 @@ value of these steps:
  <var title>index</var>.
 </ol>
 
+<p>The <dfn>index big5 pointer</dfn> for <var>code point</var> is the return value of
+these steps:
+
+<ol>
+ <li><p>Let <var>index</var> be <span>index big5</span>.
+
+ <li><p>If <var>code point</var> is U+2550, U+255E, U+2561, U+256A, U+5341, or U+5345,
+ return the <em>last</em> pointer corresponding to <var>code point</var> in
+ <var>index</var>.
+ <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=27878 -->
+
+ <li><p>Return the <span>index pointer</span> for <var>code point</var> in
+ <var>index</var>.
+</ol>
+
 <hr>
 
 <p class="note no-backref">All <span title=index>indexes</span> are also available as
@@ -1787,8 +1802,8 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <li><p>If <var title>code point</var> is an <span>ASCII code point</span>, return
  a byte whose value is <var title>code point</var>.
 
- <li><p>Let <var title>pointer</var> be the <span>index pointer</span> for
- <var title>code point</var> in <span>index big5</span>.
+ <li><p>Let <var>pointer</var> be the <span>index big5 pointer</span> for
+ <var>code point</var>.
 
  <li><p>If <var title>pointer</var> is null, return <span>error</span> with
  <var title>code point</var>.
