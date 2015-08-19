@@ -159,12 +159,12 @@ The producer did not see the problem even though this is an illegal byte combina
 consumer decoded it as a single U+FFFD and therefore changed the overall interpretation as
 U+0022 is an important delimiter. Decoders of encodings that use multiple bytes for scalar
 values now require that in case of an illegal byte combination, a scalar value in the
-U+0000 to U+007F range cannot be “masked”. For the aforementioned sequence the output
-would be U+FFFD U+0022.
+range U+0000 to U+007F, inclusive, cannot be “masked”. For the aforementioned sequence the
+output would be U+FFFD U+0022.
 
-<p>This is a larger issue for encodings that map anything in the 0x00 to 0x7F byte range
-to something other than U+0000 to U+007F, when there is no lead byte present. These are
-“ASCII-incompatible” encodings and other than <a href="#iso-2022-jp">iso-2022-jp</a>,
+<p>This is a larger issue for encodings that map anything in the range 0x00 to 0x7F,
+inclusive, to something other than U+0000 to U+007F, inclusive, when there is no lead byte
+present. These are “ASCII-incompatible” encodings and other than <a href="#iso-2022-jp">iso-2022-jp</a>,
 <a href="#utf-16be">utf-16be</a>, and <a href="#utf-16le">utf-16le</a>, which are unfortunately required due to
 deployed content, they are not supported. (Investigation is
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21057" title="Introduce additional labels for the replacement encoding">ongoing</a>
@@ -224,7 +224,9 @@ bitwise AND by "&amp;", and bitwise OR by "|".
 <p>For logical right shifts operands must have at least twenty-one bits precision.
 
 <p>A <dfn id="byte">byte</dfn> is a sequence of eight bits, represented as a
-double-digit hexadecimal number in the range 0x00 to 0xFF.
+double-digit hexadecimal number in the range 0x00 to 0xFF, inclusive.
+
+<p>An <dfn id="ascii-byte">ASCII byte</dfn> is a <a href="#byte">byte</a> in the range 0x00 to 0x7F, inclusive.
 
 <p>A <dfn id="code-point">code point</dfn> is a Unicode code point and is represented as a
 four-to-six digit hexadecimal number, typically prefixed with "U+".
@@ -232,20 +234,23 @@ In equations and <a href="#index" title="index">indexes</a> code points are pref
 with "0x". <a href="#refsUNICODE">[UNICODE]</a>
 
 <p>A <dfn id="scalar-value">scalar value</dfn> is a <a href="#code-point">code point</a> that is not in the range U+D800
-to U+DFFF.
+to U+DFFF, inclusive.
+
+<p>An <dfn id="ascii-code-point">ASCII code point</dfn> is a <a href="#code-point">code point</a> in the range U+0000 to
+U+007F, inclusive.
 
 <p>The <dfn id="ascii-whitespace">ASCII whitespace</dfn> are code points U+0009, U+000A, U+000C,
 U+000D, and U+0020.
 
-<p>The <dfn id="ascii-digits">ASCII digits</dfn> are code points in the range U+0030 to U+0039.
+<p>The <dfn id="ascii-digits">ASCII digits</dfn> are code points in the range U+0030 to U+0039, inclusive.
 
 <p>A <dfn id="string">string</dfn> is a sequence of code points.
 
 <p>Comparing two strings in an <dfn id="ascii-case-insensitive">ASCII case-insensitive</dfn> manner
 means comparing them exactly, code point for code point, except that the
 characters in the range U+0041 to U+005A (i.e. LATIN CAPITAL LETTER A to
-LATIN CAPITAL LETTER Z) and the corresponding characters in the range
-U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z) are
+LATIN CAPITAL LETTER Z), inclusive, and the corresponding characters in the range
+U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z), inclusive, are
 considered to also match.
 
 <hr>
@@ -861,7 +866,7 @@ value of these steps:
 
 <ol>
  <li><p>Let <var title="">index</var> be <a href="#index-jis0208">index jis0208</a> excluding all pointers in
- the range 8272 to 8835.
+ the range 8272 to 8835, inclusive.
  <!-- selected NEC duplicates from IBM extensions later in the index; need to use IBM
       extensions when going back to bytes -->
 
@@ -1400,14 +1405,14 @@ method, when invoked, must run these steps:
    <dd><p>Return <a href="#error">error</a>.
   </dl>
 
-  <p>Then (<var title="">byte</var> is in the range 0xC2 to 0xF4) set
+  <p>Then (<var title="">byte</var> is in the range 0xC2 to 0xF4, inclusive) set
   <a href="#utf-8-code-point">utf-8 code point</a> to
   <a href="#utf-8-code-point">utf-8 code point</a> &lt;&lt; (6 × <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>)
   and return <a href="#continue">continue</a>.
 
  <li>
   <p>If <var title="">byte</var> is not in the range
-  <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to <a href="#utf-8-upper-boundary">utf-8 upper boundary</a>,
+  <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to <a href="#utf-8-upper-boundary">utf-8 upper boundary</a>, inclusive,
   run these substeps:
 
   <ol>
@@ -1457,7 +1462,7 @@ achieve the same result are obviously fine, even encouraged).
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ <li><p>If <var title="">code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, return
  a byte whose value is <var title="">code point</var>.
 
  <li>
@@ -1465,11 +1470,11 @@ achieve the same result are obviously fine, even encouraged).
   range <var title="">code point</var> is in:
 
   <dl class="switch">
-   <dt>U+0080 to U+07FF
+   <dt>U+0080 to U+07FF, inclusive
    <dd>1 and 0xC0
-   <dt>U+0800 to U+FFFF
+   <dt>U+0800 to U+FFFF, inclusive
    <dd>2 and 0xE0
-   <dt>U+10000 to U+10FFFF
+   <dt>U+10000 to U+10FFFF, inclusive
    <dd>3 and 0xF0
   </dl>
 
@@ -1554,8 +1559,8 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
- a code point whose value is <var title="">byte</var>.
+ <li><p>If <var>byte</var> is an <a href="#ascii-byte">ASCII byte</a>, return a code point whose value
+ is <var>byte</var>.
 
  <li><p>Let <var title="">code point</var> be the <a href="#index-code-point">index code point</a>
  for <var title="">byte</var> − 0x80 in <a href="#index-single-byte">index single-byte</a>.
@@ -1575,7 +1580,7 @@ historically this might have been the case for <a href="#iso-8859-6">iso-8859-6<
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ <li><p>If <var title="">code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, return
  a byte whose value is <var title="">code point</var>.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
@@ -1634,7 +1639,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
   <ol>
    <li><p>Let <var title="">code point</var> be null.
 
-   <li><p>If <var title="">byte</var> is in the range 0x30 to 0x39, set
+   <li><p>If <var title="">byte</var> is in the range 0x30 to 0x39, inclusive, set
    <var title="">code point</var> to the
    <a href="#index-gb18030-ranges-code-point">index gb18030 ranges code point</a> for
    (((<a href="#gb18030-first">gb18030 first</a> − 0x81) × 10 + <a href="#gb18030-second">gb18030 second</a> − 0x30) × 126 + <a href="#gb18030-third">gb18030 third</a> − 0x81) × 10 + <var title="">byte</var> − 0x30.
@@ -1657,7 +1662,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
   <p>If <a href="#gb18030-second">gb18030 second</a> is not 0x00, run these substeps:
 
   <ol>
-   <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
+   <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, inclusive, set
    <a href="#gb18030-third">gb18030 third</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
    <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> <a href="#gb18030-second">gb18030 second</a>
@@ -1670,7 +1675,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
   <p>If <a href="#gb18030-first">gb18030 first</a> is not 0x00, run these substeps:
 
   <ol>
-   <li><p>If <var title="">byte</var> is in the range 0x30 to 0x39, set
+   <li><p>If <var title="">byte</var> is in the range 0x30 to 0x39, inclusive, set
    <a href="#gb18030-second">gb18030 second</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
    <li><p>Let <var>lead</var> be <a href="#gb18030-first">gb18030 first</a>, let
@@ -1679,29 +1684,29 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <li><p>Let <var>offset</var> be 0x40 if <var title="">byte</var> is
    less than 0x7F and 0x41 otherwise.
 
-   <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
-   0x80 to 0xFE, set <var title="">pointer</var> to
+   <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E, inclusive, or
+   0x80 to 0xFE, inclusive, set <var title="">pointer</var> to
    (<var>lead</var> − 0x81) × 190 + (<var title="">byte</var> − <var>offset</var>).
 
    <li><p>Let <var title="">code point</var> be null if
    <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-gb18030">index gb18030</a> otherwise.
 
-   <li><p>If <var>code point</var> is null and <var>byte</var> is in the range
-   0x00 to 0x7F <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>byte</var> to
-   <var>stream</var>.
+   <li><p>If <var>code point</var> is null and <var>byte</var> is an
+   <a href="#ascii-byte">ASCII byte</a>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a>
+   <var>byte</var> to <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
    <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ <li><p>If <var title="">byte</var> is an <a href="#ascii-byte">ASCII byte</a>, return
  a code point whose value is <var title="">byte</var>.
 
  <li><p>If <var title="">byte</var> is 0x80, return code point U+20AC.
 
- <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
+ <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, inclusive, set
  <a href="#gb18030-first">gb18030 first</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
  <li><p>Return <a href="#error">error</a>.
@@ -1720,7 +1725,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ <li><p>If <var title="">code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, return
  a byte whose value is <var title="">code point</var>.
 
  <li><p>If the <a href="#gbk-flag">gbk flag</a> is set and <var title="">code point</var> is
@@ -1811,8 +1816,8 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    less than 0x7F and 0x62 otherwise.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
 
-   <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
-   0xA1 to 0xFE, set <var title="">pointer</var> to
+   <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E, inclusive, or
+   0xA1 to 0xFE, inclusive, set <var title="">pointer</var> to
    (<var>lead</var> − 0x81) × 157 + (<var title="">byte</var> − <var>offset</var>).
 
    <li>
@@ -1836,19 +1841,19 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <var title="">pointer</var> is null and the <a href="#index-code-point">index code point</a>
    for <var title="">pointer</var> in <a href="#index-big5">index big5</a> otherwise.
 
-   <li><p>If <var title="">code point</var> is null and <var title="">byte</var> is in the range
-   0x00 to 0x7F, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var>
-   to <var>stream</var>.
+   <li><p>If <var>code point</var> is null and <var>byte</var> is an
+   <a href="#ascii-byte">ASCII byte</a>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a>
+   <var>byte</var> to <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
    <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ <li><p>If <var title="">byte</var> is an <a href="#ascii-byte">ASCII byte</a>, return
  a code point whose value is <var title="">byte</var>.
 
- <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
+ <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, inclusive, set
  <a href="#big5-lead">big5 lead</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
  <li><p>Return <a href="#error">error</a>.
@@ -1864,7 +1869,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ <li><p>If <var title="">code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, return
  a byte whose value is <var title="">code point</var>.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
@@ -1916,13 +1921,13 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <a href="#euc-jp-lead">euc-jp lead</a> is 0x00, return <a href="#finished">finished</a>.
 
  <li><p>If <a href="#euc-jp-lead">euc-jp lead</a> is 0x8E and <var title="">byte</var> is
- in the range 0xA1 to 0xDF, set <a href="#euc-jp-lead">euc-jp lead</a> to 0x00 and return
+ in the range 0xA1 to 0xDF, inclusive, set <a href="#euc-jp-lead">euc-jp lead</a> to 0x00 and return
  a code point whose value is 0xFF61 + <var title="">byte</var> − 0xA1.
  <!-- katakana -->
 
- <li><p>If <a href="#euc-jp-lead">euc-jp lead</a> is 0x8F and <var title="">byte</var> is in the range
- 0xA1 to 0xFE, set the <a href="#euc-jp-jis0212-flag">euc-jp jis0212 flag</a>, set <a href="#euc-jp-lead">euc-jp lead</a> to
- <var title="">byte</var>, and return <a href="#continue">continue</a>.
+ <li><p>If <a href="#euc-jp-lead">euc-jp lead</a> is 0x8F and <var>byte</var> is in the range
+ 0xA1 to 0xFE, inclusive, set the <a href="#euc-jp-jis0212-flag">euc-jp jis0212 flag</a>, set
+ <a href="#euc-jp-lead">euc-jp lead</a> to <var>byte</var>, and return <a href="#continue">continue</a>.
 
  <li>
   <p>If <a href="#euc-jp-lead">euc-jp lead</a> is not 0x00, let <var>lead</var> be
@@ -1932,7 +1937,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <li><p>Let <var title="">code point</var> be null.
 
    <li><p>If <var>lead</var> and <var title="">byte</var> are both in the
-   range 0xA1 to 0xFE, set <var title="">code point</var> to the
+   range 0xA1 to 0xFE, inclusive, set <var title="">code point</var> to the
    <a href="#index-code-point">index code point</a> for
    (<var>lead</var> − 0xA1) × 94 + <var title="">byte</var> − 0xA1
    in <a href="#index-jis0208">index jis0208</a> if the <a href="#euc-jp-jis0212-flag">euc-jp jis0212 flag</a> is unset and in
@@ -1940,7 +1945,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
    <li><p>Unset the <a href="#euc-jp-jis0212-flag">euc-jp jis0212 flag</a>.
 
-   <li><p>If <var title="">byte</var> is not in the range 0xA1 to 0xFE,
+   <li><p>If <var title="">byte</var> is not in the range 0xA1 to 0xFE, inclusive,
    <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">byte</var> to
    <var>stream</var>.
 
@@ -1949,11 +1954,11 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ <li><p>If <var title="">byte</var> is an <a href="#ascii-byte">ASCII byte</a>, return
  a code point whose value is <var title="">byte</var>.
 
  <li><p>If <var title="">byte</var> is 0x8E, 0x8F, or in the range 0xA1 to
- 0xFE, set <a href="#euc-jp-lead">euc-jp lead</a> to <var title="">byte</var> and return
+ 0xFE, inclusive, set <a href="#euc-jp-lead">euc-jp lead</a> to <var title="">byte</var> and return
  <a href="#continue">continue</a>.
 
  <li><p>Return <a href="#error">error</a>.
@@ -1969,14 +1974,14 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ <li><p>If <var title="">code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, return
  a byte whose value is <var title="">code point</var>.
 
  <li><p>If <var title="">code point</var> is U+00A5, return byte 0x5C.
 
  <li><p>If <var title="">code point</var> is U+203E, return byte 0x7E.
 
- <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F, return
+ <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, return
  two bytes whose values are 0x8E and <var title="">code point</var> − 0xFF61 + 0xA1.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
@@ -2237,17 +2242,17 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>, return <a href="#finished">finished</a>.
 
  <li><p>If <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is
- <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a> and <var title="">code point</var> is
- in the range U+0000 to U+007F, return a byte whose value is <var title="">code point</var>.
+ <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a> and <var>code point</var> is an
+ <a href="#ascii-code-point">ASCII code point</a>, return a byte whose value is <var>code point</var>.
 
  <li>
   <p>If <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is
-  <a href="#iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</a> and <var title="">code point</var> is
-  in the range U+0000 to U+007F, excluding U+005C and U+007E, or is U+00A5 or U+203E, run
+  <a href="#iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</a> and <var>code point</var> is an
+  <a href="#ascii-code-point">ASCII code point</a>, excluding U+005C and U+007E, or is U+00A5 or U+203E, run
   these substeps:
 
   <ol>
-   <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return a byte
+   <li><p>If <var title="">code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, return a byte
    whose value is <var title="">code point</var>.
 
    <li><p>If <var title="">code point</var> is U+00A5, return byte 0x5C.
@@ -2255,7 +2260,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <li><p>If <var title="">code point</var> is U+203E, return byte 0x7E.
   </ol>
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, and
+ <li><p>If <var title="">code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, and
  <a href="#iso-2022-jp-encoder-state">iso-2022-jp encoder state</a> is not
  <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>,
  <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var title="">code point</var> to
@@ -2323,8 +2328,8 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    <li><p>Let <var>lead offset</var> be 0x81, if <var>lead</var>
    is less than 0xA0, and 0xC1 otherwise.
 
-   <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E or
-   0x80 to 0xFC, set <var title="">pointer</var> to
+   <li><p>If <var title="">byte</var> is in the range 0x40 to 0x7E, inclusive, or
+   0x80 to 0xFC, inclusive, set <var title="">pointer</var> to
    (<var>lead</var> − <var>lead offset</var>) × 188 + <var title="">byte</var> − <var>offset</var>.
 
    <li><p>Let <var title="">code point</var> be null, if
@@ -2333,31 +2338,32 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
    <li>
     <p>If <var title="">code point</var> is null and <var>pointer</var> is in the range
-    8836 to 10528, return a code point whose value is
+    8836 to 10528, inclusive, return a code point whose value is
     0xE000 + <var>pointer</var> − 8836.
 
     <p class="note">This is interoperable legacy from Windows known as EUDC.
     <!-- PUA -->
 
-   <li><p>If <var>code point</var> is null and <var>byte</var> is in the range
-   0x00 to 0x7F, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>byte</var> to
-   <var>stream</var>.
+   <li><p>If <var>code point</var> is null and <var>byte</var> is an
+   <a href="#ascii-byte">ASCII byte</a>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a>
+   <var>byte</var> to <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
    <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x80, return
- a code point whose value is <var title="">byte</var>.
+ <li><p>If <var>byte</var> is an <a href="#ascii-byte">ASCII byte</a> or 0x80, return a code point
+ whose value is <var title="">byte</var>.
  <!-- Opera has 0x7E -->
 
- <li><p>If <var title="">byte</var> is in the range 0xA1 to 0xDF, return
+ <li><p>If <var title="">byte</var> is in the range 0xA1 to 0xDF, inclusive, return
  a code point whose value is 0xFF61 + <var title="">byte</var> − 0xA1.
  <!-- katakana -->
 
- <li><p>If <var title="">byte</var> is in the range 0x81 to 0x9F or 0xE0 to 0xFC, set
- <a href="#shift_jis-lead">shift_jis lead</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
+ <li><p>If <var>byte</var> is in the range 0x81 to 0x9F, inclusive, or 0xE0 to 0xFC,
+ inclusive, set <a href="#shift_jis-lead">shift_jis lead</a> to <var>byte</var> and return
+ <a href="#continue">continue</a>.
 
  <li><p>Return <a href="#error">error</a>.
 </ol>
@@ -2372,14 +2378,14 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+0080, return
+ <li><p>If <var>code point</var> is an <a href="#ascii-code-point">ASCII code point</a> or U+0080, return
  a byte whose value is <var title="">code point</var>.
 
  <li><p>If <var title="">code point</var> is U+00A5, return byte 0x5C.
 
  <li><p>If <var title="">code point</var> is U+203E, return byte 0x7E.
 
- <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F, return
+ <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F, inclusive, return
  a byte whose value is <var title="">code point</var> − 0xFF61 + 0xA1.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-shift_jis-pointer">index shift_jis pointer</a> for
@@ -2432,7 +2438,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
   set <a href="#euc-kr-lead">euc-kr lead</a> to 0x00, and then run these substeps:
 
   <ol>
-   <li><p>If <var title="">byte</var> is in the range  0x41 to 0xFE, set
+   <li><p>If <var title="">byte</var> is in the range  0x41 to 0xFE, inclusive, set
    <var title="">pointer</var> to
    (<var>lead</var> − 0x81) × 190 + (<var title="">byte</var> − 0x41).
 
@@ -2440,19 +2446,19 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
    and the <a href="#index-code-point">index code point</a> for <var title="">pointer</var> in
    <a href="#index-euc-kr">index euc-kr</a> otherwise.
 
-   <li><p>If <var>code point</var> is null and <var>byte</var> is in the range
-   0x00 to 0x7F, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>byte</var>
-   to <var>stream</var>.
+   <li><p>If <var>code point</var> is null and <var>byte</var> is an
+   <a href="#ascii-byte">ASCII byte</a>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a>
+   <var>byte</var> to <var>stream</var>.
 
    <li><p>If <var title="">code point</var> is null, return <a href="#error">error</a>.
 
    <li><p>Return a code point whose value is <var title="">code point</var>.
   </ol>
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ <li><p>If <var title="">byte</var> is an <a href="#ascii-byte">ASCII byte</a>, return
  a code point whose value is <var title="">byte</var>.
 
- <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, set
+ <li><p>If <var title="">byte</var> is in the range 0x81 to 0xFE, inclusive, set
  <a href="#euc-kr-lead">euc-kr lead</a> to <var title="">byte</var> and return <a href="#continue">continue</a>.
 
  <li><p>Return <a href="#error">error</a>.
@@ -2468,7 +2474,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ <li><p>If <var title="">code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, return
  a byte whose value is <var title="">code point</var>.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
@@ -2582,8 +2588,8 @@ and <var title="">byte</var>, runs these steps:
   <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to null, and then run these substeps:
 
   <ol>
-   <li><p>If <var title="">code unit</var> is in the range U+DC00 to U+DFFF, return
-   a code point whose value is
+   <li><p>If <var title="">code unit</var> is in the range U+DC00 to U+DFFF, inclusive,
+   return a code point whose value is
    0x10000 + ((<var>lead surrogate</var> − 0xD800) &lt;&lt; 10) + (<var title="">code unit</var> − 0xDC00).
 
    <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> the sequence resulting of
@@ -2593,11 +2599,11 @@ and <var title="">byte</var>, runs these steps:
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
- <li><p>If <var title="">code unit</var> is in the range U+D800 to U+DBFF, set
+ <li><p>If <var title="">code unit</var> is in the range U+D800 to U+DBFF, inclusive, set
  <a href="#utf-16-lead-surrogate">utf-16 lead surrogate</a> to <var title="">code unit</var> and return
  <a href="#continue">continue</a>.
 
- <li><p>If <var title="">code unit</var> is in the range U+DC00 to U+DFFF,
+ <li><p>If <var title="">code unit</var> is in the range U+DC00 to U+DFFF, inclusive,
  return <a href="#error">error</a>.
  <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
 
@@ -2617,8 +2623,8 @@ and <var title="">code point</var>, runs these steps:
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+FFFF, return the
- sequence resulting of
+ <li><p>If <var title="">code point</var> is in the range U+0000 to U+FFFF, inclusive, return
+ the sequence resulting of
  <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var title="">code point</var> to bytes</a>
  using <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a>.
 
@@ -2690,7 +2696,7 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
  <li><p>If <var title="">byte</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">byte</var> is in the range 0x00 to 0x7F, return
+ <li><p>If <var title="">byte</var> is an <a href="#ascii-byte">ASCII byte</a>, return
  a code point whose value is <var title="">byte</var>.
 
  <li><p>Return a code point whose value is 0xF780 + <var title="">byte</var> − 0x80.
@@ -2706,10 +2712,10 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
  <li><p>If <var title="">code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
  <a href="#finished">finished</a>.
 
- <li><p>If <var title="">code point</var> is in the range U+0000 to U+007F, return
+ <li><p>If <var title="">code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, return
  a byte whose value is <var title="">code point</var>.
 
- <li><p>If <var title="">code point</var> is in the range U+F780 to U+F7FF, return
+ <li><p>If <var title="">code point</var> is in the range U+F780 to U+F7FF, inclusive, return
  a byte whose value is <var title="">code point</var> − 0xF780 + 0x80.
 
  <li><p>Return <a href="#error">error</a> with <var title="">code point</var>.
