@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-19-august-2015">Living Standard — Last Updated 19 August 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-20-august-2015">Living Standard — Last Updated 20 August 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -2000,6 +2000,8 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, return
  two bytes whose values are 0x8E and <var title="">code point</var> − 0xFF61 + 0xA1.
 
+ <li><p>If <var>code point</var> is U+2022, set it to U+FF0D.
+
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
 
@@ -2292,6 +2294,8 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <a href="#iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</a>, and return three bytes
  0x1B 0x28 0x4A.
 
+ <li><p>If <var>code point</var> is U+2022, set it to U+FF0D.
+
  <li><p>Let <var title="">pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var title="">code point</var> in <a href="#index-jis0208">index jis0208</a>.
 
@@ -2403,6 +2407,8 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
  <li><p>If <var title="">code point</var> is in the range U+FF61 to U+FF9F, inclusive, return
  a byte whose value is <var title="">code point</var> − 0xFF61 + 0xA1.
+
+ <li><p>If <var>code point</var> is U+2022, set it to U+FF0D.
 
  <li><p>Let <var title="">pointer</var> be the <a href="#index-shift_jis-pointer">index shift_jis pointer</a> for
  <var title="">code point</var>.
@@ -2816,6 +2822,7 @@ Jxck,
 Ken Lunde,
 Ken Whistler,
 Kenneth Russell,
+田村健人 (Kent Tamura),
 Leif Halvard Silli,
 Makoto Kato,
 Mark Callow,
