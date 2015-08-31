@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-21-august-2015">Living Standard — Last Updated 21 August 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-31-august-2015">Living Standard — Last Updated 31 August 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -880,10 +880,14 @@ these steps:
 <ol>
  <li><p>Let <var>index</var> be <a href="#index-big5">index big5</a>.
 
- <li><p>If <var>code point</var> is U+2550, U+255E, U+2561, U+256A, U+5341, or U+5345,
- return the <em>last</em> pointer corresponding to <var>code point</var> in
- <var>index</var>.
- <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=27878 -->
+ <li>
+  <p>If <var>code point</var> is U+2550, U+255E, U+2561, U+256A, U+5341, or U+5345,
+  return the <em>last</em> pointer corresponding to <var>code point</var> in
+  <var>index</var>.
+  <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=27878 -->
+
+  <p class="note">There are other duplicate code points, but for those the <em>first</em> pointer is
+  to be used.
 
  <li><p>Return the <a href="#index-pointer">index pointer</a> for <var>code point</var> in
  <var>index</var>.
