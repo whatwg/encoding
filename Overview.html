@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-31-august-2015">Living Standard — Last Updated 31 August 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-6-september-2015">Living Standard — Last Updated 6 September 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -878,7 +878,11 @@ value of these steps:
 these steps:
 
 <ol>
- <li><p>Let <var>index</var> be <a href="#index-big5">index big5</a>.
+ <li>
+  <p>Let <var>index</var> be <a href="#index-big5">index big5</a> excluding all pointers less than
+  (0xA1 - 0x81) × 157.
+
+  <p class="note">Avoid returning Hong Kong Supplementary Character Set extensions literally.
 
  <li>
   <p>If <var>code point</var> is U+2550, U+255E, U+2561, U+256A, U+5341, or U+5345,
@@ -1898,13 +1902,6 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <var title="">code point</var>.
 
  <li><p>Let <var>lead</var> be <var title="">pointer</var> / 157 + 0x81.
-
- <li>
-  <p>If <var>lead</var> is less than 0xA1, return <a href="#error">error</a> with
-  <var title="">code point</var>.
-
-  <p class="note">Avoid returning Hong Kong Supplementary Character Set extensions
-  literally.
 
  <li><p>Let <var>trail</var> be <var title="">pointer</var> % 157.
 

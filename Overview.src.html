@@ -792,7 +792,11 @@ value of these steps:
 these steps:
 
 <ol>
- <li><p>Let <var>index</var> be <span>index big5</span>.
+ <li>
+  <p>Let <var>index</var> be <span>index big5</span> excluding all pointers less than
+  (0xA1 - 0x81) &times; 157.
+
+  <p class=note>Avoid returning Hong Kong Supplementary Character Set extensions literally.
 
  <li>
   <p>If <var>code point</var> is U+2550, U+255E, U+2561, U+256A, U+5341, or U+5345,
@@ -1812,13 +1816,6 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <var title>code point</var>.
 
  <li><p>Let <var>lead</var> be <var title>pointer</var> / 157 + 0x81.
-
- <li>
-  <p>If <var>lead</var> is less than 0xA1, return <span>error</span> with
-  <var title>code point</var>.
-
-  <p class=note>Avoid returning Hong Kong Supplementary Character Set extensions
-  literally.
 
  <li><p>Let <var>trail</var> be <var title>pointer</var> % 157.
 
