@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-6-september-2015">Living Standard — Last Updated 6 September 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-4-november-2015">Living Standard — Last Updated 4 November 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -1474,6 +1474,7 @@ method, when invoked, must run these steps:
 “Best Practices for Using U+FFFD” from the Unicode standard. No other
 behavior is permitted per the Encoding Standard (other algorithms that
 achieve the same result are obviously fine, even encouraged).
+<a href="#refsUNICODE">[UNICODE]</a>
 
 
 <h4 id="utf-8-encoder"><span class="secno">9.1.2 </span><dfn>utf-8 encoder</dfn></h4>
@@ -1518,6 +1519,9 @@ achieve the same result are obviously fine, even encouraged).
 
  <li><p>Return bytes <var title="">bytes</var>, in order.
 </ol>
+
+<p class="note">This algorithm has identical results to the one described in the Unicode standard. It
+is included here for completeness. <a href="#refsUNICODE">[UNICODE]</a>
 
 
 
@@ -2677,6 +2681,9 @@ its <a href="#utf-16be-decoder-flag">utf-16be decoder flag</a> set.
 <p><a href="#utf-16be">utf-16be</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a> with
 its <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a> set.
 
+<p class="note">This algorithm has identical results to the one described in the Unicode standard. It
+is included here for completeness. <a href="#refsUNICODE">[UNICODE]</a>
+
 
 <h3 id="utf-16le"><span class="secno">15.4 </span><dfn>utf-16le</dfn></h3>
 
@@ -2693,6 +2700,9 @@ its <a href="#utf-16be-encoder-flag">utf-16be encoder flag</a> set.
 <h4 id="utf-16le-encoder"><span class="secno">15.4.2 </span><dfn>utf-16le encoder</dfn></h4>
 
 <p><a href="#utf-16le">utf-16le</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared utf-16 encoder</a>.
+
+<p class="note">This algorithm has identical results to the one described in the Unicode standard. It
+is included here for completeness. <a href="#refsUNICODE">[UNICODE]</a>
 
 
 <h3 id="x-user-defined"><span class="secno">15.5 </span><dfn>x-user-defined</dfn></h3>
@@ -2831,6 +2841,7 @@ Mark Davis,
 Martin Dürst,
 Masatoshi Kimura,
 Ms2ger,
+Nigel Megitt,
 Nigel Tao,
 Norbert Lindenberg,
 Øistein E. Andersen,
