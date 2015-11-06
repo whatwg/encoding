@@ -1095,9 +1095,17 @@ control.
 
  <dt><code><var>decoder</var> . <span title=dom-TextDecoder-decode>decode</span>([<var>input</var> [, <var>options</var>]])</code>
  <dd>
-  <p>Returns the result of running <b>encoding</b>'s <span>decoder</span>. If
-  <var>options</var>'s <code title>stream</code> is true, the method can be invoked
-  multiple times to process a fragmented stream.
+  <p>Returns the result of running <b>encoding</b>'s <span>decoder</span>. The method can be invoked
+  zero or more times with <var>options</var>'s <code title>stream</code> set to true, and then once
+  without <var>options</var>'s <code title>stream</code> (or set to false), to process a fragmented
+  stream. If the invocation without <var>options</var>'s <code title>stream</code> (or set to false)
+  has no <var>input</var>, it's clearest to omit both arguments.
+
+  <pre class=example>var string = "", decoder = TextDecoder(encoding), buffer;
+while(buffer = next_chunk()) {
+  string += decoder.decode(buffer, {stream:true});
+}
+string += decoder.decode(); // end-of-stream</pre>
 
   <p>If the <b>error mode</b> is <i>fatal</i> and <b>encoding</b>'s <span>decoder</span>
   returns <span>error</span>, <span data-anolis-spec=webidl title=throw>throws</span> a
@@ -1164,8 +1172,13 @@ method, when invoked, must run these steps:
    <li><p>Let <var>token</var> be the result of
    <span title=concept-stream-read>reading</span> from <b>stream</b>.
 
-   <li><p>If <var>token</var> is <span>end-of-stream</span> and the <b>do not flush flag</b>
-   is set, return <var>output</var>, <span title=concept-TD-serialize>serialized</span>.
+   <li>
+    <p>If <var>token</var> is <span>end-of-stream</span> and the <b>do not flush flag</b> is set,
+    return <var>output</var>, <span title=concept-TD-serialize>serialized</span>.
+
+    <p class=note>The way streaming works is to not handle <span>end-of-stream</span> here when the
+    <b>do not flush flag</b> is set and to not unset that flag. That way in a subsequent invocation
+    <b>decoder</b> is not set anew in the first step of the algorithm and its state is preserved.
 
    <li>
     <p>Otherwise, run these subsubsteps:
