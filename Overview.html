@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-4-november-2015">Living Standard — Last Updated 4 November 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-6-november-2015">Living Standard — Last Updated 6 November 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -1118,7 +1118,7 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
 <b>stream</b>, <b>ignore BOM flag</b> (initially unset),
 <b>BOM seen flag</b> (initially unset),
 <b>error mode</b> (initially <i title="">replacement</i>), and
-<b>streaming flag</b> (initially unset).
+<b>do not flush flag</b> (initially unset).
 
 <p>A <a href="#textdecoder"><code>TextDecoder</code></a> object also has an associated
 <dfn id="concept-td-serialize" title="concept-TD-serialize">serialize stream</dfn> algorithm, that given a
@@ -1230,12 +1230,12 @@ getter must return true if <b>ignore BOM flag</b> is set, and false otherwise.
 method, when invoked, must run these steps:
 
 <ol>
- <li><p>If the <b>streaming flag</b> is unset, set <b>decoder</b> to a new
+ <li><p>If the <b>do not flush flag</b> is unset, set <b>decoder</b> to a new
  <b>encoding</b>'s <a href="#decoder">decoder</a>, set <b>stream</b> to a new
  <a href="#concept-stream" title="concept-stream">stream</a>, and unset the <b>BOM seen flag</b>.
 
  <li><p>If <var>options</var>'s <code title="">stream</code> is true, set the
- <b>streaming flag</b>, and unset the <b>streaming flag</b> otherwise.
+ <b>do not flush flag</b>, and unset the <b>do not flush flag</b> otherwise.
 
  <li><p>If <var>input</var> is given, <a href="#concept-stream-push" title="concept-stream-push">push</a> a
  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy" title="get a copy of the bytes held by the buffer source">copy of</a>
@@ -1250,7 +1250,7 @@ method, when invoked, must run these steps:
    <li><p>Let <var>token</var> be the result of
    <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <b>stream</b>.
 
-   <li><p>If <var>token</var> is <a href="#end-of-stream">end-of-stream</a> and the <b>streaming flag</b>
+   <li><p>If <var>token</var> is <a href="#end-of-stream">end-of-stream</a> and the <b>do not flush flag</b>
    is set, return <var>output</var>, <a href="#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
 
    <li>
