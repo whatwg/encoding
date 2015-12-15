@@ -1380,11 +1380,9 @@ method, when invoked, must run these steps:
  <li><p>Set <span>utf-8 lower boundary</span> to 0x80 and
  <span>utf-8 upper boundary</span> to 0xBF.
 
- <li>
-  <p>Increase <span>utf-8 bytes seen</span> by one and set
-  <span>utf-8 code point</span> to
-  <span>utf-8 code point</span> + (<var>byte</var> &minus; 0x80) &lt;&lt;
-  (6 &times; (<span>utf-8 bytes needed</span> &minus; <span>utf-8 bytes seen</span>)).
+ <li><p>Increase <span>utf-8 bytes seen</span> by one and increase <span>utf-8 code point</span> by
+ (<var>byte</var> &minus; 0x80) &lt;&lt; (6 &times; (<span>utf-8 bytes needed</span> &minus;
+ <span>utf-8 bytes seen</span>)).
 
  <li><p>If <span>utf-8 bytes seen</span> is not equal to
  <span>utf-8 bytes needed</span>, return <span>continue</span>.

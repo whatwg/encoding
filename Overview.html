@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-6-november-2015">Living Standard — Last Updated 6 November 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-15-december-2015">Living Standard — Last Updated 15 December 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -1466,11 +1466,9 @@ method, when invoked, must run these steps:
  <li><p>Set <a href="#utf-8-lower-boundary">utf-8 lower boundary</a> to 0x80 and
  <a href="#utf-8-upper-boundary">utf-8 upper boundary</a> to 0xBF.
 
- <li>
-  <p>Increase <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> by one and set
-  <a href="#utf-8-code-point">utf-8 code point</a> to
-  <a href="#utf-8-code-point">utf-8 code point</a> + (<var>byte</var> − 0x80) &lt;&lt;
-  (6 × (<a href="#utf-8-bytes-needed">utf-8 bytes needed</a> − <a href="#utf-8-bytes-seen">utf-8 bytes seen</a>)).
+ <li><p>Increase <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> by one and increase <a href="#utf-8-code-point">utf-8 code point</a> by
+ (<var>byte</var> − 0x80) &lt;&lt; (6 × (<a href="#utf-8-bytes-needed">utf-8 bytes needed</a> −
+ <a href="#utf-8-bytes-seen">utf-8 bytes seen</a>)).
 
  <li><p>If <a href="#utf-8-bytes-seen">utf-8 bytes seen</a> is not equal to
  <a href="#utf-8-bytes-needed">utf-8 bytes needed</a>, return <a href="#continue">continue</a>.
