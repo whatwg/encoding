@@ -2015,7 +2015,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, return
  two bytes whose values are 0x8E and <var>code point</var> − 0xFF61 + 0xA1.
 
- <li><p>If <var>code point</var> is U+2022, set it to U+FF0D.
+ <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
 
  <li><p>Let <var>pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var>code point</var> in <a href="#index-jis0208">index jis0208</a>.
@@ -2309,7 +2309,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <a href="#iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</a>, and return three bytes
  0x1B 0x28 0x4A.
 
- <li><p>If <var>code point</var> is U+2022, set it to U+FF0D.
+ <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
 
  <li><p>Let <var>pointer</var> be the <a href="#index-pointer">index pointer</a> for
  <var>code point</var> in <a href="#index-jis0208">index jis0208</a>.
@@ -2423,7 +2423,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, return
  a byte whose value is <var>code point</var> − 0xFF61 + 0xA1.
 
- <li><p>If <var>code point</var> is U+2022, set it to U+FF0D.
+ <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
 
  <li><p>Let <var>pointer</var> be the <a href="#index-shift_jis-pointer">index shift_jis pointer</a> for
  <var>code point</var>.
