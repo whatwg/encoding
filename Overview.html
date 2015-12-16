@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-15-december-2015">Living Standard — Last Updated 15 December 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-16-december-2015">Living Standard — Last Updated 16 December 2015</h2>
 
 <dl>
  <dt>Participate:
@@ -214,11 +214,11 @@ out of memory, or to work around platform-specific limitations.
 
 <p>Hexadecimal numbers are prefixed with "0x".
 
-<p>In equations, all numbers are integers, addition is represented by "+",
-subtraction by "−", multiplication by "×", division by "/",
-calculating the remainder of a division (also known as modulo) by "%",
-logical left shifts by "&lt;&lt;", logical right shifts by "&gt;&gt;",
-bitwise AND by "&amp;", and bitwise OR by "|".
+<p>In equations, all numbers are integers, addition is represented by "+", subtraction by "−",
+multiplication by "×", division by "/", calculating the remainder of a division (also known as
+modulo) by "%", logical left shifts by "&lt;&lt;", logical right shifts by "&gt;&gt;", bitwise AND by
+"&amp;", and bitwise OR by "|". floor(<var>x</var>) is the largest integer not greater than
+<var>x</var>.
 
 <p>For logical right shifts operands must have at least twenty-one bits precision.
 
@@ -1776,8 +1776,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
   <p>If <var>pointer</var> is not null, run these substeps:
 
   <ol>
-   <li><p>Let <var>lead</var> be
-   <var>pointer</var> / 190 + 0x81.
+   <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 190) + 0x81.
 
    <li><p>Let <var>trail</var> be <var>pointer</var> % 190.
 
@@ -1794,20 +1793,17 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>Set <var>pointer</var> to the
  <a href="#index-gb18030-ranges-pointer">index gb18030 ranges pointer</a> for <var>code point</var>.
 
- <li><p>Let <var>byte1</var> be
- <var>pointer</var> / 10 / 126 / 10.
+ <li><p>Let <var>byte1</var> be floor(<var>pointer</var> / 10 / 126 / 10).
 
  <li><p>Set <var>pointer</var> to
  <var>pointer</var> − <var>byte1</var> × 10 × 126 × 10.
 
- <li><p>Let <var>byte2</var> be
- <var>pointer</var> / 10 / 126.
+ <li><p>Let <var>byte2</var> be floor(<var>pointer</var> / 10 / 126).
 
  <li><p>Set <var>pointer</var> to
  <var>pointer</var> − <var>byte2</var> × 10 × 126.
 
- <li><p>Let <var>byte3</var> be
- <var>pointer</var> / 10.
+ <li><p>Let <var>byte3</var> be floor(<var>pointer</var> / 10).
 
  <li><p>Let <var>byte4</var> be
  <var>pointer</var> − <var>byte3</var> × 10.
@@ -1916,7 +1912,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var>pointer</var> is null, return <a href="#error">error</a> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 157 + 0x81.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 157) + 0x81.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 157.
 
@@ -2023,7 +2019,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var>pointer</var> is null, return <a href="#error">error</a> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0xA1.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 94) + 0xA1.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0xA1.
 
@@ -2324,7 +2320,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <a href="#iso-2022-jp-encoder-jis0208" title="iso-2022-jp encoder jis0208">jis0208</a>, and return three bytes
  0x1B 0x24 0x42.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0x21.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 94) + 0x21.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0x21.
 
@@ -2431,7 +2427,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var>pointer</var> is null, return <a href="#error">error</a> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 188.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 188).
 
  <li><p>Let <var>lead offset</var> be 0x81, if <var>lead</var> is
  less than 0x1F, and 0xC1 otherwise.
@@ -2520,7 +2516,7 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
  <li><p>If <var>pointer</var> is null, return <a href="#error">error</a> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 190) + 0x81.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 190 + 0x41.
 

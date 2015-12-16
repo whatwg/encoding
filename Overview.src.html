@@ -128,11 +128,11 @@ out of memory, or to work around platform-specific limitations.
 
 <p>Hexadecimal numbers are prefixed with "0x".
 
-<p>In equations, all numbers are integers, addition is represented by "+",
-subtraction by "&minus;", multiplication by "&times;", division by "/",
-calculating the remainder of a division (also known as modulo) by "%",
-logical left shifts by "&lt;&lt;", logical right shifts by ">>",
-bitwise AND by "&amp;", and bitwise OR by "|".
+<p>In equations, all numbers are integers, addition is represented by "+", subtraction by "&minus;",
+multiplication by "&times;", division by "/", calculating the remainder of a division (also known as
+modulo) by "%", logical left shifts by "&lt;&lt;", logical right shifts by ">>", bitwise AND by
+"&amp;", and bitwise OR by "|". floor(<var>x</var>) is the largest integer not greater than
+<var>x</var>.
 
 <p>For logical right shifts operands must have at least twenty-one bits precision.
 
@@ -1690,8 +1690,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
   <p>If <var>pointer</var> is not null, run these substeps:
 
   <ol>
-   <li><p>Let <var>lead</var> be
-   <var>pointer</var> / 190 + 0x81.
+   <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 190) + 0x81.
 
    <li><p>Let <var>trail</var> be <var>pointer</var> % 190.
 
@@ -1708,20 +1707,17 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <li><p>Set <var>pointer</var> to the
  <span>index gb18030 ranges pointer</span> for <var>code point</var>.
 
- <li><p>Let <var>byte1</var> be
- <var>pointer</var> / 10 / 126 / 10.
+ <li><p>Let <var>byte1</var> be floor(<var>pointer</var> / 10 / 126 / 10).
 
  <li><p>Set <var>pointer</var> to
  <var>pointer</var> &minus; <var>byte1</var> &times; 10 &times; 126 &times; 10.
 
- <li><p>Let <var>byte2</var> be
- <var>pointer</var> / 10 / 126.
+ <li><p>Let <var>byte2</var> be floor(<var>pointer</var> / 10 / 126).
 
  <li><p>Set <var>pointer</var> to
  <var>pointer</var> &minus; <var>byte2</var> &times; 10 &times; 126.
 
- <li><p>Let <var>byte3</var> be
- <var>pointer</var> / 10.
+ <li><p>Let <var>byte3</var> be floor(<var>pointer</var> / 10).
 
  <li><p>Let <var>byte4</var> be
  <var>pointer</var> &minus; <var>byte3</var> &times; 10.
@@ -1830,7 +1826,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <li><p>If <var>pointer</var> is null, return <span>error</span> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 157 + 0x81.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 157) + 0x81.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 157.
 
@@ -1937,7 +1933,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <li><p>If <var>pointer</var> is null, return <span>error</span> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0xA1.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 94) + 0xA1.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0xA1.
 
@@ -2238,7 +2234,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <span title="iso-2022-jp encoder jis0208">jis0208</span>, and return three bytes
  0x1B 0x24 0x42.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0x21.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 94) + 0x21.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0x21.
 
@@ -2345,7 +2341,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <li><p>If <var>pointer</var> is null, return <span>error</span> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 188.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 188).
 
  <li><p>Let <var>lead offset</var> be 0x81, if <var>lead</var> is
  less than 0x1F, and 0xC1 otherwise.
@@ -2434,7 +2430,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <li><p>If <var>pointer</var> is null, return <span>error</span> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
+ <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 190) + 0x81.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 190 + 0x41.
 
