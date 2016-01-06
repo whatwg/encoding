@@ -798,8 +798,8 @@ specification, excluding <a href="#index-single-byte">index single-byte</a>, whi
  <tr>
   <td><dfn id="index-gb18030">index gb18030</dfn>
   <td><a href="index-gb18030.txt">index-gb18030.txt</a>
-  <td>This matches the GB18030-2000 standard for code points encoded as two bytes, except
-  for 0xA3 0xA0 which maps to U+3000 to be compatible with deployed content.
+  <td>This matches the GB18030-2005 standard for code points encoded as two bytes, except for
+  0xA3 0xA0 which maps to U+3000 to be compatible with deployed content.
   <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=131837
        https://bugs.webkit.org/show_bug.cgi?id=17014
        https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396
@@ -807,10 +807,9 @@ specification, excluding <a href="#index-single-byte">index single-byte</a>, whi
  <tr>
   <td><dfn id="index-gb18030-ranges">index gb18030 ranges</dfn>
   <td><a href="index-gb18030-ranges.txt">index-gb18030-ranges.txt</a>
-  <td>This <a href="#index">index</a> works different from all others. Listing all
-  code points would result in over a million items whereas they can be
-  represented neatly in 207 ranges combined with trivial limit checks. It
-  therefore only superficially matches the GB18030 standard for code points
+  <td>This <a href="#index">index</a> works different from all others. Listing all code points would result
+  in over a million items whereas they can be represented neatly in 207 ranges combined with trivial
+  limit checks. It therefore only superficially matches the GB18030-2005 standard for code points
   encoded as four bytes. See also <a href="#index-gb18030-ranges-code-point">index gb18030 ranges code point</a> and
   <a href="#index-gb18030-ranges-pointer">index gb18030 ranges pointer</a> below.
  <tr>
@@ -841,6 +840,9 @@ the return value of these steps:
  <li><p>If <var>pointer</var> is greater than 39419 and less than
  189000, or <var>pointer</var> is greater than 1237575, return null.
 
+ <li><p>If <var>pointer</var> is 7457, return code point U+E7C7.
+ <!-- 7457 is 0x81 0x35 0xF4 0x37 -->
+
  <li><p>Let <var>offset</var> be the last pointer in
  <a href="#index-gb18030-ranges">index gb18030 ranges</a> that is equal to or less than
  <var>pointer</var> and let <var>code point offset</var> be its
@@ -854,6 +856,8 @@ the return value of these steps:
 the return value of these steps:
 
 <ol>
+ <li><p>If <var>code point</var> is U+E7C7, return pointer 7457.
+
  <li><p>Let <var>offset</var> be the last code point in
  <a href="#index-gb18030-ranges">index gb18030 ranges</a> that is equal to or less than
  <var>code point</var> and let <var>pointer offset</var> be its

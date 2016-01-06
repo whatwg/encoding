@@ -5,7 +5,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 85bb7b5c2dc75975afebe5743935ba4ed5a09c1e9e34e9bfb2ff80293f5d8bbc
-# Date: 2015-08-19
+# Date: 2016-01-20
 
   0	0x0080	 (<control>)
   1	0x0081	 (<control>)

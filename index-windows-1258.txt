@@ -5,7 +5,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 198bacedfcf24390e219240a7b776b6cec34cff070330b08a601a69c67f7eb24
-# Date: 2015-08-19
+# Date: 2016-01-20
 
   0	0x20AC	€ (EURO SIGN)
   1	0x0081	 (<control>)
