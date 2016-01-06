@@ -714,8 +714,10 @@ specification, excluding <span>index single-byte</span>, which have their own ta
   <td><a href=index-gb18030.txt>index-gb18030.txt</a>
   <td>This matches the GB18030-2000 standard for code points encoded as two bytes, except
   for 0xA3 0xA0 which maps to U+3000 to be compatible with deployed content.
-  <!-- https://bugs.webkit.org/show_bug.cgi?id=17014
-       https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396 -->
+  <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=131837
+       https://bugs.webkit.org/show_bug.cgi?id=17014
+       https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396
+       https://github.com/whatwg/encoding/issues/17 -->
  <tr>
   <td><dfn>index gb18030 ranges</dfn>
   <td><a href=index-gb18030-ranges.txt>index-gb18030-ranges.txt</a>
@@ -1679,6 +1681,12 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 
  <li><p>If <var>code point</var> is an <span>ASCII code point</span>, return
  a byte whose value is <var>code point</var>.
+
+ <li>
+  <p>If <var>code point</var> is U+E5E5, return <span>error</span> with <var>code point</var>.
+
+  <p class="note"><span>Index gb18030</span> maps 0xA3 0xA0 to U+3000 rather than U+E5E5 for
+  compatibility with deployed content. Therefore it cannot roundtrip.
 
  <li><p>If the <span>gbk flag</span> is set and <var>code point</var> is
  U+20AC, return byte 0x80.

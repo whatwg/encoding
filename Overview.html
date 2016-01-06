@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-16-december-2015">Living Standard — Last Updated 16 December 2015</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-20-january-2016">Living Standard — Last Updated 20 January 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -800,8 +800,10 @@ specification, excluding <a href="#index-single-byte">index single-byte</a>, whi
   <td><a href="index-gb18030.txt">index-gb18030.txt</a>
   <td>This matches the GB18030-2000 standard for code points encoded as two bytes, except
   for 0xA3 0xA0 which maps to U+3000 to be compatible with deployed content.
-  <!-- https://bugs.webkit.org/show_bug.cgi?id=17014
-       https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396 -->
+  <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=131837
+       https://bugs.webkit.org/show_bug.cgi?id=17014
+       https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396
+       https://github.com/whatwg/encoding/issues/17 -->
  <tr>
   <td><dfn id="index-gb18030-ranges">index gb18030 ranges</dfn>
   <td><a href="index-gb18030-ranges.txt">index-gb18030-ranges.txt</a>
@@ -1765,6 +1767,12 @@ consumers of content generated with <a href="#gbk">gbk</a>'s <a href="#encoder">
 
  <li><p>If <var>code point</var> is an <a href="#ascii-code-point">ASCII code point</a>, return
  a byte whose value is <var>code point</var>.
+
+ <li>
+  <p>If <var>code point</var> is U+E5E5, return <a href="#error">error</a> with <var>code point</var>.
+
+  <p class="note"><a href="#index-gb18030">Index gb18030</a> maps 0xA3 0xA0 to U+3000 rather than U+E5E5 for
+  compatibility with deployed content. Therefore it cannot roundtrip.
 
  <li><p>If the <a href="#gbk-flag">gbk flag</a> is set and <var>code point</var> is
  U+20AC, return byte 0x80.
