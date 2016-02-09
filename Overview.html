@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-20-january-2016">Living Standard — Last Updated 20 January 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-9-february-2016">Living Standard — Last Updated 9 February 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -914,11 +914,12 @@ to represent ranges.)
 
 <h2 id="specification-hooks"><span class="secno">7 </span>Specification hooks</h2>
 
-<p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>,
-<a href="#utf-8-decode-without-bom">utf-8 decode without BOM</a>, <a href="#encode">encode</a>, and <a href="#utf-8-encode">utf-8 encode</a>
-are intended for usage by other specifications. <a href="#utf-8-decode">utf-8 decode</a> is to be used by
-new formats. The <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be
-used first to turn a <a href="#label">label</a> into an <a href="#encoding">encoding</a>.
+<p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>, 
+<a href="#utf-8-decode-without-bom">utf-8 decode without BOM</a>, <a href="#utf-8-decode-without-bom-or-fail">utf-8 decode without BOM or fail</a>, 
+<a href="#encode">encode</a>, and <a href="#utf-8-encode">utf-8 encode</a> are intended for usage by other specifications. 
+<a href="#utf-8-decode">utf-8 decode</a> is to be used by new formats. The 
+<a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be used first to turn a 
+<a href="#label">label</a> into an <a href="#encoding">encoding</a>.
 
 <p>To <dfn id="decode">decode</dfn> a byte stream <var>stream</var> using
 fallback encoding <var>encoding</var>, run these steps:
@@ -997,6 +998,19 @@ steps:
  <li><p>Return <var>output</var>.
 </ol>
 
+<p>To <dfn id="utf-8-decode-without-bom-or-fail">utf-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these steps:
+
+<ol>
+ <li><p>Let <var>output</var> be a code point stream.
+
+ <li><p>Let <var>potentialError</var> be the result of <a title="concept-encoding-run">running</a>
+ <a href="#utf-8">utf-8</a>'s <a href="#decoder">decoder</a> with <var>stream</var>, <var>output</var>, and 
+ <i>fatal</i>.
+
+ <li><p>If <var>potentialError</var> is <a href="#error">error</a>, return failure.
+
+ <li><p>Return <var>output</var>.</li>
+</ol>
 
 <hr>
 
@@ -2805,7 +2819,7 @@ issues. Browsers also should disable this feature if the resource was decoded us
 <dd><cite><a href="https://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
 
 <dt id="refsXML">[XML]
-<dd>(Non-normative) <cite><a href="http://www.w3.org/TR/xml/">Extensible Markup Language</a></cite>, Tim Bray, Jean Paoli, C. M. Sperberg-McQueen et al.. W3C.
+<dd>(Non-normative) <cite><a href="https://www.w3.org/TR/xml/">Extensible Markup Language</a></cite>, Tim Bray, Jean Paoli, C. M. Sperberg-McQueen et al.. W3C.
 
 </dl></div>
 

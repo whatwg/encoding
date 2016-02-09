@@ -828,11 +828,12 @@ to represent ranges.)
 
 <h2>Specification hooks</h2>
 
-<p class=note>The algorithms <span>decode</span>, <span>utf-8 decode</span>,
-<span>utf-8 decode without BOM</span>, <span>encode</span>, and <span>utf-8 encode</span>
-are intended for usage by other specifications. <span>utf-8 decode</span> is to be used by
-new formats. The <span title=concept-encoding-get>get an encoding</span> algorithm can be
-used first to turn a <span>label</span> into an <span>encoding</span>.
+<p class=note>The algorithms <span>decode</span>, <span>utf-8 decode</span>, 
+<span>utf-8 decode without BOM</span>, <span>utf-8 decode without BOM or fail</span>, 
+<span>encode</span>, and <span>utf-8 encode</span> are intended for usage by other specifications. 
+<span>utf-8 decode</span> is to be used by new formats. The 
+<span title=concept-encoding-get>get an encoding</span> algorithm can be used first to turn a 
+<span>label</span> into an <span>encoding</span>.
 
 <p>To <dfn>decode</dfn> a byte stream <var>stream</var> using
 fallback encoding <var>encoding</var>, run these steps:
@@ -911,6 +912,19 @@ steps:
  <li><p>Return <var>output</var>.
 </ol>
 
+<p>To <dfn>utf-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these steps:
+
+<ol>
+ <li><p>Let <var>output</var> be a code point stream.
+
+ <li><p>Let <var>potentialError</var> be the result of <a title=concept-encoding-run>running</a>
+ <span>utf-8</span>'s <span>decoder</span> with <var>stream</var>, <var>output</var>, and 
+ <i>fatal</i>.
+
+ <li><p>If <var>potentialError</var> is <span>error</span>, return failure.
+
+ <li><p>Return <var>output</var>.</p></li>
+</ol>
 
 <hr>
 
