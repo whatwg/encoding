@@ -304,15 +304,15 @@ one or more <a href="#concept-token" title="concept-token">tokens</a>,
 <dfn id="error">error</dfn> optionally with a <a href="#code-point">code point</a>, or
 <dfn id="continue">continue</dfn>.
 
-<p>An <dfn id="error-mode">error mode</dfn> as used below is either <i title="">replacement</i> (default) or
-<i>fatal</i> for a <a href="#decoder">decoder</a> and one of <i>fatal</i> (default) or <i>HTML</i>
-for an <a href="#encoder">encoder</a>.
+<p>An <dfn id="error-mode">error mode</dfn> as used below is either "<code title="">replacement</code>" (default) or
+"<code>fatal</code>" for a <a href="#decoder">decoder</a> and one of "<code>fatal</code>" (default) or 
+"<code>html</code>" for an <a href="#encoder">encoder</a>.
 
-<p class="note">An XML processor would set <a href="#error-mode">error mode</a> to <i>fatal</i>.
+<p class="note">An XML processor would set <a href="#error-mode">error mode</a> to "<code>fatal</code>".
 <a class="informative" href="#refsXML">[XML]</a>
 
-<p class="note"><i>HTML</i> exists as <a href="#error-mode">error mode</a> due to URLs and HTML forms
-requiring a non-terminating legacy <a href="#encoder">encoder</a>. The <i>HTML</i>
+<p class="note">"<code>html</code>" exists as <a href="#error-mode">error mode</a> due to URLs and HTML forms
+requiring a non-terminating legacy <a href="#encoder">encoder</a>. The "<code>html</code>"
 <a href="#error-mode">error mode</a> causes a sequence to be emitted that cannot be distinguished from
 legitimate input and can therefore lead to silent data loss. Developers are strongly
 encouraged to use the <a href="#utf-8">utf-8</a> <a href="#encoding">encoding</a> to prevent this from
@@ -327,8 +327,8 @@ happening.
 <a href="#error-mode">error mode</a> <var>mode</var>, run these steps:
 
 <ol>
- <li><p>If <var>mode</var> is not given, set it to <i title="">replacement</i>, if
- <var>encoderDecoder</var> is a <a href="#decoder">decoder</a>, and <i>fatal</i> otherwise.
+ <li><p>If <var>mode</var> is not given, set it to "<code title="">replacement</code>", if
+ <var>encoderDecoder</var> is a <a href="#decoder">decoder</a>, and "<code>fatal</code>" otherwise.
 
  <li><p>Let <var>encoderDecoderInstance</var> be a new <var>encoderDecoder</var>.
 
@@ -356,8 +356,8 @@ happening.
 <a href="#error-mode">error mode</a> <var>mode</var>, run these steps:
 
 <ol>
- <li><p>If <var>mode</var> is not given, set it to <i title="">replacement</i>, if
- <var>encoderDecoderInstance</var> is a <a href="#decoder">decoder</a> instance, and <i>fatal</i>
+ <li><p>If <var>mode</var> is not given, set it to "<code title="">replacement</code>", if
+ <var>encoderDecoderInstance</var> is a <a href="#decoder">decoder</a> instance, and "<code>fatal</code>"
  otherwise.
 
  <li><p>Let <var>result</var> be the result of running <var>encoderDecoderInstance</var>'s
@@ -375,14 +375,14 @@ happening.
   run the associated steps:
 
   <dl class="switch">
-   <dt><i title="">replacement</i>
+   <dt>"<code title="">replacement</code>"
    <dd><a href="#concept-stream-push" title="concept-stream-push">Push</a> U+FFFD to <var>output</var>.
-   <dt><i>HTML</i>
+   <dt>"<code>html</code>"
    <dd><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> U+0026, U+0023, followed by the
    shortest sequence of <a href="#ascii-digits">ASCII digits</a> representing <var>result</var>'s
    <a href="#code-point">code point</a> in base ten, followed by U+003B to <var>input</var>.
    <!-- &# ... ; -->
-   <dt><i>fatal</i>
+   <dt>"<code>fatal</code>"
    <dd>Return <a href="#error">error</a>.
   </dl>
 
@@ -766,7 +766,7 @@ Then the pointers and their corresponding code points are found by splitting eac
 The first subitem is the pointer (as a decimal number) and the second is the corresponding code point (as a hexadecimal number).
 Other subitems are not relevant.
 
-<p class="note no-backref">To signify changes an <a href="#index">index</a> includes an
+<p class="note no-backref">To signify changes an <a href="#index">index</a> includes an 
 <i title="">Identifier</i> and a <i title="">Date</i>. If an <i title="">Identifier</i> has
 changed, so has the <a href="#index">index</a>.
 
@@ -1005,7 +1005,7 @@ steps:
 
  <li><p>Let <var>potentialError</var> be the result of <a title="concept-encoding-run">running</a>
  <a href="#utf-8">utf-8</a>'s <a href="#decoder">decoder</a> with <var>stream</var>, <var>output</var>, and 
- <i>fatal</i>.
+ "<code>fatal</code>".
 
  <li><p>If <var>potentialError</var> is <a href="#error">error</a>, return failure.
 
@@ -1021,7 +1021,7 @@ encoding <var>encoding</var>, run these steps:
  <li><p>Let <var>output</var> be a byte <a href="#concept-stream" title="concept-stream">stream</a>.
 
  <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <var>encoding</var>'s
- <a href="#encoder">encoder</a> with <var>stream</var>, <var>output</var>, and <i>HTML</i>.
+ <a href="#encoder">encoder</a> with <var>stream</var>, <var>output</var>, and "<code>html</code>".
 
  <li><p>Return <var>output</var>.
 </ol>
@@ -1137,7 +1137,7 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
 <p>A <a href="#textdecoder"><code>TextDecoder</code></a> object has an associated <b>encoding</b>, <b>decoder</b>,
 <b>stream</b>, <b>ignore BOM flag</b> (initially unset),
 <b>BOM seen flag</b> (initially unset),
-<b>error mode</b> (initially <i title="">replacement</i>), and
+<b>error mode</b> (initially "<code title="">replacement</code>"), and
 <b>do not flush flag</b> (initially unset).
 
 <p>A <a href="#textdecoder"><code>TextDecoder</code></a> object also has an associated
@@ -1194,7 +1194,7 @@ control.
  <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>.
 
  <dt><code><var>decoder</var> . <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a></code>
- <dd><p>Returns true if <b>error mode</b> is <i>fatal</i>, and false otherwise.
+ <dd><p>Returns true if <b>error mode</b> is "<code>fatal</code>", and false otherwise.
 
  <dt><code><var>decoder</var> . <a href="#dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM">ignoreBOM</a></code>
  <dd><p>Returns true if <b>ignore BOM flag</b> is set, and false otherwise.
@@ -1213,7 +1213,7 @@ while(buffer = next_chunk()) {
 }
 string += decoder.decode(); // end-of-stream</pre>
 
-  <p>If the <b>error mode</b> is <i>fatal</i> and <b>encoding</b>'s <a href="#decoder">decoder</a>
+  <p>If the <b>error mode</b> is "<code>fatal</code>" and <b>encoding</b>'s <a href="#decoder">decoder</a>
   returns <a href="#error">error</a>, <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
   <code>TypeError</code>.
 </dl>
@@ -1236,7 +1236,7 @@ constructor, when invoked, must run these steps:
  <var>encoding</var>.
 
  <li><p>If <var>options</var>'s <code title="">fatal</code> member is
- true, set <var>dec</var>'s <b>error mode</b> to <i>fatal</i>.
+ true, set <var>dec</var>'s <b>error mode</b> to "<code>fatal</code>".
 
  <li><p>If <var>options</var>'s <code title="">ignoreBOM</code> member is
  true, set <var>dec</var>'s <b>ignore BOM flag</b>.
@@ -1248,7 +1248,7 @@ constructor, when invoked, must run these steps:
 must return <b>encoding</b>'s <a href="#name">name</a>.
 
 <p>The <dfn id="dom-textdecoder-fatal" title="dom-TextDecoder-fatal"><code>fatal</code></dfn> attribute's getter must
-return true if <b>error mode</b> is <i>fatal</i>, and false otherwise.
+return true if <b>error mode</b> is "<code>fatal</code>", and false otherwise.
 
 <p>The <dfn id="dom-textdecoder-ignorebom" title="dom-TextDecoder-ignoreBOM"><code>ignoreBOM</code></dfn> attribute's
 getter must return true if <b>ignore BOM flag</b> is set, and false otherwise.
