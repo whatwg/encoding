@@ -305,7 +305,7 @@ one or more <a href="#concept-token" title="concept-token">tokens</a>,
 <dfn id="continue">continue</dfn>.
 
 <p>An <dfn id="error-mode">error mode</dfn> as used below is either "<code title="">replacement</code>" (default) or
-"<code>fatal</code>" for a <a href="#decoder">decoder</a> and one of "<code>fatal</code>" (default) or 
+"<code>fatal</code>" for a <a href="#decoder">decoder</a> and one of "<code>fatal</code>" (default) or
 "<code>html</code>" for an <a href="#encoder">encoder</a>.
 
 <p class="note">An XML processor would set <a href="#error-mode">error mode</a> to "<code>fatal</code>".
@@ -766,7 +766,7 @@ Then the pointers and their corresponding code points are found by splitting eac
 The first subitem is the pointer (as a decimal number) and the second is the corresponding code point (as a hexadecimal number).
 Other subitems are not relevant.
 
-<p class="note no-backref">To signify changes an <a href="#index">index</a> includes an 
+<p class="note no-backref">To signify changes an <a href="#index">index</a> includes an
 <i title="">Identifier</i> and a <i title="">Date</i>. If an <i title="">Identifier</i> has
 changed, so has the <a href="#index">index</a>.
 
@@ -914,11 +914,11 @@ to represent ranges.)
 
 <h2 id="specification-hooks"><span class="secno">7 </span>Specification hooks</h2>
 
-<p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>, 
-<a href="#utf-8-decode-without-bom">utf-8 decode without BOM</a>, <a href="#utf-8-decode-without-bom-or-fail">utf-8 decode without BOM or fail</a>, 
-<a href="#encode">encode</a>, and <a href="#utf-8-encode">utf-8 encode</a> are intended for usage by other specifications. 
-<a href="#utf-8-decode">utf-8 decode</a> is to be used by new formats. The 
-<a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be used first to turn a 
+<p class="note">The algorithms <a href="#decode">decode</a>, <a href="#utf-8-decode">utf-8 decode</a>,
+<a href="#utf-8-decode-without-bom">utf-8 decode without BOM</a>, <a href="#utf-8-decode-without-bom-or-fail">utf-8 decode without BOM or fail</a>,
+<a href="#encode">encode</a>, and <a href="#utf-8-encode">utf-8 encode</a> are intended for usage by other specifications.
+<a href="#utf-8-decode">utf-8 decode</a> is to be used by new formats. The
+<a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be used first to turn a
 <a href="#label">label</a> into an <a href="#encoding">encoding</a>.
 
 <p>To <dfn id="decode">decode</dfn> a byte stream <var>stream</var> using
@@ -947,8 +947,9 @@ fallback encoding <var>encoding</var>, run these steps:
    <tr><td>0xFF 0xFE<td><a href="#utf-16le">utf-16le</a>
   </table>
 
-  <p class="note">For compatibility with deployed content, the byte order mark
-  (also known as BOM) is considered more authoritative than anything else.
+  <p class="note">For compatibility with deployed content, the byte order mark (also known as BOM) is
+  more authoritative than anything else. In a context where HTTP is used this is in violation of the
+  semantics of the `<code>Content-Type</code>` header.
 
  <li><p>If <var>BOM seen flag</var> is unset
  <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a> <var>buffer</var> to <var>stream</var>.
@@ -1004,7 +1005,7 @@ steps:
  <li><p>Let <var>output</var> be a code point stream.
 
  <li><p>Let <var>potentialError</var> be the result of <a title="concept-encoding-run">running</a>
- <a href="#utf-8">utf-8</a>'s <a href="#decoder">decoder</a> with <var>stream</var>, <var>output</var>, and 
+ <a href="#utf-8">utf-8</a>'s <a href="#decoder">decoder</a> with <var>stream</var>, <var>output</var>, and
  "<code>fatal</code>".
 
  <li><p>If <var>potentialError</var> is <a href="#error">error</a>, return failure.
