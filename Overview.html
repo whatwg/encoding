@@ -305,8 +305,8 @@ input <a href="#concept-stream" title="concept-stream">stream</a> and a <a href=
 returns <dfn id="finished">finished</dfn>, one or more <a href="#concept-token" title="concept-token">tokens</a>, <dfn id="error">error</dfn>
 optionally with a <a href="#code-point">code point</a>, or <dfn id="continue">continue</dfn>.
 
-<p>An <dfn id="error-mode">error mode</dfn> as used below is either "<code title="">replacement</code>" (default) or
-"<code>fatal</code>" for a <a href="#decoder">decoder</a> and one of "<code>fatal</code>" (default) or
+<p>An <dfn id="error-mode">error mode</dfn> as used below is "<code title="">replacement</code>" (default) or
+"<code>fatal</code>" for a <a href="#decoder">decoder</a> and "<code>fatal</code>" (default) or
 "<code>html</code>" for an <a href="#encoder">encoder</a>.
 
 <p class="note">An XML processor would set <a href="#error-mode">error mode</a> to "<code>fatal</code>".
@@ -1176,9 +1176,8 @@ interface <dfn id="textdecoder">TextDecoder</dfn> {
    <a href="#concept-stream-read" title="concept-stream-read">reading</a> from <var>stream</var>.
 
    <li>
-    <p>If <b>encoding</b> is one of <a href="#utf-8">UTF-8</a>, <a href="#utf-16be">UTF-16BE</a>, and
-    <a href="#utf-16le">UTF-16LE</a>, and <b>ignore BOM flag</b> and <b>BOM seen flag</b> are unset,
-    run these subsubsteps:
+    <p>If <b>encoding</b> is <a href="#utf-8">UTF-8</a>, <a href="#utf-16be">UTF-16BE</a>, or <a href="#utf-16le">UTF-16LE</a>,
+    and <b>ignore BOM flag</b> and <b>BOM seen flag</b> are unset, run these subsubsteps:
 
     <ol>
      <li><p>If <var>token</var> is U+FEFF, set <b>BOM seen flag</b>.
@@ -1368,9 +1367,8 @@ constructor, when invoked, must run these steps:
  <a href="#concept-encoding-get" title="concept-encoding-get">getting an encoding</a> from
  <var>utfLabel</var>.
 
- <li><p>If <var>encoding</var> is failure, or is none of
- <a href="#utf-8">UTF-8</a>, <a href="#utf-16be">UTF-16BE</a>, and <a href="#utf-16le">UTF-16LE</a>,
- <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
+ <li><p>If <var>encoding</var> is failure, or is not <a href="#utf-8">UTF-8</a>, <a href="#utf-16be">UTF-16BE</a>, or
+ <a href="#utf-16le">UTF-16LE</a>, <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
 
  <li><p>Let <var>enc</var> be a new <a href="#textencoder"><code>TextEncoder</code></a> object.
 
@@ -2295,9 +2293,8 @@ consumers of content generated with <a href="#gbk">GBK</a>'s <a href="#encoder">
 <h4 id="iso-2022-jp-encoder"><span class="secno">13.2.2 </span><dfn>ISO-2022-JP encoder</dfn></h4>
 
 <p><a href="#iso-2022-jp">ISO-2022-JP</a>'s <a href="#encoder">encoder</a> has an associated
-<dfn id="iso-2022-jp-encoder-state">ISO-2022-JP encoder state</dfn> which is one of
-<dfn id="iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</dfn>,
-<dfn id="iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</dfn>, and
+<dfn id="iso-2022-jp-encoder-state">ISO-2022-JP encoder state</dfn> which is <dfn id="iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</dfn>,
+<dfn id="iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</dfn>, or
 <dfn id="iso-2022-jp-encoder-jis0208" title="iso-2022-jp encoder jis0208">jis0208</dfn> (initially
 <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>).
 

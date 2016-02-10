@@ -219,8 +219,8 @@ input <span title=concept-stream>stream</span> and a <span title=concept-token>t
 returns <dfn>finished</dfn>, one or more <span title=concept-token>tokens</span>, <dfn>error</dfn>
 optionally with a <span>code point</span>, or <dfn>continue</dfn>.
 
-<p>An <dfn>error mode</dfn> as used below is either "<code title>replacement</code>" (default) or
-"<code>fatal</code>" for a <span>decoder</span> and one of "<code>fatal</code>" (default) or
+<p>An <dfn>error mode</dfn> as used below is "<code title>replacement</code>" (default) or
+"<code>fatal</code>" for a <span>decoder</span> and "<code>fatal</code>" (default) or
 "<code>html</code>" for an <span>encoder</span>.
 
 <p class=note>An XML processor would set <span>error mode</span> to "<code>fatal</code>".
@@ -1090,9 +1090,8 @@ interface <dfn>TextDecoder</dfn> {
    <span title=concept-stream-read>reading</span> from <var>stream</var>.
 
    <li>
-    <p>If <b>encoding</b> is one of <span>UTF-8</span>, <span>UTF-16BE</span>, and
-    <span>UTF-16LE</span>, and <b>ignore BOM flag</b> and <b>BOM seen flag</b> are unset,
-    run these subsubsteps:
+    <p>If <b>encoding</b> is <span>UTF-8</span>, <span>UTF-16BE</span>, or <span>UTF-16LE</span>,
+    and <b>ignore BOM flag</b> and <b>BOM seen flag</b> are unset, run these subsubsteps:
 
     <ol>
      <li><p>If <var>token</var> is U+FEFF, set <b>BOM seen flag</b>.
@@ -1282,9 +1281,8 @@ constructor, when invoked, must run these steps:
  <span title=concept-encoding-get>getting an encoding</span> from
  <var>utfLabel</var>.
 
- <li><p>If <var>encoding</var> is failure, or is none of
- <span>UTF-8</span>, <span>UTF-16BE</span>, and <span>UTF-16LE</span>,
- <span data-anolis-spec=webidl>throw</span> a <code>RangeError</code>.
+ <li><p>If <var>encoding</var> is failure, or is not <span>UTF-8</span>, <span>UTF-16BE</span>, or
+ <span>UTF-16LE</span>, <span data-anolis-spec=webidl>throw</span> a <code>RangeError</code>.
 
  <li><p>Let <var>enc</var> be a new <code>TextEncoder</code> object.
 
@@ -2209,9 +2207,8 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 <h4><dfn>ISO-2022-JP encoder</dfn></h4>
 
 <p><span>ISO-2022-JP</span>'s <span>encoder</span> has an associated
-<dfn>ISO-2022-JP encoder state</dfn> which is one of
-<dfn title="iso-2022-jp encoder ASCII">ASCII</dfn>,
-<dfn title="iso-2022-jp encoder Roman">Roman</dfn>, and
+<dfn>ISO-2022-JP encoder state</dfn> which is <dfn title="iso-2022-jp encoder ASCII">ASCII</dfn>,
+<dfn title="iso-2022-jp encoder Roman">Roman</dfn>, or
 <dfn title="iso-2022-jp encoder jis0208">jis0208</dfn> (initially
 <span title="iso-2022-jp encoder ASCII">ASCII</span>).
 
