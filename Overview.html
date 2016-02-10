@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-10-february-2016">Living Standard — Last Updated 10 February 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-12-february-2016">Living Standard — Last Updated 12 February 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -2314,6 +2314,15 @@ consumers of content generated with <a href="#gbk">GBK</a>'s <a href="#encoder">
  <a href="#iso-2022-jp-encoder-state">ISO-2022-JP encoder state</a> is
  <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a>, return <a href="#finished">finished</a>.
 
+ <li>
+  <p>If <a href="#iso-2022-jp-encoder-state">ISO-2022-JP encoder state</a> is
+  <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a> or
+  <a href="#iso-2022-jp-encoder-roman" title="iso-2022-jp encoder Roman">Roman</a>, and <var>code point</var> is U+000E, U+000F,
+  or U+001B, return <a href="#error">error</a> with U+FFFD.
+
+  <p class="note">This returns U+FFFD rather than the <var>code point</var> to prevent attacks.
+  <!-- https://github.com/whatwg/encoding/issues/15 -->
+
  <li><p>If <a href="#iso-2022-jp-encoder-state">ISO-2022-JP encoder state</a> is
  <a href="#iso-2022-jp-encoder-ascii" title="iso-2022-jp encoder ASCII">ASCII</a> and <var>code point</var> is an
  <a href="#ascii-code-point">ASCII code point</a>, return a byte whose value is <var>code point</var>.
@@ -2904,6 +2913,7 @@ Shawn Steele,
 Simon Montagu,
 Simon Pieters,
 Simon Sapin,
+寺田健 (Takeshi Terada),
 Vyacheslav Matva, and
 成瀬ゆい (Yui Naruse)
 for being awesome.

@@ -2228,6 +2228,15 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
  <span>ISO-2022-JP encoder state</span> is
  <span title="iso-2022-jp encoder ASCII">ASCII</span>, return <span>finished</span>.
 
+ <li>
+  <p>If <span>ISO-2022-JP encoder state</span> is
+  <span title="iso-2022-jp encoder ASCII">ASCII</span> or
+  <span title="iso-2022-jp encoder Roman">Roman</span>, and <var>code point</var> is U+000E, U+000F,
+  or U+001B, return <span>error</span> with U+FFFD.
+
+  <p class="note">This returns U+FFFD rather than the <var>code point</var> to prevent attacks.
+  <!-- https://github.com/whatwg/encoding/issues/15 -->
+
  <li><p>If <span>ISO-2022-JP encoder state</span> is
  <span title="iso-2022-jp encoder ASCII">ASCII</span> and <var>code point</var> is an
  <span>ASCII code point</span>, return a byte whose value is <var>code point</var>.
@@ -2797,6 +2806,7 @@ Shawn Steele,
 Simon Montagu,
 Simon Pieters,
 Simon Sapin,
+寺田健 (Takeshi Terada),
 Vyacheslav Matva, and
 成瀬ゆい (Yui Naruse)
 for being awesome.
