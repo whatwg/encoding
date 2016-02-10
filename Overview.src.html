@@ -212,14 +212,12 @@ those tokens must be inserted, in given order, after the last token in the strea
 
 <h3>Encoders and decoders</h3>
 
-<p>Each <span>encoding</span> has an associated <dfn>decoder</dfn> and <dfn>encoder</dfn>.
-Each <span>decoder</span> and <span>encoder</span> have a <dfn>handler</dfn> algorithm.
-A <span>handler</span> algorithm takes an input <span title=concept-stream>stream</span>
-and a <span title=concept-token>token</span>, and returns
-<dfn>finished</dfn>,
-one or more <span title=concept-token>tokens</span>,
-<dfn>error</dfn> optionally with a <span>code point</span>, or
-<dfn>continue</dfn>.
+<p>Each <span>encoding</span> has an associated <dfn>decoder</dfn> and most of them have an
+associated <dfn>encoder</dfn> (<span>replacement</span> does not). Each <span>decoder</span> and
+<span>encoder</span> have a <dfn>handler</dfn> algorithm. A <span>handler</span> algorithm takes an
+input <span title=concept-stream>stream</span> and a <span title=concept-token>token</span>, and
+returns <dfn>finished</dfn>, one or more <span title=concept-token>tokens</span>, <dfn>error</dfn>
+optionally with a <span>code point</span>, or <dfn>continue</dfn>.
 
 <p>An <dfn>error mode</dfn> as used below is either "<code title>replacement</code>" (default) or
 "<code>fatal</code>" for a <span>decoder</span> and one of "<code>fatal</code>" (default) or
@@ -664,6 +662,22 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
 <a href=encodings.json>encodings.json</a> resource.
 
 
+<h3>Output encodings</h3>
+
+<p>To <dfn>get an output encoding</dfn> from an <span>encoding</span> <var>encoding</var>, run these
+steps:</p>
+
+<ol>
+ <li><p>If <var>encoding</var> is <span>replacement</span>, <span>UTF-16BE</span>, or
+ <span>UTF-16LE</span>, return <span>UTF-8</span>.
+
+ <li><p>Return <var>encoding</var>.
+</ol>
+
+<p class="note">The <span>get an output encoding</span> algorithm is useful for URL parsing HTML
+form submission, which both need exactly this.
+
+
 
 <h2>Indexes</h2>
 
@@ -936,6 +950,9 @@ steps:
 encoding <var>encoding</var>, run these steps:
 
 <ol>
+ <li><p>Assert: <var>encoding</var> is not <span>replacement</span>, <span>UTF-16BE</span> or
+ <span>UTF-16LE</span>.
+
  <li><p>Let <var>output</var> be a byte <span title=concept-stream>stream</span>.
 
  <li><p><span title=concept-encoding-run>Run</span> <var>encoding</var>'s
@@ -2494,11 +2511,6 @@ the server and the client.
 
  <li><p>Return <span>finished</span>.
 </ol>
-
-<h4><dfn>replacement encoder</dfn></h4>
-
-<p><span>replacement</span>'s <span>encoder</span> is <span>UTF-8</span>'s
-<span>encoder</span>.
 
 
 <h3>Common infrastructure for <span>UTF-16BE</span> and <span>UTF-16LE</span></h3>

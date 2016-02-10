@@ -40,7 +40,8 @@
  <li><a href="#encodings"><span class="secno">5 </span>Encodings</a>
   <ol>
    <li><a href="#encoders-and-decoders"><span class="secno">5.1 </span>Encoders and decoders</a></li>
-   <li><a href="#names-and-labels"><span class="secno">5.2 </span>Names and labels</a></ol></li>
+   <li><a href="#names-and-labels"><span class="secno">5.2 </span>Names and labels</a></li>
+   <li><a href="#output-encodings"><span class="secno">5.3 </span>Output encodings</a></ol></li>
  <li><a href="#indexes"><span class="secno">6 </span>Indexes</a></li>
  <li><a href="#specification-hooks"><span class="secno">7 </span>Specification hooks</a></li>
  <li><a href="#api"><span class="secno">8 </span>API</a>
@@ -97,8 +98,7 @@
   <ol>
    <li><a href="#replacement"><span class="secno">15.1 </span>replacement</a>
     <ol>
-     <li><a href="#replacement-decoder"><span class="secno">15.1.1 </span>replacement decoder</a></li>
-     <li><a href="#replacement-encoder"><span class="secno">15.1.2 </span>replacement encoder</a></ol></li>
+     <li><a href="#replacement-decoder"><span class="secno">15.1.1 </span>replacement decoder</a></ol></li>
    <li><a href="#common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">15.2 </span>Common infrastructure for <span>UTF-16BE</span> and <span>UTF-16LE</span></a>
     <ol>
      <li><a href="#shared-utf-16-decoder"><span class="secno">15.2.1 </span>shared UTF-16 decoder</a></li>
@@ -298,14 +298,12 @@ those tokens must be inserted, in given order, after the last token in the strea
 
 <h3 id="encoders-and-decoders"><span class="secno">5.1 </span>Encoders and decoders</h3>
 
-<p>Each <a href="#encoding">encoding</a> has an associated <dfn id="decoder">decoder</dfn> and <dfn id="encoder">encoder</dfn>.
-Each <a href="#decoder">decoder</a> and <a href="#encoder">encoder</a> have a <dfn id="handler">handler</dfn> algorithm.
-A <a href="#handler">handler</a> algorithm takes an input <a href="#concept-stream" title="concept-stream">stream</a>
-and a <a href="#concept-token" title="concept-token">token</a>, and returns
-<dfn id="finished">finished</dfn>,
-one or more <a href="#concept-token" title="concept-token">tokens</a>,
-<dfn id="error">error</dfn> optionally with a <a href="#code-point">code point</a>, or
-<dfn id="continue">continue</dfn>.
+<p>Each <a href="#encoding">encoding</a> has an associated <dfn id="decoder">decoder</dfn> and most of them have an
+associated <dfn id="encoder">encoder</dfn> (<a href="#replacement">replacement</a> does not). Each <a href="#decoder">decoder</a> and
+<a href="#encoder">encoder</a> have a <dfn id="handler">handler</dfn> algorithm. A <a href="#handler">handler</a> algorithm takes an
+input <a href="#concept-stream" title="concept-stream">stream</a> and a <a href="#concept-token" title="concept-token">token</a>, and
+returns <dfn id="finished">finished</dfn>, one or more <a href="#concept-token" title="concept-token">tokens</a>, <dfn id="error">error</dfn>
+optionally with a <a href="#code-point">code point</a>, or <dfn id="continue">continue</dfn>.
 
 <p>An <dfn id="error-mode">error mode</dfn> as used below is either "<code title="">replacement</code>" (default) or
 "<code>fatal</code>" for a <a href="#decoder">decoder</a> and one of "<code>fatal</code>" (default) or
@@ -750,6 +748,22 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
 <a href="encodings.json">encodings.json</a> resource.
 
 
+<h3 id="output-encodings"><span class="secno">5.3 </span>Output encodings</h3>
+
+<p>To <dfn id="get-an-output-encoding">get an output encoding</dfn> from an <a href="#encoding">encoding</a> <var>encoding</var>, run these
+steps:</p>
+
+<ol>
+ <li><p>If <var>encoding</var> is <a href="#replacement">replacement</a>, <a href="#utf-16be">UTF-16BE</a>, or
+ <a href="#utf-16le">UTF-16LE</a>, return <a href="#utf-8">UTF-8</a>.
+
+ <li><p>Return <var>encoding</var>.
+</ol>
+
+<p class="note">The <a href="#get-an-output-encoding">get an output encoding</a> algorithm is useful for URL parsing HTML
+form submission, which both need exactly this.
+
+
 
 <h2 id="indexes"><span class="secno">6 </span>Indexes</h2>
 
@@ -1022,6 +1036,9 @@ steps:
 encoding <var>encoding</var>, run these steps:
 
 <ol>
+ <li><p>Assert: <var>encoding</var> is not <a href="#replacement">replacement</a>, <a href="#utf-16be">UTF-16BE</a> or
+ <a href="#utf-16le">UTF-16LE</a>.
+
  <li><p>Let <var>output</var> be a byte <a href="#concept-stream" title="concept-stream">stream</a>.
 
  <li><p><a href="#concept-encoding-run" title="concept-encoding-run">Run</a> <var>encoding</var>'s
@@ -2580,11 +2597,6 @@ the server and the client.
 
  <li><p>Return <a href="#finished">finished</a>.
 </ol>
-
-<h4 id="replacement-encoder"><span class="secno">15.1.2 </span><dfn>replacement encoder</dfn></h4>
-
-<p><a href="#replacement">replacement</a>'s <a href="#encoder">encoder</a> is <a href="#utf-8">UTF-8</a>'s
-<a href="#encoder">encoder</a>.
 
 
 <h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">15.2 </span>Common infrastructure for <a href="#utf-16be">UTF-16BE</a> and <a href="#utf-16le">UTF-16LE</a></h3>
