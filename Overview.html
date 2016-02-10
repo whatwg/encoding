@@ -2573,6 +2573,8 @@ the server and the client.
 <var>stream</var> and <var>byte</var>, runs these steps:
 
 <ol>
+ <li><p>If <var>byte</var> is <a href="#end-of-stream">end-of-stream</a>, return <a href="#finished">finished</a>.
+
  <li><p>If <a href="#replacement-error-returned-flag">replacement error returned flag</a> is unset, set the
  <a href="#replacement-error-returned-flag">replacement error returned flag</a> and return <a href="#error">error</a>.
 

@@ -2487,6 +2487,8 @@ the server and the client.
 <var>stream</var> and <var>byte</var>, runs these steps:
 
 <ol>
+ <li><p>If <var>byte</var> is <span>end-of-stream</span>, return <span>finished</span>.
+
  <li><p>If <span>replacement error returned flag</span> is unset, set the
  <span>replacement error returned flag</span> and return <span>error</span>.
 
