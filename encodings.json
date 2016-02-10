@@ -7,7 +7,7 @@
           "utf-8",
           "utf8"
         ],
-        "name": "utf-8"
+        "name": "UTF-8"
       }
     ],
     "heading": "The Encoding"
@@ -21,7 +21,7 @@
           "csibm866",
           "ibm866"
         ],
-        "name": "ibm866"
+        "name": "IBM866"
       },
       {
         "labels": [
@@ -35,7 +35,7 @@
           "l2",
           "latin2"
         ],
-        "name": "iso-8859-2"
+        "name": "ISO-8859-2"
       },
       {
         "labels": [
@@ -49,7 +49,7 @@
           "l3",
           "latin3"
         ],
-        "name": "iso-8859-3"
+        "name": "ISO-8859-3"
       },
       {
         "labels": [
@@ -63,7 +63,7 @@
           "l4",
           "latin4"
         ],
-        "name": "iso-8859-4"
+        "name": "ISO-8859-4"
       },
       {
         "labels": [
@@ -76,7 +76,7 @@
           "iso_8859-5",
           "iso_8859-5:1988"
         ],
-        "name": "iso-8859-5"
+        "name": "ISO-8859-5"
       },
       {
         "labels": [
@@ -95,7 +95,7 @@
           "iso_8859-6",
           "iso_8859-6:1987"
         ],
-        "name": "iso-8859-6"
+        "name": "ISO-8859-6"
       },
       {
         "labels": [
@@ -112,7 +112,7 @@
           "iso_8859-7:1987",
           "sun_eu_greek"
         ],
-        "name": "iso-8859-7"
+        "name": "ISO-8859-7"
       },
       {
         "labels": [
@@ -128,7 +128,7 @@
           "iso_8859-8:1988",
           "visual"
         ],
-        "name": "iso-8859-8"
+        "name": "ISO-8859-8"
       },
       {
         "labels": [
@@ -136,7 +136,7 @@
           "iso-8859-8-i",
           "logical"
         ],
-        "name": "iso-8859-8-i"
+        "name": "ISO-8859-8-i"
       },
       {
         "labels": [
@@ -148,7 +148,7 @@
           "l6",
           "latin6"
         ],
-        "name": "iso-8859-10"
+        "name": "ISO-8859-10"
       },
       {
         "labels": [
@@ -156,7 +156,7 @@
           "iso8859-13",
           "iso885913"
         ],
-        "name": "iso-8859-13"
+        "name": "ISO-8859-13"
       },
       {
         "labels": [
@@ -164,7 +164,7 @@
           "iso8859-14",
           "iso885914"
         ],
-        "name": "iso-8859-14"
+        "name": "ISO-8859-14"
       },
       {
         "labels": [
@@ -175,13 +175,13 @@
           "iso_8859-15",
           "l9"
         ],
-        "name": "iso-8859-15"
+        "name": "ISO-8859-15"
       },
       {
         "labels": [
           "iso-8859-16"
         ],
-        "name": "iso-8859-16"
+        "name": "ISO-8859-16"
       },
       {
         "labels": [
@@ -191,14 +191,14 @@
           "koi8-r",
           "koi8_r"
         ],
-        "name": "koi8-r"
+        "name": "KOI8-R"
       },
       {
         "labels": [
           "koi8-ru",
           "koi8-u"
         ],
-        "name": "koi8-u"
+        "name": "KOI8-U"
       },
       {
         "labels": [
@@ -339,7 +339,7 @@
           "iso-ir-58",
           "x-gbk"
         ],
-        "name": "gbk"
+        "name": "GBK"
       },
       {
         "labels": [
@@ -360,7 +360,7 @@
           "csbig5",
           "x-x-big5"
         ],
-        "name": "big5"
+        "name": "Big5"
       }
     ],
     "heading": "Legacy multi-byte Chinese (traditional) encodings"
@@ -373,14 +373,14 @@
           "euc-jp",
           "x-euc-jp"
         ],
-        "name": "euc-jp"
+        "name": "EUC-JP"
       },
       {
         "labels": [
           "csiso2022jp",
           "iso-2022-jp"
         ],
-        "name": "iso-2022-jp"
+        "name": "ISO-2022-JP"
       },
       {
         "labels": [
@@ -393,7 +393,7 @@
           "windows-31j",
           "x-sjis"
         ],
-        "name": "shift_jis"
+        "name": "Shift_JIS"
       }
     ],
     "heading": "Legacy multi-byte Japanese encodings"
@@ -413,7 +413,7 @@
           "ksc_5601",
           "windows-949"
         ],
-        "name": "euc-kr"
+        "name": "EUC-KR"
       }
     ],
     "heading": "Legacy multi-byte Korean encodings"
@@ -434,14 +434,14 @@
         "labels": [
           "utf-16be"
         ],
-        "name": "utf-16be"
+        "name": "UTF-16BE"
       },
       {
         "labels": [
           "utf-16",
           "utf-16le"
         ],
-        "name": "utf-16le"
+        "name": "UTF-16LE"
       },
       {
         "labels": [

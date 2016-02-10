@@ -8,6 +8,11 @@ here (I know). Also, the Encoding Standard uses [Anolis](https://wiki.whatwg.org
 generate `Overview.html`. (Do not worry if using that tool is too complicated, your pull request
 does not need to contain the generated HTML.)
 
+### Merge policy
+
+If you can commit to this repository, see
+[whatwg/html TEAM](https://github.com/whatwg/html/blob/master/TEAM.md) for guidelines.
+
 ### Tests
 
 Tests can be found in the `encoding/` directory of

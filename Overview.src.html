@@ -38,10 +38,10 @@
 
 <h2>Preface</h2>
 
-<p>The utf-8 encoding is the most appropriate encoding for interchange of Unicode, the
+<p>The UTF-8 encoding is the most appropriate encoding for interchange of Unicode, the
 universal coded character set. Therefore for new protocols and formats, as well as
 existing formats deployed in new contexts, this specification requires (and defines) the
-utf-8 encoding.
+UTF-8 encoding.
 
 <p>The other (legacy) encodings have been defined to some extent in the past. However,
 user agents have not always implemented them in the same way, have not always used the
@@ -66,7 +66,7 @@ specification does not provide a mechanism for extending any aspect of encodings
 
 <p>There is a set of encoding security issues when the producer and consumer do not agree
 on the encoding in use, or on the way a given encoding is to be implemented. For instance,
-an attack was reported in 2011 where a <span>shift_jis</span> lead byte 0x82 was used to
+an attack was reported in 2011 where a <span>Shift_JIS</span> lead byte 0x82 was used to
 “mask” a 0x22 trail byte in a JSON resource of which an attacker could control some field.
 The producer did not see the problem even though this is an illegal byte combination. The
 consumer decoded it as a single U+FFFD and therefore changed the overall interpretation as
@@ -75,12 +75,12 @@ values now require that in case of an illegal byte combination, a scalar value i
 range U+0000 to U+007F, inclusive, cannot be “masked”. For the aforementioned sequence the
 output would be U+FFFD U+0022.
 
-<p>This is a larger issue for encodings that map anything in the range 0x00 to 0x7F,
-inclusive, to something other than U+0000 to U+007F, inclusive, when there is no lead byte
-present. These are “ASCII-incompatible” encodings and other than <span>iso-2022-jp</span>,
-<span>utf-16be</span>, and <span>utf-16le</span>, which are unfortunately required due to
-deployed content, they are not supported. (Investigation is
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21057" title="Introduce additional labels for the replacement encoding">ongoing</a>
+<p>This is a larger issue for encodings that map anything that is an <span>ASCII byte</span> to
+something that is not an <span>ASCII code point</span>, when there is no lead byte present. These
+are “ASCII-incompatible” encodings and other than <span>ISO-2022-JP</span>, <span>UTF-16BE</span>,
+and <span>UTF-16LE</span>, which are unfortunately required due to deployed content, they are not
+supported. (Investigation is
+<a href="https://github.com/whatwg/encoding/issues/8" title="Add more labels to the replacement encoding">ongoing</a>
 whether more labels of other such encodings can be mapped to the <span>replacement</span>
 encoding, rather than the unknown encoding fallback.) An example attack is injecting
 carefully crafted content into a resource and then encouraging the user to override the
@@ -91,7 +91,7 @@ information loss when an encoding is used that cannot represent all scalar value
 when a resource uses the <span>windows-1252</span> encoding a server will not be able to
 distinguish between an end user entering “💩” and “&amp;#128169;” into a form.
 
-<p>The problems outlined here go away when exclusively using utf-8, which is one of the
+<p>The problems outlined here go away when exclusively using UTF-8, which is one of the
 many reasons that is now the mandatory encoding for all things.
 
 <p class=note>See also the <a href="#browser-ui">Browser UI</a> chapter.
@@ -166,6 +166,9 @@ LATIN CAPITAL LETTER Z), inclusive, and the corresponding characters in the rang
 U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z), inclusive, are
 considered to also match.
 
+<p>To <dfn>ASCII lowercase</dfn> a string, replace all code points in the range U+0041 to U+005A,
+inclusive, with the corresponding code points in the range U+0061 to U+007A, inclusive.
+
 <hr>
 
 <p>A <dfn title=concept-token>token</dfn> is a piece of data, such as a <span>byte</span>
@@ -229,7 +232,7 @@ one or more <span title=concept-token>tokens</span>,
 requiring a non-terminating legacy <span>encoder</span>. The "<code>html</code>"
 <span>error mode</span> causes a sequence to be emitted that cannot be distinguished from
 legitimate input and can therefore lead to silent data loss. Developers are strongly
-encouraged to use the <span>utf-8</span> <span>encoding</span> to prevent this from
+encouraged to use the <span>UTF-8</span> <span>encoding</span> to prevent this from
 happening.
 <span data-anolis-ref class=informative>URL</span>
 <span data-anolis-ref class=informative>HTML</span>
@@ -311,12 +314,12 @@ and their <span title=label>labels</span> user agents must support.
 User agents must not support any other <span title=encoding>encodings</span>
 or <span title=label>labels</span>.
 
-<p>Authors must use the <span>utf-8</span> <span>encoding</span> and must use the
+<p>Authors must use the <span>UTF-8</span> <span>encoding</span> and must use the
 <span>ASCII case-insensitive</span> "<code title>utf-8</code>" <span>label</span> to
 identify it.
 
 <p>New protocols and formats, as well as existing formats deployed in new contexts, must
-use the <span>utf-8</span> <span>encoding</span> exclusively. If these protocols and
+use the <span>UTF-8</span> <span>encoding</span> exclusively. If these protocols and
 formats need to expose the <span>encoding</span>'s <span>name</span> or
 <span>label</span>, they must expose it as "<code title>utf-8</code>".
 
@@ -345,20 +348,20 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan=2><a href=#the-encoding>The Encoding</a>
   <tr>
-   <td rowspan=3><span>utf-8</span>
+   <td rowspan=3><span>UTF-8</span>
    <td>"<code title>unicode-1-1-utf-8</code>"
   <tr><td>"<code title>utf-8</code>"
   <tr><td>"<code title>utf8</code>"
  <tbody>
   <tr><th colspan=2><a href=#legacy-single-byte-encodings>Legacy single-byte encodings</a>
   <tr>
-   <td rowspan=4><span>ibm866</span>
+   <td rowspan=4><span>IBM866</span>
    <td>"<code title>866</code>"
   <tr><td>"<code title>cp866</code>"
   <tr><td>"<code title>csibm866</code>"
   <tr><td>"<code title>ibm866</code>"
   <tr>
-   <td rowspan=9><span>iso-8859-2</span>
+   <td rowspan=9><span>ISO-8859-2</span>
    <td>"<code title>csisolatin2</code>"
   <tr><td>"<code title>iso-8859-2</code>"
   <tr><td>"<code title>iso-ir-101</code>"
@@ -369,7 +372,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>l2</code>"
   <tr><td>"<code title>latin2</code>"
   <tr>
-   <td rowspan=9><span>iso-8859-3</span>
+   <td rowspan=9><span>ISO-8859-3</span>
    <td>"<code title>csisolatin3</code>"
   <tr><td>"<code title>iso-8859-3</code>"
   <tr><td>"<code title>iso-ir-109</code>"
@@ -380,7 +383,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>l3</code>"
   <tr><td>"<code title>latin3</code>"
   <tr>
-   <td rowspan=9><span>iso-8859-4</span>
+   <td rowspan=9><span>ISO-8859-4</span>
    <td>"<code title>csisolatin4</code>"
   <tr><td>"<code title>iso-8859-4</code>"
   <tr><td>"<code title>iso-ir-110</code>"
@@ -391,7 +394,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>l4</code>"
   <tr><td>"<code title>latin4</code>"
   <tr>
-   <td rowspan=8><span>iso-8859-5</span>
+   <td rowspan=8><span>ISO-8859-5</span>
    <td>"<code title>csisolatincyrillic</code>"
   <tr><td>"<code title>cyrillic</code>"
   <tr><td>"<code title>iso-8859-5</code>"
@@ -401,7 +404,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>iso_8859-5</code>"
   <tr><td>"<code title>iso_8859-5:1988</code>"
   <tr>
-   <td rowspan=14><span>iso-8859-6</span>
+   <td rowspan=14><span>ISO-8859-6</span>
    <td>"<code title>arabic</code>"
   <tr><td>"<code title>asmo-708</code>"
   <tr><td>"<code title>csiso88596e</code>"
@@ -417,7 +420,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>iso_8859-6</code>"
   <tr><td>"<code title>iso_8859-6:1987</code>"
   <tr>
-   <td rowspan=12><span>iso-8859-7</span>
+   <td rowspan=12><span>ISO-8859-7</span>
    <td>"<code title>csisolatingreek</code>"
   <tr><td>"<code title>ecma-118</code>"
   <tr><td>"<code title>elot_928</code>"
@@ -431,7 +434,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>iso_8859-7:1987</code>"
   <tr><td>"<code title>sun_eu_greek</code>"
   <tr>
-   <td rowspan=11><span>iso-8859-8</span>
+   <td rowspan=11><span>ISO-8859-8</span>
    <td>"<code title>csiso88598e</code>"
   <tr><td>"<code title>csisolatinhebrew</code>"
   <tr><td>"<code title>hebrew</code>"
@@ -444,12 +447,12 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>iso_8859-8:1988</code>"
   <tr><td>"<code title>visual</code>"
   <tr>
-   <td rowspan=3><span>iso-8859-8-i</span>
+   <td rowspan=3><span>ISO-8859-8-I</span>
    <td>"<code title>csiso88598i</code>"
   <tr><td>"<code title>iso-8859-8-i</code>"
   <tr><td>"<code title>logical</code>"
   <tr>
-   <td rowspan=7><span>iso-8859-10</span>
+   <td rowspan=7><span>ISO-8859-10</span>
    <td>"<code title>csisolatin6</code>"
   <tr><td>"<code title>iso-8859-10</code>"
   <tr><td>"<code title>iso-ir-157</code>"
@@ -458,17 +461,17 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>l6</code>"
   <tr><td>"<code title>latin6</code>"
   <tr>
-   <td rowspan=3><span>iso-8859-13</span>
+   <td rowspan=3><span>ISO-8859-13</span>
    <td>"<code title>iso-8859-13</code>"
   <tr><td>"<code title>iso8859-13</code>"
   <tr><td>"<code title>iso885913</code>"
   <tr>
-   <td rowspan=3><span>iso-8859-14</span>
+   <td rowspan=3><span>ISO-8859-14</span>
    <td>"<code title>iso-8859-14</code>"
   <tr><td>"<code title>iso8859-14</code>"
   <tr><td>"<code title>iso885914</code>"
   <tr>
-   <td rowspan=6><span>iso-8859-15</span>
+   <td rowspan=6><span>ISO-8859-15</span>
    <td>"<code title>csisolatin9</code>"
   <tr><td>"<code title>iso-8859-15</code>"
   <tr><td>"<code title>iso8859-15</code>"
@@ -476,17 +479,17 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>iso_8859-15</code>"
   <tr><td>"<code title>l9</code>"
   <tr>
-   <td><span>iso-8859-16</span>
+   <td><span>ISO-8859-16</span>
    <td>"<code title>iso-8859-16</code>"
   <tr>
-   <td rowspan=5><span>koi8-r</span>
+   <td rowspan=5><span>KOI8-R</span>
    <td>"<code title>cskoi8r</code>"
   <tr><td>"<code title>koi</code>"
   <tr><td>"<code title>koi8</code>"
   <tr><td>"<code title>koi8-r</code>"
   <tr><td>"<code title>koi8_r</code>"
   <tr>
-   <td rowspan=2><span>koi8-u</span>
+   <td rowspan=2><span>KOI8-U</span>
    <td>"<code title>koi8-ru</code>"
   <tr><td>"<code title>koi8-u</code>"
   <tr>
@@ -578,7 +581,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan=2><a href=#legacy-multi-byte-chinese-(simplified)-encodings>Legacy multi-byte Chinese (simplified) encodings</a>
   <tr>
-   <td rowspan=9><span>gbk</span>
+   <td rowspan=9><span>GBK</span>
    <td>"<code title>chinese</code>"
   <tr><td>"<code title>csgb2312</code>"
   <tr><td>"<code title>csiso58gb231280</code>"
@@ -594,7 +597,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan=2><a href=#legacy-multi-byte-chinese-(traditional)-encodings>Legacy multi-byte Chinese (traditional) encodings</a>
   <tr>
-   <td rowspan=5><span>big5</span>
+   <td rowspan=5><span>Big5</span>
    <td>"<code title>big5</code>"
   <tr><td>"<code title>big5-hkscs</code>"
   <tr><td>"<code title>cn-big5</code>"
@@ -603,16 +606,16 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan=2><a href=#legacy-multi-byte-japanese-encodings>Legacy multi-byte Japanese encodings</a>
   <tr>
-   <td rowspan=3><span>euc-jp</span>
+   <td rowspan=3><span>EUC-JP</span>
    <td>"<code title>cseucpkdfmtjapanese</code>"
   <tr><td>"<code title>euc-jp</code>"
   <tr><td>"<code title>x-euc-jp</code>"
   <tr>
-   <td rowspan=2><span>iso-2022-jp</span>
+   <td rowspan=2><span>ISO-2022-JP</span>
    <td>"<code title>csiso2022jp</code>"
   <tr><td>"<code title>iso-2022-jp</code>"
   <tr>
-   <td rowspan=8><span>shift_jis</span>
+   <td rowspan=8><span>Shift_JIS</span>
    <td>"<code title>csshiftjis</code>"
   <tr><td>"<code title>ms932</code>"
   <tr><td>"<code title>ms_kanji</code>"
@@ -624,7 +627,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan=2><a href=#legacy-multi-byte-korean-encodings>Legacy multi-byte Korean encodings</a>
   <tr>
-   <td rowspan=10><span>euc-kr</span>
+   <td rowspan=10><span>EUC-KR</span>
    <td>"<code title>cseuckr</code>"
   <tr><td>"<code title>csksc56011987</code>"
   <tr><td>"<code title>euc-kr</code>"
@@ -645,10 +648,10 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>iso-2022-cn-ext</code>"
   <tr><td>"<code title>iso-2022-kr</code>"
   <tr>
-   <td><span>utf-16be</span>
+   <td><span>UTF-16BE</span>
    <td>"<code title>utf-16be</code>"
   <tr>
-   <td rowspan=2><span>utf-16le</span>
+   <td rowspan=2><span>UTF-16LE</span>
    <td>"<code title>utf-16</code>"
   <tr><td>"<code title>utf-16le</code>"
   <tr>
@@ -700,12 +703,12 @@ specification, excluding <span>index single-byte</span>, which have their own ta
 <table>
  <tr><th colspan=2><span>Index</span><th>Notes
  <tr>
-  <td><dfn>index big5</dfn>
+  <td><dfn>index Big5</dfn>
   <td><a href=index-big5.txt>index-big5.txt</a>
   <td>This matches the Big5 standard in combination with the
   Hong Kong Supplementary Character Set and other common extensions.
  <tr>
-  <td><dfn>index euc-kr</dfn>
+  <td><dfn>index EUC-KR</dfn>
   <td><a href=index-euc-kr.txt>index-euc-kr.txt</a>
   <td>This matches the KS X 1001 standard and the Unified Hangul Code, more
   commonly known together as Windows Codepage 949.
@@ -735,7 +738,7 @@ specification, excluding <span>index single-byte</span>, which have their own ta
  <tr>
   <td><dfn>index jis0212</dfn>
   <td><a href=index-jis0212.txt>index-jis0212.txt</a>
-  <td>This is the JIS X 0212 standard. It is only used by the <span>euc-jp decoder</span>
+  <td>This is the JIS X 0212 standard. It is only used by the <span>EUC-JP decoder</span>
   due to lack of widespread support elsewhere.
   <!--
    No JIX X 0212 euc-jp encoder support:
@@ -794,12 +797,12 @@ value of these steps:
  <var>index</var>.
 </ol>
 
-<p>The <dfn>index big5 pointer</dfn> for <var>code point</var> is the return value of
+<p>The <dfn>index Big5 pointer</dfn> for <var>code point</var> is the return value of
 these steps:
 
 <ol>
  <li>
-  <p>Let <var>index</var> be <span>index big5</span> excluding all pointers less than
+  <p>Let <var>index</var> be <span>index Big5</span> excluding all pointers less than
   (0xA1 - 0x81) &times; 157.
 
   <p class=note>Avoid returning Hong Kong Supplementary Character Set extensions literally.
@@ -828,10 +831,10 @@ to represent ranges.)
 
 <h2>Specification hooks</h2>
 
-<p class=note>The algorithms <span>decode</span>, <span>utf-8 decode</span>,
-<span>utf-8 decode without BOM</span>, <span>utf-8 decode without BOM or fail</span>,
-<span>encode</span>, and <span>utf-8 encode</span> are intended for usage by other specifications.
-<span>utf-8 decode</span> is to be used by new formats. The
+<p class=note>The algorithms <span>decode</span>, <span>UTF-8 decode</span>,
+<span>UTF-8 decode without BOM</span>, <span>UTF-8 decode without BOM or fail</span>,
+<span>encode</span>, and <span>UTF-8 encode</span> are intended for usage by other specifications.
+<span>UTF-8 decode</span> is to be used by new formats. The
 <span title=concept-encoding-get>get an encoding</span> algorithm can be used first to turn a
 <span>label</span> into an <span>encoding</span>.
 
@@ -856,9 +859,9 @@ fallback encoding <var>encoding</var>, run these steps:
 
   <table>
    <tr><th>Byte order mark<th>Encoding
-   <tr><td>0xEF 0xBB 0xBF<td><span>utf-8</span>
-   <tr><td>0xFE 0xFF<td><span>utf-16be</span>
-   <tr><td>0xFF 0xFE<td><span>utf-16le</span>
+   <tr><td>0xEF 0xBB 0xBF<td><span>UTF-8</span>
+   <tr><td>0xFE 0xFF<td><span>UTF-16BE</span>
+   <tr><td>0xFF 0xFE<td><span>UTF-16LE</span>
   </table>
 
   <p class=note>For compatibility with deployed content, the byte order mark (also known as BOM) is
@@ -869,7 +872,7 @@ fallback encoding <var>encoding</var>, run these steps:
  <span title=concept-stream-prepend>prepend</span> <var>buffer</var> to <var>stream</var>.
 
  <li><p>Otherwise, if <var>BOM seen flag</var> is set, <var>encoding</var> is not
- <span>utf-8</span>, and <var>buffer</var> contains three bytes,
+ <span>UTF-8</span>, and <var>buffer</var> contains three bytes,
  <span title=concept-stream-prepend>prepend</span> the last byte of <var>buffer</var> to
  <var>stream</var>.
 
@@ -881,7 +884,7 @@ fallback encoding <var>encoding</var>, run these steps:
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn>utf-8 decode</dfn> a byte stream <var>stream</var>, run
+<p>To <dfn>UTF-8 decode</dfn> a byte stream <var>stream</var>, run
 these steps:
 
 <ol>
@@ -895,31 +898,31 @@ these steps:
 
  <li><p>Let <var>output</var> be a code point <span title=concept-stream>stream</span>.
 
- <li><p><span title=concept-encoding-run>Run</span> <span>utf-8</span>'s
+ <li><p><span title=concept-encoding-run>Run</span> <span>UTF-8</span>'s
  <span>decoder</span> with <var>stream</var> and <var>output</var>.
 
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn>utf-8 decode without BOM</dfn> a byte stream <var>stream</var>, run these
+<p>To <dfn>UTF-8 decode without BOM</dfn> a byte stream <var>stream</var>, run these
 steps:
 
 <ol>
  <li><p>Let <var>output</var> be a code point <span title=concept-stream>stream</span>.
 
- <li><p><span title=concept-encoding-run>Run</span> <span>utf-8</span>'s
+ <li><p><span title=concept-encoding-run>Run</span> <span>UTF-8</span>'s
  <span>decoder</span> with <var>stream</var> and <var>output</var>.
 
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn>utf-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these steps:
+<p>To <dfn>UTF-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these steps:
 
 <ol>
  <li><p>Let <var>output</var> be a code point stream.
 
  <li><p>Let <var>potentialError</var> be the result of <a title=concept-encoding-run>running</a>
- <span>utf-8</span>'s <span>decoder</span> with <var>stream</var>, <var>output</var>, and
+ <span>UTF-8</span>'s <span>decoder</span> with <var>stream</var>, <var>output</var>, and
  "<code>fatal</code>".
 
  <li><p>If <var>potentialError</var> is <span>error</span>, return failure.
@@ -942,14 +945,14 @@ encoding <var>encoding</var>, run these steps:
 </ol>
 
 <p class="note no-backref">This is mostly a legacy hook for URLs and HTML forms. Layering
-<span>utf-8 encode</span> on top is safe as it never triggers
+<span>UTF-8 encode</span> on top is safe as it never triggers
 <span title=error>errors</span>.
 <span data-anolis-ref class=informative>URL</span>
 <span data-anolis-ref class=informative>HTML</span>
 
-<p>To <dfn>utf-8 encode</dfn> a code point stream <var>stream</var>,
+<p>To <dfn>UTF-8 encode</dfn> a code point stream <var>stream</var>,
 return the result of <span title=encode>encoding</span>
-<var>stream</var> using encoding <span>utf-8</span>.
+<var>stream</var> using encoding <span>UTF-8</span>.
 
 
 
@@ -971,7 +974,7 @@ Non-browser user agents are not required to support this API.
  of strings (as a <code title>Uint32Array</code>),
  followed by the length of the first string (as a
  <code title>Uint32Array</code>), the
- <span>utf-8</span> encoded string data, the length of the second string (as
+ <span>UTF-8</span> encoded string data, the length of the second string (as
  a <code title>Uint32Array</code>), the string data,
  and so on.
  <pre><code>function encodeArrayOfStrings(strings, encoding) {
@@ -1070,8 +1073,8 @@ interface <dfn>TextDecoder</dfn> {
    <span title=concept-stream-read>reading</span> from <var>stream</var>.
 
    <li>
-    <p>If <b>encoding</b> is one of <span>utf-8</span>, <span>utf-16be</span>, and
-    <span>utf-16le</span>, and <b>ignore BOM flag</b> and <b>BOM seen flag</b> are unset,
+    <p>If <b>encoding</b> is one of <span>UTF-8</span>, <span>UTF-16BE</span>, and
+    <span>UTF-16LE</span>, and <b>ignore BOM flag</b> and <b>BOM seen flag</b> are unset,
     run these subsubsteps:
 
     <ol>
@@ -1106,7 +1109,7 @@ control.
   <code>RangeError</code>.
 
  <dt><code><var>decoder</var> . <span title=dom-TextDecoder-encoding>encoding</span></code>
- <dd><p>Returns <b>encoding</b>'s <span>name</span>.
+ <dd><p>Returns <b>encoding</b>'s <span>name</span>, lowercased.
 
  <dt><code><var>decoder</var> . <span title=dom-TextDecoder-fatal>fatal</span></code>
  <dd><p>Returns true if <b>error mode</b> is "<code>fatal</code>", and false otherwise.
@@ -1159,8 +1162,8 @@ constructor, when invoked, must run these steps:
  <li><p>Return <var>dec</var>.
 </ol>
 
-<p>The <dfn title=dom-TextDecoder-encoding><code>encoding</code></dfn> attribute's getter
-must return <b>encoding</b>'s <span>name</span>.
+<p>The <dfn title=dom-TextDecoder-encoding><code>encoding</code></dfn> attribute's getter must
+return <b>encoding</b>'s <span>name</span> in <span>ASCII lowercase</span>.
 
 <p>The <dfn title=dom-TextDecoder-fatal><code>fatal</code></dfn> attribute's getter must
 return true if <b>error mode</b> is "<code>fatal</code>", and false otherwise.
@@ -1242,12 +1245,12 @@ option as no <span>encoder</span> requires buffering of scalar values.
  <dd>
   <p>Returns a new <code>TextEncoder</code> object.
   <p>If <var>utfLabel</var> is not a <span>label</span> for
-  <span>utf-8</span>, <span>utf-16be</span>, or <span>utf-16le</span>,
+  <span>UTF-8</span>, <span>UTF-16BE</span>, or <span>UTF-16LE</span>,
   <span data-anolis-spec=webidl title=throw>throws</span> a
   <code>RangeError</code>.
 
  <dt><code><var>encoder</var> . <span title=dom-TextEncoder-encoding>encoding</span></code>
- <dd><p>Returns <b>encoding</b>'s <span>name</span>.
+ <dd><p>Returns <b>encoding</b>'s <span>name</span>, lowercased.
 
  <dt><code><var>encoder</var> . <span title=dom-TextEncoder-encode>encode</span>([<var>input</var> = ""])</code>
  <dd><p>Returns the result of running <b>encoding</b>'s <span>encoder</span>.
@@ -1263,7 +1266,7 @@ constructor, when invoked, must run these steps:
  <var>utfLabel</var>.
 
  <li><p>If <var>encoding</var> is failure, or is none of
- <span>utf-8</span>, <span>utf-16be</span>, and <span>utf-16le</span>,
+ <span>UTF-8</span>, <span>UTF-16BE</span>, and <span>UTF-16LE</span>,
  <span data-anolis-spec=webidl>throw</span> a <code>RangeError</code>.
 
  <li><p>Let <var>enc</var> be a new <code>TextEncoder</code> object.
@@ -1276,8 +1279,8 @@ constructor, when invoked, must run these steps:
  <li><p>Return <var>enc</var>.
 </ol>
 
-<p>The <dfn title=dom-TextEncoder-encoding><code>encoding</code></dfn>
-attribute's getter must return <b>encoding</b>'s <span>name</span>.
+<p>The <dfn title=dom-TextEncoder-encoding><code>encoding</code></dfn> attribute's getter must
+return <b>encoding</b>'s <span>name</span> in <span>ASCII lowercase</span>.
 
 <p>The
 <dfn title=dom-TextEncoder-encode><code>encode(<var>input</var>)</code></dfn>
@@ -1314,28 +1317,28 @@ method, when invoked, must run these steps:
 
 <h2>The encoding</h2>
 
-<h3><dfn>utf-8</dfn></h3>
+<h3><dfn>UTF-8</dfn></h3>
 
-<h4><dfn>utf-8 decoder</dfn></h4>
+<h4><dfn>UTF-8 decoder</dfn></h4>
 
-<p><span>utf-8</span>'s <span>decoder</span>'s has an associated
-<dfn>utf-8 code point</dfn>, <dfn>utf-8 bytes seen</dfn>, and
-<dfn>utf-8 bytes needed</dfn> (all initially 0), a <dfn>utf-8 lower boundary</dfn>
-(initially 0x80), and a <dfn>utf-8 upper boundary</dfn> (initially 0xBF).
+<p><span>UTF-8</span>'s <span>decoder</span>'s has an associated
+<dfn>UTF-8 code point</dfn>, <dfn>UTF-8 bytes seen</dfn>, and
+<dfn>UTF-8 bytes needed</dfn> (all initially 0), a <dfn>UTF-8 lower boundary</dfn>
+(initially 0x80), and a <dfn>UTF-8 upper boundary</dfn> (initially 0xBF).
 
-<p><span>utf-8</span>'s <span>decoder</span>'s <span>handler</span>, given a
+<p><span>UTF-8</span>'s <span>decoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>byte</var>, runs these steps:
 
 <ol>
  <li><p>If <var>byte</var> is <span>end-of-stream</span> and
- <span>utf-8 bytes needed</span> is not 0, set
- <span>utf-8 bytes needed</span> to 0 and return <span>error</span>.
+ <span>UTF-8 bytes needed</span> is not 0, set
+ <span>UTF-8 bytes needed</span> to 0 and return <span>error</span>.
 
  <li><p>If <var>byte</var> is <span>end-of-stream</span>, return
  <span>finished</span>.
 
  <li>
-  <p>If <span>utf-8 bytes needed</span> is 0, based on
+  <p>If <span>UTF-8 bytes needed</span> is 0, based on
   <var>byte</var>:
 
   <dl class=switch>
@@ -1343,33 +1346,33 @@ method, when invoked, must run these steps:
    <dd><p>Return a code point whose value is <var>byte</var>.
 
    <dt>0xC2 to 0xDF
-   <dd><p>Set <span>utf-8 bytes needed</span> to 1 and
-   <span>utf-8 code point</span> to <var>byte</var> &minus; 0xC0.
+   <dd><p>Set <span>UTF-8 bytes needed</span> to 1 and
+   <span>UTF-8 code point</span> to <var>byte</var> &minus; 0xC0.
 
    <dt>0xE0 to 0xEF
    <dd>
     <ol>
      <li><p>If <var>byte</var> is 0xE0, set
-     <span>utf-8 lower boundary</span> to 0xA0.
+     <span>UTF-8 lower boundary</span> to 0xA0.
 
      <li><p>If <var>byte</var> is 0xED, set
-     <span>utf-8 upper boundary</span> to 0x9F.
+     <span>UTF-8 upper boundary</span> to 0x9F.
 
-     <li><p>Set <span>utf-8 bytes needed</span> to 2 and
-     <span>utf-8 code point</span> to <var>byte</var> &minus; 0xE0.
+     <li><p>Set <span>UTF-8 bytes needed</span> to 2 and
+     <span>UTF-8 code point</span> to <var>byte</var> &minus; 0xE0.
     </ol>
 
    <dt>0xF0 to 0xF4
    <dd>
     <ol>
      <li><p>If <var>byte</var> is 0xF0, set
-     <span>utf-8 lower boundary</span> to 0x90.
+     <span>UTF-8 lower boundary</span> to 0x90.
 
      <li><p>If <var>byte</var> is 0xF4, set
-     <span>utf-8 upper boundary</span> to 0x8F.
+     <span>UTF-8 upper boundary</span> to 0x8F.
 
-     <li><p>Set <span>utf-8 bytes needed</span> to 3 and
-     <span>utf-8 code point</span> to <var>byte</var> &minus; 0xF0.
+     <li><p>Set <span>UTF-8 bytes needed</span> to 3 and
+     <span>UTF-8 code point</span> to <var>byte</var> &minus; 0xF0.
     </ol>
 
    <dt>Otherwise
@@ -1377,20 +1380,20 @@ method, when invoked, must run these steps:
   </dl>
 
   <p>Then (<var>byte</var> is in the range 0xC2 to 0xF4, inclusive) set
-  <span>utf-8 code point</span> to
-  <span>utf-8 code point</span> &lt;&lt; (6 &times; <span>utf-8 bytes needed</span>)
+  <span>UTF-8 code point</span> to
+  <span>UTF-8 code point</span> &lt;&lt; (6 &times; <span>UTF-8 bytes needed</span>)
   and return <span>continue</span>.
 
  <li>
   <p>If <var>byte</var> is not in the range
-  <span>utf-8 lower boundary</span> to <span>utf-8 upper boundary</span>, inclusive,
+  <span>UTF-8 lower boundary</span> to <span>UTF-8 upper boundary</span>, inclusive,
   run these substeps:
 
   <ol>
-   <li><p>Set <span>utf-8 code point</span>,
-   <span>utf-8 bytes needed</span>, and <span>utf-8 bytes seen</span> to 0,
-   set <span>utf-8 lower boundary</span> to 0x80, and set
-   <span>utf-8 upper boundary</span> to 0xBF.
+   <li><p>Set <span>UTF-8 code point</span>,
+   <span>UTF-8 bytes needed</span>, and <span>UTF-8 bytes seen</span> to 0,
+   set <span>UTF-8 lower boundary</span> to 0x80, and set
+   <span>UTF-8 upper boundary</span> to 0xBF.
 
    <li><p><span title=concept-stream-prepend>Prepend</span> <var>byte</var> to
    <var>stream</var>.
@@ -1398,34 +1401,34 @@ method, when invoked, must run these steps:
    <li><p>Return <span>error</span>.
   </ol>
 
- <li><p>Set <span>utf-8 lower boundary</span> to 0x80 and
- <span>utf-8 upper boundary</span> to 0xBF.
+ <li><p>Set <span>UTF-8 lower boundary</span> to 0x80 and
+ <span>UTF-8 upper boundary</span> to 0xBF.
 
- <li><p>Increase <span>utf-8 bytes seen</span> by one and increase <span>utf-8 code point</span> by
- (<var>byte</var> &minus; 0x80) &lt;&lt; (6 &times; (<span>utf-8 bytes needed</span> &minus;
- <span>utf-8 bytes seen</span>)).
+ <li><p>Increase <span>UTF-8 bytes seen</span> by one and increase <span>UTF-8 code point</span> by
+ (<var>byte</var> &minus; 0x80) &lt;&lt; (6 &times; (<span>UTF-8 bytes needed</span> &minus;
+ <span>UTF-8 bytes seen</span>)).
 
- <li><p>If <span>utf-8 bytes seen</span> is not equal to
- <span>utf-8 bytes needed</span>, return <span>continue</span>.
+ <li><p>If <span>UTF-8 bytes seen</span> is not equal to
+ <span>UTF-8 bytes needed</span>, return <span>continue</span>.
 
- <li><p>Let <var>code point</var> be <span>utf-8 code point</span>.
+ <li><p>Let <var>code point</var> be <span>UTF-8 code point</span>.
 
- <li><p>Set <span>utf-8 code point</span>,
- <span>utf-8 bytes needed</span>, and <span>utf-8 bytes seen</span> to 0.
+ <li><p>Set <span>UTF-8 code point</span>,
+ <span>UTF-8 bytes needed</span>, and <span>UTF-8 bytes seen</span> to 0.
 
  <li><p>Return a code point whose value is <var>code point</var>.
 </ol>
 
-<p class=note>The constraints in the <span>utf-8 decoder</span> above match
+<p class=note>The constraints in the <span>UTF-8 decoder</span> above match
 “Best Practices for Using U+FFFD” from the Unicode standard. No other
 behavior is permitted per the Encoding Standard (other algorithms that
 achieve the same result are obviously fine, even encouraged).
 <span data-anolis-ref>UNICODE</span>
 
 
-<h4><dfn>utf-8 encoder</dfn></h4>
+<h4><dfn>UTF-8 encoder</dfn></h4>
 
-<p><span>utf-8</span>'s <span>encoder</span>'s <span>handler</span>, given a
+<p><span>UTF-8</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
 
 <ol>
@@ -1485,22 +1488,22 @@ unique <span>index</span>.
 
 <table>
  <tr><th><span>Name</name><th><span>Index</span>
- <tr><td><dfn>ibm866</dfn><td><a href=index-ibm866.txt>index-ibm866.txt</a>
- <tr><td><dfn>iso-8859-2</dfn><td><a href=index-iso-8859-2.txt>index-iso-8859-2.txt</a>
- <tr><td><dfn>iso-8859-3</dfn><td><a href=index-iso-8859-3.txt>index-iso-8859-3.txt</a>
- <tr><td><dfn>iso-8859-4</dfn><td><a href=index-iso-8859-4.txt>index-iso-8859-4.txt</a>
- <tr><td><dfn>iso-8859-5</dfn><td><a href=index-iso-8859-5.txt>index-iso-8859-5.txt</a>
- <tr><td><dfn>iso-8859-6</dfn><td><a href=index-iso-8859-6.txt>index-iso-8859-6.txt</a>
- <tr><td><dfn>iso-8859-7</dfn><td><a href=index-iso-8859-7.txt>index-iso-8859-7.txt</a>
- <tr><td><dfn>iso-8859-8</dfn><td rowspan=2><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a>
- <tr><td><dfn>iso-8859-8-i</dfn>
- <tr><td><dfn>iso-8859-10</dfn><td><a href=index-iso-8859-10.txt>index-iso-8859-10.txt</a>
- <tr><td><dfn>iso-8859-13</dfn><td><a href=index-iso-8859-13.txt>index-iso-8859-13.txt</a>
- <tr><td><dfn>iso-8859-14</dfn><td><a href=index-iso-8859-14.txt>index-iso-8859-14.txt</a>
- <tr><td><dfn>iso-8859-15</dfn><td><a href=index-iso-8859-15.txt>index-iso-8859-15.txt</a>
- <tr><td><dfn>iso-8859-16</dfn><td><a href=index-iso-8859-16.txt>index-iso-8859-16.txt</a>
- <tr><td><dfn>koi8-r</dfn><td><a href=index-koi8-r.txt>index-koi8-r.txt</a>
- <tr><td><dfn>koi8-u</dfn><td><a href=index-koi8-u.txt>index-koi8-u.txt</a>
+ <tr><td><dfn>IBM866</dfn><td><a href=index-ibm866.txt>index-ibm866.txt</a>
+ <tr><td><dfn>ISO-8859-2</dfn><td><a href=index-iso-8859-2.txt>index-iso-8859-2.txt</a>
+ <tr><td><dfn>ISO-8859-3</dfn><td><a href=index-iso-8859-3.txt>index-iso-8859-3.txt</a>
+ <tr><td><dfn>ISO-8859-4</dfn><td><a href=index-iso-8859-4.txt>index-iso-8859-4.txt</a>
+ <tr><td><dfn>ISO-8859-5</dfn><td><a href=index-iso-8859-5.txt>index-iso-8859-5.txt</a>
+ <tr><td><dfn>ISO-8859-6</dfn><td><a href=index-iso-8859-6.txt>index-iso-8859-6.txt</a>
+ <tr><td><dfn>ISO-8859-7</dfn><td><a href=index-iso-8859-7.txt>index-iso-8859-7.txt</a>
+ <tr><td><dfn>ISO-8859-8</dfn><td rowspan=2><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a>
+ <tr><td><dfn>ISO-8859-8-I</dfn>
+ <tr><td><dfn>ISO-8859-10</dfn><td><a href=index-iso-8859-10.txt>index-iso-8859-10.txt</a>
+ <tr><td><dfn>ISO-8859-13</dfn><td><a href=index-iso-8859-13.txt>index-iso-8859-13.txt</a>
+ <tr><td><dfn>ISO-8859-14</dfn><td><a href=index-iso-8859-14.txt>index-iso-8859-14.txt</a>
+ <tr><td><dfn>ISO-8859-15</dfn><td><a href=index-iso-8859-15.txt>index-iso-8859-15.txt</a>
+ <tr><td><dfn>ISO-8859-16</dfn><td><a href=index-iso-8859-16.txt>index-iso-8859-16.txt</a>
+ <tr><td><dfn>KOI8-R</dfn><td><a href=index-koi8-r.txt>index-koi8-r.txt</a>
+ <tr><td><dfn>KOI8-U</dfn><td><a href=index-koi8-u.txt>index-koi8-u.txt</a>
  <tr><td><dfn>macintosh</dfn><td><a href=index-macintosh.txt>index-macintosh.txt</a>
  <tr><td><dfn>windows-874</dfn><td><a href=index-windows-874.txt>index-windows-874.txt</a>
  <tr><td><dfn>windows-1250</dfn><td><a href=index-windows-1250.txt>index-windows-1250.txt</a>
@@ -1515,10 +1518,10 @@ unique <span>index</span>.
  <tr><td><dfn>x-mac-cyrillic</dfn><td><a href=index-x-mac-cyrillic.txt>index-x-mac-cyrillic.txt</a>
 </table>
 
-<p class=note><span>iso-8859-8</span> and <span>iso-8859-8-i</span> are
+<p class=note><span>ISO-8859-8</span> and <span>ISO-8859-8-I</span> are
 distinct <span>encoding</span> <span title=name>names</span>, because
-<span>iso-8859-8</span> has influence on the layout direction. And although
-historically this might have been the case for <span>iso-8859-6</span> and
+<span>ISO-8859-8</span> has influence on the layout direction. And although
+historically this might have been the case for <span>ISO-8859-6</span> and
 "iso-8859-6-i" as well, that is no longer true.
 <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=19505 -->
 
@@ -1569,21 +1572,21 @@ historically this might have been the case for <span>iso-8859-6</span> and
 
 <h2>Legacy multi-byte Chinese (simplified) encodings</h2>
 
-<h3><dfn>gbk</dfn></h3>
+<h3><dfn>GBK</dfn></h3>
 
-<h4><dfn>gbk decoder</dfn></h4>
+<h4><dfn>GBK decoder</dfn></h4>
 
-<p><span>gbk</span>'s <span>decoder</span> is <span>gb18030</span>'s <span>decoder</span>.
+<p><span>GBK</span>'s <span>decoder</span> is <span>gb18030</span>'s <span>decoder</span>.
 
 
-<h4><dfn>gbk encoder</dfn></h4>
+<h4><dfn>GBK encoder</dfn></h4>
 
-<p><span>gbk</span>'s <span>encoder</span> is <span>gb18030</span>'s <span>encoder</span>
-with its <span>gbk flag</span> set.
+<p><span>GBK</span>'s <span>encoder</span> is <span>gb18030</span>'s <span>encoder</span>
+with its <span>GBK flag</span> set.
 
-<p class="note no-backref">Not fully aliasing <span>gbk</span> with <span>gb18030</span>
+<p class="note no-backref">Not fully aliasing <span>GBK</span> with <span>gb18030</span>
 is a conservative move to decrease the chances of breaking legacy servers and other
-consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
+consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
 
 <h3><dfn>gb18030</dfn></h3>
@@ -1688,7 +1691,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 
 <h4><dfn>gb18030 encoder</dfn></h4>
 
-<p><span>gb18030</span>'s <span>encoder</span> has an associated <dfn>gbk flag</dfn>
+<p><span>gb18030</span>'s <span>encoder</span> has an associated <dfn>GBK flag</dfn>
 (initially unset).
 
 <p><span>gb18030</span>'s <span>encoder</span>'s <span>handler</span>, given a
@@ -1707,7 +1710,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
   <p class="note"><span>Index gb18030</span> maps 0xA3 0xA0 to U+3000 rather than U+E5E5 for
   compatibility with deployed content. Therefore it cannot roundtrip.
 
- <li><p>If the <span>gbk flag</span> is set and <var>code point</var> is
+ <li><p>If the <span>GBK flag</span> is set and <var>code point</var> is
  U+20AC, return byte 0x80.
 
  <li><p>Let <var>pointer</var> be the <span>index pointer</span> for
@@ -1728,7 +1731,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
    <var>trail</var> + <var>offset</var>.
   </ol>
 
- <li><p>If <span>gbk flag</span> is set, return <span>error</span> with
+ <li><p>If <span>GBK flag</span> is set, return <span>error</span> with
  <var>code point</var>.
 
  <li><p>Set <var>pointer</var> to the
@@ -1764,27 +1767,27 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 -->
 
 
-<h3><dfn>big5</dfn></h3>
+<h3><dfn>Big5</dfn></h3>
 
-<h4><dfn>big5 decoder</dfn></h4>
+<h4><dfn>Big5 decoder</dfn></h4>
 
-<p><span>big5</span>'s <span>decoder</span> has an associated
-<dfn>big5 lead</dfn> (initially 0x00).
+<p><span>Big5</span>'s <span>decoder</span> has an associated
+<dfn>Big5 lead</dfn> (initially 0x00).
 
-<span>big5</span>'s <span>decoder</span>'s <span>handler</span>, given a
+<span>Big5</span>'s <span>decoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <span>end-of-stream</span> and <span>big5 lead</span>
- is not 0x00, set <span>big5 lead</span> to 0x00 and return <span>error</span>.
+ <li><p>If <var>byte</var> is <span>end-of-stream</span> and <span>Big5 lead</span>
+ is not 0x00, set <span>Big5 lead</span> to 0x00 and return <span>error</span>.
 
- <li><p>If <var>byte</var> is <span>end-of-stream</span> and <span>big5 lead</span>
+ <li><p>If <var>byte</var> is <span>end-of-stream</span> and <span>Big5 lead</span>
  is 0x00, return <span>finished</span>.
 
  <li>
-  <p>If <span>big5 lead</span> is not 0x00, let <var>lead</var> be
-  <span>big5 lead</span>, let <var>pointer</var> be null, set
-  <span>big5 lead</span> to 0x00, and then run these substeps:
+  <p>If <span>Big5 lead</span> is not 0x00, let <var>lead</var> be
+  <span>Big5 lead</span>, let <var>pointer</var> be null, set
+  <span>Big5 lead</span> to 0x00, and then run these substeps:
 
   <ol>
    <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is
@@ -1814,7 +1817,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 
    <li><p>Let <var>code point</var> be null if
    <var>pointer</var> is null and the <span>index code point</span>
-   for <var>pointer</var> in <span>index big5</span> otherwise.
+   for <var>pointer</var> in <span>index Big5</span> otherwise.
 
    <li><p>If <var>code point</var> is null and <var>byte</var> is an
    <span>ASCII byte</span>, <span title=concept-stream-prepend>prepend</span>
@@ -1829,15 +1832,15 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  a code point whose value is <var>byte</var>.
 
  <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
- <span>big5 lead</span> to <var>byte</var> and return <span>continue</span>.
+ <span>Big5 lead</span> to <var>byte</var> and return <span>continue</span>.
 
  <li><p>Return <span>error</span>.
 </ol>
 
 
-<h4><dfn>big5 encoder</dfn></h4>
+<h4><dfn>Big5 encoder</dfn></h4>
 
-<p><span>big5</span>'s <span>encoder</span>'s <span>handler</span>, given a
+<p><span>Big5</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
 
 <ol>
@@ -1847,7 +1850,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <li><p>If <var>code point</var> is an <span>ASCII code point</span>, return
  a byte whose value is <var>code point</var>.
 
- <li><p>Let <var>pointer</var> be the <span>index big5 pointer</span> for
+ <li><p>Let <var>pointer</var> be the <span>index Big5 pointer</span> for
  <var>code point</var>.
 
  <li><p>If <var>pointer</var> is null, return <span>error</span> with
@@ -1868,38 +1871,38 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 
 <h2>Legacy multi-byte Japanese encodings</h2>
 
-<h3><dfn>euc-jp</dfn></h3>
+<h3><dfn>EUC-JP</dfn></h3>
 <!-- https://www.iana.org/assignments/charset-reg/CP51932 -->
 
-<h4><dfn>euc-jp decoder</dfn></h4>
+<h4><dfn>EUC-JP decoder</dfn></h4>
 
-<p><span>euc-jp</span>'s <span>decoder</span> has an associated
-<dfn>euc-jp jis0212 flag</dfn> (initially unset) and
-<dfn>euc-jp lead</dfn> (initially 0x00).
+<p><span>EUC-JP</span>'s <span>decoder</span> has an associated
+<dfn>EUC-JP jis0212 flag</dfn> (initially unset) and
+<dfn>EUC-JP lead</dfn> (initially 0x00).
 
-<p><span>euc-jp</span>'s <span>decoder</span>'s <span>handler</span>, given a
+<p><span>EUC-JP</span>'s <span>decoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>byte</var>, runs these steps:
 
 <ol>
  <li><p>If <var>byte</var> is <span>end-of-stream</span> and
- <span>euc-jp lead</span> is not 0x00, set <span>euc-jp lead</span> to 0x00, and return
+ <span>EUC-JP lead</span> is not 0x00, set <span>EUC-JP lead</span> to 0x00, and return
  <span>error</span>.
 
  <li><p>If <var>byte</var> is <span>end-of-stream</span> and
- <span>euc-jp lead</span> is 0x00, return <span>finished</span>.
+ <span>EUC-JP lead</span> is 0x00, return <span>finished</span>.
 
- <li><p>If <span>euc-jp lead</span> is 0x8E and <var>byte</var> is
- in the range 0xA1 to 0xDF, inclusive, set <span>euc-jp lead</span> to 0x00 and return
+ <li><p>If <span>EUC-JP lead</span> is 0x8E and <var>byte</var> is
+ in the range 0xA1 to 0xDF, inclusive, set <span>EUC-JP lead</span> to 0x00 and return
  a code point whose value is 0xFF61 + <var>byte</var> &minus; 0xA1.
  <!-- katakana -->
 
- <li><p>If <span>euc-jp lead</span> is 0x8F and <var>byte</var> is in the range
- 0xA1 to 0xFE, inclusive, set the <span>euc-jp jis0212 flag</span>, set
- <span>euc-jp lead</span> to <var>byte</var>, and return <span>continue</span>.
+ <li><p>If <span>EUC-JP lead</span> is 0x8F and <var>byte</var> is in the range
+ 0xA1 to 0xFE, inclusive, set the <span>EUC-JP jis0212 flag</span>, set
+ <span>EUC-JP lead</span> to <var>byte</var>, and return <span>continue</span>.
 
  <li>
-  <p>If <span>euc-jp lead</span> is not 0x00, let <var>lead</var> be
-  <span>euc-jp lead</span>, set <span>euc-jp lead</span> to 0x00, and run these substeps:
+  <p>If <span>EUC-JP lead</span> is not 0x00, let <var>lead</var> be
+  <span>EUC-JP lead</span>, set <span>EUC-JP lead</span> to 0x00, and run these substeps:
 
   <ol>
    <li><p>Let <var>code point</var> be null.
@@ -1908,10 +1911,10 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
    range 0xA1 to 0xFE, inclusive, set <var>code point</var> to the
    <span>index code point</span> for
    (<var>lead</var> &minus; 0xA1) &times; 94 + <var>byte</var> &minus; 0xA1
-   in <span>index jis0208</span> if the <span>euc-jp jis0212 flag</span> is unset and in
+   in <span>index jis0208</span> if the <span>EUC-JP jis0212 flag</span> is unset and in
    <span>index jis0212</span> otherwise.
 
-   <li><p>Unset the <span>euc-jp jis0212 flag</span>.
+   <li><p>Unset the <span>EUC-JP jis0212 flag</span>.
 
    <li><p>If <var>byte</var> is not in the range 0xA1 to 0xFE, inclusive,
    <span title=concept-stream-prepend>prepend</span> <var>byte</var> to
@@ -1926,16 +1929,16 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  a code point whose value is <var>byte</var>.
 
  <li><p>If <var>byte</var> is 0x8E, 0x8F, or in the range 0xA1 to
- 0xFE, inclusive, set <span>euc-jp lead</span> to <var>byte</var> and return
+ 0xFE, inclusive, set <span>EUC-JP lead</span> to <var>byte</var> and return
  <span>continue</span>.
 
  <li><p>Return <span>error</span>.
 </ol>
 
 
-<h4><dfn>euc-jp encoder</dfn></h4>
+<h4><dfn>EUC-JP encoder</dfn></h4>
 
-<p><span>euc-jp</span>'s <span>encoder</span>'s <span>handler</span>, given a
+<p><span>EUC-JP</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
 
 <ol>
@@ -1969,26 +1972,26 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 </ol>
 
 
-<h3><dfn>iso-2022-jp</dfn></h3>
+<h3><dfn>ISO-2022-JP</dfn></h3>
 <!--
  https://tools.ietf.org/html/rfc1468
  https://tools.ietf.org/html/rfc2237 (iso-2022-jp-1; not used)
  "ESC ) I" is from iso-2022-jp-3 reportedly
 -->
 
-<h4><dfn>iso-2022-jp decoder</dfn></h4>
+<h4><dfn>ISO-2022-JP decoder</dfn></h4>
 
-<p><span>iso-2022-jp</span>'s <span>decoder</span> has an associated
-<dfn>iso-2022-jp decoder state</dfn> (initially
+<p><span>ISO-2022-JP</span>'s <span>decoder</span> has an associated
+<dfn>ISO-2022-JP decoder state</dfn> (initially
 <span title="iso-2022-jp decoder ASCII">ASCII</span>),
-<dfn>iso-2022-jp decoder output state</dfn> (initially
+<dfn>ISO-2022-JP decoder output state</dfn> (initially
 <span title="iso-2022-jp decoder ASCII">ASCII</span>),
-<dfn>iso-2022-jp lead</dfn> (initially 0x00), and
-<dfn>iso-2022-jp output flag</dfn> (initially unset).
+<dfn>ISO-2022-JP lead</dfn> (initially 0x00), and
+<dfn>ISO-2022-JP output flag</dfn> (initially unset).
 
-<p><span>iso-2022-jp</span>'s <span>decoder</span>'s <span>handler</span>, given a
+<p><span>ISO-2022-JP</span>'s <span>decoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>byte</var>, runs these steps, switching on
-<span>iso-2022-jp decoder state</span>:
+<span>ISO-2022-JP decoder state</span>:
 
 <dl class=switch>
  <dt><dfn title="iso-2022-jp decoder ASCII">ASCII</dfn>
@@ -1997,19 +2000,19 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 
   <dl class=switch>
    <dt>0x1B
-   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <dd><p>Set <span>ISO-2022-JP decoder state</span> to
    <span title="iso-2022-jp decoder escape start">escape start</span> and return
    <span>continue</span>.
 
    <dt>0x00 to 0x7F, excluding 0x0E, 0x0F, and 0x1B
-   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return a code point whose
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return a code point whose
    value is <var>byte</var>.
 
    <dt><span>end-of-stream</span>
    <dd><p>Return <span>finished</span>.
 
    <dt>Otherwise
-   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return <span>error</span>.
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return <span>error</span>.
   </dl>
 
  <dt><dfn title="iso-2022-jp decoder Roman">Roman</dfn>
@@ -2018,25 +2021,25 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 
   <dl class=switch>
    <dt>0x1B
-   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <dd><p>Set <span>ISO-2022-JP decoder state</span> to
    <span title="iso-2022-jp decoder escape start">escape start</span> and return
    <span>continue</span>.
 
    <dt>0x5C
-   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return code point U+00A5.
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return code point U+00A5.
 
    <dt>0x7E
-   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return code point U+203E.
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return code point U+203E.
 
    <dt>0x00 to 0x7F, excluding 0x0E, 0x0F, 0x1B, 0x5C, and 0x7E
-   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return a code point whose
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return a code point whose
    value is <var>byte</var>.
 
    <dt><span>end-of-stream</span>
    <dd><p>Return <span>finished</span>.
 
    <dt>Otherwise
-   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return <span>error</span>.
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return <span>error</span>.
   </dl>
 
  <dt><dfn title="iso-2022-jp decoder Katakana">Katakana</dfn>
@@ -2044,12 +2047,12 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
   <p>Based on <var>byte</var>:
   <dl class=switch>
    <dt>0x1B
-   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <dd><p>Set <span>ISO-2022-JP decoder state</span> to
    <span title="iso-2022-jp decoder escape start">escape start</span> and return
    <span>continue</span>.
 
    <dt>0x21 to 0x5F
-   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return a code point whose
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return a code point whose
    value is 0xFF61 + <var>byte</var> &minus; 0x21.
    <!-- katakana -->
 
@@ -2057,7 +2060,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
    <dd><p>Return <span>finished</span>.
 
    <dt>Otherwise
-   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return <span>error</span>.
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return <span>error</span>.
   </dl>
 
  <dt><dfn title="iso-2022-jp decoder lead byte">Lead byte</dfn>
@@ -2065,14 +2068,14 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
   <p>Based on <var>byte</var>:
   <dl class=switch>
    <dt>0x1B
-   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <dd><p>Set <span>ISO-2022-JP decoder state</span> to
    <span title="iso-2022-jp decoder escape start">escape start</span> and return
    <span>continue</span>.
 
    <dt>0x21 to 0x7E
-   <dd><p>Unset the <span>iso-2022-jp output flag</span>, set
-   <span>iso-2022-jp lead</span> to <var>byte</var>,
-   <span>iso-2022-jp decoder state</span> to
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span>, set
+   <span>ISO-2022-JP lead</span> to <var>byte</var>,
+   <span>ISO-2022-JP decoder state</span> to
    <span title="iso-2022-jp decoder trail byte">trail byte</span>, and return
    <span>continue</span>.
 
@@ -2080,7 +2083,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
    <dd><p>Return <span>finished</span>.
 
    <dt>Otherwise
-   <dd><p>Unset the <span>iso-2022-jp output flag</span> and return <span>error</span>.
+   <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return <span>error</span>.
   </dl>
 
  <dt><dfn title="iso-2022-jp decoder trail byte">Trail byte</dfn>
@@ -2088,7 +2091,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
   <p>Based on <var>byte</var>:
   <dl class=switch>
    <dt>0x1B
-   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <dd><p>Set <span>ISO-2022-JP decoder state</span> to
    <span title="iso-2022-jp decoder escape start">escape start</span> and return
    <span>error</span>.
    <!-- iso-2022-jp decoder output state is still lead byte -->
@@ -2096,11 +2099,11 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
    <dt>0x21 to 0x7E
    <dd>
     <ol>
-     <li><p>Set the <span>iso-2022-jp decoder state</span> to
+     <li><p>Set the <span>ISO-2022-JP decoder state</span> to
      <span title="iso-2022-jp decoder lead byte">lead byte</span>.
 
      <li><p>Let <var>pointer</var> be
-     (<span>iso-2022-jp lead</span> &minus; 0x21) &times; 94 + <var>byte</var> &minus; 0x21.
+     (<span>ISO-2022-JP lead</span> &minus; 0x21) &times; 94 + <var>byte</var> &minus; 0x21.
 
      <li><p>Let <var>code point</var> be the <span>index code point</span> for
      <var>pointer</var> in <span>index jis0208</span>.
@@ -2111,13 +2114,13 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
     </ol>
 
    <dt><span>end-of-stream</span>
-   <dd><p>Set the <span>iso-2022-jp decoder state</span> to
+   <dd><p>Set the <span>ISO-2022-JP decoder state</span> to
    <span title="iso-2022-jp decoder lead byte">lead byte</span>,
    <span title=concept-stream-prepend>prepend</span> <var>byte</var> to
    <var>stream</var>, and return <span>error</span>.
 
    <dt>Otherwise
-   <dd><p>Set <span>iso-2022-jp decoder state</span> to
+   <dd><p>Set <span>ISO-2022-JP decoder state</span> to
    <span title="iso-2022-jp decoder lead byte">lead byte</span> and return
    <span>error</span>.
    <!-- iso-2022-jp decoder output state is still lead byte -->
@@ -2127,24 +2130,24 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <dd>
   <ol>
    <li><p>If <var>byte</var> is either <!--$-->0x24 or <!--(-->0x28, set
-   <span>iso-2022-jp lead</span> to <var>byte</var>,
-   <span>iso-2022-jp decoder state</span> to
+   <span>ISO-2022-JP lead</span> to <var>byte</var>,
+   <span>ISO-2022-JP decoder state</span> to
    <span title="iso-2022-jp decoder escape">escape</span>, and return
    <span>continue</span>.
 
    <li><p><span title=concept-stream-prepend>Prepend</span> <var>byte</var> to
    <var>stream</var>.
 
-   <li><p>Unset the <span>iso-2022-jp output flag</span>, set
-   <span>iso-2022-jp decoder state</span> to
-   <span>iso-2022-jp decoder output state</span>, and return <span>error</span>.
+   <li><p>Unset the <span>ISO-2022-JP output flag</span>, set
+   <span>ISO-2022-JP decoder state</span> to
+   <span>ISO-2022-JP decoder output state</span>, and return <span>error</span>.
   </ol>
 
  <dt><dfn title="iso-2022-jp decoder escape">Escape</dfn>
  <dd>
   <ol>
-   <li><p>Let <var>lead</var> be <span>iso-2022-jp lead</span> and set
-   <span>iso-2022-jp lead</span> to 0x00.
+   <li><p>Let <var>lead</var> be <span>ISO-2022-JP lead</span> and set
+   <span>ISO-2022-JP lead</span> to 0x00.
 
    <li><p>Let <var>state</var> be null.
 
@@ -2165,12 +2168,12 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
     <p>If <var>state</var> is non-null, run these substeps:
 
     <ol>
-     <li><p>Set <span>iso-2022-jp decoder state</span> and
-     <span>iso-2022-jp decoder output state</span> to <var>state</var>.
+     <li><p>Set <span>ISO-2022-JP decoder state</span> and
+     <span>ISO-2022-JP decoder output state</span> to <var>state</var>.
 
-     <li><p>Let <var>output flag</var> be the <span>iso-2022-jp output flag</span>.
+     <li><p>Let <var>output flag</var> be the <span>ISO-2022-JP output flag</span>.
 
-     <li><p>Set the <span>iso-2022-jp output flag</span>.
+     <li><p>Set the <span>ISO-2022-JP output flag</span>.
 
      <li><p>Return <span>continue</span>, if <var>output flag</var> is unset, and
      <span>error</span> otherwise.
@@ -2179,44 +2182,44 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
    <li><p><span title=concept-stream-prepend>Prepend</span>
    <var>lead</var> and <var>byte</var> to <var>stream</var>.
 
-   <li><p>Unset the <span>iso-2022-jp output flag</span>, set
-   <span>iso-2022-jp decoder state</span> to <span>iso-2022-jp decoder output state</span>
+   <li><p>Unset the <span>ISO-2022-JP output flag</span>, set
+   <span>ISO-2022-JP decoder state</span> to <span>ISO-2022-JP decoder output state</span>
    and return <span>error</span>.
   </ol>
 </dl>
 
 
-<h4><dfn>iso-2022-jp encoder</dfn></h4>
+<h4><dfn>ISO-2022-JP encoder</dfn></h4>
 
-<p><span>iso-2022-jp</span>'s <span>encoder</span> has an associated
-<dfn>iso-2022-jp encoder state</dfn> which is one of
+<p><span>ISO-2022-JP</span>'s <span>encoder</span> has an associated
+<dfn>ISO-2022-JP encoder state</dfn> which is one of
 <dfn title="iso-2022-jp encoder ASCII">ASCII</dfn>,
 <dfn title="iso-2022-jp encoder Roman">Roman</dfn>, and
 <dfn title="iso-2022-jp encoder jis0208">jis0208</dfn> (initially
 <span title="iso-2022-jp encoder ASCII">ASCII</span>).
 
-<p><span>iso-2022-jp</span>'s <span>encoder</span>'s <span>handler</span>, given a
+<p><span>ISO-2022-JP</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
 
 <ol>
  <li><p>If <var>code point</var> is <span>end-of-stream</span> and
- <span>iso-2022-jp encoder state</span> is not
+ <span>ISO-2022-JP encoder state</span> is not
  <span title="iso-2022-jp encoder ASCII">ASCII</span>,
  <span title=concept-stream-prepend>prepend</span> <var>code point</var> to
- <var>stream</var>, set <span>iso-2022-jp encoder state</span> to
+ <var>stream</var>, set <span>ISO-2022-JP encoder state</span> to
  <span title="iso-2022-jp encoder ASCII">ASCII</span>, and return three bytes
  0x1B 0x28 0x42.
 
  <li><p>If <var>code point</var> is <span>end-of-stream</span> and
- <span>iso-2022-jp encoder state</span> is
+ <span>ISO-2022-JP encoder state</span> is
  <span title="iso-2022-jp encoder ASCII">ASCII</span>, return <span>finished</span>.
 
- <li><p>If <span>iso-2022-jp encoder state</span> is
+ <li><p>If <span>ISO-2022-JP encoder state</span> is
  <span title="iso-2022-jp encoder ASCII">ASCII</span> and <var>code point</var> is an
  <span>ASCII code point</span>, return a byte whose value is <var>code point</var>.
 
  <li>
-  <p>If <span>iso-2022-jp encoder state</span> is
+  <p>If <span>ISO-2022-JP encoder state</span> is
   <span title="iso-2022-jp encoder Roman">Roman</span> and <var>code point</var> is an
   <span>ASCII code point</span>, excluding U+005C and U+007E, or is U+00A5 or U+203E, run
   these substeps:
@@ -2231,18 +2234,18 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
   </ol>
 
  <li><p>If <var>code point</var> is an <span>ASCII code point</span>, and
- <span>iso-2022-jp encoder state</span> is not
+ <span>ISO-2022-JP encoder state</span> is not
  <span title="iso-2022-jp encoder ASCII">ASCII</span>,
  <span title=concept-stream-prepend>prepend</span> <var>code point</var> to
- <var>stream</var>, set <span>iso-2022-jp encoder state</span> to
+ <var>stream</var>, set <span>ISO-2022-JP encoder state</span> to
  <span title="iso-2022-jp encoder ASCII">ASCII</span>, and return three bytes
  0x1B 0x28 0x42.
 
  <li><p>If <var>code point</var> is either U+00A5 or U+203E, and
- <span>iso-2022-jp encoder state</span> is not
+ <span>ISO-2022-JP encoder state</span> is not
  <span title="iso-2022-jp encoder Roman">Roman</span>,
  <span title=concept-stream-prepend>prepend</span> <var>code point</var> to
- <var>stream</var>, set <span>iso-2022-jp encoder state</span> to
+ <var>stream</var>, set <span>ISO-2022-JP encoder state</span> to
  <span title="iso-2022-jp encoder Roman">Roman</span>, and return three bytes
  0x1B 0x28 0x4A.
 
@@ -2254,10 +2257,10 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <li><p>If <var>pointer</var> is null, return <span>error</span> with
  <var>code point</var>.
 
- <li><p>If <span>iso-2022-jp encoder state</span> is not
+ <li><p>If <span>ISO-2022-JP encoder state</span> is not
  <span title="iso-2022-jp encoder jis0208">jis0208</span>,
  <span title=concept-stream-prepend>prepend</span> <var>code point</var> to
- <var>stream</var>, set <span>iso-2022-jp encoder state</span> to
+ <var>stream</var>, set <span>ISO-2022-JP encoder state</span> to
  <span title="iso-2022-jp encoder jis0208">jis0208</span>, and return three bytes
  0x1B 0x24 0x42.
 
@@ -2270,28 +2273,28 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 </ol>
 
 
-<h3><dfn>shift_jis</dfn></h3>
+<h3><dfn>Shift_JIS</dfn></h3>
 
-<h4><dfn>shift_jis decoder</dfn></h4>
+<h4><dfn>Shift_JIS decoder</dfn></h4>
 
-<p><span>shift_jis</span>'s <span>decoder</span> has an associated
-<dfn>shift_jis lead</dfn> (initially 0x00).
+<p><span>Shift_JIS</span>'s <span>decoder</span> has an associated
+<dfn>Shift_JIS lead</dfn> (initially 0x00).
 
-<p><span>shift_jis</span>'s <span>decoder</span>'s <span>handler</span>, given a
+<p><span>Shift_JIS</span>'s <span>decoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>byte</var>, runs these steps:
 
 <ol>
  <li><p>If <var>byte</var> is <span>end-of-stream</span> and
- <span>shift_jis lead</span> is not 0x00, set <span>shift_jis lead</span> to 0x00 and
+ <span>Shift_JIS lead</span> is not 0x00, set <span>Shift_JIS lead</span> to 0x00 and
  return <span>error</span>.
 
  <li><p>If <var>byte</var> is <span>end-of-stream</span> and
- <span>shift_jis lead</span> is 0x00, return <span>finished</span>.
+ <span>Shift_JIS lead</span> is 0x00, return <span>finished</span>.
 
  <li>
-  <p>If <span>shift_jis lead</span> is not 0x00, let <var>lead</var>
-  be <span>shift_jis lead</span>, let <var>pointer</var> be null, set
-  <span>shift_jis lead</span> to 0x00, and then run these substeps:
+  <p>If <span>Shift_JIS lead</span> is not 0x00, let <var>lead</var>
+  be <span>Shift_JIS lead</span>, let <var>pointer</var> be null, set
+  <span>Shift_JIS lead</span> to 0x00, and then run these substeps:
 
   <ol>
    <li><p>Let <var>offset</var> be 0x40, if <var>byte</var> is
@@ -2334,16 +2337,16 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  <!-- katakana -->
 
  <li><p>If <var>byte</var> is in the range 0x81 to 0x9F, inclusive, or 0xE0 to 0xFC,
- inclusive, set <span>shift_jis lead</span> to <var>byte</var> and return
+ inclusive, set <span>Shift_JIS lead</span> to <var>byte</var> and return
  <span>continue</span>.
 
  <li><p>Return <span>error</span>.
 </ol>
 
 
-<h4><dfn>shift_jis encoder</dfn></h4>
+<h4><dfn>Shift_JIS encoder</dfn></h4>
 
-<p><span>shift_jis</span>'s <span>encoder</span>'s <span>handler</span>, given a
+<p><span>Shift_JIS</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
 
 <ol>
@@ -2388,28 +2391,28 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 
 <h2>Legacy multi-byte Korean encodings</h2>
 
-<h3><dfn>euc-kr</dfn></h3>
+<h3><dfn>EUC-KR</dfn></h3>
 
-<h4><dfn>euc-kr decoder</dfn></h4>
+<h4><dfn>EUC-KR decoder</dfn></h4>
 
-<p><span>euc-kr</span>'s <span>decoder</span> has an associated
-<dfn>euc-kr lead</dfn> (initially 0x00).
+<p><span>EUC-KR</span>'s <span>decoder</span> has an associated
+<dfn>EUC-KR lead</dfn> (initially 0x00).
 
-<p><span>euc-kr</span>'s <span>decoder</span>'s <span>handler</span>, given a
+<p><span>EUC-KR</span>'s <span>decoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>byte</var>, runs these steps:
 
 <ol>
  <li><p>If <var>byte</var> is <span>end-of-stream</span> and
- <span>euc-kr lead</span> is not 0x00, set <span>euc-kr lead</span> to 0x00
+ <span>EUC-KR lead</span> is not 0x00, set <span>EUC-KR lead</span> to 0x00
  and return <span>error</span>.
 
  <li><p>If <var>byte</var> is <span>end-of-stream</span> and
- <span>euc-kr lead</span> is 0x00, return <span>finished</span>.
+ <span>EUC-KR lead</span> is 0x00, return <span>finished</span>.
 
  <li>
-  <p>If <span>euc-kr lead</span> is not 0x00, let <var>lead</var> be
-  <span>euc-kr lead</span>, let <var>pointer</var> be null,
-  set <span>euc-kr lead</span> to 0x00, and then run these substeps:
+  <p>If <span>EUC-KR lead</span> is not 0x00, let <var>lead</var> be
+  <span>EUC-KR lead</span>, let <var>pointer</var> be null,
+  set <span>EUC-KR lead</span> to 0x00, and then run these substeps:
 
   <ol>
    <li><p>If <var>byte</var> is in the range  0x41 to 0xFE, inclusive, set
@@ -2418,7 +2421,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
 
    <li><p>Let <var>code point</var> be null, if <var>pointer</var> is null,
    and the <span>index code point</span> for <var>pointer</var> in
-   <span>index euc-kr</span> otherwise.
+   <span>index EUC-KR</span> otherwise.
 
    <li><p>If <var>code point</var> is null and <var>byte</var> is an
    <span>ASCII byte</span>, <span title=concept-stream-prepend>prepend</span>
@@ -2433,15 +2436,15 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  a code point whose value is <var>byte</var>.
 
  <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
- <span>euc-kr lead</span> to <var>byte</var> and return <span>continue</span>.
+ <span>EUC-KR lead</span> to <var>byte</var> and return <span>continue</span>.
 
  <li><p>Return <span>error</span>.
 </ol>
 
 
-<h4><dfn>euc-kr encoder</dfn></h4>
+<h4><dfn>EUC-KR encoder</dfn></h4>
 
-<p><span>euc-kr</span>'s <span>encoder</span>'s <span>handler</span>, given a
+<p><span>EUC-KR</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
 
 <ol>
@@ -2452,7 +2455,7 @@ consumers of content generated with <span>gbk</span>'s <span>encoder</span>.
  a byte whose value is <var>code point</var>.
 
  <li><p>Let <var>pointer</var> be the <span>index pointer</span> for
- <var>code point</var> in <span>index euc-kr</span>.
+ <var>code point</var> in <span>index EUC-KR</span>.
 
  <li><p>If <var>pointer</var> is null, return <span>error</span> with
  <var>code point</var>.
@@ -2492,11 +2495,11 @@ the server and the client.
 
 <h4><dfn>replacement encoder</dfn></h4>
 
-<p><span>replacement</span>'s <span>encoder</span> is <span>utf-8</span>'s
+<p><span>replacement</span>'s <span>encoder</span> is <span>UTF-8</span>'s
 <span>encoder</span>.
 
 
-<h3>Common infrastructure for <span>utf-16be</span> and <span>utf-16le</span></h3>
+<h3>Common infrastructure for <span>UTF-16BE</span> and <span>UTF-16LE</span></h3>
 
 <p>To <dfn>convert a <var>code unit</var> to bytes</dfn> using a
 <var>utf-16be flag</var>, run these steps:
@@ -2518,48 +2521,48 @@ the server and the client.
   </dl>
 </ol>
 
-<h4><dfn>shared utf-16 decoder</dfn></h4>
+<h4><dfn>shared UTF-16 decoder</dfn></h4>
 
 <p class="note no-backref">A byte order mark has priority over a <span>label</span> as it
 has been found to be more accurate in deployed content. Therefore it is not part of the
-<span>shared utf-16 decoder</span> algorithm but rather the <span>decode</span> algorithm.
+<span>shared UTF-16 decoder</span> algorithm but rather the <span>decode</span> algorithm.
 
-<p><span>shared utf-16 decoder</span> has an associated <dfn>utf-16 lead byte</dfn> and
-<dfn>utf-16 lead surrogate</dfn> (both initially null), and
-<dfn>utf-16be decoder flag</dfn> (initially unset).
+<p><span>shared UTF-16 decoder</span> has an associated <dfn>UTF-16 lead byte</dfn> and
+<dfn>UTF-16 lead surrogate</dfn> (both initially null), and
+<dfn>UTF-16BE decoder flag</dfn> (initially unset).
 
-<p><span>shared utf-16 decoder</span>'s <span>handler</span>, given a <var>stream</var>
+<p><span>shared UTF-16 decoder</span>'s <span>handler</span>, given a <var>stream</var>
 and <var>byte</var>, runs these steps:
 
 <ol>
  <li><p>If <var>byte</var> is <span>end-of-stream</span> and either
- <span>utf-16 lead byte</span> or <span>utf-16 lead surrogate</span> is not null, set
- <span>utf-16 lead byte</span> and <span>utf-16 lead surrogate</span> to null, and return
+ <span>UTF-16 lead byte</span> or <span>UTF-16 lead surrogate</span> is not null, set
+ <span>UTF-16 lead byte</span> and <span>UTF-16 lead surrogate</span> to null, and return
  <span>error</span>.
 
  <li><p>If <var>byte</var> is <span>end-of-stream</span> and
- <span>utf-16 lead byte</span> and <span>utf-16 lead surrogate</span> are null, return
+ <span>UTF-16 lead byte</span> and <span>UTF-16 lead surrogate</span> are null, return
  <span>finished</span>.
 
- <li><p>If <span>utf-16 lead byte</span> is null, set <span>utf-16 lead byte</span> to
+ <li><p>If <span>UTF-16 lead byte</span> is null, set <span>UTF-16 lead byte</span> to
  <var>byte</var> and return <span>continue</span>.
 
  <li>
   <p>Let <var>code unit</var> be the result of:
 
   <dl class=switch>
-   <dt><span>utf-16be decoder flag</span> is set
-   <dd><p>(<span>utf-16 lead byte</span> &lt;&lt; 8) + <var>byte</var>.
-   <dt><span>utf-16be decoder flag</span> is unset
-   <dd><p>(<var>byte</var> &lt;&lt; 8) + <span>utf-16 lead byte</span>.
+   <dt><span>UTF-16BE decoder flag</span> is set
+   <dd><p>(<span>UTF-16 lead byte</span> &lt;&lt; 8) + <var>byte</var>.
+   <dt><span>UTF-16BE decoder flag</span> is unset
+   <dd><p>(<var>byte</var> &lt;&lt; 8) + <span>UTF-16 lead byte</span>.
   </dl>
 
-  <p>Then set <span>utf-16 lead byte</span> to null.
+  <p>Then set <span>UTF-16 lead byte</span> to null.
 
  <li>
-  <p>If <span>utf-16 lead surrogate</span> is not null, let
-  <var>lead surrogate</var> be <span>utf-16 lead surrogate</span>, set
-  <span>utf-16 lead surrogate</span> to null, and then run these substeps:
+  <p>If <span>UTF-16 lead surrogate</span> is not null, let
+  <var>lead surrogate</var> be <span>UTF-16 lead surrogate</span>, set
+  <span>UTF-16 lead surrogate</span> to null, and then run these substeps:
 
   <ol>
    <li><p>If <var>code unit</var> is in the range U+DC00 to U+DFFF, inclusive,
@@ -2568,13 +2571,13 @@ and <var>byte</var>, runs these steps:
 
    <li><p><span title=concept-stream-prepend>Prepend</span> the sequence resulting of
    <span title="convert a code unit to bytes">converting <var>code unit</var> to bytes</span>
-   using <span>utf-16be decoder flag</span> to <var>stream</var> and return
+   using <span>UTF-16BE decoder flag</span> to <var>stream</var> and return
    <span>error</span>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
  <li><p>If <var>code unit</var> is in the range U+D800 to U+DBFF, inclusive, set
- <span>utf-16 lead surrogate</span> to <var>code unit</var> and return
+ <span>UTF-16 lead surrogate</span> to <var>code unit</var> and return
  <span>continue</span>.
 
  <li><p>If <var>code unit</var> is in the range U+DC00 to U+DFFF, inclusive,
@@ -2585,12 +2588,12 @@ and <var>byte</var>, runs these steps:
 </ol>
 
 
-<h4><dfn>shared utf-16 encoder</dfn></h4>
+<h4><dfn>shared UTF-16 encoder</dfn></h4>
 
-<p><span>shared utf-16 encoder</span> has an associated <dfn>utf-16be encoder flag</dfn>
+<p><span>shared UTF-16 encoder</span> has an associated <dfn>UTF-16BE encoder flag</dfn>
 (initially unset).
 
-<p><span>shared utf-16 encoder</span>'s <span>handler</span>, given a <var>stream</var>
+<p><span>shared UTF-16 encoder</span>'s <span>handler</span>, given a <var>stream</var>
 and <var>code point</var>, runs these steps:
 
 <ol>
@@ -2600,54 +2603,54 @@ and <var>code point</var>, runs these steps:
  <li><p>If <var>code point</var> is in the range U+0000 to U+FFFF, inclusive, return
  the sequence resulting of
  <span title="convert a code unit to bytes">converting <var>code point</var> to bytes</span>
- using <span>utf-16be encoder flag</span>.
+ using <span>UTF-16BE encoder flag</span>.
 
  <li><p>Let <var>lead</var> be
  ((<var>code point</var> &minus; 0x10000) >> 10) + 0xD800,
  <span title="convert a code unit to bytes">converted to bytes</span> using
- <span>utf-16be encoder flag</span>.
+ <span>UTF-16BE encoder flag</span>.
 
  <li><p>Let <var>trail</var> be
  ((<var>code point</var> &minus; 0x10000) &amp; 0x3FF) + 0xDC00,
  <span title="convert a code unit to bytes">converted to bytes</span> using
- <span>utf-16be encoder flag</span>.
+ <span>UTF-16BE encoder flag</span>.
 
  <li><p>Return a byte sequence of <var>lead</var> followed by <var>trail</var>.
 </ol>
 
 
-<h3><dfn>utf-16be</dfn></h3>
+<h3><dfn>UTF-16BE</dfn></h3>
 
-<h4><dfn>utf-16be decoder</dfn></h4>
+<h4><dfn>UTF-16BE decoder</dfn></h4>
 
-<p><span>utf-16be</span>'s <span>decoder</span> is <span>shared utf-16 decoder</span> with
-its <span>utf-16be decoder flag</span> set.
+<p><span>UTF-16BE</span>'s <span>decoder</span> is <span>shared UTF-16 decoder</span> with
+its <span>UTF-16BE decoder flag</span> set.
 
 
-<h4><dfn>utf-16be encoder</dfn></h4>
+<h4><dfn>UTF-16BE encoder</dfn></h4>
 
-<p><span>utf-16be</span>'s <span>encoder</span> is <span>shared utf-16 encoder</span> with
-its <span>utf-16be encoder flag</span> set.
+<p><span>UTF-16BE</span>'s <span>encoder</span> is <span>shared UTF-16 encoder</span> with
+its <span>UTF-16BE encoder flag</span> set.
 
 <p class=note>This algorithm has identical results to the one described in the Unicode standard. It
 is included here for completeness. <span data-anolis-ref>UNICODE</span>
 
 
-<h3><dfn>utf-16le</dfn></h3>
+<h3><dfn>UTF-16LE</dfn></h3>
 
 <p class="note no-backref">Both "<code title>utf-16</code>" and
 "<code title>utf-16le</code>" are <span title=label>labels</span> for
-<span>utf-16le</span> to deal with deployed content.
+<span>UTF-16LE</span> to deal with deployed content.
 
 
-<h4><dfn>utf-16le decoder</dfn></h4>
+<h4><dfn>UTF-16LE decoder</dfn></h4>
 
-<p><span>utf-16le</span>'s <span>decoder</span> is <span>shared utf-16 decoder</span>.
+<p><span>UTF-16LE</span>'s <span>decoder</span> is <span>shared UTF-16 decoder</span>.
 
 
-<h4><dfn>utf-16le encoder</dfn></h4>
+<h4><dfn>UTF-16LE encoder</dfn></h4>
 
-<p><span>utf-16le</span>'s <span>encoder</span> is <span>shared utf-16 encoder</span>.
+<p><span>UTF-16LE</span>'s <span>encoder</span> is <span>shared UTF-16 encoder</span>.
 
 <p class=note>This algorithm has identical results to the one described in the Unicode standard. It
 is included here for completeness. <span data-anolis-ref>UNICODE</span>
@@ -2707,9 +2710,9 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 
 <p>Browsers are encouraged to not enable overriding the encoding of a resource. If such a
 feature is nonetheless present, browsers should not offer either
-<span>utf-16be</span> or <span>utf-16le</span> as option due to aforementioned security
+<span>UTF-16BE</span> or <span>UTF-16LE</span> as option due to aforementioned security
 issues. Browsers also should disable this feature if the resource was decoded using either
-<span>utf-16be</span> or <span>utf-16le</span>.
+<span>UTF-16BE</span> or <span>UTF-16LE</span>.
 
 
 
