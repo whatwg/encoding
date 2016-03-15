@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-12-february-2016">Living Standard — Last Updated 12 February 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-18-march-2016">Living Standard — Last Updated 18 March 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -101,16 +101,13 @@
      <li><a href="#replacement-decoder"><span class="secno">15.1.1 </span>replacement decoder</a></ol></li>
    <li><a href="#common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">15.2 </span>Common infrastructure for <span>UTF-16BE</span> and <span>UTF-16LE</span></a>
     <ol>
-     <li><a href="#shared-utf-16-decoder"><span class="secno">15.2.1 </span>shared UTF-16 decoder</a></li>
-     <li><a href="#shared-utf-16-encoder"><span class="secno">15.2.2 </span>shared UTF-16 encoder</a></ol></li>
+     <li><a href="#shared-utf-16-decoder"><span class="secno">15.2.1 </span>shared UTF-16 decoder</a></ol></li>
    <li><a href="#utf-16be"><span class="secno">15.3 </span>UTF-16BE</a>
     <ol>
-     <li><a href="#utf-16be-decoder"><span class="secno">15.3.1 </span>UTF-16BE decoder</a></li>
-     <li><a href="#utf-16be-encoder"><span class="secno">15.3.2 </span>UTF-16BE encoder</a></ol></li>
+     <li><a href="#utf-16be-decoder"><span class="secno">15.3.1 </span>UTF-16BE decoder</a></ol></li>
    <li><a href="#utf-16le"><span class="secno">15.4 </span>UTF-16LE</a>
     <ol>
-     <li><a href="#utf-16le-decoder"><span class="secno">15.4.1 </span>UTF-16LE decoder</a></li>
-     <li><a href="#utf-16le-encoder"><span class="secno">15.4.2 </span>UTF-16LE encoder</a></ol></li>
+     <li><a href="#utf-16le-decoder"><span class="secno">15.4.1 </span>UTF-16LE decoder</a></ol></li>
    <li><a href="#x-user-defined"><span class="secno">15.5 </span>x-user-defined</a>
     <ol>
      <li><a href="#x-user-defined-decoder"><span class="secno">15.5.1 </span>x-user-defined decoder</a></li>
@@ -299,11 +296,14 @@ those tokens must be inserted, in given order, after the last token in the strea
 <h3 id="encoders-and-decoders"><span class="secno">5.1 </span>Encoders and decoders</h3>
 
 <p>Each <a href="#encoding">encoding</a> has an associated <dfn id="decoder">decoder</dfn> and most of them have an
-associated <dfn id="encoder">encoder</dfn> (<a href="#replacement">replacement</a> does not). Each <a href="#decoder">decoder</a> and
-<a href="#encoder">encoder</a> have a <dfn id="handler">handler</dfn> algorithm. A <a href="#handler">handler</a> algorithm takes an
-input <a href="#concept-stream" title="concept-stream">stream</a> and a <a href="#concept-token" title="concept-token">token</a>, and
-returns <dfn id="finished">finished</dfn>, one or more <a href="#concept-token" title="concept-token">tokens</a>, <dfn id="error">error</dfn>
+associated <dfn id="encoder">encoder</dfn>. Each <a href="#decoder">decoder</a> and <a href="#encoder">encoder</a> have a
+<dfn id="handler">handler</dfn> algorithm. A <a href="#handler">handler</a> algorithm takes an input
+<a href="#concept-stream" title="concept-stream">stream</a> and a <a href="#concept-token" title="concept-token">token</a>, and returns
+<dfn id="finished">finished</dfn>, one or more <a href="#concept-token" title="concept-token">tokens</a>, <dfn id="error">error</dfn>
 optionally with a <a href="#code-point">code point</a>, or <dfn id="continue">continue</dfn>.
+
+<p class="note no-backref">The <a href="#replacement">replacement</a>, <a href="#utf-16be">UTF-16BE</a>, and
+<a href="#utf-16le">UTF-16LE</a> <a href="#encoding" title="encoding">encodings</a> have no <a href="#encoder">encoder</a>.
 
 <p>An <dfn id="error-mode">error mode</dfn> as used below is "<code title="">replacement</code>" (default) or
 "<code>fatal</code>" for a <a href="#decoder">decoder</a> and "<code>fatal</code>" (default) or
@@ -1080,10 +1080,10 @@ Non-browser user agents are not required to support this API.
  <a href="#utf-8">UTF-8</a> encoded string data, the length of the second string (as
  a <code title="">Uint32Array</code>), the string data,
  and so on.
- <pre><code>function encodeArrayOfStrings(strings, encoding) {
+ <pre><code>function encodeArrayOfStrings(strings) {
   var encoder, encoded, len, bytes, view, offset;
 
-  encoder = new TextEncoder(encoding);
+  encoder = new TextEncoder();
   encoded = [];
 
   len = Uint32Array.BYTES_PER_ELEMENT;
@@ -1109,10 +1109,10 @@ Non-browser user agents are not required to support this API.
   return bytes.buffer;
 }</code></pre>
 
- <p>The following example decodes an
- <code title="">ArrayBuffer</code> containing data
- encoded in the format produced by the previous example back into an array
- of strings.
+ <p>The following example decodes an <code title="">ArrayBuffer</code> containing data encoded in the
+ format produced by the previous example, or an equivalent algorithm for encodings other than
+ <a href="#utf-8">UTF-8</a>, back into an array of strings.
+
  <pre><code>function decodeArrayOfStrings(buffer, encoding) {
   var decoder, view, offset, num_strings, strings, len;
 
@@ -1328,60 +1328,46 @@ method, when invoked, must run these steps:
 
 <h3 id="interface-textencoder"><span class="secno">8.2 </span>Interface <code title="">TextEncoder</code></h3>
 
-<pre class="idl">[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a>(optional DOMString <var>utfLabel</var> = "utf-8"),
+<pre class="idl">[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a><!-- We cannot add an argument here
+that is not the label argument it had previously. That would break content. -->,
  Exposed=Window,Worker]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
   [NewObject] Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional USVString <var>input</var> = "");
 };</pre>
 
-<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoding</b> and <b>encoder</b>.
+<p>A <a href="#textencoder"><code>TextEncoder</code></a> object has an associated <b>encoder</b>.
 
-<p class="note no-backref">A <a href="#textencoder"><code>TextEncoder</code></a> object offers no <code>stream</code>
-option as no <a href="#encoder">encoder</a> requires buffering of scalar values.
+<p class="note no-backref">A <a href="#textencoder"><code>TextEncoder</code></a> object offers no <var>label</var> argument as
+it only supports <a href="#utf-8">UTF-8</a>. It also offers no <code>stream</code> option as no
+<a href="#encoder">encoder</a> requires buffering of scalar values.
 
 <hr>
 
 <dl class="domintro">
- <dt><code><var>encoder</var> = new <a href="#dom-textencoder" title="dom-TextEncoder">TextEncoder</a>([<var>utfLabel</var> = "utf-8"])</code>
- <dd>
-  <p>Returns a new <a href="#textencoder"><code>TextEncoder</code></a> object.
-  <p>If <var>utfLabel</var> is not a <a href="#label">label</a> for
-  <a href="#utf-8">UTF-8</a>, <a href="#utf-16be">UTF-16BE</a>, or <a href="#utf-16le">UTF-16LE</a>,
-  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throws</a> a
-  <code>RangeError</code>.
+ <dt><code><var>encoder</var> = new <a href="#dom-textencoder" title="dom-TextEncoder">TextEncoder</a>()</code>
+ <dd><p>Returns a new <a href="#textencoder"><code>TextEncoder</code></a> object.
 
  <dt><code><var>encoder</var> . <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a></code>
- <dd><p>Returns <b>encoding</b>'s <a href="#name">name</a>, lowercased.
+ <dd><p>Returns "<code title="">utf-8</code>".
 
  <dt><code><var>encoder</var> . <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>([<var>input</var> = ""])</code>
- <dd><p>Returns the result of running <b>encoding</b>'s <a href="#encoder">encoder</a>.
+ <dd><p>Returns the result of running <a href="#utf-8">UTF-8</a>'s <a href="#encoder">encoder</a>.
 </dl>
 
-<p>The
-<dfn id="dom-textencoder" title="dom-TextEncoder"><code>TextEncoder(<var>utfLabel</var>)</code></dfn>
-constructor, when invoked, must run these steps:
+<p>The <dfn id="dom-textencoder" title="dom-TextEncoder"><code>TextEncoder()</code></dfn> constructor, when invoked, must
+run these steps:
 
 <ol>
- <li><p>Let <var>encoding</var> be the result of
- <a href="#concept-encoding-get" title="concept-encoding-get">getting an encoding</a> from
- <var>utfLabel</var>.
-
- <li><p>If <var>encoding</var> is failure, or is not <a href="#utf-8">UTF-8</a>, <a href="#utf-16be">UTF-16BE</a>, or
- <a href="#utf-16le">UTF-16LE</a>, <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
-
  <li><p>Let <var>enc</var> be a new <a href="#textencoder"><code>TextEncoder</code></a> object.
 
- <li><p>Set <var>enc</var>'s <b>encoding</b> to <var>encoding</var>.
-
- <li><p>Set <var>enc</var>'s <b>encoder</b> to a new
- <var>enc</var>'s <b>encoding</b>'s <a href="#encoder">encoder</a>.
+ <li><p>Set <var>enc</var>'s <b>encoder</b> to <a href="#utf-8">UTF-8</a>'s <a href="#encoder">encoder</a>.
 
  <li><p>Return <var>enc</var>.
 </ol>
 
 <p>The <dfn id="dom-textencoder-encoding" title="dom-TextEncoder-encoding"><code>encoding</code></dfn> attribute's getter must
-return <b>encoding</b>'s <a href="#name">name</a> in <a href="#ascii-lowercase">ASCII lowercase</a>.
+return "<code title="">utf-8</code>".
 
 <p>The
 <dfn id="dom-textencoder-encode" title="dom-TextEncoder-encode"><code>encode(<var>input</var>)</code></dfn>
@@ -2607,26 +2593,6 @@ the server and the client.
 
 <h3 id="common-infrastructure-for-utf-16be-and-utf-16le"><span class="secno">15.2 </span>Common infrastructure for <a href="#utf-16be">UTF-16BE</a> and <a href="#utf-16le">UTF-16LE</a></h3>
 
-<p>To <dfn id="convert-a-code-unit-to-bytes">convert a <var>code unit</var> to bytes</dfn> using a
-<var>utf-16be flag</var>, run these steps:
-
-<ol>
- <li><p>Let <var>byte1</var> be <var>code unit</var> &gt;&gt; 8.
-
- <li><p>Let <var>byte2</var> be
- <var>code unit</var> &amp; 0x00FF.
-
- <li>
-  <p>Then return the bytes in order:
-
-  <dl class="switch">
-   <dt><var>utf-16be flag</var> is set
-   <dd><p><var>byte1</var>, then <var>byte2</var>.
-   <dt><var>utf-16be flag</var> is unset
-   <dd><p><var>byte2</var>, then <var>byte1</var>.
-  </dl>
-</ol>
-
 <h4 id="shared-utf-16-decoder"><span class="secno">15.2.1 </span><dfn>shared UTF-16 decoder</dfn></h4>
 
 <p class="note no-backref">A byte order mark has priority over a <a href="#label">label</a> as it
@@ -2675,10 +2641,27 @@ and <var>byte</var>, runs these steps:
    return a code point whose value is
    0x10000 + ((<var>lead surrogate</var> − 0xD800) &lt;&lt; 10) + (<var>code unit</var> − 0xDC00).
 
-   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> the sequence resulting of
-   <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var>code unit</var> to bytes</a>
-   using <a href="#utf-16be-decoder-flag">UTF-16BE decoder flag</a> to <var>stream</var> and return
-   <a href="#error">error</a>.
+   <li>
+    <p>Let <var>bytes</var> be the return value of running these subsubsteps:
+
+    <ol>
+     <li><p>Let <var>byte1</var> be <var>code unit</var> &gt;&gt; 8.
+
+     <li><p>Let <var>byte2</var> be <var>code unit</var> &amp; 0x00FF.
+
+     <li>
+      <p>Then return the bytes in order, switching on <a href="#utf-16be-decoder-flag">UTF-16BE decoder flag</a>:
+
+      <dl class="switch">
+       <dt>Set
+       <dd><p><var>byte1</var>, then <var>byte2</var>.
+       <dt>Unset
+       <dd><p><var>byte2</var>, then <var>byte1</var>.
+      </dl>
+    </ol>
+
+   <li><p><a href="#concept-stream-prepend" title="concept-stream-prepend">Prepend</a> the <var>bytes</var> to
+   <var>stream</var> and return <a href="#error">error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
@@ -2694,52 +2677,12 @@ and <var>byte</var>, runs these steps:
 </ol>
 
 
-<h4 id="shared-utf-16-encoder"><span class="secno">15.2.2 </span><dfn>shared UTF-16 encoder</dfn></h4>
-
-<p><a href="#shared-utf-16-encoder">shared UTF-16 encoder</a> has an associated <dfn id="utf-16be-encoder-flag">UTF-16BE encoder flag</dfn>
-(initially unset).
-
-<p><a href="#shared-utf-16-encoder">shared UTF-16 encoder</a>'s <a href="#handler">handler</a>, given a <var>stream</var>
-and <var>code point</var>, runs these steps:
-
-<ol>
- <li><p>If <var>code point</var> is <a href="#end-of-stream">end-of-stream</a>, return
- <a href="#finished">finished</a>.
-
- <li><p>If <var>code point</var> is in the range U+0000 to U+FFFF, inclusive, return
- the sequence resulting of
- <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converting <var>code point</var> to bytes</a>
- using <a href="#utf-16be-encoder-flag">UTF-16BE encoder flag</a>.
-
- <li><p>Let <var>lead</var> be
- ((<var>code point</var> − 0x10000) &gt;&gt; 10) + 0xD800,
- <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
- <a href="#utf-16be-encoder-flag">UTF-16BE encoder flag</a>.
-
- <li><p>Let <var>trail</var> be
- ((<var>code point</var> − 0x10000) &amp; 0x3FF) + 0xDC00,
- <a href="#convert-a-code-unit-to-bytes" title="convert a code unit to bytes">converted to bytes</a> using
- <a href="#utf-16be-encoder-flag">UTF-16BE encoder flag</a>.
-
- <li><p>Return a byte sequence of <var>lead</var> followed by <var>trail</var>.
-</ol>
-
-
 <h3 id="utf-16be"><span class="secno">15.3 </span><dfn>UTF-16BE</dfn></h3>
 
 <h4 id="utf-16be-decoder"><span class="secno">15.3.1 </span><dfn>UTF-16BE decoder</dfn></h4>
 
 <p><a href="#utf-16be">UTF-16BE</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared UTF-16 decoder</a> with
 its <a href="#utf-16be-decoder-flag">UTF-16BE decoder flag</a> set.
-
-
-<h4 id="utf-16be-encoder"><span class="secno">15.3.2 </span><dfn>UTF-16BE encoder</dfn></h4>
-
-<p><a href="#utf-16be">UTF-16BE</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared UTF-16 encoder</a> with
-its <a href="#utf-16be-encoder-flag">UTF-16BE encoder flag</a> set.
-
-<p class="note">This algorithm has identical results to the one described in the Unicode standard. It
-is included here for completeness. <a href="#refsUNICODE">[UNICODE]</a>
 
 
 <h3 id="utf-16le"><span class="secno">15.4 </span><dfn>UTF-16LE</dfn></h3>
@@ -2752,14 +2695,6 @@ is included here for completeness. <a href="#refsUNICODE">[UNICODE]</a>
 <h4 id="utf-16le-decoder"><span class="secno">15.4.1 </span><dfn>UTF-16LE decoder</dfn></h4>
 
 <p><a href="#utf-16le">UTF-16LE</a>'s <a href="#decoder">decoder</a> is <a href="#shared-utf-16-decoder">shared UTF-16 decoder</a>.
-
-
-<h4 id="utf-16le-encoder"><span class="secno">15.4.2 </span><dfn>UTF-16LE encoder</dfn></h4>
-
-<p><a href="#utf-16le">UTF-16LE</a>'s <a href="#encoder">encoder</a> is <a href="#shared-utf-16-encoder">shared UTF-16 encoder</a>.
-
-<p class="note">This algorithm has identical results to the one described in the Unicode standard. It
-is included here for completeness. <a href="#refsUNICODE">[UNICODE]</a>
 
 
 <h3 id="x-user-defined"><span class="secno">15.5 </span><dfn>x-user-defined</dfn></h3>

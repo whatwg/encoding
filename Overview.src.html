@@ -213,11 +213,14 @@ those tokens must be inserted, in given order, after the last token in the strea
 <h3>Encoders and decoders</h3>
 
 <p>Each <span>encoding</span> has an associated <dfn>decoder</dfn> and most of them have an
-associated <dfn>encoder</dfn> (<span>replacement</span> does not). Each <span>decoder</span> and
-<span>encoder</span> have a <dfn>handler</dfn> algorithm. A <span>handler</span> algorithm takes an
-input <span title=concept-stream>stream</span> and a <span title=concept-token>token</span>, and
-returns <dfn>finished</dfn>, one or more <span title=concept-token>tokens</span>, <dfn>error</dfn>
+associated <dfn>encoder</dfn>. Each <span>decoder</span> and <span>encoder</span> have a
+<dfn>handler</dfn> algorithm. A <span>handler</span> algorithm takes an input
+<span title=concept-stream>stream</span> and a <span title=concept-token>token</span>, and returns
+<dfn>finished</dfn>, one or more <span title=concept-token>tokens</span>, <dfn>error</dfn>
 optionally with a <span>code point</span>, or <dfn>continue</dfn>.
+
+<p class="note no-backref">The <span>replacement</span>, <span>UTF-16BE</span>, and
+<span>UTF-16LE</span> <span title=encoding>encodings</span> have no <span>encoder</span>.
 
 <p>An <dfn>error mode</dfn> as used below is "<code title>replacement</code>" (default) or
 "<code>fatal</code>" for a <span>decoder</span> and "<code>fatal</code>" (default) or
@@ -994,10 +997,10 @@ Non-browser user agents are not required to support this API.
  <span>UTF-8</span> encoded string data, the length of the second string (as
  a <code title>Uint32Array</code>), the string data,
  and so on.
- <pre><code>function encodeArrayOfStrings(strings, encoding) {
+ <pre><code>function encodeArrayOfStrings(strings) {
   var encoder, encoded, len, bytes, view, offset;
 
-  encoder = new TextEncoder(encoding);
+  encoder = new TextEncoder();
   encoded = [];
 
   len = Uint32Array.BYTES_PER_ELEMENT;
@@ -1023,10 +1026,10 @@ Non-browser user agents are not required to support this API.
   return bytes.buffer;
 }</code></pre>
 
- <p>The following example decodes an
- <code title>ArrayBuffer</code> containing data
- encoded in the format produced by the previous example back into an array
- of strings.
+ <p>The following example decodes an <code title>ArrayBuffer</code> containing data encoded in the
+ format produced by the previous example, or an equivalent algorithm for encodings other than
+ <span>UTF-8</span>, back into an array of strings.
+
  <pre><code>function decodeArrayOfStrings(buffer, encoding) {
   var decoder, view, offset, num_strings, strings, len;
 
@@ -1242,60 +1245,46 @@ method, when invoked, must run these steps:
 
 <h3>Interface <code title>TextEncoder</code></h3>
 
-<pre class=idl>[<span title=dom-TextEncoder>Constructor</span>(optional DOMString <var>utfLabel</var> = "utf-8"),
+<pre class=idl>[<span title=dom-TextEncoder>Constructor</span><!-- We cannot add an argument here
+that is not the label argument it had previously. That would break content. -->,
  Exposed=Window,Worker]
 interface <dfn>TextEncoder</dfn> {
   readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
   [NewObject] Uint8Array <span title=dom-TextEncoder-encode>encode</span>(optional USVString <var>input</var> = "");
 };</pre>
 
-<p>A <code>TextEncoder</code> object has an associated <b>encoding</b> and <b>encoder</b>.
+<p>A <code>TextEncoder</code> object has an associated <b>encoder</b>.
 
-<p class="note no-backref">A <code>TextEncoder</code> object offers no <code>stream</code>
-option as no <span>encoder</span> requires buffering of scalar values.
+<p class="note no-backref">A <code>TextEncoder</code> object offers no <var>label</var> argument as
+it only supports <span>UTF-8</span>. It also offers no <code>stream</code> option as no
+<span>encoder</span> requires buffering of scalar values.
 
 <hr>
 
 <dl class=domintro>
- <dt><code><var>encoder</var> = new <span title=dom-TextEncoder>TextEncoder</span>([<var>utfLabel</var> = "utf-8"])</code>
- <dd>
-  <p>Returns a new <code>TextEncoder</code> object.
-  <p>If <var>utfLabel</var> is not a <span>label</span> for
-  <span>UTF-8</span>, <span>UTF-16BE</span>, or <span>UTF-16LE</span>,
-  <span data-anolis-spec=webidl title=throw>throws</span> a
-  <code>RangeError</code>.
+ <dt><code><var>encoder</var> = new <span title=dom-TextEncoder>TextEncoder</span>()</code>
+ <dd><p>Returns a new <code>TextEncoder</code> object.
 
  <dt><code><var>encoder</var> . <span title=dom-TextEncoder-encoding>encoding</span></code>
- <dd><p>Returns <b>encoding</b>'s <span>name</span>, lowercased.
+ <dd><p>Returns "<code title>utf-8</code>".
 
  <dt><code><var>encoder</var> . <span title=dom-TextEncoder-encode>encode</span>([<var>input</var> = ""])</code>
- <dd><p>Returns the result of running <b>encoding</b>'s <span>encoder</span>.
+ <dd><p>Returns the result of running <span>UTF-8</span>'s <span>encoder</span>.
 </dl>
 
-<p>The
-<dfn title=dom-TextEncoder><code>TextEncoder(<var>utfLabel</var>)</code></dfn>
-constructor, when invoked, must run these steps:
+<p>The <dfn title=dom-TextEncoder><code>TextEncoder()</code></dfn> constructor, when invoked, must
+run these steps:
 
 <ol>
- <li><p>Let <var>encoding</var> be the result of
- <span title=concept-encoding-get>getting an encoding</span> from
- <var>utfLabel</var>.
-
- <li><p>If <var>encoding</var> is failure, or is not <span>UTF-8</span>, <span>UTF-16BE</span>, or
- <span>UTF-16LE</span>, <span data-anolis-spec=webidl>throw</span> a <code>RangeError</code>.
-
  <li><p>Let <var>enc</var> be a new <code>TextEncoder</code> object.
 
- <li><p>Set <var>enc</var>'s <b>encoding</b> to <var>encoding</var>.
-
- <li><p>Set <var>enc</var>'s <b>encoder</b> to a new
- <var>enc</var>'s <b>encoding</b>'s <span>encoder</span>.
+ <li><p>Set <var>enc</var>'s <b>encoder</b> to <span>UTF-8</span>'s <span>encoder</span>.
 
  <li><p>Return <var>enc</var>.
 </ol>
 
 <p>The <dfn title=dom-TextEncoder-encoding><code>encoding</code></dfn> attribute's getter must
-return <b>encoding</b>'s <span>name</span> in <span>ASCII lowercase</span>.
+return "<code title>utf-8</code>".
 
 <p>The
 <dfn title=dom-TextEncoder-encode><code>encode(<var>input</var>)</code></dfn>
@@ -2521,26 +2510,6 @@ the server and the client.
 
 <h3>Common infrastructure for <span>UTF-16BE</span> and <span>UTF-16LE</span></h3>
 
-<p>To <dfn>convert a <var>code unit</var> to bytes</dfn> using a
-<var>utf-16be flag</var>, run these steps:
-
-<ol>
- <li><p>Let <var>byte1</var> be <var>code unit</var> >> 8.
-
- <li><p>Let <var>byte2</var> be
- <var>code unit</var> &amp; 0x00FF.
-
- <li>
-  <p>Then return the bytes in order:
-
-  <dl class=switch>
-   <dt><var>utf-16be flag</var> is set
-   <dd><p><var>byte1</var>, then <var>byte2</var>.
-   <dt><var>utf-16be flag</var> is unset
-   <dd><p><var>byte2</var>, then <var>byte1</var>.
-  </dl>
-</ol>
-
 <h4><dfn>shared UTF-16 decoder</dfn></h4>
 
 <p class="note no-backref">A byte order mark has priority over a <span>label</span> as it
@@ -2589,10 +2558,27 @@ and <var>byte</var>, runs these steps:
    return a code point whose value is
    0x10000 + ((<var>lead surrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>code unit</var> &minus; 0xDC00).
 
-   <li><p><span title=concept-stream-prepend>Prepend</span> the sequence resulting of
-   <span title="convert a code unit to bytes">converting <var>code unit</var> to bytes</span>
-   using <span>UTF-16BE decoder flag</span> to <var>stream</var> and return
-   <span>error</span>.
+   <li>
+    <p>Let <var>bytes</var> be the return value of running these subsubsteps:
+
+    <ol>
+     <li><p>Let <var>byte1</var> be <var>code unit</var> >> 8.
+
+     <li><p>Let <var>byte2</var> be <var>code unit</var> &amp; 0x00FF.
+
+     <li>
+      <p>Then return the bytes in order, switching on <span>UTF-16BE decoder flag</span>:
+
+      <dl class=switch>
+       <dt>Set
+       <dd><p><var>byte1</var>, then <var>byte2</var>.
+       <dt>Unset
+       <dd><p><var>byte2</var>, then <var>byte1</var>.
+      </dl>
+    </ol>
+
+   <li><p><span title=concept-stream-prepend>Prepend</span> the <var>bytes</var> to
+   <var>stream</var> and return <span>error</span>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
   </ol>
 
@@ -2608,52 +2594,12 @@ and <var>byte</var>, runs these steps:
 </ol>
 
 
-<h4><dfn>shared UTF-16 encoder</dfn></h4>
-
-<p><span>shared UTF-16 encoder</span> has an associated <dfn>UTF-16BE encoder flag</dfn>
-(initially unset).
-
-<p><span>shared UTF-16 encoder</span>'s <span>handler</span>, given a <var>stream</var>
-and <var>code point</var>, runs these steps:
-
-<ol>
- <li><p>If <var>code point</var> is <span>end-of-stream</span>, return
- <span>finished</span>.
-
- <li><p>If <var>code point</var> is in the range U+0000 to U+FFFF, inclusive, return
- the sequence resulting of
- <span title="convert a code unit to bytes">converting <var>code point</var> to bytes</span>
- using <span>UTF-16BE encoder flag</span>.
-
- <li><p>Let <var>lead</var> be
- ((<var>code point</var> &minus; 0x10000) >> 10) + 0xD800,
- <span title="convert a code unit to bytes">converted to bytes</span> using
- <span>UTF-16BE encoder flag</span>.
-
- <li><p>Let <var>trail</var> be
- ((<var>code point</var> &minus; 0x10000) &amp; 0x3FF) + 0xDC00,
- <span title="convert a code unit to bytes">converted to bytes</span> using
- <span>UTF-16BE encoder flag</span>.
-
- <li><p>Return a byte sequence of <var>lead</var> followed by <var>trail</var>.
-</ol>
-
-
 <h3><dfn>UTF-16BE</dfn></h3>
 
 <h4><dfn>UTF-16BE decoder</dfn></h4>
 
 <p><span>UTF-16BE</span>'s <span>decoder</span> is <span>shared UTF-16 decoder</span> with
 its <span>UTF-16BE decoder flag</span> set.
-
-
-<h4><dfn>UTF-16BE encoder</dfn></h4>
-
-<p><span>UTF-16BE</span>'s <span>encoder</span> is <span>shared UTF-16 encoder</span> with
-its <span>UTF-16BE encoder flag</span> set.
-
-<p class=note>This algorithm has identical results to the one described in the Unicode standard. It
-is included here for completeness. <span data-anolis-ref>UNICODE</span>
 
 
 <h3><dfn>UTF-16LE</dfn></h3>
@@ -2666,14 +2612,6 @@ is included here for completeness. <span data-anolis-ref>UNICODE</span>
 <h4><dfn>UTF-16LE decoder</dfn></h4>
 
 <p><span>UTF-16LE</span>'s <span>decoder</span> is <span>shared UTF-16 decoder</span>.
-
-
-<h4><dfn>UTF-16LE encoder</dfn></h4>
-
-<p><span>UTF-16LE</span>'s <span>encoder</span> is <span>shared UTF-16 encoder</span>.
-
-<p class=note>This algorithm has identical results to the one described in the Unicode standard. It
-is included here for completeness. <span data-anolis-ref>UNICODE</span>
 
 
 <h3><dfn>x-user-defined</dfn></h3>
