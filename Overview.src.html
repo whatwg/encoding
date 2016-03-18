@@ -640,6 +640,60 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
   <tr><td>"<code title>ksc_5601</code>"
   <tr><td>"<code title>windows-949</code>"
  <tbody>
+  <tr><th colspan=2><a href=#legacy-ebcdic-encodings>Legacy EBCDIC encodings</a>
+  <tr>
+   <td rowspan=13><span>cp037</span>
+   <td>"<code title>ibm-37_P100-1995</code>"
+  <tr><td>"<code title>ibm-37</code>"
+  <tr><td>"<code title>IBM037</code>"
+  <tr><td>"<code title>ibm-037</code>"
+  <tr><td>"<code title>ebcdic-cp-us</code>"
+  <tr><td>"<code title>ebcdic-cp-ca</code>"
+  <tr><td>"<code title>ebcdic-cp-wt</code>"
+  <tr><td>"<code title>ebcdic-cp-nl</code>"
+  <tr><td>"<code title>csIBM037</code>"
+  <tr><td>"<code title>cp037</code>"
+  <tr><td>"<code title>037</code>"
+  <tr><td>"<code title>cpibm37</code>"
+  <tr><td>"<code title>cp37</code>"
+  <tr>
+   <td rowspan=8><span>cp500</span>
+   <td>"<code title>bm-500_P100-1995</code>"
+  <tr><td>"<code title>ibm-500</code>"
+  <tr><td>"<code title>IBM500</code>"
+  <tr><td>"<code title>CP500</code>"
+  <tr><td>"<code title>ebcdic-cp-be</code>"
+  <tr><td>"<code title>csIBM500</code>"
+  <tr><td>"<code title>ebcdic-cp-ch</code>"
+  <tr><td>"<code title>500</code>"
+  <tr>
+   <td rowspan=6><span>cp875</span>
+   <td>"<code title>ibm-875_P100-1995</code>"
+  <tr><td>"<code title>ibm-875</code>"
+  <tr><td>"<code title>IBM875</code>"
+  <tr><td>"<code title>cp875</code>"
+  <tr><td>"<code title>875</code>"
+  <tr><td>"<code title>x-IBM875</code>"
+  <tr>
+   <td rowspan=6><span>cp1026</span>
+   <td>"<code title>ibm-1026_P100-1995</code>"
+  <tr><td>"<code title>ibm-1026</code>"
+  <tr><td>"<code title>IBM1026</code>"
+  <tr><td>"<code title>CP1026</code>"
+  <tr><td>"<code title>csIBM1026</code>"
+  <tr><td>"<code title>1026</code>"
+  <tr>
+   <td rowspan=7><span>cp1140</span>
+   <td>"<code title>ibm-1140_P100-1997</code>"
+  <tr><td>"<code title>ibm-1140</code>"
+  <tr><td>"<code title>IBM01140</code>"
+  <tr><td>"<code title>CCSID01140</code>"
+  <tr><td>"<code title>CP01140</code>"
+  <tr><td>"<code title>cp1140</code>"
+  <tr><td>"<code title>ebcdic-us-37+euro</code>"
+
+
+ <tbody>
   <tr><th colspan=2><a href=#legacy-miscellaneous-encodings>Legacy miscellaneous encodings</a>
   <tr>
    <td rowspan=5><span>replacement</span>
@@ -2477,6 +2531,64 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
  <li><p>Let <var>trail</var> be <var>pointer</var> % 190 + 0x41.
 
  <li><p>Return two bytes whose values are <var>lead</var> and <var>trail</var>.
+</ol>
+
+
+<h2>Legacy EBCDIC encodings</h2>
+
+<p>EBCDIC is a family of encodings where each byte is a single code
+point or nothing, but does not use <span>ASCII code points</span>
+and so cannot be represented as a <span>single-byte encoding</span>.
+<span title="ebcdic encoding">EBCDIC encodings</span> share the
+<span>decoder</span> and <span>encoder</span>. <dfn>Index EBCDIC</dfn>,
+as referenced by the <span>EBCDIC decoder</span> and
+<span>EBCDIC encoder</span>, is defined by the following table, and
+depends on the <span>EBCDIC encoding</span> in use.
+
+<table>
+ <tr><th><span>Name</name><th><span>Index</span>
+ <tr><td><dfn>cp037</dfn><td><a href=index-cp037.txt>index-cp037.txt</a>
+ <tr><td><dfn>cp500</dfn><td><a href=index-cp500.txt>index-cp500.txt</a>
+ <tr><td><dfn>cp875</dfn><td><a href=index-cp875.txt>index-cp875.txt</a>
+ <tr><td><dfn>cp1026</dfn><td><a href=index-cp1026.txt>index-cp1026.txt</a>
+ <tr><td><dfn>cp1140</dfn><td><a href=index-cp1140.txt>index-cp1140.txt</a>
+</table>
+
+<h3><dfn>EBCDIC decoder</dfn></h3>
+
+<p><span title="EBCDIC encoding">EBCDIC encodings</span>'s
+<span>decoder</span>'s <span>handler</span>, given a
+<var>stream</var> and <var>byte</var>, runs these steps:
+
+<ol>
+ <li><p>If <var>byte</var> is <span>end-of-stream</span>, return
+ <span>finished</span>.
+
+ <li><p>Let <var>code point</var> be the <span>index code point</span>
+ for <var>byte</var> in <span>index EBCDIC</span>.
+
+ <li><p>If <var>code point</var> is null, return <span>error</span>.
+
+ <li><p>Return a code point whose value is <var>code point</var>.
+</ol>
+
+<h3><dfn>EBCDIC encoder</dfn></h3>
+
+<p><span title="EBCDIC encoding">EBCDIC encodings</span>'s
+<span>encoder</span>'s <span>handler</span>, given a
+<var>stream</var> and <var>code point</var>, runs these steps:
+
+<ol>
+ <li><p>If <var>code point</var> is <span>end-of-stream</span>, return
+ <span>finished</span>.
+
+ <li><p>Let <var>pointer</var> be the <span>index pointer</span> for
+ <var>code point</var> in <span>index EBCDIC</span>.
+
+ <li><p>If <var>pointer</var> is null, return <span>error</span> with
+ <var>code point</var>.
+
+ <li><p>Return a byte whose value is <var>pointer</var>.
 </ol>
 
 
