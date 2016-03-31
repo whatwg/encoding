@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-18-march-2016">Living Standard — Last Updated 18 March 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-31-march-2016">Living Standard — Last Updated 31 March 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -1433,8 +1433,17 @@ method, when invoked, must run these steps:
    <dd><p>Return a code point whose value is <var>byte</var>.
 
    <dt>0xC2 to 0xDF
-   <dd><p>Set <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a> to 1 and
-   <a href="#utf-8-code-point">UTF-8 code point</a> to <var>byte</var> − 0xC0.
+   <dd>
+    <ol>
+     <li><p>Set <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a> to 1.
+
+     <li>
+      <p>Set <a href="#utf-8-code-point">UTF-8 code point</a> to <var>byte</var> &amp; 0x1F.
+
+      <p class="note">The five least significant bits of <var>byte</var>.
+
+     <li><p>Return <a href="#continue">continue</a>.
+    </ol>
 
    <dt>0xE0 to 0xEF
    <dd>
@@ -1445,8 +1454,12 @@ method, when invoked, must run these steps:
      <li><p>If <var>byte</var> is 0xED, set
      <a href="#utf-8-upper-boundary">UTF-8 upper boundary</a> to 0x9F.
 
-     <li><p>Set <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a> to 2 and
-     <a href="#utf-8-code-point">UTF-8 code point</a> to <var>byte</var> − 0xE0.
+     <li><p>Set <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a> to 2.
+
+     <li>
+      <p>Set <a href="#utf-8-code-point">UTF-8 code point</a> to <var>byte</var> &amp; 0xF.
+
+      <p class="note">The four least significant bits of <var>byte</var>.
     </ol>
 
    <dt>0xF0 to 0xF4
@@ -1458,18 +1471,17 @@ method, when invoked, must run these steps:
      <li><p>If <var>byte</var> is 0xF4, set
      <a href="#utf-8-upper-boundary">UTF-8 upper boundary</a> to 0x8F.
 
-     <li><p>Set <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a> to 3 and
-     <a href="#utf-8-code-point">UTF-8 code point</a> to <var>byte</var> − 0xF0.
+     <li><p>Set <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a> to 3.
+
+     <li>
+      <p>Set <a href="#utf-8-code-point">UTF-8 code point</a> to <var>byte</var> &amp; 0x7.
+
+      <p class="note">The three least significant bits of <var>byte</var>.
     </ol>
 
    <dt>Otherwise
    <dd><p>Return <a href="#error">error</a>.
   </dl>
-
-  <p>Then (<var>byte</var> is in the range 0xC2 to 0xF4, inclusive) set
-  <a href="#utf-8-code-point">UTF-8 code point</a> to
-  <a href="#utf-8-code-point">UTF-8 code point</a> &lt;&lt; (6 × <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a>)
-  and return <a href="#continue">continue</a>.
 
  <li>
   <p>If <var>byte</var> is not in the range
@@ -1491,9 +1503,15 @@ method, when invoked, must run these steps:
  <li><p>Set <a href="#utf-8-lower-boundary">UTF-8 lower boundary</a> to 0x80 and
  <a href="#utf-8-upper-boundary">UTF-8 upper boundary</a> to 0xBF.
 
- <li><p>Increase <a href="#utf-8-bytes-seen">UTF-8 bytes seen</a> by one and increase <a href="#utf-8-code-point">UTF-8 code point</a> by
- (<var>byte</var> − 0x80) &lt;&lt; (6 × (<a href="#utf-8-bytes-needed">UTF-8 bytes needed</a> −
- <a href="#utf-8-bytes-seen">UTF-8 bytes seen</a>)).
+ <li>
+  <p>Set <a href="#utf-8-code-point">UTF-8 code point</a> to (<a href="#utf-8-code-point">UTF-8 code point</a> &lt;&lt; 6) |
+  (<var>byte</var> &amp; 0x3F)
+
+  <p class="note no-backref">Shift the existing bits of <a href="#utf-8-code-point">UTF-8 code point</a> left by six
+  places and set the newly-vacated six least significant bits to the six least significant bits of
+  <var>byte</var>.
+
+ <li><p>Increase <a href="#utf-8-bytes-seen">UTF-8 bytes seen</a> by one.
 
  <li><p>If <a href="#utf-8-bytes-seen">UTF-8 bytes seen</a> is not equal to
  <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a>, return <a href="#continue">continue</a>.

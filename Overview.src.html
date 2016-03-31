@@ -1352,8 +1352,12 @@ method, when invoked, must run these steps:
    <dt>0xC2 to 0xDF
    <dd>
     <ol>
-     <li><p>Set <span>UTF-8 bytes needed</span> to 1 and
-   <span>UTF-8 code point</span> to <var>byte</var> &amp; 0x1F (i.e. the five least significant bits of <var>byte</var>).
+     <li><p>Set <span>UTF-8 bytes needed</span> to 1.
+
+     <li>
+      <p>Set <span>UTF-8 code point</span> to <var>byte</var> &amp; 0x1F.
+
+      <p class="note">The five least significant bits of <var>byte</var>.
 
      <li><p>Return <span>continue</span>.
     </ol>
@@ -1369,7 +1373,10 @@ method, when invoked, must run these steps:
 
      <li><p>Set <span>UTF-8 bytes needed</span> to 2.
 
-     <li><p>Set <span>UTF-8 code point</span> to <var>byte</var> &amp; 0xF (i.e. the four least significant bits of <var>byte</var>).
+     <li>
+      <p>Set <span>UTF-8 code point</span> to <var>byte</var> &amp; 0xF.
+
+      <p class="note">The four least significant bits of <var>byte</var>.
     </ol>
 
    <dt>0xF0 to 0xF4
@@ -1383,7 +1390,10 @@ method, when invoked, must run these steps:
 
      <li><p>Set <span>UTF-8 bytes needed</span> to 3.
 
-     <li><p>Set <span>UTF-8 code point</span> to <var>byte</var> &amp; 0x7 (i.e. the three least significant bits of <var>byte</var>).
+     <li>
+      <p>Set <span>UTF-8 code point</span> to <var>byte</var> &amp; 0x7.
+
+      <p class="note">The three least significant bits of <var>byte</var>.
     </ol>
 
    <dt>Otherwise
@@ -1410,7 +1420,13 @@ method, when invoked, must run these steps:
  <li><p>Set <span>UTF-8 lower boundary</span> to 0x80 and
  <span>UTF-8 upper boundary</span> to 0xBF.
 
- <li><p>Set <span>UTF-8 code point</span> to (<span>UTF-8 code point</span> &lt;&lt; 6) | (<var>byte</var> &amp; 0x3F) (i.e. shift the existing bits of <span>UTF-8 code point</span> left by six places and set the newly-vacated six least significant bits to the six least significant bits of <var>byte</var>).
+ <li>
+  <p>Set <span>UTF-8 code point</span> to (<span>UTF-8 code point</span> &lt;&lt; 6) |
+  (<var>byte</var> &amp; 0x3F)
+
+  <p class="note no-backref">Shift the existing bits of <span>UTF-8 code point</span> left by six
+  places and set the newly-vacated six least significant bits to the six least significant bits of
+  <var>byte</var>.
 
  <li><p>Increase <span>UTF-8 bytes seen</span> by one.
 
