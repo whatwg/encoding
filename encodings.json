@@ -329,6 +329,76 @@
     "encodings": [
       {
         "labels": [
+          "ibm-37_p100-1995",
+          "ibm-37",
+          "ibm037",
+          "ibm-037",
+          "ebcdic-cp-us",
+          "ebcdic-cp-ca",
+          "ebcdic-cp-wt",
+          "ebcdic-cp-nl",
+          "csibm037",
+          "cp037",
+          "037",
+          "cpibm37",
+          "cp37"
+        ],
+        "name": "cp037"
+      },
+      {
+        "labels": [
+          "bm-500_p100-1995",
+          "ibm-500",
+          "ibm500",
+          "cp500",
+          "ebcdic-cp-be",
+          "csibm500",
+          "ebcdic-cp-ch",
+          "500"
+        ],
+        "name": "cp500"
+      },
+      {
+        "labels": [
+          "ibm-875_p100-1995",
+          "ibm-875",
+          "ibm875",
+          "cp875",
+          "875",
+          "x-ibm875"
+        ],
+        "name": "cp875"
+      },
+      {
+        "labels": [
+          "ibm-1026_p100-1995",
+          "ibm-1026",
+          "ibm1026",
+          "cp1026",
+          "csibm1026",
+          "1026"
+        ],
+        "name": "cp1026"
+      },
+      {
+        "labels": [
+          "ibm-1140_p100-1997",
+          "ibm-1140",
+          "ibm01140",
+          "ccsid01140",
+          "cp01140",
+          "cp1140",
+          "ebcdic-us-37+euro"
+        ],
+        "name": "cp1140"
+      }
+    ],
+    "heading": "Legacy EBCDIC encodings"
+  },
+  {
+    "encodings": [
+      {
+        "labels": [
           "chinese",
           "csgb2312",
           "csiso58gb231280",
