@@ -1350,8 +1350,17 @@ method, when invoked, must run these steps:
    <dd><p>Return a code point whose value is <var>byte</var>.
 
    <dt>0xC2 to 0xDF
-   <dd><p>Set <span>UTF-8 bytes needed</span> to 1 and
-   <span>UTF-8 code point</span> to <var>byte</var> &minus; 0xC0.
+   <dd>
+    <ol>
+     <li><p>Set <span>UTF-8 bytes needed</span> to 1.
+
+     <li>
+      <p>Set <span>UTF-8 code point</span> to <var>byte</var> &amp; 0x1F.
+
+      <p class="note">The five least significant bits of <var>byte</var>.
+
+     <li><p>Return <span>continue</span>.
+    </ol>
 
    <dt>0xE0 to 0xEF
    <dd>
@@ -1362,8 +1371,12 @@ method, when invoked, must run these steps:
      <li><p>If <var>byte</var> is 0xED, set
      <span>UTF-8 upper boundary</span> to 0x9F.
 
-     <li><p>Set <span>UTF-8 bytes needed</span> to 2 and
-     <span>UTF-8 code point</span> to <var>byte</var> &minus; 0xE0.
+     <li><p>Set <span>UTF-8 bytes needed</span> to 2.
+
+     <li>
+      <p>Set <span>UTF-8 code point</span> to <var>byte</var> &amp; 0xF.
+
+      <p class="note">The four least significant bits of <var>byte</var>.
     </ol>
 
    <dt>0xF0 to 0xF4
@@ -1375,18 +1388,17 @@ method, when invoked, must run these steps:
      <li><p>If <var>byte</var> is 0xF4, set
      <span>UTF-8 upper boundary</span> to 0x8F.
 
-     <li><p>Set <span>UTF-8 bytes needed</span> to 3 and
-     <span>UTF-8 code point</span> to <var>byte</var> &minus; 0xF0.
+     <li><p>Set <span>UTF-8 bytes needed</span> to 3.
+
+     <li>
+      <p>Set <span>UTF-8 code point</span> to <var>byte</var> &amp; 0x7.
+
+      <p class="note">The three least significant bits of <var>byte</var>.
     </ol>
 
    <dt>Otherwise
    <dd><p>Return <span>error</span>.
   </dl>
-
-  <p>Then (<var>byte</var> is in the range 0xC2 to 0xF4, inclusive) set
-  <span>UTF-8 code point</span> to
-  <span>UTF-8 code point</span> &lt;&lt; (6 &times; <span>UTF-8 bytes needed</span>)
-  and return <span>continue</span>.
 
  <li>
   <p>If <var>byte</var> is not in the range
@@ -1408,9 +1420,15 @@ method, when invoked, must run these steps:
  <li><p>Set <span>UTF-8 lower boundary</span> to 0x80 and
  <span>UTF-8 upper boundary</span> to 0xBF.
 
- <li><p>Increase <span>UTF-8 bytes seen</span> by one and increase <span>UTF-8 code point</span> by
- (<var>byte</var> &minus; 0x80) &lt;&lt; (6 &times; (<span>UTF-8 bytes needed</span> &minus;
- <span>UTF-8 bytes seen</span>)).
+ <li>
+  <p>Set <span>UTF-8 code point</span> to (<span>UTF-8 code point</span> &lt;&lt; 6) |
+  (<var>byte</var> &amp; 0x3F)
+
+  <p class="note no-backref">Shift the existing bits of <span>UTF-8 code point</span> left by six
+  places and set the newly-vacated six least significant bits to the six least significant bits of
+  <var>byte</var>.
+
+ <li><p>Increase <span>UTF-8 bytes seen</span> by one.
 
  <li><p>If <span>UTF-8 bytes seen</span> is not equal to
  <span>UTF-8 bytes needed</span>, return <span>continue</span>.
