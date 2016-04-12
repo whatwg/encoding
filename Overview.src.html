@@ -205,9 +205,10 @@ those tokens must be inserted, in given order, after the last token in the strea
 
 <h2>Encodings</h2>
 
-<p>An <dfn>encoding</dfn> defines a mapping from a <span>scalar value</span> sequence to a
-<span>byte</span> sequence (and vice versa). Each <span>encoding</span> has a
-<dfn>name</dfn>, and one or more <dfn title=label>labels</dfn>.
+<p>An <dfn data-export>encoding</dfn> defines a mapping from a <span>scalar value</span> sequence to
+a <span>byte</span> sequence (and vice versa). Each <span>encoding</span> has a
+<dfn data-export data-dfn-for=encoding>name</dfn>, and one or more
+<dfn data-export data-dfn-for=encoding data-lt=label title=label>labels</dfn>.
 
 
 <h3>Encoders and decoders</h3>
@@ -324,7 +325,7 @@ use the <span>UTF-8</span> <span>encoding</span> exclusively. If these protocols
 formats need to expose the <span>encoding</span>'s <span>name</span> or
 <span>label</span>, they must expose it as "<code title>utf-8</code>".
 
-<p>To <dfn title=concept-encoding-get>get an encoding</dfn> from a string
+<p>To <dfn data-export title=concept-encoding-get>get an encoding</dfn> from a string
 <var>label</var>, run these steps:
 
 <ol>
@@ -667,8 +668,8 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
 
 <h3>Output encodings</h3>
 
-<p>To <dfn>get an output encoding</dfn> from an <span>encoding</span> <var>encoding</var>, run these
-steps:</p>
+<p>To <dfn data-export>get an output encoding</dfn> from an <span>encoding</span>
+<var>encoding</var>, run these steps:</p>
 
 <ol>
  <li><p>If <var>encoding</var> is <span>replacement</span>, <span>UTF-16BE</span>, or
@@ -855,7 +856,7 @@ to represent ranges.)
 <span title=concept-encoding-get>get an encoding</span> algorithm can be used first to turn a
 <span>label</span> into an <span>encoding</span>.
 
-<p>To <dfn>decode</dfn> a byte stream <var>stream</var> using
+<p>To <dfn data-export>decode</dfn> a byte stream <var>stream</var> using
 fallback encoding <var>encoding</var>, run these steps:
 
 <ol>
@@ -901,7 +902,7 @@ fallback encoding <var>encoding</var>, run these steps:
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn>UTF-8 decode</dfn> a byte stream <var>stream</var>, run
+<p>To <dfn data-export>UTF-8 decode</dfn> a byte stream <var>stream</var>, run
 these steps:
 
 <ol>
@@ -921,7 +922,7 @@ these steps:
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn>UTF-8 decode without BOM</dfn> a byte stream <var>stream</var>, run these
+<p>To <dfn data-export>UTF-8 decode without BOM</dfn> a byte stream <var>stream</var>, run these
 steps:
 
 <ol>
@@ -933,7 +934,7 @@ steps:
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn>UTF-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these steps:
+<p>To <dfn data-export>UTF-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these steps:
 
 <ol>
  <li><p>Let <var>output</var> be a code point stream.
@@ -949,7 +950,7 @@ steps:
 
 <hr>
 
-<p>To <dfn>encode</dfn> a code point stream <var>stream</var> using
+<p>To <dfn data-export>encode</dfn> a code point stream <var>stream</var> using
 encoding <var>encoding</var>, run these steps:
 
 <ol>
@@ -970,7 +971,7 @@ encoding <var>encoding</var>, run these steps:
 <span data-anolis-ref class=informative>URL</span>
 <span data-anolis-ref class=informative>HTML</span>
 
-<p>To <dfn>UTF-8 encode</dfn> a code point stream <var>stream</var>,
+<p>To <dfn data-export>UTF-8 encode</dfn> a code point stream <var>stream</var>,
 return the result of <span title=encode>encoding</span>
 <var>stream</var> using encoding <span>UTF-8</span>.
 
@@ -2728,6 +2729,7 @@ Gordon P. Hemsley,
 Henri Sivonen,
 Ian Hickson,
 James Graham,
+Jeffrey Yasskin,
 John Tamplin,
 Joshua Bell,
 村井純 (Jun Murai),

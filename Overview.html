@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-31-march-2016">Living Standard — Last Updated 31 March 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-13-april-2016">Living Standard — Last Updated 13 April 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -288,9 +288,10 @@ those tokens must be inserted, in given order, after the last token in the strea
 
 <h2 id="encodings"><span class="secno">5 </span>Encodings</h2>
 
-<p>An <dfn id="encoding">encoding</dfn> defines a mapping from a <a href="#scalar-value">scalar value</a> sequence to a
-<a href="#byte">byte</a> sequence (and vice versa). Each <a href="#encoding">encoding</a> has a
-<dfn id="name">name</dfn>, and one or more <dfn id="label" title="label">labels</dfn>.
+<p>An <dfn data-export="" id="encoding">encoding</dfn> defines a mapping from a <a href="#scalar-value">scalar value</a> sequence to
+a <a href="#byte">byte</a> sequence (and vice versa). Each <a href="#encoding">encoding</a> has a
+<dfn data-dfn-for="encoding" data-export="" id="name">name</dfn>, and one or more
+<dfn data-dfn-for="encoding" data-export="" data-lt="label" id="label" title="label">labels</dfn>.
 
 
 <h3 id="encoders-and-decoders"><span class="secno">5.1 </span>Encoders and decoders</h3>
@@ -407,7 +408,7 @@ use the <a href="#utf-8">UTF-8</a> <a href="#encoding">encoding</a> exclusively.
 formats need to expose the <a href="#encoding">encoding</a>'s <a href="#name">name</a> or
 <a href="#label">label</a>, they must expose it as "<code title="">utf-8</code>".
 
-<p>To <dfn id="concept-encoding-get" title="concept-encoding-get">get an encoding</dfn> from a string
+<p>To <dfn data-export="" id="concept-encoding-get" title="concept-encoding-get">get an encoding</dfn> from a string
 <var>label</var>, run these steps:
 
 <ol>
@@ -750,8 +751,8 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
 
 <h3 id="output-encodings"><span class="secno">5.3 </span>Output encodings</h3>
 
-<p>To <dfn id="get-an-output-encoding">get an output encoding</dfn> from an <a href="#encoding">encoding</a> <var>encoding</var>, run these
-steps:</p>
+<p>To <dfn data-export="" id="get-an-output-encoding">get an output encoding</dfn> from an <a href="#encoding">encoding</a>
+<var>encoding</var>, run these steps:</p>
 
 <ol>
  <li><p>If <var>encoding</var> is <a href="#replacement">replacement</a>, <a href="#utf-16be">UTF-16BE</a>, or
@@ -938,7 +939,7 @@ to represent ranges.)
 <a href="#concept-encoding-get" title="concept-encoding-get">get an encoding</a> algorithm can be used first to turn a
 <a href="#label">label</a> into an <a href="#encoding">encoding</a>.
 
-<p>To <dfn id="decode">decode</dfn> a byte stream <var>stream</var> using
+<p>To <dfn data-export="" id="decode">decode</dfn> a byte stream <var>stream</var> using
 fallback encoding <var>encoding</var>, run these steps:
 
 <ol>
@@ -984,7 +985,7 @@ fallback encoding <var>encoding</var>, run these steps:
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn id="utf-8-decode">UTF-8 decode</dfn> a byte stream <var>stream</var>, run
+<p>To <dfn data-export="" id="utf-8-decode">UTF-8 decode</dfn> a byte stream <var>stream</var>, run
 these steps:
 
 <ol>
@@ -1004,7 +1005,7 @@ these steps:
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn id="utf-8-decode-without-bom">UTF-8 decode without BOM</dfn> a byte stream <var>stream</var>, run these
+<p>To <dfn data-export="" id="utf-8-decode-without-bom">UTF-8 decode without BOM</dfn> a byte stream <var>stream</var>, run these
 steps:
 
 <ol>
@@ -1016,7 +1017,7 @@ steps:
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn id="utf-8-decode-without-bom-or-fail">UTF-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these steps:
+<p>To <dfn data-export="" id="utf-8-decode-without-bom-or-fail">UTF-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these steps:
 
 <ol>
  <li><p>Let <var>output</var> be a code point stream.
@@ -1032,7 +1033,7 @@ steps:
 
 <hr>
 
-<p>To <dfn id="encode">encode</dfn> a code point stream <var>stream</var> using
+<p>To <dfn data-export="" id="encode">encode</dfn> a code point stream <var>stream</var> using
 encoding <var>encoding</var>, run these steps:
 
 <ol>
@@ -1053,7 +1054,7 @@ encoding <var>encoding</var>, run these steps:
 <a class="informative" href="#refsURL">[URL]</a>
 <a class="informative" href="#refsHTML">[HTML]</a>
 
-<p>To <dfn id="utf-8-encode">UTF-8 encode</dfn> a code point stream <var>stream</var>,
+<p>To <dfn data-export="" id="utf-8-encode">UTF-8 encode</dfn> a code point stream <var>stream</var>,
 return the result of <a href="#encode" title="encode">encoding</a>
 <var>stream</var> using encoding <a href="#utf-8">UTF-8</a>.
 
@@ -2832,6 +2833,7 @@ Gordon P. Hemsley,
 Henri Sivonen,
 Ian Hickson,
 James Graham,
+Jeffrey Yasskin,
 John Tamplin,
 Joshua Bell,
 村井純 (Jun Murai),
