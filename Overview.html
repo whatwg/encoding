@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-13-april-2016">Living Standard — Last Updated 13 April 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-19-april-2016">Living Standard — Last Updated 19 April 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -1426,8 +1426,7 @@ method, when invoked, must run these steps:
  <a href="#finished">finished</a>.
 
  <li>
-  <p>If <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a> is 0, based on
-  <var>byte</var>:
+  <p>If <a href="#utf-8-bytes-needed">UTF-8 bytes needed</a> is 0, based on <var>byte</var>:
 
   <dl class="switch">
    <dt>0x00 to 0x7F
@@ -1442,8 +1441,6 @@ method, when invoked, must run these steps:
       <p>Set <a href="#utf-8-code-point">UTF-8 code point</a> to <var>byte</var> &amp; 0x1F.
 
       <p class="note">The five least significant bits of <var>byte</var>.
-
-     <li><p>Return <a href="#continue">continue</a>.
     </ol>
 
    <dt>0xE0 to 0xEF
@@ -1483,6 +1480,8 @@ method, when invoked, must run these steps:
    <dt>Otherwise
    <dd><p>Return <a href="#error">error</a>.
   </dl>
+
+  <p>Return <a href="#continue">continue</a>.
 
  <li>
   <p>If <var>byte</var> is not in the range
