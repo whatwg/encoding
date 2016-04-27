@@ -805,8 +805,8 @@ the return value of these steps:
  <var>pointer offset</var> + <var>code point</var> &minus; <var>offset</var>.
 </ol>
 
-<p>The <dfn>index shift_jis pointer</dfn> for <var>code point</var> is the return
-value of these steps:
+<p>The <dfn>index Shift_JIS pointer</dfn> for <var>code point</var> is the return value of these
+steps:
 
 <ol>
  <li><p>Let <var>index</var> be <span>index jis0208</span> excluding all pointers in
@@ -2398,7 +2398,7 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
  <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
 
- <li><p>Let <var>pointer</var> be the <span>index shift_jis pointer</span> for
+ <li><p>Let <var>pointer</var> be the <span>index Shift_JIS pointer</span> for
  <var>code point</var>.
 
  <li><p>If <var>pointer</var> is null, return <span>error</span> with
