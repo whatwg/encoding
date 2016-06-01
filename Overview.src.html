@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang=en-US>
 <meta charset=utf-8>
+<meta content=width=device-width,initial-scale=1,shrink-to-fit=no name=viewport>
+<meta content=#3c790a name=theme-color>
 <title>Encoding Standard</title>
-<link rel=stylesheet href=https://whatwg.org/style/specification>
+<link rel=stylesheet href=https://resources.whatwg.org/standard.css>
 <link rel=icon href=https://resources.whatwg.org/logo-encoding.svg>
 
 <div class=head>
@@ -688,10 +690,10 @@ form submission, which both need exactly this.
 
 <h2>Indexes</h2>
 
-<p>Most legacy <span title=encoding>encodings</span> make use of
-an <dfn>index</dfn>. An <span>index</span> is an ordered list of
-pointers and corresponding code points. Within an <span>index</span>
-pointers are unique and code points can be duplicated.
+<p>Most legacy <span title=encoding>encodings</span> make use of an <dfn>index</dfn>. An
+<span>index</span> is an ordered list of entries, each entry consisting of a pointer and a
+corresponding code point. Within an <span>index</span> pointers are unique and code points can be
+duplicated.
 
 <p class="note no-backref">An efficient implementation likely has two
 <span title=index>indexes</span> per <span>encoding</span>. One optimized for its
@@ -810,8 +812,8 @@ steps:
 
 <ol>
  <li>
-  <p>Let <var>index</var> be <span>index jis0208</span> excluding all pointers in the range 8272 to
-  8835, inclusive.
+  <p>Let <var>index</var> be <span>index jis0208</span> excluding all entries whose pointer is in
+  the range 8272 to 8835, inclusive.
   <!-- selected NEC duplicates from IBM extensions later in the index; need to use IBM
        extensions when going back to bytes -->
 
@@ -827,8 +829,8 @@ these steps:
 
 <ol>
  <li>
-  <p>Let <var>index</var> be <span>index Big5</span> excluding all pointers less than
-  (0xA1 - 0x81) &times; 157.
+  <p>Let <var>index</var> be <span>index Big5</span> excluding all entries whose pointer is less
+  than (0xA1 - 0x81) &times; 157.
 
   <p class=note>Avoid returning Hong Kong Supplementary Character Set extensions literally.
 

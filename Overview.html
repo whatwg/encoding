@@ -1,6 +1,8 @@
 <!DOCTYPE html><html lang="en-US"><meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
+<meta content="#3c790a" name="theme-color">
 <title>Encoding Standard</title>
-<link href="https://whatwg.org/style/specification" rel="stylesheet">
+<link href="https://resources.whatwg.org/standard.css" rel="stylesheet">
 <link href="https://resources.whatwg.org/logo-encoding.svg" rel="icon">
 
 <div class="head">
@@ -771,10 +773,10 @@ form submission, which both need exactly this.
 
 <h2 id="indexes"><span class="secno">6 </span>Indexes</h2>
 
-<p>Most legacy <a href="#encoding" title="encoding">encodings</a> make use of
-an <dfn id="index">index</dfn>. An <a href="#index">index</a> is an ordered list of
-pointers and corresponding code points. Within an <a href="#index">index</a>
-pointers are unique and code points can be duplicated.
+<p>Most legacy <a href="#encoding" title="encoding">encodings</a> make use of an <dfn id="index">index</dfn>. An
+<a href="#index">index</a> is an ordered list of entries, each entry consisting of a pointer and a
+corresponding code point. Within an <a href="#index">index</a> pointers are unique and code points can be
+duplicated.
 
 <p class="note no-backref">An efficient implementation likely has two
 <a href="#index" title="index">indexes</a> per <a href="#encoding">encoding</a>. One optimized for its
@@ -893,8 +895,8 @@ steps:
 
 <ol>
  <li>
-  <p>Let <var>index</var> be <a href="#index-jis0208">index jis0208</a> excluding all pointers in the range 8272 to
-  8835, inclusive.
+  <p>Let <var>index</var> be <a href="#index-jis0208">index jis0208</a> excluding all entries whose pointer is in
+  the range 8272 to 8835, inclusive.
   <!-- selected NEC duplicates from IBM extensions later in the index; need to use IBM
        extensions when going back to bytes -->
 
@@ -910,8 +912,8 @@ these steps:
 
 <ol>
  <li>
-  <p>Let <var>index</var> be <a href="#index-big5">index Big5</a> excluding all pointers less than
-  (0xA1 - 0x81) × 157.
+  <p>Let <var>index</var> be <a href="#index-big5">index Big5</a> excluding all entries whose pointer is less
+  than (0xA1 - 0x81) × 157.
 
   <p class="note">Avoid returning Hong Kong Supplementary Character Set extensions literally.
 
