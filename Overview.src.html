@@ -2346,17 +2346,16 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
    0x80 to 0xFC, inclusive, set <var>pointer</var> to
    (<var>lead</var> &minus; <var>lead offset</var>) &times; 188 + <var>byte</var> &minus; <var>offset</var>.
 
-   <li><p>Let <var>code point</var> be null, if
-   <var>pointer</var> is null, and the <span>index code point</span>
-   for <var>pointer</var> in <span>index jis0208</span> otherwise.
-
    <li>
-    <p>If <var>code point</var> is null and <var>pointer</var> is in the range
-    8836 to 10528, inclusive, return a code point whose value is
-    0xE000 + <var>pointer</var> &minus; 8836.
+    <p>If <var>pointer</var> is in the range 8836 to 10528, inclusive, return a code point whose
+    value is 0xE000 + <var>pointer</var> &minus; 8836.
 
     <p class=note>This is interoperable legacy from Windows known as EUDC.
     <!-- PUA -->
+
+   <li><p>Let <var>code point</var> be null, if
+   <var>pointer</var> is null, and the <span>index code point</span>
+   for <var>pointer</var> in <span>index jis0208</span> otherwise.
 
    <li><p>If <var>code point</var> is null and <var>byte</var> is an
    <span>ASCII byte</span>, <span title=concept-stream-prepend>prepend</span>
