@@ -7,7 +7,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-27-april-2016">Living Standard — Last Updated 27 April 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-1-june-2016">Living Standard — Last Updated 1 June 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -892,10 +892,14 @@ the return value of these steps:
 steps:
 
 <ol>
- <li><p>Let <var>index</var> be <a href="#index-jis0208">index jis0208</a> excluding all pointers in
- the range 8272 to 8835, inclusive.
- <!-- selected NEC duplicates from IBM extensions later in the index; need to use IBM
-      extensions when going back to bytes -->
+ <li>
+  <p>Let <var>index</var> be <a href="#index-jis0208">index jis0208</a> excluding all pointers in the range 8272 to
+  8835, inclusive.
+  <!-- selected NEC duplicates from IBM extensions later in the index; need to use IBM
+       extensions when going back to bytes -->
+
+  <p class="note">The <a href="#index-jis0208">index jis0208</a> contains duplicate code points so the exclusion of
+  these entries causes later code points to be used.</p>
 
  <li><p>Return the <a href="#index-pointer">index pointer</a> for <var>code point</var> in
  <var>index</var>.
