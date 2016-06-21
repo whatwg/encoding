@@ -9,7 +9,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-1-june-2016">Living Standard — Last Updated 1 June 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-21-june-2016">Living Standard — Last Updated 21 June 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -2007,8 +2007,8 @@ consumers of content generated with <a href="#gbk">GBK</a>'s <a href="#encoder">
 
  <li><p>If <a href="#euc-jp-lead">EUC-JP lead</a> is 0x8E and <var>byte</var> is
  in the range 0xA1 to 0xDF, inclusive, set <a href="#euc-jp-lead">EUC-JP lead</a> to 0x00 and return
- a code point whose value is 0xFF61 + <var>byte</var> − 0xA1.
- <!-- katakana -->
+ a code point whose value is 0xFF61 − 0xA1 + <var>byte</var>.
+ <!-- katakana; subtraction is done first to avoid upsetting compilers -->
 
  <li><p>If <a href="#euc-jp-lead">EUC-JP lead</a> is 0x8F and <var>byte</var> is in the range
  0xA1 to 0xFE, inclusive, set the <a href="#euc-jp-jis0212-flag">EUC-JP jis0212 flag</a>, set
@@ -2167,8 +2167,8 @@ consumers of content generated with <a href="#gbk">GBK</a>'s <a href="#encoder">
 
    <dt>0x21 to 0x5F
    <dd><p>Unset the <a href="#iso-2022-jp-output-flag">ISO-2022-JP output flag</a> and return a code point whose
-   value is 0xFF61 + <var>byte</var> − 0x21.
-   <!-- katakana -->
+   value is 0xFF61 − 0x21 + <var>byte</var>.
+   <!-- katakana; subtraction is done first to avoid upsetting compilers -->
 
    <dt><a href="#end-of-stream">end-of-stream</a>
    <dd><p>Return <a href="#finished">finished</a>.
@@ -2429,17 +2429,17 @@ consumers of content generated with <a href="#gbk">GBK</a>'s <a href="#encoder">
    0x80 to 0xFC, inclusive, set <var>pointer</var> to
    (<var>lead</var> − <var>lead offset</var>) × 188 + <var>byte</var> − <var>offset</var>.
 
-   <li><p>Let <var>code point</var> be null, if
-   <var>pointer</var> is null, and the <a href="#index-code-point">index code point</a>
-   for <var>pointer</var> in <a href="#index-jis0208">index jis0208</a> otherwise.
-
    <li>
-    <p>If <var>code point</var> is null and <var>pointer</var> is in the range
-    8836 to 10528, inclusive, return a code point whose value is
-    0xE000 + <var>pointer</var> − 8836.
+    <p>If <var>pointer</var> is in the range 8836 to 10528, inclusive, return a code point whose
+    value is 0xE000 − 8836 + <var>pointer</var>.
+    <!-- subtraction is done first to avoid upsetting compilers -->
 
     <p class="note">This is interoperable legacy from Windows known as EUDC.
     <!-- PUA -->
+
+   <li><p>Let <var>code point</var> be null, if
+   <var>pointer</var> is null, and the <a href="#index-code-point">index code point</a>
+   for <var>pointer</var> in <a href="#index-jis0208">index jis0208</a> otherwise.
 
    <li><p>If <var>code point</var> is null and <var>byte</var> is an
    <a href="#ascii-byte">ASCII byte</a>, <a href="#concept-stream-prepend" title="concept-stream-prepend">prepend</a>
@@ -2455,8 +2455,8 @@ consumers of content generated with <a href="#gbk">GBK</a>'s <a href="#encoder">
  <!-- Opera has 0x7E -->
 
  <li><p>If <var>byte</var> is in the range 0xA1 to 0xDF, inclusive, return
- a code point whose value is 0xFF61 + <var>byte</var> − 0xA1.
- <!-- katakana -->
+ a code point whose value is 0xFF61 − 0xA1 + <var>byte</var>.
+ <!-- katakana; subtraction is done first to avoid upsetting compilers -->
 
  <li><p>If <var>byte</var> is in the range 0x81 to 0x9F, inclusive, or 0xE0 to 0xFC,
  inclusive, set <a href="#shift_jis-lead">Shift_JIS lead</a> to <var>byte</var> and return
