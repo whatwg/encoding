@@ -1924,8 +1924,8 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
  <li><p>If <span>EUC-JP lead</span> is 0x8E and <var>byte</var> is
  in the range 0xA1 to 0xDF, inclusive, set <span>EUC-JP lead</span> to 0x00 and return
- a code point whose value is 0xFF61 + <var>byte</var> &minus; 0xA1.
- <!-- katakana -->
+ a code point whose value is 0xFF61 &minus; 0xA1 + <var>byte</var>.
+ <!-- katakana; subtraction is done first to avoid upsetting compilers -->
 
  <li><p>If <span>EUC-JP lead</span> is 0x8F and <var>byte</var> is in the range
  0xA1 to 0xFE, inclusive, set the <span>EUC-JP jis0212 flag</span>, set
@@ -2084,8 +2084,8 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
    <dt>0x21 to 0x5F
    <dd><p>Unset the <span>ISO-2022-JP output flag</span> and return a code point whose
-   value is 0xFF61 + <var>byte</var> &minus; 0x21.
-   <!-- katakana -->
+   value is 0xFF61 &minus; 0x21 + <var>byte</var>.
+   <!-- katakana; subtraction is done first to avoid upsetting compilers -->
 
    <dt><span>end-of-stream</span>
    <dd><p>Return <span>finished</span>.
@@ -2372,8 +2372,8 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
  <!-- Opera has 0x7E -->
 
  <li><p>If <var>byte</var> is in the range 0xA1 to 0xDF, inclusive, return
- a code point whose value is 0xFF61 + <var>byte</var> &minus; 0xA1.
- <!-- katakana -->
+ a code point whose value is 0xFF61 &minus; 0xA1 + <var>byte</var>.
+ <!-- katakana; subtraction is done first to avoid upsetting compilers -->
 
  <li><p>If <var>byte</var> is in the range 0x81 to 0x9F, inclusive, or 0xE0 to 0xFC,
  inclusive, set <span>Shift_JIS lead</span> to <var>byte</var> and return
