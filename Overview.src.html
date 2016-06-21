@@ -2348,7 +2348,8 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
    <li>
     <p>If <var>pointer</var> is in the range 8836 to 10528, inclusive, return a code point whose
-    value is 0xE000 + <var>pointer</var> &minus; 8836.
+    value is 0xE000 &minus; 8836 + <var>pointer</var>.
+    <!-- subtraction is done first to avoid upsetting compilers -->
 
     <p class=note>This is interoperable legacy from Windows known as EUDC.
     <!-- PUA -->
