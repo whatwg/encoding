@@ -1074,7 +1074,7 @@ dictionary <dfn>TextDecodeOptions</dfn> {
 };
 
 [<span title=dom-TextDecoder>Constructor</span>(optional DOMString <var>label</var> = "utf-8", optional <span>TextDecoderOptions</span> <var>options</var>),
- Exposed=Window,Worker]
+ Exposed=(Window,Worker)]
 interface <dfn>TextDecoder</dfn> {
   readonly attribute DOMString <span title=dom-TextDecoder-encoding>encoding</span>;
   readonly attribute boolean <span title=dom-TextDecoder-fatal>fatal</span>;
@@ -1257,7 +1257,7 @@ method, when invoked, must run these steps:
 
 <pre class=idl>[<span title=dom-TextEncoder>Constructor</span><!-- We cannot add an argument here
 that is not the label argument it had previously. That would break content. -->,
- Exposed=Window,Worker]
+ Exposed=(Window,Worker)]
 interface <dfn>TextEncoder</dfn> {
   readonly attribute DOMString <span title=dom-TextEncoder-encoding>encoding</span>;
   [NewObject] Uint8Array <span title=dom-TextEncoder-encode>encode</span>(optional USVString <var>input</var> = "");

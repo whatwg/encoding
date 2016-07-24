@@ -9,7 +9,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-21-june-2016">Living Standard — Last Updated 21 June 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-24-july-2016">Living Standard — Last Updated 24 July 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -1157,7 +1157,7 @@ dictionary <dfn id="textdecodeoptions">TextDecodeOptions</dfn> {
 };
 
 [<a href="#dom-textdecoder" title="dom-TextDecoder">Constructor</a>(optional DOMString <var>label</var> = "utf-8", optional <a href="#textdecoderoptions">TextDecoderOptions</a> <var>options</var>),
- Exposed=Window,Worker]
+ Exposed=(Window,Worker)]
 interface <dfn id="textdecoder">TextDecoder</dfn> {
   readonly attribute DOMString <a href="#dom-textdecoder-encoding" title="dom-TextDecoder-encoding">encoding</a>;
   readonly attribute boolean <a href="#dom-textdecoder-fatal" title="dom-TextDecoder-fatal">fatal</a>;
@@ -1340,7 +1340,7 @@ method, when invoked, must run these steps:
 
 <pre class="idl">[<a href="#dom-textencoder" title="dom-TextEncoder">Constructor</a><!-- We cannot add an argument here
 that is not the label argument it had previously. That would break content. -->,
- Exposed=Window,Worker]
+ Exposed=(Window,Worker)]
 interface <dfn id="textencoder">TextEncoder</dfn> {
   readonly attribute DOMString <a href="#dom-textencoder-encoding" title="dom-TextEncoder-encoding">encoding</a>;
   [NewObject] Uint8Array <a href="#dom-textencoder-encode" title="dom-TextEncoder-encode">encode</a>(optional USVString <var>input</var> = "");
