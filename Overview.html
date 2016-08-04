@@ -9,7 +9,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-29-july-2016">Living Standard — Last Updated 29 July 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-4-august-2016">Living Standard — Last Updated 4 August 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -1732,7 +1732,9 @@ consumers of content generated with <a href="#gbk">GBK</a>'s <a href="#encoder">
    <li><p>If <var>byte</var> is in the range 0x30 to 0x39, inclusive, set
    <var>code point</var> to the
    <a href="#index-gb18030-ranges-code-point">index gb18030 ranges code point</a> for
-   (((<a href="#gb18030-first">gb18030 first</a> − 0x81) × 10 + <a href="#gb18030-second">gb18030 second</a> − 0x30) × 126 + <a href="#gb18030-third">gb18030 third</a> − 0x81) × 10 + <var>byte</var> − 0x30.
+   ((<a href="#gb18030-first">gb18030 first</a> − 0x81) × (10 × 126 × 10)) +
+   ((<a href="#gb18030-second">gb18030 second</a> − 0x30) × (10 × 126)) +
+   ((<a href="#gb18030-third">gb18030 third</a> − 0x81) × 10) + <var>byte</var> − 0x30.
 
    <li><p>Let <var>buffer</var> be a byte sequence consisting of
    <a href="#gb18030-second">gb18030 second</a>, <a href="#gb18030-third">gb18030 third</a>, and <var>byte</var>, in
@@ -1851,20 +1853,17 @@ consumers of content generated with <a href="#gbk">GBK</a>'s <a href="#encoder">
  <li><p>Set <var>pointer</var> to the
  <a href="#index-gb18030-ranges-pointer">index gb18030 ranges pointer</a> for <var>code point</var>.
 
- <li><p>Let <var>byte1</var> be floor(<var>pointer</var> / 10 / 126 / 10).
+ <li><p>Let <var>byte1</var> be floor(<var>pointer</var> / (10 × 126 × 10)).
 
- <li><p>Set <var>pointer</var> to
- <var>pointer</var> − <var>byte1</var> × 10 × 126 × 10.
+ <li><p>Set <var>pointer</var> to <var>pointer</var> % (10 × 126 × 10).
 
- <li><p>Let <var>byte2</var> be floor(<var>pointer</var> / 10 / 126).
+ <li><p>Let <var>byte2</var> be floor(<var>pointer</var> / (10 × 126)).
 
- <li><p>Set <var>pointer</var> to
- <var>pointer</var> − <var>byte2</var> × 10 × 126.
+ <li><p>Set <var>pointer</var> to <var>pointer</var> % (10 × 126).
 
  <li><p>Let <var>byte3</var> be floor(<var>pointer</var> / 10).
 
- <li><p>Let <var>byte4</var> be
- <var>pointer</var> − <var>byte3</var> × 10.
+ <li><p>Let <var>byte4</var> be <var>pointer</var> % 10.
 
  <li><p>Return four bytes whose values are <var>byte1</var> + 0x81,
  <var>byte2</var> + 0x30, <var>byte3</var> + 0x81,

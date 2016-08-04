@@ -1649,7 +1649,9 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
    <li><p>If <var>byte</var> is in the range 0x30 to 0x39, inclusive, set
    <var>code point</var> to the
    <span>index gb18030 ranges code point</span> for
-   (((<span>gb18030 first</span> &minus; 0x81) &times; 10 + <span>gb18030 second</span> &minus; 0x30) &times; 126 + <span>gb18030 third</span> &minus; 0x81) &times; 10 + <var>byte</var> &minus; 0x30.
+   ((<span>gb18030 first</span> &minus; 0x81) &times; (10 &times; 126 &times; 10)) +
+   ((<span>gb18030 second</span> &minus; 0x30) &times; (10 &times; 126)) +
+   ((<span>gb18030 third</span> &minus; 0x81) &times; 10) + <var>byte</var> &minus; 0x30.
 
    <li><p>Let <var>buffer</var> be a byte sequence consisting of
    <span>gb18030 second</span>, <span>gb18030 third</span>, and <var>byte</var>, in
@@ -1768,20 +1770,17 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
  <li><p>Set <var>pointer</var> to the
  <span>index gb18030 ranges pointer</span> for <var>code point</var>.
 
- <li><p>Let <var>byte1</var> be floor(<var>pointer</var> / 10 / 126 / 10).
+ <li><p>Let <var>byte1</var> be floor(<var>pointer</var> / (10 &times; 126 &times; 10)).
 
- <li><p>Set <var>pointer</var> to
- <var>pointer</var> &minus; <var>byte1</var> &times; 10 &times; 126 &times; 10.
+ <li><p>Set <var>pointer</var> to <var>pointer</var> % (10 &times; 126 &times; 10).
 
- <li><p>Let <var>byte2</var> be floor(<var>pointer</var> / 10 / 126).
+ <li><p>Let <var>byte2</var> be floor(<var>pointer</var> / (10 &times; 126)).
 
- <li><p>Set <var>pointer</var> to
- <var>pointer</var> &minus; <var>byte2</var> &times; 10 &times; 126.
+ <li><p>Set <var>pointer</var> to <var>pointer</var> % (10 &times; 126).
 
  <li><p>Let <var>byte3</var> be floor(<var>pointer</var> / 10).
 
- <li><p>Let <var>byte4</var> be
- <var>pointer</var> &minus; <var>byte3</var> &times; 10.
+ <li><p>Let <var>byte4</var> be <var>pointer</var> % 10.
 
  <li><p>Return four bytes whose values are <var>byte1</var> + 0x81,
  <var>byte2</var> + 0x30, <var>byte3</var> + 0x81,
