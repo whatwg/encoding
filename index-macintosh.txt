@@ -5,7 +5,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: f2c6a4f6406b3e86a50a5dba4d2b7dd48e2e33c0d82aefe764535c934ec11764
-# Date: 2016-01-20
+# Date: 2016-10-24
 
   0	0x00C4	Ä (LATIN CAPITAL LETTER A WITH DIAERESIS)
   1	0x00C5	Å (LATIN CAPITAL LETTER A WITH RING ABOVE)

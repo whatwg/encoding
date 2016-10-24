@@ -5,7 +5,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 715f084846f5c6fc9dd31046d0a4d604bd2d88bfe3a22833cea048415e413c70
-# Date: 2016-01-20
+# Date: 2016-10-24
 
     0	0x4E02	丂 (<CJK Ideograph>)
     1	0x4E04	丄 (<CJK Ideograph>)
