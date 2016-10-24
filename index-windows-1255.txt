@@ -4,8 +4,8 @@
 # For details on index index-windows-1255.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
-# Identifier: 3b3ec872752f43c348a39b3fd2040202ccd95b935e56b2f92bb9e03e220ca02a
-# Date: 2016-01-20
+# Identifier: cd7fb43c97eefa1651084d92d02af53ad668bd848528c18c3b1af5c06b499651
+# Date: 2016-10-24
 
   0	0x20AC	€ (EURO SIGN)
   1	0x0081	 (<control>)
@@ -81,6 +81,7 @@
  71	0x05B7	ַ (HEBREW POINT PATAH)
  72	0x05B8	ָ (HEBREW POINT QAMATS)
  73	0x05B9	ֹ (HEBREW POINT HOLAM)
+ 74	0x05BA	ֺ (HEBREW POINT HOLAM HASER FOR VAV)
  75	0x05BB	ֻ (HEBREW POINT QUBUTS)
  76	0x05BC	ּ (HEBREW POINT DAGESH OR MAPIQ)
  77	0x05BD	ֽ (HEBREW POINT METEG)
