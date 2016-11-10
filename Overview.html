@@ -9,7 +9,7 @@
 
 <p><a class="logo" href="https://whatwg.org/"><img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg" width="100"></a></p>
 <h1>Encoding</h1>
-<h2 class="no-num no-toc" id="living-standard-—-last-updated-24-october-2016">Living Standard — Last Updated 24 October 2016</h2>
+<h2 class="no-num no-toc" id="living-standard-—-last-updated-10-november-2016">Living Standard — Last Updated 10 November 2016</h2>
 
 <dl>
  <dt>Participate:
@@ -280,8 +280,8 @@ the first token in the stream must be returned and subsequently removed, and
 <a href="#concept-stream" title="concept-stream">stream</a>, those tokens must be inserted, in given order,
 before the first token in the stream.
 
-<p class="example">Inserting the sequence of tokens <code title="">&amp;#128169;</code> in a
-stream "<code title=""> hello world</code>", results in a stream
+<p class="example" id="example-tokens">Inserting the sequence of tokens <code title="">&amp;#128169;</code>
+in a stream "<code title=""> hello world</code>", results in a stream
 "<code title="">&amp;#128169; hello world</code>". The next token to be read would be
 <code title="">&amp;</code>. <!-- 💩 -->
 
@@ -1079,7 +1079,7 @@ Non-browser user agents are not required to support this API.
 <a href="#refsDOM">[DOM]</a>
 <a href="#refsWEBIDL">[WEBIDL]</a>
 
-<div class="example">
+<div class="example" id="example-textencoder">
  <p>The following example uses the <a href="#textencoder"><code>TextEncoder</code></a> object to encode
  an array of strings into an
  <code title="">ArrayBuffer</code>. The result is a
@@ -1237,7 +1237,7 @@ control.
   stream. If the invocation without <var>options</var>'s <code title="">stream</code> (or set to false)
   has no <var>input</var>, it's clearest to omit both arguments.
 
-  <pre class="example">var string = "", decoder = TextDecoder(encoding), buffer;
+  <pre class="example" id="example-end-of-stream">var string = "", decoder = TextDecoder(encoding), buffer;
 while(buffer = next_chunk()) {
   string += decoder.decode(buffer, {stream:true});
 }

@@ -41,7 +41,7 @@
 
 
 
-<h2>Preface</h2>
+<h2 id=preface>Preface</h2>
 
 <p>The UTF-8 encoding is the most appropriate encoding for interchange of Unicode, the
 universal coded character set. Therefore for new protocols and formats, as well as
@@ -67,7 +67,7 @@ specification does not provide a mechanism for extending any aspect of encodings
 
 
 
-<h2>Security background</h2>
+<h2 id=security-background>Security background</h2>
 
 <p>There is a set of encoding security issues when the producer and consumer do not agree
 on the encoding in use, or on the way a given encoding is to be implemented. For instance,
@@ -103,7 +103,7 @@ many reasons that is now the mandatory encoding for all things.
 
 
 
-<h2>Conformance</h2>
+<h2 id=conformance>Conformance</h2>
 
 <p>All diagrams, examples, and notes in this specification are
 non-normative, as are all sections explicitly marked non-normative.
@@ -129,7 +129,7 @@ out of memory, or to work around platform-specific limitations.
 
 
 
-<h2>Terminology</h2>
+<h2 id=terminology>Terminology</h2>
 
 <p>Hexadecimal numbers are prefixed with "0x".
 
@@ -197,8 +197,8 @@ the first token in the stream must be returned and subsequently removed, and
 <span title=concept-stream>stream</span>, those tokens must be inserted, in given order,
 before the first token in the stream.
 
-<p class=example>Inserting the sequence of tokens <code title>&amp;#128169;</code> in a
-stream "<code title> hello world</code>", results in a stream
+<p class=example id=example-tokens>Inserting the sequence of tokens <code title>&amp;#128169;</code>
+in a stream "<code title> hello world</code>", results in a stream
 "<code title>&amp;#128169; hello world</code>". The next token to be read would be
 <code title>&amp;</code>. <!-- 💩 -->
 
@@ -208,7 +208,7 @@ those tokens must be inserted, in given order, after the last token in the strea
 
 
 
-<h2>Encodings</h2>
+<h2 id=encodings>Encodings</h2>
 
 <p>An <dfn data-export>encoding</dfn> defines a mapping from a <span>scalar value</span> sequence to
 a <span>byte</span> sequence (and vice versa). Each <span>encoding</span> has a
@@ -216,7 +216,7 @@ a <span>byte</span> sequence (and vice versa). Each <span>encoding</span> has a
 <dfn data-export data-dfn-for=encoding data-lt=label title=label>labels</dfn>.
 
 
-<h3>Encoders and decoders</h3>
+<h3 id=encoders-and-decoders>Encoders and decoders</h3>
 
 <p>Each <span>encoding</span> has an associated <dfn>decoder</dfn> and most of them have an
 associated <dfn>encoder</dfn>. Each <span>decoder</span> and <span>encoder</span> have a
@@ -314,7 +314,7 @@ happening.
 </ol>
 
 
-<h3>Names and labels</h3>
+<h3 id=names-and-labels>Names and labels</h3>
 
 <p>The table below lists all <span title=encoding>encodings</span>
 and their <span title=label>labels</span> user agents must support.
@@ -671,7 +671,7 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
 <a href=encodings.json>encodings.json</a> resource.
 
 
-<h3>Output encodings</h3>
+<h3 id=output-encodings>Output encodings</h3>
 
 <p>To <dfn data-export>get an output encoding</dfn> from an <span>encoding</span>
 <var>encoding</var>, run these steps:</p>
@@ -688,7 +688,7 @@ form submission, which both need exactly this.
 
 
 
-<h2>Indexes</h2>
+<h2 id=indexes>Indexes</h2>
 
 <p>Most legacy <span title=encoding>encodings</span> make use of an <dfn>index</dfn>. An
 <span>index</span> is an ordered list of entries, each entry consisting of a pointer and a
@@ -856,7 +856,7 @@ to represent ranges.)
 
 
 
-<h2>Specification hooks</h2>
+<h2 id=specification-hooks>Specification hooks</h2>
 
 <p class=note>The algorithms <span>decode</span>, <span>UTF-8 decode</span>,
 <span>UTF-8 decode without BOM</span>, <span>UTF-8 decode without BOM or fail</span>,
@@ -986,7 +986,7 @@ return the result of <span title=encode>encoding</span>
 
 
 
-<h2>API</h2>
+<h2 id=api>API</h2>
 
 <!-- https://wiki.whatwg.org/wiki/StringEncoding  -->
 
@@ -996,7 +996,7 @@ Non-browser user agents are not required to support this API.
 <span data-anolis-ref>DOM</span>
 <span data-anolis-ref>WEBIDL</span>
 
-<div class=example>
+<div class=example id=example-textencoder>
  <p>The following example uses the <code>TextEncoder</code> object to encode
  an array of strings into an
  <code title>ArrayBuffer</code>. The result is a
@@ -1062,7 +1062,7 @@ Non-browser user agents are not required to support this API.
 </div>
 
 
-<h3>Interface <code title>TextDecoder</code></h3>
+<h3 id=interface-textdecoder>Interface <code title>TextDecoder</code></h3>
 
 <pre class=idl>dictionary <dfn>TextDecoderOptions</dfn> {
   boolean fatal = false;
@@ -1154,7 +1154,7 @@ control.
   stream. If the invocation without <var>options</var>'s <code title>stream</code> (or set to false)
   has no <var>input</var>, it's clearest to omit both arguments.
 
-  <pre class=example>var string = "", decoder = TextDecoder(encoding), buffer;
+  <pre class=example id=example-end-of-stream>var string = "", decoder = TextDecoder(encoding), buffer;
 while(buffer = next_chunk()) {
   string += decoder.decode(buffer, {stream:true});
 }
@@ -1253,7 +1253,7 @@ method, when invoked, must run these steps:
 </ol>
 
 
-<h3>Interface <code title>TextEncoder</code></h3>
+<h3 id=interface-textencoder>Interface <code title>TextEncoder</code></h3>
 
 <pre class=idl>[<span title=dom-TextEncoder>Constructor</span><!-- We cannot add an argument here
 that is not the label argument it had previously. That would break content. -->,
@@ -1329,11 +1329,11 @@ method, when invoked, must run these steps:
 
 
 
-<h2>The encoding</h2>
+<h2 id=the-encoding>The encoding</h2>
 
-<h3><dfn>UTF-8</dfn></h3>
+<h3 id=utf-8><dfn>UTF-8</dfn></h3>
 
-<h4><dfn>UTF-8 decoder</dfn></h4>
+<h4 id=utf-8-decoder><dfn>UTF-8 decoder</dfn></h4>
 
 <p><span>UTF-8</span>'s <span>decoder</span>'s has an associated
 <dfn>UTF-8 code point</dfn>, <dfn>UTF-8 bytes seen</dfn>, and
@@ -1457,7 +1457,7 @@ achieve the same result are obviously fine, even encouraged).
 <span data-anolis-ref>UNICODE</span>
 
 
-<h4><dfn>UTF-8 encoder</dfn></h4>
+<h4 id=utf-8-encoder><dfn>UTF-8 encoder</dfn></h4>
 
 <p><span>UTF-8</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
@@ -1505,7 +1505,7 @@ is included here for completeness. <span data-anolis-ref>UNICODE</span>
 
 
 
-<h2>Legacy single-byte encodings</h2>
+<h2 id=legacy-single-byte-encodings>Legacy single-byte encodings</h2>
 
 <p>An <span>encoding</span> where each byte is either a single code point or
 nothing, is a <dfn>single-byte encoding</dfn>.
@@ -1556,7 +1556,7 @@ historically this might have been the case for <span>ISO-8859-6</span> and
 "iso-8859-6-i" as well, that is no longer true.
 <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=19505 -->
 
-<h3><dfn>single-byte decoder</dfn></h3>
+<h3 id=single-byte-decoder><dfn>single-byte decoder</dfn></h3>
 
 <p><span title="single-byte encoding">Single-byte encodings</span>'s
 <span>decoder</span>'s <span>handler</span>, given a
@@ -1577,7 +1577,7 @@ historically this might have been the case for <span>ISO-8859-6</span> and
  <li><p>Return a code point whose value is <var>code point</var>.
 </ol>
 
-<h3><dfn>single-byte encoder</dfn></h3>
+<h3 id=single-byte-encoder><dfn>single-byte encoder</dfn></h3>
 
 <p><span title="single-byte encoding">Single-byte encodings</span>'s
 <span>encoder</span>'s <span>handler</span>, given a
@@ -1601,16 +1601,16 @@ historically this might have been the case for <span>ISO-8859-6</span> and
 
 
 
-<h2>Legacy multi-byte Chinese (simplified) encodings</h2>
+<h2 id=legacy-multi-byte-chinese-(simplified)-encodings>Legacy multi-byte Chinese (simplified) encodings</h2>
 
-<h3><dfn>GBK</dfn></h3>
+<h3 id=gbk><dfn>GBK</dfn></h3>
 
-<h4><dfn>GBK decoder</dfn></h4>
+<h4 id=gbk-decoder><dfn>GBK decoder</dfn></h4>
 
 <p><span>GBK</span>'s <span>decoder</span> is <span>gb18030</span>'s <span>decoder</span>.
 
 
-<h4><dfn>GBK encoder</dfn></h4>
+<h4 id=gbk-encoder><dfn>GBK encoder</dfn></h4>
 
 <p><span>GBK</span>'s <span>encoder</span> is <span>gb18030</span>'s <span>encoder</span>
 with its <span>GBK flag</span> set.
@@ -1620,9 +1620,9 @@ is a conservative move to decrease the chances of breaking legacy servers and ot
 consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
 
-<h3><dfn>gb18030</dfn></h3>
+<h3 id=gb18030><dfn>gb18030</dfn></h3>
 
-<h4><dfn>gb18030 decoder</dfn></h4>
+<h4 id=gb18030-decoder><dfn>gb18030 decoder</dfn></h4>
 
 <p><span>gb18030</span>'s <span>decoder</span> has an associated <dfn>gb18030 first</dfn>,
 <dfn>gb18030 second</dfn>, and <dfn>gb18030 third</dfn> (all initially 0x00).
@@ -1722,7 +1722,7 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 </ol>
 
 
-<h4><dfn>gb18030 encoder</dfn></h4>
+<h4 id=gb18030-encoder><dfn>gb18030 encoder</dfn></h4>
 
 <p><span>gb18030</span>'s <span>encoder</span> has an associated <dfn>GBK flag</dfn>
 (initially unset).
@@ -1789,7 +1789,7 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
 
 
-<h2>Legacy multi-byte Chinese (traditional) encodings</h2>
+<h2 id=legacy-multi-byte-chinese-(traditional)-encodings>Legacy multi-byte Chinese (traditional) encodings</h2>
 
 <!--
  Lead:  0x81 to 0xFE
@@ -1797,9 +1797,9 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 -->
 
 
-<h3><dfn>Big5</dfn></h3>
+<h3 id=big5><dfn>Big5</dfn></h3>
 
-<h4><dfn>Big5 decoder</dfn></h4>
+<h4 id=big5-decoder><dfn>Big5 decoder</dfn></h4>
 
 <p><span>Big5</span>'s <span>decoder</span> has an associated
 <dfn>Big5 lead</dfn> (initially 0x00).
@@ -1868,7 +1868,7 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 </ol>
 
 
-<h4><dfn>Big5 encoder</dfn></h4>
+<h4 id=big5-encoder><dfn>Big5 encoder</dfn></h4>
 
 <p><span>Big5</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
@@ -1899,12 +1899,12 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
 
 
-<h2>Legacy multi-byte Japanese encodings</h2>
+<h2 id=legacy-multi-byte-japanese-encodings>Legacy multi-byte Japanese encodings</h2>
 
-<h3><dfn>EUC-JP</dfn></h3>
+<h3 id=euc-jp><dfn>EUC-JP</dfn></h3>
 <!-- https://www.iana.org/assignments/charset-reg/CP51932 -->
 
-<h4><dfn>EUC-JP decoder</dfn></h4>
+<h4 id=euc-jp-decoder><dfn>EUC-JP decoder</dfn></h4>
 
 <p><span>EUC-JP</span>'s <span>decoder</span> has an associated
 <dfn>EUC-JP jis0212 flag</dfn> (initially unset) and
@@ -1966,7 +1966,7 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 </ol>
 
 
-<h4><dfn>EUC-JP encoder</dfn></h4>
+<h4 id=euc-jp-encoder><dfn>EUC-JP encoder</dfn></h4>
 
 <p><span>EUC-JP</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
@@ -2002,14 +2002,14 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 </ol>
 
 
-<h3><dfn>ISO-2022-JP</dfn></h3>
+<h3 id=iso-2022-jp><dfn>ISO-2022-JP</dfn></h3>
 <!--
  https://tools.ietf.org/html/rfc1468
  https://tools.ietf.org/html/rfc2237 (iso-2022-jp-1; not used)
  "ESC ) I" is from iso-2022-jp-3 reportedly
 -->
 
-<h4><dfn>ISO-2022-JP decoder</dfn></h4>
+<h4 id=iso-2022-jp-decoder><dfn>ISO-2022-JP decoder</dfn></h4>
 
 <p><span>ISO-2022-JP</span>'s <span>decoder</span> has an associated
 <dfn>ISO-2022-JP decoder state</dfn> (initially
@@ -2219,7 +2219,7 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 </dl>
 
 
-<h4><dfn>ISO-2022-JP encoder</dfn></h4>
+<h4 id=iso-2022-jp-encoder><dfn>ISO-2022-JP encoder</dfn></h4>
 
 <p><span>ISO-2022-JP</span>'s <span>encoder</span> has an associated
 <dfn>ISO-2022-JP encoder state</dfn> which is <dfn title="iso-2022-jp encoder ASCII">ASCII</dfn>,
@@ -2311,9 +2311,9 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 </ol>
 
 
-<h3><dfn>Shift_JIS</dfn></h3>
+<h3 id=shift_jis><dfn>Shift_JIS</dfn></h3>
 
-<h4><dfn>Shift_JIS decoder</dfn></h4>
+<h4 id=shift_jis-decoder><dfn>Shift_JIS decoder</dfn></h4>
 
 <p><span>Shift_JIS</span>'s <span>decoder</span> has an associated
 <dfn>Shift_JIS lead</dfn> (initially 0x00).
@@ -2382,7 +2382,7 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 </ol>
 
 
-<h4><dfn>Shift_JIS encoder</dfn></h4>
+<h4 id=shift_jis-encoder><dfn>Shift_JIS encoder</dfn></h4>
 
 <p><span>Shift_JIS</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
@@ -2427,11 +2427,11 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
 
 
-<h2>Legacy multi-byte Korean encodings</h2>
+<h2 id=legacy-multi-byte-korean-encodings>Legacy multi-byte Korean encodings</h2>
 
-<h3><dfn>EUC-KR</dfn></h3>
+<h3 id=euc-kr><dfn>EUC-KR</dfn></h3>
 
-<h4><dfn>EUC-KR decoder</dfn></h4>
+<h4 id=euc-kr-decoder><dfn>EUC-KR decoder</dfn></h4>
 
 <p><span>EUC-KR</span>'s <span>decoder</span> has an associated
 <dfn>EUC-KR lead</dfn> (initially 0x00).
@@ -2480,7 +2480,7 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 </ol>
 
 
-<h4><dfn>EUC-KR encoder</dfn></h4>
+<h4 id=euc-kr-encoder><dfn>EUC-KR encoder</dfn></h4>
 
 <p><span>EUC-KR</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
@@ -2507,16 +2507,16 @@ consumers of content generated with <span>GBK</span>'s <span>encoder</span>.
 
 
 
-<h2>Legacy miscellaneous encodings</h2>
+<h2 id=legacy-miscellaneous-encodings>Legacy miscellaneous encodings</h2>
 
-<h3><dfn>replacement</dfn></h3>
+<h3 id=replacement><dfn>replacement</dfn></h3>
 
 <p class=note>The <span>replacement</span> <span>encoding</span> exists to prevent certain
 attacks that abuse a mismatch between <span title=encoding>encodings</span> supported on
 the server and the client.
 
 
-<h4><dfn>replacement decoder</dfn></h4>
+<h4 id=replacement-decoder><dfn>replacement decoder</dfn></h4>
 
 <p><span>replacement</span>'s <span>decoder</span> has an associated
 <dfn>replacement error returned flag</dfn> (initially unset).
@@ -2534,9 +2534,9 @@ the server and the client.
 </ol>
 
 
-<h3>Common infrastructure for <span>UTF-16BE</span> and <span>UTF-16LE</span></h3>
+<h3 id=common-infrastructure-for-utf-16be-and-utf-16le>Common infrastructure for <span>UTF-16BE</span> and <span>UTF-16LE</span></h3>
 
-<h4><dfn>shared UTF-16 decoder</dfn></h4>
+<h4 id=shared-utf-16-decoder><dfn>shared UTF-16 decoder</dfn></h4>
 
 <p class="note no-backref">A byte order mark has priority over a <span>label</span> as it
 has been found to be more accurate in deployed content. Therefore it is not part of the
@@ -2620,27 +2620,27 @@ and <var>byte</var>, runs these steps:
 </ol>
 
 
-<h3><dfn>UTF-16BE</dfn></h3>
+<h3 id=utf-16be><dfn>UTF-16BE</dfn></h3>
 
-<h4><dfn>UTF-16BE decoder</dfn></h4>
+<h4 id=utf-16be-decoder><dfn>UTF-16BE decoder</dfn></h4>
 
 <p><span>UTF-16BE</span>'s <span>decoder</span> is <span>shared UTF-16 decoder</span> with
 its <span>UTF-16BE decoder flag</span> set.
 
 
-<h3><dfn>UTF-16LE</dfn></h3>
+<h3 id=utf-16le><dfn>UTF-16LE</dfn></h3>
 
 <p class="note no-backref">Both "<code title>utf-16</code>" and
 "<code title>utf-16le</code>" are <span title=label>labels</span> for
 <span>UTF-16LE</span> to deal with deployed content.
 
 
-<h4><dfn>UTF-16LE decoder</dfn></h4>
+<h4 id=utf-16le-decoder><dfn>UTF-16LE decoder</dfn></h4>
 
 <p><span>UTF-16LE</span>'s <span>decoder</span> is <span>shared UTF-16 decoder</span>.
 
 
-<h3><dfn>x-user-defined</dfn></h3>
+<h3 id=x-user-defined><dfn>x-user-defined</dfn></h3>
 
 <p class=note>While technically this is a <span>single-byte encoding</span>,
 it is defined separately as it can be implemented algorithmically.
@@ -2654,7 +2654,7 @@ http://krijnhoetmer.nl/irc-logs/whatwg/20121010#l-812
 https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7-when-using-charset-x-user-defined-with-xm
 -->
 
-<h4><dfn>x-user-defined decoder</dfn></h4>
+<h4 id=x-user-defined-decoder><dfn>x-user-defined decoder</dfn></h4>
 
 <p><span>x-user-defined</span>'s <span>decoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>byte</var>, runs these steps:
@@ -2670,7 +2670,7 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 </ol>
 
 
-<h4><dfn>x-user-defined encoder</dfn></h4>
+<h4 id=x-user-defined-encoder><dfn>x-user-defined encoder</dfn></h4>
 
 <p><span>x-user-defined</span>'s <span>encoder</span>'s <span>handler</span>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
@@ -2690,7 +2690,7 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 
 
 
-<h2>Browser UI</h2>
+<h2 id=browser-ui>Browser UI</h2>
 
 <p>Browsers are encouraged to not enable overriding the encoding of a resource. If such a
 feature is nonetheless present, browsers should not offer either
@@ -2706,7 +2706,7 @@ issues. Browsers also should disable this feature if the resource was decoded us
 
 
 
-<h2 class=no-num>Acknowledgments</h2>
+<h2 class=no-num id=acknowledgments>Acknowledgments</h2>
 
 <p>There have been a lot of people that have helped make encodings more
 interoperable over the years and thereby furthered the goals of this
