@@ -14,14 +14,14 @@ def create_table():
             if label_len > 1:
                 rowspan = " rowspan=" + str(label_len)
 
-            table += "  <tr>\n   <td" + rowspan + "><span>" + encoding["name"] + "</span>"
+            table += "  <tr>\n   <td" + rowspan + "><a>" + encoding["name"] + "</a>"
             i = 0
             for label in encoding["labels"]:
                 if i > 0:
                     table += "  <tr>"
                 else:
                     table += "\n   "
-                table += "<td>\"<code title>" + label + "</code>\"\n"
+                table += "<td>\"<code>" + label + "</code>\"\n"
                 i += 1
     print table
 
