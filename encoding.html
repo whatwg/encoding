@@ -7,7 +7,7 @@
   <link href="https://resources.whatwg.org/standard.css" rel="stylesheet">
   <link href="https://resources.whatwg.org/bikeshed.css" rel="stylesheet">
   <link href="https://resources.whatwg.org/logo-encoding.svg" rel="icon">
-  <meta content="Bikeshed 1.0.0" name="generator">
+  <meta content="Bikeshed version 258032c803e345e163711f5fb2ec268425c773d2" name="generator">
 <style>/* style-syntax-highlighting */
 pre.idl.highlight { color: #708090; }
         .highlight:not(.idl) { background: hsl(24, 20%, 95%); }
@@ -71,7 +71,7 @@ pre.idl.highlight { color: #708090; }
    <p data-fill-with="logo"><a class="logo" href="https://whatwg.org/"> <img alt="WHATWG" height="100" src="https://resources.whatwg.org/logo-encoding.svg"> </a> </p>
    <hgroup>
     <h1 class="p-name no-ref" id="title">Encoding</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard — Last Updated <time class="dt-updated" datetime="2016-11-10">10 November 2016</time></span></h2>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard — Last Updated <time class="dt-updated" datetime="2016-11-15">15 November 2016</time></span></h2>
    </hgroup>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -1137,10 +1137,10 @@ Non-browser user agents are not required to support this API. </p>
    <div class="example" id="example-textencoder">
     <a class="self-link" href="#example-textencoder"></a> 
     <p>The following example uses the <code class="idl"><a data-link-type="idl" href="#textencoder">TextEncoder</a></code> object to encode
- an array of strings into an <code>ArrayBuffer</code>. The result is a <code>Uint8Array</code> containing the number
- of strings (as a <code>Uint32Array</code>),
- followed by the length of the first string (as a <code>Uint32Array</code>), the <a data-link-type="dfn" href="#utf-8">UTF-8</a> encoded string data, the length of the second string (as
- a <code>Uint32Array</code>), the string data,
+ an array of strings into an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a></code>. The result is a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-Uint8Array">Uint8Array</a></code> containing the number
+ of strings (as a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-Uint32Array">Uint32Array</a></code>),
+ followed by the length of the first string (as a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-Uint32Array">Uint32Array</a></code>), the <a data-link-type="dfn" href="#utf-8">UTF-8</a> encoded string data, the length of the second string (as
+ a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-Uint32Array">Uint32Array</a></code>), the string data,
  and so on. </p>
 <pre><code>function encodeArrayOfStrings(strings) {  var encoder, encoded, len, bytes, view, offset;
 
@@ -1169,7 +1169,7 @@ Non-browser user agents are not required to support this API. </p>
   }
   return bytes.buffer;
 }</code></pre>
-    <p>The following example decodes an <code>ArrayBuffer</code> containing data encoded in the
+    <p>The following example decodes an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a></code> containing data encoded in the
  format produced by the previous example, or an equivalent algorithm for encodings other than <a data-link-type="dfn" href="#utf-8">UTF-8</a>, back into an array of strings. </p>
 <pre><code>function decodeArrayOfStrings(buffer, encoding) {  var decoder, view, offset, num_strings, strings, len;
 
@@ -1242,7 +1242,7 @@ control. </p>
     <dt><code><var>decoder</var> = new <a class="idl-code" data-link-type="constructor" href="#dom-textdecoder">TextDecoder([<var>label</var> = "utf-8" [, <var>options</var>]])</a></code> 
     <dd>
      <p>Returns a new <code class="idl"><a data-link-type="idl" href="#textdecoder">TextDecoder</a></code> object. </p>
-     <p>If <var>label</var> is either not a <a data-link-type="dfn" href="#label">label</a> or is a <a data-link-type="dfn" href="#label">label</a> for <a data-link-type="dfn" href="#replacement">replacement</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throws</a> a <code>RangeError</code>. </p>
+     <p>If <var>label</var> is either not a <a data-link-type="dfn" href="#label">label</a> or is a <a data-link-type="dfn" href="#label">label</a> for <a data-link-type="dfn" href="#replacement">replacement</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throws</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-rangeerror">RangeError</a></code>. </p>
     <dt><code><var>decoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-encoding">encoding</a></code> 
     <dd>
      <p>Returns <b>encoding</b>’s <a data-link-type="dfn" href="#name">name</a>, lowercased. </p>
@@ -1263,14 +1263,14 @@ control. </p>
   string += decoder.decode(buffer, {stream:true});
 }
 string += decoder.decode(); // end-of-stream</pre>
-     <p>If the <b>error mode</b> is "<code>fatal</code>" and <b>encoding</b>’s <a data-link-type="dfn" href="#decoder">decoder</a> returns <a data-link-type="dfn" href="#error">error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throws</a> a <code>TypeError</code>. </p>
+     <p>If the <b>error mode</b> is "<code>fatal</code>" and <b>encoding</b>’s <a data-link-type="dfn" href="#decoder">decoder</a> returns <a data-link-type="dfn" href="#error">error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throws</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code>. </p>
    </dl>
    <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="constructor" data-export="" id="dom-textdecoder"><code>TextDecoder(<var>label</var>, <var>options</var>)</code><a class="self-link" href="#dom-textdecoder"></a></dfn> constructor, when invoked, must run these steps: </p>
    <ol>
     <li>
      <p>Let <var>encoding</var> be the result of <a data-link-type="dfn" href="#concept-encoding-get">getting an encoding</a> from <var>label</var>. </p>
     <li>
-     <p>If <var>encoding</var> is failure or <a data-link-type="dfn" href="#replacement">replacement</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>. </p>
+     <p>If <var>encoding</var> is failure or <a data-link-type="dfn" href="#replacement">replacement</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-rangeerror">RangeError</a></code>. </p>
     <li>
      <p>Let <var>dec</var> be a new <code class="idl"><a data-link-type="idl" href="#textdecoder">TextDecoder</a></code> object. </p>
     <li>
@@ -1317,7 +1317,7 @@ getter must return true if <b>ignore BOM flag</b> is set, and false otherwise. <
         <li>
          <p>If <var>result</var> is <a data-link-type="dfn" href="#finished">finished</a>, return <var>output</var>, <a data-link-type="dfn" href="#concept-td-serialize">serialized</a>. </p>
         <li>
-         <p>Otherwise, if <var>result</var> is <a data-link-type="dfn" href="#error">error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>TypeError</code>. </p>
+         <p>Otherwise, if <var>result</var> is <a data-link-type="dfn" href="#error">error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code>. </p>
         <li>
          <p>Otherwise, do nothing. </p>
        </ol>
@@ -1370,7 +1370,7 @@ return "<code>utf-8</code>". </p>
        <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="#concept-encoding-process">processing</a> <var>token</var> for <b>encoder</b>, <var>input</var>, <var>output</var>. </p>
       <li>
        <p>If <var>result</var> is <a data-link-type="dfn" href="#finished">finished</a>, convert <var>output</var> into a
-    byte sequence, and then return a <code>Uint8Array</code> object wrapping an <code>ArrayBuffer</code> containing <var>output</var>. </p>
+    byte sequence, and then return a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-Uint8Array">Uint8Array</a></code> object wrapping an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a></code> containing <var>output</var>. </p>
        <p class="note" role="note">These <a data-link-type="dfn" href="#encoding">encodings</a> cannot return <a data-link-type="dfn" href="#error">error</a>. </p>
      </ol>
    </ol>

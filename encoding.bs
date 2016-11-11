@@ -981,13 +981,13 @@ Non-browser user agents are not required to support this API.
 <div class=example id=example-textencoder>
  <p>The following example uses the {{TextEncoder}} object to encode
  an array of strings into an
- <code>ArrayBuffer</code>. The result is a
- <code>Uint8Array</code> containing the number
- of strings (as a <code>Uint32Array</code>),
+ {{ArrayBuffer}}. The result is a
+ {{Uint8Array}} containing the number
+ of strings (as a {{Uint32Array}}),
  followed by the length of the first string (as a
- <code>Uint32Array</code>), the
+ {{Uint32Array}}), the
  <a>UTF-8</a> encoded string data, the length of the second string (as
- a <code>Uint32Array</code>), the string data,
+ a {{Uint32Array}}), the string data,
  and so on.
  <pre><code>function encodeArrayOfStrings(strings) {
   var encoder, encoded, len, bytes, view, offset;
@@ -1018,7 +1018,7 @@ Non-browser user agents are not required to support this API.
   return bytes.buffer;
 }</code></pre>
 
- <p>The following example decodes an <code>ArrayBuffer</code> containing data encoded in the
+ <p>The following example decodes an {{ArrayBuffer}} containing data encoded in the
  format produced by the previous example, or an equivalent algorithm for encodings other than
  <a>UTF-8</a>, back into an array of strings.
 
@@ -1117,7 +1117,7 @@ control.
   <p>If <var>label</var> is either not a <a>label</a> or is a
   <a>label</a> for <a>replacement</a>,
   <a>throws</a> a
-  <code>RangeError</code>.
+  {{RangeError}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoder>encoding</a></code>
  <dd><p>Returns <b>encoding</b>'s <a>name</a>, lowercased.
@@ -1144,7 +1144,7 @@ string += decoder.decode(); // end-of-stream</pre>
 
   <p>If the <b>error mode</b> is "<code>fatal</code>" and <b>encoding</b>'s <a>decoder</a>
   returns <a>error</a>, <a>throws</a> a
-  <code>TypeError</code>.
+  {{TypeError}}.
 </dl>
 
 <p>The
@@ -1157,7 +1157,7 @@ constructor, when invoked, must run these steps:
  <var>label</var>.
 
  <li><p>If <var>encoding</var> is failure or <a>replacement</a>,
- <a>throw</a> a <code>RangeError</code>.
+ <a>throw</a> a {{RangeError}}.
 
  <li><p>Let <var>dec</var> be a new {{TextDecoder}} object.
 
@@ -1227,7 +1227,7 @@ method, when invoked, must run these steps:
      <a lt="serialize stream">serialized</a>.
 
      <li><p>Otherwise, if <var>result</var> is <a>error</a>,
-     <a lt=throw>throw</a> a <code>TypeError</code>.
+     <a lt=throw>throw</a> a {{TypeError}}.
 
      <li><p>Otherwise, do nothing.
     </ol>
@@ -1299,8 +1299,8 @@ method, when invoked, must run these steps:
 
    <li>
     <p>If <var>result</var> is <a>finished</a>, convert <var>output</var> into a
-    byte sequence, and then return a <code>Uint8Array</code> object wrapping an
-    <code>ArrayBuffer</code> containing <var>output</var>.
+    byte sequence, and then return a {{Uint8Array}} object wrapping an
+    {{ArrayBuffer}} containing <var>output</var>.
     <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
 
     <p class=note>These <a>encodings</a> cannot return
