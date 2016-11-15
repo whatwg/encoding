@@ -1207,7 +1207,7 @@ Non-browser user agents are not required to support this API. </p>
   <span class="kt">readonly</span> <span class="kt">attribute</span> <span class="kt">boolean</span> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="boolean" href="#dom-textdecoder-ignorebom">ignoreBOM</a>;
   <span class="kt">USVString</span> <a class="nv idl-code" data-link-type="method" href="#dom-textdecoder-decode">decode</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#BufferSource">BufferSource</a> <dfn class="nv idl-code" data-dfn-for="TextDecoder/decode(input, options), TextDecoder/decode(input), TextDecoder/decode()" data-dfn-type="argument" data-export="" id="dom-textdecoder-decode-input-options-input">input<a class="self-link" href="#dom-textdecoder-decode-input-options-input"></a></dfn>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#textdecodeoptions">TextDecodeOptions</a> <dfn class="nv idl-code" data-dfn-for="TextDecoder/decode(input, options), TextDecoder/decode(input), TextDecoder/decode()" data-dfn-type="argument" data-export="" id="dom-textdecoder-decode-input-options-options">options<a class="self-link" href="#dom-textdecoder-decode-input-options-options"></a></dfn>);
 };</pre>
-   <p>A <code class="idl"><a data-link-type="idl" href="#textdecoder">TextDecoder</a></code> object has an associated <b>encoding</b>, <b>decoder</b>, <b>stream</b>, <b>ignore BOM flag</b> (initially unset), <b>BOM seen flag</b> (initially unset), <b>error mode</b> (initially "<code>replacement</code>"), and <b>do not flush flag</b> (initially unset). </p>
+   <p>A <code class="idl"><a data-link-type="idl" href="#textdecoder">TextDecoder</a></code> object has an associated <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="textdecoder-encoding">encoding<a class="self-link" href="#textdecoder-encoding"></a></dfn>, <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="textdecoder-decoder">decoder<a class="self-link" href="#textdecoder-decoder"></a></dfn>, <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="textdecoder-stream">stream<a class="self-link" href="#textdecoder-stream"></a></dfn>, <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="textdecoder-ignore-bom-flag">ignore BOM flag<a class="self-link" href="#textdecoder-ignore-bom-flag"></a></dfn> (initially unset), <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="textdecoder-bom-seen-flag">BOM seen flag<a class="self-link" href="#textdecoder-bom-seen-flag"></a></dfn> (initially unset), <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="textdecoder-error-mode">error mode<a class="self-link" href="#textdecoder-error-mode"></a></dfn> (initially "<code>replacement</code>"), and <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="textdecoder-do-not-flush-flag">do not flush flag<a class="self-link" href="#textdecoder-do-not-flush-flag"></a></dfn> (initially unset). </p>
    <p>A <code class="idl"><a data-link-type="idl" href="#textdecoder">TextDecoder</a></code> object also has an associated <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="concept-td-serialize">serialize stream<a class="self-link" href="#concept-td-serialize"></a></dfn> algorithm, that given a <a data-link-type="dfn" href="#concept-stream">stream</a> <var>stream</var>, runs these steps: </p>
    <ol>
     <li>
@@ -1218,18 +1218,18 @@ Non-browser user agents are not required to support this API. </p>
       <li>
        <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="#concept-stream-read">reading</a> from <var>stream</var>. </p>
       <li>
-       <p>If <b>encoding</b> is <a data-link-type="dfn" href="#utf-8">UTF-8</a>, <a data-link-type="dfn" href="#utf-16be">UTF-16BE</a>, or <a data-link-type="dfn" href="#utf-16le">UTF-16LE</a>,
-    and <b>ignore BOM flag</b> and <b>BOM seen flag</b> are unset, run these subsubsteps: </p>
+       <p>If <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a> is <a data-link-type="dfn" href="#utf-8">UTF-8</a>, <a data-link-type="dfn" href="#utf-16be">UTF-16BE</a>, or <a data-link-type="dfn" href="#utf-16le">UTF-16LE</a>, and <a data-link-type="dfn" href="#textdecoder-ignore-bom-flag">ignore BOM flag</a> and <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen flag</a> are unset, then
+    run these subsubsteps: </p>
        <ol>
         <li>
-         <p>If <var>token</var> is U+FEFF, set <b>BOM seen flag</b>. </p>
+         <p>If <var>token</var> is U+FEFF, then set <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen flag</a>. </p>
         <li>
-         <p>Otherwise, if <var>token</var> is not <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a>, set <b>BOM seen flag</b> and append <var>token</var> to <var>output</var>. </p>
+         <p>Otherwise, if <var>token</var> is not <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a>, then set <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen flag</a> and append <var>token</var> to <var>output</var>. </p>
         <li>
          <p>Otherwise, return <var>output</var>. </p>
        </ol>
       <li>
-       <p>Otherwise, if <var>token</var> is not <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a>, append <var>token</var> to <var>output</var>. </p>
+       <p>Otherwise, if <var>token</var> is not <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a>, then append <var>token</var> to <var>output</var>. </p>
       <li>
        <p>Otherwise, return <var>output</var>. </p>
      </ol>
@@ -1245,77 +1245,75 @@ control. </p>
      <p>If <var>label</var> is either not a <a data-link-type="dfn" href="#label">label</a> or is a <a data-link-type="dfn" href="#label">label</a> for <a data-link-type="dfn" href="#replacement">replacement</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throws</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-rangeerror">RangeError</a></code>. </p>
     <dt><code><var>decoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-encoding">encoding</a></code> 
     <dd>
-     <p>Returns <b>encoding</b>’s <a data-link-type="dfn" href="#name">name</a>, lowercased. </p>
+     <p>Returns <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#name">name</a>, lowercased. </p>
     <dt><code><var>decoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-fatal">fatal</a></code> 
     <dd>
-     <p>Returns true if <b>error mode</b> is "<code>fatal</code>", and false otherwise. </p>
+     <p>Returns true if <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a> is "<code>fatal</code>", and false
+ otherwise. </p>
     <dt><code><var>decoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-ignorebom">ignoreBOM</a></code> 
     <dd>
-     <p>Returns true if <b>ignore BOM flag</b> is set, and false otherwise. </p>
+     <p>Returns true if <a data-link-type="dfn" href="#textdecoder-ignore-bom-flag">ignore BOM flag</a> is set, and false otherwise. </p>
     <dt><code><var>decoder</var> . <a class="idl-code" data-link-type="method" href="#dom-textdecoder-decode">decode([<var>input</var> [, <var>options</var>]])</a></code> 
     <dd>
-     <p>Returns the result of running <b>encoding</b>’s <a data-link-type="dfn" href="#decoder">decoder</a>. The method can be invoked
-  zero or more times with <var>options</var>’s <code>stream</code> set to true, and then once
-  without <var>options</var>’s <code>stream</code> (or set to false), to process a fragmented
-  stream. If the invocation without <var>options</var>’s <code>stream</code> (or set to false)
-  has no <var>input</var>, it’s clearest to omit both arguments. </p>
+     <p>Returns the result of running <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#decoder">decoder</a>. The method can
+  be invoked zero or more times with <var>options</var>’s <code>stream</code> set to true, and then
+  once without <var>options</var>’s <code>stream</code> (or set to false), to process a fragmented
+  stream. If the invocation without <var>options</var>’s <code>stream</code> (or set to false) has
+  no <var>input</var>, it’s clearest to omit both arguments. </p>
 <pre class="example" id="example-end-of-stream"><a class="self-link" href="#example-end-of-stream"></a>var string = "", decoder = TextDecoder(encoding), buffer;while(buffer = next_chunk()) {
   string += decoder.decode(buffer, {stream:true});
 }
 string += decoder.decode(); // end-of-stream</pre>
-     <p>If the <b>error mode</b> is "<code>fatal</code>" and <b>encoding</b>’s <a data-link-type="dfn" href="#decoder">decoder</a> returns <a data-link-type="dfn" href="#error">error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throws</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code>. </p>
+     <p>If the <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a> is "<code>fatal</code>" and <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#decoder">decoder</a> returns <a data-link-type="dfn" href="#error">error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throws</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code>. </p>
    </dl>
    <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="constructor" data-export="" id="dom-textdecoder"><code>TextDecoder(<var>label</var>, <var>options</var>)</code><a class="self-link" href="#dom-textdecoder"></a></dfn> constructor, when invoked, must run these steps: </p>
    <ol>
     <li>
      <p>Let <var>encoding</var> be the result of <a data-link-type="dfn" href="#concept-encoding-get">getting an encoding</a> from <var>label</var>. </p>
     <li>
-     <p>If <var>encoding</var> is failure or <a data-link-type="dfn" href="#replacement">replacement</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-rangeerror">RangeError</a></code>. </p>
+     <p>If <var>encoding</var> is failure or <a data-link-type="dfn" href="#replacement">replacement</a>, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-rangeerror">RangeError</a></code>. </p>
     <li>
      <p>Let <var>dec</var> be a new <code class="idl"><a data-link-type="idl" href="#textdecoder">TextDecoder</a></code> object. </p>
     <li>
-     <p>Set <var>dec</var>’s <b>encoding</b> to <var>encoding</var>. </p>
+     <p>Set <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a> to <var>encoding</var>. </p>
     <li>
-     <p>If <var>options</var>’s <code>fatal</code> member is
- true, set <var>dec</var>’s <b>error mode</b> to "<code>fatal</code>". </p>
+     <p>If <var>options</var>’s <code>fatal</code> member is true, then set <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a> to "<code>fatal</code>". </p>
     <li>
-     <p>If <var>options</var>’s <code>ignoreBOM</code> member is
- true, set <var>dec</var>’s <b>ignore BOM flag</b>. </p>
+     <p>If <var>options</var>’s <code>ignoreBOM</code> member is true, then set <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-ignore-bom-flag">ignore BOM flag</a>. </p>
     <li>
      <p>Return <var>dec</var>. </p>
    </ol>
-   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-encoding"><code>encoding</code><a class="self-link" href="#dom-textdecoder-encoding"></a></dfn> attribute’s getter must
-return <b>encoding</b>’s <a data-link-type="dfn" href="#name">name</a> in <a data-link-type="dfn" href="#ascii-lowercase">ASCII lowercase</a>. </p>
-   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-fatal"><code>fatal</code><a class="self-link" href="#dom-textdecoder-fatal"></a></dfn> attribute’s getter must
-return true if <b>error mode</b> is "<code>fatal</code>", and false otherwise. </p>
-   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-ignorebom"><code>ignoreBOM</code><a class="self-link" href="#dom-textdecoder-ignorebom"></a></dfn> attribute’s
-getter must return true if <b>ignore BOM flag</b> is set, and false otherwise. </p>
+   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-encoding"><code>encoding</code><a class="self-link" href="#dom-textdecoder-encoding"></a></dfn> attribute’s getter must return <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#name">name</a> in <a data-link-type="dfn" href="#ascii-lowercase">ASCII lowercase</a>. </p>
+   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-fatal"><code>fatal</code><a class="self-link" href="#dom-textdecoder-fatal"></a></dfn> attribute’s getter must return true
+if <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a> is "<code>fatal</code>", and false otherwise. </p>
+   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-ignorebom"><code>ignoreBOM</code><a class="self-link" href="#dom-textdecoder-ignorebom"></a></dfn> attribute’s getter must return
+true if <a data-link-type="dfn" href="#textdecoder-ignore-bom-flag">ignore BOM flag</a> is set, and false otherwise. </p>
    <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="method" data-export="" data-lt="decode(input, options)|decode(input)|decode()" id="dom-textdecoder-decode"><code>decode(<var>input</var>, <var>options</var>)</code><a class="self-link" href="#dom-textdecoder-decode"></a></dfn> method, when invoked, must run these steps: </p>
    <ol>
     <li>
-     <p>If the <b>do not flush flag</b> is unset, set <b>decoder</b> to a new <b>encoding</b>’s <a data-link-type="dfn" href="#decoder">decoder</a>, set <b>stream</b> to a new <a data-link-type="dfn" href="#concept-stream">stream</a>, and unset the <b>BOM seen flag</b>. </p>
+     <p>If the <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a> is unset, set <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a> to a new <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#decoder">decoder</a>, set <a data-link-type="dfn" href="#textdecoder-stream">stream</a> to a
+ new <a data-link-type="dfn" href="#concept-stream">stream</a>, and unset the <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen flag</a>. </p>
     <li>
-     <p>If <var>options</var>’s <code>stream</code> is true, set the <b>do not flush flag</b>, and unset the <b>do not flush flag</b> otherwise. </p>
+     <p>If <var>options</var>’s <code>stream</code> is true, set the <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a>, and unset the <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a> otherwise. </p>
     <li>
-     <p>If <var>input</var> is given, <a data-link-type="dfn" href="#concept-stream-push">push</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy">copy of</a> <var>input</var> to <b>stream</b>. </p>
+     <p>If <var>input</var> is given, <a data-link-type="dfn" href="#concept-stream-push">push</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy">copy of</a> <var>input</var> to <a data-link-type="dfn" href="#textdecoder-stream">stream</a>. </p>
     <li>
      <p>Let <var>output</var> be a new <a data-link-type="dfn" href="#concept-stream">stream</a>. </p>
     <li>
      <p>While true: </p>
      <ol>
       <li>
-       <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="#concept-stream-read">reading</a> from <b>stream</b>. </p>
+       <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="#concept-stream-read">reading</a> from <a data-link-type="dfn" href="#textdecoder-stream">stream</a>. </p>
       <li>
-       <p>If <var>token</var> is <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a> and the <b>do not flush flag</b> is set,
-    return <var>output</var>, <a data-link-type="dfn" href="#concept-td-serialize">serialized</a>. </p>
-       <p class="note" role="note">The way streaming works is to not handle <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a> here when the <b>do not flush flag</b> is set and to not unset that flag. That way in a subsequent invocation <b>decoder</b> is not set anew in the first step of the algorithm and its state is preserved. </p>
+       <p>If <var>token</var> is <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a> and the <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a> is set, then return <var>output</var>, <a data-link-type="dfn" href="#concept-td-serialize">serialized</a>. </p>
+       <p class="note" role="note">The way streaming works is to not handle <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a> here when the <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a> is set and to not unset that flag. That way in a subsequent invocation <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a> is not set anew in the first step of the algorithm and its state is preserved. </p>
       <li>
        <p>Otherwise, run these subsubsteps: </p>
        <ol>
         <li>
-         <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="#concept-encoding-process">processing</a> <var>token</var> for <b>decoder</b>, <b>stream</b>, <var>output</var>, and <b>error mode</b>. </p>
+         <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="#concept-encoding-process">processing</a> <var>token</var> for <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="#textdecoder-stream">stream</a>, <var>output</var>, and <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a>. </p>
         <li>
-         <p>If <var>result</var> is <a data-link-type="dfn" href="#finished">finished</a>, return <var>output</var>, <a data-link-type="dfn" href="#concept-td-serialize">serialized</a>. </p>
+         <p>If <var>result</var> is <a data-link-type="dfn" href="#finished">finished</a>, then return <var>output</var>, <a data-link-type="dfn" href="#concept-td-serialize">serialized</a>. </p>
         <li>
          <p>Otherwise, if <var>result</var> is <a data-link-type="dfn" href="#error">error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code>. </p>
         <li>
@@ -1329,9 +1327,10 @@ getter must return true if <b>ignore BOM flag</b> is set, and false otherwise. <
   <span class="kt">readonly</span> <span class="kt">attribute</span> <span class="kt">DOMString</span> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="DOMString" href="#dom-textencoder-encoding">encoding</a>;
   [<a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject">NewObject</a>] <span class="kt">Uint8Array</span> <a class="nv idl-code" data-link-type="method" href="#dom-textencoder-encode">encode</a>(<span class="kt">optional</span> <span class="kt">USVString</span> <dfn class="nv idl-code" data-dfn-for="TextEncoder/encode(input), TextEncoder/encode()" data-dfn-type="argument" data-export="" id="dom-textencoder-encode-input-input">input<a class="self-link" href="#dom-textencoder-encode-input-input"></a></dfn> = "");
 };</pre>
-   <p>A <code class="idl"><a data-link-type="idl" href="#textencoder">TextEncoder</a></code> object has an associated <b>encoder</b>. </p>
-   <p class="note no-backref" role="note">A <code class="idl"><a data-link-type="idl" href="#textencoder">TextEncoder</a></code> object offers no <var>label</var> argument as
-it only supports <a data-link-type="dfn" href="#utf-8">UTF-8</a>. It also offers no <code>stream</code> option as no <a data-link-type="dfn" href="#encoder">encoder</a> requires buffering of scalar values. </p>
+   <p>A <code class="idl"><a data-link-type="idl" href="#textencoder">TextEncoder</a></code> object has an associated <dfn data-dfn-for="TextEncoder" data-dfn-type="dfn" data-noexport="" id="textencoder-encoder">encoder<a class="self-link" href="#textencoder-encoder"></a></dfn>. </p>
+   <p class="note no-backref" role="note">A <code class="idl"><a data-link-type="idl" href="#textencoder">TextEncoder</a></code> object offers no <var>label</var> argument as it only
+supports <a data-link-type="dfn" href="#utf-8">UTF-8</a>. It also offers no <code>stream</code> option as no <a data-link-type="dfn" href="#encoder">encoder</a> requires
+buffering of scalar values. </p>
    <hr>
    <dl class="domintro">
     <dt><code><var>encoder</var> = new <a class="idl-code" data-link-type="constructor" href="#dom-textencoder">TextEncoder()</a></code> 
@@ -1349,13 +1348,14 @@ it only supports <a data-link-type="dfn" href="#utf-8">UTF-8</a>. It also offers
     <li>
      <p>Let <var>enc</var> be a new <code class="idl"><a data-link-type="idl" href="#textencoder">TextEncoder</a></code> object. </p>
     <li>
-     <p>Set <var>enc</var>’s <b>encoder</b> to <a data-link-type="dfn" href="#utf-8">UTF-8</a>’s <a data-link-type="dfn" href="#encoder">encoder</a>. </p>
+     <p>Set <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-encoder">encoder</a> to <a data-link-type="dfn" href="#utf-8">UTF-8</a>’s <a data-link-type="dfn" href="#encoder">encoder</a>. </p>
     <li>
      <p>Return <var>enc</var>. </p>
    </ol>
-   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="attribute" data-export="" id="dom-textencoder-encoding"><code>encoding</code><a class="self-link" href="#dom-textencoder-encoding"></a></dfn> attribute’s getter must
-return "<code>utf-8</code>". </p>
-   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="method" data-export="" data-lt="encode(input)|encode()" id="dom-textencoder-encode"><code>encode(<var>input</var>)</code><a class="self-link" href="#dom-textencoder-encode"></a></dfn> method, when invoked, must run these steps: </p>
+   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="attribute" data-export="" id="dom-textencoder-encoding"><code>encoding</code><a class="self-link" href="#dom-textencoder-encoding"></a></dfn> attribute’s getter must return
+"<code>utf-8</code>". </p>
+   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="method" data-export="" data-lt="encode(input)|encode()" id="dom-textencoder-encode"><code>encode(<var>input</var>)</code><a class="self-link" href="#dom-textencoder-encode"></a></dfn> method, when invoked,
+must run these steps: </p>
    <ol>
     <li>
      <p>Convert <var>input</var> to a <a data-link-type="dfn" href="#concept-stream">stream</a>. </p>
@@ -1367,11 +1367,11 @@ return "<code>utf-8</code>". </p>
       <li>
        <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="#concept-stream-read">reading</a> from <var>input</var>. </p>
       <li>
-       <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="#concept-encoding-process">processing</a> <var>token</var> for <b>encoder</b>, <var>input</var>, <var>output</var>. </p>
+       <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="#concept-encoding-process">processing</a> <var>token</var> for <a data-link-type="dfn" href="#textencoder-encoder">encoder</a>, <var>input</var>, <var>output</var>. </p>
       <li>
        <p>If <var>result</var> is <a data-link-type="dfn" href="#finished">finished</a>, convert <var>output</var> into a
     byte sequence, and then return a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-Uint8Array">Uint8Array</a></code> object wrapping an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a></code> containing <var>output</var>. </p>
-       <p class="note" role="note">These <a data-link-type="dfn" href="#encoding">encodings</a> cannot return <a data-link-type="dfn" href="#error">error</a>. </p>
+       <p class="note" role="note"><a data-link-type="dfn" href="#utf-8">UTF-8</a> cannot return <a data-link-type="dfn" href="#error">error</a>. </p>
      </ol>
    </ol>
    <h2 class="heading settled" data-level="9" id="the-encoding"><span class="secno">9. </span><span class="content">The encoding</span><a class="self-link" href="#the-encoding"></a></h2>
