@@ -12,13 +12,15 @@ Markup Shorthands: css off
 !Participate: <a href=https://github.com/whatwg/encoding>GitHub whatwg/encoding</a> (<a href=https://github.com/whatwg/encoding/issues/new>file an issue</a>, <a href=https://github.com/whatwg/encoding/issues>open issues</a>)
 !Participate: <a href=https://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a>
 !Commits: <a href=https://github.com/whatwg/encoding/commits>GitHub whatwg/encoding/commits</a>
+!Commits: [SNAPSHOT-LINK]
 !Commits: <a href=https://twitter.com/encodings>@encodings</a>
 !Translation (non-normative): <span title=Japanese><a href=https://triple-underscore.github.io/Encoding-ja.html lang=ja hreflang=ja rel=alternate>日本語</a></span>
 Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeoptions textdecodeoptions
 </pre>
 
 <script src=https://resources.whatwg.org/file-issue.js async></script>
-<script id=head src=https://html.spec.whatwg.org/dfn.js defer></script>
+<script src=https://resources.whatwg.org/commit-snapshot-shortcut-key.js async></script>
+<script src=https://html.spec.whatwg.org/dfn.js defer></script>
 
 
 
