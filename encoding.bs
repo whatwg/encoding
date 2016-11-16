@@ -2681,6 +2681,27 @@ issues. Browsers also should disable this feature if the resource was decoded us
 
 
 
+<h2 class=no-num id=implementation-considerations>Implementation considerations</h2>
+
+<p>Instead of supporting <a for=/>streams</a> with arbitrary <a for=stream>prepend</a>, the
+<a for=/>decoders</a> for <a for=/>encodings</a> in this standard could be implemented with:
+
+<ol>
+ <li><p>The ability to unread the current byte.
+
+ <li>
+  <p>A single-byte buffer for <a>gb18030</a> (an <a>ASCII byte</a>) and <a>ISO-2022-JP</a> (0x24 or
+  0x28).
+
+  <p class="example">For <a>gb18030</a> when hitting a bogus byte while <a>gb18030 third</a> is not
+  0x00, <a>gb18030 second</a> could be moved into the single-byte buffer to be returned next, and
+  <a>gb18030 third</a> would be the new <a>gb18030 first</a>, checked for not being 0x00 after the
+  single-byte buffer was returned and emptied. This is possible as the range for the first and third
+  byte in <a>gb18030</a> is identical.
+</ol>
+
+
+
 <h2 class=no-num id=acknowledgments>Acknowledgments</h2>
 
 <p>There have been a lot of people that have helped make encodings more
