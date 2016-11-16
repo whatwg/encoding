@@ -26,6 +26,12 @@ If you want to preview the spec locally, you can either use a locally installed 
 [Bikeshed](https://github.com/tabatkins/bikeshed) by running `make` or use the HTTP API version by
 running `make remote`.
 
+If you want to do a complete "local deploy" including commit and/or branch snapshots, run
+
+```
+./deploy.sh --local
+```
+
 ### Merge policy
 
 If you can commit to this repository, see the
