@@ -1965,8 +1965,12 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
  <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
 
- <li><p>Let <var>pointer</var> be the <a>index pointer</a> for
- <var>code point</var> in <a>index jis0208</a>.
+ <li>
+  <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>code point</var> in
+  <a>index jis0208</a>.
+
+  <p class=note>If <var>pointer</var> is non-null, it is less than 8836 due to the nature of
+  <a>index jis0208</a> and the <a>index pointer</a> operation.
 
  <li><p>If <var>pointer</var> is null, return <a>error</a> with
  <var>code point</var>.
@@ -2267,8 +2271,12 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
  <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
 
- <li><p>Let <var>pointer</var> be the <a>index pointer</a> for
- <var>code point</var> in <a>index jis0208</a>.
+ <li>
+  <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>code point</var> in
+  <a>index jis0208</a>.
+
+  <p class=note>If <var>pointer</var> is non-null, it is less than 8836 due to the nature of
+  <a>index jis0208</a> and the <a>index pointer</a> operation.
 
  <li><p>If <var>pointer</var> is null, return <a>error</a> with
  <var>code point</var>.
