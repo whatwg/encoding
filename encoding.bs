@@ -20,7 +20,13 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 
 <script src=https://resources.whatwg.org/file-issue.js async></script>
 <script src=https://resources.whatwg.org/commit-snapshot-shortcut-key.js async></script>
-<script src=https://html.spec.whatwg.org/dfn.js defer></script>
+<script src=https://resources.whatwg.org/dfn.js defer></script>
+
+<pre class=link-defaults>
+spec:infra; type:dfn;
+    text:code point
+    text:ascii case-insensitive
+</pre>
 
 
 
@@ -86,33 +92,9 @@ many reasons that is now the mandatory encoding for all things.
 
 
 
-<h2 id=conformance>Conformance</h2>
-
-<p>All diagrams, examples, and notes in this specification are
-non-normative, as are all sections explicitly marked non-normative.
-Everything else in this specification is normative.
-
-<p>The key words "MUST", "MUST NOT", "REQUIRED", <!--"SHALL", "SHALL
-NOT",--> "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and
-"OPTIONAL" in the normative parts of this document are to be
-interpreted as described in RFC2119. For readability, these words do
-not appear in all uppercase letters in this specification.
-[[!RFC2119]]
-
-<p>Conformance requirements phrased as algorithms or specific steps
-may be implemented in any manner, so long as the end result is
-equivalent. (In particular, the algorithms defined in this
-specification are intended to be easy to follow, and not intended to
-be performant.)
-
-<p id=hardwareLimitations>User agents may impose
-implementation-specific limits on otherwise unconstrained inputs,
-e.g. to prevent denial of service attacks, to guard against running
-out of memory, or to work around platform-specific limitations.
-
-
-
 <h2 id=terminology>Terminology</h2>
+
+<p>This specification depends on the Infra Standard. [[!INFRA]]
 
 <p>Hexadecimal numbers are prefixed with "0x".
 
@@ -123,39 +105,6 @@ modulo) by "%", logical left shifts by "&lt;&lt;", logical right shifts by ">>",
 <var>x</var>.
 
 <p>For logical right shifts operands must have at least twenty-one bits precision.
-
-<p>A <dfn>byte</dfn> is a sequence of eight bits, represented as a
-double-digit hexadecimal number in the range 0x00 to 0xFF, inclusive.
-
-<p>An <dfn>ASCII byte</dfn> is a <a>byte</a> in the range 0x00 to 0x7F, inclusive.
-
-<p>A <dfn>code point</dfn> is a Unicode code point and is represented as a
-four-to-six digit hexadecimal number, typically prefixed with "U+".
-In equations and <a lt=index>indexes</a> code points are prefixed
-with "0x". [[!UNICODE]]
-
-<p>A <dfn>scalar value</dfn> is a <a>code point</a> that is not in the range U+D800
-to U+DFFF, inclusive.
-
-<p>An <dfn>ASCII code point</dfn> is a <a>code point</a> in the range U+0000 to
-U+007F, inclusive.
-
-<p>The <dfn>ASCII whitespace</dfn> are code points U+0009, U+000A, U+000C,
-U+000D, and U+0020.
-
-<p>The <dfn>ASCII digits</dfn> are code points in the range U+0030 to U+0039, inclusive.
-
-<p>A <dfn>string</dfn> is a sequence of code points.
-
-<p>Comparing two strings in an <dfn>ASCII case-insensitive</dfn> manner
-means comparing them exactly, code point for code point, except that the
-characters in the range U+0041 to U+005A (i.e. LATIN CAPITAL LETTER A to
-LATIN CAPITAL LETTER Z), inclusive, and the corresponding characters in the range
-U+0061 to U+007A (i.e. LATIN SMALL LETTER A to LATIN SMALL LETTER Z), inclusive, are
-considered to also match.
-
-<p>To <dfn>ASCII lowercase</dfn> a string, replace all code points in the range U+0041 to U+005A,
-inclusive, with the corresponding code points in the range U+0061 to U+007A, inclusive.
 
 <hr>
 
@@ -1078,7 +1027,7 @@ interface TextDecoder {
 <a for=/>stream</a> <var>stream</var>, runs these steps:
 
 <ol>
- <li><p>Let <var>output</var> be the empty <a>string</a>.
+ <li><p>Let <var>output</var> be the empty string.
 
  <li>
   <p>While true:
