@@ -165,7 +165,7 @@ optionally with a <a>code point</a>, or <dfn>continue</dfn>.
 "<code>html</code>" for an <a for=/>encoder</a>.
 
 <p class=note>An XML processor would set <a for=/>error mode</a> to "<code>fatal</code>".
-[[!XML]]
+[[XML]]
 
 <p class=note><code>html</code> exists as <a for=/>error mode</a> due to URLs and HTML forms
 requiring a non-terminating legacy <a for=/>encoder</a>. The "<code>html</code>"
@@ -173,8 +173,8 @@ requiring a non-terminating legacy <a for=/>encoder</a>. The "<code>html</code>"
 legitimate input and can therefore lead to silent data loss. Developers are strongly
 encouraged to use the <a>UTF-8</a> <a for=/>encoding</a> to prevent this from
 happening.
-[[!URL]]
-[[!HTML]]
+[[URL]]
+[[HTML]]
 
 <p>To <dfn id=concept-encoding-run for=encoding>run</dfn> an <a for=/>encoding</a>'s
 <a for=/>decoder</a> or <a for=/>encoder</a> <var>encoderDecoder</var> with input
@@ -910,8 +910,8 @@ encoding <var>encoding</var>, run these steps:
 <p class="note no-backref">This is mostly a legacy hook for URLs and HTML forms. Layering
 <a>UTF-8 encode</a> on top is safe as it never triggers
 <a>errors</a>.
-[[!URL]]
-[[!HTML]]
+[[URL]]
+[[HTML]]
 
 <p>To <dfn export>UTF-8 encode</dfn> a code point stream <var>stream</var>,
 return the result of <a lt=encode for=/>encoding</a>
@@ -921,12 +921,9 @@ return the result of <a lt=encode for=/>encoding</a>
 
 <h2 id=api>API</h2>
 
-<!-- https://wiki.whatwg.org/wiki/StringEncoding  -->
+<p>This section uses terminology from Web IDL. Non-browser user agents are not required to support
+this API.
 
-<p>This section uses terminology from the DOM and Web IDL.
-Non-browser user agents are not required to support this API.
-
-[[!DOM]]
 [[!WEBIDL]]
 
 <div class=example id=example-textencoder>
@@ -2632,10 +2629,6 @@ feature is nonetheless present, browsers should not offer either
 <a>UTF-16BE</a> or <a>UTF-16LE</a> as option due to aforementioned security
 issues. Browsers also should disable this feature if the resource was decoded using either
 <a>UTF-16BE</a> or <a>UTF-16LE</a>.
-
-
-
-<div data-fill-with=references></div>
 
 
 
