@@ -18,6 +18,7 @@ Markup Shorthands: css off
 Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeoptions textdecodeoptions
 </pre>
 
+<style>@import 'visualization-colors.css';</style>
 <script src=https://resources.whatwg.org/file-issue.js async></script>
 <script src=https://resources.whatwg.org/commit-snapshot-shortcut-key.js async></script>
 <script src=https://resources.whatwg.org/dfn.js defer></script>
@@ -653,33 +654,66 @@ changed, so has the <a>index</a>.
 <var>code point</var> in <var>index</var>, or null if
 <var>code point</var> is not in <var>index</var>.
 
+<div class=note id=visualization>
+<p>There is a non-normative visualization for each index other than index gb18030 ranges.
+index jis0208 also has an alternative Shift_JIS visualization.
+Additionally, there is visualization of the Basic Multilingual Plane coverage of each index other than index gb18030 ranges.
+
+<p>The legend for the visualizations is:
+<ul class=visualizationlegend>
+    <li class=unmapped>Unmapped
+    <li class=mid>Two bytes in UTF-8
+    <li class="mid contiguous">Two bytes in UTF-8, code point follows immediately the code point of previous pointer
+    <li class=upper>Three bytes in UTF-8 (non-PUA)
+    <li class="upper contiguous">Three bytes in UTF-8 (non-PUA), code point follows immediately the code point of previous pointer
+    <li class=pua>Private Use
+    <li class="pua contiguous">Private Use, code point follows immediately the code point of previous pointer
+    <li class=astral>Four bytes in UTF-8
+    <li class="astral contiguous">Four bytes in UTF-8, code point follows immediately the code point of previous pointer
+    <li class=duplicate>Duplicate code point already mapped at an earlier index
+    <li class=compatibility>CJK Compatibility Ideograph
+    <li class=ext>CJK Unified Ideographs Extension A
+</ul>
+</div>
+
 <p>These are the <a lt=index>indexes</a> defined by this
 specification, excluding <a>index single-byte</a>, which have their own table:
 
 <table>
- <tbody><tr><th colspan=2><a>Index</a><th>Notes
+ <tbody><tr><th colspan=4><a>Index</a><th>Notes
  <tr>
   <td><dfn export>index Big5</dfn>
   <td><a href=index-big5.txt>index-big5.txt</a>
+  <td><a href=big5.html>Visualization</a>
+  <td><a href=big5-bmp.html>BMP coverage</a>
   <td>This matches the Big5 standard in combination with the
   Hong Kong Supplementary Character Set and other common extensions.
  <tr>
   <td><dfn export>index EUC-KR</dfn>
   <td><a href=index-euc-kr.txt>index-euc-kr.txt</a>
+  <td><a href=euc-kr.html>Visualization</a>
+  <td><a href=euc-kr-bmp.html>BMP coverage</a>
   <td>This matches the KS X 1001 standard and the Unified Hangul Code, more
-  commonly known together as Windows Codepage 949.
+  commonly known together as Windows Codepage 949. This index covers the Hangul Syllables
+  block of Unicode in its entirety. The Hangul block whose top left corner in the visualization
+  is at pointer 9026 is in the Unicode order. Taken separately, the rest of the Hangul syllables
+  in this index are in the Unicode order, too.
  <tr>
   <td><dfn export>index gb18030</dfn>
   <td><a href=index-gb18030.txt>index-gb18030.txt</a>
+  <td><a href=gb18030.html>Visualization</a>
+  <td><a href=gb18030-bmp.html>BMP coverage</a>
   <td>This matches the GB18030-2005 standard for code points encoded as two bytes, except for
-  0xA3 0xA0 which maps to U+3000 to be compatible with deployed content.
+  0xA3 0xA0 which maps to U+3000 to be compatible with deployed content. This index covers the
+  CJK Unified Ideographs block of Unicode in its entirety. Entries from that block that are
+  above or to the left of (the first) U+3000 in the visualization are in the Unicode order.
   <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=131837
        https://bugs.webkit.org/show_bug.cgi?id=17014
        https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396
        https://github.com/whatwg/encoding/issues/17 -->
  <tr>
   <td><dfn export>index gb18030 ranges</dfn>
-  <td><a href=index-gb18030-ranges.txt>index-gb18030-ranges.txt</a>
+  <td colspan=3><a href=index-gb18030-ranges.txt>index-gb18030-ranges.txt</a>
   <td>This <a>index</a> works different from all others. Listing all code points would result
   in over a million items whereas they can be represented neatly in 207 ranges combined with trivial
   limit checks. It therefore only superficially matches the GB18030-2005 standard for code points
@@ -688,12 +722,16 @@ specification, excluding <a>index single-byte</a>, which have their own table:
  <tr>
   <td><dfn export>index jis0208</dfn>
   <td><a href=index-jis0208.txt>index-jis0208.txt</a>
+  <td><a href=jis0208.html>Visualization</a>, <a href=shift_jis.html>Shift_JIS visualization</a>
+  <td><a href=jis0208-bmp.html>BMP coverage</a>
   <td>This is the JIS X 0208 standard including formerly proprietary
   extensions from IBM and NEC.
   <!-- NEC = Nippon Electronics Corporation -->
  <tr>
   <td><dfn export>index jis0212</dfn>
   <td><a href=index-jis0212.txt>index-jis0212.txt</a>
+  <td><a href=jis0212.html>Visualization</a>
+  <td><a href=jis0212-bmp.html>BMP coverage</a>
   <td>This is the JIS X 0212 standard. It is only used by the <a>EUC-JP decoder</a>
   due to lack of widespread support elsewhere.
   <!--
@@ -1442,35 +1480,34 @@ depends on the <a>single-byte encoding</a> in use. All but two
 unique <a>index</a>.
 
 <table>
- <tbody><tr><th><a>Name</a><th><a>Index</a>
- <tr><td><dfn export>IBM866</dfn><td><a href=index-ibm866.txt>index-ibm866.txt</a>
- <tr><td><dfn export>ISO-8859-2</dfn><td><a href=index-iso-8859-2.txt>index-iso-8859-2.txt</a>
- <tr><td><dfn export>ISO-8859-3</dfn><td><a href=index-iso-8859-3.txt>index-iso-8859-3.txt</a>
- <tr><td><dfn export>ISO-8859-4</dfn><td><a href=index-iso-8859-4.txt>index-iso-8859-4.txt</a>
- <tr><td><dfn export>ISO-8859-5</dfn><td><a href=index-iso-8859-5.txt>index-iso-8859-5.txt</a>
- <tr><td><dfn export>ISO-8859-6</dfn><td><a href=index-iso-8859-6.txt>index-iso-8859-6.txt</a>
- <tr><td><dfn export>ISO-8859-7</dfn><td><a href=index-iso-8859-7.txt>index-iso-8859-7.txt</a>
- <tr><td><dfn export>ISO-8859-8</dfn><td rowspan=2><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a>
+ <tr><td><dfn export>IBM866</dfn><td><a href=index-ibm866.txt>index-ibm866.txt</a><td><a href=ibm866.html>Visualization</a><td><a href=ibm866-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-2</dfn><td><a href=index-iso-8859-2.txt>index-iso-8859-2.txt</a><td><a href=iso-8859-2.html>Visualization</a><td><a href=iso-8859-2-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-3</dfn><td><a href=index-iso-8859-3.txt>index-iso-8859-3.txt</a><td><a href=iso-8859-3.html>Visualization</a><td><a href=iso-8859-3-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-4</dfn><td><a href=index-iso-8859-4.txt>index-iso-8859-4.txt</a><td><a href=iso-8859-4.html>Visualization</a><td><a href=iso-8859-4-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-5</dfn><td><a href=index-iso-8859-5.txt>index-iso-8859-5.txt</a><td><a href=iso-8859-5.html>Visualization</a><td><a href=iso-8859-5-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-6</dfn><td><a href=index-iso-8859-6.txt>index-iso-8859-6.txt</a><td><a href=iso-8859-6.html>Visualization</a><td><a href=iso-8859-6-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-7</dfn><td><a href=index-iso-8859-7.txt>index-iso-8859-7.txt</a><td><a href=iso-8859-7.html>Visualization</a><td><a href=iso-8859-7-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-8</dfn><td rowspan=2><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a><td><a href=iso-8859-8.html>Visualization</a><td><a href=iso-8859-8-bmp.html>BMP coverage</a>
  <tr><td><dfn export>ISO-8859-8-I</dfn>
- <tr><td><dfn export>ISO-8859-10</dfn><td><a href=index-iso-8859-10.txt>index-iso-8859-10.txt</a>
- <tr><td><dfn export>ISO-8859-13</dfn><td><a href=index-iso-8859-13.txt>index-iso-8859-13.txt</a>
- <tr><td><dfn export>ISO-8859-14</dfn><td><a href=index-iso-8859-14.txt>index-iso-8859-14.txt</a>
- <tr><td><dfn export>ISO-8859-15</dfn><td><a href=index-iso-8859-15.txt>index-iso-8859-15.txt</a>
- <tr><td><dfn export>ISO-8859-16</dfn><td><a href=index-iso-8859-16.txt>index-iso-8859-16.txt</a>
- <tr><td><dfn export>KOI8-R</dfn><td><a href=index-koi8-r.txt>index-koi8-r.txt</a>
- <tr><td><dfn export>KOI8-U</dfn><td><a href=index-koi8-u.txt>index-koi8-u.txt</a>
- <tr><td><dfn export>macintosh</dfn><td><a href=index-macintosh.txt>index-macintosh.txt</a>
- <tr><td><dfn export>windows-874</dfn><td><a href=index-windows-874.txt>index-windows-874.txt</a>
- <tr><td><dfn export>windows-1250</dfn><td><a href=index-windows-1250.txt>index-windows-1250.txt</a>
- <tr><td><dfn export>windows-1251</dfn><td><a href=index-windows-1251.txt>index-windows-1251.txt</a>
- <tr><td><dfn export>windows-1252</dfn><td><a href=index-windows-1252.txt>index-windows-1252.txt</a>
- <tr><td><dfn export>windows-1253</dfn><td><a href=index-windows-1253.txt>index-windows-1253.txt</a>
- <tr><td><dfn export>windows-1254</dfn><td><a href=index-windows-1254.txt>index-windows-1254.txt</a>
- <tr><td><dfn export>windows-1255</dfn><td><a href=index-windows-1255.txt>index-windows-1255.txt</a>
- <tr><td><dfn export>windows-1256</dfn><td><a href=index-windows-1256.txt>index-windows-1256.txt</a>
- <tr><td><dfn export>windows-1257</dfn><td><a href=index-windows-1257.txt>index-windows-1257.txt</a>
- <tr><td><dfn export>windows-1258</dfn><td><a href=index-windows-1258.txt>index-windows-1258.txt</a>
- <tr><td><dfn export>x-mac-cyrillic</dfn><td><a href=index-x-mac-cyrillic.txt>index-x-mac-cyrillic.txt</a>
+ <tr><td><dfn export>ISO-8859-10</dfn><td><a href=index-iso-8859-10.txt>index-iso-8859-10.txt</a><td><a href=iso-8859-10.html>Visualization</a><td><a href=iso-8859-10-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-13</dfn><td><a href=index-iso-8859-13.txt>index-iso-8859-13.txt</a><td><a href=iso-8859-13.html>Visualization</a><td><a href=iso-8859-13-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-14</dfn><td><a href=index-iso-8859-14.txt>index-iso-8859-14.txt</a><td><a href=iso-8859-14.html>Visualization</a><td><a href=iso-8859-14-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-15</dfn><td><a href=index-iso-8859-15.txt>index-iso-8859-15.txt</a><td><a href=iso-8859-15.html>Visualization</a><td><a href=iso-8859-15-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-16</dfn><td><a href=index-iso-8859-16.txt>index-iso-8859-16.txt</a><td><a href=iso-8859-16.html>Visualization</a><td><a href=iso-8859-16-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>KOI8-R</dfn><td><a href=index-koi8-r.txt>index-koi8-r.txt</a><td><a href=koi8-r.html>Visualization</a><td><a href=koi8-r-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>KOI8-U</dfn><td><a href=index-koi8-u.txt>index-koi8-u.txt</a><td><a href=koi8-u.html>Visualization</a><td><a href=koi8-u-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>macintosh</dfn><td><a href=index-macintosh.txt>index-macintosh.txt</a><td><a href=macintosh.html>Visualization</a><td><a href=macintosh-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-874</dfn><td><a href=index-windows-874.txt>index-windows-874.txt</a><td><a href=windows-874.html>Visualization</a><td><a href=windows-874-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-1250</dfn><td><a href=index-windows-1250.txt>index-windows-1250.txt</a><td><a href=windows-1250.html>Visualization</a><td><a href=windows-1250-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-1251</dfn><td><a href=index-windows-1251.txt>index-windows-1251.txt</a><td><a href=windows-1251.html>Visualization</a><td><a href=windows-1251-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-1252</dfn><td><a href=index-windows-1252.txt>index-windows-1252.txt</a><td><a href=windows-1252.html>Visualization</a><td><a href=windows-1252-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-1253</dfn><td><a href=index-windows-1253.txt>index-windows-1253.txt</a><td><a href=windows-1253.html>Visualization</a><td><a href=windows-1253-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-1254</dfn><td><a href=index-windows-1254.txt>index-windows-1254.txt</a><td><a href=windows-1254.html>Visualization</a><td><a href=windows-1254-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-1255</dfn><td><a href=index-windows-1255.txt>index-windows-1255.txt</a><td><a href=windows-1255.html>Visualization</a><td><a href=windows-1255-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-1256</dfn><td><a href=index-windows-1256.txt>index-windows-1256.txt</a><td><a href=windows-1256.html>Visualization</a><td><a href=windows-1256-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-1257</dfn><td><a href=index-windows-1257.txt>index-windows-1257.txt</a><td><a href=windows-1257.html>Visualization</a><td><a href=windows-1257-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>windows-1258</dfn><td><a href=index-windows-1258.txt>index-windows-1258.txt</a><td><a href=windows-1258.html>Visualization</a><td><a href=windows-1258-bmp.html>BMP coverage</a>
+ <tr><td><dfn export>x-mac-cyrillic</dfn><td><a href=index-x-mac-cyrillic.txt>index-x-mac-cyrillic.txt</a><td><a href=x-mac-cyrillic.html>Visualization</a><td><a href=x-mac-cyrillic-bmp.html>BMP coverage</a>
 </table>
 
 <p class=note><a>ISO-8859-8</a> and <a>ISO-8859-8-I</a> are
