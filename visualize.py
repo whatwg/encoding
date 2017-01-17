@@ -5,6 +5,7 @@
 
 import json
 import sys
+import unicodedata
 
 directory = ""
 if len(sys.argv) == 2:
@@ -115,6 +116,18 @@ def aria(code_point, contiguous, duplicate):
     return label
 
 
+def format_code_point(code_point):
+    if code_point >= 0x80 and code_point < 0xA0:
+        # HTML prohibits C1 controls
+        # TODO draw some fancy SVG hex inside the square
+        return "<svg><rect x=1 y=1 width=14 height=14 stroke=black stroke-width=2 fill=none /></svg>"
+    as_str = unichr(code_point)
+    if unicodedata.combining(as_str) == 0:
+        return as_str
+    else:
+        return " " + as_str
+
+
 def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
     out_file = open("%s%s.html" % (directory, name), "w")
     out_file.write(("<!DOCTYPE html><html lang=en><meta charset=utf-8><title>%s</title><link rel=stylesheet href=visualization.css type=text/css><h1>%s</h1><p class=note role=note>This table is not normative.<p><a href='%s-bmp.html'>BMP coverage</a><p><a href='./#visualization'>Legend</a><table><thead>") % (name, name, "jis0208" if name == "shift_jis" else name))
@@ -190,7 +203,7 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
                 else:
                     astral_seen.add(code_point)
             contiguous = previous and previous + 1 == code_point
-            out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>%d<dd lang=%s>%s<dd>U+%04X</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), pointer, lang, unichr(code_point), code_point)).encode("utf-8"))
+            out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>%d<dd lang=%s>%s<dd>U+%04X</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), pointer, lang, format_code_point(code_point), code_point)).encode("utf-8"))
         else:
             out_file.write((u"<td class=unmapped><dl><dt>%d<dd>\uFFFD<dd>\u00A0</dl>" % pointer).encode("utf-8"))
         previous = code_point
@@ -228,7 +241,7 @@ def format_coverage(name, lang, bmp, duplicates):
         elif pointer:
             duplicate = code_point in duplicates
             contiguous = previous and previous + 1 == pointer
-            out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>U+%04X<dd lang=%s>%s<dd>%d</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), code_point, lang, unichr(code_point), pointer)).encode("utf-8"))
+            out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>U+%04X<dd lang=%s>%s<dd>%d</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), code_point, lang, format_code_point(code_point), pointer)).encode("utf-8"))
         else:
             out_file.write((u"<td class=unmapped><dl><dt>U+%04X<dd>\uFFFD<dd>\u00A0</dl>" % code_point).encode("utf-8"))
         previous = pointer
