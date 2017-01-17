@@ -112,6 +112,7 @@ def aria(code_point, contiguous, duplicate):
         label += ", contiguous"
     if duplicate:
         label += ", duplicate"
+    return label
 
 
 def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
@@ -188,7 +189,8 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
                     duplicates.add(code_point)
                 else:
                     astral_seen.add(code_point)
-            out_file.write((u"<td class='%s %s%s%s'><dl><dt>%d<dd lang=%s>%s<dd>U+%04X</dl>" % ("contiguous" if previous and previous + 1 == code_point else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), pointer, lang, unichr(code_point), code_point)).encode("utf-8"))
+            contiguous = previous and previous + 1 == code_point
+            out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>%d<dd lang=%s>%s<dd>U+%04X</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), pointer, lang, unichr(code_point), code_point)).encode("utf-8"))
         else:
             out_file.write((u"<td class=unmapped><dl><dt>%d<dd>\uFFFD<dd>\u00A0</dl>" % pointer).encode("utf-8"))
         previous = code_point
@@ -224,7 +226,9 @@ def format_coverage(name, lang, bmp, duplicates):
         if code_point >= 0xD800 and code_point <= 0xDFFF:
             out_file.write("<td class=surrogate>")
         elif pointer:
-            out_file.write((u"<td class='%s %s%s%s'><dl><dt>U+%04X<dd lang=%s>%s<dd>%d</dl>" % ("contiguous" if previous and previous + 1 == pointer else "discontiguous", classify(code_point), " duplicate" if code_point in duplicates else "", check_compatibility(code_point), code_point, lang, unichr(code_point), pointer)).encode("utf-8"))
+            duplicate = code_point in duplicates
+            contiguous = previous and previous + 1 == pointer
+            out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>U+%04X<dd lang=%s>%s<dd>%d</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), code_point, lang, unichr(code_point), pointer)).encode("utf-8"))
         else:
             out_file.write((u"<td class=unmapped><dl><dt>U+%04X<dd>\uFFFD<dd>\u00A0</dl>" % code_point).encode("utf-8"))
         previous = pointer
