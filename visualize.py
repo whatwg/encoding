@@ -219,7 +219,7 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
             contiguous = previous and previous + 1 == code_point
             out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>%d<dd lang=%s>%s<dd>U+%04X</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), pointer, lang, format_code_point(code_point), code_point)).encode("utf-8"))
         else:
-            out_file.write((u"<td class=unmapped><dl><dt>%d<dd>\uFFFD<dd>\u00A0</dl>" % pointer).encode("utf-8"))
+            out_file.write((u"<td class=unmapped aria-label=Unmapped><dl><dt>%d<dd>\uFFFD<dd>\u00A0</dl>" % pointer).encode("utf-8"))
         previous = code_point
         pointer += 1
         if pointer % row_length == 0:
@@ -257,7 +257,7 @@ def format_coverage(name, lang, bmp, duplicates):
             contiguous = previous and previous + 1 == pointer
             out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>U+%04X<dd lang=%s>%s<dd>%d</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), code_point, lang, format_code_point(code_point), pointer)).encode("utf-8"))
         else:
-            out_file.write((u"<td class=unmapped><dl><dt>U+%04X<dd>\uFFFD<dd>\u00A0</dl>" % code_point).encode("utf-8"))
+            out_file.write((u"<td class=unmapped aria-label=Unmapped><dl><dt>U+%04X<dd>\uFFFD<dd>\u00A0</dl>" % code_point).encode("utf-8"))
         previous = pointer
     out_file.write("</table>")
     out_file.close()
