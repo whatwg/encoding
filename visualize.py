@@ -116,11 +116,25 @@ def aria(code_point, contiguous, duplicate):
     return label
 
 
+def code_point_to_ustr(code_point):
+    try:
+        return unichr(code_point)
+    except ValueError:
+        # For narrow builds
+        high = 0xD7C0 + (code_point >> 10)
+        low = 0xDC00 + (code_point & 0x3FF)
+        return unichr(high) + unichr(low)
+
+
 def format_code_point(code_point):
     if code_point >= 0x80 and code_point < 0xA0:
         # HTML prohibits C1 controls
         # TODO draw some fancy SVG hex inside the square
         return "<svg><rect x=1 y=1 width=14 height=14 stroke=black stroke-width=2 fill=none /></svg>"
+    # Big5's Plane 2 stuff is non-combining, so let's deal with it first,
+    # since it need special treatment in narrow Python.
+    if code_point > 0xFFFF:
+        return code_point_to_ustr(code_point)
     as_str = unichr(code_point)
     if unicodedata.combining(as_str) == 0:
         return as_str
