@@ -1,0 +1,92 @@
+@import 'https://resources.whatwg.org/fonts/faces.css';
+@import 'visualization-colors.css';
+
+/* Any copyright is dedicated to the Public Domain.
+ * http://creativecommons.org/publicdomain/zero/1.0/ */
+
+
+/* Common styling from standard.css */
+h1 {
+  color: #3c790a; /* WHATWG Green */
+}
+
+@media screen {
+  :link, :visited { text-decoration: none; }
+  :link:hover, :visited:hover, :link:focus, :visited:focus { text-decoration: underline; }
+  :link { color: #00C; }
+  :visited { color: #609; }
+  :link:active, :visited:active { color: #C00; }
+}
+
+.note { position: relative; color: green; background: #DDFFDD; font-style: italic; margin-left: 2em; padding-left: 2em; }
+.note::before { content: 'Note'; background: green; color: white; padding: 0.15em 0.25em; font-style: normal; position: absolute; top: -0.2em; left: -1.5em; transform: rotate(-5deg); }
+/* End copypasta from standard.css */
+
+html {
+  font-family: 'Source Sans Pro', 'Noto Naskh Arabic', 'Noto Sans Hebrew', 'Noto Sans Thai', sans-serif;
+}
+
+th, h1, {
+  font-weight: 700;
+}
+
+th {
+  text-align: right;
+  border: 2px solid transparent;
+}
+
+td {
+  text-align: center;
+  border: 2px solid transparent;
+  padding: 0;
+}
+
+thead th {
+  text-align: center;
+}
+
+li {
+  border: 2px solid transparent;
+}
+
+dl, dd, dt {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+dt, dd + dd {
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: .15em;
+}
+
+.astral dd {
+  letter-spacing: normal;
+}
+
+dd {
+  line-height: 1.1;
+  font-size: 18px;
+}
+
+table {
+  table-layout: fixed;
+  border-spacing: 1px;
+  border-collapse: separate;
+}
+
+:lang(ja) {
+  font-family: 'Source Han Sans JP';
+}
+
+:lang(ko) {
+  font-family: 'Source Han Sans KR';
+}
+
+:lang(zh-cn) {
+  font-family: 'Source Han Sans CN';
+}
+
+:lang(zh-tw) {
+  font-family: 'Source Han Sans TW';
+}

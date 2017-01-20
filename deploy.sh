@@ -54,6 +54,8 @@ curl https://api.csswg.org/bikeshed/ -f -F file=@$INPUT_FILE -F md-status=LS-COM
      > $COMMIT_DIR/index.html;
 cp *.txt $COMMIT_DIR/;
 cp *.json $COMMIT_DIR/;
+cp *.css $COMMIT_DIR/;
+python visualize.py $COMMIT_DIR/;
 echo "Commit snapshot output to $WEB_ROOT/$COMMITS_DIR/$SHA"
 echo ""
 
@@ -68,6 +70,8 @@ if [ $BRANCH != "master" ] ; then
          > $BRANCH_DIR/index.html;
     cp *.txt $BRANCH_DIR/;
     cp *.json $BRANCH_DIR/;
+    cp *.css $BRANCH_DIR/;
+    python visualize.py $BRANCH_DIR/;
     echo "Branch snapshot output to $WEB_ROOT/$BRANCHES_DIR/$BRANCH"
 else
     # Living standard, if master
@@ -76,6 +80,8 @@ else
          > $WEB_ROOT/index.html
     cp *.txt $WEB_ROOT/;
     cp *.json $WEB_ROOT/;
+    cp *.css $WEB_ROOT/;
+    python visualize.py $WEB_ROOT/;
     echo "Living standard output to $WEB_ROOT"
 fi
 

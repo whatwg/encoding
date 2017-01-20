@@ -1,0 +1,91 @@
+/* Any copyright is dedicated to the Public Domain.
+ * http://creativecommons.org/publicdomain/zero/1.0/ */
+
+/*
+ * Color scheme from http://mkweb.bcgsc.ca/biovis2012/
+ * for color blindness a11y.
+ */
+
+.visualizationlegend li {
+  padding: 0.3em 0.5em;
+}
+
+.visualizationlegend {
+	padding-bottom: 1em;
+	padding-right: 4.5em;
+}
+
+.unmapped {
+  background-color: #920000;
+  color: white;
+}
+
+.astral {
+  background-color: #6db6fe;
+  color: black;
+}
+
+.mid {
+  background-color: #ffff6d;
+  color: black;
+}
+
+.upper, .byte {
+  background-color: #d4d5db;
+  color: black;
+}
+
+.pua {
+  background-color: #db6d00;
+  color: black;
+}
+
+.mid.contiguous {
+  background-color: #009292;
+  color: black;
+}
+
+.upper.contiguous {
+  background-color: #24fe23;
+  color: black;
+}
+
+.pua.contiguous {
+  background-color: #924900;
+  color: white;
+}
+
+.astral.contiguous {
+  background-color: #480091;
+  color: white;
+}
+
+.duplicate {
+  border-style: solid ;
+  border-color: #920000;
+  color: black;
+}
+
+.compatibility {
+  border-style: dashed;
+  border-color: black;
+}
+
+.duplicate.compatibility {
+  border-style: dashed;
+  border-color: #920000;
+}
+
+.ext {
+  border-style: dotted;
+  border-color: black;
+}
+
+.ext.compatibility {
+  border-style: dotted;
+  border-color: #920000;
+}
+
+.surrogate {
+  background-color: #b4b4b6;
+}
