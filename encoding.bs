@@ -656,20 +656,26 @@ changed, so has the <a>index</a>.
 
 <div class=note id=visualization>
  <p>There is a non-normative visualization for each index other than <a>index gb18030 ranges</a>.
- <a>index jis0208</a> also has an alternative <a>Shift_JIS</a> visualization.
- Additionally, there is visualization of the Basic Multilingual Plane coverage of each index other than <a>index gb18030 ranges</a>.
+ <a>index jis0208</a> also has an alternative <a>Shift_JIS</a> visualization. Additionally, there is
+ visualization of the Basic Multilingual Plane coverage of each index other than
+ <a>index gb18030 ranges</a>.
 
  <p>The legend for the visualizations is:
+
  <ul class=visualizationlegend>
   <li class=unmapped>Unmapped
   <li class=mid>Two bytes in UTF-8
-  <li class="mid contiguous">Two bytes in UTF-8, code point follows immediately the code point of previous pointer
+  <li class="mid contiguous">Two bytes in UTF-8, code point follows immediately the code point of
+  previous pointer
   <li class=upper>Three bytes in UTF-8 (non-PUA)
-  <li class="upper contiguous">Three bytes in UTF-8 (non-PUA), code point follows immediately the code point of previous pointer
+  <li class="upper contiguous">Three bytes in UTF-8 (non-PUA), code point follows immediately the
+  code point of previous pointer
   <li class=pua>Private Use
-  <li class="pua contiguous">Private Use, code point follows immediately the code point of previous pointer
+  <li class="pua contiguous">Private Use, code point follows immediately the code point of previous
+  pointer
   <li class=astral>Four bytes in UTF-8
-  <li class="astral contiguous">Four bytes in UTF-8, code point follows immediately the code point of previous pointer
+  <li class="astral contiguous">Four bytes in UTF-8, code point follows immediately the code point
+  of previous pointer
   <li class=duplicate>Duplicate code point already mapped at an earlier index
   <li class=compatibility>CJK Compatibility Ideograph
   <li class=ext>CJK Unified Ideographs Extension A
@@ -693,11 +699,11 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <td><a href=index-euc-kr.txt>index-euc-kr.txt</a>
   <td><a href=euc-kr.html>index EUC-KR visualization</a>
   <td><a href=euc-kr-bmp.html>index EUC-KR BMP coverage</a>
-  <td>This matches the KS X 1001 standard and the Unified Hangul Code, more
-  commonly known together as Windows Codepage 949. It covers the Hangul Syllables
-  block of Unicode in its entirety. The Hangul block whose top left corner in the visualization
-  is at pointer 9026 is in the Unicode order. Taken separately, the rest of the Hangul syllables
-  in this index are in the Unicode order, too.
+  <td>This matches the KS X 1001 standard and the Unified Hangul Code, more commonly known together
+  as Windows Codepage 949. It covers the Hangul Syllables block of Unicode in its entirety. The
+  Hangul block whose top left corner in the visualization is at pointer 9026 is in the Unicode
+  order. Taken separately, the rest of the Hangul syllables in this index are in the Unicode order,
+  too.
  <tr>
   <td><dfn export>index gb18030</dfn>
   <td><a href=index-gb18030.txt>index-gb18030.txt</a>
@@ -705,8 +711,8 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <td><a href=gb18030-bmp.html>index gb18030 BMP coverage</a>
   <td>This matches the GB18030-2005 standard for code points encoded as two bytes, except for
   0xA3 0xA0 which maps to U+3000 to be compatible with deployed content. This index covers the
-  CJK Unified Ideographs block of Unicode in its entirety. Entries from that block that are
-  above or to the left of (the first) U+3000 in the visualization are in the Unicode order.
+  CJK Unified Ideographs block of Unicode in its entirety. Entries from that block that are above or
+  to the left of (the first) U+3000 in the visualization are in the Unicode order.
   <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=131837
        https://bugs.webkit.org/show_bug.cgi?id=17014
        https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396
