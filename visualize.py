@@ -190,7 +190,7 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
             if byte_rule:
                 (lead_one, lead_two, trail_one, trail_two) = byte_rule
                 lead = row_num + lead_one
-                if lead_two and row_num >= 0x3F:
+                if lead_two and row_num >= 0x1F:
                     lead = row_num + lead_two
                 if dec_row_cell:
                     if lead < 0xA1:
