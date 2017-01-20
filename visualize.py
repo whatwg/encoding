@@ -130,7 +130,7 @@ def format_code_point(code_point):
     if code_point >= 0x80 and code_point < 0xA0:
         # HTML prohibits C1 controls
         # TODO draw some fancy SVG hex inside the square
-        return "<svg><rect x=1 y=1 width=14 height=14 stroke=black stroke-width=2 fill=none /></svg>"
+        return "<svg width=16 height=16><rect x=1 y=1 width=14 height=14 stroke=black stroke-width=2 fill=none /></svg>"
     # Big5's Plane 2 stuff is non-combining, so let's deal with it first,
     # since it need special treatment in narrow Python.
     if code_point > 0xFFFF:
