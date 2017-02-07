@@ -28,6 +28,24 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 spec:infra; type:dfn;
     text:code point
     text:ascii case-insensitive
+spec:streams; type:interface;
+    text:ReadableStream
+    text:WritableStream
+</pre>
+
+<pre class=anchors>
+spec: streams; urlPrefix: https://streams.spec.whatwg.org/
+    type:dfn; text:chunk; url:#chunk
+    type:dfn; text:readable stream; url:#readable-stream
+    type:dfn; text:writable stream; url:#writable-stream
+    type:abstract-op; text:CreateTransformStream; url: #create-transform-stream
+    type:abstract-op; text:TransformStreamDefaultControllerEnqueue; url: #transform-stream-default-controller-enqueue
+    type:interface; text:TransformStream; url: #ts-class
+spec: ECMASCRIPT; urlPrefix: https://tc39.github.io/ecma262/
+    text: type; url: #sec-ecmascript-data-types-and-values; type: dfn
+    text: IsDetachedBuffer; url: #sec-isdetachedbuffer; type: abstract-op
+    text: IsSharedArrayBuffer; url: #sec-issharedarraybuffer; type: abstract-op
+    text: internal slot; url: #sec-object-internal-methods-and-internal-slots; type: dfn
 </pre>
 
 
@@ -1066,6 +1084,8 @@ interface TextDecoder {
   readonly attribute DOMString encoding;
   readonly attribute boolean fatal;
   readonly attribute boolean ignoreBOM;
+  readonly attribute ReadableStream readable;
+  readonly attribute WritableStream writable;
   USVString decode(optional BufferSource input, optional TextDecodeOptions options);
 };</pre>
 
@@ -1073,8 +1093,9 @@ interface TextDecoder {
 <dfn for=TextDecoder>decoder</dfn>, <dfn for=TextDecoder>stream</dfn>,
 <dfn for=TextDecoder>ignore BOM flag</dfn> (initially unset),
 <dfn for=TextDecoder>BOM seen flag</dfn> (initially unset),
-<dfn for=TextDecoder>error mode</dfn> (initially "<code>replacement</code>"), and
-<dfn for=TextDecoder>do not flush flag</dfn> (initially unset).
+<dfn for=TextDecoder>error mode</dfn> (initially "<code>replacement</code>"),
+<dfn for=TextDecoder>do not flush flag</dfn> (initially unset), and
+<dfn for=TextDecoder>transform</dfn> (a {{TransformStream}} object).
 
 <p>A {{TextDecoder}} object also has an associated
 <dfn id=concept-td-serialize for=TextDecoder>serialize stream</dfn> algorithm, that given a
@@ -1135,6 +1156,31 @@ control.
  <dt><code><var>decoder</var> . <a attribute for=TextDecoder>ignoreBOM</a></code>
  <dd><p>Returns true if <a for=TextDecoder>ignore BOM flag</a> is set, and false otherwise.
 
+ <dt><code><var>decoder</var> . <a attribute for=TextDecoder>readable</a></code>
+ <dd>
+  <p>Returns a <a>readable stream</a> whose <a>chunks</a> are strings resulting from running <a
+  for=TextDecoder>encoding</a>'s <a for=/>decoder</a> on the chunks written to
+  {{TextDecoder/writable}}.
+
+ <dt><code><var>decoder</var> . <a attribute for=TextDecoder>writable</a></code>
+ <dd>
+  <p>Returns a <a>writable stream</a> which accepts {{BufferSource}} chunks and runs them through <a
+  for=TextDecoder>encoding</a>'s <a for=/>decoder</a> before making them available to
+  {{TextDecoder/readable}}.
+
+  <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a
+  {{ReadableStream}} source.
+
+<pre class=example id=example-textdecode-writable>
+var decoder = new TextDecoder(encoding);
+byteReadable
+  .pipeThrough(decoder)
+  .pipeTo(textWritable);</pre>
+
+  <p>If the <a for=TextDecoder>error mode</a> is "<code>fatal</code>" and
+  <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>, both {{TextDecoder/readable}}
+  and {{TextDecoder/writable}} will be errored with a {{TypeError}}.
+
  <dt><code><var>decoder</var> . <a method for=TextDecoder lt=decode()>decode([<var>input</var> [, <var>options</var>]])</a></code>
  <dd>
   <p>Returns the result of running <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>. The
@@ -1174,6 +1220,20 @@ constructor, when invoked, must run these steps:
  <li><p>If <var>options</var>'s <code>ignoreBOM</code> member is true, then set <var>dec</var>'s
  <a for=TextDecoder>ignore BOM flag</a>.
 
+ <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
+
+ <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
+ and runs the <a>decode and enqueue a chunk</a> algorithm with <var>dec</var> and <var>chunk</var>.
+
+ <li><p>Let <var>flushAlgorithm</var> be an algorithm which takes no arguments and runs the <a>flush
+ and enqueue</a> algorithm with <var>dec</var>.
+
+ <li><p>Let <var>transform</var> be the result of calling <a
+ abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
+ <var>flushAlgorithm</var>).
+
+ <li><p>Set <var>dec</var>'s <a for=TextDecoder>transform</a> to <var>transform</var>.
+
  <li><p>Return <var>dec</var>.
 </ol>
 
@@ -1186,10 +1246,31 @@ if <a for=TextDecoder>error mode</a> is "<code>fatal</code>", and false otherwis
 <p>The <dfn attribute for=TextDecoder><code>ignoreBOM</code></dfn> attribute's getter must return
 true if <a for=TextDecoder>ignore BOM flag</a> is set, and false otherwise.
 
+<p>The <dfn attribute for=TextDecoder><code>readable</code></dfn> attribute's getter must return the
+contents of <a for=TextDecoder>transform</a>'s \[[readable]] <a>internal slot</a>.
+
+<p>The <dfn attribute for=TextDecoder><code>writable</code></dfn> attribute's getter must return the
+contents of <a for=TextDecoder>transform</a>'s \[[writable]] <a>internal slot</a>.
+
 <p>The <dfn method for=TextDecoder><code>decode(<var>input</var>, <var>options</var>)</code></dfn>
 method, when invoked, must run these steps:
 
 <ol>
+ <li><p>Let <var>readable</var> be <a for=TextDecoder>transform</a>'s \[[readable]] <a>internal
+ slot</a>.
+
+ <li><p>If <a abstract-op>IsReadableStreamLocked</a>(<var>readable</var>) is true, throw a
+ {{TypeError}} exception.
+
+ <li><p>Let <var>writable</var> be <a for=TextDecoder>transform</a>'s \[[writable]] <a>internal
+ slot</a>.
+
+ <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, throw a
+ {{TypeError}} exception.
+
+ <p class="note">These steps ensure that the state of the <a for=/>decoder</a> is not simultaneously modified by
+ the Streams API and this method.
+
  <li><p>If the <a for=TextDecoder>do not flush flag</a> is unset, set <a for=TextDecoder>decoder</a>
  to a new <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>, set <a for=TextDecoder>stream</a>
  to a new <a for=/>stream</a>, and unset the <a for=TextDecoder>BOM seen flag</a>.
@@ -1241,6 +1322,88 @@ method, when invoked, must run these steps:
   </ol>
 </ol>
 
+<p>The <dfn id=concept-td-decode-and-enqueue>decode and enqueue a chunk</dfn> algorithm, given a
+{{TextDecoder}} <var>dec</var> and a <var>chunk</var>, runs these steps:
+
+<ol>
+ <li><p>If the <a>type</a> of of <var>chunk</var> is not Object, or <var>chunk</var> does not have
+ an \[[ArrayBufferData]] <a>internal slot</a>, or <a
+ abstract-op>IsDetachedBuffer</a>(<var>chunk</var>) is true, or <a
+ abstract-op>IsSharedArrayBuffer</a>(<var>chunk</var>) is true then return <a>a promise rejected
+ with</a> a {{TypeError}}.
+
+ <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, set
+ <var>dec's</var> <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <var>dec</var>'s
+ <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new <a
+ for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
+
+ <li><p>Set <var>dec</var>'s <a for=TextDecoder>do not flush flag</a>.
+
+ <li><p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>chunk</var> to
+ <var>dec</var>'s <a for=TextDecoder>stream</a>.
+
+ <li><p>Let <var>controller</var> be <var>dec</var>'s <a for=TextDecoder>transform</a>'s
+ \[[transformStreamController]] <a>internal slot</a>.
+
+ <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+
+ <li>
+  <p>While true, run these substeps:
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>dec</var>'s <a
+   for=TextDecoder>stream</a>.
+
+   <li>
+    <p>If <var>token</var> is <a>end-of-stream</a>, run these substeps:
+    <ol>
+     <li><p>Let <var>outputChunk</var> be <var>output</var>, <a lt="serialize stream">serialized</a>.
+
+     <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>).
+
+     <li><p>Return <a>a promise resolved with</a> undefined.
+    </ol>
+
+   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
+   <var>dec</var>'s <a for=TextDecoder>decoder</a>, <var>dec</var>'s <a for=TextDecoder>stream</a>,
+   <var>output</var>, and <var>dec's</var> <a for=TextDecoder>error mode</a>.
+
+   <li><p>If <var>result</var> is <a>error</a>, return <a>a promise rejected with</a> a
+   {{TypeError}} exception.
+  </ol>
+</ol>
+
+<p>The <dfn id=concept-td-flush-and-enqueue>flush and enqueue</dfn> algorithm, which handles the end
+of data from the input {{ReadableStream}}, given a {{TextDecoder}} <var>dec</var>, runs these steps:
+
+<ol>
+ <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, set
+ <var>dec's</var> <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <var>dec</var>'s
+ <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new <a
+ for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
+
+ <li><p>Unset <var>dec</var>'s <a for=TextDecoder>do not flush flag</a>.
+
+ <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+
+ <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-stream</a> for
+ <var>dec</var>'s <a for=TextDecoder>decoder</a> and <var>dec</var>'s <a for=TextDecoder>stream</a>,
+ <var>output</var>, and <var>dec</var>'s <a for=TextDecoder>error mode</a>.
+
+ <li><p>If <var>result</var> is <a>finished</a>, run these substeps:
+ <ol>
+  <li><p>Let <var>outputChunk</var> be <var>output</var>, <a lt="serialize stream">serialized</a>.
+
+  <li><p>Let <var>controller</var> be <var>dec</var>'s <a for=TextDecoder>transform</a>'s
+  \[[transformStreamController]] <a>internal slot</a>.
+
+  <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>).
+
+  <li><p>Return <a>a promise resolved with</a> undefined.
+ </ol>
+
+ <li><p>Otherwise, return <a>a promise rejected with</a> a {{TypeError}}.
+</ol>
 
 <h3 id=interface-textencoder>Interface {{TextEncoder}}</h3>
 
@@ -1249,10 +1412,13 @@ method, when invoked, must run these steps:
  Exposed=(Window,Worker)]
 interface TextEncoder {
   readonly attribute DOMString encoding;
+  readonly attribute ReadableStream readable;
+  readonly attribute WritableStream writable;
   [NewObject] Uint8Array encode(optional USVString input = "");
 };</pre>
 
-<p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn>.
+<p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn> and <dfn
+for=TextEncoder>transform</dfn> (a {{TransformStream}} object).
 
 <p class="note no-backref">A {{TextEncoder}} object offers no <var>label</var> argument as it only
 supports <a>UTF-8</a>. It also offers no <code>stream</code> option as no <a for=/>encoder</a>
@@ -1267,6 +1433,23 @@ requires buffering of scalar values.
  <dt><code><var>encoder</var> . <a attribute for=TextEncoder>encoding</a></code>
  <dd><p>Returns "<code>utf-8</code>".
 
+ <dt><code><var>encoder</var> . <a attribute for=TextEncoder>readable</a></code>
+ <dd>
+  <p>Returns a <a>readable stream</a> whose <a>chunks</a> are {{Uint8Array}}s resulting from running
+  <a>UTF-8</a>'s <a for=/>encoder</a> on the chunks written to {{TextEncoder/writable}}.
+
+ <dt><code><var>encoder</var> . <a attribute for=TextEncoder>writable</a></code>
+ <dd>
+  <p>Returns a <a>writable stream</a> which accepts string chunks and runs them through
+  <a>UTF-8</a>'s <a for=/>encoder</a> before making them available to {{TextEncoder/readable}}.
+
+  <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a {{ReadableStream}} source.
+
+<pre class=example id=example-textencode-writable>
+textReadable
+  .pipeThrough(new TextEncoder())
+  .pipeTo(byteWritable);</pre>
+
  <dt><code><var>encoder</var> . <a method for=TextEncoder lt=encode()>encode([<var>input</var> = ""])</a></code>
  <dd><p>Returns the result of running <a>UTF-8</a>'s <a for=/>encoder</a>.
 </dl>
@@ -1279,16 +1462,51 @@ constructor, when invoked, must run these steps:
 
  <li><p>Set <var>enc</var>'s <a for=TextEncoder>encoder</a> to <a>UTF-8</a>'s <a for=/>encoder</a>.
 
+ <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
+
+ <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
+ and runs the <a>encode and enqueue a chunk</a> algorithm with <var>enc</var> and <var>chunk</var>.
+
+ <li><p>Let <var>flushAlgorithm</var> be an algorithm which returns <a>a promise resolved with</a>
+ undefined.
+
+ <li><p>Let <var>transform</var> be the result of calling <a
+ abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
+ <var>flushAlgorithm</var>).
+
+ <li><p>Set <var>enc</var>'s <a for=TextEncoder>transform</a> to <var>transform</var>
+
  <li><p>Return <var>enc</var>.
 </ol>
 
 <p>The <dfn attribute for=TextEncoder><code>encoding</code></dfn> attribute's getter must return
 "<code>utf-8</code>".
 
+<p>The <dfn attribute for=TextEncoder><code>readable</code></dfn> attribute's getter must return the
+contents of <a for=TextEncoder>transform</a>'s \[[readable]] <a>internal slot</a>.
+
+<p>The <dfn attribute for=TextEncoder><code>writable</code></dfn> attribute's getter must return the
+contents of <a for=TextEncoder>transform</a>'s \[[writable]] <a>internal slot</a>.
+
 <p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method, when invoked,
 must run these steps:
 
 <ol>
+ <li><p>Let <var>readable</var> be <a for=TextEncoder>transform</a>'s \[[readable]] <a>internal
+ slot</a>.
+
+ <li><p>If <a abstract-op>IsReadableStreamLocked</a>(<var>readable</var>) is true, throw a
+ {{TypeError}} exception.
+
+ <li><p>Let <var>writable</var> be <a for=TextEncoder>transform</a>'s \[[writable]] <a>internal
+ slot</a>.
+
+ <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, throw a
+ {{TypeError}} exception.
+
+ <p class="note">These steps are for consistent behaviour with the {{TextDecoder}} <a method
+ for=TextDecoder><code>decode(<var>input</var>)</code></a> method.
+
  <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
 
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
@@ -1312,6 +1530,48 @@ must run these steps:
 
     <p class=note><a>UTF-8</a> cannot return <a>error</a>.
   </ol>
+</ol>
+
+<p>The <dfn id=concept-td-encode-and-enqueue>encode and enqueue a chunk</dfn> algorithm, given a
+{{TextEncoder}} <var>dec</var> and <var>chunk</var>, runs these steps:
+
+<ol>
+ <li><p>Let <var>input</var> be the result of <a lt="converted to an IDL value">converting</a>
+ <var>chunk</var> to a {{USVString}}. If this throws an exception, return a promise rejected with
+ that exception.
+
+ <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
+
+ <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+
+ <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
+
+ <li><p>Let <var>controller</var> be <var>dec</var>'s <a for=TextEncoder>transform</a>'s
+ \[[transformStreamController]] <a>internal slot</a>.
+
+ <li><p>While true, run these substeps:
+
+ <!--
+      TODO(ricea): This algorithm cannot deal with having a surrogate pair split between two
+      chunks. This is consistent with the encode() method but arguably is a worse limitation in the
+      streaming case.
+ -->
+
+ <ol>
+  <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>input</var>.
+
+  <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
+  <var>encoder</var>, <var>input</var>, <var>output</var>.
+
+  <li><p>If <var>result</var> is <a>finished</a>, run these substeps:
+  <ol>
+   <li><p>Convert <var>output</var> into a byte sequence.
+
+   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>output</var>).
+
+   <li><p>Return <a>a promise resolved with</a> undefined.
+  </ol>
+ </ol>
 </ol>
 
 
