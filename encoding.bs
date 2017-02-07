@@ -937,7 +937,7 @@ this API.
  <a>UTF-8</a> encoded string data, the length of the second string (as
  a {{Uint32Array}}), the string data,
  and so on.
- <pre class=lang-javascript><code>
+ <pre><code class=lang-javascript>
 function encodeArrayOfStrings(strings) {
   var encoder, encoded, len, bytes, view, offset;
 
@@ -971,7 +971,7 @@ function encodeArrayOfStrings(strings) {
  format produced by the previous example, or an equivalent algorithm for encodings other than
  <a>UTF-8</a>, back into an array of strings.
 
- <pre class=lang-javascript><code>
+ <pre><code class=lang-javascript>
 function decodeArrayOfStrings(buffer, encoding) {
   var decoder, view, offset, num_strings, strings, len;
 
@@ -1090,7 +1090,7 @@ control.
   stream. If the invocation without <var>options</var>'s <code>stream</code> (or set to false) has
   no <var>input</var>, it's clearest to omit both arguments.
 
-  <pre class="example lang-javascript" id=example-end-of-stream><code>
+  <pre class=example id=example-end-of-stream><code class=lang-javascript>
 var string = "", decoder = new TextDecoder(encoding), buffer;
 while(buffer = next_chunk()) {
   string += decoder.decode(buffer, {stream:true});
