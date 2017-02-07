@@ -981,7 +981,8 @@ this API.
  <a>UTF-8</a> encoded string data, the length of the second string (as
  a {{Uint32Array}}), the string data,
  and so on.
- <pre><code>function encodeArrayOfStrings(strings) {
+ <pre><code class=lang-javascript>
+function encodeArrayOfStrings(strings) {
   var encoder, encoded, len, bytes, view, offset;
 
   encoder = new TextEncoder();
@@ -1014,7 +1015,8 @@ this API.
  format produced by the previous example, or an equivalent algorithm for encodings other than
  <a>UTF-8</a>, back into an array of strings.
 
- <pre><code>function decodeArrayOfStrings(buffer, encoding) {
+ <pre><code class=lang-javascript>
+function decodeArrayOfStrings(buffer, encoding) {
   var decoder, view, offset, num_strings, strings, len;
 
   decoder = new TextDecoder(encoding);
@@ -1038,7 +1040,8 @@ this API.
 
 <h3 id=interface-textdecoder>Interface {{TextDecoder}}</h3>
 
-<pre class=idl>dictionary TextDecoderOptions {
+<pre class=idl>
+dictionary TextDecoderOptions {
   boolean fatal = false;
   boolean ignoreBOM = false;
 };
@@ -1131,11 +1134,12 @@ control.
   stream. If the invocation without <var>options</var>'s <code>stream</code> (or set to false) has
   no <var>input</var>, it's clearest to omit both arguments.
 
-  <pre class=example id=example-end-of-stream>var string = "", decoder = TextDecoder(encoding), buffer;
+  <pre class=example id=example-end-of-stream><code class=lang-javascript>
+var string = "", decoder = new TextDecoder(encoding), buffer;
 while(buffer = next_chunk()) {
   string += decoder.decode(buffer, {stream:true});
 }
-string += decoder.decode(); // end-of-stream</pre>
+string += decoder.decode(); // end-of-stream</code></pre>
 
   <p>If the <a for=TextDecoder>error mode</a> is "<code>fatal</code>" and
   <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>, <a>throws</a> a
@@ -1226,7 +1230,8 @@ method, when invoked, must run these steps:
 
 <h3 id=interface-textencoder>Interface {{TextEncoder}}</h3>
 
-<pre class=idl>[Constructor,
+<pre class=idl>
+[Constructor,
  Exposed=(Window,Worker)]
 interface TextEncoder {
   readonly attribute DOMString encoding;
