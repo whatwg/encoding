@@ -14,7 +14,7 @@ Markup Shorthands: css off
 !Commits: <a href=https://github.com/whatwg/encoding/commits>GitHub whatwg/encoding/commits</a>
 !Commits: [SNAPSHOT-LINK]
 !Commits: <a href=https://twitter.com/encodings>@encodings</a>
-!Tests: <a href=https://github.com/w3c/web-platform-tests/tree/master/encoding>web-platform-tests encoding/</a> (<a href=https://github.com/w3c/web-platform-tests/labels/encodingh>ongoing work</a>)
+!Tests: <a href=https://github.com/w3c/web-platform-tests/tree/master/encoding>web-platform-tests encoding/</a> (<a href=https://github.com/w3c/web-platform-tests/labels/encoding>ongoing work</a>)
 !Translation (non-normative): <span title=Japanese><a href=https://triple-underscore.github.io/Encoding-ja.html lang=ja hreflang=ja rel=alternate>日本語</a></span>
 Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeoptions textdecodeoptions
 </pre>
