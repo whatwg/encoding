@@ -1499,7 +1499,7 @@ unique <a>index</a>.
  <tr><td><dfn export>ISO-8859-5</dfn><td><a href=index-iso-8859-5.txt>index-iso-8859-5.txt</a><td><a href=iso-8859-5.html>index ISO-8859-5 visualization</a><td><a href=iso-8859-5-bmp.html>index ISO-8859-5 BMP coverage</a>
  <tr><td><dfn export>ISO-8859-6</dfn><td><a href=index-iso-8859-6.txt>index-iso-8859-6.txt</a><td><a href=iso-8859-6.html>index ISO-8859-6 visualization</a><td><a href=iso-8859-6-bmp.html>index ISO-8859-6 BMP coverage</a>
  <tr><td><dfn export>ISO-8859-7</dfn><td><a href=index-iso-8859-7.txt>index-iso-8859-7.txt</a><td><a href=iso-8859-7.html>index ISO-8859-7 visualization</a><td><a href=iso-8859-7-bmp.html>index ISO-8859-7 BMP coverage</a>
- <tr><td><dfn export>ISO-8859-8</dfn><td rowspan=2><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a><td><a href=iso-8859-8.html>index ISO-8859-8 visualization</a><td><a href=iso-8859-8-bmp.html>index ISO-8859-8 BMP coverage</a>
+ <tr><td><dfn export>ISO-8859-8</dfn><td rowspan=2><a href=index-iso-8859-8.txt>index-iso-8859-8.txt</a><td rowspan="2"><a href=iso-8859-8.html>index ISO-8859-8 visualization</a><td rowspan="2"><a href=iso-8859-8-bmp.html>index ISO-8859-8 BMP coverage</a>
  <tr><td><dfn export>ISO-8859-8-I</dfn>
  <tr><td><dfn export>ISO-8859-10</dfn><td><a href=index-iso-8859-10.txt>index-iso-8859-10.txt</a><td><a href=iso-8859-10.html>index ISO-8859-10 visualization</a><td><a href=iso-8859-10-bmp.html>index ISO-8859-10 BMP coverage</a>
  <tr><td><dfn export>ISO-8859-13</dfn><td><a href=index-iso-8859-13.txt>index-iso-8859-13.txt</a><td><a href=iso-8859-13.html>index ISO-8859-13 visualization</a><td><a href=iso-8859-13-bmp.html>index ISO-8859-13 BMP coverage</a>
