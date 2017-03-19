@@ -101,10 +101,9 @@ many reasons that is now the mandatory encoding for all things.
 <p>Hexadecimal numbers are prefixed with "0x".
 
 <p>In equations, all numbers are integers, addition is represented by "+", subtraction by "&minus;",
-multiplication by "×", division by "/", calculating the remainder of a division (also known as
-modulo) by "%", logical left shifts by "&lt;&lt;", logical right shifts by ">>", bitwise AND by
-"&amp;", and bitwise OR by "|". floor(<var>x</var>) is the largest integer not greater than
-<var>x</var>.
+multiplication by "×", integer division by "/" (returns the quotient), modulo by "%" (returns the
+remainder of an integer division), logical left shifts by "&lt;&lt;", logical right shifts by ">>",
+bitwise AND by "&amp;", and bitwise OR by "|".
 
 <p>For logical right shifts operands must have at least twenty-one bits precision.
 
@@ -1731,7 +1730,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
   <p>If <var>pointer</var> is not null, run these substeps:
 
   <ol>
-   <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 190) + 0x81.
+   <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
 
    <li><p>Let <var>trail</var> be <var>pointer</var> % 190.
 
@@ -1748,15 +1747,15 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <li><p>Set <var>pointer</var> to the
  <a>index gb18030 ranges pointer</a> for <var>code point</var>.
 
- <li><p>Let <var>byte1</var> be floor(<var>pointer</var> / (10 × 126 × 10)).
+ <li><p>Let <var>byte1</var> be <var>pointer</var> / (10 × 126 × 10).
 
  <li><p>Set <var>pointer</var> to <var>pointer</var> % (10 × 126 × 10).
 
- <li><p>Let <var>byte2</var> be floor(<var>pointer</var> / (10 × 126)).
+ <li><p>Let <var>byte2</var> be <var>pointer</var> / (10 × 126).
 
  <li><p>Set <var>pointer</var> to <var>pointer</var> % (10 × 126).
 
- <li><p>Let <var>byte3</var> be floor(<var>pointer</var> / 10).
+ <li><p>Let <var>byte3</var> be <var>pointer</var> / 10.
 
  <li><p>Let <var>byte4</var> be <var>pointer</var> % 10.
 
@@ -1864,7 +1863,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <li><p>If <var>pointer</var> is null, return <a>error</a> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 157) + 0x81.
+ <li><p>Let <var>lead</var> be <var>pointer</var> / 157 + 0x81.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 157.
 
@@ -1975,7 +1974,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <li><p>If <var>pointer</var> is null, return <a>error</a> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 94) + 0xA1.
+ <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0xA1.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0xA1.
 
@@ -2288,7 +2287,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <a lt="iso 2022 jp encoder jis0208">jis0208</a>, and return three bytes
  0x1B 0x24 0x42.
 
- <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 94) + 0x21.
+ <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0x21.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0x21.
 
@@ -2395,7 +2394,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <li><p>If <var>pointer</var> is null, return <a>error</a> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 188).
+ <li><p>Let <var>lead</var> be <var>pointer</var> / 188.
 
  <li><p>Let <var>lead offset</var> be 0x81, if <var>lead</var> is
  less than 0x1F, and 0xC1 otherwise.
@@ -2484,7 +2483,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <li><p>If <var>pointer</var> is null, return <a>error</a> with
  <var>code point</var>.
 
- <li><p>Let <var>lead</var> be floor(<var>pointer</var> / 190) + 0x81.
+ <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 190 + 0x41.
 
