@@ -1190,9 +1190,14 @@ method, when invoked, must run these steps:
  <a for=TextDecoder>do not flush flag</a>, and unset the <a for=TextDecoder>do not flush flag</a>
  otherwise.
 
- <li><p>If <var>input</var> is given, <a>push</a> a
- <a lt="get a copy of the buffer source">copy of</a>
- <var>input</var> to <a for=TextDecoder>stream</a>.
+ <li>
+  <p>If <var>input</var> is given, then <a>push</a> a
+  <a lt="get a copy of the buffer source">copy of</a> <var>input</var> to
+  <a for=TextDecoder>stream</a>.
+
+  <p class=note>Implementations are strongly encouraged to use an implementation strategy that
+  avoids this copy. When doing so they will have to make sure that changes to <var>input</var> do
+  not affect future calls to <a method><code>decode()</code></a>.
 
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
