@@ -1526,7 +1526,7 @@ unique <a>index</a>.
 distinct <a for=/>encoding</a> <a for=encoding>names</a>, because
 <a>ISO-8859-8</a> has influence on the layout direction. And although
 historically this might have been the case for <a>ISO-8859-6</a> and
-"ISO-8859-6-i" as well, that is no longer true.
+"ISO-8859-6-I" as well, that is no longer true.
 <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=19505 -->
 
 <h3 id=single-byte-decoder dfn export>single-byte decoder</h3>
