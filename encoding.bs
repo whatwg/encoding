@@ -2700,6 +2700,10 @@ issues. Browsers also should disable this feature if the resource was decoded us
   byte in <a>gb18030</a> is identical.
 </ol>
 
+<p>The <a>ISO-2022-JP encoder</a> needs <a>ISO-2022-JP encoder state</a> as additional state, but
+other than that, none of the <a for=/>encoders</a> for <a for=/>encodings</a> in this standard
+require additional state or buffers.
+
 
 
 <h2 class=no-num id=acknowledgments>Acknowledgments</h2>
