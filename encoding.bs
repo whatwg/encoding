@@ -7,7 +7,7 @@ Status: LS
 No Editor: true
 Abstract: The Encoding Standard defines encodings and their JavaScript API.
 Logo: https://resources.whatwg.org/logo-encoding.svg
-Boilerplate: omit feedback-header, omit conformance, omit index, omit idl-index
+Boilerplate: omit feedback-header, omit conformance, omit idl-index
 Markup Shorthands: css off
 !Participate: <a href=https://github.com/whatwg/encoding>GitHub whatwg/encoding</a> (<a href=https://github.com/whatwg/encoding/issues/new>file an issue</a>, <a href=https://github.com/whatwg/encoding/issues>open issues</a>)
 !Participate: <a href=https://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a>
@@ -123,7 +123,7 @@ or <a>code point</a>.
 the first token in the stream must be returned and subsequently removed, and
 <a>end-of-stream</a> must be returned otherwise.
 <!-- this means read is blocking on e.g. networking activity;
-     SimonSapin thinks this is fine, curse him if not -->
+     SimonSapin thinks this is fine, blame him if not -->
 
 <p>When one or more <a>tokens</a> are
 <dfn id=concept-stream-prepend for=stream>prepended</dfn> to a
@@ -741,11 +741,11 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <td>This is the JIS X 0212 standard. It is only used by the <a>EUC-JP decoder</a>
   due to lack of widespread support elsewhere.
   <!--
-   No JIX X 0212 euc-jp encoder support:
+   No JIX X 0212 EUC-JP encoder support:
      https://bugzilla.mozilla.org/show_bug.cgi?id=600715
      https://code.google.com/p/chromium/issues/detail?id=78847
 
-   No JIX X 0212 iso-2022-jp support:
+   No JIX X 0212 ISO-2022-JP support:
      https://www.w3.org/Bugs/Public/show_bug.cgi?id=26885
   -->
 </table>
@@ -1530,7 +1530,7 @@ unique <a>index</a>.
 distinct <a for=/>encoding</a> <a for=encoding>names</a>, because
 <a>ISO-8859-8</a> has influence on the layout direction. And although
 historically this might have been the case for <a>ISO-8859-6</a> and
-"iso-8859-6-i" as well, that is no longer true.
+"ISO-8859-6-I" as well, that is no longer true.
 <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=19505 -->
 
 <h3 id=single-byte-decoder dfn export>single-byte decoder</h3>
@@ -1986,17 +1986,17 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <h3 id=iso-2022-jp dfn export>ISO-2022-JP</h3>
 <!--
  https://tools.ietf.org/html/rfc1468
- https://tools.ietf.org/html/rfc2237 (iso-2022-jp-1; not used)
- "ESC ) I" is from iso-2022-jp-3 reportedly
+ https://tools.ietf.org/html/rfc2237 (ISO-2022-JP-1; not used)
+ "ESC ) I" is from ISO-2022-JP-3 reportedly
 -->
 
 <h4 id=iso-2022-jp-decoder dfn export>ISO-2022-JP decoder</h4>
 
 <p><a>ISO-2022-JP</a>'s <a for=/>decoder</a> has an associated
 <dfn>ISO-2022-JP decoder state</dfn> (initially
-<a lt="iso 2022 jp decoder ASCII">ASCII</a>),
+<a lt="ISO-2022-JP decoder ASCII">ASCII</a>),
 <dfn>ISO-2022-JP decoder output state</dfn> (initially
-<a lt="iso 2022 jp decoder ASCII">ASCII</a>),
+<a lt="ISO-2022-JP decoder ASCII">ASCII</a>),
 <dfn>ISO-2022-JP lead</dfn> (initially 0x00), and
 <dfn>ISO-2022-JP output flag</dfn> (initially unset).
 
@@ -2005,14 +2005,14 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <a>ISO-2022-JP decoder state</a>:
 
 <dl class=switch>
- <dt><dfn lt="iso 2022 jp decoder ASCII">ASCII</dfn>
+ <dt><dfn lt="ISO-2022-JP decoder ASCII">ASCII</dfn>
  <dd>
   <p>Based on <var>byte</var>:
 
   <dl class=switch>
    <dt>0x1B
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
-   <a lt="iso 2022 jp decoder escape start">escape start</a> and return
+   <a lt="ISO-2022-JP decoder escape start">escape start</a> and return
    <a>continue</a>.
 
    <dt>0x00 to 0x7F, excluding 0x0E, 0x0F, and 0x1B
@@ -2026,14 +2026,14 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <dd><p>Unset the <a>ISO-2022-JP output flag</a> and return <a>error</a>.
   </dl>
 
- <dt><dfn lt="iso 2022 jp decoder Roman">Roman</dfn>
+ <dt><dfn lt="ISO-2022-JP decoder Roman">Roman</dfn>
  <dd>
   <p>Based on <var>byte</var>:
 
   <dl class=switch>
    <dt>0x1B
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
-   <a lt="iso 2022 jp decoder escape start">escape start</a> and return
+   <a lt="ISO-2022-JP decoder escape start">escape start</a> and return
    <a>continue</a>.
 
    <dt>0x5C
@@ -2053,19 +2053,19 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <dd><p>Unset the <a>ISO-2022-JP output flag</a> and return <a>error</a>.
   </dl>
 
- <dt><dfn lt="iso 2022 jp decoder Katakana">Katakana</dfn>
+ <dt><dfn lt="ISO-2022-JP decoder Katakana">Katakana</dfn>
  <dd>
   <p>Based on <var>byte</var>:
   <dl class=switch>
    <dt>0x1B
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
-   <a lt="iso 2022 jp decoder escape start">escape start</a> and return
+   <a lt="ISO-2022-JP decoder escape start">escape start</a> and return
    <a>continue</a>.
 
    <dt>0x21 to 0x5F
    <dd><p>Unset the <a>ISO-2022-JP output flag</a> and return a code point whose
    value is 0xFF61 &minus; 0x21 + <var>byte</var>.
-   <!-- katakana; subtraction is done first to avoid upsetting compilers -->
+   <!-- Katakana; subtraction is done first to avoid upsetting compilers -->
 
    <dt><a>end-of-stream</a>
    <dd><p>Return <a>finished</a>.
@@ -2074,20 +2074,20 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <dd><p>Unset the <a>ISO-2022-JP output flag</a> and return <a>error</a>.
   </dl>
 
- <dt><dfn lt="iso 2022 jp decoder lead byte">Lead byte</dfn>
+ <dt><dfn lt="ISO-2022-JP decoder lead byte">Lead byte</dfn>
  <dd>
   <p>Based on <var>byte</var>:
   <dl class=switch>
    <dt>0x1B
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
-   <a lt="iso 2022 jp decoder escape start">escape start</a> and return
+   <a lt="ISO-2022-JP decoder escape start">escape start</a> and return
    <a>continue</a>.
 
    <dt>0x21 to 0x7E
    <dd><p>Unset the <a>ISO-2022-JP output flag</a>, set
    <a>ISO-2022-JP lead</a> to <var>byte</var>,
    <a>ISO-2022-JP decoder state</a> to
-   <a lt="iso 2022 jp decoder trail byte">trail byte</a>, and return
+   <a lt="ISO-2022-JP decoder trail byte">trail byte</a>, and return
    <a>continue</a>.
 
    <dt><a>end-of-stream</a>
@@ -2097,21 +2097,21 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <dd><p>Unset the <a>ISO-2022-JP output flag</a> and return <a>error</a>.
   </dl>
 
- <dt><dfn lt="iso 2022 jp decoder trail byte">Trail byte</dfn>
+ <dt><dfn lt="ISO-2022-JP decoder trail byte">Trail byte</dfn>
  <dd>
   <p>Based on <var>byte</var>:
   <dl class=switch>
    <dt>0x1B
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
-   <a lt="iso 2022 jp decoder escape start">escape start</a> and return
+   <a lt="ISO-2022-JP decoder escape start">escape start</a> and return
    <a>error</a>.
-   <!-- iso-2022-jp decoder output state is still lead byte -->
+   <!-- ISO-2022-JP decoder output state is still lead byte -->
 
    <dt>0x21 to 0x7E
    <dd>
     <ol>
      <li><p>Set the <a>ISO-2022-JP decoder state</a> to
-     <a lt="iso 2022 jp decoder lead byte">lead byte</a>.
+     <a lt="ISO-2022-JP decoder lead byte">lead byte</a>.
 
      <li><p>Let <var>pointer</var> be
      (<a>ISO-2022-JP lead</a> &minus; 0x21) × 94 + <var>byte</var> &minus; 0x21.
@@ -2126,24 +2126,24 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
    <dt><a>end-of-stream</a>
    <dd><p>Set the <a>ISO-2022-JP decoder state</a> to
-   <a lt="iso 2022 jp decoder lead byte">lead byte</a>,
+   <a lt="ISO-2022-JP decoder lead byte">lead byte</a>,
    <a>prepend</a> <var>byte</var> to
    <var>stream</var>, and return <a>error</a>.
 
    <dt>Otherwise
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
-   <a lt="iso 2022 jp decoder lead byte">lead byte</a> and return
+   <a lt="ISO-2022-JP decoder lead byte">lead byte</a> and return
    <a>error</a>.
-   <!-- iso-2022-jp decoder output state is still lead byte -->
+   <!-- ISO-2022-JP decoder output state is still lead byte -->
   </dl>
 
- <dt><dfn lt="iso 2022 jp decoder escape start">Escape start</dfn>
+ <dt><dfn lt="ISO-2022-JP decoder escape start">Escape start</dfn>
  <dd>
   <ol>
    <li><p>If <var>byte</var> is either <!--$-->0x24 or <!--(-->0x28, set
    <a>ISO-2022-JP lead</a> to <var>byte</var>,
    <a>ISO-2022-JP decoder state</a> to
-   <a lt="iso 2022 jp decoder escape">escape</a>, and return
+   <a lt="ISO-2022-JP decoder escape">escape</a>, and return
    <a>continue</a>.
 
    <li><p><a>Prepend</a> <var>byte</var> to
@@ -2154,7 +2154,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <a>ISO-2022-JP decoder output state</a>, and return <a>error</a>.
   </ol>
 
- <dt><dfn lt="iso 2022 jp decoder escape">Escape</dfn>
+ <dt><dfn lt="ISO-2022-JP decoder escape">Escape</dfn>
  <dd>
   <ol>
    <li><p>Let <var>lead</var> be <a>ISO-2022-JP lead</a> and set
@@ -2163,17 +2163,17 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <li><p>Let <var>state</var> be null.
 
    <li><p>If <var>lead</var> is 0x28 and <var>byte</var> is 0x42<!--B-->, set
-   <var>state</var> to <a lt="iso 2022 jp decoder ASCII">ASCII</a>.
+   <var>state</var> to <a lt="ISO-2022-JP decoder ASCII">ASCII</a>.
 
    <li><p>If <var>lead</var> is 0x28 and <var>byte</var> is 0x4A<!--J-->, set
-   <var>state</var> to <a lt="iso 2022 jp decoder Roman">Roman</a>.
+   <var>state</var> to <a lt="ISO-2022-JP decoder Roman">Roman</a>.
 
    <li><p>If <var>lead</var> is 0x28 and <var>byte</var> is 0x49<!--I-->, set
-   <var>state</var> to <a lt="iso 2022 jp decoder Katakana">Katakana</a>.
+   <var>state</var> to <a lt="ISO-2022-JP decoder Katakana">Katakana</a>.
 
    <li><p>If <var>lead</var> is 0x24 and <var>byte</var> is either
    0x40<!--@--> or 0x42<!--B-->, set <var>state</var> to
-   <a lt="iso 2022 jp decoder lead byte">lead byte</a>.
+   <a lt="ISO-2022-JP decoder lead byte">lead byte</a>.
 
    <li>
     <p>If <var>state</var> is non-null, run these substeps:
@@ -2203,10 +2203,10 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <h4 id=iso-2022-jp-encoder dfn export>ISO-2022-JP encoder</h4>
 
 <p><a>ISO-2022-JP</a>'s <a for=/>encoder</a> has an associated
-<dfn>ISO-2022-JP encoder state</dfn> which is <dfn lt="iso 2022 jp encoder ASCII">ASCII</dfn>,
-<dfn lt="iso 2022 jp encoder Roman">Roman</dfn>, or
-<dfn lt="iso 2022 jp encoder jis0208">jis0208</dfn> (initially
-<a lt="iso 2022 jp encoder ASCII">ASCII</a>).
+<dfn>ISO-2022-JP encoder state</dfn> which is <dfn lt="ISO-2022-JP encoder ASCII">ASCII</dfn>,
+<dfn lt="ISO-2022-JP encoder Roman">Roman</dfn>, or
+<dfn lt="ISO-2022-JP encoder jis0208">jis0208</dfn> (initially
+<a lt="ISO-2022-JP encoder ASCII">ASCII</a>).
 
 <p><a>ISO-2022-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given a
 <var>stream</var> and <var>code point</var>, runs these steps:
@@ -2214,32 +2214,32 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-stream</a> and
  <a>ISO-2022-JP encoder state</a> is not
- <a lt="iso 2022 jp encoder ASCII">ASCII</a>,
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a>,
  <a>prepend</a> <var>code point</var> to
  <var>stream</var>, set <a>ISO-2022-JP encoder state</a> to
- <a lt="iso 2022 jp encoder ASCII">ASCII</a>, and return three bytes
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes
  0x1B 0x28 0x42.
 
  <li><p>If <var>code point</var> is <a>end-of-stream</a> and
  <a>ISO-2022-JP encoder state</a> is
- <a lt="iso 2022 jp encoder ASCII">ASCII</a>, return <a>finished</a>.
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, return <a>finished</a>.
 
  <li>
   <p>If <a>ISO-2022-JP encoder state</a> is
-  <a lt="iso 2022 jp encoder ASCII">ASCII</a> or
-  <a lt="iso 2022 jp encoder Roman">Roman</a>, and <var>code point</var> is U+000E, U+000F,
+  <a lt="ISO-2022-JP encoder ASCII">ASCII</a> or
+  <a lt="ISO-2022-JP encoder Roman">Roman</a>, and <var>code point</var> is U+000E, U+000F,
   or U+001B, return <a>error</a> with U+FFFD.
 
-  <p class=note>This returns U+FFFD rather than the <var>code point</var> to prevent attacks.
+  <p class=note>This returns U+FFFD rather than <var>code point</var> to prevent attacks.
   <!-- https://github.com/whatwg/encoding/issues/15 -->
 
  <li><p>If <a>ISO-2022-JP encoder state</a> is
- <a lt="iso 2022 jp encoder ASCII">ASCII</a> and <var>code point</var> is an
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a> and <var>code point</var> is an
  <a>ASCII code point</a>, return a byte whose value is <var>code point</var>.
 
  <li>
   <p>If <a>ISO-2022-JP encoder state</a> is
-  <a lt="iso 2022 jp encoder Roman">Roman</a> and <var>code point</var> is an
+  <a lt="ISO-2022-JP encoder Roman">Roman</a> and <var>code point</var> is an
   <a>ASCII code point</a>, excluding U+005C and U+007E, or is U+00A5 or U+203E, run
   these substeps:
 
@@ -2254,18 +2254,18 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, and
  <a>ISO-2022-JP encoder state</a> is not
- <a lt="iso 2022 jp encoder ASCII">ASCII</a>,
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a>,
  <a>prepend</a> <var>code point</var> to
  <var>stream</var>, set <a>ISO-2022-JP encoder state</a> to
- <a lt="iso 2022 jp encoder ASCII">ASCII</a>, and return three bytes
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes
  0x1B 0x28 0x42.
 
  <li><p>If <var>code point</var> is either U+00A5 or U+203E, and
  <a>ISO-2022-JP encoder state</a> is not
- <a lt="iso 2022 jp encoder Roman">Roman</a>,
+ <a lt="ISO-2022-JP encoder Roman">Roman</a>,
  <a>prepend</a> <var>code point</var> to
  <var>stream</var>, set <a>ISO-2022-JP encoder state</a> to
- <a lt="iso 2022 jp encoder Roman">Roman</a>, and return three bytes
+ <a lt="ISO-2022-JP encoder Roman">Roman</a>, and return three bytes
  0x1B 0x28 0x4A.
 
  <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
@@ -2281,10 +2281,10 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <var>code point</var>.
 
  <li><p>If <a>ISO-2022-JP encoder state</a> is not
- <a lt="iso 2022 jp encoder jis0208">jis0208</a>,
+ <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
  <a>prepend</a> <var>code point</var> to
  <var>stream</var>, set <a>ISO-2022-JP encoder state</a> to
- <a lt="iso 2022 jp encoder jis0208">jis0208</a>, and return three bytes
+ <a lt="ISO-2022-JP encoder jis0208">jis0208</a>, and return three bytes
  0x1B 0x24 0x42.
 
  <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0x21.
@@ -2357,7 +2357,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
  <li><p>If <var>byte</var> is in the range 0xA1 to 0xDF, inclusive, return
  a code point whose value is 0xFF61 &minus; 0xA1 + <var>byte</var>.
- <!-- katakana; subtraction is done first to avoid upsetting compilers -->
+ <!-- Katakana; subtraction is done first to avoid upsetting compilers -->
 
  <li><p>If <var>byte</var> is in the range 0x81 to 0x9F, inclusive, or 0xE0 to 0xFC,
  inclusive, set <a>Shift_JIS lead</a> to <var>byte</var> and return
@@ -2590,7 +2590,7 @@ and <var>byte</var>, runs these steps:
 
    <li><p><a>Prepend</a> the <var>bytes</var> to
    <var>stream</var> and return <a>error</a>.
-   <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
+   <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera U+FFFD them -->
   </ol>
 
  <li><p>If <var>code unit</var> is in the range U+D800 to U+DBFF, inclusive, set
@@ -2599,7 +2599,7 @@ and <var>byte</var>, runs these steps:
 
  <li><p>If <var>code unit</var> is in the range U+DC00 to U+DFFF, inclusive,
  return <a>error</a>.
- <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera FFFD them -->
+ <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera U+FFFD them -->
 
  <li><p>Return code point <var>code unit</var>.
 </ol>
