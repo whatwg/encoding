@@ -624,7 +624,7 @@ form submission, which both need exactly this.
 
 <h2 id=indexes>Indexes</h2>
 
-<p>Most legacy <a for=/>encodings</a> make use of an <dfn>index</dfn>. An
+<p>Most legacy <a for=/>encodings</a> make use of an <dfn id=index>index</dfn>. An
 <a>index</a> is an ordered list of entries, each entry consisting of a pointer and a
 corresponding code point. Within an <a>index</a> pointers are unique and code points can be
 duplicated.
@@ -1108,7 +1108,7 @@ control.
 <hr>
 
 <dl class=domintro>
- <dt><code><var>decoder</var> = new <a constructor for=TextDecoder>TextDecoder([<var>label</var> = "utf-8" [, <var>options</var>]])</a></code>
+ <dt><code><var>decoder</var> = new <a constructor for=TextDecoder lt=TextDecoder()>TextDecoder([<var>label</var> = "utf-8" [, <var>options</var>]])</a></code>
  <dd>
   <p>Returns a new {{TextDecoder}} object.
   <p>If <var>label</var> is either not a <a>label</a> or is a
@@ -1126,13 +1126,13 @@ control.
  <dt><code><var>decoder</var> . <a attribute for=TextDecoder>ignoreBOM</a></code>
  <dd><p>Returns true if <a for=TextDecoder>ignore BOM flag</a> is set, and false otherwise.
 
- <dt><code><var>decoder</var> . <a method for=TextDecoder>decode([<var>input</var> [, <var>options</var>]])</a></code>
+ <dt><code><var>decoder</var> . <a method for=TextDecoder lt=decode()>decode([<var>input</var> [, <var>options</var>]])</a></code>
  <dd>
-  <p>Returns the result of running <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>. The method can
-  be invoked zero or more times with <var>options</var>'s <code>stream</code> set to true, and then
-  once without <var>options</var>'s <code>stream</code> (or set to false), to process a fragmented
-  stream. If the invocation without <var>options</var>'s <code>stream</code> (or set to false) has
-  no <var>input</var>, it's clearest to omit both arguments.
+  <p>Returns the result of running <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>. The
+  method can be invoked zero or more times with <var>options</var>'s <code>stream</code> set to
+  true, and then once without <var>options</var>'s <code>stream</code> (or set to false), to process
+  a fragmented stream. If the invocation without <var>options</var>'s <code>stream</code> (or set to
+  false) has no <var>input</var>, it's clearest to omit both arguments.
 
   <pre class=example id=example-end-of-stream><code class=lang-javascript>
 var string = "", decoder = new TextDecoder(encoding), buffer;
@@ -1182,8 +1182,8 @@ method, when invoked, must run these steps:
 
 <ol>
  <li><p>If the <a for=TextDecoder>do not flush flag</a> is unset, set <a for=TextDecoder>decoder</a>
- to a new <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>, set <a for=TextDecoder>stream</a> to a
- new <a for=/>stream</a>, and unset the <a for=TextDecoder>BOM seen flag</a>.
+ to a new <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>, set <a for=TextDecoder>stream</a>
+ to a new <a for=/>stream</a>, and unset the <a for=TextDecoder>BOM seen flag</a>.
 
  <li><p>If <var>options</var>'s <code>stream</code> is true, set the
  <a for=TextDecoder>do not flush flag</a>, and unset the <a for=TextDecoder>do not flush flag</a>
@@ -1211,8 +1211,9 @@ method, when invoked, must run these steps:
     is set, then return <var>output</var>, <a lt="serialize stream">serialized</a>.
 
     <p class=note>The way streaming works is to not handle <a>end-of-stream</a> here when the
-    <a for=TextDecoder>do not flush flag</a> is set and to not unset that flag. That way in a subsequent invocation
-    <a for=TextDecoder>decoder</a> is not set anew in the first step of the algorithm and its state is preserved.
+    <a for=TextDecoder>do not flush flag</a> is set and to not unset that flag. That way in a
+    subsequent invocation <a for=TextDecoder>decoder</a> is not set anew in the first step of the
+    algorithm and its state is preserved.
 
    <li>
     <p>Otherwise, run these subsubsteps:
@@ -1246,8 +1247,8 @@ interface TextEncoder {
 <p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn>.
 
 <p class="note no-backref">A {{TextEncoder}} object offers no <var>label</var> argument as it only
-supports <a>UTF-8</a>. It also offers no <code>stream</code> option as no <a for=/>encoder</a> requires
-buffering of scalar values.
+supports <a>UTF-8</a>. It also offers no <code>stream</code> option as no <a for=/>encoder</a>
+requires buffering of scalar values.
 
 <hr>
 
@@ -1258,7 +1259,7 @@ buffering of scalar values.
  <dt><code><var>encoder</var> . <a attribute for=TextEncoder>encoding</a></code>
  <dd><p>Returns "<code>utf-8</code>".
 
- <dt><code><var>encoder</var> . <a method for=TextEncoder>encode([<var>input</var> = ""])</a></code>
+ <dt><code><var>encoder</var> . <a method for=TextEncoder lt=encode()>encode([<var>input</var> = ""])</a></code>
  <dd><p>Returns the result of running <a>UTF-8</a>'s <a for=/>encoder</a>.
 </dl>
 
@@ -2697,11 +2698,12 @@ issues. Browsers also should disable this feature if the resource was decoded us
   <p>A single-byte buffer for <a>gb18030</a> (an <a>ASCII byte</a>) and <a>ISO-2022-JP</a> (0x24 or
   0x28).
 
-  <p class="example">For <a>gb18030</a> when hitting a bogus byte while <a>gb18030 third</a> is not
-  0x00, <a>gb18030 second</a> could be moved into the single-byte buffer to be returned next, and
-  <a>gb18030 third</a> would be the new <a>gb18030 first</a>, checked for not being 0x00 after the
-  single-byte buffer was returned and emptied. This is possible as the range for the first and third
-  byte in <a>gb18030</a> is identical.
+  <p class=example id=example-gb18030-implementation-strategy>For <a>gb18030</a> when hitting a
+  bogus byte while <a>gb18030 third</a> is not 0x00, <a>gb18030 second</a> could be moved into the
+  single-byte buffer to be returned next, and <a>gb18030 third</a> would be the new
+  <a>gb18030 first</a>, checked for not being 0x00 after the single-byte buffer was returned and
+  emptied. This is possible as the range for the first and third byte in <a>gb18030</a> is
+  identical.
 </ol>
 
 <p>The <a>ISO-2022-JP encoder</a> needs <a>ISO-2022-JP encoder state</a> as additional state, but
