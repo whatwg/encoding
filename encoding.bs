@@ -1678,13 +1678,13 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>pointer</var> is null and the <a>index code point</a>
    for <var>pointer</var> in <a>index gb18030</a> otherwise.
 
-   <li><p>If <var>code point</var> is null and <var>byte</var> is an
-   <a>ASCII byte</a>, <a>prepend</a>
-   <var>byte</var> to <var>stream</var>.
+   <li><p>If <var>code point</var> is non-null, return a code point whose value is
+   <var>code point</var>.
 
-   <li><p>If <var>code point</var> is null, return <a>error</a>.
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
+   <var>stream</var>.
 
-   <li><p>Return a code point whose value is <var>code point</var>.
+   <li><p>Return <a>error</a>.
   </ol>
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
@@ -1727,7 +1727,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <var>code point</var> in <a>index gb18030</a>.
 
  <li>
-  <p>If <var>pointer</var> is not null, run these substeps:
+  <p>If <var>pointer</var> is non-null, run these substeps:
 
   <ol>
    <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
@@ -1826,13 +1826,13 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>pointer</var> is null and the <a>index code point</a>
    for <var>pointer</var> in <a>index Big5</a> otherwise.
 
-   <li><p>If <var>code point</var> is null and <var>byte</var> is an
-   <a>ASCII byte</a>, <a>prepend</a>
-   <var>byte</var> to <var>stream</var>.
+   <li><p>If <var>code point</var> is non-null, return a code point whose value is
+   <var>code point</var>.
 
-   <li><p>If <var>code point</var> is null, return <a>error</a>.
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
+   <var>stream</var>.
 
-   <li><p>Return a code point whose value is <var>code point</var>.
+   <li><p>Return <a>error</a>.
   </ol>
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
@@ -1923,12 +1923,13 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
    <li><p>Unset the <a>EUC-JP jis0212 flag</a>.
 
+   <li><p>If <var>code point</var> is non-null, return a code point whose value is
+   <var>code point</var>.
+
    <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
    <var>stream</var>.
 
-   <li><p>If <var>code point</var> is null, return <a>error</a>.
-
-   <li><p>Return a code point whose value is <var>code point</var>.
+   <li><p>Return <a>error</a>.
   </ol>
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
@@ -2341,13 +2342,13 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>pointer</var> is null, and the <a>index code point</a>
    for <var>pointer</var> in <a>index jis0208</a> otherwise.
 
-   <li><p>If <var>code point</var> is null and <var>byte</var> is an
-   <a>ASCII byte</a>, <a>prepend</a>
-   <var>byte</var> to <var>stream</var>.
+   <li><p>If <var>code point</var> is non-null, return a code point whose value is
+   <var>code point</var>.
 
-   <li><p>If <var>code point</var> is null, return <a>error</a>.
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
+   <var>stream</var>.
 
-   <li><p>Return a code point whose value is <var>code point</var>.
+   <li><p>Return <a>error</a>.
   </ol>
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a> or 0x80, return a code point
@@ -2445,13 +2446,13 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    and the <a>index code point</a> for <var>pointer</var> in
    <a>index EUC-KR</a> otherwise.
 
-   <li><p>If <var>code point</var> is null and <var>byte</var> is an
-   <a>ASCII byte</a>, <a>prepend</a>
-   <var>byte</var> to <var>stream</var>.
+   <li><p>If <var>code point</var> is non-null, return a code point whose value is
+   <var>code point</var>.
 
-   <li><p>If <var>code point</var> is null, return <a>error</a>.
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
+   <var>stream</var>.
 
-   <li><p>Return a code point whose value is <var>code point</var>.
+   <li><p>Return <a>error</a>.
   </ol>
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
@@ -2535,7 +2536,7 @@ and <var>byte</var>, runs these steps:
 
 <ol>
  <li><p>If <var>byte</var> is <a>end-of-stream</a> and either
- <a>UTF-16 lead byte</a> or <a>UTF-16 lead surrogate</a> is not null, set
+ <a>UTF-16 lead byte</a> or <a>UTF-16 lead surrogate</a> is non-null, set
  <a>UTF-16 lead byte</a> and <a>UTF-16 lead surrogate</a> to null, and return
  <a>error</a>.
 
@@ -2559,7 +2560,7 @@ and <var>byte</var>, runs these steps:
   <p>Then set <a>UTF-16 lead byte</a> to null.
 
  <li>
-  <p>If <a>UTF-16 lead surrogate</a> is not null, let
+  <p>If <a>UTF-16 lead surrogate</a> is non-null, let
   <var>lead surrogate</var> be <a>UTF-16 lead surrogate</a>, set
   <a>UTF-16 lead surrogate</a> to null, and then run these substeps:
 
