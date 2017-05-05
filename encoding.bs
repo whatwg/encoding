@@ -1082,8 +1082,7 @@ interface TextDecoder {
 
    <li>
     <p>If <a for=TextDecoder>encoding</a> is <a>UTF-8</a>, <a>UTF-16BE</a>, or <a>UTF-16LE</a>, and
-    <a for=TextDecoder>ignore BOM flag</a> and <a for=TextDecoder>BOM seen flag</a> are unset, then
-    run these subsubsteps:
+    <a for=TextDecoder>ignore BOM flag</a> and <a for=TextDecoder>BOM seen flag</a> are unset, then:
 
     <ol>
      <li><p>If <var>token</var> is U+FEFF, then set <a for=TextDecoder>BOM seen flag</a>.
@@ -1215,7 +1214,7 @@ method, when invoked, must run these steps:
     <a for=TextDecoder>decoder</a> is not set anew in the first step of the algorithm and its state is preserved.
 
    <li>
-    <p>Otherwise, run these subsubsteps:
+    <p>Otherwise:
 
     <ol>
      <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
@@ -1225,9 +1224,8 @@ method, when invoked, must run these steps:
      <li><p>If <var>result</var> is <a>finished</a>, then return <var>output</var>,
      <a lt="serialize stream">serialized</a>.
 
-     <li><p>Otherwise, if <var>result</var> is <a>error</a>, <a lt=throw>throw</a> a {{TypeError}}.
-
-     <li><p>Otherwise, do nothing.
+     <li><p>Otherwise, if <var>result</var> is <a>error</a>, then <a lt=throw>throw</a> a
+     {{TypeError}}.
     </ol>
   </ol>
 </ol>
@@ -1285,7 +1283,7 @@ must run these steps:
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
  <li>
-  <p>While true, run these substeps:
+  <p>While true:
 
   <ol>
    <li><p>Let <var>token</var> be the result of
@@ -1388,9 +1386,8 @@ must run these steps:
   <p>Return <a>continue</a>.
 
  <li>
-  <p>If <var>byte</var> is not in the range
-  <a>UTF-8 lower boundary</a> to <a>UTF-8 upper boundary</a>, inclusive,
-  run these substeps:
+  <p>If <var>byte</var> is not in the range <a>UTF-8 lower boundary</a> to
+  <a>UTF-8 upper boundary</a>, inclusive, then:
 
   <ol>
    <li><p>Set <a>UTF-8 code point</a>,
@@ -1464,7 +1461,7 @@ achieve the same result are obviously fine, even encouraged).
  (<var>code point</var> >> (6 × <var>count</var>)) + <var>offset</var>.
 
  <li>
-  <p>Run these substeps while <var>count</var> is greater than 0:
+  <p>While <var>count</var> is greater than 0:
 
   <ol>
    <li><p>Set <var>temp</var> to
@@ -1618,7 +1615,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <a>gb18030 third</a> to 0x00, and return <a>error</a>.
 
  <li>
-  <p>If <a>gb18030 third</a> is not 0x00, run these substeps:
+  <p>If <a>gb18030 third</a> is not 0x00, then:
 
   <ol>
    <li><p>Let <var>code point</var> be null.
@@ -1645,7 +1642,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
   </ol>
 
  <li>
-  <p>If <a>gb18030 second</a> is not 0x00, run these substeps:
+  <p>If <a>gb18030 second</a> is not 0x00, then:
 
   <ol>
    <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
@@ -1658,7 +1655,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
   </ol>
 
  <li>
-  <p>If <a>gb18030 first</a> is not 0x00, run these substeps:
+  <p>If <a>gb18030 first</a> is not 0x00, then:
 
   <ol>
    <li><p>If <var>byte</var> is in the range 0x30 to 0x39, inclusive, set
@@ -1727,7 +1724,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <var>code point</var> in <a>index gb18030</a>.
 
  <li>
-  <p>If <var>pointer</var> is non-null, run these substeps:
+  <p>If <var>pointer</var> is non-null, then:
 
   <ol>
    <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
@@ -1794,7 +1791,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <li>
   <p>If <a>Big5 lead</a> is not 0x00, let <var>lead</var> be
   <a>Big5 lead</a>, let <var>pointer</var> be null, set
-  <a>Big5 lead</a> to 0x00, and then run these substeps:
+  <a>Big5 lead</a> to 0x00, and then:
 
   <ol>
    <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is
@@ -1908,8 +1905,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <a>EUC-JP lead</a> to <var>byte</var>, and return <a>continue</a>.
 
  <li>
-  <p>If <a>EUC-JP lead</a> is not 0x00, let <var>lead</var> be
-  <a>EUC-JP lead</a>, set <a>EUC-JP lead</a> to 0x00, and run these substeps:
+  <p>If <a>EUC-JP lead</a> is not 0x00, let <var>lead</var> be <a>EUC-JP lead</a>, set
+  <a>EUC-JP lead</a> to 0x00, and then:
 
   <ol>
    <li><p>Let <var>code point</var> be null.
@@ -2176,7 +2173,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <a lt="ISO-2022-JP decoder lead byte">lead byte</a>.
 
    <li>
-    <p>If <var>state</var> is non-null, run these substeps:
+    <p>If <var>state</var> is non-null, then:
 
     <ol>
      <li><p>Set <a>ISO-2022-JP decoder state</a> and
@@ -2238,10 +2235,9 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <a>ASCII code point</a>, return a byte whose value is <var>code point</var>.
 
  <li>
-  <p>If <a>ISO-2022-JP encoder state</a> is
-  <a lt="ISO-2022-JP encoder Roman">Roman</a> and <var>code point</var> is an
-  <a>ASCII code point</a>, excluding U+005C and U+007E, or is U+00A5 or U+203E, run
-  these substeps:
+  <p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder Roman">Roman</a> and
+  <var>code point</var> is an <a>ASCII code point</a>, excluding U+005C and U+007E, or is U+00A5 or
+  U+203E, then:
 
   <ol>
    <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return a byte
@@ -2315,9 +2311,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <a>Shift_JIS lead</a> is 0x00, return <a>finished</a>.
 
  <li>
-  <p>If <a>Shift_JIS lead</a> is not 0x00, let <var>lead</var>
-  be <a>Shift_JIS lead</a>, let <var>pointer</var> be null, set
-  <a>Shift_JIS lead</a> to 0x00, and then run these substeps:
+  <p>If <a>Shift_JIS lead</a> is not 0x00, let <var>lead</var> be <a>Shift_JIS lead</a>, let
+  <var>pointer</var> be null, set <a>Shift_JIS lead</a> to 0x00, and then:
 
   <ol>
    <li><p>Let <var>offset</var> be 0x40, if <var>byte</var> is
@@ -2433,9 +2428,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <a>EUC-KR lead</a> is 0x00, return <a>finished</a>.
 
  <li>
-  <p>If <a>EUC-KR lead</a> is not 0x00, let <var>lead</var> be
-  <a>EUC-KR lead</a>, let <var>pointer</var> be null,
-  set <a>EUC-KR lead</a> to 0x00, and then run these substeps:
+  <p>If <a>EUC-KR lead</a> is not 0x00, let <var>lead</var> be <a>EUC-KR lead</a>, let
+  <var>pointer</var> be null, set <a>EUC-KR lead</a> to 0x00, and then:
 
   <ol>
    <li><p>If <var>byte</var> is in the range  0x41 to 0xFE, inclusive, set
@@ -2560,33 +2554,20 @@ and <var>byte</var>, runs these steps:
   <p>Then set <a>UTF-16 lead byte</a> to null.
 
  <li>
-  <p>If <a>UTF-16 lead surrogate</a> is non-null, let
-  <var>lead surrogate</var> be <a>UTF-16 lead surrogate</a>, set
-  <a>UTF-16 lead surrogate</a> to null, and then run these substeps:
+  <p>If <a>UTF-16 lead surrogate</a> is non-null, let <var>lead surrogate</var> be
+  <a>UTF-16 lead surrogate</a>, set <a>UTF-16 lead surrogate</a> to null, and then:
 
   <ol>
    <li><p>If <var>code unit</var> is in the range U+DC00 to U+DFFF, inclusive,
    return a code point whose value is
    0x10000 + ((<var>lead surrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>code unit</var> &minus; 0xDC00).
 
-   <li>
-    <p>Let <var>bytes</var> be the return value of running these subsubsteps:
+   <li><p>Let <var>byte1</var> be <var>code unit</var> >> 8.
 
-    <ol>
-     <li><p>Let <var>byte1</var> be <var>code unit</var> >> 8.
+   <li><p>Let <var>byte2</var> be <var>code unit</var> &amp; 0x00FF.
 
-     <li><p>Let <var>byte2</var> be <var>code unit</var> &amp; 0x00FF.
-
-     <li>
-      <p>Then return the bytes in order, switching on <a>UTF-16BE decoder flag</a>:
-
-      <dl class=switch>
-       <dt>Set
-       <dd><p><var>byte1</var>, then <var>byte2</var>.
-       <dt>Unset
-       <dd><p><var>byte2</var>, then <var>byte1</var>.
-      </dl>
-    </ol>
+   <li><p>Let <var>bytes</var> be two bytes whose values are <var>byte1</var> and <var>byte2</var>,
+   if the <a>UTF-16BE decoder flag</a> is set, and <var>byte2</var> and <var>byte1</var> otherwise.
 
    <li><p><a>Prepend</a> the <var>bytes</var> to
    <var>stream</var> and return <a>error</a>.
