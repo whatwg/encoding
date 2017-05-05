@@ -2270,6 +2270,10 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
  <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
 
+ <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, set it to the result
+ of normalizing <var>code point</var> using Normalization Form KC (NFKC). [[!UNICODE]]
+ <!-- Katakana; halfwidth to fullwidth -->
+
  <li>
   <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>code point</var> in
   <a>index jis0208</a>.
