@@ -655,10 +655,11 @@ changed, so has the <a>index</a>.
 <var>code point</var> is not in <var>index</var>.
 
 <div class=note id=visualization>
- <p>There is a non-normative visualization for each index other than <a>index gb18030 ranges</a>.
- <a>index jis0208</a> also has an alternative <a>Shift_JIS</a> visualization. Additionally, there is
- visualization of the Basic Multilingual Plane coverage of each index other than
- <a>index gb18030 ranges</a>.
+ <p>There is a non-normative visualization for each <a>index</a> other than
+ <a>index gb18030 ranges</a> and <a>index ISO-2022-JP Katakana</a>. <a>index jis0208</a> also has an
+ alternative <a>Shift_JIS</a> visualization. Additionally, there is visualization of the Basic
+ Multilingual Plane coverage of each index other than <a>index gb18030 ranges</a> and
+ <a>index ISO-2022-JP Katakana</a>.
 
  <p>The legend for the visualizations is:
 
@@ -832,10 +833,9 @@ these steps:
 
 <hr>
 
-<p class="note no-backref">All <a lt=index>indexes</a> are also available as
-non-normative <a href=indexes.json>indexes.json</a> resource.
-(<a>index gb18030 ranges</a> has a slightly different format here, to be able
-to represent ranges.)
+<p class="note no-backref">All <a lt=index>indexes</a> are also available as a non-normative
+<a href=indexes.json>indexes.json</a> resource. (<a>Index gb18030 ranges</a> has a slightly
+different format here, to be able to represent ranges.)
 
 
 
