@@ -5,7 +5,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: f963aaa1653f630c523e7b04729fb4e4458f35806c45eb5c179445623138f0c0
-# Date: 2016-10-24
+# Date: 2017-05-06
 
      0	0x0080
     36	0x00A5

@@ -748,6 +748,12 @@ specification, excluding <a>index single-byte</a>, which have their own table:
    No JIX X 0212 ISO-2022-JP support:
      https://www.w3.org/Bugs/Public/show_bug.cgi?id=26885
   -->
+ <tr>
+  <td><dfn export>index ISO-2022-JP Katakana</dfn>
+  <td colspan=3><a href=index-iso-2022-jp-katakana.txt>index-iso-2022-jp-katakana.txt</a>
+  <td>This maps halfwidth to fullwidth Katakana as per Unicode Normalization Form KC, except that
+  U+FF9E and U+FF9F map to U+309B and U+309C rather than U+3099 and U+309A. It is only used by the
+  <a>ISO-2022-JP encoder</a>. [[UNICODE]]
 </table>
 
 <p>The <dfn>index gb18030 ranges code point</dfn> for <var>pointer</var> is
@@ -2270,9 +2276,9 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
  <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
 
- <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, set it to the result
- of normalizing <var>code point</var> using Normalization Form KC (NFKC). [[!UNICODE]]
- <!-- Katakana; halfwidth to fullwidth -->
+ <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, set it to the
+ <a>index code point</a> for <var>code point</var> &minus; 0xFF61 in
+ <a>index ISO-2022-JP Katakana</a>.
 
  <li>
   <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>code point</var> in
