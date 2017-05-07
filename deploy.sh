@@ -14,6 +14,9 @@ WEB_ROOT="encoding.spec.whatwg.org"
 COMMITS_DIR="commit-snapshots"
 BRANCHES_DIR="branch-snapshots"
 
+RUN_HTML_CHECKER_ON_ALL_HTML_OUTPUT=false
+RUN_HTML_CHECKER_ON_SPEC_HTML=false
+
 if [ "$1" != "--local" -a "$DEPLOY_USER" == "" ]; then
     echo "No deploy credentials present; skipping deploy"
     exit 0
@@ -89,7 +92,40 @@ echo ""
 find $WEB_ROOT -print
 echo ""
 
-if [ "$1" != "--local" ]; then
+if [ "$TRAVIS" == "true" ]; then
+    for file in $(git diff --name-only "$TRAVIS_COMMIT_RANGE"); do
+        if [ "$file" == "encoding.bs" ]; then
+          RUN_HTML_CHECKER_ON_SPEC_HTML=true
+        fi
+        if [ "$file" == "visualize.py" ]; then
+          RUN_HTML_CHECKER_ON_ALL_HTML_OUTPUT=true
+        fi
+        if [ "${file: -4}" == ".txt" ]; then
+          RUN_HTML_CHECKER_ON_ALL_HTML_OUTPUT=true
+        fi
+    done
+    if [ "$RUN_HTML_CHECKER_ON_ALL_HTML_OUTPUT" == "true" ]; then
+        (find "$WEB_ROOT" -name "*.html" -exec bash -c "echo Checking \$1...; \
+            curl -s -H 'Content-Type: text/html; charset=utf-8' \
+                --data-binary @\$1 \
+                --retry 5 \
+                https://checker.html5.org/?out=gnu\&file=\$1$CHECKER_PARAMS \
+            | tee -a OUTPUT; echo" _ {} \;);
+        if [ -s OUTPUT ]; then
+            exit 1;
+        fi
+    elif [ "$RUN_HTML_CHECKER_ON_SPEC_HTML" == "true" ]; then
+        (find . -name "index.html" -exec bash -c "echo Checking \$1...; \
+            curl -s -H 'Content-Type: text/html; charset=utf-8' \
+                --data-binary @\$1 \
+                --retry 5 \
+                https://checker.html5.org/?out=gnu\&file=\$1$CHECKER_PARAMS \
+            | tee -a OUTPUT; echo" _ {} \;);
+        if [ -s OUTPUT ]; then
+            exit 1;
+        fi
+    fi
+
     # Get the deploy key by using Travis's stored variables to decrypt deploy_key.enc
     ENCRYPTED_KEY_VAR="encrypted_${ENCRYPTION_LABEL}_key"
     ENCRYPTED_IV_VAR="encrypted_${ENCRYPTION_LABEL}_iv"

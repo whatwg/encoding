@@ -2,16 +2,10 @@ language: generic
 
 env:
   global:
-    - ENCRYPTION_LABEL: "eaa0f98d3fae"
-addons:
-  apt:
-    packages:
-      - oracle-java8-set-default
-install:
-  - curl -O https://sideshowbarker.net/nightlies/jar/vnu.jar
+    - ENCRYPTION_LABEL="eaa0f98d3fae"
+    - CHECKER_PARAMS='\&filterpattern=Text%20run%20is%20not%20in%20Unicode%20Normalization%20Form%20C\.\|.*appears%20to%20be%20written%20in.*\|.*Charmod%20C073.*'
 script:
   - bash ./deploy.sh
-  - /usr/lib/jvm/java-8-oracle/jre/bin/java -jar vnu.jar --skip-non-html /home/travis/build/whatwg/encoding
 notifications:
   email:
     on_success: never
