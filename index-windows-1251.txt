@@ -5,7 +5,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 7592ef921679ba168b00a9e9afa3b4eebd67bf13dc7e84c4b6e120de856826e0
-# Date: 2016-10-24
+# Date: 2017-05-06
 
   0	0x0402	Ђ (CYRILLIC CAPITAL LETTER DJE)
   1	0x0403	Ѓ (CYRILLIC CAPITAL LETTER GJE)

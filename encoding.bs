@@ -655,10 +655,11 @@ changed, so has the <a>index</a>.
 <var>code point</var> is not in <var>index</var>.
 
 <div class=note id=visualization>
- <p>There is a non-normative visualization for each index other than <a>index gb18030 ranges</a>.
- <a>index jis0208</a> also has an alternative <a>Shift_JIS</a> visualization. Additionally, there is
- visualization of the Basic Multilingual Plane coverage of each index other than
- <a>index gb18030 ranges</a>.
+ <p>There is a non-normative visualization for each <a>index</a> other than
+ <a>index gb18030 ranges</a> and <a>index ISO-2022-JP katakana</a>. <a>index jis0208</a> also has an
+ alternative <a>Shift_JIS</a> visualization. Additionally, there is visualization of the Basic
+ Multilingual Plane coverage of each index other than <a>index gb18030 ranges</a> and
+ <a>index ISO-2022-JP katakana</a>.
 
  <p>The legend for the visualizations is:
 
@@ -748,6 +749,12 @@ specification, excluding <a>index single-byte</a>, which have their own table:
    No JIX X 0212 ISO-2022-JP support:
      https://www.w3.org/Bugs/Public/show_bug.cgi?id=26885
   -->
+ <tr>
+  <td><dfn export>index ISO-2022-JP katakana</dfn>
+  <td colspan=3><a href=index-iso-2022-jp-katakana.txt>index-iso-2022-jp-katakana.txt</a>
+  <td>This maps halfwidth to fullwidth katakana as per Unicode Normalization Form KC, except that
+  U+FF9E and U+FF9F map to U+309B and U+309C rather than U+3099 and U+309A. It is only used by the
+  <a>ISO-2022-JP encoder</a>. [[UNICODE]]
 </table>
 
 <p>The <dfn>index gb18030 ranges code point</dfn> for <var>pointer</var> is
@@ -826,10 +833,9 @@ these steps:
 
 <hr>
 
-<p class="note no-backref">All <a lt=index>indexes</a> are also available as
-non-normative <a href=indexes.json>indexes.json</a> resource.
-(<a>index gb18030 ranges</a> has a slightly different format here, to be able
-to represent ranges.)
+<p class="note no-backref">All <a lt=index>indexes</a> are also available as a non-normative
+<a href=indexes.json>indexes.json</a> resource. (<a>Index gb18030 ranges</a> has a slightly
+different format here, to be able to represent ranges.)
 
 
 
@@ -1898,7 +1904,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <li><p>If <a>EUC-JP lead</a> is 0x8E and <var>byte</var> is
  in the range 0xA1 to 0xDF, inclusive, set <a>EUC-JP lead</a> to 0x00 and return
  a code point whose value is 0xFF61 &minus; 0xA1 + <var>byte</var>.
- <!-- katakana; subtraction is done first to avoid upsetting compilers -->
+ <!-- Katakana; subtraction is done first to avoid upsetting compilers -->
 
  <li><p>If <a>EUC-JP lead</a> is 0x8F and <var>byte</var> is in the range
  0xA1 to 0xFE, inclusive, set the <a>EUC-JP jis0212 flag</a>, set
@@ -2050,7 +2056,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <dd><p>Unset the <a>ISO-2022-JP output flag</a> and return <a>error</a>.
   </dl>
 
- <dt><dfn lt="ISO-2022-JP decoder Katakana">Katakana</dfn>
+ <dt><dfn lt="ISO-2022-JP decoder katakana">katakana</dfn>
  <dd>
   <p>Based on <var>byte</var>:
   <dl class=switch>
@@ -2166,7 +2172,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>state</var> to <a lt="ISO-2022-JP decoder Roman">Roman</a>.
 
    <li><p>If <var>lead</var> is 0x28 and <var>byte</var> is 0x49<!--I-->, set
-   <var>state</var> to <a lt="ISO-2022-JP decoder Katakana">Katakana</a>.
+   <var>state</var> to <a lt="ISO-2022-JP decoder katakana">katakana</a>.
 
    <li><p>If <var>lead</var> is 0x24 and <var>byte</var> is either
    0x40<!--@--> or 0x42<!--B-->, set <var>state</var> to
@@ -2265,6 +2271,10 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  0x1B 0x28 0x4A.
 
  <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
+
+ <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, set it to the
+ <a>index code point</a> for <var>code point</var> &minus; 0xFF61 in
+ <a>index ISO-2022-JP katakana</a>.
 
  <li>
   <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>code point</var> in
