@@ -1641,11 +1641,13 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <li><p>Set <a>gb18030 first</a>, <a>gb18030 second</a>, and
    <a>gb18030 third</a> to 0x00.
 
-   <li><p>If <var>code point</var> is null,
-   <a>prepend</a> <var>buffer</var> to
-   <var>stream</var> and return <a>error</a>.
+   <li><p>If <var>code point</var> is non-null, return a code point whose value is
+   <var>code point</var>.
 
-   <li><p>Return a code point whose value is <var>code point</var>.
+   <li><p>If <var>byte</var> is not in the range 0x30 to 0x39, inclusive, <a>prepend</a>
+   <var>buffer</var> to <var>stream</var>.
+
+   <li><p>Return <a>error</a>.
   </ol>
 
  <li>
