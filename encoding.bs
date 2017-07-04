@@ -582,12 +582,13 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan=2><a href=#legacy-miscellaneous-encodings>Legacy miscellaneous encodings</a>
   <tr>
-   <td rowspan=5><a>replacement</a>
+   <td rowspan=6><a>replacement</a>
    <td>"<code>csiso2022kr</code>"
   <tr><td>"<code>hz-gb-2312</code>"
   <tr><td>"<code>iso-2022-cn</code>"
   <tr><td>"<code>iso-2022-cn-ext</code>"
   <tr><td>"<code>iso-2022-kr</code>"
+  <tr><td>"<code>replacement</code>"
   <tr>
    <td><a>UTF-16BE</a>
    <td>"<code>utf-16be</code>"
