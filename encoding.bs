@@ -254,6 +254,9 @@ and their <a>labels</a> user agents must support.
 User agents must not support any other <a for=/>encodings</a>
 or <a>labels</a>.
 
+<p class=note>For each encoding, <a lt="ASCII lowercase">ASCII-lowercasing</a> its
+<a for=encoding>name</a> yields one of its <a for=encoding>labels</a>.
+
 <p>Authors must use the <a>UTF-8</a> <a for=/>encoding</a> and must use the
 <a>ASCII case-insensitive</a> "<code>utf-8</code>" <a>label</a> to
 identify it.
@@ -582,12 +585,13 @@ prescribes, as that is found to be necessary to be compatible with deployed cont
  <tbody>
   <tr><th colspan=2><a href=#legacy-miscellaneous-encodings>Legacy miscellaneous encodings</a>
   <tr>
-   <td rowspan=5><a>replacement</a>
+   <td rowspan=6><a>replacement</a>
    <td>"<code>csiso2022kr</code>"
   <tr><td>"<code>hz-gb-2312</code>"
   <tr><td>"<code>iso-2022-cn</code>"
   <tr><td>"<code>iso-2022-cn-ext</code>"
   <tr><td>"<code>iso-2022-kr</code>"
+  <tr><td>"<code>replacement</code>"
   <tr>
    <td><a>UTF-16BE</a>
    <td>"<code>utf-16be</code>"
