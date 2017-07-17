@@ -254,6 +254,9 @@ and their <a>labels</a> user agents must support.
 User agents must not support any other <a for=/>encodings</a>
 or <a>labels</a>.
 
+<p class=note>For each encoding, <a lt="ASCII lowercase">ASCII-lowercasing</a> its
+<a for=encoding>name</a> yields one of its <a for=encoding>labels</a>.
+
 <p>Authors must use the <a>UTF-8</a> <a for=/>encoding</a> and must use the
 <a>ASCII case-insensitive</a> "<code>utf-8</code>" <a>label</a> to
 identify it.
