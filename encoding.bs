@@ -279,10 +279,10 @@ from a string <var>label</var>, run these steps:
  below, return the corresponding <a for=/>encoding</a>, and failure otherwise.
 </ol>
 
-<p class="note no-backref">This is a much simpler and more restrictive algorithm of
-mapping <a>labels</a> to <a for=/>encodings</a> than
-<a href=http://www.unicode.org/reports/tr22/tr22-7.html#Charset_Alias_Matching>section 1.4 of Unicode Technical Standard #22</a>
-prescribes, as that is found to be necessary to be compatible with deployed content.
+<p class="note no-backref">This is a more basic and restrictive algorithm of mapping <a>labels</a>
+to <a for=/>encodings</a> than
+<a href=http://www.unicode.org/reports/tr22/#Charset_Alias_Matching>section 1.4 of Unicode Technical Standard #22</a>
+prescribes, as that is necessary to be compatible with deployed content.
 
 <table>
  <thead>
@@ -1439,7 +1439,7 @@ must run these steps:
 <p class=note>The constraints in the <a>UTF-8 decoder</a> above match
 “Best Practices for Using U+FFFD” from the Unicode standard. No other
 behavior is permitted per the Encoding Standard (other algorithms that
-achieve the same result are obviously fine, even encouraged).
+achieve the same result are fine, even encouraged).
 [[!UNICODE]]
 
 
