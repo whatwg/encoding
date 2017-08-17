@@ -882,7 +882,7 @@ fallback encoding <var>encoding</var>, run these steps:
   more authoritative than anything else. In a context where HTTP is used this is in violation of the
   semantics of the `<code>Content-Type</code>` header.
 
- <li><p>If <var>BOM seen flag</var> is unset
+ <li><p>If <var>BOM seen flag</var> is unset,
  <a>prepend</a> <var>buffer</var> to <var>stream</var>.
 
  <li><p>Otherwise, if <var>BOM seen flag</var> is set, <var>encoding</var> is not
