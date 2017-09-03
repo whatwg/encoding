@@ -3,9 +3,13 @@ language: generic
 env:
   global:
     - ENCRYPTION_LABEL="eaa0f98d3fae"
-    - CHECKER_PARAMS='\&filterpattern=Text%20run%20is%20not%20in%20Unicode%20Normalization%20Form%20C\.\|.*appears%20to%20be%20written%20in.*\|.*Charmod%20C073.*'
+    - DEPLOY_USER="annevankesteren"
+    - EXTRA_FILES="*.txt *.json *.css"
+    - POST_BUILD_STEP="python visualize.py \"$DIR/\""
+
 script:
-  - bash ./deploy.sh
+  - curl --remote-name --fail https://resources.whatwg.org/build/deploy.sh && bash ./deploy.sh
+
 notifications:
   email:
     on_success: never
