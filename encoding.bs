@@ -281,7 +281,7 @@ from a string <var>label</var>, run these steps:
 
 <p class="note no-backref">This is a more basic and restrictive algorithm of mapping <a>labels</a>
 to <a for=/>encodings</a> than
-<a href=http://www.unicode.org/reports/tr22/#Charset_Alias_Matching>section 1.4 of Unicode Technical Standard #22</a>
+<a href=https://www.unicode.org/reports/tr22/#Charset_Alias_Matching>section 1.4 of Unicode Technical Standard #22</a>
 prescribes, as that is necessary to be compatible with deployed content.
 
 <table>
@@ -1818,7 +1818,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
     its second column (the third column is irrelevant):
 
     <table>
-     <tbody><tr><th>Pointer<th>Code points<th>Notes<!-- http://www.unicode.org/Public/UNIDATA/NamedSequences.txt -->
+     <tbody><tr><th>Pointer<th>Code points<th>Notes<!-- https://www.unicode.org/Public/UNIDATA/NamedSequences.txt -->
      <tr><td>1133<!-- 0x88 0x62 --><td>U+00CA U+0304<td>Ê̄ (LATIN CAPITAL LETTER E WITH CIRCUMFLEX AND MACRON)
      <tr><td>1135<!-- 0x88 0x64 --><td>U+00CA U+030C<td>Ê̌ (LATIN CAPITAL LETTER E WITH CIRCUMFLEX AND CARON)
      <tr><td>1164<!-- 0x88 0xA3 --><td>U+00EA U+0304<td>ê̄ (LATIN SMALL LETTER E WITH CIRCUMFLEX AND MACRON)
@@ -2628,8 +2628,8 @@ it is defined separately as it can be implemented algorithmically.
 <!--
 This encoding is silly, however, the web depends on it:
 
-http://krijnhoetmer.nl/irc-logs/whatwg/20121003#l-461
-http://krijnhoetmer.nl/irc-logs/whatwg/20121010#l-812
+https://krijnhoetmer.nl/irc-logs/whatwg/20121003#l-461
+https://krijnhoetmer.nl/irc-logs/whatwg/20121010#l-812
 
 https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7-when-using-charset-x-user-defined-with-xm
 -->
