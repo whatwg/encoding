@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-windows-874.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: b416583ce125e38474381b31b401a98b19ecf2e57e0998e78a1e18b14894905d
-# Date: 2017-05-06
+# Date: 2018-01-06
 
   0	0x20AC	€ (EURO SIGN)
   1	0x0081	 (<control>)

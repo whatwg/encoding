@@ -61,9 +61,6 @@ def get_name(cp):
 for index in data:
     import codecs, hashlib, datetime
     handle = codecs.open("index-" + index + ".txt", "w", "utf-8")
-    handle.write("# Any copyright is dedicated to the Public Domain.\n")
-    handle.write("# https://creativecommons.org/publicdomain/zero/1.0/\n")
-    handle.write("#\n")
     handle.write("# For details on index index-" + index + ".txt see the Encoding Standard\n")
     handle.write("# https://encoding.spec.whatwg.org/\n")
     handle.write("#\n")

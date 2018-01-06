@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-jis0212.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 83bf90dd1c591a4355730d8c4567efc499d74da7490531019ef22a879991cfb7
-# Date: 2017-05-06
+# Date: 2018-01-06
 
  108	0x02D8	˘ (BREVE)
  109	0x02C7	ˇ (CARON)

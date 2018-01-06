@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-gb18030-ranges.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: f963aaa1653f630c523e7b04729fb4e4458f35806c45eb5c179445623138f0c0
-# Date: 2017-05-06
+# Date: 2018-01-06
 
      0	0x0080
     36	0x00A5

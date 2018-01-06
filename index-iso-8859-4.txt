@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-iso-8859-4.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 72f29c92344d351fe9e74a946e7e0468d76d542c6894ff82982cb652ebe0feb7
-# Date: 2017-05-06
+# Date: 2018-01-06
 
   0	0x0080	 (<control>)
   1	0x0081	 (<control>)

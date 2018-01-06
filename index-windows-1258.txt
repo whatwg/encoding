@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-windows-1258.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 198bacedfcf24390e219240a7b776b6cec34cff070330b08a601a69c67f7eb24
-# Date: 2017-05-06
+# Date: 2018-01-06
 
   0	0x20AC	€ (EURO SIGN)
   1	0x0081	 (<control>)

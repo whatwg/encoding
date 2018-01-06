@@ -1,10 +1,6 @@
 @import 'https://resources.whatwg.org/fonts/faces.css';
 @import 'visualization-colors.css';
 
-/* Any copyright is dedicated to the Public Domain.
- * http://creativecommons.org/publicdomain/zero/1.0/ */
-
-
 /* Common styling from standard.css */
 h1 {
   color: #3c790a; /* WHATWG Green */

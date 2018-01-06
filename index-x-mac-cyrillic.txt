@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-x-mac-cyrillic.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 73e8e7642c6fa9de29d42819b47fba55b58666fb1e339faeb4a89a0bd7c24d43
-# Date: 2017-05-06
+# Date: 2018-01-06
 
   0	0x0410	А (CYRILLIC CAPITAL LETTER A)
   1	0x0411	Б (CYRILLIC CAPITAL LETTER BE)

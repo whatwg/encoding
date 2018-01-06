@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-koi8-r.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: c5497cd9071cb352c0e56b219154e539badf63de40b71578f09e2e11fe7d50ae
-# Date: 2017-05-06
+# Date: 2018-01-06
 
   0	0x2500	─ (BOX DRAWINGS LIGHT HORIZONTAL)
   1	0x2502	│ (BOX DRAWINGS LIGHT VERTICAL)
