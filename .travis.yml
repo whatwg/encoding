@@ -8,7 +8,7 @@ env:
     - POST_BUILD_STEP='python visualize.py "$DIR/"'
 
 script:
-  - curl --remote-name --fail https://resources.whatwg.org/build/deploy.sh && bash ./deploy.sh
+  - make deploy
 
 branches:
   only:
