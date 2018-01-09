@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-windows-1251.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 7592ef921679ba168b00a9e9afa3b4eebd67bf13dc7e84c4b6e120de856826e0
-# Date: 2017-05-06
+# Date: 2018-01-06
 
   0	0x0402	Ђ (CYRILLIC CAPITAL LETTER DJE)
   1	0x0403	Ѓ (CYRILLIC CAPITAL LETTER GJE)

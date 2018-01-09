@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-macintosh.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: f2c6a4f6406b3e86a50a5dba4d2b7dd48e2e33c0d82aefe764535c934ec11764
-# Date: 2017-05-06
+# Date: 2018-01-06
 
   0	0x00C4	Ä (LATIN CAPITAL LETTER A WITH DIAERESIS)
   1	0x00C5	Å (LATIN CAPITAL LETTER A WITH RING ABOVE)

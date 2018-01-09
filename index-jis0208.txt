@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-jis0208.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: cbaa91f3deb7d0841faf5c33041fc15a285da0e87e64ab802c4bf04b7c4da861
-# Date: 2017-05-06
+# Date: 2018-01-06
 
     0	0x3000	　 (IDEOGRAPHIC SPACE)
     1	0x3001	、 (IDEOGRAPHIC COMMA)

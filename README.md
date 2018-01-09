@@ -16,8 +16,8 @@ started, leave a comment on the issue or ask around [on IRC](https://wiki.whatwg
 ### Pull requests
 
 In short, change `encoding.bs` and submit your patch, with a
-[good commit message](https://github.com/erlang/otp/wiki/Writing-good-commit-messages). Consider
-reading through the [WHATWG FAQ](https://wiki.whatwg.org/wiki/FAQ) if you are new here.
+[good commit message](https://github.com/whatwg/meta/blob/master/COMMITTING.md). Consider
+reading through the [WHATWG FAQ](https://whatwg.org/faq) if you are new here.
 
 Please add your name to the Acknowledgments section in your first pull request, even for trivial
 fixes. The names are sorted lexicographically.
@@ -27,15 +27,12 @@ If you want to preview the spec locally, you can either use a locally installed 
 running `make remote`.
 
 If you want to do a complete "local deploy" including commit and/or branch snapshots, run
-
-```
-./deploy.sh --local
-```
+`make deploy`.
 
 ### Merge policy
 
 If you can commit to this repository, see the
-[html repository's TEAM](https://github.com/whatwg/html/blob/master/TEAM.md) for guidelines.
+[WHATWG Maintainer Guidelines](https://github.com/whatwg/meta/blob/master/MAINTAINERS.md).
 
 ### Tests
 

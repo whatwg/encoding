@@ -1,11 +1,8 @@
-# Any copyright is dedicated to the Public Domain.
-# https://creativecommons.org/publicdomain/zero/1.0/
-#
 # For details on index index-big5.txt see the Encoding Standard
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: 8dfc771062e7be0810919082c2c06baa2236147909e0ecc235b1cb9ad782ac82
-# Date: 2017-05-06
+# Date: 2018-01-06
 
   942	0x43F0	䏰 (<CJK Ideograph Extension A>)
   943	0x4C32	䰲 (<CJK Ideograph Extension A>)
