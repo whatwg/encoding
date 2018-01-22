@@ -1084,8 +1084,8 @@ interface TextDecoder {
   readonly attribute DOMString encoding;
   readonly attribute boolean fatal;
   readonly attribute boolean ignoreBOM;
-  readonly attribute ReadableStream readable;
-  readonly attribute WritableStream writable;
+  [SameObject] readonly attribute ReadableStream readable;
+  [SameObject] readonly attribute WritableStream writable;
   USVString decode(optional BufferSource input, optional TextDecodeOptions options);
 };</pre>
 
@@ -1412,13 +1412,14 @@ of data from the input {{ReadableStream}}, given a {{TextDecoder}} <var>dec</var
  Exposed=(Window,Worker)]
 interface TextEncoder {
   readonly attribute DOMString encoding;
-  readonly attribute ReadableStream readable;
-  readonly attribute WritableStream writable;
+  [SameObject] readonly attribute ReadableStream readable;
+  [SameObject] readonly attribute WritableStream writable;
   [NewObject] Uint8Array encode(optional USVString input = "");
 };</pre>
 
-<p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn> and <dfn
-for=TextEncoder>transform</dfn> (a {{TransformStream}} object).
+<p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn>, <dfn
+for=TextEncoder>transform</dfn> (a {{TransformStream}} object) and <dfn for=TextEncoder>pending high
+surrogate</dfn> (initially unset).
 
 <p class="note no-backref">A {{TextEncoder}} object offers no <var>label</var> argument as it only
 supports <a>UTF-8</a>. It also offers no <code>stream</code> option as no <a for=/>encoder</a>
@@ -1467,8 +1468,8 @@ constructor, when invoked, must run these steps:
  <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
  and runs the <a>encode and enqueue a chunk</a> algorithm with <var>enc</var> and <var>chunk</var>.
 
- <li><p>Let <var>flushAlgorithm</var> be an algorithm which returns <a>a promise resolved with</a>
- undefined.
+ <li><p>Let <var>flushAlgorithm</var> be an algorithm which runs the <a>encode and flush</a>
+ algorithm with <var>enc</var>.
 
  <li><p>Let <var>transform</var> be the result of calling <a
  abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
@@ -1532,12 +1533,12 @@ must run these steps:
   </ol>
 </ol>
 
-<p>The <dfn id=concept-td-encode-and-enqueue>encode and enqueue a chunk</dfn> algorithm, given a
-{{TextEncoder}} <var>dec</var> and <var>chunk</var>, runs these steps:
+<p>The <dfn id=concept-te-encode-and-enqueue>encode and enqueue a chunk</dfn> algorithm, given a
+{{TextEncoder}} <var>enc</var> and <var>chunk</var>, runs these steps:
 
 <ol>
  <li><p>Let <var>input</var> be the result of <a lt="converted to an IDL value">converting</a>
- <var>chunk</var> to a {{USVString}}. If this throws an exception, return a promise rejected with
+ <var>chunk</var> to a {{DOMString}}. If this throws an exception, return a promise rejected with
  that exception.
 
  <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
@@ -1546,34 +1547,96 @@ must run these steps:
 
  <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
 
- <li><p>Let <var>controller</var> be <var>dec</var>'s <a for=TextEncoder>transform</a>'s
+ <li><p>Let <var>controller</var> be <var>enc</var>'s <a for=TextEncoder>transform</a>'s
  \[[transformStreamController]] <a>internal slot</a>.
 
  <li><p>While true, run these substeps:
 
- <!--
-      TODO(ricea): This algorithm cannot deal with having a surrogate pair split between two
-      chunks. This is consistent with the encode() method but arguably is a worse limitation in the
-      streaming case.
- -->
-
  <ol>
   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>input</var>.
 
-  <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
-  <var>encoder</var>, <var>input</var>, <var>output</var>.
+  <li><p>If <var>token</var> is <a>end-of-stream</a> then run these substeps:
 
-  <li><p>If <var>result</var> is <a>finished</a>, run these substeps:
   <ol>
    <li><p>Convert <var>output</var> into a byte sequence.
 
-   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>output</var>).
+   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+   <var>output</var>).
 
    <li><p>Return <a>a promise resolved with</a> undefined.
   </ol>
+
+  <li><p>Let <var>result</var> by the result of executing the <a>convert code unit to scalar value</a>
+  algorithm with <var>enc</var> and <var>token</var>.
+
+  <li><p>If <var>result</var> is not <a>continue</a>, <a>process</a> <var>result</var> for
+  <var>encoder</var>, <var>input</var>, <var>output</var>.
+
  </ol>
 </ol>
 
+
+<p>The <dfn id=concept-te-convert-code-unit-to-scalar-value>convert code unit to scalar value</dfn>
+algorithm, given a {{TextEncoder}} <var>enc</var> and <var>token</var>, runs these steps:
+
+<ol>
+ <li><p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these substeps:
+
+ <ol>
+  <li><p>Let <var>high surrogate</var> be <var>enc</var>'s <a>pending high surrogate</a>.
+
+  <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>.
+
+  <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, return a code point whose
+  value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>token</var>
+  &minus; 0xDC00).
+
+  <li><p>Return U+FFFD.
+ </ol>
+
+ <li><p>If <var>token</var> is in the range U+D800 to U+DBFF, inclusive, set <a>pending high
+ surrogate</a> to <var>token</var> and return <a>continue</a>.
+
+ <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, return U+FFFD.
+
+ <li><p>Return <var>token</var>.
+</ol>
+
+<p class=note>This is equivalent to the <a spec=webidl>convert a DOMString to a sequence of Unicode
+scalar values</a> algorithm from [[WEBIDL]], but allows for surrogate pairs that are split between
+strings.
+
+
+<p>The <dfn id=concept-te-encode-and-flush>encode and flush</dfn> algorithm, given a
+{{TextEncoder}} <var>enc</var>, runs these steps:
+
+<ol>
+ <li><p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these substeps:
+
+ <ol>
+  <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>
+
+  <li><p>Let <var>input</var> be a new <a for=/>stream</a>.
+
+  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+
+  <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
+
+  <li><p>Let <var>controller</var> be <var>enc</var>'s <a for=TextEncoder>transform</a>'s
+  \[[transformStreamController]] <a>internal slot</a>.
+
+  <li><p>Let <var>token</var> be U+FFFD.
+
+  <li><p><a>Process</a> <var>token</var> for <var>encoder</var>, <var>input</var>, <var>output</var>.
+
+  <li><p>Convert <var>output</var> into a byte sequence.
+
+  <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+  <var>output</var>).
+ </ol>
+
+ <li><p>Return <a>a promise resolved with</a> undefined.
+</ol>
 
 
 <h2 id=the-encoding>The encoding</h2>
