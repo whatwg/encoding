@@ -28,24 +28,18 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 spec:infra; type:dfn;
     text:code point
     text:ascii case-insensitive
-spec:streams; type:interface;
-    text:ReadableStream
-    text:WritableStream
+spec:streams;
+    type:interface; text:ReadableStream
+    type:dfn; text:chunk
+    type:dfn; text:readable stream
+    type:dfn; text:writable stream
 </pre>
 
 <pre class=anchors>
-spec: streams; urlPrefix: https://streams.spec.whatwg.org/
-    type:dfn; text:chunk; url:#chunk
-    type:dfn; text:readable stream; url:#readable-stream
-    type:dfn; text:writable stream; url:#writable-stream
-    type:abstract-op; text:CreateTransformStream; url: #create-transform-stream
-    type:abstract-op; text:TransformStreamDefaultControllerEnqueue; url: #transform-stream-default-controller-enqueue
-    type:interface; text:TransformStream; url: #ts-class
 spec: ECMASCRIPT; urlPrefix: https://tc39.github.io/ecma262/
-    text: type; url: #sec-ecmascript-data-types-and-values; type: dfn
+    text: Type; url: #sec-ecmascript-data-types-and-values; type: dfn
     text: IsDetachedBuffer; url: #sec-isdetachedbuffer; type: abstract-op
     text: IsSharedArrayBuffer; url: #sec-issharedarraybuffer; type: abstract-op
-    text: internal slot; url: #sec-object-internal-methods-and-internal-slots; type: dfn
 </pre>
 
 
@@ -1171,11 +1165,11 @@ control.
   <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a
   {{ReadableStream}} source.
 
-<pre class=example id=example-textdecode-writable>
+  <pre class=example id=example-textdecode-writable><code class=lang-javascript>
 var decoder = new TextDecoder(encoding);
 byteReadable
   .pipeThrough(decoder)
-  .pipeTo(textWritable);</pre>
+  .pipeTo(textWritable);</code></pre>
 
   <p>If the <a for=TextDecoder>error mode</a> is "<code>fatal</code>" and
   <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>, both {{TextDecoder/readable}}
@@ -1246,26 +1240,24 @@ if <a for=TextDecoder>error mode</a> is "<code>fatal</code>", and false otherwis
 <p>The <dfn attribute for=TextDecoder><code>ignoreBOM</code></dfn> attribute's getter must return
 true if <a for=TextDecoder>ignore BOM flag</a> is set, and false otherwise.
 
-<p>The <dfn attribute for=TextDecoder><code>readable</code></dfn> attribute's getter must return the
-contents of <a for=TextDecoder>transform</a>'s \[[readable]] <a>internal slot</a>.
+<p>The <dfn attribute for=TextDecoder><code>readable</code></dfn> attribute's getter must return <a
+for=TextDecoder>transform</a>.\[[readable]].
 
-<p>The <dfn attribute for=TextDecoder><code>writable</code></dfn> attribute's getter must return the
-contents of <a for=TextDecoder>transform</a>'s \[[writable]] <a>internal slot</a>.
+<p>The <dfn attribute for=TextDecoder><code>writable</code></dfn> attribute's getter must return <a
+for=TextDecoder>transform</a>.\[[writable]].
 
 <p>The <dfn method for=TextDecoder><code>decode(<var>input</var>, <var>options</var>)</code></dfn>
 method, when invoked, must run these steps:
 
 <ol>
- <li><p>Let <var>readable</var> be <a for=TextDecoder>transform</a>'s \[[readable]] <a>internal
- slot</a>.
+ <li><p>Let <var>readable</var> be <a for=TextDecoder>transform</a>.\[[readable]].
 
- <li><p>If <a abstract-op>IsReadableStreamLocked</a>(<var>readable</var>) is true, throw a
+ <li><p>If <a abstract-op>IsReadableStreamLocked</a>(<var>readable</var>) is true, then throw a
  {{TypeError}} exception.
 
- <li><p>Let <var>writable</var> be <a for=TextDecoder>transform</a>'s \[[writable]] <a>internal
- slot</a>.
+ <li><p>Let <var>writable</var> be <a for=TextDecoder>transform</a>.\[[writable]].
 
- <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, throw a
+ <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a
  {{TypeError}} exception.
 
  <p class="note">These steps ensure that the state of the <a for=/>decoder</a> is not simultaneously modified by
@@ -1275,7 +1267,7 @@ method, when invoked, must run these steps:
  to a new <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>, set <a for=TextDecoder>stream</a>
  to a new <a for=/>stream</a>, and unset the <a for=TextDecoder>BOM seen flag</a>.
 
- <li><p>If <var>options</var>'s <code>stream</code> is true, set the
+ <li><p>If <var>options</var>'s <code>stream</code> is true, then set the
  <a for=TextDecoder>do not flush flag</a>, and unset the <a for=TextDecoder>do not flush flag</a>
  otherwise.
 
@@ -1326,11 +1318,10 @@ method, when invoked, must run these steps:
 {{TextDecoder}} <var>dec</var> and a <var>chunk</var>, runs these steps:
 
 <ol>
- <li><p>If the <a>type</a> of of <var>chunk</var> is not Object, or <var>chunk</var> does not have
- an \[[ArrayBufferData]] <a>internal slot</a>, or <a
- abstract-op>IsDetachedBuffer</a>(<var>chunk</var>) is true, or <a
- abstract-op>IsSharedArrayBuffer</a>(<var>chunk</var>) is true then return <a>a promise rejected
- with</a> a {{TypeError}}.
+ <li><p>If <a>Type</a>(<var>chunk</var>) is not Object, or <var>chunk</var> does not have an
+ \[[ArrayBufferData]] internal slot, or <a abstract-op>IsDetachedBuffer</a>(<var>chunk</var>) is
+ true, or <a abstract-op>IsSharedArrayBuffer</a>(<var>chunk</var>) is true, then return a new
+ promise rejected with a {{TypeError}} exception.
 
  <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, set
  <var>dec's</var> <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <var>dec</var>'s
@@ -1342,33 +1333,33 @@ method, when invoked, must run these steps:
  <li><p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>chunk</var> to
  <var>dec</var>'s <a for=TextDecoder>stream</a>.
 
- <li><p>Let <var>controller</var> be <var>dec</var>'s <a for=TextDecoder>transform</a>'s
- \[[transformStreamController]] <a>internal slot</a>.
+ <li><p>Let <var>controller</var> be <var>dec</var>'s
+ <a for=TextDecoder>transform</a>.\[[transformStreamController]].
 
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
  <li>
-  <p>While true, run these substeps:
+  <p>While true, run these steps:
 
   <ol>
    <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>dec</var>'s <a
    for=TextDecoder>stream</a>.
 
    <li>
-    <p>If <var>token</var> is <a>end-of-stream</a>, run these substeps:
+    <p>If <var>token</var> is <a>end-of-stream</a>, run these steps:
     <ol>
      <li><p>Let <var>outputChunk</var> be <var>output</var>, <a lt="serialize stream">serialized</a>.
 
      <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>).
 
-     <li><p>Return <a>a promise resolved with</a> undefined.
+     <li><p>Return a new promise resolved with undefined.
     </ol>
 
    <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
    <var>dec</var>'s <a for=TextDecoder>decoder</a>, <var>dec</var>'s <a for=TextDecoder>stream</a>,
    <var>output</var>, and <var>dec's</var> <a for=TextDecoder>error mode</a>.
 
-   <li><p>If <var>result</var> is <a>error</a>, return <a>a promise rejected with</a> a
+   <li><p>If <var>result</var> is <a>error</a>, return a new promise rejected with a
    {{TypeError}} exception.
   </ol>
 </ol>
@@ -1390,20 +1381,21 @@ of data from the input {{ReadableStream}}, given a {{TextDecoder}} <var>dec</var
  <var>dec</var>'s <a for=TextDecoder>decoder</a> and <var>dec</var>'s <a for=TextDecoder>stream</a>,
  <var>output</var>, and <var>dec</var>'s <a for=TextDecoder>error mode</a>.
 
- <li><p>If <var>result</var> is <a>finished</a>, run these substeps:
+ <li><p>If <var>result</var> is <a>finished</a>, run these steps:
  <ol>
   <li><p>Let <var>outputChunk</var> be <var>output</var>, <a lt="serialize stream">serialized</a>.
 
-  <li><p>Let <var>controller</var> be <var>dec</var>'s <a for=TextDecoder>transform</a>'s
-  \[[transformStreamController]] <a>internal slot</a>.
+  <li><p>Let <var>controller</var> be <var>dec</var>'s
+  <a for=TextDecoder>transform</a>.\[[transformStreamController]].
 
   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>).
 
-  <li><p>Return <a>a promise resolved with</a> undefined.
+  <li><p>Return a new promise resolved with undefined.
  </ol>
 
- <li><p>Otherwise, return <a>a promise rejected with</a> a {{TypeError}}.
+ <li><p>Otherwise, return a new promise rejected with a {{TypeError}} exception.
 </ol>
+
 
 <h3 id=interface-textencoder>Interface {{TextEncoder}}</h3>
 
@@ -1446,10 +1438,11 @@ requires buffering of scalar values.
 
   <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a {{ReadableStream}} source.
 
-<pre class=example id=example-textencode-writable>
+
+  <pre class=example id=example-textencode-writable><code class=lang-javascript>
 textReadable
   .pipeThrough(new TextEncoder())
-  .pipeTo(byteWritable);</pre>
+  .pipeTo(byteWritable);</code></pre>
 
  <dt><code><var>encoder</var> . <a method for=TextEncoder lt=encode()>encode([<var>input</var> = ""])</a></code>
  <dd><p>Returns the result of running <a>UTF-8</a>'s <a for=/>encoder</a>.
@@ -1483,26 +1476,24 @@ constructor, when invoked, must run these steps:
 <p>The <dfn attribute for=TextEncoder><code>encoding</code></dfn> attribute's getter must return
 "<code>utf-8</code>".
 
-<p>The <dfn attribute for=TextEncoder><code>readable</code></dfn> attribute's getter must return the
-contents of <a for=TextEncoder>transform</a>'s \[[readable]] <a>internal slot</a>.
+<p>The <dfn attribute for=TextEncoder><code>readable</code></dfn> attribute's getter must return <a
+for=TextEncoder>transform</a>.\[[readable]].
 
-<p>The <dfn attribute for=TextEncoder><code>writable</code></dfn> attribute's getter must return the
-contents of <a for=TextEncoder>transform</a>'s \[[writable]] <a>internal slot</a>.
+<p>The <dfn attribute for=TextEncoder><code>writable</code></dfn> attribute's getter must return <a
+for=TextEncoder>transform</a>.\[[writable]].
 
 <p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method, when invoked,
 must run these steps:
 
 <ol>
- <li><p>Let <var>readable</var> be <a for=TextEncoder>transform</a>'s \[[readable]] <a>internal
- slot</a>.
+ <li><p>Let <var>readable</var> be <a for=TextEncoder>transform</a>.\[[readable]].
 
- <li><p>If <a abstract-op>IsReadableStreamLocked</a>(<var>readable</var>) is true, throw a
+ <li><p>If <a abstract-op>IsReadableStreamLocked</a>(<var>readable</var>) is true, then throw a
  {{TypeError}} exception.
 
- <li><p>Let <var>writable</var> be <a for=TextEncoder>transform</a>'s \[[writable]] <a>internal
- slot</a>.
+ <li><p>Let <var>writable</var> be <a for=TextEncoder>transform</a>.\[[writable]].
 
- <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, throw a
+ <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a
  {{TypeError}} exception.
 
  <p class="note">These steps are for consistent behaviour with the {{TextDecoder}} <a method
@@ -1547,15 +1538,15 @@ must run these steps:
 
  <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
 
- <li><p>Let <var>controller</var> be <var>enc</var>'s <a for=TextEncoder>transform</a>'s
- \[[transformStreamController]] <a>internal slot</a>.
+ <li><p>Let <var>controller</var> be <var>enc</var>'s <a
+ for=TextEncoder>transform</a>.\[[transformStreamController]].
 
- <li><p>While true, run these substeps:
+ <li><p>While true, run these steps:
 
  <ol>
   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>input</var>.
 
-  <li><p>If <var>token</var> is <a>end-of-stream</a> then run these substeps:
+  <li><p>If <var>token</var> is <a>end-of-stream</a>, then run these steps:
 
   <ol>
    <li><p>Convert <var>output</var> into a byte sequence.
@@ -1563,11 +1554,11 @@ must run these steps:
    <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
    <var>output</var>).
 
-   <li><p>Return <a>a promise resolved with</a> undefined.
+   <li><p>Return a new promise resolved with undefined.
   </ol>
 
-  <li><p>Let <var>result</var> by the result of executing the <a>convert code unit to scalar value</a>
-  algorithm with <var>enc</var> and <var>token</var>.
+  <li><p>Let <var>result</var> be the result of executing the <a>convert code unit to scalar
+  value</a> algorithm with <var>enc</var>, <var>token</var> and <var>input</var>.
 
   <li><p>If <var>result</var> is not <a>continue</a>, <a>process</a> <var>result</var> for
   <var>encoder</var>, <var>input</var>, <var>output</var>.
@@ -1577,10 +1568,11 @@ must run these steps:
 
 
 <p>The <dfn id=concept-te-convert-code-unit-to-scalar-value>convert code unit to scalar value</dfn>
-algorithm, given a {{TextEncoder}} <var>enc</var> and <var>token</var>, runs these steps:
+algorithm, given a {{TextEncoder}} <var>enc</var>, <var>token</var> and <var>input</var> stream,
+runs these steps:
 
 <ol>
- <li><p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these substeps:
+ <li><p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these steps:
 
  <ol>
   <li><p>Let <var>high surrogate</var> be <var>enc</var>'s <a>pending high surrogate</a>.
@@ -1590,6 +1582,8 @@ algorithm, given a {{TextEncoder}} <var>enc</var> and <var>token</var>, runs the
   <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, return a code point whose
   value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>token</var>
   &minus; 0xDC00).
+
+  <li><p><a>Prepend</a> <var>token</var> to <var>input</var>.
 
   <li><p>Return U+FFFD.
  </ol>
@@ -1611,7 +1605,7 @@ strings.
 {{TextEncoder}} <var>enc</var>, runs these steps:
 
 <ol>
- <li><p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these substeps:
+ <li><p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these steps:
 
  <ol>
   <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>
@@ -1622,8 +1616,8 @@ strings.
 
   <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
 
-  <li><p>Let <var>controller</var> be <var>enc</var>'s <a for=TextEncoder>transform</a>'s
-  \[[transformStreamController]] <a>internal slot</a>.
+  <li><p>Let <var>controller</var> be <var>enc</var>'s <a
+  for=TextEncoder>transform</a>.\[[transformStreamController]].
 
   <li><p>Let <var>token</var> be U+FFFD.
 
@@ -1635,7 +1629,7 @@ strings.
   <var>output</var>).
  </ol>
 
- <li><p>Return <a>a promise resolved with</a> undefined.
+ <li><p>Return a new promise resolved with undefined.
 </ol>
 
 
