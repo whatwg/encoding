@@ -1314,6 +1314,8 @@ method, when invoked, must run these steps:
   </ol>
 </ol>
 
+<hr>
+
 <p>The <dfn id=concept-td-decode-and-enqueue>decode and enqueue a chunk</dfn> algorithm, given a
 {{TextDecoder}} <var>dec</var> and a <var>chunk</var>, runs these steps:
 
@@ -1528,6 +1530,8 @@ must run these steps:
   </ol>
 </ol>
 
+<hr>
+
 <p>The <dfn id=concept-te-encode-and-enqueue>encode and enqueue a chunk</dfn> algorithm, given a
 {{TextEncoder}} <var>enc</var> and <var>chunk</var>, runs these steps:
 
@@ -1570,7 +1574,6 @@ must run these steps:
  </ol>
 </ol>
 
-
 <p>The <dfn id=concept-te-convert-code-unit-to-scalar-value>convert code unit to scalar value</dfn>
 algorithm, given a {{TextEncoder}} <var>enc</var>, <var>token</var> and <var>input</var> stream,
 runs these steps:
@@ -1603,7 +1606,6 @@ runs these steps:
 <p class=note>This is equivalent to the <a spec=webidl>convert a DOMString to a sequence of Unicode
 scalar values</a> algorithm from [[WEBIDL]], but allows for surrogate pairs that are split between
 strings.
-
 
 <p>The <dfn id=concept-te-encode-and-flush>encode and flush</dfn> algorithm, given a
 {{TextEncoder}} <var>enc</var>, runs these steps:
