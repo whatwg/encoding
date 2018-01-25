@@ -1152,14 +1152,14 @@ control.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoder>readable</a></code>
  <dd>
-  <p>Returns a <a>readable stream</a> whose <a>chunks</a> are strings resulting from running <a
-  for=TextDecoder>encoding</a>'s <a for=/>decoder</a> on the chunks written to
+  <p>Returns a <a>readable stream</a> whose <a>chunks</a> are strings resulting from running
+  <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a> on the chunks written to
   {{TextDecoder/writable}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoder>writable</a></code>
  <dd>
-  <p>Returns a <a>writable stream</a> which accepts {{BufferSource}} chunks and runs them through <a
-  for=TextDecoder>encoding</a>'s <a for=/>decoder</a> before making them available to
+  <p>Returns a <a>writable stream</a> which accepts {{BufferSource}} chunks and runs them through
+  <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a> before making them available to
   {{TextDecoder/readable}}.
 
   <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a
@@ -1172,8 +1172,8 @@ byteReadable
   .pipeTo(textWritable);</code></pre>
 
   <p>If the <a for=TextDecoder>error mode</a> is "<code>fatal</code>" and
-  <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>, both {{TextDecoder/readable}}
-  and {{TextDecoder/writable}} will be errored with a {{TypeError}}.
+  <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>, both
+  {{TextDecoder/readable}} and {{TextDecoder/writable}} will be errored with a {{TypeError}}.
 
  <dt><code><var>decoder</var> . <a method for=TextDecoder lt=decode()>decode([<var>input</var> [, <var>options</var>]])</a></code>
  <dd>
@@ -1222,8 +1222,8 @@ constructor, when invoked, must run these steps:
  <li><p>Let <var>flushAlgorithm</var> be an algorithm which takes no arguments and runs the <a>flush
  and enqueue</a> algorithm with <var>dec</var>.
 
- <li><p>Let <var>transform</var> be the result of calling <a
- abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
+ <li><p>Let <var>transform</var> be the result of calling
+ <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
  <var>flushAlgorithm</var>).
 
  <li><p>Set <var>dec</var>'s <a for=TextDecoder>transform</a> to <var>transform</var>.
@@ -1240,11 +1240,11 @@ if <a for=TextDecoder>error mode</a> is "<code>fatal</code>", and false otherwis
 <p>The <dfn attribute for=TextDecoder><code>ignoreBOM</code></dfn> attribute's getter must return
 true if <a for=TextDecoder>ignore BOM flag</a> is set, and false otherwise.
 
-<p>The <dfn attribute for=TextDecoder><code>readable</code></dfn> attribute's getter must return <a
-for=TextDecoder>transform</a>.\[[readable]].
+<p>The <dfn attribute for=TextDecoder><code>readable</code></dfn> attribute's getter must return
+<a for=TextDecoder>transform</a>.\[[readable]].
 
-<p>The <dfn attribute for=TextDecoder><code>writable</code></dfn> attribute's getter must return <a
-for=TextDecoder>transform</a>.\[[writable]].
+<p>The <dfn attribute for=TextDecoder><code>writable</code></dfn> attribute's getter must return
+<a for=TextDecoder>transform</a>.\[[writable]].
 
 <p>The <dfn method for=TextDecoder><code>decode(<var>input</var>, <var>options</var>)</code></dfn>
 method, when invoked, must run these steps:
@@ -1260,8 +1260,8 @@ method, when invoked, must run these steps:
  <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a
  {{TypeError}} exception.
 
- <p class="note">These steps ensure that the state of the <a for=/>decoder</a> is not simultaneously modified by
- the Streams API and this method.
+ <p class="note">These steps ensure that the state of the <a for=/>decoder</a> is not simultaneously
+ modified by the Streams API and this method.
 
  <li><p>If the <a for=TextDecoder>do not flush flag</a> is unset, set <a for=TextDecoder>decoder</a>
  to a new <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>, set <a for=TextDecoder>stream</a>
@@ -1325,8 +1325,8 @@ method, when invoked, must run these steps:
 
  <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, set
  <var>dec's</var> <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <var>dec</var>'s
- <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new <a
- for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
+ <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new
+ <a for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
 
  <li><p>Set <var>dec</var>'s <a for=TextDecoder>do not flush flag</a>.
 
@@ -1342,15 +1342,17 @@ method, when invoked, must run these steps:
   <p>While true, run these steps:
 
   <ol>
-   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>dec</var>'s <a
-   for=TextDecoder>stream</a>.
+   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>dec</var>'s
+   <a for=TextDecoder>stream</a>.
 
    <li>
     <p>If <var>token</var> is <a>end-of-stream</a>, run these steps:
     <ol>
-     <li><p>Let <var>outputChunk</var> be <var>output</var>, <a lt="serialize stream">serialized</a>.
+     <li><p>Let <var>outputChunk</var> be <var>output</var>,
+     <a lt="serialize stream">serialized</a>.
 
-     <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>).
+     <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+     <var>outputChunk</var>).
 
      <li><p>Return a new promise resolved with undefined.
     </ol>
@@ -1370,8 +1372,8 @@ of data from the input {{ReadableStream}}, given a {{TextDecoder}} <var>dec</var
 <ol>
  <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, set
  <var>dec's</var> <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <var>dec</var>'s
- <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new <a
- for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
+ <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new
+ <a for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
 
  <li><p>Unset <var>dec</var>'s <a for=TextDecoder>do not flush flag</a>.
 
@@ -1388,7 +1390,8 @@ of data from the input {{ReadableStream}}, given a {{TextDecoder}} <var>dec</var
   <li><p>Let <var>controller</var> be <var>dec</var>'s
   <a for=TextDecoder>transform</a>.\[[transformStreamController]].
 
-  <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>).
+  <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+  <var>outputChunk</var>).
 
   <li><p>Return a new promise resolved with undefined.
  </ol>
@@ -1409,9 +1412,9 @@ interface TextEncoder {
   [NewObject] Uint8Array encode(optional USVString input = "");
 };</pre>
 
-<p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn>, <dfn
-for=TextEncoder>transform</dfn> (a {{TransformStream}} object) and <dfn for=TextEncoder>pending high
-surrogate</dfn> (initially unset).
+<p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn>,
+<dfn for=TextEncoder>transform</dfn> (a {{TransformStream}} object) and
+<dfn for=TextEncoder>pending high surrogate</dfn> (initially unset).
 
 <p class="note no-backref">A {{TextEncoder}} object offers no <var>label</var> argument as it only
 supports <a>UTF-8</a>. It also offers no <code>stream</code> option as no <a for=/>encoder</a>
@@ -1436,7 +1439,8 @@ requires buffering of scalar values.
   <p>Returns a <a>writable stream</a> which accepts string chunks and runs them through
   <a>UTF-8</a>'s <a for=/>encoder</a> before making them available to {{TextEncoder/readable}}.
 
-  <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a {{ReadableStream}} source.
+  <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a
+  {{ReadableStream}} source.
 
 
   <pre class=example id=example-textencode-writable><code class=lang-javascript>
@@ -1464,8 +1468,8 @@ constructor, when invoked, must run these steps:
  <li><p>Let <var>flushAlgorithm</var> be an algorithm which runs the <a>encode and flush</a>
  algorithm with <var>enc</var>.
 
- <li><p>Let <var>transform</var> be the result of calling <a
- abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
+ <li><p>Let <var>transform</var> be the result of calling
+ <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
  <var>flushAlgorithm</var>).
 
  <li><p>Set <var>enc</var>'s <a for=TextEncoder>transform</a> to <var>transform</var>
@@ -1476,11 +1480,11 @@ constructor, when invoked, must run these steps:
 <p>The <dfn attribute for=TextEncoder><code>encoding</code></dfn> attribute's getter must return
 "<code>utf-8</code>".
 
-<p>The <dfn attribute for=TextEncoder><code>readable</code></dfn> attribute's getter must return <a
-for=TextEncoder>transform</a>.\[[readable]].
+<p>The <dfn attribute for=TextEncoder><code>readable</code></dfn> attribute's getter must return
+<a for=TextEncoder>transform</a>.\[[readable]].
 
-<p>The <dfn attribute for=TextEncoder><code>writable</code></dfn> attribute's getter must return <a
-for=TextEncoder>transform</a>.\[[writable]].
+<p>The <dfn attribute for=TextEncoder><code>writable</code></dfn> attribute's getter must return
+<a for=TextEncoder>transform</a>.\[[writable]].
 
 <p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method, when invoked,
 must run these steps:
@@ -1496,8 +1500,8 @@ must run these steps:
  <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a
  {{TypeError}} exception.
 
- <p class="note">These steps are for consistent behaviour with the {{TextDecoder}} <a method
- for=TextDecoder><code>decode(<var>input</var>)</code></a> method.
+ <p class="note">These steps are for consistent behaviour with the {{TextDecoder}}
+ <a method for=TextDecoder><code>decode(<var>input</var>)</code></a> method.
 
  <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
 
@@ -1538,8 +1542,8 @@ must run these steps:
 
  <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
 
- <li><p>Let <var>controller</var> be <var>enc</var>'s <a
- for=TextEncoder>transform</a>.\[[transformStreamController]].
+ <li><p>Let <var>controller</var> be <var>enc</var>'s
+ <a for=TextEncoder>transform</a>.\[[transformStreamController]].
 
  <li><p>While true, run these steps:
 
@@ -1616,12 +1620,13 @@ strings.
 
   <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
 
-  <li><p>Let <var>controller</var> be <var>enc</var>'s <a
-  for=TextEncoder>transform</a>.\[[transformStreamController]].
+  <li><p>Let <var>controller</var> be <var>enc</var>'s
+  <a for=TextEncoder>transform</a>.\[[transformStreamController]].
 
   <li><p>Let <var>token</var> be U+FFFD.
 
-  <li><p><a>Process</a> <var>token</var> for <var>encoder</var>, <var>input</var>, <var>output</var>.
+  <li><p><a>Process</a> <var>token</var> for <var>encoder</var>, <var>input</var>,
+  <var>output</var>.
 
   <li><p>Convert <var>output</var> into a byte sequence.
 
