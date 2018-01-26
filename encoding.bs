@@ -1348,7 +1348,7 @@ method, when invoked, must run these steps:
    <a for=TextDecoder>stream</a>.
 
    <li>
-    <p>If <var>token</var> is <a>end-of-stream</a>, run these steps:
+    <p>If <var>token</var> is <a>end-of-stream</a>, then run these steps:
     <ol>
      <li><p>Let <var>outputChunk</var> be <var>output</var>,
      <a lt="serialize stream">serialized</a>.
@@ -1385,7 +1385,7 @@ of data from the input {{ReadableStream}}, given a {{TextDecoder}} <var>dec</var
  <var>dec</var>'s <a for=TextDecoder>decoder</a> and <var>dec</var>'s <a for=TextDecoder>stream</a>,
  <var>output</var>, and <var>dec</var>'s <a for=TextDecoder>error mode</a>.
 
- <li><p>If <var>result</var> is <a>finished</a>, run these steps:
+ <li><p>If <var>result</var> is <a>finished</a>, then run these steps:
  <ol>
   <li><p>Let <var>outputChunk</var> be <var>output</var>, <a lt="serialize stream">serialized</a>.
 
@@ -1582,7 +1582,7 @@ runs these steps:
 
 <ol>
  <li>
-  <p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these steps:
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is set, then run these steps:
 
   <ol>
    <li><p>Let <var>high surrogate</var> be <var>enc</var>'s <a>pending high surrogate</a>.
@@ -1615,7 +1615,7 @@ strings.
 
 <ol>
  <li>
-  <p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these steps:
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is set, then run these steps:
 
   <ol>
    <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>
