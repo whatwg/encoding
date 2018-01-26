@@ -1416,7 +1416,7 @@ interface TextEncoder {
 
 <p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn>,
 <dfn for=TextEncoder>transform</dfn> and <dfn for=TextEncoder>pending high surrogate</dfn>
-(initially unset).
+(initially null).
 
 <p class="note no-backref">A {{TextEncoder}} object offers no <var>label</var> argument as it only
 supports <a>UTF-8</a>. It also offers no <code>stream</code> option as no <a for=/>encoder</a>
@@ -1582,12 +1582,12 @@ runs these steps:
 
 <ol>
  <li>
-  <p>If <var>enc</var>'s <a>pending high surrogate</a> is set, then run these steps:
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, then run these steps:
 
   <ol>
    <li><p>Let <var>high surrogate</var> be <var>enc</var>'s <a>pending high surrogate</a>.
 
-   <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>.
+   <li><p>Set <var>enc</var>'s <a>pending high surrogate</a> to null.
 
    <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return a code point
    whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
@@ -1615,10 +1615,10 @@ between strings.
 
 <ol>
  <li>
-  <p>If <var>enc</var>'s <a>pending high surrogate</a> is set, then run these steps:
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, then run these steps:
 
   <ol>
-   <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>
+   <li><p>Set <var>enc</var>'s <a>pending high surrogate</a> to null.
 
    <li><p>Let <var>input</var> be a new <a for=/>stream</a>.
 
