@@ -1325,7 +1325,7 @@ method, when invoked, must run these steps:
  true, or <a abstract-op>IsSharedArrayBuffer</a>(<var>chunk</var>) is true, then return a new
  promise rejected with a {{TypeError}} exception.
 
- <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, set
+ <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, then set
  <var>dec's</var> <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <var>dec</var>'s
  <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new
  <a for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
@@ -1363,7 +1363,7 @@ method, when invoked, must run these steps:
    <var>dec</var>'s <a for=TextDecoder>decoder</a>, <var>dec</var>'s <a for=TextDecoder>stream</a>,
    <var>output</var>, and <var>dec's</var> <a for=TextDecoder>error mode</a>.
 
-   <li><p>If <var>result</var> is <a>error</a>, return a new promise rejected with a
+   <li><p>If <var>result</var> is <a>error</a>, then return a new promise rejected with a
    {{TypeError}} exception.
   </ol>
 </ol>
@@ -1372,7 +1372,7 @@ method, when invoked, must run these steps:
 of data from the input {{ReadableStream}}, given a {{TextDecoder}} <var>dec</var>, runs these steps:
 
 <ol>
- <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, set
+ <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, then set
  <var>dec's</var> <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <var>dec</var>'s
  <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new
  <a for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
@@ -1502,7 +1502,7 @@ must run these steps:
  <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a
  {{TypeError}} exception.
 
- <p class="note">These steps are for consistent behaviour with the {{TextDecoder}}
+ <p class="note">These steps are for consistent behavior with the {{TextDecoder}}
  <a method for=TextDecoder><code>decode(<var>input</var>)</code></a> method.
 
  <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
@@ -1537,8 +1537,8 @@ must run these steps:
 
 <ol>
  <li><p>Let <var>input</var> be the result of <a lt="converted to an IDL value">converting</a>
- <var>chunk</var> to a {{DOMString}}. If this throws an exception, return a promise rejected with
- that exception.
+ <var>chunk</var> to a {{DOMString}}. If this throws an exception, then return a promise rejected
+ with that exception.
 
  <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
 
@@ -1568,7 +1568,7 @@ must run these steps:
   <li><p>Let <var>result</var> be the result of executing the <a>convert code unit to scalar
   value</a> algorithm with <var>enc</var>, <var>token</var> and <var>input</var>.
 
-  <li><p>If <var>result</var> is not <a>continue</a>, <a>process</a> <var>result</var> for
+  <li><p>If <var>result</var> is not <a>continue</a>, then <a>process</a> <var>result</var> for
   <var>encoder</var>, <var>input</var>, <var>output</var>.
 
  </ol>
@@ -1586,19 +1586,19 @@ runs these steps:
 
   <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>.
 
-  <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, return a code point whose
-  value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>token</var>
-  &minus; 0xDC00).
+  <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return a code point
+  whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
+  (<var>token</var> &minus; 0xDC00).
 
   <li><p><a>Prepend</a> <var>token</var> to <var>input</var>.
 
   <li><p>Return U+FFFD.
  </ol>
 
- <li><p>If <var>token</var> is in the range U+D800 to U+DBFF, inclusive, set <a>pending high
+ <li><p>If <var>token</var> is in the range U+D800 to U+DBFF, inclusive, then set <a>pending high
  surrogate</a> to <var>token</var> and return <a>continue</a>.
 
- <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, return U+FFFD.
+ <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return U+FFFD.
 
  <li><p>Return <var>token</var>.
 </ol>
