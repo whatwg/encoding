@@ -1474,7 +1474,7 @@ constructor, when invoked, must run these steps:
  <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
  <var>flushAlgorithm</var>).
 
- <li><p>Set <var>enc</var>'s <a for=TextEncoder>transform</a> to <var>transform</var>
+ <li><p>Set <var>enc</var>'s <a for=TextEncoder>transform</a> to <var>transform</var>.
 
  <li><p>Return <var>enc</var>.
 </ol>
@@ -1606,9 +1606,9 @@ runs these steps:
  <li><p>Return <var>token</var>.
 </ol>
 
-<p class=note>This is equivalent to the <a spec=webidl>convert a DOMString to a sequence of Unicode
-scalar values</a> algorithm from [[WEBIDL]], but allows for surrogate pairs that are split between
-strings.
+<p class=note>This is equivalent to the "<a>convert</a> a <a>JavaScript string</a> into a <a>scalar
+value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs that are split
+between strings.
 
 <p>The <dfn id=concept-te-encode-and-flush>encode and flush</dfn> algorithm, given a
 {{TextEncoder}} <var>enc</var>, runs these steps:
