@@ -1089,7 +1089,7 @@ interface TextDecoder {
 <dfn for=TextDecoder>BOM seen flag</dfn> (initially unset),
 <dfn for=TextDecoder>error mode</dfn> (initially "<code>replacement</code>"),
 <dfn for=TextDecoder>do not flush flag</dfn> (initially unset), and
-<dfn for=TextDecoder>transform</dfn> (a {{TransformStream}} object).
+<dfn for=TextDecoder>transform</dfn>.
 
 <p>A {{TextDecoder}} object also has an associated
 <dfn id=concept-td-serialize for=TextDecoder>serialize stream</dfn> algorithm, that given a
@@ -1415,8 +1415,8 @@ interface TextEncoder {
 };</pre>
 
 <p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn>,
-<dfn for=TextEncoder>transform</dfn> (a {{TransformStream}} object) and
-<dfn for=TextEncoder>pending high surrogate</dfn> (initially unset).
+<dfn for=TextEncoder>transform</dfn> and <dfn for=TextEncoder>pending high surrogate</dfn>
+(initially unset).
 
 <p class="note no-backref">A {{TextEncoder}} object offers no <var>label</var> argument as it only
 supports <a>UTF-8</a>. It also offers no <code>stream</code> option as no <a for=/>encoder</a>
