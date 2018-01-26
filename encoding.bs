@@ -1549,29 +1549,31 @@ must run these steps:
  <li><p>Let <var>controller</var> be <var>enc</var>'s
  <a for=TextEncoder>transform</a>.\[[transformStreamController]].
 
- <li><p>While true, run these steps:
-
- <ol>
-  <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>input</var>.
-
-  <li><p>If <var>token</var> is <a>end-of-stream</a>, then run these steps:
+ <li>
+  <p>While true, run these steps:
 
   <ol>
-   <li><p>Convert <var>output</var> into a byte sequence.
+   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>input</var>.
 
-   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-   <var>output</var>).
+   <li>
+    <p>If <var>token</var> is <a>end-of-stream</a>, then run these steps:
 
-   <li><p>Return a new promise resolved with undefined.
+    <ol>
+     <li><p>Convert <var>output</var> into a byte sequence.
+
+     <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+     <var>output</var>).
+
+     <li><p>Return a new promise resolved with undefined.
+    </ol>
+
+   <li><p>Let <var>result</var> be the result of executing the <a>convert code unit to scalar
+   value</a> algorithm with <var>enc</var>, <var>token</var> and <var>input</var>.
+
+   <li><p>If <var>result</var> is not <a>continue</a>, then <a>process</a> <var>result</var> for
+   <var>encoder</var>, <var>input</var>, <var>output</var>.
+
   </ol>
-
-  <li><p>Let <var>result</var> be the result of executing the <a>convert code unit to scalar
-  value</a> algorithm with <var>enc</var>, <var>token</var> and <var>input</var>.
-
-  <li><p>If <var>result</var> is not <a>continue</a>, then <a>process</a> <var>result</var> for
-  <var>encoder</var>, <var>input</var>, <var>output</var>.
-
- </ol>
 </ol>
 
 <p>The <dfn id=concept-te-convert-code-unit-to-scalar-value>convert code unit to scalar value</dfn>
@@ -1579,21 +1581,22 @@ algorithm, given a {{TextEncoder}} <var>enc</var>, <var>token</var> and <var>inp
 runs these steps:
 
 <ol>
- <li><p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these steps:
+ <li>
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these steps:
 
- <ol>
-  <li><p>Let <var>high surrogate</var> be <var>enc</var>'s <a>pending high surrogate</a>.
+  <ol>
+   <li><p>Let <var>high surrogate</var> be <var>enc</var>'s <a>pending high surrogate</a>.
 
-  <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>.
+   <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>.
 
-  <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return a code point
-  whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
-  (<var>token</var> &minus; 0xDC00).
+   <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return a code point
+   whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
+   (<var>token</var> &minus; 0xDC00).
 
-  <li><p><a>Prepend</a> <var>token</var> to <var>input</var>.
+   <li><p><a>Prepend</a> <var>token</var> to <var>input</var>.
 
-  <li><p>Return U+FFFD.
- </ol>
+   <li><p>Return U+FFFD.
+  </ol>
 
  <li><p>If <var>token</var> is in the range U+D800 to U+DBFF, inclusive, then set <a>pending high
  surrogate</a> to <var>token</var> and return <a>continue</a>.
@@ -1611,30 +1614,31 @@ strings.
 {{TextEncoder}} <var>enc</var>, runs these steps:
 
 <ol>
- <li><p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these steps:
+ <li>
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is set, run these steps:
 
- <ol>
-  <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>
+  <ol>
+   <li><p>Unset <var>enc</var>'s <a>pending high surrogate</a>
 
-  <li><p>Let <var>input</var> be a new <a for=/>stream</a>.
+   <li><p>Let <var>input</var> be a new <a for=/>stream</a>.
 
-  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+   <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
-  <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
+   <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
 
-  <li><p>Let <var>controller</var> be <var>enc</var>'s
-  <a for=TextEncoder>transform</a>.\[[transformStreamController]].
+   <li><p>Let <var>controller</var> be <var>enc</var>'s
+   <a for=TextEncoder>transform</a>.\[[transformStreamController]].
 
-  <li><p>Let <var>token</var> be U+FFFD.
+   <li><p>Let <var>token</var> be U+FFFD.
 
-  <li><p><a>Process</a> <var>token</var> for <var>encoder</var>, <var>input</var>,
-  <var>output</var>.
+   <li><p><a>Process</a> <var>token</var> for <var>encoder</var>, <var>input</var>,
+   <var>output</var>.
 
-  <li><p>Convert <var>output</var> into a byte sequence.
+   <li><p>Convert <var>output</var> into a byte sequence.
 
-  <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-  <var>output</var>).
- </ol>
+   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+   <var>output</var>).
+  </ol>
 
  <li><p>Return a new promise resolved with undefined.
 </ol>
