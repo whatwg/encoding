@@ -1224,16 +1224,17 @@ constructor, when invoked, must run these steps:
  <li><p>Set <var>decForTransform</var>'s <a for=TextDecoder>ignore BOM flag</a> to <var>dec</var>'s
  <a for=TextDecoder>ignore BOM flag</a>.
 
- <li><p>Set <var>decForTransform</var>'s <a for=TextDecoder>decoder</a> to a new
- <a for=/>decoder</a> for <var>decForTransform</var>'s <a for=TextDecoder>encoding</a>, and set
- <var>decForTransform</var>'s <a for=TextDecoder>stream</a> to a new <a for=/>stream</a>.
+ <li>
+  <p>Set <var>decForTransform</var>'s <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a>
+  for <var>decForTransform</var>'s <a for=TextDecoder>encoding</a>, and set
+  <var>decForTransform</var>'s <a for=TextDecoder>stream</a> to a new <a for=/>stream</a>.
 
- <p class=note>For simplicity, <var>dec</var> and <var>decForTransform</var> have redundant
- members. However, the <a for=TextDecoder>BOM seen flag</a>, <a for=TextDecoder>do not flush
- flag</a>, and <a for=TextDecoder>transform</a> are unused in <var>decForTransform</var>, and
- <a for=TextDecoder>encoding</a>, <a for=TextDecoder>ignore BOM flag</a> and
- <a for=TextDecoder>error mode</a> are identical to <var>dec</var>. It is not necessary for
- implementations to duplicate these member fields.</p>
+  <p class=note>For simplicity, <var>dec</var> and <var>decForTransform</var> have redundant
+  members. However, the <a for=TextDecoder>BOM seen flag</a>, <a for=TextDecoder>do not flush
+  flag</a>, and <a for=TextDecoder>transform</a> are unused in <var>decForTransform</var>, and
+  <a for=TextDecoder>encoding</a>, <a for=TextDecoder>ignore BOM flag</a> and
+  <a for=TextDecoder>error mode</a> are identical to <var>dec</var>. It is not necessary for
+  implementations to duplicate these member fields.
 
  <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
 
@@ -1462,13 +1463,14 @@ constructor, when invoked, must run these steps:
 
  <li><p>Let <var>encForTransform</var> be a new {{TextEncoder}} object.
 
- <li><p>Set <var>encForTransform</var>'s <a for=TextEncoder>encoder</a> to <a>UTF-8</a>'s
- <a for=/>encoder</a>.
+ <li>
+  <p>Set <var>encForTransform</var>'s <a for=TextEncoder>encoder</a> to <a>UTF-8</a>'s
+  <a for=/>encoder</a>.
 
- <p class=note>For simplicity, <var>enc</var> and <var>encForTransform</var> have the same
- members. However, <a for=TextEncoder>transform</a> is not used by <var>encForTransform</var>
- and <a for=TextEncoder>pending high surrogate</a> is not used by <var>enc</var>. It is not
- necessary for implementations to store these unused member fields.</p>
+  <p class=note>For simplicity, <var>enc</var> and <var>encForTransform</var> have the same
+  members. However, <a for=TextEncoder>transform</a> is not used by <var>encForTransform</var> and
+  <a for=TextEncoder>pending high surrogate</a> is not used by <var>enc</var>. It is not necessary
+  for implementations to store these unused member fields.
 
  <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
 
@@ -1621,14 +1623,10 @@ between strings.
    <li><p>Let <var>controller</var> be <var>encForTransform</var>'s
    <a for=TextEncoder>transform</a>.\[[transformStreamController]].
 
-   <li><p>Let <var>token</var> be U+FFFD.
+   <li>
+    <p>Let <var>output</var> be the byte sequence 0xEF 0xBF 0xBD.
 
-   <li><p>Let <var>input</var> and <var>output</var> be new <a for=/>stream</a>s.
-
-   <li><p><a>Process</a> <var>token</var> for <a for=TextEncoder>encoder</a>, <var>input</var>,
-   <var>output</var>.
-
-   <li><p>Convert <var>output</var> into a byte sequence.
+    <p class=note>This is the replacement character U+FFFD encoded as UTF-8.
 
    <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
    <var>output</var>.
