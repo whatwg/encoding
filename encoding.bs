@@ -1224,16 +1224,16 @@ constructor, when invoked, must run these steps:
  <li><p>Set <var>decForTransform</var>'s <a for=TextDecoder>ignore BOM flag</a> to <var>dec</var>'s
  <a for=TextDecoder>ignore BOM flag</a>.
 
- <li><p>Set <var>decForTransform</var>'s <a for=TextDecoder>decoder</a> to a new <a
- for=/>decoder</a> for <var>decForTransform</var>'s <a for=TextDecoder>encoding</a>, and set
+ <li><p>Set <var>decForTransform</var>'s <a for=TextDecoder>decoder</a> to a new
+ <a for=/>decoder</a> for <var>decForTransform</var>'s <a for=TextDecoder>encoding</a>, and set
  <var>decForTransform</var>'s <a for=TextDecoder>stream</a> to a new <a for=/>stream</a>.
 
  <p class=note>For simplicity, <var>dec</var> and <var>decForTransform</var> have redundant
  members. However, the <a for=TextDecoder>BOM seen flag</a>, <a for=TextDecoder>do not flush
- flag</a>, and <a for=TextDecoder>transform</a> are unused in <var>decForTransform</var>, and <a
- for=TextDecoder>encoding</a>, <a for=TextDecoder>ignore BOM flag</a> and <a for=TextDecoder>error
- mode</a> are identical to <var>dec</var>. It is not necessary for implementations to duplicate
- these member fields.</p>
+ flag</a>, and <a for=TextDecoder>transform</a> are unused in <var>decForTransform</var>, and
+ <a for=TextDecoder>encoding</a>, <a for=TextDecoder>ignore BOM flag</a> and
+ <a for=TextDecoder>error mode</a> are identical to <var>dec</var>. It is not necessary for
+ implementations to duplicate these member fields.</p>
 
  <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
 
@@ -1362,9 +1362,9 @@ method, when invoked, must run these steps:
     </ol>
 
    <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
-   <var>decForTransform</var>'s <a for=TextDecoder>decoder</a>, <var>decForTransform</var>'s <a
-   for=TextDecoder>stream</a>, <var>output</var>, and <var>decForTransform</var>'s <a
-   for=TextDecoder>error mode</a>.
+   <var>decForTransform</var>'s <a for=TextDecoder>decoder</a>, <var>decForTransform</var>'s
+   <a for=TextDecoder>stream</a>, <var>output</var>, and <var>decForTransform</var>'s
+   <a for=TextDecoder>error mode</a>.
 
    <li><p>If <var>result</var> is <a>error</a>, then return a new promise rejected with a
    {{TypeError}} exception.
@@ -1379,9 +1379,9 @@ these steps:
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
  <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-stream</a> for
- <var>decForTransform</var>'s <a for=TextDecoder>decoder</a> and <var>decForTransform</var>'s <a
- for=TextDecoder>stream</a>, <var>output</var>, and <var>decForTransform</var>'s <a
- for=TextDecoder>error mode</a>.
+ <var>decForTransform</var>'s <a for=TextDecoder>decoder</a> and <var>decForTransform</var>'s
+ <a for=TextDecoder>stream</a>, <var>output</var>, and <var>decForTransform</var>'s
+ <a for=TextDecoder>error mode</a>.
 
  <li><p>If <var>result</var> is <a>finished</a>, then run these steps:
  <ol>
@@ -1460,13 +1460,24 @@ constructor, when invoked, must run these steps:
 
  <li><p>Set <var>enc</var>'s <a for=TextEncoder>encoder</a> to <a>UTF-8</a>'s <a for=/>encoder</a>.
 
+ <li><p>Let <var>encForTransform</var> be a new {{TextEncoder}} object.
+
+ <li><p>Set <var>encForTransform</var>'s <a for=TextEncoder>encoder</a> to <a>UTF-8</a>'s
+ <a for=/>encoder</a>.
+
+ <p class=note>For simplicity, <var>enc</var> and <var>encForTransform</var> have the same
+ members. However, <a for=TextEncoder>transform</a> is not used by <var>encForTransform</var>
+ and <a for=TextEncoder>pending high surrogate</a> is not used by <var>enc</var>. It is not
+ necessary for implementations to store these unused member fields.</p>
+
  <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
 
  <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
- and runs the <a>encode and enqueue a chunk</a> algorithm with <var>enc</var> and <var>chunk</var>.
+ and runs the <a>encode and enqueue a chunk</a> algorithm with <var>encForTransform</var> and
+ <var>chunk</var>.
 
  <li><p>Let <var>flushAlgorithm</var> be an algorithm which runs the <a>encode and flush</a>
- algorithm with <var>enc</var>.
+ algorithm with <var>encForTransform</var>.
 
  <li><p>Let <var>transform</var> be the result of calling
  <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
@@ -1490,19 +1501,6 @@ constructor, when invoked, must run these steps:
 must run these steps:
 
 <ol>
- <li><p>Let <var>readable</var> be <a for=TextEncoder>transform</a>.\[[readable]].
-
- <li><p>If <a abstract-op>IsReadableStreamLocked</a>(<var>readable</var>) is true, then throw a
- {{TypeError}} exception.
-
- <li><p>Let <var>writable</var> be <a for=TextEncoder>transform</a>.\[[writable]].
-
- <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a
- {{TypeError}} exception.
-
- <p class="note">These steps are for consistent behavior with the {{TextDecoder}}
- <a method for=TextDecoder><code>decode(<var>input</var>)</code></a> method.
-
  <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
 
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
@@ -1531,7 +1529,7 @@ must run these steps:
 <hr>
 
 <p>The <dfn id=concept-te-encode-and-enqueue>encode and enqueue a chunk</dfn> algorithm, given a
-{{TextEncoder}} <var>enc</var> and <var>chunk</var>, runs these steps:
+{{TextEncoder}} <var>encForTransform</var> and <var>chunk</var>, runs these steps:
 
 <ol>
  <li><p>Let <var>input</var> be the result of <a lt="converted to an IDL value">converting</a>
@@ -1542,9 +1540,7 @@ must run these steps:
 
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
- <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
-
- <li><p>Let <var>controller</var> be <var>enc</var>'s
+ <li><p>Let <var>controller</var> be <var>encForTransform</var>'s
  <a for=TextEncoder>transform</a>.\[[transformStreamController]].
 
  <li>
@@ -1559,33 +1555,38 @@ must run these steps:
     <ol>
      <li><p>Convert <var>output</var> into a byte sequence.
 
+     <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
+     <var>output</var>.
+
      <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-     <var>output</var>).
+     <var>chunk</var>).
 
      <li><p>Return a new promise resolved with undefined.
     </ol>
 
    <li><p>Let <var>result</var> be the result of executing the <a>convert code unit to scalar
-   value</a> algorithm with <var>enc</var>, <var>token</var> and <var>input</var>.
+   value</a> algorithm with <var>encForTransform</var>, <var>token</var> and <var>input</var>.
 
    <li><p>If <var>result</var> is not <a>continue</a>, then <a>process</a> <var>result</var> for
-   <var>encoder</var>, <var>input</var>, <var>output</var>.
+   <a for=TextEncoder>encoder</a>, <var>input</var>, <var>output</var>.
 
   </ol>
 </ol>
 
 <p>The <dfn id=concept-te-convert-code-unit-to-scalar-value>convert code unit to scalar value</dfn>
-algorithm, given a {{TextEncoder}} <var>enc</var>, <var>token</var> and <var>input</var> stream,
-runs these steps:
+algorithm, given a {{TextEncoder}} <var>encForTransform</var>, <var>token</var> and <var>input</var>
+stream, runs these steps:
 
 <ol>
  <li>
-  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, then run these steps:
+  <p>If <var>encForTransform</var>'s <a>pending high surrogate</a> is non-null, then run these
+  steps:
 
   <ol>
-   <li><p>Let <var>high surrogate</var> be <var>enc</var>'s <a>pending high surrogate</a>.
+   <li><p>Let <var>high surrogate</var> be <var>encForTransform</var>'s <a>pending high
+   surrogate</a>.
 
-   <li><p>Set <var>enc</var>'s <a>pending high surrogate</a> to null.
+   <li><p>Set <var>encForTransform</var>'s <a>pending high surrogate</a> to null.
 
    <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return a code point
    whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
@@ -1609,33 +1610,31 @@ value string</a>" algorithm from the Infra Standard, but allows for surrogate pa
 between strings.
 
 <p>The <dfn id=concept-te-encode-and-flush>encode and flush</dfn> algorithm, given a
-{{TextEncoder}} <var>enc</var>, runs these steps:
+{{TextEncoder}} <var>encForTransform</var>, runs these steps:
 
 <ol>
  <li>
-  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, then run these steps:
+  <p>If <var>encForTransform</var>'s <a>pending high surrogate</a> is non-null, then run these
+  steps:
 
   <ol>
-   <li><p>Set <var>enc</var>'s <a>pending high surrogate</a> to null.
-
-   <li><p>Let <var>input</var> be a new <a for=/>stream</a>.
-
-   <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
-
-   <li><p>Let <var>encoder</var> be <a>UTF-8</a>'s <a for=/>encoder</a>.
-
-   <li><p>Let <var>controller</var> be <var>enc</var>'s
+   <li><p>Let <var>controller</var> be <var>encForTransform</var>'s
    <a for=TextEncoder>transform</a>.\[[transformStreamController]].
 
    <li><p>Let <var>token</var> be U+FFFD.
 
-   <li><p><a>Process</a> <var>token</var> for <var>encoder</var>, <var>input</var>,
+   <li><p>Let <var>input</var> and <var>output</var> be new <a for=/>stream</a>s.
+
+   <li><p><a>Process</a> <var>token</var> for <a for=TextEncoder>encoder</a>, <var>input</var>,
    <var>output</var>.
 
    <li><p>Convert <var>output</var> into a byte sequence.
 
+   <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
+   <var>output</var>.
+
    <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-   <var>output</var>).
+   <var>chunk</var>).
   </ol>
 
  <li><p>Return a new promise resolved with undefined.
