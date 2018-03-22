@@ -1214,13 +1214,35 @@ constructor, when invoked, must run these steps:
  <li><p>If <var>options</var>'s <code>ignoreBOM</code> member is true, then set <var>dec</var>'s
  <a for=TextDecoder>ignore BOM flag</a>.
 
+ <li><p>Let <var>decForTransform</var> be a new {{TextDecoder}} object.
+
+ <li><p>Set <var>decForTransform</var>'s <a for=TextDecoder>encoding</a> to <var>encoding</var>.
+
+ <li><p>Set <var>decForTransform</var>'s <a for=TextDecoder>error mode</a> to <var>dec</var>'s
+ <a for=TextDecoder>error mode</a>.
+
+ <li><p>Set <var>decForTransform</var>'s <a for=TextDecoder>ignore BOM flag</a> to <var>dec</var>'s
+ <a for=TextDecoder>ignore BOM flag</a>.
+
+ <li><p>Set <var>decForTransform</var>'s <a for=TextDecoder>decoder</a> to a new <a
+ for=/>decoder</a> for <var>decForTransform</var>'s <a for=TextDecoder>encoding</a>, and set
+ <var>decForTransform</var>'s <a for=TextDecoder>stream</a> to a new <a for=/>stream</a>.
+
+ <p class=note>For simplicity, <var>dec</var> and <var>decForTransform</var> have redundant
+ members. However, the <a for=TextDecoder>BOM seen flag</a>, <a for=TextDecoder>do not flush
+ flag</a>, and <a for=TextDecoder>transform</a> are unused in <var>decForTransform</var>, and <a
+ for=TextDecoder>encoding</a>, <a for=TextDecoder>ignore BOM flag</a> and <a for=TextDecoder>error
+ mode</a> are identical to <var>dec</var>. It is not necessary for implementations to duplicate
+ these member fields.</p>
+
  <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
 
  <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
- and runs the <a>decode and enqueue a chunk</a> algorithm with <var>dec</var> and <var>chunk</var>.
+ and runs the <a>decode and enqueue a chunk</a> algorithm with <var>decForTransform</var> and
+ <var>chunk</var>.
 
  <li><p>Let <var>flushAlgorithm</var> be an algorithm which takes no arguments and runs the <a>flush
- and enqueue</a> algorithm with <var>dec</var>.
+ and enqueue</a> algorithm with <var>decForTransform</var>.
 
  <li><p>Let <var>transform</var> be the result of calling
  <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
@@ -1250,19 +1272,6 @@ true if <a for=TextDecoder>ignore BOM flag</a> is set, and false otherwise.
 method, when invoked, must run these steps:
 
 <ol>
- <li><p>Let <var>readable</var> be <a for=TextDecoder>transform</a>.\[[readable]].
-
- <li><p>If <a abstract-op>IsReadableStreamLocked</a>(<var>readable</var>) is true, then throw a
- {{TypeError}} exception.
-
- <li><p>Let <var>writable</var> be <a for=TextDecoder>transform</a>.\[[writable]].
-
- <li><p>If <a abstract-op>IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a
- {{TypeError}} exception.
-
- <p class="note">These steps ensure that the state of the <a for=/>decoder</a> is not simultaneously
- modified by the Streams API and this method.
-
  <li><p>If the <a for=TextDecoder>do not flush flag</a> is unset, set <a for=TextDecoder>decoder</a>
  to a new <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>, set <a for=TextDecoder>stream</a>
  to a new <a for=/>stream</a>, and unset the <a for=TextDecoder>BOM seen flag</a>.
@@ -1317,7 +1326,7 @@ method, when invoked, must run these steps:
 <hr>
 
 <p>The <dfn id=concept-td-decode-and-enqueue>decode and enqueue a chunk</dfn> algorithm, given a
-{{TextDecoder}} <var>dec</var> and a <var>chunk</var>, runs these steps:
+{{TextDecoder}} <var>decForTransform</var> and a <var>chunk</var>, runs these steps:
 
 <ol>
  <li><p>If <a>Type</a>(<var>chunk</var>) is not Object, or <var>chunk</var> does not have an
@@ -1325,17 +1334,10 @@ method, when invoked, must run these steps:
  true, or <a abstract-op>IsSharedArrayBuffer</a>(<var>chunk</var>) is true, then return a new
  promise rejected with a {{TypeError}} exception.
 
- <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, then set
- <var>dec's</var> <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <var>dec</var>'s
- <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new
- <a for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
-
- <li><p>Set <var>dec</var>'s <a for=TextDecoder>do not flush flag</a>.
-
  <li><p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>chunk</var> to
- <var>dec</var>'s <a for=TextDecoder>stream</a>.
+ <var>decForTransform</var>'s <a for=TextDecoder>stream</a>.
 
- <li><p>Let <var>controller</var> be <var>dec</var>'s
+ <li><p>Let <var>controller</var> be <var>decForTransform</var>'s
  <a for=TextDecoder>transform</a>.\[[transformStreamController]].
 
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
@@ -1344,7 +1346,7 @@ method, when invoked, must run these steps:
   <p>While true, run these steps:
 
   <ol>
-   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>dec</var>'s
+   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>decForTransform</var>'s
    <a for=TextDecoder>stream</a>.
 
    <li>
@@ -1360,8 +1362,9 @@ method, when invoked, must run these steps:
     </ol>
 
    <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
-   <var>dec</var>'s <a for=TextDecoder>decoder</a>, <var>dec</var>'s <a for=TextDecoder>stream</a>,
-   <var>output</var>, and <var>dec's</var> <a for=TextDecoder>error mode</a>.
+   <var>decForTransform</var>'s <a for=TextDecoder>decoder</a>, <var>decForTransform</var>'s <a
+   for=TextDecoder>stream</a>, <var>output</var>, and <var>decForTransform</var>'s <a
+   for=TextDecoder>error mode</a>.
 
    <li><p>If <var>result</var> is <a>error</a>, then return a new promise rejected with a
    {{TypeError}} exception.
@@ -1369,27 +1372,22 @@ method, when invoked, must run these steps:
 </ol>
 
 <p>The <dfn id=concept-td-flush-and-enqueue>flush and enqueue</dfn> algorithm, which handles the end
-of data from the input {{ReadableStream}}, given a {{TextDecoder}} <var>dec</var>, runs these steps:
+of data from the input {{ReadableStream}}, given a {{TextDecoder}} <var>decForTransform</var>, runs
+these steps:
 
 <ol>
- <li><p>If the <a for=TextDecoder>do not flush flag</a> for <var>dec</var> is unset, then set
- <var>dec's</var> <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <var>dec</var>'s
- <a for=TextDecoder>encoding</a>, set <var>dec</var>'s <a for=TextDecoder>stream</a> to a new
- <a for=/>stream</a>, and unset <var>dec</var>'s <a for=TextDecoder>BOM seen flag</a>.
-
- <li><p>Unset <var>dec</var>'s <a for=TextDecoder>do not flush flag</a>.
-
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
  <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-stream</a> for
- <var>dec</var>'s <a for=TextDecoder>decoder</a> and <var>dec</var>'s <a for=TextDecoder>stream</a>,
- <var>output</var>, and <var>dec</var>'s <a for=TextDecoder>error mode</a>.
+ <var>decForTransform</var>'s <a for=TextDecoder>decoder</a> and <var>decForTransform</var>'s <a
+ for=TextDecoder>stream</a>, <var>output</var>, and <var>decForTransform</var>'s <a
+ for=TextDecoder>error mode</a>.
 
  <li><p>If <var>result</var> is <a>finished</a>, then run these steps:
  <ol>
   <li><p>Let <var>outputChunk</var> be <var>output</var>, <a lt="serialize stream">serialized</a>.
 
-  <li><p>Let <var>controller</var> be <var>dec</var>'s
+  <li><p>Let <var>controller</var> be <var>decForTransform</var>'s
   <a for=TextDecoder>transform</a>.\[[transformStreamController]].
 
   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
