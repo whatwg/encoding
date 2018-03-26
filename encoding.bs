@@ -1538,6 +1538,11 @@ must run these steps:
  <var>chunk</var> to a {{DOMString}}. If this throws an exception, then return a promise rejected
  with that exception.
 
+ <p class=note>{{DOMString}} is used here so that a surrogate pair that is split between chunks can
+ be correctly reassembled into the appropriate code point in the output. The behaviour is otherwise
+ identical to {{USVString}}. In particular, replacement characters will be used where necessary to
+ make the output valid UTF-8.
+
  <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
 
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
