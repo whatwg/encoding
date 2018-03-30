@@ -1539,9 +1539,8 @@ must run these steps:
  with that exception.
 
  <p class=note>{{DOMString}} is used here so that a surrogate pair that is split between chunks can
- be correctly reassembled into the appropriate code point in the output. The behaviour is otherwise
- identical to {{USVString}}. In particular, lone surrogates will be replaced with U+FFFD so that the
- output is always well-formed UTF-8.
+ be reassembled into the appropriate scalar value. The behavior is otherwise
+ identical to {{USVString}}. In particular, lone surrogates will be replaced with U+FFFD.
 
  <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
 
