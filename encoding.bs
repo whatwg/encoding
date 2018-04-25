@@ -268,7 +268,7 @@ from a string <var>label</var>, run these steps:
 
 <p class="note no-backref">This is a more basic and restrictive algorithm of mapping <a>labels</a>
 to <a for=/>encodings</a> than
-<a href=https://www.unicode.org/reports/tr22/#Charset_Alias_Matching>section 1.4 of Unicode Technical Standard #22</a>
+<a href=https://www.unicode.org/reports/tr22/tr22-8.html#Charset_Alias_Matching>section 1.4 of Unicode Technical Standard #22</a>
 prescribes, as that is necessary to be compatible with deployed content.
 
 <table>
