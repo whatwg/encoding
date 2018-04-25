@@ -917,7 +917,11 @@ steps:
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn export>UTF-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these steps:
+<p>To <dfn export>UTF-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these
+steps:
+<!-- Needed by https://tools.ietf.org/html/rfc6455#section-8.1 and
+     https://webassembly.github.io/spec/js-api/#dom-module-customsections-moduleobject-sectionname
+     -->
 
 <ol>
  <li><p>Let <var>output</var> be a code point stream.
