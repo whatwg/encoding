@@ -830,14 +830,25 @@ different format here, to be able to represent ranges.)
 
 
 
-<h2 id=specification-hooks>Specification hooks</h2>
+<h2 id=specification-hooks>Hooks for standards</h2>
 
-<p class=note>The algorithms <a>decode</a>, <a>UTF-8 decode</a>,
-<a>UTF-8 decode without BOM</a>, <a>UTF-8 decode without BOM or fail</a>,
-<a for=/>encode</a>, and <a>UTF-8 encode</a> are intended for usage by other specifications.
-<a>UTF-8 decode</a> is to be used by new formats. The
-<a>get an encoding</a> algorithm can be used first to turn a
-<a>label</a> into an <a for=/>encoding</a>.
+<div class=note>
+ <p>The algorithms defined below (<a>decode</a>, <a>UTF-8 decode</a>,
+ <a>UTF-8 decode without BOM</a>, <a>UTF-8 decode without BOM or fail</a>, <a for=/>encode</a>, and
+ <a>UTF-8 encode</a>) are intended for usage by other standards.
+
+ <p>For decoding, <a>UTF-8 decode</a> is to be used by new formats. For identifiers or byte
+ sequences within a format or protocol, use <a>UTF-8 decode without BOM</a> or
+ <a>UTF-8 decode without BOM or fail</a>.
+
+ <p>For encoding, <a>UTF-8 encode</a> is to be used.
+
+ <p>Standards are strongly discouraged from using <a>decode</a> and <a for=/>encode</a>, except as
+ needed for compatibility.
+
+ <p>The <a>get an encoding</a> algorithm is to be used to turn a <a>label</a> into an
+ <a for=/>encoding</a>.
+</div>
 
 <p>To <dfn export>decode</dfn> a byte stream <var>stream</var> using
 fallback encoding <var>encoding</var>, run these steps:
