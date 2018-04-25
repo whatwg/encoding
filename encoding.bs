@@ -966,10 +966,9 @@ return the result of <a lt=encode for=/>encoding</a>
 
 <h2 id=api>API</h2>
 
-<p>This section uses terminology from Web IDL. Non-browser user agents are not required to support
-this API.
-
-[[!WEBIDL]]
+<p>This section uses terminology from Web IDL. Browser user agents must support this API. JavaScript
+implementations should support this API. Other user agents or programming languages are encouraged
+to use an API suitable to their needs, which might not be this one. [[!WEBIDL]]
 
 <div class=example id=example-textencoder>
  <p>The following example uses the {{TextEncoder}} object to encode
