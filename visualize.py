@@ -198,7 +198,7 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
             out_file.write("<th>%02X" % row_num)
             new_row = False
         duplicate = False
-        if code_point:
+        if code_point is not None:
             if code_point < 0x10000:
                 if bmp[code_point]:
                     duplicate = True
