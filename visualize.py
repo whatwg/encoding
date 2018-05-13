@@ -198,7 +198,7 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
             out_file.write("<th>%02X" % row_num)
             new_row = False
         duplicate = False
-        if code_point:
+        if code_point is not None:
             if code_point < 0x10000:
                 if bmp[code_point]:
                     duplicate = True
@@ -249,7 +249,7 @@ def format_coverage(name, lang, bmp, duplicates):
             new_row = False
         if code_point >= 0xD800 and code_point <= 0xDFFF:
             out_file.write("<td class=surrogate>")
-        elif pointer:
+        elif pointer is not None:
             duplicate = code_point in duplicates
             contiguous = previous and previous + 1 == pointer
             out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>U+%04X<dd lang=%s>%s<dd>%d</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), code_point, lang, format_code_point(code_point), pointer)).encode("utf-8"))
