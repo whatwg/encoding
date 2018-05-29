@@ -3,9 +3,6 @@ language: generic
 env:
   global:
     - ENCRYPTION_LABEL="eaa0f98d3fae"
-    - CHECKER_FILTER="Text run is not in Unicode Normalization Form C\.|.*appears to be written in.*|.*Charmod C073.*"
-    - EXTRA_FILES="*.txt *.json *.css"
-    - POST_BUILD_STEP='python visualize.py "$DIR/"'
 
 script:
   - make deploy
