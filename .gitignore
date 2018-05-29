@@ -3,3 +3,5 @@ deploy_key
 deploy_key.pub
 encoding.html
 UnicodeData.txt
+deploy.sh
+review.sh
