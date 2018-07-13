@@ -15,6 +15,19 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 spec:infra; type:dfn;
     text:code point
     text:ascii case-insensitive
+spec:streams;
+    type:interface; text:ReadableStream
+    type:dfn; text:chunk
+    type:dfn; text:readable stream
+    type:dfn; text:writable stream
+    type:dfn; text:transform stream
+</pre>
+
+<pre class=anchors>
+spec: ECMASCRIPT; urlPrefix: https://tc39.github.io/ecma262/
+    text: Type; url: #sec-ecmascript-data-types-and-values; type: dfn
+    text: IsDetachedBuffer; url: #sec-isdetachedbuffer; type: abstract-op
+    text: IsSharedArrayBuffer; url: #sec-issharedarraybuffer; type: abstract-op
 </pre>
 
 
@@ -1038,6 +1051,33 @@ function decodeArrayOfStrings(buffer, encoding) {
 </div>
 
 
+<h3 id=interface-mixin-textdecoderattributes>Interface Mixin {{TextDecoderAttributes}}</h3>
+
+<pre class=idl>
+interface mixin TextDecoderAttributes {
+  readonly attribute DOMString encoding;
+  readonly attribute boolean fatal;
+  readonly attribute boolean ignoreBOM;
+};
+</pre>
+
+<p>The {{TextDecoderAttributes}} mixin defines common attributes that are shared between
+{{TextDecoder}} and {{TextDecoderStream}}. These objects have an associated
+<dfn for=TextDecoderAttributes>encoding</dfn>, <dfn for=TextDecoderAttributes>ignore BOM flag</dfn>,
+and <dfn for=TextDecoderAttributes>error mode</dfn>.
+
+<p>The <dfn attribute for=TextDecoderAttributes><code>encoding</code></dfn> attribute's getter must
+return <a for=TextDecoderAttributes>encoding</a>'s <a for=encoding>name</a> in <a>ASCII
+lowercase</a>.
+
+<p>The <dfn attribute for=TextDecoderAttributes><code>fatal</code></dfn> attribute's getter must
+return true if <a for=TextDecoderAttributes>error mode</a> is "<code>fatal</code>", and false
+otherwise.
+
+<p>The <dfn attribute for=TextDecoderAttributes><code>ignoreBOM</code></dfn> attribute's getter must
+return true if <a for=TextDecoderAttributes>ignore BOM flag</a> is set, and false otherwise.
+
+
 <h3 id=interface-textdecoder>Interface {{TextDecoder}}</h3>
 
 <pre class=idl>
@@ -1053,11 +1093,11 @@ dictionary TextDecodeOptions {
 [Constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options),
  Exposed=(Window,Worker)]
 interface TextDecoder {
-  readonly attribute DOMString encoding;
-  readonly attribute boolean fatal;
-  readonly attribute boolean ignoreBOM;
   USVString decode(optional BufferSource input, optional TextDecodeOptions options);
-};</pre>
+};
+
+TextDecoder includes TextDecoderAttributes;
+</pre>
 
 <p>A {{TextDecoder}} object has an associated <dfn for=TextDecoder>encoding</dfn>,
 <dfn for=TextDecoder>decoder</dfn>, <dfn for=TextDecoder>stream</dfn>,
@@ -1115,15 +1155,16 @@ control.
   <a>throws</a> a
   {{RangeError}}.
 
- <dt><code><var>decoder</var> . <a attribute for=TextDecoder>encoding</a></code>
- <dd><p>Returns <a for=TextDecoder>encoding</a>'s <a>name</a>, lowercased.
+ <dt><code><var>decoder</var> . <a attribute for=TextDecoderAttributes>encoding</a></code>
+ <dd><p>Returns <a for=TextDecoderAttributes>encoding</a>'s <a>name</a>, lowercased.
 
- <dt><code><var>decoder</var> . <a attribute for=TextDecoder>fatal</a></code>
- <dd><p>Returns true if <a for=TextDecoder>error mode</a> is "<code>fatal</code>", and false
+ <dt><code><var>decoder</var> . <a attribute for=TextDecoderAttributes>fatal</a></code>
+ <dd><p>Returns true if <a for=TextDecoderAttributes>error mode</a> is "<code>fatal</code>", and
+ false otherwise.
+
+ <dt><code><var>decoder</var> . <a attribute for=TextDecoderAttributes>ignoreBOM</a></code>
+ <dd><p>Returns true if <a for=TextDecoderAttributes>ignore BOM flag</a> is set, and false
  otherwise.
-
- <dt><code><var>decoder</var> . <a attribute for=TextDecoder>ignoreBOM</a></code>
- <dd><p>Returns true if <a for=TextDecoder>ignore BOM flag</a> is set, and false otherwise.
 
  <dt><code><var>decoder</var> . <a method for=TextDecoder lt=decode()>decode([<var>input</var> [, <var>options</var>]])</a></code>
  <dd>
@@ -1167,15 +1208,6 @@ constructor, when invoked, must run these steps:
  <li><p>Return <var>dec</var>.
 </ol>
 
-<p>The <dfn attribute for=TextDecoder><code>encoding</code></dfn> attribute's getter must return
-<a for=TextDecoder>encoding</a>'s <a for=encoding>name</a> in <a>ASCII lowercase</a>.
-
-<p>The <dfn attribute for=TextDecoder><code>fatal</code></dfn> attribute's getter must return true
-if <a for=TextDecoder>error mode</a> is "<code>fatal</code>", and false otherwise.
-
-<p>The <dfn attribute for=TextDecoder><code>ignoreBOM</code></dfn> attribute's getter must return
-true if <a for=TextDecoder>ignore BOM flag</a> is set, and false otherwise.
-
 <p>The <dfn method for=TextDecoder><code>decode(<var>input</var>, <var>options</var>)</code></dfn>
 method, when invoked, must run these steps:
 
@@ -1207,7 +1239,7 @@ method, when invoked, must run these steps:
 
    <li>
     <p>If <var>token</var> is <a>end-of-stream</a> and the <a for=TextDecoder>do not flush flag</a>
-    is set, then return <var>output</var>, <a lt="serialize stream">serialized</a>.
+    is set, then return <var>output</var>, <a lt="serialize stream" for=TextDecoder>serialized</a>.
 
     <p class=note>The way streaming works is to not handle <a>end-of-stream</a> here when the
     <a for=TextDecoder>do not flush flag</a> is set and to not unset that flag. That way in a
@@ -1223,13 +1255,27 @@ method, when invoked, must run these steps:
      <a for=TextDecoder>error mode</a>.
 
      <li><p>If <var>result</var> is <a>finished</a>, then return <var>output</var>,
-     <a lt="serialize stream">serialized</a>.
+     <a lt="serialize stream" for=TextDecoder>serialized</a>.
 
      <li><p>Otherwise, if <var>result</var> is <a>error</a>, then <a lt=throw>throw</a> a
      {{TypeError}}.
     </ol>
   </ol>
 </ol>
+
+<h3 id=interface-mixin-textencoderattributes>Interface Mixin {{TextEncoderAttributes}}</h3>
+
+<pre class=idl>
+interface mixin TextEncoderAttributes {
+  readonly attribute DOMString encoding;
+};
+</pre>
+
+<p>The {{TextEncoderAttributes}} mixin defines common attributes that are shared between
+{{TextEncoder}} and {{TextEncoderStream}}.
+
+<p>The <dfn attribute for=TextEncoderAttributes><code>encoding</code></dfn> attribute's getter must
+return "<code>utf-8</code>".
 
 
 <h3 id=interface-textencoder>Interface {{TextEncoder}}</h3>
@@ -1238,9 +1284,11 @@ method, when invoked, must run these steps:
 [Constructor,
  Exposed=(Window,Worker)]
 interface TextEncoder {
-  readonly attribute DOMString encoding;
   [NewObject] Uint8Array encode(optional USVString input = "");
-};</pre>
+};
+
+TextEncoder includes TextEncoderAttributes;
+</pre>
 
 <p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn>.
 
@@ -1254,7 +1302,7 @@ requires buffering of scalar values.
  <dt><code><var>encoder</var> = new <a constructor for=TextEncoder>TextEncoder()</a></code>
  <dd><p>Returns a new {{TextEncoder}} object.
 
- <dt><code><var>encoder</var> . <a attribute for=TextEncoder>encoding</a></code>
+ <dt><code><var>encoder</var> . <a attribute for=TextEncoderAttributes>encoding</a></code>
  <dd><p>Returns "<code>utf-8</code>".
 
  <dt><code><var>encoder</var> . <a method for=TextEncoder lt=encode()>encode([<var>input</var> = ""])</a></code>
@@ -1271,9 +1319,6 @@ constructor, when invoked, must run these steps:
 
  <li><p>Return <var>enc</var>.
 </ol>
-
-<p>The <dfn attribute for=TextEncoder><code>encoding</code></dfn> attribute's getter must return
-"<code>utf-8</code>".
 
 <p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method, when invoked,
 must run these steps:
@@ -1302,6 +1347,404 @@ must run these steps:
 
     <p class=note><a>UTF-8</a> cannot return <a>error</a>.
   </ol>
+</ol>
+
+
+<h3 id=interface-mixin-generictransformstream>Interface Mixin {{GenericTransformStream}}</h3>
+
+<p>{{GenericTransformStream}} represents the concept of a <a>transform stream</a> in IDL. It is not
+a {{TransformStream}}, though it has the same interface and it delegates to one.
+
+<pre class=idl>
+interface mixin GenericTransformStream {
+  readonly attribute ReadableStream readable;
+  readonly attribute WritableStream writable;
+};
+</pre>
+
+<p>An object that includes GenericTransformStream always has an associated
+<dfn for=GenericTransformStream>transform</dfn>.
+
+<p>The <dfn attribute for=GenericTransformStream><code>readable</code></dfn> attribute's getter must
+return <a for=GenericTransformStream>transform</a>.\[[readable]].
+
+<p>The <dfn attribute for=GenericTransformStream><code>writable</code></dfn> attribute's getter must
+return <a for=GenericTransformStream>transform</a>.\[[writable]].
+
+
+<h3 id=interface-textdecoderstream>Interface {{TextDecoderStream}}</h3>
+
+<pre class=idl>
+[Constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options),
+ Exposed=(Window,Worker)]
+interface TextDecoderStream {
+  USVString decode(optional BufferSource input, optional TextDecodeOptions options);
+};
+
+TextDecoderStream includes TextDecoderAttributes;
+TextDecoderStream includes GenericTransformStream;
+</pre>
+
+<p>A {{TextDecoderStream}} object has an associated <dfn for=TextDecoderStream>encoding</dfn>,
+<dfn for=TextDecoderStream>decoder</dfn>, <dfn for=TextDecoderStream>stream</dfn>,
+<dfn for=TextDecoderStream>ignore BOM flag</dfn> (initially unset),
+<dfn for=TextDecoderStream>BOM seen flag</dfn> (initially unset),
+<dfn for=TextDecoderStream>error mode</dfn> (initially "<code>replacement</code>"),
+<dfn for=TextDecoderStream>do not flush flag</dfn> (initially unset), and
+<dfn for=TextDecoderStream>transform</dfn>.
+
+<p>A {{TextDecoderStream}} object also has an associated <dfn id=concept-tds-serialize
+for=TextDecoderStream>serialize stream</dfn> algorithm, that is identical to the <a
+for=TextDecoder>serialize stream</a> algorithm for the equivalent {{TextDecoder}}.
+
+<dl class=domintro>
+ <dt><code><var>decoder</var> = new
+ <a constructor for=TextDecoderStream lt=TextDecoderStream()>TextDecoderStream([<var>label</var> =
+ "utf-8" [, <var>options</var>]])</a></code>
+ <dd>
+  <p>Returns a new {{TextDecoderStream}} object.
+  <p>If <var>label</var> is either not a <a>label</a> or is a <a>label</a> for <a>replacement</a>,
+  <a>throws</a> a {{RangeError}}.
+
+ <dt><code><var>decoder</var> . <a attribute for=TextDecoderAttributes>encoding</a></code>
+ <dd><p>Returns <a for=TextDecoderStream>encoding</a>'s <a>name</a>, lowercased.
+
+ <dt><code><var>decoder</var> . <a attribute for=TextDecoderAttributes>fatal</a></code>
+ <dd><p>Returns true if <a for=TextDecoderStream>error mode</a> is "<code>fatal</code>", and false
+ otherwise.
+
+ <dt><code><var>decoder</var> . <a attribute for=TextDecoderAttributes>ignoreBOM</a></code>
+ <dd><p>Returns true if <a for=TextDecoderStream>ignore BOM flag</a> is set, and false otherwise.
+
+ <dt><code><var>decoder</var> . <a attribute for=GenericTransformStream>readable</a></code>
+ <dd>
+  <p>Returns a <a>readable stream</a> whose <a>chunks</a> are strings resulting from running
+  <a for=TextDecoderStream>encoding</a>'s <a for=/>decoder</a> on the chunks written to
+  {{GenericTransformStream/writable}}.
+
+ <dt><code><var>decoder</var> . <a attribute for=GenericTransformStream>writable</a></code>
+ <dd>
+  <p>Returns a <a>writable stream</a> which accepts {{BufferSource}} chunks and runs them through
+  <a for=TextDecoderStream>encoding</a>'s <a for=/>decoder</a> before making them available to
+  {{GenericTransformStream/readable}}.
+
+  <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a
+  {{ReadableStream}} source.
+
+  <pre class=example id=example-textdecoderstream-writable><code class=lang-javascript>
+var decoder = new TextDecoderStream(encoding);
+byteReadable
+  .pipeThrough(decoder)
+  .pipeTo(textWritable);</code></pre>
+
+  <p>If the <a for=TextDecoderStream>error mode</a> is "<code>fatal</code>" and
+  <a for=TextDecoderStream>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>, both
+  {{GenericTransformStream/readable}} and {{GenericTransformStream/writable}} will be errored with a
+  {{TypeError}}.
+</dl>
+
+<p>The
+<dfn constructor for=TextDecoderStream id=dom-textdecoderstream><code>TextDecoderStream(<var>label</var>,
+<var>options</var>)</code></dfn> constructor, when invoked, must run these steps:
+
+<ol>
+ <li><p>Let <var>encoding</var> be the result of <a>getting an encoding</a> from <var>label</var>.
+
+ <li><p>If <var>encoding</var> is failure or <a>replacement</a>, then <a>throw</a> a {{RangeError}}.
+
+ <li><p>Let <var>dec</var> be a new {{TextDecoderStream}} object.
+
+ <li><p>Set <var>dec</var>'s <a for=TextDecoderStream>encoding</a> to <var>encoding</var>.
+
+ <li><p>If <var>options</var>'s <code>fatal</code> member is true, then set <var>dec</var>'s
+ <a for=TextDecoderStream>error mode</a> to "<code>fatal</code>".
+
+ <li><p>If <var>options</var>'s <code>ignoreBOM</code> member is true, then set <var>dec</var>'s
+ <a for=TextDecoderStream>ignore BOM flag</a>.
+
+ <li>
+  <p>Set <var>dec</var>'s <a for=TextDecoderStream>decoder</a> to a new <a for=/>decoder</a>
+  for <var>dec</var>'s <a for=TextDecoderStream>encoding</a>, and set <var>dec</var>'s
+  <a for=TextDecoderStream>stream</a> to a new <a for=/>stream</a>.
+
+ <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
+
+ <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
+ and runs the <a>decode and enqueue a chunk</a> algorithm with <var>dec</var> and
+ <var>chunk</var>.
+
+ <li><p>Let <var>flushAlgorithm</var> be an algorithm which takes no arguments and runs the <a>flush
+ and enqueue</a> algorithm with <var>dec</var>.
+
+ <li><p>Let <var>transform</var> be the result of calling
+ <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
+ <var>flushAlgorithm</var>).
+
+ <li><p>Set <var>dec</var>'s <a for=TextDecoderStream>transform</a> to <var>transform</var>.
+
+ <li><p>Return <var>dec</var>.
+</ol>
+
+<p>The <dfn id=concept-tds-decode-and-enqueue>decode and enqueue a chunk</dfn> algorithm, given a
+{{TextDecoderStream}} <var>dec</var> and a <var>chunk</var>, runs these steps:
+
+<ol>
+ <li><p>If <a>Type</a>(<var>chunk</var>) is not Object, or <var>chunk</var> does not have an
+ \[[ArrayBufferData]] internal slot, or <a abstract-op>IsDetachedBuffer</a>(<var>chunk</var>) is
+ true, or <a abstract-op>IsSharedArrayBuffer</a>(<var>chunk</var>) is true, then return a new
+ promise rejected with a {{TypeError}} exception.
+
+ <li><p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>chunk</var> to
+ <var>dec</var>'s <a for=TextDecoderStream>stream</a>.
+
+ <li><p>Let <var>controller</var> be <var>dec</var>'s
+ <a for=TextDecoderStream>transform</a>.\[[transformStreamController]].
+
+ <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+
+ <li>
+  <p>While true, run these steps:
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>dec</var>'s
+   <a for=TextDecoderStream>stream</a>.
+
+   <li>
+    <p>If <var>token</var> is <a>end-of-stream</a>, then run these steps:
+    <ol>
+     <li><p>Let <var>outputChunk</var> be <var>output</var>,
+     <a lt="serialize stream" for=TextDecoderStream>serialized</a>.
+
+     <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+     <var>outputChunk</var>).
+
+     <li><p>Return a new promise resolved with undefined.
+    </ol>
+
+   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
+   <var>dec</var>'s <a for=TextDecoderStream>decoder</a>, <var>dec</var>'s
+   <a for=TextDecoderStream>stream</a>, <var>output</var>, and <var>dec</var>'s
+   <a for=TextDecoderStream>error mode</a>.
+
+   <li><p>If <var>result</var> is <a>error</a>, then return a new promise rejected with a
+   {{TypeError}} exception.
+  </ol>
+</ol>
+
+<p>The <dfn id=concept-tds-flush-and-enqueue>flush and enqueue</dfn> algorithm, which handles the
+end of data from the input {{ReadableStream}}, given a {{TextDecoderStream}} <var>dec</var>, runs
+these steps:
+
+<ol>
+ <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+
+ <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-stream</a> for
+ <var>dec</var>'s <a for=TextDecoderStream>decoder</a> and <var>dec</var>'s
+ <a for=TextDecoderStream>stream</a>, <var>output</var>, and <var>dec</var>'s
+ <a for=TextDecoderStream>error mode</a>.
+
+ <li><p>If <var>result</var> is <a>finished</a>, then run these steps:
+ <ol>
+  <li><p>Let <var>outputChunk</var> be <var>output</var>,
+  <a lt="serialize stream" for=TextDecoderStream>serialized</a>.
+
+  <li><p>Let <var>controller</var> be <var>dec</var>'s
+  <a for=TextDecoderStream>transform</a>.\[[transformStreamController]].
+
+  <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+  <var>outputChunk</var>).
+
+  <li><p>Return a new promise resolved with undefined.
+ </ol>
+
+ <li><p>Otherwise, return a new promise rejected with a {{TypeError}} exception.
+</ol>
+
+
+<h3 id=interface-textencoderstream>Interface {{TextEncoderStream}}</h3>
+
+<pre class=idl>
+[Constructor,
+ Exposed=(Window,Worker)]
+interface TextEncoderStream {
+};
+
+TextEncoderStream includes TextEncoderAttributes;
+TextEncoderStream includes GenericTransformStream;
+</pre>
+
+<p>A {{TextEncoderStream}} object has an associated <dfn for=TextEncoderStream>encoder</dfn>,
+<dfn for=TextEncoderStream>transform</dfn> and <dfn for=TextEncoderStream>pending high
+surrogate</dfn> (initially null).
+
+<p class="note no-backref">A {{TextEncoderStream}} object offers no <var>label</var> argument as it
+only supports <a>UTF-8</a>.
+
+<hr>
+
+<dl class=domintro>
+ <dt><code><var>encoder</var> = new <a constructor for=TextEncoderStream>TextEncoderStream()</a></code>
+ <dd><p>Returns a new {{TextEncoderStream}} object.
+
+ <dt><code><var>encoder</var> . <a attribute for=TextEncoderAttributes>encoding</a></code>
+ <dd><p>Returns "<code>utf-8</code>".
+
+ <dt><code><var>encoder</var> . <a attribute for=GenericTransformStream>readable</a></code>
+ <dd>
+  <p>Returns a <a>readable stream</a> whose <a>chunks</a> are {{Uint8Array}}s resulting from running
+  <a>UTF-8</a>'s <a for=/>encoder</a> on the chunks written to {{GenericTransformStream/writable}}.
+
+ <dt><code><var>encoder</var> . <a attribute for=GenericTransformStream>writable</a></code>
+ <dd>
+  <p>Returns a <a>writable stream</a> which accepts string chunks and runs them through
+  <a>UTF-8</a>'s <a for=/>encoder</a> before making them available to
+  {{GenericTransformStream/readable}}.
+
+  <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a
+  {{ReadableStream}} source.
+
+  <pre class=example id=example-textencoderstream-writable><code class=lang-javascript>
+textReadable
+  .pipeThrough(new TextEncoderStream())
+  .pipeTo(byteWritable);</code></pre>
+</dl>
+
+<p>The
+<dfn constructor for=TextEncoderStream id=dom-textencoderstream><code>TextEncoderStream()</code></dfn>
+constructor, when invoked, must run these steps:
+
+<ol>
+ <li><p>Let <var>enc</var> be a new {{TextEncoderStream}} object.
+
+ <li><p>Set <var>enc</var>'s <a for=TextEncoderStream>encoder</a> to <a>UTF-8</a>'s
+ <a for=/>encoder</a>.
+
+ <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
+
+ <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
+ and runs the <a>encode and enqueue a chunk</a> algorithm with <var>enc</var> and <var>chunk</var>.
+
+ <li><p>Let <var>flushAlgorithm</var> be an algorithm which runs the <a>encode and flush</a>
+ algorithm with <var>enc</var>.
+
+ <li><p>Let <var>transform</var> be the result of calling
+ <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
+ <var>flushAlgorithm</var>).
+
+ <li><p>Set <var>enc</var>'s <a for=TextEncoderStream>transform</a> to <var>transform</var>.
+
+ <li><p>Return <var>enc</var>.
+</ol>
+
+<hr>
+
+<p>The <dfn id=concept-tes-encode-and-enqueue>encode and enqueue a chunk</dfn> algorithm, given a
+{{TextEncoderStream}} <var>enc</var> and <var>chunk</var>, runs these steps:
+
+<ol>
+ <li><p>Let <var>input</var> be the result of <a lt="converted to an IDL value">converting</a>
+ <var>chunk</var> to a {{DOMString}}. If this throws an exception, then return a promise rejected
+ with that exception.
+
+ <p class=note>{{DOMString}} is used here so that a surrogate pair that is split between chunks can
+ be reassembled into the appropriate scalar value. The behavior is otherwise identical to
+ {{USVString}}. In particular, lone surrogates will be replaced with U+FFFD.
+
+ <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
+
+ <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+
+ <li><p>Let <var>controller</var> be <var>enc</var>'s
+ <a for=TextEncoderStream>transform</a>.\[[transformStreamController]].
+
+ <li>
+  <p>While true, run these steps:
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>input</var>.
+
+   <li>
+    <p>If <var>token</var> is <a>end-of-stream</a>, then run these steps:
+
+    <ol>
+     <li><p>Convert <var>output</var> into a byte sequence.
+
+     <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
+     <var>output</var>.
+
+     <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+     <var>chunk</var>).
+
+     <li><p>Return a new promise resolved with undefined.
+    </ol>
+
+   <li><p>Let <var>result</var> be the result of executing the <a>convert code unit to scalar
+   value</a> algorithm with <var>enc</var>, <var>token</var> and <var>input</var>.
+
+   <li><p>If <var>result</var> is not <a>continue</a>, then <a>process</a> <var>result</var> for
+   <a for=TextEncoderStream>encoder</a>, <var>input</var>, <var>output</var>.
+
+  </ol>
+</ol>
+
+<p>The <dfn id=concept-tes-convert-code-unit-to-scalar-value>convert code unit to scalar value</dfn>
+algorithm, given a {{TextEncoderStream}} <var>enc</var>, <var>token</var> and <var>input</var>
+stream, runs these steps:
+
+<ol>
+ <li>
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, then run these steps:
+
+  <ol>
+   <li><p>Let <var>high surrogate</var> be <var>enc</var>'s <a>pending high surrogate</a>.
+
+   <li><p>Set <var>enc</var>'s <a>pending high surrogate</a> to null.
+
+   <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return a code point
+   whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
+   (<var>token</var> &minus; 0xDC00).
+
+   <li><p><a>Prepend</a> <var>token</var> to <var>input</var>.
+
+   <li><p>Return U+FFFD.
+  </ol>
+
+ <li><p>If <var>token</var> is in the range U+D800 to U+DBFF, inclusive, then set <a>pending high
+ surrogate</a> to <var>token</var> and return <a>continue</a>.
+
+ <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return U+FFFD.
+
+ <li><p>Return <var>token</var>.
+</ol>
+
+<p class=note>This is equivalent to the "<a>convert</a> a <a>JavaScript string</a> into a <a>scalar
+value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs that are split
+between strings.
+
+<p>The <dfn id=concept-tes-encode-and-flush>encode and flush</dfn> algorithm, given a
+{{TextEncoderStream}} <var>enc</var>, runs these steps:
+
+<ol>
+ <li>
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, then run these steps:
+
+  <ol>
+   <li><p>Let <var>controller</var> be <var>enc</var>'s
+   <a for=TextEncoderStream>transform</a>.\[[transformStreamController]].
+
+   <li>
+    <p>Let <var>output</var> be the byte sequence 0xEF 0xBF 0xBD.
+
+    <p class=note>This is the replacement character U+FFFD encoded as UTF-8.
+
+   <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
+   <var>output</var>.
+
+   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+   <var>chunk</var>).
+  </ol>
+
+ <li><p>Return a new promise resolved with undefined.
 </ol>
 
 
