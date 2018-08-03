@@ -1065,15 +1065,16 @@ interface mixin TextDecoderAttributes {
 "<code>replacement</code>").
 
 <p>The <dfn attribute for=TextDecoderAttributes><code>encoding</code></dfn> attribute's getter must
-return <a for=TextDecoderAttributes>encoding</a>'s <a for=encoding>name</a> in <a>ASCII
-lowercase</a>.
+return this object's <a for=TextDecoderAttributes>encoding</a>'s <a for=encoding>name</a> in
+<a>ASCII lowercase</a>.
 
 <p>The <dfn attribute for=TextDecoderAttributes><code>fatal</code></dfn> attribute's getter must
-return true if <a for=TextDecoderAttributes>error mode</a> is "<code>fatal</code>", and false
-otherwise.
+return true if this object's <a for=TextDecoderAttributes>error mode</a> is "<code>fatal</code>",
+and false otherwise.
 
 <p>The <dfn attribute for=TextDecoderAttributes><code>ignoreBOM</code></dfn> attribute's getter must
-return true if <a for=TextDecoderAttributes>ignore BOM flag</a> is set, and false otherwise.
+return true if this object's <a for=TextDecoderAttributes>ignore BOM flag</a> is set, and false
+otherwise.
 
 
 <h3 id=interface-textdecoder>Interface {{TextDecoder}}</h3>
