@@ -17,9 +17,6 @@ spec:infra; type:dfn;
     text:ascii case-insensitive
 spec:streams;
     type:interface; text:ReadableStream
-    type:dfn; text:chunk
-    type:dfn; text:readable stream
-    type:dfn; text:writable stream
     type:dfn; text:transform stream
 </pre>
 
@@ -1051,7 +1048,7 @@ function decodeArrayOfStrings(buffer, encoding) {
 </div>
 
 
-<h3 id=interface-mixin-textdecoderattributes>Interface Mixin {{TextDecoderAttributes}}</h3>
+<h3 id=interface-mixin-textdecoderattributes>Interface mixin {{TextDecoderAttributes}}</h3>
 
 <pre class=idl>
 interface mixin TextDecoderAttributes {
@@ -1263,7 +1260,7 @@ method, when invoked, must run these steps:
   </ol>
 </ol>
 
-<h3 id=interface-mixin-textencoderattributes>Interface Mixin {{TextEncoderAttributes}}</h3>
+<h3 id=interface-mixin-textencoderattributes>Interface mixin {{TextEncoderAttributes}}</h3>
 
 <pre class=idl>
 interface mixin TextEncoderAttributes {
@@ -1350,7 +1347,7 @@ must run these steps:
 </ol>
 
 
-<h3 id=interface-mixin-generictransformstream>Interface Mixin {{GenericTransformStream}}</h3>
+<h3 id=interface-mixin-generictransformstream>Interface mixin {{GenericTransformStream}}</h3>
 
 <p>{{GenericTransformStream}} represents the concept of a <a>transform stream</a> in IDL. It is not
 a {{TransformStream}}, though it has the same interface and it delegates to one.
@@ -1362,8 +1359,8 @@ interface mixin GenericTransformStream {
 };
 </pre>
 
-<p>An object that includes GenericTransformStream always has an associated
-<dfn for=GenericTransformStream>transform</dfn>.
+<p>An object that includes {{GenericTransformStream}} always has an associated
+<dfn for=GenericTransformStream>transform</dfn> of type {{TransformStream}}.
 
 <p>The <dfn attribute for=GenericTransformStream><code>readable</code></dfn> attribute's getter must
 return <a for=GenericTransformStream>transform</a>.\[[readable]].
@@ -1580,8 +1577,6 @@ surrogate</dfn> (initially null).
 <p class="note no-backref">A {{TextEncoderStream}} object offers no <var>label</var> argument as it
 only supports <a>UTF-8</a>.
 
-<hr>
-
 <dl class=domintro>
  <dt><code><var>encoder</var> = new <a constructor for=TextEncoderStream>TextEncoderStream()</a></code>
  <dd><p>Returns a new {{TextEncoderStream}} object.
@@ -1719,7 +1714,7 @@ stream, runs these steps:
 
 <p class=note>This is equivalent to the "<a>convert</a> a <a>JavaScript string</a> into a <a>scalar
 value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs that are split
-between strings.
+between strings. [[!INFRA]]
 
 <p>The <dfn id=concept-tes-encode-and-flush>encode and flush</dfn> algorithm, given a
 {{TextEncoderStream}} <var>enc</var>, runs these steps:
