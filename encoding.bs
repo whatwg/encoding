@@ -1060,8 +1060,9 @@ interface mixin TextDecoderAttributes {
 
 <p>The {{TextDecoderAttributes}} mixin defines common attributes that are shared between
 {{TextDecoder}} and {{TextDecoderStream}}. These objects have an associated
-<dfn for=TextDecoderAttributes>encoding</dfn>, <dfn for=TextDecoderAttributes>ignore BOM flag</dfn>,
-and <dfn for=TextDecoderAttributes>error mode</dfn>.
+<dfn for=TextDecoderAttributes>encoding</dfn>, <dfn for=TextDecoderAttributes>ignore BOM flag</dfn>
+(initially unset), and <dfn for=TextDecoderAttributes>error mode</dfn> (initially
+"<code>replacement</code>").
 
 <p>The <dfn attribute for=TextDecoderAttributes><code>encoding</code></dfn> attribute's getter must
 return <a for=TextDecoderAttributes>encoding</a>'s <a for=encoding>name</a> in <a>ASCII
@@ -1096,12 +1097,9 @@ interface TextDecoder {
 TextDecoder includes TextDecoderAttributes;
 </pre>
 
-<p>A {{TextDecoder}} object has an associated <dfn for=TextDecoder>encoding</dfn>,
-<dfn for=TextDecoder>decoder</dfn>, <dfn for=TextDecoder>stream</dfn>,
-<dfn for=TextDecoder>ignore BOM flag</dfn> (initially unset),
-<dfn for=TextDecoder>BOM seen flag</dfn> (initially unset),
-<dfn for=TextDecoder>error mode</dfn> (initially "<code>replacement</code>"), and
-<dfn for=TextDecoder>do not flush flag</dfn> (initially unset).
+<p>A {{TextDecoder}} object has an associated <dfn for=TextDecoder>decoder</dfn>, <dfn
+for=TextDecoder>stream</dfn>, <dfn for=TextDecoder>BOM seen flag</dfn> (initially unset), and <dfn
+for=TextDecoder>do not flush flag</dfn> (initially unset).
 
 <p>A {{TextDecoder}} object also has an associated
 <dfn id=concept-td-serialize for=TextDecoder>serialize stream</dfn> algorithm, that given a
@@ -1118,8 +1116,9 @@ TextDecoder includes TextDecoderAttributes;
    <a>reading</a> from <var>stream</var>.
 
    <li>
-    <p>If <a for=TextDecoder>encoding</a> is <a>UTF-8</a>, <a>UTF-16BE</a>, or <a>UTF-16LE</a>, and
-    <a for=TextDecoder>ignore BOM flag</a> and <a for=TextDecoder>BOM seen flag</a> are unset, then:
+    <p>If <a for=TextDecoderAttributes>encoding</a> is <a>UTF-8</a>, <a>UTF-16BE</a>, or
+    <a>UTF-16LE</a>, and <a for=TextDecoderAttributes>ignore BOM flag</a> and <a for=TextDecoder>BOM
+    seen flag</a> are unset, then:
 
     <ol>
      <li><p>If <var>token</var> is U+FEFF, then set <a for=TextDecoder>BOM seen flag</a>.
@@ -1165,8 +1164,8 @@ control.
 
  <dt><code><var>decoder</var> . <a method for=TextDecoder lt=decode()>decode([<var>input</var> [, <var>options</var>]])</a></code>
  <dd>
-  <p>Returns the result of running <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>. The
-  method can be invoked zero or more times with <var>options</var>'s <code>stream</code> set to
+  <p>Returns the result of running <a for=TextDecoderAttributes>encoding</a>'s <a for=/>decoder</a>.
+  The method can be invoked zero or more times with <var>options</var>'s <code>stream</code> set to
   true, and then once without <var>options</var>'s <code>stream</code> (or set to false), to process
   a fragmented stream. If the invocation without <var>options</var>'s <code>stream</code> (or set to
   false) has no <var>input</var>, it's clearest to omit both arguments.
@@ -1178,9 +1177,9 @@ while(buffer = next_chunk()) {
 }
 string += decoder.decode(); // end-of-stream</code></pre>
 
-  <p>If the <a for=TextDecoder>error mode</a> is "<code>fatal</code>" and
-  <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>, <a>throws</a> a
-  {{TypeError}}.
+  <p>If the <a for=TextDecoderAttributes>error mode</a> is "<code>fatal</code>" and
+  <a for=TextDecoderAttributes>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>,
+  <a>throws</a> a {{TypeError}}.
 </dl>
 
 <p>The
@@ -1194,13 +1193,13 @@ constructor, when invoked, must run these steps:
 
  <li><p>Let <var>dec</var> be a new {{TextDecoder}} object.
 
- <li><p>Set <var>dec</var>'s <a for=TextDecoder>encoding</a> to <var>encoding</var>.
+ <li><p>Set <var>dec</var>'s <a for=TextDecoderAttributes>encoding</a> to <var>encoding</var>.
 
  <li><p>If <var>options</var>'s <code>fatal</code> member is true, then set <var>dec</var>'s
- <a for=TextDecoder>error mode</a> to "<code>fatal</code>".
+ <a for=TextDecoderAttributes>error mode</a> to "<code>fatal</code>".
 
  <li><p>If <var>options</var>'s <code>ignoreBOM</code> member is true, then set <var>dec</var>'s
- <a for=TextDecoder>ignore BOM flag</a>.
+ <a for=TextDecoderAttributes>ignore BOM flag</a>.
 
  <li><p>Return <var>dec</var>.
 </ol>
@@ -1210,8 +1209,9 @@ method, when invoked, must run these steps:
 
 <ol>
  <li><p>If the <a for=TextDecoder>do not flush flag</a> is unset, set <a for=TextDecoder>decoder</a>
- to a new <a for=TextDecoder>encoding</a>'s <a for=/>decoder</a>, set <a for=TextDecoder>stream</a>
- to a new <a for=/>stream</a>, and unset the <a for=TextDecoder>BOM seen flag</a>.
+ to a new <a for=TextDecoderAttributes>encoding</a>'s <a for=/>decoder</a>, set
+ <a for=TextDecoder>stream</a> to a new <a for=/>stream</a>, and unset the <a for=TextDecoder>BOM
+ seen flag</a>.
 
  <li><p>If <var>options</var>'s <code>stream</code> is true, set the
  <a for=TextDecoder>do not flush flag</a>, and unset the <a for=TextDecoder>do not flush flag</a>
@@ -1249,7 +1249,7 @@ method, when invoked, must run these steps:
     <ol>
      <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
      <a for=TextDecoder>decoder</a>, <a for=TextDecoder>stream</a>, <var>output</var>, and
-     <a for=TextDecoder>error mode</a>.
+     <a for=TextDecoderAttributes>error mode</a>.
 
      <li><p>If <var>result</var> is <a>finished</a>, then return <var>output</var>,
      <a lt="serialize stream" for=TextDecoder>serialized</a>.
@@ -1359,7 +1359,7 @@ interface mixin GenericTransformStream {
 };
 </pre>
 
-<p>An object that includes {{GenericTransformStream}} always has an associated
+<p>An object that includes {{GenericTransformStream}} has an associated
 <dfn for=GenericTransformStream>transform</dfn> of type {{TransformStream}}.
 
 <p>The <dfn attribute for=GenericTransformStream><code>readable</code></dfn> attribute's getter must
@@ -1382,13 +1382,9 @@ TextDecoderStream includes TextDecoderAttributes;
 TextDecoderStream includes GenericTransformStream;
 </pre>
 
-<p>A {{TextDecoderStream}} object has an associated <dfn for=TextDecoderStream>encoding</dfn>,
-<dfn for=TextDecoderStream>decoder</dfn>, <dfn for=TextDecoderStream>stream</dfn>,
-<dfn for=TextDecoderStream>ignore BOM flag</dfn> (initially unset),
-<dfn for=TextDecoderStream>BOM seen flag</dfn> (initially unset),
-<dfn for=TextDecoderStream>error mode</dfn> (initially "<code>replacement</code>"),
-<dfn for=TextDecoderStream>do not flush flag</dfn> (initially unset), and
-<dfn for=TextDecoderStream>transform</dfn>.
+<p>A {{TextDecoderStream}} object has an associated
+<dfn for=TextDecoderStream>decoder</dfn>, <dfn for=TextDecoderStream>stream</dfn>, and
+<dfn for=TextDecoderStream>BOM seen flag</dfn> (initially unset).
 
 <p>A {{TextDecoderStream}} object also has an associated <dfn id=concept-tds-serialize
 for=TextDecoderStream>serialize stream</dfn> algorithm, that is identical to the <a
@@ -1404,25 +1400,26 @@ for=TextDecoder>serialize stream</a> algorithm for the equivalent {{TextDecoder}
   <a>throws</a> a {{RangeError}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderAttributes>encoding</a></code>
- <dd><p>Returns <a for=TextDecoderStream>encoding</a>'s <a>name</a>, lowercased.
+ <dd><p>Returns <a for=TextDecoderAttributes>encoding</a>'s <a>name</a>, lowercased.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderAttributes>fatal</a></code>
- <dd><p>Returns true if <a for=TextDecoderStream>error mode</a> is "<code>fatal</code>", and false
- otherwise.
+ <dd><p>Returns true if <a for=TextDecoderAttributes>error mode</a> is "<code>fatal</code>", and
+ false otherwise.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderAttributes>ignoreBOM</a></code>
- <dd><p>Returns true if <a for=TextDecoderStream>ignore BOM flag</a> is set, and false otherwise.
+ <dd><p>Returns true if <a for=TextDecoderAttributes>ignore BOM flag</a> is set, and false
+ otherwise.
 
  <dt><code><var>decoder</var> . <a attribute for=GenericTransformStream>readable</a></code>
  <dd>
   <p>Returns a <a>readable stream</a> whose <a>chunks</a> are strings resulting from running
-  <a for=TextDecoderStream>encoding</a>'s <a for=/>decoder</a> on the chunks written to
+  <a for=TextDecoderAttributes>encoding</a>'s <a for=/>decoder</a> on the chunks written to
   {{GenericTransformStream/writable}}.
 
  <dt><code><var>decoder</var> . <a attribute for=GenericTransformStream>writable</a></code>
  <dd>
   <p>Returns a <a>writable stream</a> which accepts {{BufferSource}} chunks and runs them through
-  <a for=TextDecoderStream>encoding</a>'s <a for=/>decoder</a> before making them available to
+  <a for=TextDecoderAttributes>encoding</a>'s <a for=/>decoder</a> before making them available to
   {{GenericTransformStream/readable}}.
 
   <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a
@@ -1434,8 +1431,8 @@ byteReadable
   .pipeThrough(decoder)
   .pipeTo(textWritable);</code></pre>
 
-  <p>If the <a for=TextDecoderStream>error mode</a> is "<code>fatal</code>" and
-  <a for=TextDecoderStream>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>, both
+  <p>If the <a for=TextDecoderAttributes>error mode</a> is "<code>fatal</code>" and
+  <a for=TextDecoderAttributes>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>, both
   {{GenericTransformStream/readable}} and {{GenericTransformStream/writable}} will be errored with a
   {{TypeError}}.
 </dl>
@@ -1451,17 +1448,17 @@ byteReadable
 
  <li><p>Let <var>dec</var> be a new {{TextDecoderStream}} object.
 
- <li><p>Set <var>dec</var>'s <a for=TextDecoderStream>encoding</a> to <var>encoding</var>.
+ <li><p>Set <var>dec</var>'s <a for=TextDecoderAttributes>encoding</a> to <var>encoding</var>.
 
  <li><p>If <var>options</var>'s <code>fatal</code> member is true, then set <var>dec</var>'s
- <a for=TextDecoderStream>error mode</a> to "<code>fatal</code>".
+ <a for=TextDecoderAttributes>error mode</a> to "<code>fatal</code>".
 
  <li><p>If <var>options</var>'s <code>ignoreBOM</code> member is true, then set <var>dec</var>'s
- <a for=TextDecoderStream>ignore BOM flag</a>.
+ <a for=TextDecoderAttributes>ignore BOM flag</a>.
 
  <li>
   <p>Set <var>dec</var>'s <a for=TextDecoderStream>decoder</a> to a new <a for=/>decoder</a>
-  for <var>dec</var>'s <a for=TextDecoderStream>encoding</a>, and set <var>dec</var>'s
+  for <var>dec</var>'s <a for=TextDecoderAttributes>encoding</a>, and set <var>dec</var>'s
   <a for=TextDecoderStream>stream</a> to a new <a for=/>stream</a>.
 
  <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
@@ -1477,7 +1474,7 @@ byteReadable
  <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
  <var>flushAlgorithm</var>).
 
- <li><p>Set <var>dec</var>'s <a for=TextDecoderStream>transform</a> to <var>transform</var>.
+ <li><p>Set <var>dec</var>'s <a for=GenericTransformStream>transform</a> to <var>transform</var>.
 
  <li><p>Return <var>dec</var>.
 </ol>
@@ -1495,7 +1492,7 @@ byteReadable
  <var>dec</var>'s <a for=TextDecoderStream>stream</a>.
 
  <li><p>Let <var>controller</var> be <var>dec</var>'s
- <a for=TextDecoderStream>transform</a>.\[[transformStreamController]].
+ <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
@@ -1521,7 +1518,7 @@ byteReadable
    <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
    <var>dec</var>'s <a for=TextDecoderStream>decoder</a>, <var>dec</var>'s
    <a for=TextDecoderStream>stream</a>, <var>output</var>, and <var>dec</var>'s
-   <a for=TextDecoderStream>error mode</a>.
+   <a for=TextDecoderAttributes>error mode</a>.
 
    <li><p>If <var>result</var> is <a>error</a>, then return a new promise rejected with a
    {{TypeError}} exception.
@@ -1538,7 +1535,7 @@ these steps:
  <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-stream</a> for
  <var>dec</var>'s <a for=TextDecoderStream>decoder</a> and <var>dec</var>'s
  <a for=TextDecoderStream>stream</a>, <var>output</var>, and <var>dec</var>'s
- <a for=TextDecoderStream>error mode</a>.
+ <a for=TextDecoderAttributes>error mode</a>.
 
  <li><p>If <var>result</var> is <a>finished</a>, then run these steps:
  <ol>
@@ -1546,7 +1543,7 @@ these steps:
   <a lt="serialize stream" for=TextDecoderStream>serialized</a>.
 
   <li><p>Let <var>controller</var> be <var>dec</var>'s
-  <a for=TextDecoderStream>transform</a>.\[[transformStreamController]].
+  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
   <var>outputChunk</var>).
@@ -1571,8 +1568,7 @@ TextEncoderStream includes GenericTransformStream;
 </pre>
 
 <p>A {{TextEncoderStream}} object has an associated <dfn for=TextEncoderStream>encoder</dfn>,
-<dfn for=TextEncoderStream>transform</dfn> and <dfn for=TextEncoderStream>pending high
-surrogate</dfn> (initially null).
+and <dfn for=TextEncoderStream>pending high surrogate</dfn> (initially null).
 
 <p class="note no-backref">A {{TextEncoderStream}} object offers no <var>label</var> argument as it
 only supports <a>UTF-8</a>.
@@ -1626,7 +1622,7 @@ constructor, when invoked, must run these steps:
  <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
  <var>flushAlgorithm</var>).
 
- <li><p>Set <var>enc</var>'s <a for=TextEncoderStream>transform</a> to <var>transform</var>.
+ <li><p>Set <var>enc</var>'s <a for=GenericTransformStream>transform</a> to <var>transform</var>.
 
  <li><p>Return <var>enc</var>.
 </ol>
@@ -1650,7 +1646,7 @@ constructor, when invoked, must run these steps:
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
  <li><p>Let <var>controller</var> be <var>enc</var>'s
- <a for=TextEncoderStream>transform</a>.\[[transformStreamController]].
+ <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
  <li>
   <p>While true, run these steps:
@@ -1725,7 +1721,7 @@ between strings. [[!INFRA]]
 
   <ol>
    <li><p>Let <var>controller</var> be <var>enc</var>'s
-   <a for=TextEncoderStream>transform</a>.\[[transformStreamController]].
+   <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
    <li>
     <p>Let <var>output</var> be the byte sequence 0xEF 0xBF 0xBD.
