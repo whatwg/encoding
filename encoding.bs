@@ -1490,7 +1490,7 @@ byteReadable
  <li><p>Let <var>arrayBuffer</var> be <var>chunk</var>.
 
  <li>
-  <p>If <var>arrayBuffer</var> has an \[[ViewedArrayBuffer]] internal slot, then run these steps:
+  <p>If <var>arrayBuffer</var> has an \[[ViewedArrayBuffer]] internal slot, run these steps:
 
   <ol>
    <li><p>Set <var>arrayBuffer</var> to the value of <var>arrayBuffer</var>’s \[[ViewedArrayBuffer]]
@@ -1521,12 +1521,13 @@ byteReadable
    <a for=TextDecoderStream>stream</a>.
 
    <li>
-    <p>If <var>token</var> is <a>end-of-stream</a>, then run these steps:
+    <p>If <var>token</var> is <a>end-of-stream</a>, run these steps:
     <ol>
      <li><p>Let <var>outputChunk</var> be <var>output</var>,
      <a lt="serialize stream" for=TextDecoderStream>serialized</a>.
 
-     <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+     <li><p>if <var>outputChunk</var> is non-empty, call
+     <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
      <var>outputChunk</var>).
 
      <li><p>Return a new promise resolved with undefined.
@@ -1554,7 +1555,7 @@ these steps:
  <a for=TextDecoderStream>stream</a>, <var>output</var>, and <var>dec</var>'s
  <a for=TextDecoderAttributes>error mode</a>.
 
- <li><p>If <var>result</var> is <a>finished</a>, then run these steps:
+ <li><p>If <var>result</var> is <a>finished</a>, run these steps:
  <ol>
   <li><p>Let <var>outputChunk</var> be <var>output</var>,
   <a lt="serialize stream" for=TextDecoderStream>serialized</a>.
@@ -1562,7 +1563,8 @@ these steps:
   <li><p>Let <var>controller</var> be <var>dec</var>'s
   <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
-  <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+  <li><p>If <var>outputChunk</var> is non-empty, call
+  <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
   <var>outputChunk</var>).
 
   <li><p>Return a new promise resolved with undefined.
@@ -1672,16 +1674,21 @@ constructor, when invoked, must run these steps:
    <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>input</var>.
 
    <li>
-    <p>If <var>token</var> is <a>end-of-stream</a>, then run these steps:
+    <p>If <var>token</var> is <a>end-of-stream</a>, run these steps:
 
     <ol>
      <li><p>Convert <var>output</var> into a byte sequence.
 
-     <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
-     <var>output</var>.
+     <li>
+      <p>If <var>output</var> is non-empty, run these steps:
 
-     <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-     <var>chunk</var>).
+      <ol>
+       <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
+       <var>output</var>.
+
+       <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+       <var>chunk</var>).
+      </ol>
 
      <li><p>Return a new promise resolved with undefined.
     </ol>
@@ -1701,7 +1708,7 @@ stream, runs these steps:
 
 <ol>
  <li>
-  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, then run these steps:
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, run these steps:
 
   <ol>
    <li><p>Let <var>high surrogate</var> be <var>enc</var>'s <a>pending high surrogate</a>.
@@ -1734,7 +1741,7 @@ between strings. [[!INFRA]]
 
 <ol>
  <li>
-  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, then run these steps:
+  <p>If <var>enc</var>'s <a>pending high surrogate</a> is non-null, run these steps:
 
   <ol>
    <li><p>Let <var>controller</var> be <var>enc</var>'s
