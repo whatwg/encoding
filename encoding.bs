@@ -1486,7 +1486,7 @@ byteReadable
 
  <li><p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>bufferSource</var> to
  <var>dec</var>'s <a for=TextDecoderStream>stream</a>. If this throws an exception, then return a
- promise rejected with that exception
+ promise rejected with that exception.
 
  <li><p>Let <var>controller</var> be <var>dec</var>'s
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
