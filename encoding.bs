@@ -21,10 +21,10 @@ spec:streams;
 </pre>
 
 <pre class=anchors>
-spec: ECMASCRIPT; urlPrefix: https://tc39.github.io/ecma262/
-    text: Type; url: #sec-ecmascript-data-types-and-values; type: dfn
-    text: IsDetachedBuffer; url: #sec-isdetachedbuffer; type: abstract-op
-    text: IsSharedArrayBuffer; url: #sec-issharedarraybuffer; type: abstract-op
+spec: ECMASCRIPT; urlPrefix: https://tc39.github.io/ecma262/#
+    text: Type; url: sec-ecmascript-data-types-and-values; type: dfn
+    text: IsDetachedBuffer; url: sec-isdetachedbuffer; type: abstract-op
+    text: IsSharedArrayBuffer; url: sec-issharedarraybuffer; type: abstract-op
 </pre>
 
 
@@ -1059,14 +1059,13 @@ interface mixin TextDecoderCommon {
 </pre>
 
 <p>The {{TextDecoderCommon}} mixin defines common attributes that are shared between
-{{TextDecoder}} and {{TextDecoderStream}}. These objects have an associated
+{{TextDecoder}} and {{TextDecoderStream}} objects. These objects have an associated
 <dfn for=TextDecoderCommon>encoding</dfn>, <dfn for=TextDecoderCommon>ignore BOM flag</dfn>
 (initially unset), <dfn for=TextDecoderCommon>BOM seen flag</dfn> (initially unset), and
 <dfn for=TextDecoderCommon>error mode</dfn> (initially "<code>replacement</code>").
 
-<p>These objects also have an associated
-<dfn id=concept-tdc-serialize for=TextDecoderCommon>serialize stream</dfn> algorithm, that given a
-<a for=/>stream</a> <var>stream</var>, runs these steps:
+<p>These objects also have an associated <dfn for=TextDecoderCommon>serialize stream</dfn>
+algorithm, that given a <a for=/>stream</a> <var>stream</var>, runs these steps:
 
 <ol>
  <li><p>Let <var>output</var> be the empty string.
@@ -1075,8 +1074,7 @@ interface mixin TextDecoderCommon {
   <p>While true:
 
   <ol>
-   <li><p>Let <var>token</var> be the result of
-   <a>reading</a> from <var>stream</var>.
+   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>stream</var>.
 
    <li>
     <p>If <a for=TextDecoderCommon>encoding</a> is <a>UTF-8</a>, <a>UTF-16BE</a>, or
@@ -1105,17 +1103,17 @@ control.
 
 <hr>
 
-<p>The <dfn attribute for=TextDecoderCommon><code>encoding</code></dfn> attribute's getter must
-return this object's <a for=TextDecoderCommon>encoding</a>'s <a for=encoding>name</a> in
-<a>ASCII lowercase</a>.
+<p>The <dfn attribute for=TextDecoderCommon><code>encoding</code></dfn> attribute's getter, when
+invoked, must return this object's <a for=TextDecoderCommon>encoding</a>'s <a for=encoding>name</a>
+in <a>ASCII lowercase</a>.
 
-<p>The <dfn attribute for=TextDecoderCommon><code>fatal</code></dfn> attribute's getter must
-return true if this object's <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>",
-and false otherwise.
+<p>The <dfn attribute for=TextDecoderCommon><code>fatal</code></dfn> attribute's getter, when
+invoked, must return true if this object's <a for=TextDecoderCommon>error mode</a> is
+"<code>fatal</code>", and false otherwise.
 
-<p>The <dfn attribute for=TextDecoderCommon><code>ignoreBOM</code></dfn> attribute's getter must
-return true if this object's <a for=TextDecoderCommon>ignore BOM flag</a> is set, and false
-otherwise.
+<p>The <dfn attribute for=TextDecoderCommon><code>ignoreBOM</code></dfn> attribute's getter, when
+invoked, must return true if this object's <a for=TextDecoderCommon>ignore BOM flag</a> is set, and
+false otherwise.
 
 
 <h3 id=interface-textdecoder>Interface {{TextDecoder}}</h3>
@@ -1135,13 +1133,12 @@ dictionary TextDecodeOptions {
 interface TextDecoder {
   USVString decode(optional BufferSource input, optional TextDecodeOptions options);
 };
-
 TextDecoder includes TextDecoderCommon;
 </pre>
 
-<p>A {{TextDecoder}} object has an associated <dfn for=TextDecoder>decoder</dfn>, <dfn
-for=TextDecoder>stream</dfn>, and <dfn for=TextDecoder>do not flush flag</dfn>
-(initially unset).
+<p>A {{TextDecoder}} object has an associated <dfn for=TextDecoder>decoder</dfn>,
+<dfn for=TextDecoder>stream</dfn>, and <dfn for=TextDecoder>do not flush flag</dfn> (initially
+unset).
 
 <dl class=domintro>
  <dt><code><var>decoder</var> = new <a constructor for=TextDecoder lt=TextDecoder()>TextDecoder([<var>label</var> = "utf-8" [, <var>options</var>]])</a></code>
@@ -1273,8 +1270,8 @@ interface mixin TextEncoderCommon {
 <p>The {{TextEncoderCommon}} mixin defines common attributes that are shared between
 {{TextEncoder}} and {{TextEncoderStream}}.
 
-<p>The <dfn attribute for=TextEncoderCommon><code>encoding</code></dfn> attribute's getter must
-return "<code>utf-8</code>".
+<p>The <dfn attribute for=TextEncoderCommon><code>encoding</code></dfn> attribute's getter, when
+invoked, must return "<code>utf-8</code>".
 
 
 <h3 id=interface-textencoder>Interface {{TextEncoder}}</h3>
@@ -1285,7 +1282,6 @@ return "<code>utf-8</code>".
 interface TextEncoder {
   [NewObject] Uint8Array encode(optional USVString input = "");
 };
-
 TextEncoder includes TextEncoderCommon;
 </pre>
 
@@ -1364,11 +1360,11 @@ interface mixin GenericTransformStream {
 <p>An object that includes {{GenericTransformStream}} has an associated
 <dfn for=GenericTransformStream>transform</dfn> of type {{TransformStream}}.
 
-<p>The <dfn attribute for=GenericTransformStream><code>readable</code></dfn> attribute's getter must
-return <a for=GenericTransformStream>transform</a>.\[[readable]].
+<p>The <dfn attribute for=GenericTransformStream><code>readable</code></dfn> attribute's getter,
+when invoked, must return <a for=GenericTransformStream>transform</a>.\[[readable]].
 
-<p>The <dfn attribute for=GenericTransformStream><code>writable</code></dfn> attribute's getter must
-return <a for=GenericTransformStream>transform</a>.\[[writable]].
+<p>The <dfn attribute for=GenericTransformStream><code>writable</code></dfn> attribute's getter,
+when invoked, must return <a for=GenericTransformStream>transform</a>.\[[writable]].
 
 
 <h3 id=interface-textdecoderstream>Interface {{TextDecoderStream}}</h3>
@@ -1379,7 +1375,6 @@ return <a for=GenericTransformStream>transform</a>.\[[writable]].
 interface TextDecoderStream {
   USVString decode(optional BufferSource input, optional TextDecodeOptions options);
 };
-
 TextDecoderStream includes TextDecoderCommon;
 TextDecoderStream includes GenericTransformStream;
 </pre>
@@ -1476,8 +1471,8 @@ byteReadable
  <li><p>Return <var>dec</var>.
 </ol>
 
-<p>The <dfn id=concept-tds-decode-and-enqueue>decode and enqueue a chunk</dfn> algorithm, given a
-{{TextDecoderStream}} <var>dec</var> and a <var>chunk</var>, runs these steps:
+<p>The <dfn>decode and enqueue a chunk</dfn> algorithm, given a {{TextDecoderStream}} object
+<var>dec</var> and a <var>chunk</var>, runs these steps:
 
 <ol>
  <li><p>Let <var>bufferSource</var> be the result of
@@ -1523,9 +1518,8 @@ byteReadable
   </ol>
 </ol>
 
-<p>The <dfn id=concept-tds-flush-and-enqueue>flush and enqueue</dfn> algorithm, which handles the
-end of data from the input {{ReadableStream}}, given a {{TextDecoderStream}} <var>dec</var>, runs
-these steps:
+<p>The <dfn>flush and enqueue</dfn> algorithm, which handles the end of data from the input
+{{ReadableStream}} object, given a {{TextDecoderStream}} object <var>dec</var>, runs these steps:
 
 <ol>
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
@@ -1561,7 +1555,6 @@ these steps:
  Exposed=(Window,Worker)]
 interface TextEncoderStream {
 };
-
 TextEncoderStream includes TextEncoderCommon;
 TextEncoderStream includes GenericTransformStream;
 </pre>
@@ -1628,8 +1621,8 @@ constructor, when invoked, must run these steps:
 
 <hr>
 
-<p>The <dfn id=concept-tes-encode-and-enqueue>encode and enqueue a chunk</dfn> algorithm, given a
-{{TextEncoderStream}} <var>enc</var> and <var>chunk</var>, runs these steps:
+<p>The <dfn>encode and enqueue a chunk</dfn> algorithm, given a {{TextEncoderStream}} object
+<var>enc</var> and <var>chunk</var>, runs these steps:
 
 <ol>
  <li><p>Let <var>input</var> be the result of <a lt="converted to an IDL value">converting</a>
@@ -1682,9 +1675,8 @@ constructor, when invoked, must run these steps:
   </ol>
 </ol>
 
-<p>The <dfn id=concept-tes-convert-code-unit-to-scalar-value>convert code unit to scalar value</dfn>
-algorithm, given a {{TextEncoderStream}} <var>enc</var>, <var>token</var> and <var>input</var>
-stream, runs these steps:
+<p>The <dfn>convert code unit to scalar value</dfn> algorithm, given a {{TextEncoderStream}} object
+<var>enc</var>, <var>token</var>, and stream <var>input</var>, runs these steps:
 
 <ol>
  <li>
@@ -1716,8 +1708,8 @@ stream, runs these steps:
 value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs that are split
 between strings. [[!INFRA]]
 
-<p>The <dfn id=concept-tes-encode-and-flush>encode and flush</dfn> algorithm, given a
-{{TextEncoderStream}} <var>enc</var>, runs these steps:
+<p>The <dfn>encode and flush</dfn> algorithm, given a {{TextEncoderStream}} <var>enc</var>, runs
+these steps:
 
 <ol>
  <li>
