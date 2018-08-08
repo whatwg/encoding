@@ -1480,28 +1480,11 @@ byteReadable
 {{TextDecoderStream}} <var>dec</var> and a <var>chunk</var>, runs these steps:
 
 <ol>
- <li><p>If <a>Type</a>(<var>chunk</var>) is not Object, then return a new promise rejected with a
- {{TypeError}} exception.
+ <li><p>Let <var>bufferSource</var> be the result of
+ <a lt="converted to an IDL value">converting</a> <var>chunk</var> to a {{BufferSource}}. If this
+ throws an exception, then return a promise rejected with that exception.
 
- <li><p>Let <var>arrayBuffer</var> be <var>chunk</var>.
-
- <li>
-  <p>If <var>arrayBuffer</var> has an \[[ViewedArrayBuffer]] internal slot, run these steps:
-
-  <ol>
-   <li><p>Set <var>arrayBuffer</var> to the value of <var>arrayBuffer</var>’s \[[ViewedArrayBuffer]]
-   internal slot.
-
-   <li><p>If <var>arrayBuffer</var> is undefined, then return a new promise rejected with a
-   {{TypeError}} exception.
-  </ol>
-
- <li><p>If <var>arrayBuffer</var> does not have an \[[ArrayBufferData]] internal slot, or
- <a abstract-op>IsDetachedBuffer</a>(<var>arrayBuffer</var>) is true, or
- <a abstract-op>IsSharedArrayBuffer</a>(<var>arrayBuffer</var>) is true, then return a new promise
- rejected with a {{TypeError}} exception.
-
- <li><p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>chunk</var> to
+ <li><p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>bufferSource</var> to
  <var>dec</var>'s <a for=TextDecoderStream>stream</a>.
 
  <li><p>Let <var>controller</var> be <var>dec</var>'s
