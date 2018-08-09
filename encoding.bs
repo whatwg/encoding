@@ -1700,8 +1700,8 @@ constructor, when invoked, must run these steps:
 value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs that are split
 between strings. [[!INFRA]]
 
-<p>The <dfn>encode and flush</dfn> algorithm, given a {{TextEncoderStream}} <var>enc</var>, runs
-these steps:
+<p>The <dfn>encode and flush</dfn> algorithm, given a {{TextEncoderStream}} object <var>enc</var>,
+runs these steps:
 
 <ol>
  <li>
