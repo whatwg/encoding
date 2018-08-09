@@ -17,14 +17,6 @@ spec:infra; type:dfn;
     text:ascii case-insensitive
 spec:streams;
     type:interface; text:ReadableStream
-    type:dfn; text:transform stream
-</pre>
-
-<pre class=anchors>
-spec: ECMASCRIPT; urlPrefix: https://tc39.github.io/ecma262/#
-    text: Type; url: sec-ecmascript-data-types-and-values; type: dfn
-    text: IsDetachedBuffer; url: sec-isdetachedbuffer; type: abstract-op
-    text: IsSharedArrayBuffer; url: sec-issharedarraybuffer; type: abstract-op
 </pre>
 
 
