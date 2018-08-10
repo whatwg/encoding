@@ -1103,11 +1103,12 @@ attribute's getter, when invoked, must return this object's <a for=TextDecoderCo
 <a for=encoding>name</a> in <a>ASCII lowercase</a>.
 
 <p>The <dfn attribute id=dom-textdecoder-fatal for=TextDecoderCommon><code>fatal</code></dfn>
-attribute's getter, when invoked, must return true if this object's <a for=TextDecoderCommon>error
-mode</a> is "<code>fatal</code>", and false otherwise.
+attribute's getter, when invoked, must return true if this object's
+<a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>", and false otherwise.
 
-<p>The <dfn attribute id=dom-textdecoder-ignorebom for=TextDecoderCommon><code>ignoreBOM</code>
-</dfn> attribute's getter, when invoked, must return true if this object's
+<p>The
+<dfn attribute id=dom-textdecoder-ignorebom for=TextDecoderCommon><code>ignoreBOM</code></dfn>
+attribute's getter, when invoked, must return true if this object's
 <a for=TextDecoderCommon>ignore BOM flag</a> is set, and false otherwise.
 
 
@@ -1265,8 +1266,8 @@ interface mixin TextEncoderCommon {
 <p>The {{TextEncoderCommon}} mixin defines common attributes that are shared between
 {{TextEncoder}} and {{TextEncoderStream}}.
 
-<p>The <dfn attribute id=dom-textencoder-encoding for=TextEncoderCommon><code>encoding</code>
-</dfn> attribute's getter, when invoked, must return "<code>utf-8</code>".
+<p>The <dfn attribute id=dom-textencoder-encoding for=TextEncoderCommon><code>encoding</code></dfn>
+attribute's getter, when invoked, must return "<code>utf-8</code>".
 
 
 <h3 id=interface-textencoder>Interface {{TextEncoder}}</h3>
