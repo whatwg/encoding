@@ -1369,7 +1369,6 @@ when invoked, must return <a for=GenericTransformStream>transform</a>.\[[writabl
 [Constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options),
  Exposed=(Window,Worker)]
 interface TextDecoderStream {
-  USVString decode(optional BufferSource input, optional TextDecodeOptions options);
 };
 TextDecoderStream includes TextDecoderCommon;
 TextDecoderStream includes GenericTransformStream;
