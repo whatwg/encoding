@@ -1050,7 +1050,7 @@ interface mixin TextDecoderCommon {
 };
 </pre>
 
-<p>The {{TextDecoderCommon}} mixin defines common attributes that are shared between
+<p>The {{TextDecoderCommon}} interface mixin defines common attributes that are shared between
 {{TextDecoder}} and {{TextDecoderStream}} objects. These objects have an associated
 <dfn id=textdecoder-encoding for=TextDecoderCommon>encoding</dfn>,
 <dfn id=textdecoder-ignore-bom-flag for=TextDecoderCommon>ignore BOM flag</dfn> (initially unset),
@@ -1263,8 +1263,8 @@ interface mixin TextEncoderCommon {
 };
 </pre>
 
-<p>The {{TextEncoderCommon}} mixin defines common attributes that are shared between
-{{TextEncoder}} and {{TextEncoderStream}}.
+<p>The {{TextEncoderCommon}} interface mixin defines common attributes that are shared between
+{{TextEncoder}} and {{TextEncoderStream}} objects.
 
 <p>The <dfn attribute id=dom-textencoder-encoding for=TextEncoderCommon><code>encoding</code></dfn>
 attribute's getter, when invoked, must return "<code>utf-8</code>".
@@ -1343,8 +1343,9 @@ must run these steps:
 
 <h3 id=interface-mixin-generictransformstream>Interface mixin {{GenericTransformStream}}</h3>
 
-<p>{{GenericTransformStream}} represents the concept of a <a>transform stream</a> in IDL. It is not
-a {{TransformStream}}, though it has the same interface and it delegates to one.
+<p>The {{GenericTransformStream}} interface mixin represents the concept of a
+<a>transform stream</a> in IDL. It is not a {{TransformStream}}, though it has the same interface
+and it delegates to one.
 
 <pre class=idl>
 interface mixin GenericTransformStream {
@@ -1357,10 +1358,10 @@ interface mixin GenericTransformStream {
 <dfn for=GenericTransformStream>transform</dfn> of type {{TransformStream}}.
 
 <p>The <dfn attribute for=GenericTransformStream><code>readable</code></dfn> attribute's getter,
-when invoked, must return <a for=GenericTransformStream>transform</a>.\[[readable]].
+when invoked, must return this object's <a for=GenericTransformStream>transform</a>.\[[readable]].
 
 <p>The <dfn attribute for=GenericTransformStream><code>writable</code></dfn> attribute's getter,
-when invoked, must return <a for=GenericTransformStream>transform</a>.\[[writable]].
+when invoked, must return this object's <a for=GenericTransformStream>transform</a>.\[[writable]].
 
 
 <h3 id=interface-textdecoderstream>Interface {{TextDecoderStream}}</h3>
