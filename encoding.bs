@@ -135,6 +135,16 @@ a <a>byte</a> sequence (and vice versa). Each <a for=/>encoding</a> has a
 <dfn id=name export for=encoding>name</dfn>, and one or more
 <dfn id=label export for=encoding lt=label>labels</dfn>.
 
+<p class="note no-backref">This specification defines three <a>encodings</a> with the same names as
+<i>encoding schemes</i> defined in the Unicode standard: <a>UTF-8</a>, <a>UTF-16LE</a>, and
+<a>UTF-16BE</a>. The <a>encodings</a> differ from the <i>encoding schemes</i> by byte order mark
+(also known as BOM) handling not being part of the <a>encodings</a> themselves and instead being
+part of wrapper algorithms in this specification, whereas byte order mark handling is part of the
+definition of the <i>encoding schemes</i> in the Unicode Standard. <a>UTF-8</a> used together with
+the <a>UTF-8 decode</a> algorithm matches the <i>encoding scheme</i> of the same name. This
+specification does not provide wrapper algorithms that would combine with <a>UTF-16LE</a> and
+<a>UTF-16BE</a> to match the similarly-named <i>encoding schemes</i>. [[UNICODE]]
+
 
 <h3 id=encoders-and-decoders>Encoders and decoders</h3>
 
@@ -865,9 +875,9 @@ fallback encoding <var>encoding</var>, run these steps:
    <tr><td>0xFF 0xFE<td><a>UTF-16LE</a>
   </table>
 
-  <p class=note>For compatibility with deployed content, the byte order mark (also known as BOM) is
-  more authoritative than anything else. In a context where HTTP is used this is in violation of the
-  semantics of the `<code>Content-Type</code>` header.
+  <p class=note>For compatibility with deployed content, the byte order mark is more authoritative
+  than anything else. In a context where HTTP is used this is in violation of the semantics of the
+  `<code>Content-Type</code>` header.
 
  <li><p>If <var>BOM seen flag</var> is unset,
  <a>prepend</a> <var>buffer</var> to <var>stream</var>.
@@ -1311,6 +1321,10 @@ must run these steps:
 <h3 id=utf-8 dfn export>UTF-8</h3>
 
 <h4 id=utf-8-decoder dfn export>UTF-8 decoder</h4>
+
+<p class="note no-backref">A byte order mark has priority over a <a>label</a> as it has been found
+to be more accurate in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a>
+algorithm but rather the <a>decode</a> and <a>UTF-8 decode</a> algorithms.
 
 <p><a>UTF-8</a>'s <a for=/>decoder</a>'s has an associated
 <dfn>UTF-8 code point</dfn>, <dfn>UTF-8 bytes seen</dfn>, and
