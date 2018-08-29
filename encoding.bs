@@ -137,14 +137,14 @@ a <a>byte</a> sequence (and vice versa). Each <a for=/>encoding</a> has a
 <dfn id=name export for=encoding>name</dfn>, and one or more
 <dfn id=label export for=encoding lt=label>labels</dfn>.
 
-<p class="note no-backref">This specification defines three <a>encodings</a> with the same names as
-<i>encoding schemes</i> defined in the Unicode standard: <a>UTF-8</a>, <a>UTF-16LE</a>, and
-<a>UTF-16BE</a>. The <a>encodings</a> differ from the <i>encoding schemes</i> by byte order mark
-(also known as BOM) handling not being part of the <a>encodings</a> themselves and instead being
-part of wrapper algorithms in this specification, whereas byte order mark handling is part of the
-definition of the <i>encoding schemes</i> in the Unicode Standard. <a>UTF-8</a> used together with
-the <a>UTF-8 decode</a> algorithm matches the <i>encoding scheme</i> of the same name. This
-specification does not provide wrapper algorithms that would combine with <a>UTF-16LE</a> and
+<p class="note no-backref">This specification defines three <a for=/>encodings</a> with the same
+names as <i>encoding schemes</i> defined in the Unicode standard: <a>UTF-8</a>, <a>UTF-16LE</a>, and
+<a>UTF-16BE</a>. The <a for=/>encodings</a> differ from the <i>encoding schemes</i> by byte order
+mark (also known as BOM) handling not being part of the <a for=/>encodings</a> themselves and
+instead being part of wrapper algorithms in this specification, whereas byte order mark handling is
+part of the definition of the <i>encoding schemes</i> in the Unicode Standard. <a>UTF-8</a> used
+together with the <a>UTF-8 decode</a> algorithm matches the <i>encoding scheme</i> of the same name.
+This specification does not provide wrapper algorithms that would combine with <a>UTF-16LE</a> and
 <a>UTF-16BE</a> to match the similarly-named <i>encoding schemes</i>. [[UNICODE]]
 
 
