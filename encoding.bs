@@ -2087,6 +2087,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    ((<a>gb18030 second</a> &minus; 0x30) × (10 × 126)) +
    ((<a>gb18030 third</a> &minus; 0x81) × 10) + <var>byte</var> &minus; 0x30.
 
+   <li><p>Set <a>gb18030 first</a>, <a>gb18030 second</a>, and <a>gb18030 third</a> to 0x00.
+
    <li><p>If <var>code point</var> is null, return <a>error</a>.
 
    <li><p>Return a code point whose value is <var>code point</var>.
@@ -3167,6 +3169,7 @@ Boris Zbarsky,
 Bruno Haible,
 Cameron McCormack,
 Charles McCathieNeville,
+Christopher Foo,
 David Carlisle,
 Domenic Denicola,
 Dominique Hazaël-Massieux,
