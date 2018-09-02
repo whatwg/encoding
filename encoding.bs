@@ -2652,7 +2652,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <div class="note no-backref">
  <p>The <a>ISO-2022-JP encoder</a> is the only <a for=/>encoder</a> for which the concatenation of
- multiple outputs can result in an <a>error</a> when run through the <a>ISO-2022-JP decoder</a>.
+ multiple outputs can result in an <a>error</a> when run through the corresponding
+ <a for=/>decoder</a>.
 
  <p class=example id=example-iso-2022-jp-encoder-oddity>Encoding U+00A5 gives 0x1B 0x28 0x4A 0x5C
  0x1B 0x28 0x42. Doing that twice, concatenating the results, and then decoding yields U+00A5 U+FFFD
