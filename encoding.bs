@@ -1294,15 +1294,19 @@ attribute's getter, when invoked, must return "<code>utf-8</code>".
 <h3 id=interface-textencoder>Interface {{TextEncoder}}</h3>
 
 <pre class=idl>
+dictionary TextEncoderEncodeIntoResult {
+  unsigned long long read;
+  unsigned long long written;
+};
+
 [Constructor,
  Exposed=(Window,Worker)]
 interface TextEncoder {
   [NewObject] Uint8Array encode(optional USVString input = "");
+  TextEncoderEncodeIntoResult encodeInto(USVString source, Uint8Array destination);
 };
 TextEncoder includes TextEncoderCommon;
 </pre>
-
-<p>A {{TextEncoder}} object has an associated <dfn for=TextEncoder>encoder</dfn>.
 
 <p class="note no-backref">A {{TextEncoder}} object offers no <var>label</var> argument as it only
 supports <a>UTF-8</a>. It also offers no <code>stream</code> option as no <a for=/>encoder</a>
@@ -1319,18 +1323,14 @@ requires buffering of scalar values.
 
  <dt><code><var>encoder</var> . <a method for=TextEncoder lt=encode()>encode([<var>input</var> = ""])</a></code>
  <dd><p>Returns the result of running <a>UTF-8</a>'s <a for=/>encoder</a>.
+
+ <dt><code><var>encoder</var> . <a method=for=TextEncoder lt="encodeInto(source, destination)">encodeInto(<var>source</var>, <var>destination</var>)</a></code>
+ <dd><p>Runs the <a>UTF-8 encoder</a> on <var>source</var>, stores the result on
+ <var>destination</var>, and returns the progress made.
 </dl>
 
 <p>The <dfn constructor for=TextEncoder id=dom-textencoder><code>TextEncoder()</code></dfn>
-constructor, when invoked, must run these steps:
-
-<ol>
- <li><p>Let <var>enc</var> be a new {{TextEncoder}} object.
-
- <li><p>Set <var>enc</var>'s <a for=TextEncoder>encoder</a> to <a>UTF-8</a>'s <a for=/>encoder</a>.
-
- <li><p>Return <var>enc</var>.
-</ol>
+constructor, when invoked, must return a new {{TextEncoder}} object.
 
 <p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method, when invoked,
 must run these steps:
@@ -1347,17 +1347,74 @@ must run these steps:
    <li><p>Let <var>token</var> be the result of
    <a>reading</a> from <var>input</var>.
 
-   <li><p>Let <var>result</var> be the result of
-   <a>processing</a> <var>token</var> for
-   <a for=TextEncoder>encoder</a>, <var>input</var>, <var>output</var>.
+   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for the
+   <a>UTF-8 encoder</a>, <var>input</var>, <var>output</var>.
 
    <li>
-    <p>If <var>result</var> is <a>finished</a>, convert <var>output</var> into a
-    byte sequence, and then return a {{Uint8Array}} object wrapping an
-    {{ArrayBuffer}} containing <var>output</var>.
-    <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
+    <p>Assert: <var>result</var> is not <a>error</a>.
 
-    <p class=note><a>UTF-8</a> cannot return <a>error</a>.
+    <p class=note>The <a>UTF-8 encoder</a> cannot return <a>error</a>.
+
+   <li><p>If <var>result</var> is <a>finished</a>, convert <var>output</var> into a byte sequence,
+   and then return a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing <var>output</var>.
+   <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
+  </ol>
+</ol>
+
+<p>The
+<dfn method for=TextEncoder><code>encodeInto(<var>source</var>, <var>destination</var>)</code></dfn>
+method, when invoked, must run these steps:
+
+<ol>
+ <li><p>Let <var>read</var> be 0.
+
+ <li><p>Let <var>written</var> be 0.
+
+ <li><p>Let <var>destinationLength</var> be the number of bytes <var>destination</var>'s
+ {{ArrayBuffer}} can hold.
+ <!-- Formal phrasing? -->
+
+ <li>
+  <p>Let <var>unused</var> be a new <a for=/>stream</a>.
+
+  <p class=note>The <a>handler</a> algorithm invoked below requires this argument, but it is not
+  used by the <a>UTF-8 encoder</a>.
+
+ <li><p>Convert <var>source</var> to a <a for=/>stream</a>.
+
+ <li>
+  <p>While true:
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>source</var>.
+
+   <li><p>Let <var>result</var> be the result of running the <a>UTF-8 encoder</a>'s <a>handler</a>
+   on <var>unused</var> and <var>token</var>.
+
+   <li><p>If <var>result</var> is <a>finished</a>, then return a new {{TextEncoderEncodeIntoResult}}
+   dictionary whose {{TextEncoderEncodeIntoResult/read}} member is <var>read</var> and
+   {{TextEncoderEncodeIntoResult/written}} member is <var>written</var>.
+
+   <li>
+    <p>Otherwise:
+
+    <ol>
+     <li>
+      <p>If <var>destinationLength</var> &minus; <var>written</var> is greater than the number of
+      bytes in <var>result</var>, then:
+
+      <ol>
+       <li><p>If <var>token</var> is greater than U+FFFF, then increment <var>read</var> by 2.
+
+       <li><p>Otherwise, increment <var>read</var> by 1.
+
+       <li><p>Write the bytes in <var>result</var> into <var>destination</var>'s {{ArrayBuffer}},
+       starting at <var>written</var>.
+       <!-- Formal phrasing? -->
+
+       <li><p>Increment <var>written</var> by the number of bytes in <var>result</var>.
+      </ol>
+    </ol>
   </ol>
 </ol>
 
