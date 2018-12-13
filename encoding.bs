@@ -1391,9 +1391,7 @@ method, when invoked, must run these steps:
    <li><p>Let <var>result</var> be the result of running the <a>UTF-8 encoder</a>'s <a>handler</a>
    on <var>unused</var> and <var>token</var>.
 
-   <li><p>If <var>result</var> is <a>finished</a>, then return a new {{TextEncoderEncodeIntoResult}}
-   dictionary whose {{TextEncoderEncodeIntoResult/read}} member is <var>read</var> and
-   {{TextEncoderEncodeIntoResult/written}} member is <var>written</var>.
+   <li><p>If <var>result</var> is <a>finished</a>, then <a for=iteration>break</a>.
 
    <li>
     <p>Otherwise:
@@ -1414,8 +1412,14 @@ method, when invoked, must run these steps:
 
        <li><p>Increment <var>written</var> by the number of bytes in <var>result</var>.
       </ol>
+
+     <li><p>Otherwise, <a for=iteration>break</a>.
     </ol>
   </ol>
+
+ <li><p>Return a new {{TextEncoderEncodeIntoResult}} dictionary whose
+ {{TextEncoderEncodeIntoResult/read}} member is <var>read</var> and
+ {{TextEncoderEncodeIntoResult/written}} member is <var>written</var>
 </ol>
 
 
