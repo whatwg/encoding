@@ -1421,7 +1421,7 @@ method, when invoked, must run these steps:
 
  <li><p>Return a new {{TextEncoderEncodeIntoResult}} dictionary whose
  {{TextEncoderEncodeIntoResult/read}} member is <var>read</var> and
- {{TextEncoderEncodeIntoResult/written}} member is <var>written</var>
+ {{TextEncoderEncodeIntoResult/written}} member is <var>written</var>.
 </ol>
 
 
