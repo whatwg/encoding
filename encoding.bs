@@ -1325,8 +1325,11 @@ requires buffering of scalar values.
  <dd><p>Returns the result of running <a>UTF-8</a>'s <a for=/>encoder</a>.
 
  <dt><code><var>encoder</var> . <a method=for=TextEncoder lt="encodeInto(source, destination)">encodeInto(<var>source</var>, <var>destination</var>)</a></code>
- <dd><p>Runs the <a>UTF-8 encoder</a> on <var>source</var>, stores the result on
- <var>destination</var>, and returns the progress made.
+ <dd><p>Runs the <a>UTF-8 encoder</a> on <var>source</var>, stores the result of that operation into
+ <var>destination</var>, and returns the progress made as a dictionary whereby
+ {{TextEncoderEncodeIntoResult/read}} is the number of converted <a>code units</a> of
+ <var>source</var> and {{TextEncoderEncodeIntoResult/written}} is the number of bytes modified in
+ <var>destination</var>.
 </dl>
 
 <p>The <dfn constructor for=TextEncoder id=dom-textencoder><code>TextEncoder()</code></dfn>
@@ -1370,9 +1373,9 @@ method, when invoked, must run these steps:
 
  <li><p>Let <var>written</var> be 0.
 
- <li><p>Let <var>destinationLength</var> be the number of bytes <var>destination</var>'s
- {{ArrayBuffer}} can hold.
- <!-- Formal phrasing? -->
+ <li><p>Let <var>destinationBytes</var> be the result of
+ <a lt="get a reference to the buffer source">getting a reference to the bytes held by</a>
+ <var>destination</var>.
 
  <li>
   <p>Let <var>unused</var> be a new <a for=/>stream</a>.
@@ -1398,17 +1401,16 @@ method, when invoked, must run these steps:
 
     <ol>
      <li>
-      <p>If <var>destinationLength</var> &minus; <var>written</var> is greater than the number of
-      bytes in <var>result</var>, then:
+      <p>If <var>destinationBytes</var>'s <a for="byte sequence">length</a> &minus;
+      <var>written</var> is greater than the number of bytes in <var>result</var>, then:
 
       <ol>
        <li><p>If <var>token</var> is greater than U+FFFF, then increment <var>read</var> by 2.
 
        <li><p>Otherwise, increment <var>read</var> by 1.
 
-       <li><p>Write the bytes in <var>result</var> into <var>destination</var>'s {{ArrayBuffer}},
-       starting at <var>written</var>.
-       <!-- Formal phrasing? -->
+       <li><p>Write the bytes in <var>result</var> into <var>destinationBytes</var>, from byte
+       offset <var>written</var>.
 
        <li><p>Increment <var>written</var> by the number of bytes in <var>result</var>.
       </ol>
