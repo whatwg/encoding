@@ -1424,6 +1424,34 @@ method, when invoked, must run these steps:
  {{TextEncoderEncodeIntoResult/written}} member is <var>written</var>.
 </ol>
 
+<div class=example id=example-textencoder-encodeinto>
+ <p>The {{TextEncoder//encodeInto()}} method can be used to encode a string into an existing
+ {{ArrayBuffer}} object. Various details below are left as an exercise for the reader, but this
+ demonstrates an approach one could take to use this methodd:
+
+ <pre><code class=lang-javascript>
+function convertString(buffer, input, callback) {
+  let bufferSize = 256,
+      bufferStart = malloc(buffer, bufferSize),
+      writeOffset = 0,
+      readOffset = 0;
+  while (true) {
+    const view = new Uint8Array(buffer, bufferStart + writeOffset, bufferSize - writeOffset),
+          {read, written} = cachedEncoder.encodeInto(input.substring(readOffset), view);
+    readOffset += read;
+    writeOffset += written;
+    if (readOffset === input.length) {
+      callback(bufferStart, writeOffset);
+      free(buffer, bufferStart);
+      return;
+    }
+    bufferSize *= 2;
+    bufferStart = realloc(buffer, bufferStart, bufferSize);
+  }
+}
+</code></pre>
+</div>
+
 
 <h3 id=interface-mixin-generictransformstream>Interface mixin {{GenericTransformStream}}</h3>
 
