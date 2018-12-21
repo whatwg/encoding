@@ -1425,9 +1425,9 @@ method, when invoked, must run these steps:
 </ol>
 
 <div class=example id=example-textencoder-encodeinto>
- <p>The {{TextEncoder//encodeInto()}} method can be used to encode a string into an existing
- {{ArrayBuffer}} object. Various details below are left as an exercise for the reader, but this
- demonstrates an approach one could take to use this methodd:
+ <p>The <a method=for=TextEncoder lt="encodeInto(source, destination)">encodeInto()</a> method can
+ be used to encode a string into an existing {{ArrayBuffer}} object. Various details below are left
+ as an exercise for the reader, but this demonstrates an approach one could take to use this method:
 
  <pre><code class=lang-javascript>
 function convertString(buffer, input, callback) {
