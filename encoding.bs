@@ -1402,7 +1402,7 @@ method, when invoked, must run these steps:
     <ol>
      <li>
       <p>If <var>destinationBytes</var>'s <a for="byte sequence">length</a> &minus;
-      <var>written</var> is greater than the number of bytes in <var>result</var>, then:
+      <var>written</var> is greater than or equal to the number of bytes in <var>result</var>, then:
 
       <ol>
        <li><p>If <var>token</var> is greater than U+FFFF, then increment <var>read</var> by 2.
