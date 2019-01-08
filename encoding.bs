@@ -770,10 +770,9 @@ the return value of these steps:
  <li><p>If <var>pointer</var> is 7457, return code point U+E7C7.
  <!-- 7457 is 0x81 0x35 0xF4 0x37 -->
 
- <li><p>Let <var>offset</var> be the last pointer in
- <a>index gb18030 ranges</a> that is equal to or less than
- <var>pointer</var> and let <var>code point offset</var> be its
- corresponding code point.
+ <li><p>Let <var>offset</var> be the last pointer in <a>index gb18030 ranges</a> that is less than
+ or equal to <var>pointer</var> and let <var>code point offset</var> be its corresponding code
+ point.
 
  <li><p>Return a code point whose value is
  <var>code point offset</var> + <var>pointer</var> &minus; <var>offset</var>.
@@ -785,10 +784,9 @@ the return value of these steps:
 <ol>
  <li><p>If <var>code point</var> is U+E7C7, return pointer 7457.
 
- <li><p>Let <var>offset</var> be the last code point in
- <a>index gb18030 ranges</a> that is equal to or less than
- <var>code point</var> and let <var>pointer offset</var> be its
- corresponding pointer.
+ <li><p>Let <var>offset</var> be the last code point in <a>index gb18030 ranges</a> that is less
+ than or equal to <var>code point</var> and let <var>pointer offset</var> be its corresponding
+ pointer.
 
  <li><p>Return a pointer whose value is
  <var>pointer offset</var> + <var>code point</var> &minus; <var>offset</var>.
