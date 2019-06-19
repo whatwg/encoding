@@ -8,7 +8,6 @@ local: encoding.bs
 
 deploy: encoding.bs
 	curl --remote-name --fail https://resources.whatwg.org/build/deploy.sh
-	CHECKER_FILTER="Text run is not in Unicode Normalization Form C\.|.*appears to be written in.*|.*Charmod C073.*" \
 	EXTRA_FILES="*.txt *.json *.css" \
 	POST_BUILD_STEP='python visualize.py "$$DIR/"' \
 	bash ./deploy.sh
