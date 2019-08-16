@@ -1240,6 +1240,11 @@ method, when invoked, must run these steps:
   avoids this copy. When doing so they will have to make sure that changes to <var>input</var> do
   not affect future calls to <a method><code>decode()</code></a>.
 
+  <p class=warning id=sharedarraybuffer-warning>The memory exposed by <code>SharedArrayBuffer</code>
+  objects does not adhere to data race freedom properties required by the memory model of
+  programming languages typically used for implementations. When implementing, take care to use the
+  appropriate facilities when accessing memory exposed by <code>SharedArrayBuffer</code> objects.
+
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
  <li>
@@ -1409,8 +1414,13 @@ method, when invoked, must run these steps:
 
        <li><p>Otherwise, increment <var>read</var> by 1.
 
-       <li><p>Write the bytes in <var>result</var> into <var>destinationBytes</var>, from byte
-       offset <var>written</var>.
+       <li>
+        <p>Write the bytes in <var>result</var> into <var>destinationBytes</var>, from byte offset
+        <var>written</var>.
+
+        <p class=warning>See the
+        <a href=#sharedarraybuffer-warning>warning for <code>SharedyArrayBuffer</code> objects</a>
+        above.
 
        <li><p>Increment <var>written</var> by the number of bytes in <var>result</var>.
       </ol>
