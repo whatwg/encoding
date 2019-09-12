@@ -1293,8 +1293,8 @@ attribute's getter, when invoked, must return "<code>utf-8</code>".
 
 <pre class=idl>
 dictionary TextEncoderEncodeIntoResult {
-  unsigned long long read;
-  unsigned long long written;
+  required unsigned long long read;
+  required unsigned long long written;
 };
 
 [Constructor,
