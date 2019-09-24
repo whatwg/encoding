@@ -1143,9 +1143,9 @@ dictionary TextDecodeOptions {
   boolean stream = false;
 };
 
-[Constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options = {}),
- Exposed=(Window,Worker)]
+[Exposed=(Window,Worker)]
 interface TextDecoder {
+  constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options = {});
   USVString decode(optional BufferSource input, optional TextDecodeOptions options = {});
 };
 TextDecoder includes TextDecoderCommon;
@@ -1297,9 +1297,9 @@ dictionary TextEncoderEncodeIntoResult {
   unsigned long long written;
 };
 
-[Constructor,
- Exposed=(Window,Worker)]
+[Exposed=(Window,Worker)]
 interface TextEncoder {
+  constructor();
   [NewObject] Uint8Array encode(optional USVString input = "");
   TextEncoderEncodeIntoResult encodeInto(USVString source, Uint8Array destination);
 };
@@ -1477,9 +1477,9 @@ when invoked, must return this object's <a for=GenericTransformStream>transform<
 <h3 id=interface-textdecoderstream>Interface {{TextDecoderStream}}</h3>
 
 <pre class=idl>
-[Constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options),
- Exposed=(Window,Worker)]
+[Exposed=(Window,Worker)]
 interface TextDecoderStream {
+  constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options = {});
 };
 TextDecoderStream includes TextDecoderCommon;
 TextDecoderStream includes GenericTransformStream;
@@ -1657,9 +1657,9 @@ byteReadable
 <h3 id=interface-textencoderstream>Interface {{TextEncoderStream}}</h3>
 
 <pre class=idl>
-[Constructor,
- Exposed=(Window,Worker)]
+[Exposed=(Window,Worker)]
 interface TextEncoderStream {
+  constructor();
 };
 TextEncoderStream includes TextEncoderCommon;
 TextEncoderStream includes GenericTransformStream;
