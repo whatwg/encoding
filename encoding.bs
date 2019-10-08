@@ -1528,7 +1528,8 @@ TextDecoderStream includes GenericTransformStream;
 
  <dt><code><var>decoder</var> . <a attribute for=GenericTransformStream>writable</a></code>
  <dd>
-  <p>Returns a <a>writable stream</a> which accepts {{BufferSource}} chunks and runs them through
+  <p>Returns a <a>writable stream</a> which accepts
+  <code>[AllowShared] <a typedef>BufferSource</a></code> chunks and runs them through
   <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a> before making them available to
   {{GenericTransformStream/readable}}.
 
@@ -1594,12 +1595,17 @@ byteReadable
 
 <ol>
  <li><p>Let <var>bufferSource</var> be the result of
- <a lt="converted to an IDL value">converting</a> <var>chunk</var> to a {{BufferSource}}. If this
- throws an exception, then return a promise rejected with that exception.
-
- <li><p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>bufferSource</var> to
- <var>dec</var>'s <a for=TextDecoderStream>stream</a>. If this throws an exception, then return a
+ <a lt="converted to an IDL value">converting</a> <var>chunk</var> to a
+ <code>[AllowShared] <a typedef>BufferSource</a></code>. If this throws an exception, then return a
  promise rejected with that exception.
+
+ <li>
+  <p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>bufferSource</var> to
+  <var>dec</var>'s <a for=TextDecoderStream>stream</a>. If this throws an exception, then return a
+  promise rejected with that exception.
+
+  <p class=warning>See the
+  <a href=#sharedarraybuffer-warning>warning for <code>SharedyArrayBuffer</code> objects</a> above.
 
  <li><p>Let <var>controller</var> be <var>dec</var>'s
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
