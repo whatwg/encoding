@@ -1595,7 +1595,7 @@ byteReadable
 
 <ol>
  <li><p>Let <var>bufferSource</var> be the result of
- <a lt="converted to an IDL value">converting</a> <var>chunk</var> to a
+ <a lt="converted to an IDL value">converting</a> <var>chunk</var> to an
  <code>[AllowShared] <a typedef>BufferSource</a></code>. If this throws an exception, then return a
  promise rejected with that exception.
 
