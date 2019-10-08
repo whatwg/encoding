@@ -1419,7 +1419,7 @@ method, when invoked, must run these steps:
         <var>written</var>.
 
         <p class=warning>See the
-        <a href=#sharedarraybuffer-warning>warning for <code>SharedyArrayBuffer</code> objects</a>
+        <a href=#sharedarraybuffer-warning>warning for <code>SharedArrayBuffer</code> objects</a>
         above.
 
        <li><p>Increment <var>written</var> by the number of bytes in <var>result</var>.
@@ -1605,7 +1605,7 @@ byteReadable
   promise rejected with that exception.
 
   <p class=warning>See the
-  <a href=#sharedarraybuffer-warning>warning for <code>SharedyArrayBuffer</code> objects</a> above.
+  <a href=#sharedarraybuffer-warning>warning for <code>SharedArrayBuffer</code> objects</a> above.
 
  <li><p>Let <var>controller</var> be <var>dec</var>'s
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
