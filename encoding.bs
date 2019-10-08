@@ -1529,9 +1529,9 @@ TextDecoderStream includes GenericTransformStream;
  <dt><code><var>decoder</var> . <a attribute for=GenericTransformStream>writable</a></code>
  <dd>
   <p>Returns a <a>writable stream</a> which accepts
-  <code>[AllowShared] <a typedef>BufferSource</a></code> chunks and runs them through
-  <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a> before making them available to
-  {{GenericTransformStream/readable}}.
+  <code>[<a extended-attribute>AllowShared</a>] <a typedef>BufferSource</a></code> chunks and runs
+  them through <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a> before making them
+  available to {{GenericTransformStream/readable}}.
 
   <p>Typically this will be used via the {{ReadableStream/pipeThrough()}} method on a
   {{ReadableStream}} source.
@@ -1596,8 +1596,8 @@ byteReadable
 <ol>
  <li><p>Let <var>bufferSource</var> be the result of
  <a lt="converted to an IDL value">converting</a> <var>chunk</var> to an
- <code>[AllowShared] <a typedef>BufferSource</a></code>. If this throws an exception, then return a
- promise rejected with that exception.
+ <code>[<a extended-attribute>AllowShared</a>] <a typedef>BufferSource</a></code>. If this throws an
+ exception, then return a promise rejected with that exception.
 
  <li>
   <p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>bufferSource</var> to
