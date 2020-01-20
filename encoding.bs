@@ -98,8 +98,8 @@ bitwise AND by "&amp;", and bitwise OR by "|".
 
 <hr>
 
-<p>A <dfn id=concept-token>token</dfn> is a piece of data, such as a <a>byte</a>
-or <a>scalar value</a>.
+<p>A <dfn id=concept-token>token</dfn> is a piece of data, such as a <a>byte</a> or
+<a>scalar value</a>.
 
 <p>A <dfn id=concept-stream>stream</dfn> represents an ordered sequence of
 <a>tokens</a>. <dfn>End-of-stream</dfn> is a special
@@ -226,12 +226,12 @@ happening.
  <var>result</var>.
 
  <li>
-  <p>Otherwise, if <var>result</var> is one or more
-  <a>tokens</a>:
+  <p>Otherwise, if <var>result</var> is one or more <a>tokens</a>:
 
   <ol>
-   <li><p>Assert: If <var>encoderDecoderInstance</var> is a <a for=/>decoder</a>
-   instance, <var>result</var> does not contain any <a>surrogates</a>.
+   <li><p>Assert: if <var>encoderDecoderInstance</var> is a <a for=/>decoder</a> instance,
+   <var>result</var> does not contain any <a>surrogates</a>.
+
    <li><p><a>Push</a> <var>result</var> to <var>output</var>.
   </ol>
 
@@ -869,8 +869,8 @@ different format here, to be able to represent ranges.)
  <a for=/>encoding</a>.
 
  <p>Standards are to ensure that the streams they pass to the <a for=/>encode</a> and
- <a>UTF-8 encode</a> algorithms are effectively scalar value streams, i.e., they contain
- no <a>surrogates</a>.
+ <a>UTF-8 encode</a> algorithms are effectively scalar value streams, i.e., they contain no
+ <a>surrogates</a>.
 </div>
 
 <p>To <dfn export>decode</dfn> a byte stream <var>stream</var> using
@@ -971,8 +971,8 @@ steps:
 
 <hr>
 
-<p>To <dfn export>encode</dfn> a scalar value stream <var>stream</var> using
-encoding <var>encoding</var>, run these steps:
+<p>To <dfn export>encode</dfn> a scalar value stream <var>stream</var> using encoding
+<var>encoding</var>, run these steps:
 
 <ol>
  <li><p>Assert: <var>encoding</var> is not <a>replacement</a>, <a>UTF-16BE</a> or
@@ -992,9 +992,8 @@ encoding <var>encoding</var>, run these steps:
 [[URL]]
 [[HTML]]
 
-<p>To <dfn export>UTF-8 encode</dfn> a scalar value stream <var>stream</var>,
-return the result of <a lt=encode for=/>encoding</a>
-<var>stream</var> using encoding <a>UTF-8</a>.
+<p>To <dfn export>UTF-8 encode</dfn> a scalar value stream <var>stream</var>, return the result of
+<a lt=encode for=/>encoding</a> <var>stream</var> using encoding <a>UTF-8</a>.
 
 
 
