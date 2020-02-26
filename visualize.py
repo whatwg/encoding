@@ -195,7 +195,9 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
                     else:
                         out_file.write("<th>%d" % (lead - 0xA0))
                 out_file.write("<th class=byte>%02X" % lead)
-            out_file.write("<th>%02X" % row_num)
+            # Format single-byte encodings (whose row_length is 16) by lead byte
+            # as opposed to index high half
+            out_file.write("<th>%02X" % (row_num + 0x8 if row_length == 16 else row_num))
             new_row = False
         duplicate = False
         if code_point is not None:
