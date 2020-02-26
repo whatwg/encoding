@@ -3106,7 +3106,7 @@ has been found to be more accurate in deployed content. Therefore it is not part
 
 <p><a>shared UTF-16 decoder</a> has an associated <dfn>UTF-16 lead byte</dfn> and
 <dfn>UTF-16 lead surrogate</dfn> (both initially null), and
-<dfn id=utf-16be-decoder-flag>is UTF-16BE decoder</dfn> (initially unset).
+<dfn id=utf-16be-decoder-flag>is UTF-16BE decoder</dfn> (initially false).
 
 <p><a>shared UTF-16 decoder</a>'s <a>handler</a>, given a <var>stream</var>
 and <var>byte</var>, runs these steps:
