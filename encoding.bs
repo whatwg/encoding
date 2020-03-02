@@ -879,7 +879,7 @@ fallback encoding <var>encoding</var>, run these steps:
 <ol>
  <li><p>Let <var>buffer</var> be an empty byte sequence.
 
- <li><p>Let <var>BOM seen</var> be false.
+ <li><p>Let <var>BOMSeen</var> be false.
 
  <li><p><a>Read</a> bytes from <var>stream</var>
  into <var>buffer</var> until either <var>buffer</var> contains three bytes or
@@ -890,7 +890,7 @@ fallback encoding <var>encoding</var>, run these steps:
   one and going down, if the first bytes of <var>buffer</var> match
   all the bytes given in the first column, then set <var>encoding</var>
   to the <a for=/>encoding</a> given in the cell in the second column of
-  that row and <var>BOM seen</var> to true.
+  that row and <var>BOMSeen</var> to true.
 
   <table>
    <tbody><tr><th>Byte order mark<th>Encoding
@@ -903,10 +903,10 @@ fallback encoding <var>encoding</var>, run these steps:
   than anything else. In a context where HTTP is used this is in violation of the semantics of the
   `<code>Content-Type</code>` header.
 
- <li><p>If <var>BOM seen</var> is false,
+ <li><p>If <var>BOMSeen</var> is false,
  <a>prepend</a> <var>buffer</var> to <var>stream</var>.
 
- <li><p>Otherwise, if <var>BOM seen</var> is true, <var>encoding</var> is not
+ <li><p>Otherwise, if <var>BOMSeen</var> is true, <var>encoding</var> is not
  <a>UTF-8</a>, and <var>buffer</var> contains three bytes,
  <a>prepend</a> the last byte of <var>buffer</var> to
  <var>stream</var>.
@@ -1269,9 +1269,9 @@ method, when invoked, must run these steps:
     <a lt="serialize stream" for=TextDecoderCommon>serialized</a>.
 
     <p class=note>The way streaming works is to not handle <a>end-of-stream</a> here when
-    <a for=TextDecoder>do not flush</a> is true and to not set that slot to false. That way in a
-    subsequent invocation <a for=TextDecoder>decoder</a> is not set anew in the first step of the
-    algorithm and its state is preserved.
+    <a for=TextDecoder>do not flush</a> is true and to not set <a for=TextDecoder>do not flush</a>
+    to false. That way in a subsequent invocation <a for=TextDecoder>decoder</a> is not set anew in
+    the first step of the algorithm and its state is preserved.
 
    <li>
     <p>Otherwise:
