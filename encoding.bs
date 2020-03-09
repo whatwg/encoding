@@ -1837,9 +1837,9 @@ constructor, when invoked, must run these steps:
  <li><p>Return <var>token</var>.
 </ol>
 
-<p class=note>This is equivalent to the "<a>convert</a> a <a>JavaScript string</a> into a <a>scalar
-value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs that are split
-between strings. [[!INFRA]]
+<p class=note>This is equivalent to the "<a for=string>convert</a> a <a>string</a> into a
+<a>scalar value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs that
+are split between strings. [[!INFRA]]
 
 <p>The <dfn>encode and flush</dfn> algorithm, given a {{TextEncoderStream}} object <var>enc</var>,
 runs these steps:
