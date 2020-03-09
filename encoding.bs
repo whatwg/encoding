@@ -13,8 +13,7 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 
 <pre class=link-defaults>
 spec:infra; type:dfn;
-    text:code point
-    text:ascii case-insensitive
+    text:string
 spec:streams;
     type:interface; text:ReadableStream
 </pre>
@@ -1837,9 +1836,9 @@ constructor, when invoked, must run these steps:
  <li><p>Return <var>token</var>.
 </ol>
 
-<p class=note>This is equivalent to the "<a for=string>convert</a> a <a>string</a> into a
-<a>scalar value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs that
-are split between strings. [[!INFRA]]
+<p class=note>This is equivalent to the "<a for=string>convert</a> a <a for=/>string</a> into a
+<a for=/>scalar value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs
+that are split between strings. [[!INFRA]]
 
 <p>The <dfn>encode and flush</dfn> algorithm, given a {{TextEncoderStream}} object <var>enc</var>,
 runs these steps:
