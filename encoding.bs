@@ -12,10 +12,7 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 <link rel=stylesheet href=visualization-colors.css>
 
 <pre class=link-defaults>
-spec:infra; type:dfn;
-    text:string
-spec:streams;
-    type:interface; text:ReadableStream
+spec:streams; type:interface; text:ReadableStream
 </pre>
 
 
