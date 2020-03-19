@@ -877,17 +877,21 @@ different format here, to be able to represent ranges.)
 fallback encoding <var>encoding</var>, run these steps:
 
 <ol>
+ <li><p>Let <var>BOMEncoding</var> be the result of <a>BOM sniffing</a> <var>stream</var>.
+
  <li>
-  <p><a>BOM sniff</a> <var>stream</var>. If the result is not null, set <var>encoding</var> to
-  the resulting value and let <var>BOMSeen</var> be true. Otherwise, let <var>BOMSeen</var> be
-  false.
+  <p>If <var>BOMEncoding</var> is not null:
+
+  <ol>
+   <li><p>Set <var>encoding</var> to <var>BOMEncoding</var>.
+
+   <li><p>Read three bytes from <var>stream</var>, if <var>BOMEncoding</var> is <a>UTF-8</a>, or
+   two bytes otherwise. Do nothing with those bytes.
+  </ol>
 
   <p class=note>For compatibility with deployed content, the byte order mark is more authoritative
   than anything else. In a context where HTTP is used this is in violation of the semantics of the
   `<code>Content-Type</code>` header.
-
- <li><p>If <var>BOMSeen</var> is true, <a>read</a> three bytes from <var>stream</var>, if
- <var>encoding</var> is <a>UTF-8</a>, and two bytes otherwise. Do nothing with those bytes.
 
  <li><p>Let <var>output</var> be a scalar value <a for=/>stream</a>.
 
