@@ -854,7 +854,7 @@ different format here, to be able to represent ranges.)
 <div class=note>
  <p>The algorithms defined below (<a>decode</a>, <a>UTF-8 decode</a>,
  <a>UTF-8 decode without BOM</a>, <a>UTF-8 decode without BOM or fail</a>, <a for=/>encode</a>,
- <a>UTF-8 encode</a> and <a>BOM sniff</a>) are intended for usage by other standards.
+ <a>UTF-8 encode</a>, and <a>BOM sniff</a>) are intended for usage by other standards.
 
  <p>For decoding, <a>UTF-8 decode</a> is to be used by new formats. For identifiers or byte
  sequences within a format or protocol, use <a>UTF-8 decode without BOM</a> or
@@ -862,8 +862,8 @@ different format here, to be able to represent ranges.)
 
  <p>For encoding, <a>UTF-8 encode</a> is to be used.
 
- <p>Standards are strongly discouraged from using <a>decode</a>, <a for=/>encode</a> and <a>BOM
- sniff</a>, except as needed for compatibility.
+ <p>Standards are strongly discouraged from using <a>decode</a>, <a for=/>encode</a>, and
+ <a>BOM sniff</a>, except as needed for compatibility.
 
  <p>The <a>get an encoding</a> algorithm is to be used to turn a <a>label</a> into an
  <a for=/>encoding</a>.
@@ -877,8 +877,10 @@ different format here, to be able to represent ranges.)
 fallback encoding <var>encoding</var>, run these steps:
 
 <ol>
- <li><p><a>BOM sniff</a> <var>stream</var>. If the result is not null, set <var>encoding</var> to
- the resulting value and let <var>BOMSeen</var> be true. Otherwise, let <var>BOMSeen</var> be false.
+ <li>
+  <p><a>BOM sniff</a> <var>stream</var>. If the result is not null, set <var>encoding</var> to
+  the resulting value and let <var>BOMSeen</var> be true. Otherwise, let <var>BOMSeen</var> be
+  false.
 
   <p class=note>For compatibility with deployed content, the byte order mark is more authoritative
   than anything else. In a context where HTTP is used this is in violation of the semantics of the
@@ -976,29 +978,31 @@ steps:
 <p>To <dfn export>BOM sniff</dfn> a byte stream <var>stream</var>, run these steps:
 
 <ol>
-  <li><p>Wait until <var>stream</var> has three bytes available or the <a>end-of-stream</a> has been
-  reached, whichever comes first.
+ <li><p>Wait until <var>stream</var> has three bytes available or the <a>end-of-stream</a> has been
+ reached, whichever comes first.
 
-  <li>
-    <p>For each of the rows in the table below, starting with the first
-    one and going down, if <var>stream</var> <a for="byte sequence">starts with</a>
-    the bytes given in the first column, return the <a for=/>encoding</a> given
-    in the cell in the second column of that row. Do not consume those bytes.
+ <li>
+  <p>For each of the rows in the table below, starting with the first
+  one and going down, if <var>stream</var> <a for="byte sequence">starts with</a>
+  the bytes given in the first column, return the <a for=/>encoding</a> given
+  in the cell in the second column of that row. Do not consume those bytes.
 
-    <table>
-    <tbody><tr><th>Byte order mark<th>Encoding
-    <tr><td>0xEF 0xBB 0xBF<td><a>UTF-8</a>
-    <tr><td>0xFE 0xFF<td><a>UTF-16BE</a>
-    <tr><td>0xFF 0xFE<td><a>UTF-16LE</a>
-    </table>
+  <table>
+   <tbody><tr><th>Byte order mark<th>Encoding
+   <tr><td>0xEF 0xBB 0xBF<td><a>UTF-8</a>
+   <tr><td>0xFE 0xFF<td><a>UTF-16BE</a>
+   <tr><td>0xFF 0xFE<td><a>UTF-16LE</a>
+  </table>
 
-  <li><p>Otherwise, return null.
+ <li><p>Otherwise, return null.
 </ol>
 
 <p class=note>This hook is a workaround for the fact that <a>decode</a> has no way to communicate
 back to the caller that it has found a byte order mark and is therefore not using the provided
 encoding. The hook is to be invoked before <a>decode</a>, and it will return an encoding
 corresponding to the byte order mark found, or null otherwise.
+
+
 
 <h2 id=api>API</h2>
 
