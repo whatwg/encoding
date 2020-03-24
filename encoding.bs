@@ -849,8 +849,8 @@ different format here, to be able to represent ranges.)
 
 <div class=note>
  <p>The algorithms defined below (<a>decode</a>, <a>UTF-8 decode</a>,
- <a>UTF-8 decode without BOM</a>, <a>UTF-8 decode without BOM or fail</a>, <a for=/>encode</a>, and
- <a>UTF-8 encode</a>) are intended for usage by other standards.
+ <a>UTF-8 decode without BOM</a>, <a>UTF-8 decode without BOM or fail</a>, <a for=/>encode</a>,
+ <a>UTF-8 encode</a>, and <a>BOM sniff</a>) are intended for usage by other standards.
 
  <p>For decoding, <a>UTF-8 decode</a> is to be used by new formats. For identifiers or byte
  sequences within a format or protocol, use <a>UTF-8 decode without BOM</a> or
@@ -858,8 +858,8 @@ different format here, to be able to represent ranges.)
 
  <p>For encoding, <a>UTF-8 encode</a> is to be used.
 
- <p>Standards are strongly discouraged from using <a>decode</a> and <a for=/>encode</a>, except as
- needed for compatibility.
+ <p>Standards are strongly discouraged from using <a>decode</a>, <a for=/>encode</a>, and
+ <a>BOM sniff</a>, except as needed for compatibility.
 
  <p>The <a>get an encoding</a> algorithm is to be used to turn a <a>label</a> into an
  <a for=/>encoding</a>.
@@ -873,39 +873,21 @@ different format here, to be able to represent ranges.)
 fallback encoding <var>encoding</var>, run these steps:
 
 <ol>
- <li><p>Let <var>buffer</var> be an empty byte sequence.
-
- <li><p>Let <var>BOMSeen</var> be false.
-
- <li><p><a>Read</a> bytes from <var>stream</var>
- into <var>buffer</var> until either <var>buffer</var> contains three bytes or
- <a>read</a> returns <a>end-of-stream</a>.
+ <li><p>Let <var>BOMEncoding</var> be the result of <a>BOM sniffing</a> <var>stream</var>.
 
  <li>
-  <p>For each of the rows in the table below, starting with the first
-  one and going down, if the first bytes of <var>buffer</var> match
-  all the bytes given in the first column, then set <var>encoding</var>
-  to the <a for=/>encoding</a> given in the cell in the second column of
-  that row and <var>BOMSeen</var> to true.
+  <p>If <var>BOMEncoding</var> is non-null:
 
-  <table>
-   <tbody><tr><th>Byte order mark<th>Encoding
-   <tr><td>0xEF 0xBB 0xBF<td><a>UTF-8</a>
-   <tr><td>0xFE 0xFF<td><a>UTF-16BE</a>
-   <tr><td>0xFF 0xFE<td><a>UTF-16LE</a>
-  </table>
+  <ol>
+   <li><p>Set <var>encoding</var> to <var>BOMEncoding</var>.
+
+   <li><p><a>Read</a> three bytes from <var>stream</var>, if <var>BOMEncoding</var> is <a>UTF-8</a>;
+   otherwise <a>read</a> two bytes. (Do nothing with those bytes.)
+  </ol>
 
   <p class=note>For compatibility with deployed content, the byte order mark is more authoritative
   than anything else. In a context where HTTP is used this is in violation of the semantics of the
   `<code>Content-Type</code>` header.
-
- <li><p>If <var>BOMSeen</var> is false,
- <a>prepend</a> <var>buffer</var> to <var>stream</var>.
-
- <li><p>Otherwise, if <var>BOMSeen</var> is true, <var>encoding</var> is not
- <a>UTF-8</a>, and <var>buffer</var> contains three bytes,
- <a>prepend</a> the last byte of <var>buffer</var> to
- <var>stream</var>.
 
  <li><p>Let <var>output</var> be a scalar value <a for=/>stream</a>.
 
@@ -990,6 +972,35 @@ steps:
 
 <p>To <dfn export>UTF-8 encode</dfn> a scalar value stream <var>stream</var>, return the result of
 <a lt=encode for=/>encoding</a> <var>stream</var> using encoding <a>UTF-8</a>.
+
+<hr>
+
+<p>To <dfn export>BOM sniff</dfn> a byte stream <var>stream</var>, run these steps:
+
+<ol>
+ <li><p>Wait until <var>stream</var> has three bytes available or the <a>end-of-stream</a> has been
+ reached, whichever comes first.
+
+ <li>
+  <p>For each of the rows in the table below, starting with the first one and going down, if
+  <var>stream</var> <a for="byte sequence">starts with</a> the bytes given in the first column,
+  return the <a for=/>encoding</a> given in the cell in the second column of that row. (Do not
+  consume those bytes.)
+
+  <table>
+   <tbody><tr><th>Byte order mark<th>Encoding
+   <tr><td>0xEF 0xBB 0xBF<td><a>UTF-8</a>
+   <tr><td>0xFE 0xFF<td><a>UTF-16BE</a>
+   <tr><td>0xFF 0xFE<td><a>UTF-16LE</a>
+  </table>
+
+ <li><p>Return null.
+</ol>
+
+<p class=note>This hook is a workaround for the fact that <a>decode</a> has no way to communicate
+back to the caller that it has found a byte order mark and is therefore not using the provided
+encoding. The hook is to be invoked before <a>decode</a>, and it will return an encoding
+corresponding to the byte order mark found, or null otherwise.
 
 
 
