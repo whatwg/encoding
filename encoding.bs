@@ -880,13 +880,13 @@ fallback encoding <var>encoding</var>, run these steps:
  <li><p>Let <var>BOMEncoding</var> be the result of <a>BOM sniffing</a> <var>stream</var>.
 
  <li>
-  <p>If <var>BOMEncoding</var> is not null:
+  <p>If <var>BOMEncoding</var> is non-null:
 
   <ol>
    <li><p>Set <var>encoding</var> to <var>BOMEncoding</var>.
 
-   <li><p>Read three bytes from <var>stream</var>, if <var>BOMEncoding</var> is <a>UTF-8</a>, or
-   two bytes otherwise. Do nothing with those bytes.
+   <li><p><a>Read</a> three bytes from <var>stream</var>, if <var>BOMEncoding</var> is <a>UTF-8</a>;
+   otherwise <a>read</a> two bytes. (Do nothing with those bytes.)
   </ol>
 
   <p class=note>For compatibility with deployed content, the byte order mark is more authoritative
@@ -986,10 +986,10 @@ steps:
  reached, whichever comes first.
 
  <li>
-  <p>For each of the rows in the table below, starting with the first
-  one and going down, if <var>stream</var> <a for="byte sequence">starts with</a>
-  the bytes given in the first column, return the <a for=/>encoding</a> given
-  in the cell in the second column of that row. Do not consume those bytes.
+  <p>For each of the rows in the table below, starting with the first one and going down, if
+  <var>stream</var> <a for="byte sequence">starts with</a> the bytes given in the first column,
+  return the <a for=/>encoding</a> given in the cell in the second column of that row. (Do not
+  consume those bytes.)
 
   <table>
    <tbody><tr><th>Byte order mark<th>Encoding
@@ -998,7 +998,7 @@ steps:
    <tr><td>0xFF 0xFE<td><a>UTF-16LE</a>
   </table>
 
- <li><p>Otherwise, return null.
+ <li><p>Return null.
 </ol>
 
 <p class=note>This hook is a workaround for the fact that <a>decode</a> has no way to communicate
