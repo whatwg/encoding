@@ -1,4 +1,5 @@
 SHELL=/bin/bash -o pipefail
+.PHONY: local remote deploy review
 
 remote: encoding.bs
 	curl https://api.csswg.org/bikeshed/ -f -F file=@encoding.bs > encoding.html -F md-Text-Macro="SNAPSHOT-LINK LOCAL COPY"
