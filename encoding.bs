@@ -3195,7 +3195,7 @@ its <a>is UTF-16BE decoder</a> set to true.
 
 <h3 id=utf-16le dfn export>UTF-16LE</h3>
 
-<p class="note no-backref">"<code>utf-16</code>" is a <a>labels</a> for <a>UTF-16LE</a> to deal with
+<p class="note no-backref">"<code>utf-16</code>" is a <a>label</a> for <a>UTF-16LE</a> to deal with
 deployed content.
 
 
