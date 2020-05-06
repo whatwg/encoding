@@ -296,10 +296,13 @@ prescribes, as that is necessary to be compatible with deployed content.
  <tbody>
   <tr><th colspan=2><a href=#the-encoding>The Encoding</a>
   <tr>
-   <td rowspan=3><a>UTF-8</a>
+   <td rowspan=6><a>UTF-8</a>
    <td>"<code>unicode-1-1-utf-8</code>"
+  <tr><td>"<code>unicode11utf8</code>"
+  <tr><td>"<code>unicode20utf8</code>"
   <tr><td>"<code>utf-8</code>"
   <tr><td>"<code>utf8</code>"
+  <tr><td>"<code>x-unicode20utf8</code>"
  <tbody>
   <tr><th colspan=2><a href=#legacy-single-byte-encodings>Legacy single-byte encodings</a>
   <tr>
@@ -597,11 +600,17 @@ prescribes, as that is necessary to be compatible with deployed content.
   <tr><td>"<code>iso-2022-kr</code>"
   <tr><td>"<code>replacement</code>"
   <tr>
-   <td><a>UTF-16BE</a>
-   <td>"<code>utf-16be</code>"
+   <td rowspan=2><a>UTF-16BE</a>
+   <td>"<code>unicodefffe</code>"
+  <tr><td>"<code>utf-16be</code>"
   <tr>
-   <td rowspan=2><a>UTF-16LE</a>
-   <td>"<code>utf-16</code>"
+   <td rowspan=7><a>UTF-16LE</a>
+   <td>"<code>csunicode</code>"
+  <tr><td>"<code>iso-10646-ucs-2</code>"
+  <tr><td>"<code>ucs-2</code>"
+  <tr><td>"<code>unicode</code>"
+  <tr><td>"<code>unicodefeff</code>"
+  <tr><td>"<code>utf-16</code>"
   <tr><td>"<code>utf-16le</code>"
   <tr>
    <td><a>x-user-defined</a>
@@ -3186,9 +3195,8 @@ its <a>is UTF-16BE decoder</a> set to true.
 
 <h3 id=utf-16le dfn export>UTF-16LE</h3>
 
-<p class="note no-backref">Both "<code>utf-16</code>" and
-"<code>utf-16le</code>" are <a>labels</a> for
-<a>UTF-16LE</a> to deal with deployed content.
+<p class="note no-backref">"<code>utf-16</code>" is a <a>label</a> for <a>UTF-16LE</a> to deal with
+deployed content.
 
 
 <h4 id=utf-16le-decoder dfn export>UTF-16LE decoder</h4>
