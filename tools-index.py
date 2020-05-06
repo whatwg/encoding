@@ -1,12 +1,12 @@
 import os
 import json
-import urllib2
+import requests
 
-data = json.loads(open("indexes.json", "r").read())
+data = json.load(open("indexes.json", "r"))
 
 if not os.path.exists("UnicodeData.txt"):
   # Download UnicodeData.txt if it doesn't exist yet
-  open("UnicodeData.txt","wb").write(urllib2.urlopen("https://unicode.org/Public/UNIDATA/UnicodeData.txt").read())
+  open("UnicodeData.txt", "w").write(requests.get("https://unicode.org/Public/UNIDATA/UnicodeData.txt").text)
 
 names = open("UnicodeData.txt", "r").readlines()
 
@@ -15,12 +15,6 @@ jamo = [
   ["A","AE","YA","YAE","EO","E","YEO","YE","O","WA","WAE","OE","YO","U","WEO","WE","WI","YU","EU","YI","I"],
   ["","G","GG","GS","N","NJ","NH","D","L","LG","LM","LB","LS","LT","LP","LH","M","B","BS","S","SS","NG","J","C","K","T","P","H"]
 ]
-
-def char(cp):
-    if cp > 0xFFFF:
-        hi, lo = divmod(cp-0x10000, 0x400)
-        return unichr(0xD800+hi) + unichr(0xDC00+lo)
-    return unichr(cp)
 
 def format_index(num, width):
     return str(num).rjust(width, " ")
@@ -36,7 +30,7 @@ def get_name(cp):
     elif cp >= 0xAC00 and cp <= 0xD7A3:
         #return "<Hangul Syllable>"
         i = cp - 0xAC00
-        s = jamo[0][i/28/21] + jamo[1][i/28%21] + jamo[2][i%28]
+        s = jamo[0][int(i/28/21)] + jamo[1][int(i/28%21)] + jamo[2][i%28]
         return "HANGUL SYLLABLE " + s
     elif cp >= 0xE000 and cp <= 0xF8FF:
         return "<Private Use>"
@@ -52,7 +46,7 @@ def get_name(cp):
         if line.startswith(index):
             return (line.split(";"))[1]
 
-    print "name not found", format_cp(cp)[2:]
+    print("name not found", format_cp(cp)[2:])
     return "<Private Use>"
 
 for index in data:
@@ -61,7 +55,7 @@ for index in data:
     handle.write("# For details on index index-" + index + ".txt see the Encoding Standard\n")
     handle.write("# https://encoding.spec.whatwg.org/\n")
     handle.write("#\n")
-    handle.write("# Identifier: " + hashlib.sha256(str(data[index])).hexdigest() + "\n")
+    handle.write("# Identifier: " + hashlib.sha256(str(data[index]).encode("ascii")).hexdigest() + "\n")
     handle.write("# Date: " + str(datetime.date.today()) + "\n")
     handle.write("\n")
 
@@ -76,5 +70,5 @@ for index in data:
     for cp in data[index]:
         if cp != None:
             name = get_name(cp)
-            handle.write(format_index(i, width) + "\t" + format_cp(cp) + "\t" + char(cp) + " (" + name + ")\n")
+            handle.write(format_index(i, width) + "\t" + format_cp(cp) + "\t" + chr(cp) + " (" + name + ")\n")
         i += 1
