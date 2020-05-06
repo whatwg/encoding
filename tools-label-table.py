@@ -23,6 +23,6 @@ def create_table():
                     table += "\n   "
                 table += "<td>\"<code>" + label + "</code>\"\n"
                 i += 1
-    print table
+    print(table)
 
 create_table()

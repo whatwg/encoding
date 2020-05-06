@@ -113,16 +113,6 @@ def aria(code_point, contiguous, duplicate):
     return label
 
 
-def code_point_to_ustr(code_point):
-    try:
-        return unichr(code_point)
-    except ValueError:
-        # For narrow builds
-        high = 0xD7C0 + (code_point >> 10)
-        low = 0xDC00 + (code_point & 0x3FF)
-        return unichr(high) + unichr(low)
-
-
 def format_code_point(code_point):
     if code_point >= 0x80 and code_point < 0xA0:
         # HTML prohibits C1 controls
@@ -131,8 +121,8 @@ def format_code_point(code_point):
     # Big5's Plane 2 stuff is non-combining, so let's deal with it first,
     # since it need special treatment in narrow Python.
     if code_point > 0xFFFF:
-        return code_point_to_ustr(code_point)
-    as_str = unichr(code_point)
+        return chr(code_point)
+    as_str = chr(code_point)
     if unicodedata.combining(as_str) == 0:
         return as_str
     else:
@@ -148,7 +138,7 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
         if not (name == "big5" or name == "shift_jis"):
             dec_row_cell = True
             out_file.write("<tr><td><td><td>")
-            for i in xrange(row_length):
+            for i in range(row_length):
                 trail = i + trail_one
                 if trail_two and i >= 0x3F:
                     trail = i + trail_two
@@ -159,7 +149,7 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
             out_file.write("<tr><td><td><td>")
         else:
             out_file.write("<tr><td><td>")
-        for i in xrange(row_length):
+        for i in range(row_length):
             trail = i + trail_one
             if trail_two and i >= 0x3F:
                 trail = i + trail_two
@@ -170,7 +160,7 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
             out_file.write("<tr><td><td>")
     else:
         out_file.write("<tr><td>")
-    for i in xrange(row_length):
+    for i in range(row_length):
         out_file.write("<th>%02X" % i)
     out_file.write("<tbody>")
     previous = None
@@ -216,9 +206,9 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
                 else:
                     astral_seen.add(code_point)
             contiguous = previous and previous + 1 == code_point
-            out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>%d<dd lang=%s>%s<dd>U+%04X</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), pointer, lang, format_code_point(code_point), code_point)).encode("utf-8"))
+            out_file.write(("<td class='%s %s%s%s' aria-label='%s'><dl><dt>%d<dd lang=%s>%s<dd>U+%04X</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), pointer, lang, format_code_point(code_point), code_point)))
         else:
-            out_file.write((u"<td class=unmapped aria-label=Unmapped><dl><dt>%d<dd>\uFFFD<dd>\u00A0</dl>" % pointer).encode("utf-8"))
+            out_file.write(("<td class=unmapped aria-label=Unmapped><dl><dt>%d<dd>\uFFFD<dd>\u00A0</dl>" % pointer))
         previous = code_point
         pointer += 1
         if pointer % row_length == 0:
@@ -231,17 +221,17 @@ def format_index(name, row_length, lang, bmp, duplicates, byte_rule):
 def format_coverage(name, lang, bmp, duplicates):
     out_file = open("%s%s-bmp.html" % (directory, name), "w")
     out_file.write(("<!DOCTYPE html><html lang=en><meta charset=utf-8><title>BMP coverage of %s</title><link rel=stylesheet href=visualization.css type=text/css><h1>BMP coverage of %s</h1><p class=note role=note>This table is not normative.<p><a href='%s.html'>Index</a><p><a href='./#visualization'>Legend</a><table><thead><tr><td><td>") % (name, name, name))
-    for i in xrange(256):
+    for i in range(256):
         out_file.write("<th>%02d" % i)
     out_file.write("<tr><td><td>")
-    for i in xrange(256):
+    for i in range(256):
         out_file.write("<th>%02X" % i)
     out_file.write("<tbody>")
     previous = None
     new_row = True
     row_num = -1
     index = indexes[name]
-    for code_point in xrange(0x10000):
+    for code_point in range(0x10000):
         if code_point % 256 == 0:
             new_row = True
             row_num += 1
@@ -254,9 +244,9 @@ def format_coverage(name, lang, bmp, duplicates):
         elif pointer is not None:
             duplicate = code_point in duplicates
             contiguous = previous and previous + 1 == pointer
-            out_file.write((u"<td class='%s %s%s%s' aria-label='%s'><dl><dt>U+%04X<dd lang=%s>%s<dd>%d</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), code_point, lang, format_code_point(code_point), pointer)).encode("utf-8"))
+            out_file.write(("<td class='%s %s%s%s' aria-label='%s'><dl><dt>U+%04X<dd lang=%s>%s<dd>%d</dl>" % ("contiguous" if contiguous else "discontiguous", classify(code_point), " duplicate" if duplicate else "", check_compatibility(code_point), aria(code_point, contiguous, duplicate), code_point, lang, format_code_point(code_point), pointer)))
         else:
-            out_file.write((u"<td class=unmapped aria-label=Unmapped><dl><dt>U+%04X<dd>\uFFFD<dd>\u00A0</dl>" % code_point).encode("utf-8"))
+            out_file.write(("<td class=unmapped aria-label=Unmapped><dl><dt>U+%04X<dd>\uFFFD<dd>\u00A0</dl>" % code_point))
         previous = pointer
     out_file.write("</table>")
     out_file.close()

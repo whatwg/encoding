@@ -11,7 +11,7 @@ for set in data:
         encoding["labels"] = labels
         for label in labels:
             if label in labelsseen:
-                raise "Duplicate label: ", label
+                raise("Duplicate label: ", label)
             labelsseen.append(label)
 
 handle = open(filename, "w")
