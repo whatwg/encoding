@@ -621,6 +621,18 @@ prescribes, as that is necessary to be compatible with deployed content.
 <a>labels</a> are also available as non-normative
 <a href=encodings.json>encodings.json</a> resource.
 
+<p class=note id=supported-encodings>The set of supported <a for=/>encodings</a> is primarily based
+on the intersection of the sets supported by major browser engines when the development of this
+standard started, while removing encodings that were rarely used legitimately but that could be used
+in attacks. The inclusion of some encodings is questionable in the light of anecdotal evidence of
+the level of use by existing Web content. That is, while they have been broadly supported by
+browsers, it is unclear if they are broadly used by Web content. However, an effort has not been
+made to eagerly remove <a>single-byte encodings</a> that were broadly supported by browsers or are
+part of the ISO 8859 series. In particular, the necessity of the inclusion of <a>IBM866</a>,
+<a>macintosh</a>, <a>x-mac-cyrillic</a>, <a>ISO-8859-3</a>, <a>ISO-8859-10</a>, <a>ISO-8859-14</a>,
+and <a>ISO-8859-16</a> is doubtful for the purpose of supporting existing content, but there are no
+plans to remove these.</p>
+
 
 <h3 id=output-encodings>Output encodings</h3>
 
