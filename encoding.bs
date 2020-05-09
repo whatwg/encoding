@@ -1376,7 +1376,7 @@ requires buffering of scalar values.
 
  <dt><code><var>encoder</var> . <a method=for=TextEncoder lt="encodeInto(source, destination)">encodeInto(<var>source</var>, <var>destination</var>)</a></code>
  <dd><p>Runs the <a>UTF-8 encoder</a> on <var>source</var>, stores the result of that operation into
- <var>destination</var>, and returns the progress made as a dictionary whereby
+ <var>destination</var>, and returns the progress made as an object whereby
  {{TextEncoderEncodeIntoResult/read}} is the number of converted <a>code units</a> of
  <var>source</var> and {{TextEncoderEncodeIntoResult/written}} is the number of bytes modified in
  <var>destination</var>.
@@ -1474,9 +1474,8 @@ method steps are:
     </ol>
   </ol>
 
- <li><p>Return a new {{TextEncoderEncodeIntoResult}} dictionary whose
- {{TextEncoderEncodeIntoResult/read}} member is <var>read</var> and
- {{TextEncoderEncodeIntoResult/written}} member is <var>written</var>.
+ <li><p>Return «[ "{{TextEncoderEncodeIntoResult/read}}" → <var>read</var>,
+ "{{TextEncoderEncodeIntoResult/written}}" → <var>written</var> ]».
 </ol>
 
 <div class=example id=example-textencoder-encodeinto>
