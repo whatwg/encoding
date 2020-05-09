@@ -1110,12 +1110,17 @@ interface mixin TextDecoderCommon {
 </pre>
 
 <p>The {{TextDecoderCommon}} interface mixin defines common attributes that are shared between
-{{TextDecoder}} and {{TextDecoderStream}} objects. These objects have an associated
-<dfn id=textdecoder-encoding for=TextDecoderCommon>encoding</dfn>,
-<dfn id=textdecoder-ignore-bom-flag for=TextDecoderCommon>ignore BOM</dfn> (boolean, initially
-false), <dfn id=textdecoder-bom-seen-flag for=TextDecoderCommon>BOM seen</dfn> (boolean, initially
-false), and <dfn id=textdecoder-error-mode for=TextDecoderCommon>error mode</dfn> (initially
-"<code>replacement</code>").
+{{TextDecoder}} and {{TextDecoderStream}} objects. These objects have an associated:
+
+<ul class=brief>
+ <li><dfn id=textdecoder-encoding for=TextDecoderCommon>encoding</dfn>: an <a for=/>encoding</a>.
+ <li><dfn id=textdecoder-ignore-bom-flag for=TextDecoderCommon>ignore BOM</dfn>: a boolean,
+ initially false.
+ <li><dfn id=textdecoder-bom-seen-flag for=TextDecoderCommon>BOM seen</dfn>: a boolean, initially
+ false.
+ <li><dfn id=textdecoder-error-mode for=TextDecoderCommon>error mode</dfn> an
+ <a for=/>error mode</a>, initially "<code>replacement</code>").
+</ul>
 
 <p>The <dfn id=concept-td-serialize>serialize stream</dfn> algorithm, given a {{TextDecoderCommon}}
 <var>decoder</var> and a <a for=/>stream</a> <var>stream</var>, runs these steps:
@@ -1192,10 +1197,14 @@ interface TextDecoder {
 TextDecoder includes TextDecoderCommon;
 </pre>
 
-<p>A {{TextDecoder}} object has an associated <dfn for=TextDecoder>decoder</dfn>,
-<dfn for=TextDecoder>stream</dfn>, and
-<dfn for=TextDecoder id=textdecoder-do-not-flush-flag>do not flush</dfn> (boolean; initially
-false).
+<p>A {{TextDecoder}} object has an associated:
+
+<ul class=brief>
+ <li><dfn for=TextDecoder>decoder</dfn>: a <a for=/>decoder</a>.
+ <li><dfn for=TextDecoder>stream</dfn>: a <a for=/>stream</a>.
+ <li><dfn for=TextDecoder id=textdecoder-do-not-flush-flag>do not flush</dfn>: a boolean, initially
+ false.
+</ul>
 
 <dl class=domintro>
  <dt><code><var>decoder</var> = new <a constructor for=TextDecoder lt=TextDecoder()>TextDecoder([<var>label</var> = "utf-8" [, <var>options</var>]])</a></code>
@@ -1533,8 +1542,12 @@ TextDecoderStream includes TextDecoderCommon;
 TextDecoderStream includes GenericTransformStream;
 </pre>
 
-<p>A {{TextDecoderStream}} object has an associated <dfn for=TextDecoderStream>decoder</dfn> and
-<dfn for=TextDecoderStream>stream</dfn>.
+<p>A {{TextDecoderStream}} object has an associated:
+
+<ul class=brief>
+ <li><dfn for=TextDecoderStream>decoder</dfn>: a <a for=/>decoder</a>.
+ <li><dfn for=TextDecoderStream>stream</dfn>: a <a for=/>stream</a>.
+</ul>
 
 <dl class=domintro>
  <dt><code><var>decoder</var> = new
