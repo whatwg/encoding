@@ -1109,7 +1109,7 @@ interface mixin TextDecoderCommon {
 };
 </pre>
 
-<p>The {{TextDecoderCommon}} interface mixin defines common attributes that are shared between
+<p>The {{TextDecoderCommon}} interface mixin defines common getters that are shared between
 {{TextDecoder}} and {{TextDecoderStream}} objects. These objects have an associated:
 
 <ul class=brief>
@@ -1164,16 +1164,16 @@ control.
 <hr>
 
 <p>The <dfn attribute id=dom-textdecoder-encoding for=TextDecoderCommon><code>encoding</code></dfn>
-attribute's getter steps are to return <a>this</a>'s <a for=TextDecoderCommon>encoding</a>'s
+getter steps are to return <a>this</a>'s <a for=TextDecoderCommon>encoding</a>'s
 <a for=encoding>name</a>, <a>ASCII lowercased</a>.
 
-<p>The <dfn attribute id=dom-textdecoder-fatal for=TextDecoderCommon><code>fatal</code></dfn>
-attribute's getter steps are to return true if <a>this</a>'s <a for=TextDecoderCommon>error mode</a>
-is "<code>fatal</code>", otherwise false.
+<p>The <dfn attribute id=dom-textdecoder-fatal for=TextDecoderCommon><code>fatal</code></dfn> getter
+steps are to return true if <a>this</a>'s <a for=TextDecoderCommon>error mode</a> is
+"<code>fatal</code>", otherwise false.
 
 <p>The
 <dfn attribute id=dom-textdecoder-ignorebom for=TextDecoderCommon><code>ignoreBOM</code></dfn>
-attribute's getter steps are to return <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a>.
+getter steps are to return <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a>.
 
 
 <h3 id=interface-textdecoder>Interface {{TextDecoder}}</h3>
@@ -1333,11 +1333,11 @@ interface mixin TextEncoderCommon {
 };
 </pre>
 
-<p>The {{TextEncoderCommon}} interface mixin defines common attributes that are shared between
+<p>The {{TextEncoderCommon}} interface mixin defines common getters that are shared between
 {{TextEncoder}} and {{TextEncoderStream}} objects.
 
 <p>The <dfn attribute id=dom-textencoder-encoding for=TextEncoderCommon><code>encoding</code></dfn>
-attribute's getter steps are to return "<code>utf-8</code>".
+getter steps are to return "<code>utf-8</code>".
 
 
 <h3 id=interface-textencoder>Interface {{TextEncoder}}</h3>
@@ -1523,11 +1523,11 @@ interface mixin GenericTransformStream {
 <p>An object that includes {{GenericTransformStream}} has an associated
 <dfn for=GenericTransformStream>transform</dfn> of type {{TransformStream}}.
 
-<p>The <dfn attribute for=GenericTransformStream><code>readable</code></dfn> attribute's getter
-steps are to return <a>this</a>'s <a for=GenericTransformStream>transform</a>.\[[readable]].
+<p>The <dfn attribute for=GenericTransformStream><code>readable</code></dfn> getter steps are to
+return <a>this</a>'s <a for=GenericTransformStream>transform</a>.\[[readable]].
 
-<p>The <dfn attribute for=GenericTransformStream><code>writable</code></dfn> attribute's getter
-steps are to return <a>this</a>'s <a for=GenericTransformStream>transform</a>.\[[writable]].
+<p>The <dfn attribute for=GenericTransformStream><code>writable</code></dfn> getter steps are to
+return <a>this</a>'s <a for=GenericTransformStream>transform</a>.\[[writable]].
 
 
 <h3 id=interface-textdecoderstream>Interface {{TextDecoderStream}}</h3>
