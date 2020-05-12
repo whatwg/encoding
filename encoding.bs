@@ -1256,11 +1256,11 @@ constructor steps are:
 
  <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>encoding</a> to <var>encoding</var>.
 
- <li><p>If <var>options</var>["<code>fatal</code>"] is true, then set <a>this</a>'s
+ <li><p>If <var>options</var>["{{TextDecoderOptions/fatal}}"] is true, then set <a>this</a>'s
  <a for=TextDecoderCommon>error mode</a> to "<code>fatal</code>".
 
  <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a> to
- <var>options</var>["<code>ignoreBOM</code>"].
+ <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"].
 </ol>
 
 <p>The <dfn method for=TextDecoder><code>decode(<var>input</var>, <var>options</var>)</code></dfn>
@@ -1273,7 +1273,7 @@ method steps are:
  and set <a>this</a>'s <a for=TextDecoderCommon>BOM seen</a> to false.
 
  <li><p>Set <a>this</a>'s <a for=TextDecoder>do not flush</a> to
- <var>options</var>["<code>stream</code>"].
+ <var>options</var>["{{TextDecodeOptions/stream}}"].
 
  <li>
   <p>If <var>input</var> is given, then <a>push</a> a
@@ -1376,7 +1376,7 @@ requires buffering of scalar values.
 
  <dt><code><var>encoder</var> . <a method=for=TextEncoder lt="encodeInto(source, destination)">encodeInto(<var>source</var>, <var>destination</var>)</a></code>
  <dd><p>Runs the <a>UTF-8 encoder</a> on <var>source</var>, stores the result of that operation into
- <var>destination</var>, and returns the progress made as an object whereby
+ <var>destination</var>, and returns the progress made as an object wherein
  {{TextEncoderEncodeIntoResult/read}} is the number of converted <a>code units</a> of
  <var>source</var> and {{TextEncoderEncodeIntoResult/written}} is the number of bytes modified in
  <var>destination</var>.
@@ -1606,11 +1606,11 @@ constructor steps are:
 
  <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>encoding</a> to <var>encoding</var>.
 
- <li><p>If <var>options</var>["<code>fatal</code>"] is true, then set <a>this</a>'s
+ <li><p>If <var>options</var>["{{TextDecoderOptions/fatal}}"] is true, then set <a>this</a>'s
  <a for=TextDecoderCommon>error mode</a> to "<code>fatal</code>".
 
  <li><p>set <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a> to
- <var>options</var>["<code>ignoreBOM</code>"].
+ <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"].
 
  <li><p>Set <a>this</a>'s <a for=TextDecoderStream>decoder</a> to a new <a for=/>decoder</a> for
  <a>this</a>'s <a for=TextDecoderCommon>encoding</a>, and set <a>this</a>'s
