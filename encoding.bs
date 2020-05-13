@@ -1112,15 +1112,19 @@ interface mixin TextDecoderCommon {
 <p>The {{TextDecoderCommon}} interface mixin defines common getters that are shared between
 {{TextDecoder}} and {{TextDecoderStream}} objects. These objects have an associated:
 
-<ul class=brief>
- <li><dfn id=textdecoder-encoding for=TextDecoderCommon>encoding</dfn>: an <a for=/>encoding</a>.
- <li><dfn id=textdecoder-ignore-bom-flag for=TextDecoderCommon>ignore BOM</dfn>: a boolean,
- initially false.
- <li><dfn id=textdecoder-bom-seen-flag for=TextDecoderCommon>BOM seen</dfn>: a boolean, initially
- false.
- <li><dfn id=textdecoder-error-mode for=TextDecoderCommon>error mode</dfn> an
- <a for=/>error mode</a>, initially "<code>replacement</code>").
-</ul>
+<dl>
+ <dt><dfn id=textdecoder-encoding for=TextDecoderCommon>encoding</dfn>
+ <dd>An <a for=/>encoding</a>.
+
+ <dt><dfn id=textdecoder-ignore-bom-flag for=TextDecoderCommon>ignore BOM</dfn>
+ <dd>A boolean, initially false.
+
+ <dt><dfn id=textdecoder-bom-seen-flag for=TextDecoderCommon>BOM seen</dfn>
+ <dd>A boolean, initially false.
+
+ <dt><dfn id=textdecoder-error-mode for=TextDecoderCommon>error mode</dfn>
+ <dd>An <a for=/>error mode</a>, initially "<code>replacement</code>").
+</dl>
 
 <p>The <dfn id=concept-td-serialize>serialize stream</dfn> algorithm, given a {{TextDecoderCommon}}
 <var>decoder</var> and a <a for=/>stream</a> <var>stream</var>, runs these steps:
@@ -1199,12 +1203,16 @@ TextDecoder includes TextDecoderCommon;
 
 <p>A {{TextDecoder}} object has an associated:
 
-<ul class=brief>
- <li><dfn for=TextDecoder>decoder</dfn>: a <a for=/>decoder</a>.
- <li><dfn for=TextDecoder>stream</dfn>: a <a for=/>stream</a>.
- <li><dfn for=TextDecoder id=textdecoder-do-not-flush-flag>do not flush</dfn>: a boolean, initially
- false.
-</ul>
+<dl>
+ <dt><dfn for=TextDecoder>decoder</dfn>
+ <dd>A <a for=/>decoder</a>.
+
+ <dt><dfn for=TextDecoder>stream</dfn>
+ <dd>A <a for=/>stream</a>.
+
+ <dt><dfn for=TextDecoder id=textdecoder-do-not-flush-flag>do not flush</dfn>
+ <dd>A boolean, initially false.
+</dl>
 
 <dl class=domintro>
  <dt><code><var>decoder</var> = new <a constructor for=TextDecoder lt=TextDecoder()>TextDecoder([<var>label</var> = "utf-8" [, <var>options</var>]])</a></code>
@@ -1268,9 +1276,9 @@ method steps are:
 
 <ol>
  <li><p>If <a>this</a>'s <a for=TextDecoder>do not flush</a> is false, then set <a>this</a>'s
- <a for=TextDecoder>decoder</a> to a new <a for=TextDecoderCommon>encoding</a>'s
- <a for=/>decoder</a>, set <a>this</a>'s <a for=TextDecoder>stream</a> to a new <a for=/>stream</a>,
- and set <a>this</a>'s <a for=TextDecoderCommon>BOM seen</a> to false.
+ <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <a>this</a>'s
+ <a for=TextDecoderCommon>encoding</a>, <a>this</a>'s <a for=TextDecoder>stream</a> to a new
+ <a for=/>stream</a>, and <a>this</a>'s <a for=TextDecoderCommon>BOM seen</a> to false.
 
  <li><p>Set <a>this</a>'s <a for=TextDecoder>do not flush</a> to
  <var>options</var>["{{TextDecodeOptions/stream}}"].
@@ -1304,9 +1312,9 @@ method steps are:
     <a>serialize stream</a> with <a>this</a> and <var>output</var>.
 
     <p class=note>The way streaming works is to not handle <a>end-of-stream</a> here when
-    <a for=TextDecoder>do not flush</a> is true and to not set it to false. That way in a subsequent
-    invocation <a for=TextDecoder>decoder</a> is not set anew in the first step of the algorithm and
-    its state is preserved.
+    <a>this</a>'s <a for=TextDecoder>do not flush</a> is true and to not set it to false. That way
+    in a subsequent invocation <a>this</a>'s <a for=TextDecoder>decoder</a> is not set anew in the
+    first step of the algorithm and its state is preserved.
 
    <li>
     <p>Otherwise:
@@ -1543,10 +1551,13 @@ TextDecoderStream includes GenericTransformStream;
 
 <p>A {{TextDecoderStream}} object has an associated:
 
-<ul class=brief>
- <li><dfn for=TextDecoderStream>decoder</dfn>: a <a for=/>decoder</a>.
- <li><dfn for=TextDecoderStream>stream</dfn>: a <a for=/>stream</a>.
-</ul>
+<dl>
+ <dt><dfn for=TextDecoderStream>decoder</dfn>
+ <dd>A <a for=/>decoder</a>.
+
+ <dt><dfn for=TextDecoderStream>stream</dfn>
+ <dd>A <a for=/>stream</a>.
+</dl>
 
 <dl class=domintro>
  <dt><code><var>decoder</var> = new
@@ -1725,8 +1736,15 @@ TextEncoderStream includes TextEncoderCommon;
 TextEncoderStream includes GenericTransformStream;
 </pre>
 
-<p>A {{TextEncoderStream}} object has an associated <dfn for=TextEncoderStream>encoder</dfn> and
-<dfn for=TextEncoderStream>pending high surrogate</dfn> (initially null).
+<p>A {{TextEncoderStream}} object has an associated:
+
+<dl>
+ <dt><dfn for=TextEncoderStream>encoder</dfn>
+ <dd>An <a for=/>encoder</a>.
+
+ <dt><dfn for=TextEncoderStream>pending high surrogate</dfn>
+ <dd>Null or a <a for=/>surrogate</a>, initially null.
+</dl>
 
 <p class="note no-backref">A {{TextEncoderStream}} object offers no <var>label</var> argument as it
 only supports <a>UTF-8</a>.
