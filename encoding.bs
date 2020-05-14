@@ -1138,6 +1138,8 @@ interface mixin TextDecoderCommon {
   <ol>
    <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>stream</var>.
 
+   <li><p>If <var>token</var> is <a>end-of-stream</a>, then return <var>output</var>.
+
    <li>
     <p>If <var>decoder</var>'s <a for=TextDecoderCommon>encoding</a> is <a>UTF-8</a>,
     <a>UTF-16BE</a>, or <a>UTF-16LE</a>, and <var>decoder</var>'s
@@ -1145,19 +1147,12 @@ interface mixin TextDecoderCommon {
     then:
 
     <ol>
-     <li><p>If <var>token</var> is U+FEFF, then set <var>decoder</var>'s
-     <a for=TextDecoderCommon>BOM seen</a> to true.
+     <li><p>Set <var>decoder</var>'s <a for=TextDecoderCommon>BOM seen</a> to true.
 
-     <li><p>Otherwise, if <var>token</var> is not <a>end-of-stream</a>, set <var>decoder</var>'s
-     <a for=TextDecoderCommon>BOM seen</a> to true and append <var>token</var> to <var>output</var>.
-
-     <li><p>Otherwise, return <var>output</var>.
+     <li><p>If <var>token</var> is U+FEFF, then <a for=iteration>continue</a>.
     </ol>
 
-   <li><p>Otherwise, if <var>token</var> is not <a>end-of-stream</a>, then append <var>token</var>
-   to <var>output</var>.
-
-   <li><p>Otherwise, return <var>output</var>.
+   <li><p>Append <var>token</var> to <var>output</var>.
   </ol>
 </ol>
 
@@ -3333,6 +3328,7 @@ Bruno Haible,
 Cameron McCormack,
 Charles McCathieNeville,
 Christopher Foo,
+CodifierNL, <!-- Codifier on GitHub -->
 David Carlisle,
 Domenic Denicola,
 Dominique Hazaël-Massieux,
