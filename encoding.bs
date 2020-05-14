@@ -1116,6 +1116,12 @@ interface mixin TextDecoderCommon {
  <dt><dfn id=textdecoder-encoding for=TextDecoderCommon>encoding</dfn>
  <dd>An <a for=/>encoding</a>.
 
+ <dt><dfn for=TextDecoderCommon oldids=textdecoder-decoder,textdecoderstream-decoder>decoder</dfn>
+ <dd>A <a for=/>decoder</a>.
+
+ <dt><dfn for=TextDecoderCommon oldids=textdecoder-stream,textdecoderstream-stream>stream</dfn>
+ <dd>A <a for=/>stream</a>.
+
  <dt><dfn id=textdecoder-ignore-bom-flag for=TextDecoderCommon>ignore BOM</dfn>
  <dd>A boolean, initially false.
 
@@ -1196,18 +1202,9 @@ interface TextDecoder {
 TextDecoder includes TextDecoderCommon;
 </pre>
 
-<p>A {{TextDecoder}} object has an associated:
-
-<dl>
- <dt><dfn for=TextDecoder>decoder</dfn>
- <dd>A <a for=/>decoder</a>.
-
- <dt><dfn for=TextDecoder>stream</dfn>
- <dd>A <a for=/>stream</a>.
-
- <dt><dfn for=TextDecoder id=textdecoder-do-not-flush-flag>do not flush</dfn>
- <dd>A boolean, initially false.
-</dl>
+<p>A {{TextDecoder}} object has an associated
+<dfn for=TextDecoder id=textdecoder-do-not-flush-flag>do not flush</dfn>, which is a boolean,
+initially false.
 
 <dl class=domintro>
  <dt><code><var>decoder</var> = new <a constructor for=TextDecoder lt=TextDecoder()>TextDecoder([<var>label</var> = "utf-8" [, <var>options</var>]])</a></code>
@@ -1271,8 +1268,8 @@ method steps are:
 
 <ol>
  <li><p>If <a>this</a>'s <a for=TextDecoder>do not flush</a> is false, then set <a>this</a>'s
- <a for=TextDecoder>decoder</a> to a new <a for=/>decoder</a> for <a>this</a>'s
- <a for=TextDecoderCommon>encoding</a>, <a>this</a>'s <a for=TextDecoder>stream</a> to a new
+ <a for=TextDecoderCommon>decoder</a> to a new <a for=/>decoder</a> for <a>this</a>'s
+ <a for=TextDecoderCommon>encoding</a>, <a>this</a>'s <a for=TextDecoderCommon>stream</a> to a new
  <a for=/>stream</a>, and <a>this</a>'s <a for=TextDecoderCommon>BOM seen</a> to false.
 
  <li><p>Set <a>this</a>'s <a for=TextDecoder>do not flush</a> to
@@ -1281,7 +1278,7 @@ method steps are:
  <li>
   <p>If <var>input</var> is given, then <a>push</a> a
   <a lt="get a copy of the buffer source">copy of</a> <var>input</var> to <a>this</a>'s
-  <a for=TextDecoder>stream</a>.
+  <a for=TextDecoderCommon>stream</a>.
 
   <p class=note>Implementations are strongly encouraged to use an implementation strategy that
   avoids this copy. When doing so they will have to make sure that changes to <var>input</var> do
@@ -1299,7 +1296,7 @@ method steps are:
 
   <ol>
    <li><p>Let <var>token</var> be the result of <a>reading</a> from <a>this</a>'s
-   <a for=TextDecoder>stream</a>.
+   <a for=TextDecoderCommon>stream</a>.
 
    <li>
     <p>If <var>token</var> is <a>end-of-stream</a> and <a>this</a>'s
@@ -1308,16 +1305,17 @@ method steps are:
 
     <p class=note>The way streaming works is to not handle <a>end-of-stream</a> here when
     <a>this</a>'s <a for=TextDecoder>do not flush</a> is true and to not set it to false. That way
-    in a subsequent invocation <a>this</a>'s <a for=TextDecoder>decoder</a> is not set anew in the
-    first step of the algorithm and its state is preserved.
+    in a subsequent invocation <a>this</a>'s <a for=TextDecoderCommon>decoder</a> is not set anew in
+    the first step of the algorithm and its state is preserved.
 
    <li>
     <p>Otherwise:
 
     <ol>
      <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
-     <a>this</a>'s <a for=TextDecoder>decoder</a>, <a>this</a>'s <a for=TextDecoder>stream</a>,
-     <var>output</var>, and <a>this</a>'s <a for=TextDecoderCommon>error mode</a>.
+     <a>this</a>'s <a for=TextDecoderCommon>decoder</a>, <a>this</a>'s
+     <a for=TextDecoderCommon>stream</a>, <var>output</var>, and <a>this</a>'s
+     <a for=TextDecoderCommon>error mode</a>.
 
      <li><p>If <var>result</var> is <a>finished</a>, then return the result of running
      <a>serialize stream</a> with <a>this</a> and <var>output</var>.
@@ -1544,16 +1542,6 @@ TextDecoderStream includes TextDecoderCommon;
 TextDecoderStream includes GenericTransformStream;
 </pre>
 
-<p>A {{TextDecoderStream}} object has an associated:
-
-<dl>
- <dt><dfn for=TextDecoderStream>decoder</dfn>
- <dd>A <a for=/>decoder</a>.
-
- <dt><dfn for=TextDecoderStream>stream</dfn>
- <dd>A <a for=/>stream</a>.
-</dl>
-
 <dl class=domintro>
  <dt><code><var>decoder</var> = new
  <a constructor for=TextDecoderStream lt=TextDecoderStream()>TextDecoderStream([<var>label</var> =
@@ -1618,9 +1606,9 @@ constructor steps are:
  <li><p>set <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a> to
  <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"].
 
- <li><p>Set <a>this</a>'s <a for=TextDecoderStream>decoder</a> to a new <a for=/>decoder</a> for
+ <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>decoder</a> to a new <a for=/>decoder</a> for
  <a>this</a>'s <a for=TextDecoderCommon>encoding</a>, and set <a>this</a>'s
- <a for=TextDecoderStream>stream</a> to a new <a for=/>stream</a>.
+ <a for=TextDecoderCommon>stream</a> to a new <a for=/>stream</a>.
 
  <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
 
@@ -1648,7 +1636,7 @@ constructor steps are:
 
  <li>
   <p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>bufferSource</var> to
-  <var>decoder</var>'s <a for=TextDecoderStream>stream</a>. If this throws an exception, then return
+  <var>decoder</var>'s <a for=TextDecoderCommon>stream</a>. If this throws an exception, then return
   a promise rejected with that exception.
 
   <p class=warning>See the
@@ -1664,7 +1652,7 @@ constructor steps are:
 
   <ol>
    <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>decoder</var>'s
-   <a for=TextDecoderStream>stream</a>.
+   <a for=TextDecoderCommon>stream</a>.
 
    <li>
     <p>If <var>token</var> is <a>end-of-stream</a>, run these steps:
@@ -1680,8 +1668,8 @@ constructor steps are:
     </ol>
 
    <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
-   <var>decoder</var>'s <a for=TextDecoderStream>decoder</a>, <var>decoder</var>'s
-   <a for=TextDecoderStream>stream</a>, <var>output</var>, and <var>decoder</var>'s
+   <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a>, <var>decoder</var>'s
+   <a for=TextDecoderCommon>stream</a>, <var>output</var>, and <var>decoder</var>'s
    <a for=TextDecoderCommon>error mode</a>.
 
    <li><p>If <var>result</var> is <a>error</a>, then return a new promise rejected with a
@@ -1697,8 +1685,8 @@ steps:
  <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
 
  <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-stream</a> for
- <var>decoder</var>'s <a for=TextDecoderStream>decoder</a> and <var>decoder</var>'s
- <a for=TextDecoderStream>stream</a>, <var>output</var>, and <var>decoder</var>'s
+ <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a> and <var>decoder</var>'s
+ <a for=TextDecoderCommon>stream</a>, <var>output</var>, and <var>decoder</var>'s
  <a for=TextDecoderCommon>error mode</a>.
 
  <li><p>If <var>result</var> is <a>finished</a>, run these steps:
