@@ -97,10 +97,10 @@ bitwise AND by "&amp;", and bitwise OR by "|".
 <p>A <dfn id=concept-token>token</dfn> is a piece of data, such as a <a>byte</a> or
 <a>scalar value</a>.
 
-<p>A <dfn id=concept-stream>token queue</dfn> represents an ordered sequence of
-<a>tokens</a> of a particular type (i.e. <a>bytes</a> or <a>scalar values</a>).
-<dfn>End-of-stream</dfn> is a special <a>token</a> that signifies no more
-<a>tokens</a> are in the
+<p>A <dfn id=concept-stream export>token queue</dfn> represents an ordered
+sequence of <a>tokens</a> of a particular type (i.e. <a>bytes</a> or <a>scalar
+values</a>). <dfn export>End-of-stream</dfn> is a special <a>token</a> that
+signifies no more <a>tokens</a> are in the
 <a for=/>token queue</a>.
 
 <p class=note>In previous versions of this specification, <a for=/>token
@@ -109,14 +109,14 @@ streams in the web platform. The name "<a>end-of-stream</a>" is a holdover from
 that time. [[STREAMS]]
 
 <p>When a <a>token</a> is
-<dfn id=concept-stream-read for="token queue">read</dfn> from a <a for=/>token
-queue</a>, the first token in the queue must be returned and subsequently
-removed, and <a>end-of-stream</a> must be returned otherwise.
+<dfn id=concept-stream-read for="token queue" export>read</dfn> from a
+<a for=/>token queue</a>, the first token in the queue must be returned and
+subsequently removed, and <a>end-of-stream</a> must be returned otherwise.
 <!-- this means read is blocking on e.g. networking activity;
      SimonSapin thinks this is fine, blame him if not -->
 
 <p>When one or more <a>tokens</a> are
-<dfn id=concept-stream-prepend for="token queue">prepended</dfn> to a
+<dfn id=concept-stream-prepend for="token queue" export>prepended</dfn> to a
 <a for=/>token queue</a>, those tokens must be inserted, in given order,
 before the first token in the queue.
 
@@ -126,8 +126,9 @@ in a token queue "<code> hello world</code>", results in a token queue
 <code>&amp;</code>. <!-- 💩 -->
 
 <p>When one or more <a>tokens</a> are
-<dfn id=concept-stream-push for="token queue">pushed</dfn> to a <a for=/>token queue</a>,
-those tokens must be inserted, in given order, after the last token in the queue.
+<dfn id=concept-stream-push for="token queue" export>pushed</dfn> to a
+<a for=/>token queue</a>, those tokens must be inserted, in given order, after
+the last token in the queue.
 
 
 <h2 id=encodings>Encodings</h2>
