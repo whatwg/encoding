@@ -1129,7 +1129,7 @@ interface mixin TextDecoderCommon {
  <dd>A boolean, initially false.
 
  <dt><dfn id=textdecoder-error-mode for=TextDecoderCommon>error mode</dfn>
- <dd>An <a for=/>error mode</a>, initially "<code>replacement</code>").
+ <dd>An <a for=/>error mode</a>, initially "<code>replacement</code>".
 </dl>
 
 <p>The <dfn id=concept-td-serialize>serialize stream</dfn> algorithm, given a {{TextDecoderCommon}}
