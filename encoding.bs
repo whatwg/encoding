@@ -116,7 +116,7 @@ subsequently removed, and <a>end-of-stream</a> must be returned otherwise.
      SimonSapin thinks this is fine, blame him if not -->
 
 <p>When one or more <a>tokens</a> are
-<dfn id=concept-stream-prepend for="token queue" export>prepended</dfn> to a
+<dfn id=concept-stream-prepend for="token queue">prepended</dfn> to a
 <a for=/>token queue</a>, those tokens must be inserted, in given order,
 before the first token in the queue.
 
