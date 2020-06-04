@@ -130,6 +130,83 @@ in a token queue "<code> hello world</code>", results in a token queue
 <a for=/>token queue</a>, those tokens must be inserted, in given order, after
 the last token in the queue.
 
+<hr>
+
+<p><a for=/>Token queues</a> can be implicitly converted into and from
+<a>strings</a> and <a>byte sequences</a> using the following operations.
+
+<p>To <dfn for="byte sequence to token queue" export>convert</dfn> a <a>byte
+sequence</a> <var>byteSeq</var> into a byte <a for=/>token queue</a>, run these
+steps:
+
+<ol>
+ <li><p>Let <var>output</var> be a new byte <a for=/>token queue</a>.
+
+ <li><p>For each byte <var>byte</var> in <var>byteSeq</var>,
+ <a for="token queue">push</a> <var>byte</var> into <var>output</var>.
+
+ <li><p>Return <var>output</var>.
+</ol>
+
+<p>To <dfn for="string to token queue" export>convert</dfn> a <a>string</a>
+<var>string</var> into a <a for=/>token queue</a> of code points, run these
+steps:
+
+<ol>
+ <li><p><a for="string">Convert</a> <var>string</var> into a <a>scalar value
+ string</a>.
+
+ <li><p>Let <var>output</var> be a new byte <a for=/>token queue</a>.
+
+ <li><p>For each code point <var>codePoint</var> in <var>string</var>,
+ <a for="token queue">push</a> <var>codePoint</var> into <var>output</var>.
+
+ <li><p>Return <var>output</var>.
+</ol>
+
+<p>To <dfn for="token queue to byte sequence" export>convert</dfn> a byte
+<a for=/>token queue</a> <var>tokenQueue</var> into a <a>byte sequence</a>, run
+these steps:
+
+<ol>
+ <li><p>Let <var>output</var> be an empty <a>byte sequence</a>.
+
+ <li>
+  <p>While true:
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of <a for="token queue">reading</a>
+   from <var>tokenQueue</var>.
+
+   <li><p>If <var>token</var> is <a>end-of-stream</a>, return <var>output</var>.
+
+   <li><p>Append <var>token</var> to <var>output</var>.
+  </ol>
+</ol>
+
+<p>To <dfn for="token queue to string" export>convert</dfn> a <a for=/>token
+queue</a> of scalar values <var>tokenQueue</var> into a <a>string</a>, run these
+steps:
+
+<ol>
+ <li><p>Let <var>output</var> be an empty <a>string</a>.
+
+ <li>
+  <p>While true:
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of <a for="token queue">reading</a>
+   from <var>tokenQueue</var>.
+
+   <li><p>If <var>token</var> is <a>end-of-stream</a>, return <var>output</var>.
+
+   <li><p>Append <var>token</var> to <var>output</var>.
+  </ol>
+</ol>
+
+<p class=note>The conversion from <a for=/>token queues</a> into <a>strings</a>
+and <a>byte sequences</a> empties the <a for=/>token queue</a>. Therefore, it is
+to be used only when there are no other references to the queue.
 
 <h2 id=encodings>Encodings</h2>
 
@@ -1004,14 +1081,24 @@ the result of <a lt=encode for=/>encoding</a> <var>tokenQueue</var> using encodi
 <p>To <dfn export>BOM sniff</dfn> a byte token queue <var>tokenQueue</var>, run these steps:
 
 <ol>
- <li><p>Wait until <var>tokenQueue</var> has three bytes available or the <a>end-of-stream</a> has been
- reached, whichever comes first.
+ <li><p>Let <var>BOM</var> be the empty byte sequence.
+
+ <li>
+  <p>While <var>BOM</var>'s <a for="byte sequence">length</a> is less than 3:
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of <a for="token queue">reading</a> from
+   <var>tokenQueue</var>.
+
+   <li><p>If <var>token</var> is <a>end-of-stream</a>, then <a>break</a>. Otherwise, append
+   <var>token</var> to <var>BOM</var>.
+  </ol>
 
  <li>
   <p>For each of the rows in the table below, starting with the first one and going down, if
-  <var>tokenQueue</var> <a for="byte sequence">starts with</a> the bytes given in the first column,
-  return the <a for=/>encoding</a> given in the cell in the second column of that row. (Do not
-  consume those bytes.)
+  <var>BOM</var> <a for="byte sequence">starts with</a> the bytes given in the first column, then
+  let <var>BOMEncoding</var> be the <a for=/>encoding</a> given in the cell in the second column of
+  that row. Otherwise, let <var>BOMEncoding</var> be null.
 
   <table>
    <tbody><tr><th>Byte order mark<th>Encoding
@@ -1020,7 +1107,9 @@ the result of <a lt=encode for=/>encoding</a> <var>tokenQueue</var> using encodi
    <tr><td>0xFF 0xFE<td><a>UTF-16LE</a>
   </table>
 
- <li><p>Return null.
+ <li><p><a for="token queue">Prepend</a> the bytes in <var>BOM</var> into <var>tokenQueue</var>.
+
+ <li><p>Return <var>BOMEncoding</var>.
 </ol>
 
 <p class=note>This hook is a workaround for the fact that <a>decode</a> has no way to communicate
