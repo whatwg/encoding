@@ -1,7 +1,5 @@
 /encoding.spec.whatwg.org/
 /deploy.sh
-/deploy_key
-/deploy_key.pub
 /encoding.html
 /review.sh
 /UnicodeData.txt
