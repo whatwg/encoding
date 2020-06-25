@@ -11,6 +11,13 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 
 <link rel=stylesheet href=visualization-colors.css>
 
+<pre class=anchors>
+urlPrefix: https://tc39.es/ecma262/#; spec: ECMA-262;
+    type: dfn; for: agent; text: block; url: sec-forward-progress
+    type: dfn; text: agent; url: agent
+    type: dfn; text: agent record; url: agent-record
+</pre>
+
 <pre class=link-defaults>
 spec:streams; type:interface; text:ReadableStream
 </pre>
@@ -99,26 +106,39 @@ bitwise AND by "&amp;", and bitwise OR by "|".
 
 <p>A <dfn id=concept-stream export>token queue</dfn> represents an ordered
 sequence of <a>tokens</a> of a particular type (i.e. <a>bytes</a> or <a>scalar
-values</a>). <dfn export>End-of-stream</dfn> is a special <a>token</a> that
-signifies no more <a>tokens</a> are in the
-<a for=/>token queue</a>.
+values</a>). <dfn export>End-of-stream</dfn> is a special
+<a for=token>immediate</a> <a>token</a> that signifies no more <a>tokens</a> are
+in the <a for=/>token queue</a>.
 
 <p class=note>In previous versions of this specification, <a for=/>token
 queues</a> were called "streams", leading to confusion with the other concept of
 streams in the web platform. The name "<a>end-of-stream</a>" is a holdover from
 that time. [[STREAMS]]
 
+<p><a>Tokens</a> in a <a for=/>token queue</a> are either
+<dfn for=token>immediate</dfn> or <dfn for=token>blocking</dfn>. This
+specification only ever inserts <a for=token>immediate</a> tokens into a token
+queue, but <a for=token>blocking</a> tokens can be inserted through external
+means.
+
 <p>When a <a>token</a> is
 <dfn id=concept-stream-read for="token queue" export>read</dfn> from a
 <a for=/>token queue</a>, the first token in the queue must be returned and
 subsequently removed, and <a>end-of-stream</a> must be returned otherwise.
-<!-- this means read is blocking on e.g. networking activity;
-     SimonSapin thinks this is fine, blame him if not -->
+This operation is allowed to <a for=agent>block</a> only when it returns a
+<a for=token>blocking</a> token.
+
+<p class=note><a for=/>Token queues</a> containing <a for=token>blocking</a>
+tokens can be used to simulate incoming data from I/O.
+
+<p class=XXX><a>Agents</a> whose <a>agent record</a>'s \[[CanBlock]] field is
+true are not allowed to <a for="agent">block</a>.
 
 <p>When one or more <a>tokens</a> are
 <dfn id=concept-stream-prepend for="token queue">prepended</dfn> to a
-<a for=/>token queue</a>, those tokens must be inserted, in given order,
-before the first token in the queue.
+<a for=/>token queue</a>, those tokens must be inserted as
+<a for=token>immediate</a> tokens, in given order, before the first token in the
+queue.
 
 <p class=example id=example-tokens>Inserting the sequence of tokens <code>&amp;#128169;</code>
 in a token queue "<code> hello world</code>", results in a token queue
@@ -127,8 +147,9 @@ in a token queue "<code> hello world</code>", results in a token queue
 
 <p>When one or more <a>tokens</a> are
 <dfn id=concept-stream-push for="token queue" export>pushed</dfn> to a
-<a for=/>token queue</a>, those tokens must be inserted, in given order, after
-the last token in the queue.
+<a for=/>token queue</a>, those tokens must be inserted as
+<a for=token>immediate</a> tokens, in given order, after the last token in the
+queue.
 
 <hr>
 
