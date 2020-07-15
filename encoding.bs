@@ -149,17 +149,18 @@ steps:
 </ol>
 
 <p>To <dfn for="string to token queue" export>convert</dfn> a <a>string</a>
-<var>string</var> into a <a for=/>token queue</a> of code points, run these
+<var>string</var> into a <a for=/>token queue</a> of scalar values, run these
 steps:
 
 <ol>
  <li><p><a for="string">Convert</a> <var>string</var> into a <a>scalar value
  string</a>.
 
- <li><p>Let <var>output</var> be a new byte <a for=/>token queue</a>.
+ <li><p>Let <var>output</var> be a new <a for=/>token queue</a> of scalar
+ values.
 
- <li><p>For each code point <var>codePoint</var> in <var>string</var>,
- <a for="token queue">push</a> <var>codePoint</var> into <var>output</var>.
+ <li><p>For each scalar value <var>scalarValue</var> in <var>string</var>,
+ <a for="token queue">push</a> <var>scalarValue</var> into <var>output</var>.
 
  <li><p>Return <var>output</var>.
 </ol>
