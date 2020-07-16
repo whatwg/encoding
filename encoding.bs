@@ -102,17 +102,72 @@ values</a>). <dfn id="end-of-stream" export>End-of-file</dfn> is a special
 <a>item</a> that can be present in <a for=/>I/O queues</a> of any type, and that
 signifies no more <a>items</a> are in the queue.
 
-<p>When an <a>item</a> is
-<dfn id=concept-stream-read for="I/O queue" export>read</dfn> from an
-<a for=/>I/O queue</a>, the first item in the queue must be returned and
-subsequently removed, and <a>end-of-file</a> must be returned otherwise.
-<!-- this means read is blocking on e.g. networking activity;
-     SimonSapin thinks this is fine, blame him if not -->
+<p>To <dfn>create an I/O queue</dfn>, return a new <a for=/>I/O queue</a>
+containing an <a>end-of-file</a> item.
+
+<div class=note>
+ <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate
+ mode, where the queue's last item is <a>end-of-file</a>, and where the
+ <a for="I/O queue">read</a> operation cannot block; and in streaming mode, to
+ represent data coming in from the network, where the queue need not have an
+ <a>end-of-file</a> item and <a for="I/O queue">read</a> might block.
+
+ <p>An immediate <a for=/>I/O queue</a> is to be created with the <a>create an
+ I/O queue</a> operation. A streaming <a for=/>I/O queue</a> is to be created
+ empty, and it is expected that new <a>items</a> will be
+ <a for="I/O queue">pushed</a> to it as data comes in from the network. When the
+ underlying network stream closes, an <a>end-of-file</a> item is to be
+ <a for="I/O queue">pushed</a> into the queue.
+</div>
+
+<p>To <dfn id=concept-stream-read for="I/O queue" export>read</dfn> an
+<a>item</a> from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
+
+<ol>
+ <li><p>If <var>ioQueue</var> is <a for=list>empty</a>, then wait until its
+ <a for=list>size</a> is at least 1.
+
+ <li><p>If the first item in <var>ioQueue</var> is <a>end-of-file</a>, then
+ return <a>end-of-file</a>.
+
+ <li><p>Otherwise, <a for=list>remove</a> the first item in <var>ioQueue</var>
+ and return it.
+</ol>
+
+<p>To read a number <var>number</var> of <a>items</a> from <var>ioQueue</var>,
+run these steps:
+
+<ol>
+ <li><p>Let <var>readItems</var> be an empty list.
+
+ <li>
+  <p>Perform the following step <var>number</var> times:
+
+  <ol>
+   <li><p><a for=list>Append</a> to <var>readItems</var> the result of
+   <a for="I/O queue">reading</a> an item from <var>ioQueue</var>.
+  </ol>
+ </li>
+
+ <li><p><a for=list>Remove</a> <a>end-of-file</a> from <var>readItems</var>.
+
+ <li><p>Return <var>readItems</var>.
+</ol>
 
 <p>To <dfn id=concept-stream-push for="I/O queue" export>push</dfn> one
-<a>item</a> to an <a for=/>I/O queue</a> is to <a for=list>append</a> it. To
-push a sequence of items is to <a for=list>extend</a> the queue with that
-sequence.
+<a>item</a> <var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run
+these steps:
+
+<ol>
+ <li><p>If the last <a>item</a> in <var>ioQueue</var> is <a>end-of-file</a>,
+ then <a for=list>insert</a> <var>item</var> before the last <a>item</a> in the
+ queue.
+
+ <li><p>Otherwise, <a for=list>append</a> <var>item</var> to <var>ioQueue</var>.
+</ol>
+
+<p>To push a sequence of items is to push each item in the sequence, in the
+given order.
 
 <p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> one
 <a>item</a> to an <a for=/>I/O queue</a>, perform the normal <a>list</a>
