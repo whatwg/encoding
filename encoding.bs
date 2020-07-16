@@ -12,8 +12,6 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 <link rel=stylesheet href=visualization-colors.css>
 
 <pre class=link-defaults>
-spec:streams; type:interface; text:ReadableStream
-spec:infra; type:dfn; text:list;
 spec:infra; type:dfn; for:list; text:item;
 </pre>
 
@@ -96,7 +94,7 @@ bitwise AND by "&amp;", and bitwise OR by "|".
 
 <hr>
 
-<p>An <dfn id=concept-stream export>I/O queue</dfn> is a type of <a>list</a>
+<p>An <dfn id=concept-stream export>I/O queue</dfn> is a type of <a for=/>list</a>
 with <a>items</a> of a particular type (i.e. <a>bytes</a> or <a>scalar
 values</a>). <dfn id="end-of-stream" export>End-of-file</dfn> is a special
 <a>item</a> that can be present in <a for=/>I/O queues</a> of any type, and that
@@ -174,7 +172,7 @@ these steps:
 given order.
 
 <p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> one
-<a>item</a> to an <a for=/>I/O queue</a>, perform the normal <a>list</a>
+<a>item</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
 <a for=list>prepend</a> operation. To prepend a sequence of items, insert those
 items, in the given order, before the first item in the queue.
 
@@ -183,7 +181,7 @@ items, in the given order, before the first item in the queue.
 results in an I/O queue "<code>&amp;#128169; hello world</code>". The next item
 to be read would be <code>&amp;</code>. <!-- 💩 -->
 
-<p class=note><a for=/>I/O queues</a> are defined as <a>lists</a>, not
+<p class=note><a for=/>I/O queues</a> are defined as <a for=/>lists</a>, not
 <a spec=infra>queues</a>, because they feature a <a for="I/O queue">prepend</a>
 operation. However, this prepend operation is an internal detail of the
 algorithms in this specification, and is not to be used by other standards.
