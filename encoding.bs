@@ -152,6 +152,28 @@ run these steps:
  <li><p>Return <var>readItems</var>.
 </ol>
 
+<p>To <dfn for="I/O queue" export>peek</dfn> a number <var>number</var> of <a for=list>items</a>
+from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
+
+<ol>
+ <li><p>Wait until either <var>ioQueue</var>'s <a for=list>size</a> is equal to or greater than
+ <var>number</var>, or <var>ioQueue</var> <a for=list>contains</a> <a>end-of-queue</a>, whichever
+ comes first.
+
+ <li><p>Let <var>prefix</var> be an empty list.
+
+ <li>
+  <p><a for=list>For each</a> <var>n</var> in <a>the range</a> 1 to <var>number</var>, inclusive:
+
+  <ol>
+   <li><p>If <var>ioQueue</var>[<var>n</var>] is <a>end-of-queue</a>, <a>break</a>. Otherwise,
+   <a for=list>append</a> <var>ioQueue</var>[<var>n</var>] to <var>prefix</var>.
+  </ol>
+ </li>
+
+ <li><p>Return <var>prefix</var>.
+</ol>
+
 <p>To <dfn id=concept-stream-push for="I/O queue" export>push</dfn> one
 <a for=list>item</a> <var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run
 these steps:
