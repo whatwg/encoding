@@ -1959,7 +1959,7 @@ constructor steps are:
  the appropriate scalar value. The behavior is otherwise identical to {{USVString}}. In particular,
  lone surrogates will be replaced with U+FFFD.
 
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an 
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
  <a for=/>I/O queue</a> of bytes.
 
  <li><p>Let <var>controller</var> be <var>encoder</var>'s
