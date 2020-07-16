@@ -106,11 +106,11 @@ signifies no more <a>items</a> are in the queue.
 containing an <a>end-of-file</a> item.
 
 <div class=note>
- <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate
- mode, where the queue's last item is <a>end-of-file</a>, and where the
- <a for="I/O queue">read</a> operation cannot block; and in streaming mode, to
- represent data coming in from the network, where the queue need not have an
- <a>end-of-file</a> item and <a for="I/O queue">read</a> might block.
+ <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate mode, to
+ represent I/O data stored in memory, and in streaming mode, to represent data
+ coming in from the network. Immediate queues have <a>end-of-file</a> as their
+ last item, whereas streaming queues need not have it, and so their
+ <a for="I/O queue">read</a> operation might block.
 
  <p>An immediate <a for=/>I/O queue</a> is to be created with the <a>create an
  I/O queue</a> operation. A streaming <a for=/>I/O queue</a> is to be created
@@ -118,6 +118,10 @@ containing an <a>end-of-file</a> item.
  <a for="I/O queue">pushed</a> to it as data comes in from the network. When the
  underlying network stream closes, an <a>end-of-file</a> item is to be
  <a for="I/O queue">pushed</a> into the queue.
+
+ <p>Since reading from a streaming <a for=/>I/O queue</a> might block, streaming
+ <a for=/>I/O queues</a> are not to be used from an <a for=/>event loop</a>.
+ They are to be used <a>in parallel</a> instead.
 </div>
 
 <p>To <dfn id=concept-stream-read for="I/O queue" export>read</dfn> an
