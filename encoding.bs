@@ -100,8 +100,8 @@ values</a>). <dfn id="end-of-stream" export>End-of-queue</dfn> is a special
 <a>item</a> that can be present in <a for=/>I/O queues</a> of any type, and that
 signifies no more <a>items</a> are in the queue.
 
-<p>To <dfn>create an I/O queue</dfn>, return a new <a for=/>I/O queue</a>
-containing an <a>end-of-queue</a> item.
+<p>To <dfn for="I/O queue" export>create</dfn> an <a for=/>I/O queue</a>, return a new
+<a for=/>I/O queue</a> containing an <a>end-of-queue</a> item.
 
 <div class=note>
  <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate mode, to
@@ -110,8 +110,8 @@ containing an <a>end-of-queue</a> item.
  last item, whereas streaming queues need not have it, and so their
  <a for="I/O queue">read</a> operation might block.
 
- <p>An immediate <a for=/>I/O queue</a> is to be created with the <a>create an
- I/O queue</a> operation. A streaming <a for=/>I/O queue</a> is to be created
+ <p>An immediate <a for=/>I/O queue</a> is to be created with the <a for="I/O queue">create</a> an
+ <a for=/>I/O queue</a> operation. A streaming <a for=/>I/O queue</a> is to be created
  empty, and it is expected that new <a>items</a> will be
  <a for="I/O queue">pushed</a> to it as data comes in from the network. When the
  underlying network stream closes, an <a>end-of-queue</a> item is to be
@@ -198,7 +198,8 @@ sequence</a> <var>byteSeq</var> into an <a for=/>I/O queue</a> of bytes, run
 these steps:
 
 <ol>
- <li><p>Let <var>output</var> be a new <a for=/>I/O queue</a> of bytes.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of bytes.
 
  <li><p>For each byte <var>byte</var> in <var>byteSeq</var>,
  <a for="I/O queue">push</a> <var>byte</var> into <var>output</var>.
@@ -214,7 +215,8 @@ steps:
  <li><p><a for="string">Convert</a> <var>string</var> into a <a>scalar value
  string</a>.
 
- <li><p>Let <var>output</var> be a new <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of scalar values.
 
  <li><p>For each scalar value <var>scalarValue</var> in <var>string</var>,
  <a for="I/O queue">push</a> <var>scalarValue</var> into <var>output</var>.
@@ -1050,7 +1052,8 @@ fallback encoding <var>encoding</var>, run these steps:
   than anything else. In a context where HTTP is used this is in violation of the semantics of the
   `<code>Content-Type</code>` header.
 
- <li><p>Let <var>output</var> be an <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of scalar values.
 
  <li><p><a>Run</a> <var>encoding</var>'s
  <a for=/>decoder</a> with <var>ioQueue</var> and <var>output</var>.
@@ -1069,7 +1072,8 @@ run these steps:
  <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF,
  <a>prepend</a> <var>buffer</var> to <var>ioQueue</var>.
 
- <li><p>Let <var>output</var> be an <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of scalar values.
 
  <li><p><a>Run</a> <a>UTF-8</a>'s
  <a for=/>decoder</a> with <var>ioQueue</var> and <var>output</var>.
@@ -1081,7 +1085,8 @@ run these steps:
 <var>ioQueue</var>, run these steps:
 
 <ol>
- <li><p>Let <var>output</var> be an <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of scalar values.
 
  <li><p><a>Run</a> <a>UTF-8</a>'s
  <a for=/>decoder</a> with <var>ioQueue</var> and <var>output</var>.
@@ -1096,7 +1101,8 @@ run these steps:
      -->
 
 <ol>
- <li><p>Let <var>output</var> be an I/O queue of scalar values.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of scalar values.
 
  <li><p>Let <var>potentialError</var> be the result of <a>running</a>
  <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var>, <var>output</var>,
@@ -1116,7 +1122,8 @@ run these steps:
  <li><p>Assert: <var>encoding</var> is not <a>replacement</a>, <a>UTF-16BE</a> or
  <a>UTF-16LE</a>.
 
- <li><p>Let <var>output</var> be an <a for=/>I/O queue</a> of bytes.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of bytes.
 
  <li><p><a>Run</a> <var>encoding</var>'s
  <a for=/>encoder</a> with <var>ioQueue</var>, <var>output</var>, and "<code>html</code>".
@@ -1138,18 +1145,8 @@ the result of <a lt=encode for=/>encoding</a> <var>ioQueue</var> using encoding 
 <p>To <dfn export>BOM sniff</dfn> an I/O queue of bytes <var>ioQueue</var>, run these steps:
 
 <ol>
- <li><p>Let <var>BOM</var> be the empty byte sequence.
-
- <li>
-  <p>While <var>BOM</var>'s <a for="byte sequence">length</a> is less than 3:
-
-  <ol>
-   <li><p>Let <var>item</var> be the result of <a for="I/O queue">reading</a>
-   from <var>ioQueue</var>.
-
-   <li><p>If <var>item</var> is <a>end-of-queue</a>, then <a>break</a>.
-   Otherwise, append <var>item</var> to <var>BOM</var>.
-  </ol>
+ <li><p>Let <var>BOM</var> be the result of <a for="I/O queue">reading</a> 3 bytes from
+ <var>ioQueue</var>, converted to a byte sequence.
 
  <li>
   <p>For each of the rows in the table below, starting with the first one and going down, if
@@ -1272,7 +1269,7 @@ interface mixin TextDecoderCommon {
  <dd>A <a for=/>decoder</a>.
 
  <dt><dfn for=TextDecoderCommon oldids=textdecoder-stream,textdecoderstream-stream,textdecodercommon-stream>I/O queue</dfn>
- <dd>An <a for=/>I/O queue</a>.
+ <dd>An <a for=/>I/O queue</a> of bytes.
 
  <dt><dfn id=textdecoder-ignore-bom-flag for=TextDecoderCommon>ignore BOM</dfn>
  <dd>A boolean, initially false.
@@ -1285,7 +1282,7 @@ interface mixin TextDecoderCommon {
 </dl>
 
 <p>The <dfn id=concept-td-serialize>serialize I/O queue</dfn> algorithm, given a
-{{TextDecoderCommon}} <var>decoder</var> and an <a for=/>I/O queue</a>
+{{TextDecoderCommon}} <var>decoder</var> and an <a for=/>I/O queue</a> of scalar values
 <var>ioQueue</var>, runs these steps:
 
 <ol>
@@ -1422,8 +1419,9 @@ method steps are:
 <ol>
  <li><p>If <a>this</a>'s <a for=TextDecoder>do not flush</a> is false, then set <a>this</a>'s
  <a for=TextDecoderCommon>decoder</a> to a new <a for=/>decoder</a> for <a>this</a>'s
- <a for=TextDecoderCommon>encoding</a>, <a>this</a>'s <a for=TextDecoderCommon>I/O queue</a> to a
- new <a for=/>I/O queue</a>, and <a>this</a>'s <a for=TextDecoderCommon>BOM seen</a> to  false.
+ <a for=TextDecoderCommon>encoding</a>, <a>this</a>'s <a for=TextDecoderCommon>I/O queue</a> to the
+ result of <a for="I/O queue">creating</a> an <a for=/>I/O queue</a> of bytes, and <a>this</a>'s
+ <a for=TextDecoderCommon>BOM seen</a> to false.
 
  <li><p>Set <a>this</a>'s <a for=TextDecoder>do not flush</a> to
  <var>options</var>["{{TextDecodeOptions/stream}}"].
@@ -1442,7 +1440,8 @@ method steps are:
   programming languages typically used for implementations. When implementing, take care to use the
   appropriate facilities when accessing memory exposed by <code>SharedArrayBuffer</code> objects.
 
- <li><p>Let <var>output</var> be a new <a for=/>I/O queue</a>.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of scalar values.
 
  <li>
   <p>While true:
@@ -1543,9 +1542,11 @@ constructor steps are to do nothing.
 <p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method steps are:
 
 <ol>
- <li><p>Convert <var>input</var> to an <a for=/>I/O queue</a>.
+ <li><p><a for="string to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of
+ scalar values.
 
- <li><p>Let <var>output</var> be a new <a for=/>I/O queue</a>.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of bytes.
 
  <li>
   <p>While true:
@@ -1562,8 +1563,9 @@ constructor steps are to do nothing.
 
     <p class=note>The <a>UTF-8 encoder</a> cannot return <a>error</a>.
 
-   <li><p>If <var>result</var> is <a>finished</a>, convert <var>output</var> into a byte sequence,
-   and then return a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing <var>output</var>.
+   <li><p>If <var>result</var> is <a>finished</a>, <a for="I/O queue to byte sequence">convert</a>
+   <var>output</var> into a byte sequence, and then return a {{Uint8Array}} object wrapping an
+   {{ArrayBuffer}} containing <var>output</var>.
    <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
   </ol>
 </ol>
@@ -1582,12 +1584,14 @@ method steps are:
  <var>destination</var>.
 
  <li>
-  <p>Let <var>unused</var> be a new <a for=/>I/O queue</a>.
+  <p>Let <var>unused</var> be the result of <a for="I/O queue">creating</a> an
+  <a for=/>I/O queue</a> of scalar values.
 
   <p class=note>The <a>handler</a> algorithm invoked below requires this argument, but it is not
   used by the <a>UTF-8 encoder</a>.
 
- <li><p>Convert <var>source</var> to an <a for=/>I/O queue</a>.
+ <li><p><a for="string to I/O queue">Convert</a> <var>source</var> to an <a for=/>I/O queue</a> of
+ scalar values.
 
  <li>
   <p>While true:
@@ -1798,7 +1802,8 @@ constructor steps are:
  <li><p>Let <var>controller</var> be <var>decoder</var>'s
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
- <li><p>Let <var>output</var> be a new <a for=/>I/O queue</a>.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of scalar values.
 
  <li>
   <p>While true, run these steps:
@@ -1835,7 +1840,8 @@ constructor steps are:
 steps:
 
 <ol>
- <li><p>Let <var>output</var> be a new <a for=/>I/O queue</a>.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
+ <a for=/>I/O queue</a> of scalar values.
 
  <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-queue</a> for
  <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a> and <var>decoder</var>'s
@@ -1945,13 +1951,16 @@ constructor steps are:
  <var>chunk</var> to a {{DOMString}}. If this throws an exception, then return a promise rejected
  with that exception.
 
- <p class=note>{{DOMString}} is used here so that a surrogate pair that is split between chunks can
- be reassembled into the appropriate scalar value. The behavior is otherwise identical to
- {{USVString}}. In particular, lone surrogates will be replaced with U+FFFD.
+ <li><p><a for="string to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of
+ <a>code units</a>.
 
- <li><p>Convert <var>input</var> to an <a for=/>I/O queue</a>.
+ <p class=note>{{DOMString}}, as well as an <a for=/>I/O queue</a> of code units rather than scalar
+ values, are used here so that a surrogate pair that is split between chunks can be reassembled into
+ the appropriate scalar value. The behavior is otherwise identical to {{USVString}}. In particular,
+ lone surrogates will be replaced with U+FFFD.
 
- <li><p>Let <var>output</var> be a new <a for=/>I/O queue</a>.
+ <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an 
+ <a for=/>I/O queue</a> of bytes.
 
  <li><p>Let <var>controller</var> be <var>encoder</var>'s
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
@@ -1966,7 +1975,7 @@ constructor steps are:
     <p>If <var>item</var> is <a>end-of-queue</a>, run these steps:
 
     <ol>
-     <li><p>Convert <var>output</var> into a byte sequence.
+     <li><p><a for="I/O queue to byte sequence">Convert</a> <var>output</var> into a byte sequence.
 
      <li>
       <p>If <var>output</var> is non-empty, run these steps:
@@ -1992,7 +2001,8 @@ constructor steps are:
 </ol>
 
 <p>The <dfn>convert code unit to scalar value</dfn> algorithm, given a {{TextEncoderStream}} object
-<var>encoder</var>, <var>item</var>, and I/O queue <var>input</var>, runs these steps:
+<var>encoder</var>, a <a>code unit</a> <var>item</var>, and an <a for=/>I/O queue</a> of code units
+<var>input</var>, runs these steps:
 
 <ol>
  <li>
@@ -2003,7 +2013,7 @@ constructor steps are:
 
    <li><p>Set <var>encoder</var>'s <a>pending high surrogate</a> to null.
 
-   <li><p>If <var>item</var> is in the range U+DC00 to U+DFFF, inclusive, then return a code point
+   <li><p>If <var>item</var> is in the range U+DC00 to U+DFFF, inclusive, then return a scalar value
    whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
    (<var>item</var> &minus; 0xDC00).
 
