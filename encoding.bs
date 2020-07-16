@@ -96,17 +96,17 @@ bitwise AND by "&amp;", and bitwise OR by "|".
 
 <p>An <dfn id=concept-stream export>I/O queue</dfn> is a type of <a for=/>list</a>
 with <a>items</a> of a particular type (i.e. <a>bytes</a> or <a>scalar
-values</a>). <dfn id="end-of-stream" export>End-of-file</dfn> is a special
+values</a>). <dfn id="end-of-stream" export>End-of-queue</dfn> is a special
 <a>item</a> that can be present in <a for=/>I/O queues</a> of any type, and that
 signifies no more <a>items</a> are in the queue.
 
 <p>To <dfn>create an I/O queue</dfn>, return a new <a for=/>I/O queue</a>
-containing an <a>end-of-file</a> item.
+containing an <a>end-of-queue</a> item.
 
 <div class=note>
  <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate mode, to
  represent I/O data stored in memory, and in streaming mode, to represent data
- coming in from the network. Immediate queues have <a>end-of-file</a> as their
+ coming in from the network. Immediate queues have <a>end-of-queue</a> as their
  last item, whereas streaming queues need not have it, and so their
  <a for="I/O queue">read</a> operation might block.
 
@@ -114,7 +114,7 @@ containing an <a>end-of-file</a> item.
  I/O queue</a> operation. A streaming <a for=/>I/O queue</a> is to be created
  empty, and it is expected that new <a>items</a> will be
  <a for="I/O queue">pushed</a> to it as data comes in from the network. When the
- underlying network stream closes, an <a>end-of-file</a> item is to be
+ underlying network stream closes, an <a>end-of-queue</a> item is to be
  <a for="I/O queue">pushed</a> into the queue.
 
  <p>Since reading from a streaming <a for=/>I/O queue</a> might block, streaming
@@ -129,8 +129,8 @@ containing an <a>end-of-file</a> item.
  <li><p>If <var>ioQueue</var> is <a for=list>empty</a>, then wait until its
  <a for=list>size</a> is at least 1.
 
- <li><p>If the first item in <var>ioQueue</var> is <a>end-of-file</a>, then
- return <a>end-of-file</a>.
+ <li><p>If the first item in <var>ioQueue</var> is <a>end-of-queue</a>, then
+ return <a>end-of-queue</a>.
 
  <li><p>Otherwise, <a for=list>remove</a> the first item in <var>ioQueue</var>
  and return it.
@@ -151,7 +151,7 @@ run these steps:
   </ol>
  </li>
 
- <li><p><a for=list>Remove</a> <a>end-of-file</a> from <var>readItems</var>.
+ <li><p><a for=list>Remove</a> <a>end-of-queue</a> from <var>readItems</var>.
 
  <li><p>Return <var>readItems</var>.
 </ol>
@@ -161,7 +161,7 @@ run these steps:
 these steps:
 
 <ol>
- <li><p>If the last <a>item</a> in <var>ioQueue</var> is <a>end-of-file</a>,
+ <li><p>If the last <a>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>,
  then <a for=list>insert</a> <var>item</var> before the last <a>item</a> in the
  queue.
 
@@ -236,7 +236,7 @@ run these steps:
    <li><p>Let <var>item</var> be the result of <a for="I/O queue">reading</a>
    from <var>ioQueue</var>.
 
-   <li><p>If <var>item</var> is <a>end-of-file</a>, return <var>output</var>.
+   <li><p>If <var>item</var> is <a>end-of-queue</a>, return <var>output</var>.
 
    <li><p>Append <var>item</var> to <var>output</var>.
   </ol>
@@ -256,7 +256,7 @@ steps:
    <li><p>Let <var>item</var> be the result of <a for="I/O queue">reading</a>
    from <var>ioQueue</var>.
 
-   <li><p>If <var>item</var> is <a>end-of-file</a>, return <var>output</var>.
+   <li><p>If <var>item</var> is <a>end-of-queue</a>, return <var>output</var>.
 
    <li><p>Append <var>item</var> to <var>output</var>.
   </ol>
@@ -1147,7 +1147,7 @@ the result of <a lt=encode for=/>encoding</a> <var>ioQueue</var> using encoding 
    <li><p>Let <var>item</var> be the result of <a for="I/O queue">reading</a>
    from <var>ioQueue</var>.
 
-   <li><p>If <var>item</var> is <a>end-of-file</a>, then <a>break</a>.
+   <li><p>If <var>item</var> is <a>end-of-queue</a>, then <a>break</a>.
    Otherwise, append <var>item</var> to <var>BOM</var>.
   </ol>
 
@@ -1297,7 +1297,7 @@ interface mixin TextDecoderCommon {
   <ol>
    <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>ioQueue</var>.
 
-   <li><p>If <var>item</var> is <a>end-of-file</a>, then return <var>output</var>.
+   <li><p>If <var>item</var> is <a>end-of-queue</a>, then return <var>output</var>.
 
    <li>
     <p>If <var>decoder</var>'s <a for=TextDecoderCommon>encoding</a> is <a>UTF-8</a>,
@@ -1391,7 +1391,7 @@ var string = "", decoder = new TextDecoder(encoding), buffer;
 while(buffer = next_chunk()) {
   string += decoder.decode(buffer, {stream:true});
 }
-string += decoder.decode(); // end-of-file</code></pre>
+string += decoder.decode(); // end-of-queue</code></pre>
 
   <p>If the <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>" and
   <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>,
@@ -1452,11 +1452,11 @@ method steps are:
    <a for=TextDecoderCommon>I/O queue</a>.
 
    <li>
-    <p>If <var>item</var> is <a>end-of-file</a> and <a>this</a>'s
+    <p>If <var>item</var> is <a>end-of-queue</a> and <a>this</a>'s
     <a for=TextDecoder>do not flush</a> is true, then return the result of running
     <a>serialize I/O queue</a> with <a>this</a> and <var>output</var>.
 
-    <p class=note>The way streaming works is to not handle <a>end-of-file</a> here when
+    <p class=note>The way streaming works is to not handle <a>end-of-queue</a> here when
     <a>this</a>'s <a for=TextDecoder>do not flush</a> is true and to not set it to false. That way
     in a subsequent invocation <a>this</a>'s <a for=TextDecoderCommon>decoder</a> is not set anew in
     the first step of the algorithm and its state is preserved.
@@ -1808,7 +1808,7 @@ constructor steps are:
    <a for=TextDecoderCommon>I/O queue</a>.
 
    <li>
-    <p>If <var>item</var> is <a>end-of-file</a>, run these steps:
+    <p>If <var>item</var> is <a>end-of-queue</a>, run these steps:
     <ol>
      <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
      <var>decoder</var> and <var>output</var>.
@@ -1837,7 +1837,7 @@ steps:
 <ol>
  <li><p>Let <var>output</var> be a new <a for=/>I/O queue</a>.
 
- <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-file</a> for
+ <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-queue</a> for
  <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a> and <var>decoder</var>'s
  <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <var>decoder</var>'s
  <a for=TextDecoderCommon>error mode</a>.
@@ -1963,7 +1963,7 @@ constructor steps are:
    <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>input</var>.
 
    <li>
-    <p>If <var>item</var> is <a>end-of-file</a>, run these steps:
+    <p>If <var>item</var> is <a>end-of-queue</a>, run these steps:
 
     <ol>
      <li><p>Convert <var>output</var> into a byte sequence.
@@ -2071,11 +2071,11 @@ algorithm but rather the <a>decode</a> and <a>UTF-8 decode</a> algorithms.
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>UTF-8 bytes needed</a> is not 0, set
  <a>UTF-8 bytes needed</a> to 0 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-file</a>, return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li>
@@ -2189,7 +2189,7 @@ achieve the same result are fine, even encouraged).
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-file</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2288,7 +2288,7 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a>, return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return a code point whose value
@@ -2309,7 +2309,7 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-file</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2356,11 +2356,11 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>gb18030 first</a>, <a>gb18030 second</a>, and <a>gb18030 third</a>
  are 0x00, return <a>finished</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-file</a>, and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, and
  <a>gb18030 first</a>, <a>gb18030 second</a>, or <a>gb18030 third</a>
  is not 0x00, set <a>gb18030 first</a>, <a>gb18030 second</a>, and
  <a>gb18030 third</a> to 0x00, and return <a>error</a>.
@@ -2455,7 +2455,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-file</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2532,10 +2532,10 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a> and <a>Big5 lead</a>
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a>
  is not 0x00, set <a>Big5 lead</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-file</a> and <a>Big5 lead</a>
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a>
  is 0x00, return <a>finished</a>.
 
  <li>
@@ -2596,7 +2596,7 @@ and <var>byte</var>, runs these steps:
 and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-file</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2636,11 +2636,11 @@ and <var>code point</var>, runs these steps:
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>EUC-JP lead</a> is not 0x00, set <a>EUC-JP lead</a> to 0x00, and return
  <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-file</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>EUC-JP lead</a> is 0x00, return <a>finished</a>.
 
  <li><p>If <a>EUC-JP lead</a> is 0x8E and <var>byte</var> is
@@ -2693,7 +2693,7 @@ and <var>code point</var>, runs these steps:
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-file</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2763,7 +2763,7 @@ and <var>code point</var>, runs these steps:
    <dd><p>Set <a>ISO-2022-JP output</a> to false and return a code point whose
    value is <var>byte</var>.
 
-   <dt><a>end-of-file</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Return <a>finished</a>.
 
    <dt>Otherwise
@@ -2790,7 +2790,7 @@ and <var>code point</var>, runs these steps:
    <dd><p>Set <a>ISO-2022-JP output</a> to false and return a code point whose
    value is <var>byte</var>.
 
-   <dt><a>end-of-file</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Return <a>finished</a>.
 
    <dt>Otherwise
@@ -2811,7 +2811,7 @@ and <var>code point</var>, runs these steps:
    value is 0xFF61 &minus; 0x21 + <var>byte</var>.
    <!-- Katakana; subtraction is done first to avoid upsetting compilers -->
 
-   <dt><a>end-of-file</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Return <a>finished</a>.
 
    <dt>Otherwise
@@ -2834,7 +2834,7 @@ and <var>code point</var>, runs these steps:
    <a lt="ISO-2022-JP decoder trail byte">trail byte</a>, and return
    <a>continue</a>.
 
-   <dt><a>end-of-file</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Return <a>finished</a>.
 
    <dt>Otherwise
@@ -2868,7 +2868,7 @@ and <var>code point</var>, runs these steps:
      <li><p>Return a code point whose value is <var>code point</var>.
     </ol>
 
-   <dt><a>end-of-file</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Set the <a>ISO-2022-JP decoder state</a> to
    <a lt="ISO-2022-JP decoder lead byte">lead byte</a>,
    <a>prepend</a> <var>byte</var> to
@@ -2966,7 +2966,7 @@ and <var>code point</var>, runs these steps:
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-file</a> and
+ <li><p>If <var>code point</var> is <a>end-of-queue</a> and
  <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>,
  <a>prepend</a> <var>code point</var> to
@@ -2974,7 +2974,7 @@ and <var>code point</var>, runs these steps:
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes
  0x1B 0x28 0x42.
 
- <li><p>If <var>code point</var> is <a>end-of-file</a> and
+ <li><p>If <var>code point</var> is <a>end-of-queue</a> and
  <a>ISO-2022-JP encoder state</a> is
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, return <a>finished</a>.
 
@@ -3064,11 +3064,11 @@ and <var>code point</var>, runs these steps:
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>Shift_JIS lead</a> is not 0x00, set <a>Shift_JIS lead</a> to 0x00 and
  return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-file</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>Shift_JIS lead</a> is 0x00, return <a>finished</a>.
 
  <li>
@@ -3126,7 +3126,7 @@ and <var>code point</var>, runs these steps:
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-file</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a> or U+0080, return
@@ -3176,11 +3176,11 @@ and <var>code point</var>, runs these steps:
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>EUC-KR lead</a> is not 0x00, set <a>EUC-KR lead</a> to 0x00
  and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-file</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>EUC-KR lead</a> is 0x00, return <a>finished</a>.
 
  <li>
@@ -3220,7 +3220,7 @@ and <var>code point</var>, runs these steps:
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-file</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -3259,7 +3259,7 @@ the server and the client.
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a>, return <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, return <a>finished</a>.
 
  <li><p>If <a>replacement error returned</a> is false, set
  <a>replacement error returned</a> to true and return <a>error</a>.
@@ -3284,12 +3284,12 @@ has been found to be more accurate in deployed content. Therefore it is not part
 <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a> and either
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and either
  <a>UTF-16 lead byte</a> or <a>UTF-16 lead surrogate</a> is non-null, set
  <a>UTF-16 lead byte</a> and <a>UTF-16 lead surrogate</a> to null, and return
  <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-file</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>UTF-16 lead byte</a> and <a>UTF-16 lead surrogate</a> are null, return
  <a>finished</a>.
 
@@ -3380,7 +3380,7 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-file</a>, return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
@@ -3396,7 +3396,7 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-file</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
