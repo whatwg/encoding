@@ -11,10 +11,6 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 
 <link rel=stylesheet href=visualization-colors.css>
 
-<pre class=link-defaults>
-spec:infra; type:dfn; for:list; text:item;
-</pre>
-
 
 
 <h2 id=preface>Preface</h2>
@@ -95,10 +91,10 @@ bitwise AND by "&amp;", and bitwise OR by "|".
 <hr>
 
 <p>An <dfn id=concept-stream export>I/O queue</dfn> is a type of <a for=/>list</a>
-with <a>items</a> of a particular type (i.e. <a>bytes</a> or <a>scalar
+with <a for=list>items</a> of a particular type (i.e. <a>bytes</a> or <a>scalar
 values</a>). <dfn id="end-of-stream" export>End-of-queue</dfn> is a special
-<a>item</a> that can be present in <a for=/>I/O queues</a> of any type, and that
-signifies no more <a>items</a> are in the queue.
+<a for=list>item</a> that can be present in <a for=/>I/O queues</a> of any type, and that
+signifies no more <a for=list>items</a> are in the queue.
 
 <p>To <dfn for="I/O queue" export>create</dfn> an <a for=/>I/O queue</a>, return a new
 <a for=/>I/O queue</a> containing an <a>end-of-queue</a> item.
@@ -112,7 +108,7 @@ signifies no more <a>items</a> are in the queue.
 
  <p>An immediate <a for=/>I/O queue</a> is to be created with the <a for="I/O queue">create</a> an
  <a for=/>I/O queue</a> operation. A streaming <a for=/>I/O queue</a> is to be created
- empty, and it is expected that new <a>items</a> will be
+ empty, and it is expected that new <a for=list>items</a> will be
  <a for="I/O queue">pushed</a> to it as data comes in from the network. When the
  underlying network stream closes, an <a>end-of-queue</a> item is to be
  <a for="I/O queue">pushed</a> into the queue.
@@ -123,7 +119,7 @@ signifies no more <a>items</a> are in the queue.
 </div>
 
 <p>To <dfn id=concept-stream-read for="I/O queue" export>read</dfn> an
-<a>item</a> from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
+<a for=list>item</a> from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
 <ol>
  <li><p>If <var>ioQueue</var> is <a for=list>empty</a>, then wait until its
@@ -136,7 +132,7 @@ signifies no more <a>items</a> are in the queue.
  and return it.
 </ol>
 
-<p>To read a number <var>number</var> of <a>items</a> from <var>ioQueue</var>,
+<p>To read a number <var>number</var> of <a for=list>items</a> from <var>ioQueue</var>,
 run these steps:
 
 <ol>
@@ -157,12 +153,12 @@ run these steps:
 </ol>
 
 <p>To <dfn id=concept-stream-push for="I/O queue" export>push</dfn> one
-<a>item</a> <var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run
+<a for=list>item</a> <var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run
 these steps:
 
 <ol>
- <li><p>If the last <a>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>,
- then <a for=list>insert</a> <var>item</var> before the last <a>item</a> in the
+ <li><p>If the last <a for=list>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>,
+ then <a for=list>insert</a> <var>item</var> before the last <a for=list>item</a> in the
  queue.
 
  <li><p>Otherwise, <a for=list>append</a> <var>item</var> to <var>ioQueue</var>.
@@ -172,7 +168,7 @@ these steps:
 given order.
 
 <p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> one
-<a>item</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
+<a for=list>item</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
 <a for=list>prepend</a> operation. To prepend a sequence of items, insert those
 items, in the given order, before the first item in the queue.
 
@@ -291,8 +287,8 @@ This specification does not provide wrapper algorithms that would combine with <
 <p>Each <a for=/>encoding</a> has an associated <dfn>decoder</dfn> and most of them have an
 associated <dfn>encoder</dfn>. Each <a for=/>decoder</a> and <a for=/>encoder</a> have a
 <dfn>handler</dfn> algorithm. A <a>handler</a> algorithm takes an input
-<a for=/>I/O queue</a> and an <a>item</a>, and returns
-<dfn>finished</dfn>, one or more <a>items</a>, <dfn>error</dfn>
+<a for=/>I/O queue</a> and an <a for=list>item</a>, and returns
+<dfn>finished</dfn>, one or more <a for=list>items</a>, <dfn>error</dfn>
 optionally with a <a>code point</a>, or <dfn>continue</dfn>.
 
 <p class="note no-backref">The <a>replacement</a>, <a>UTF-16BE</a>, and
@@ -343,7 +339,7 @@ happening.
 </ol>
 
 <p>To <dfn id=concept-encoding-process for=encoding>process</dfn> an
-<a>item</a> <var>item</var> for an <a for=/>encoding</a>'s
+<a for=list>item</a> <var>item</var> for an <a for=/>encoding</a>'s
 <a for=/>encoder</a> or <a for=/>decoder</a> instance <var>encoderDecoderInstance</var>,
 <a for=/>I/O queue</a> <var>input</var>, output
 <a for=/>I/O queue</a> <var>output</var>, and optional
@@ -364,7 +360,7 @@ happening.
  <var>result</var>.
 
  <li>
-  <p>Otherwise, if <var>result</var> is one or more <a>items</a>:
+  <p>Otherwise, if <var>result</var> is one or more <a for=list>items</a>:
 
   <ol>
    <li><p>Assert: if <var>encoderDecoderInstance</var> is a <a for=/>decoder</a> instance,
