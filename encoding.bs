@@ -96,8 +96,10 @@ values</a>). <dfn id="end-of-stream" export>End-of-queue</dfn> is a special
 <a for=list>item</a> that can be present in <a for=/>I/O queues</a> of any type, and that
 signifies no more <a for=list>items</a> are in the queue.
 
-<p>To <dfn for="I/O queue" export>create</dfn> an <a for=/>I/O queue</a>, return a new
-<a for=/>I/O queue</a> containing an <a>end-of-queue</a> item.
+<p>To <dfn for="I/O queue" export>create</dfn> an <a for=/>I/O queue</a>, optionally initialized
+with a list <var>contents</var>, return a new <a for=/>I/O queue</a> containing the
+<a for=list>items</a> of <var>contents</var> in order, if it is given, followed by an
+<a>end-of-queue</a> item.
 
 <div class=note>
  <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate mode, to
@@ -199,6 +201,16 @@ items, in the given order, before the first item in the queue.
 results in an I/O queue "<code>&amp;#128169; hello world</code>". The next item
 to be read would be <code>&amp;</code>. <!-- 💩 -->
 
+<p>To <dfn for="from I/O queue">convert</dfn> an <a for=/>I/O queue</a> <var>ioQueue</var> into a
+<a for=/>list</a>, <a>string</a> or <a>byte sequence</a>, return the result of
+<a for="I/O queue">reading</a> an indefinite number of <a for=list>items</a> from
+<var>ioQueue</var>. To <dfn for="to I/O queue">convert</dfn> a <a for=/>list</a>, <a>string</a> or
+<a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, return the result of
+<a for="I/O queue">creating</a> an <a for=/>I/O queue</a> initialized with <var>input</var>.
+
+<p class=XXX>The Infra standard is expected to define some infrastructure around type conversions.
+See <a href="https://github.com/whatwg/infra/issues/319">whatwg/infra issue #319</a>. [[INFRA]]
+
 <p class=note><a for=/>I/O queues</a> are defined as <a for=/>lists</a>, not
 <a spec=infra>queues</a>, because they feature a <a for="I/O queue">prepend</a>
 operation. However, this prepend operation is an internal detail of the
@@ -206,85 +218,7 @@ algorithms in this specification, and is not to be used by other standards.
 Implementations are free to find alternative ways to implement such algorithms,
 as detailed in [[#implementation-considerations]].
 
-<hr>
 
-<p><a for=/>I/O queues</a> can be implicitly converted into and from
-<a>strings</a> and <a>byte sequences</a> using the following operations.
-
-<p>To <dfn for="byte sequence to I/O queue" export>convert</dfn> a <a>byte
-sequence</a> <var>byteSeq</var> into an <a for=/>I/O queue</a> of bytes, run
-these steps:
-
-<ol>
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of bytes.
-
- <li><p>For each byte <var>byte</var> in <var>byteSeq</var>,
- <a for="I/O queue">push</a> <var>byte</var> into <var>output</var>.
-
- <li><p>Return <var>output</var>.
-</ol>
-
-<p>To <dfn for="string to I/O queue" export>convert</dfn> a <a>string</a>
-<var>string</var> into an <a for=/>I/O queue</a> of scalar values, run these
-steps:
-
-<ol>
- <li><p><a for="string">Convert</a> <var>string</var> into a <a>scalar value
- string</a>.
-
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of scalar values.
-
- <li><p>For each scalar value <var>scalarValue</var> in <var>string</var>,
- <a for="I/O queue">push</a> <var>scalarValue</var> into <var>output</var>.
-
- <li><p>Return <var>output</var>.
-</ol>
-
-<p>To <dfn for="I/O queue to byte sequence" export>convert</dfn> an
-<a for=/>I/O queue</a> of bytes <var>ioQueue</var> into a <a>byte sequence</a>,
-run these steps:
-
-<ol>
- <li><p>Let <var>output</var> be an empty <a>byte sequence</a>.
-
- <li>
-  <p>While true:
-
-  <ol>
-   <li><p>Let <var>item</var> be the result of <a for="I/O queue">reading</a>
-   from <var>ioQueue</var>.
-
-   <li><p>If <var>item</var> is <a>end-of-queue</a>, return <var>output</var>.
-
-   <li><p>Append <var>item</var> to <var>output</var>.
-  </ol>
-</ol>
-
-<p>To <dfn for="I/O queue to string" export>convert</dfn> an <a for=/>I/O
-queue</a> of scalar values <var>ioQueue</var> into a <a>string</a>, run these
-steps:
-
-<ol>
- <li><p>Let <var>output</var> be an empty <a>string</a>.
-
- <li>
-  <p>While true:
-
-  <ol>
-   <li><p>Let <var>item</var> be the result of <a for="I/O queue">reading</a>
-   from <var>ioQueue</var>.
-
-   <li><p>If <var>item</var> is <a>end-of-queue</a>, return <var>output</var>.
-
-   <li><p>Append <var>item</var> to <var>output</var>.
-  </ol>
-</ol>
-
-<p class=note>The conversion from <a for=/>I/O queues</a> into <a>strings</a>
-and <a>byte sequences</a> empties the <a for=/>I/O queue</a>. Therefore, it is
-to be used only when there are no other references to the queue.
 
 <h2 id=encodings>Encodings</h2>
 
@@ -1560,8 +1494,8 @@ constructor steps are to do nothing.
 <p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method steps are:
 
 <ol>
- <li><p><a for="string to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of
- scalar values.
+ <li><p><a for="to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of scalar
+ values.
 
  <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
  <a for=/>I/O queue</a> of bytes.
@@ -1581,7 +1515,7 @@ constructor steps are to do nothing.
 
     <p class=note>The <a>UTF-8 encoder</a> cannot return <a>error</a>.
 
-   <li><p>If <var>result</var> is <a>finished</a>, <a for="I/O queue to byte sequence">convert</a>
+   <li><p>If <var>result</var> is <a>finished</a>, <a for="from I/O queue">convert</a>
    <var>output</var> into a byte sequence, and then return a {{Uint8Array}} object wrapping an
    {{ArrayBuffer}} containing <var>output</var>.
    <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
@@ -1608,8 +1542,8 @@ method steps are:
   <p class=note>The <a>handler</a> algorithm invoked below requires this argument, but it is not
   used by the <a>UTF-8 encoder</a>.
 
- <li><p><a for="string to I/O queue">Convert</a> <var>source</var> to an <a for=/>I/O queue</a> of
- scalar values.
+ <li><p><a for="to I/O queue">Convert</a> <var>source</var> to an <a for=/>I/O queue</a> of scalar
+ values.
 
  <li>
   <p>While true:
@@ -1969,7 +1903,7 @@ constructor steps are:
  <var>chunk</var> to a {{DOMString}}. If this throws an exception, then return a promise rejected
  with that exception.
 
- <li><p><a for="string to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of
+ <li><p><a for="to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of
  <a>code units</a>.
 
  <p class=note>{{DOMString}}, as well as an <a for=/>I/O queue</a> of code units rather than scalar
@@ -1993,7 +1927,7 @@ constructor steps are:
     <p>If <var>item</var> is <a>end-of-queue</a>, run these steps:
 
     <ol>
-     <li><p><a for="I/O queue to byte sequence">Convert</a> <var>output</var> into a byte sequence.
+     <li><p><a for="from I/O queue">Convert</a> <var>output</var> into a byte sequence.
 
      <li>
       <p>If <var>output</var> is non-empty, run these steps:
