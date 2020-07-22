@@ -127,11 +127,9 @@ with a list <var>contents</var>, return a new <a for=/>I/O queue</a> containing 
  <li><p>If <var>ioQueue</var> is <a for=list>empty</a>, then wait until its
  <a for=list>size</a> is at least 1.
 
- <li><p>If the first item in <var>ioQueue</var> is <a>end-of-queue</a>, then
- return <a>end-of-queue</a>.
+ <li><p>If <var>ioQueue</var>[0] is <a>end-of-queue</a>, then return <a>end-of-queue</a>.
 
- <li><p>Otherwise, <a for=list>remove</a> the first item in <var>ioQueue</var>
- and return it.
+ <li><p>Otherwise, <a for=list>remove</a> <var>ioQueue</var>[0] and return it.
 </ol>
 
 <p>To read a number <var>number</var> of <a for=list>items</a> from <var>ioQueue</var>,
