@@ -96,11 +96,6 @@ values</a>). <dfn id="end-of-stream" export>End-of-queue</dfn> is a special
 <a for=list>item</a> that can be present in <a for=/>I/O queues</a> of any type, and that
 signifies no more <a for=list>items</a> are in the queue.
 
-<p>To <dfn for="I/O queue" export>create</dfn> an <a for=/>I/O queue</a>, optionally initialized
-with a list <var>contents</var>, return a new <a for=/>I/O queue</a> containing the
-<a for=list>items</a> of <var>contents</var> in order, if it is given, followed by an
-<a>end-of-queue</a> item.
-
 <div class=note>
  <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate mode, to
  represent I/O data stored in memory, and in streaming mode, to represent data
@@ -108,11 +103,9 @@ with a list <var>contents</var>, return a new <a for=/>I/O queue</a> containing 
  last item, whereas streaming queues need not have it, and so their
  <a for="I/O queue">read</a> operation might block.
 
- <p>An immediate <a for=/>I/O queue</a> is to be created with the <a for="I/O queue">create</a> an
- <a for=/>I/O queue</a> operation. A streaming <a for=/>I/O queue</a> is to be created
- empty, and it is expected that new <a for=list>items</a> will be
- <a for="I/O queue">pushed</a> to it as data comes in from the network. When the
- underlying network stream closes, an <a>end-of-queue</a> item is to be
+ <p>It is expected that streaming <a for=/>I/O queues</a> will be created empty, and that new
+ <a for=list>items</a> will be <a for="I/O queue">pushed</a> to it as data comes in from the
+ network. When the underlying network stream closes, an <a>end-of-queue</a> item is to be
  <a for="I/O queue">pushed</a> into the queue.
 
  <p>Since reading from a streaming <a for=/>I/O queue</a> might block, streaming
@@ -203,8 +196,9 @@ to be read would be <code>&amp;</code>. <!-- 💩 -->
 <a for=/>list</a>, <a>string</a> or <a>byte sequence</a>, return the result of
 <a for="I/O queue">reading</a> an indefinite number of <a for=list>items</a> from
 <var>ioQueue</var>. To <dfn for="to I/O queue">convert</dfn> a <a for=/>list</a>, <a>string</a> or
-<a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, return the result of
-<a for="I/O queue">creating</a> an <a for=/>I/O queue</a> initialized with <var>input</var>.
+<a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, return an
+<a for=/>I/O queue</a> containing the <a for=list>items</a> in <var>input</var>, in order, followed
+by <a>end-of-queue</a>.
 
 <p class=XXX>The Infra standard is expected to define some infrastructure around type conversions.
 See <a href="https://github.com/whatwg/infra/issues/319">whatwg/infra issue #319</a>. [[INFRA]]
@@ -1002,8 +996,8 @@ fallback encoding <var>encoding</var>, run these steps:
   than anything else. In a context where HTTP is used this is in violation of the semantics of the
   `<code>Content-Type</code>` header.
 
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
  <li><p><a>Run</a> <var>encoding</var>'s
  <a for=/>decoder</a> with <var>ioQueue</var> and <var>output</var>.
@@ -1022,8 +1016,8 @@ run these steps:
  <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF,
  <a>prepend</a> <var>buffer</var> to <var>ioQueue</var>.
 
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
  <li><p><a>Run</a> <a>UTF-8</a>'s
  <a for=/>decoder</a> with <var>ioQueue</var> and <var>output</var>.
@@ -1035,8 +1029,8 @@ run these steps:
 <var>ioQueue</var>, run these steps:
 
 <ol>
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
  <li><p><a>Run</a> <a>UTF-8</a>'s
  <a for=/>decoder</a> with <var>ioQueue</var> and <var>output</var>.
@@ -1051,8 +1045,8 @@ run these steps:
      -->
 
 <ol>
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
  <li><p>Let <var>potentialError</var> be the result of <a>running</a>
  <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var>, <var>output</var>,
@@ -1072,8 +1066,7 @@ run these steps:
  <li><p>Assert: <var>encoding</var> is not <a>replacement</a>, <a>UTF-16BE</a> or
  <a>UTF-16LE</a>.
 
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of bytes.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> ».
 
  <li><p><a>Run</a> <var>encoding</var>'s
  <a for=/>encoder</a> with <var>ioQueue</var>, <var>output</var>, and "<code>html</code>".
@@ -1370,7 +1363,7 @@ method steps are:
  <li><p>If <a>this</a>'s <a for=TextDecoder>do not flush</a> is false, then set <a>this</a>'s
  <a for=TextDecoderCommon>decoder</a> to a new <a for=/>decoder</a> for <a>this</a>'s
  <a for=TextDecoderCommon>encoding</a>, <a>this</a>'s <a for=TextDecoderCommon>I/O queue</a> to the
- result of <a for="I/O queue">creating</a> an <a for=/>I/O queue</a> of bytes, and <a>this</a>'s
+ <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> », and <a>this</a>'s
  <a for=TextDecoderCommon>BOM seen</a> to false.
 
  <li><p>Set <a>this</a>'s <a for=TextDecoder>do not flush</a> to
@@ -1390,8 +1383,8 @@ method steps are:
   programming languages typically used for implementations. When implementing, take care to use the
   appropriate facilities when accessing memory exposed by <code>SharedArrayBuffer</code> objects.
 
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
  <li>
   <p>While true:
@@ -1495,8 +1488,7 @@ constructor steps are to do nothing.
  <li><p><a for="to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of scalar
  values.
 
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of bytes.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> ».
 
  <li>
   <p>While true:
@@ -1534,8 +1526,7 @@ method steps are:
  <var>destination</var>.
 
  <li>
-  <p>Let <var>unused</var> be the result of <a for="I/O queue">creating</a> an
-  <a for=/>I/O queue</a> of scalar values.
+  <p>Let <var>unused</var> be the <a for=/>I/O queue</a> of scalar values « <a>end-of-queue</a> ».
 
   <p class=note>The <a>handler</a> algorithm invoked below requires this argument, but it is not
   used by the <a>UTF-8 encoder</a>.
@@ -1752,8 +1743,8 @@ constructor steps are:
  <li><p>Let <var>controller</var> be <var>decoder</var>'s
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
  <li>
   <p>While true, run these steps:
@@ -1790,8 +1781,8 @@ constructor steps are:
 steps:
 
 <ol>
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of scalar values.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
  <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-queue</a> for
  <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a> and <var>decoder</var>'s
@@ -1909,8 +1900,7 @@ constructor steps are:
  the appropriate scalar value. The behavior is otherwise identical to {{USVString}}. In particular,
  lone surrogates will be replaced with U+FFFD.
 
- <li><p>Let <var>output</var> be the result of <a for="I/O queue">creating</a> an
- <a for=/>I/O queue</a> of bytes.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> ».
 
  <li><p>Let <var>controller</var> be <var>encoder</var>'s
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
