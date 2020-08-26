@@ -187,7 +187,7 @@ these steps:
 <a for=list>prepend</a> operation. To prepend a sequence of items, insert those
 items, in the given order, before the first item in the queue.
 
-<p class=example id=example-items>Inserting the sequence of scalar value items
+<p class=example id=example-tokens>Inserting the sequence of scalar value items
 <code>&amp;#128169;</code> in an I/O queue of scalar values "<code> hello world</code>",
 results in an I/O queue "<code>&amp;#128169; hello world</code>". The next item
 to be read would be <code>&amp;</code>. <!-- 💩 -->
