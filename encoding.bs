@@ -125,8 +125,8 @@ signifies no more <a for=list>items</a> are in the queue.
  <li><p>Otherwise, <a for=list>remove</a> <var>ioQueue</var>[0] and return it.
 </ol>
 
-<p>To read a number <var>number</var> of <a for=list>items</a> from <var>ioQueue</var>,
-run these steps:
+<p>To <a for="I/O queue">read</a> a number <var>number</var> of <a for=list>items</a> from
+<var>ioQueue</var>, run these steps:
 
 <ol>
  <li><p>Let <var>readItems</var> be an empty list.
@@ -159,30 +159,30 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
   <p><a for=list>For each</a> <var>n</var> in <a>the range</a> 1 to <var>number</var>, inclusive:
 
   <ol>
-   <li><p>If <var>ioQueue</var>[<var>n</var>] is <a>end-of-queue</a>, <a>break</a>. Otherwise,
-   <a for=list>append</a> <var>ioQueue</var>[<var>n</var>] to <var>prefix</var>.
+   <li><p>If <var>ioQueue</var>[<var>n</var>] is <a>end-of-queue</a>, <a>break</a>.
+   <li><p>Otherwise, <a for=list>append</a> <var>ioQueue</var>[<var>n</var>] to <var>prefix</var>.
   </ol>
  </li>
 
  <li><p>Return <var>prefix</var>.
 </ol>
 
-<p>To <dfn id=concept-stream-push for="I/O queue" export>push</dfn> one
+<p>To <dfn id=concept-stream-push for="I/O queue" export>push</dfn> an
 <a for=list>item</a> <var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run
 these steps:
 
 <ol>
  <li><p>If the last <a for=list>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>,
- then <a for=list>insert</a> <var>item</var> before the last <a for=list>item</a> in the
- queue.
+ then <a for=list>insert</a> <var>item</var> before the last <a for=list>item</a> in
+ <var>ioQueue</var>.
 
  <li><p>Otherwise, <a for=list>append</a> <var>item</var> to <var>ioQueue</var>.
 </ol>
 
-<p>To push a sequence of items is to push each item in the sequence, in the
-given order.
+<p>To <a for="I/O queue">push</a> a sequence of items to an <a for=/>I/O queue</a>
+<var>ioQueue</var> is to push each item in the sequence to <var>ioQueue</var>, in the given order.
 
-<p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> one
+<p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> an
 <a for=list>item</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
 <a for=list>prepend</a> operation. To prepend a sequence of items, insert those
 items, in the given order, before the first item in the queue.
@@ -1089,7 +1089,7 @@ the result of <a lt=encode for=/>encoding</a> <var>ioQueue</var> using encoding 
 
 <ol>
  <li><p>Let <var>BOM</var> be the result of <a for="I/O queue">reading</a> 3 bytes from
- <var>ioQueue</var>, converted to a byte sequence.
+ <var>ioQueue</var>, <a for="from I/O queue">converted</a> to a byte sequence.
 
  <li>
   <p>For each of the rows in the table below, starting with the first one and going down, if
