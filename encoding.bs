@@ -1731,6 +1731,8 @@ constructor steps are:
 
      <li><p>If <var>outputChunk</var> is non-empty, then <a for=TransformStream>enqueue</a>
      <var>outputChunk</var> in <var>decoder</var>'s <a for=GenericTransformStream>transform</a>.
+
+     <li><p>Return.
     </ol>
 
    <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for
