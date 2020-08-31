@@ -90,18 +90,17 @@ bitwise AND by "&amp;", and bitwise OR by "|".
 
 <hr>
 
-<p>An <dfn id=concept-stream export>I/O queue</dfn> is a type of <a for=/>list</a>
-with <a for=list>items</a> of a particular type (i.e. <a>bytes</a> or <a>scalar
-values</a>). <dfn id="end-of-stream" export>End-of-queue</dfn> is a special
-<a for=list>item</a> that can be present in <a for=/>I/O queues</a> of any type, and that
-signifies no more <a for=list>items</a> are in the queue.
+<p>An <dfn id=concept-stream export>I/O queue</dfn> is a type of <a for=/>list</a> with
+<a for=list>items</a> of a particular type (i.e., <a>bytes</a> or <a>scalar values</a>).
+<dfn id="end-of-stream" export>End-of-queue</dfn> is a special <a for=list>item</a> that can be
+present in <a for=/>I/O queues</a> of any type and it signifies that there are no more
+<a for=list>items</a> in the queue.
 
 <div class=note>
- <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate mode, to
- represent I/O data stored in memory, and in streaming mode, to represent data
- coming in from the network. Immediate queues have <a>end-of-queue</a> as their
- last item, whereas streaming queues need not have it, and so their
- <a for="I/O queue">read</a> operation might block.
+ <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate mode, to represent I/O data
+ stored in memory, and in streaming mode, to represent data coming in from the network. Immediate
+ queues have <a>end-of-queue</a> as their last item, whereas streaming queues need not have it, and
+ so their <a for="I/O queue">read</a> operation might block.
 
  <p>It is expected that streaming <a for=/>I/O queues</a> will be created empty, and that new
  <a for=list>items</a> will be <a for="I/O queue">pushed</a> to it as data comes in from the
@@ -109,16 +108,16 @@ signifies no more <a for=list>items</a> are in the queue.
  <a for="I/O queue">pushed</a> into the queue.
 
  <p>Since reading from a streaming <a for=/>I/O queue</a> might block, streaming
- <a for=/>I/O queues</a> are not to be used from an <a for=/>event loop</a>.
- They are to be used <a>in parallel</a> instead.
+ <a for=/>I/O queues</a> are not to be used from an <a for=/>event loop</a>. They are to be used
+ <a>in parallel</a> instead.
 </div>
 
-<p>To <dfn id=concept-stream-read for="I/O queue" export>read</dfn> an
-<a for=list>item</a> from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
+<p>To <dfn id=concept-stream-read for="I/O queue" export>read</dfn> an <a for=list>item</a> from an
+<a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
 <ol>
- <li><p>If <var>ioQueue</var> is <a for=list>empty</a>, then wait until its
- <a for=list>size</a> is at least 1.
+ <li><p>If <var>ioQueue</var> is <a for=list>empty</a>, then wait until its <a for=list>size</a> is
+ at least 1.
 
  <li><p>If <var>ioQueue</var>[0] is <a>end-of-queue</a>, then return <a>end-of-queue</a>.
 
@@ -167,14 +166,12 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
  <li><p>Return <var>prefix</var>.
 </ol>
 
-<p>To <dfn id=concept-stream-push for="I/O queue" export>push</dfn> an
-<a for=list>item</a> <var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run
-these steps:
+<p>To <dfn id=concept-stream-push for="I/O queue" export>push</dfn> an <a for=list>item</a>
+<var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
 <ol>
- <li><p>If the last <a for=list>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>,
- then <a for=list>insert</a> <var>item</var> before the last <a for=list>item</a> in
- <var>ioQueue</var>.
+ <li><p>If the last <a for=list>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>, then
+ <a for=list>insert</a> <var>item</var> before the last <a for=list>item</a> in <var>ioQueue</var>.
 
  <li><p>Otherwise, <a for=list>append</a> <var>item</var> to <var>ioQueue</var>.
 </ol>
@@ -182,15 +179,15 @@ these steps:
 <p>To <a for="I/O queue">push</a> a sequence of items to an <a for=/>I/O queue</a>
 <var>ioQueue</var> is to push each item in the sequence to <var>ioQueue</var>, in the given order.
 
-<p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> an
-<a for=list>item</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
-<a for=list>prepend</a> operation. To prepend a sequence of items, insert those
-items, in the given order, before the first item in the queue.
+<p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> an <a for=list>item</a> to an
+<a for=/>I/O queue</a>, perform the normal <a for=/>list</a> <a for=list>prepend</a> operation. To
+prepend a sequence of items, insert those items, in the given order, before the first item in the
+queue.
 
 <p class=example id=example-tokens>Inserting the sequence of scalar value items
-<code>&amp;#128169;</code> in an I/O queue of scalar values "<code> hello world</code>",
-results in an I/O queue "<code>&amp;#128169; hello world</code>". The next item
-to be read would be <code>&amp;</code>. <!-- 💩 -->
+<code>&amp;#128169;</code> in an I/O queue of scalar values "<code> hello world</code>", results in
+an I/O queue "<code>&amp;#128169; hello world</code>". The next item to be read would be
+<code>&amp;</code>. <!-- 💩 -->
 
 <p>To <dfn for="from I/O queue">convert</dfn> an <a for=/>I/O queue</a> <var>ioQueue</var> into a
 <a for=/>list</a>, <a>string</a> or <a>byte sequence</a>, return the result of
@@ -204,11 +201,10 @@ by <a>end-of-queue</a>.
 See <a href="https://github.com/whatwg/infra/issues/319">whatwg/infra issue #319</a>. [[INFRA]]
 
 <p class=note><a for=/>I/O queues</a> are defined as <a for=/>lists</a>, not
-<a spec=infra>queues</a>, because they feature a <a for="I/O queue">prepend</a>
-operation. However, this prepend operation is an internal detail of the
-algorithms in this specification, and is not to be used by other standards.
-Implementations are free to find alternative ways to implement such algorithms,
-as detailed in [[#implementation-considerations]].
+<a spec=infra>queues</a>, because they feature a <a for="I/O queue">prepend</a> operation. However,
+this prepend operation is an internal detail of the algorithms in this specification, and is not to
+be used by other standards. Implementations are free to find alternative ways to implement such
+algorithms, as detailed in [[#implementation-considerations]].
 
 
 
