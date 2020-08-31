@@ -269,6 +269,7 @@ identify it.
 use the <a>UTF-8</a> <a for=/>encoding</a> exclusively. If these protocols and
 formats need to expose the <a for=/>encoding</a>'s <a>name</a> or
 <a>label</a>, they must expose it as "<code>utf-8</code>".
+<!-- “UTF-8 or death” — Emil A Eklund -->
 
 <p>To
 <dfn export lt="get an encoding|getting an encoding" id=concept-encoding-get>get an encoding</dfn>
