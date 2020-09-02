@@ -1091,14 +1091,14 @@ the result of <a lt=encode for=/>encoding</a> <var>ioQueue</var> using encoding 
 <p>To <dfn export>BOM sniff</dfn> an I/O queue of bytes <var>ioQueue</var>, run these steps:
 
 <ol>
- <li><p>Let <var>BOM</var> be the result of <a for="I/O queue">reading</a> 3 bytes from
+ <li><p>Let <var>BOM</var> be the result of <a for="I/O queue">peeking</a> 3 bytes from
  <var>ioQueue</var>, <a for="from I/O queue">converted</a> to a byte sequence.
 
  <li>
   <p>For each of the rows in the table below, starting with the first one and going down, if
   <var>BOM</var> <a for="byte sequence">starts with</a> the bytes given in the first column, then
-  let <var>BOMEncoding</var> be the <a for=/>encoding</a> given in the cell in the second column of
-  that row. Otherwise, let <var>BOMEncoding</var> be null.
+  return the <a for=/>encoding</a> given in the cell in the second column of that row. Otherwise,
+  return null.
 
   <table>
    <tbody><tr><th>Byte order mark<th>Encoding
@@ -1106,11 +1106,6 @@ the result of <a lt=encode for=/>encoding</a> <var>ioQueue</var> using encoding 
    <tr><td>0xFE 0xFF<td><a>UTF-16BE</a>
    <tr><td>0xFF 0xFE<td><a>UTF-16LE</a>
   </table>
-
- <li><p><a for="I/O queue">Prepend</a> the bytes in <var>BOM</var> into
- <var>ioQueue</var>.
-
- <li><p>Return <var>BOMEncoding</var>.
 </ol>
 
 <p class=note>This hook is a workaround for the fact that <a>decode</a> has no way to communicate
