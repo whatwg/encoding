@@ -170,8 +170,15 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 <var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
 <ol>
- <li><p>If the last <a for=list>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>, then
- <a for=list>insert</a> <var>item</var> before the last <a for=list>item</a> in <var>ioQueue</var>.
+ <li>
+  <p>If the last <a for=list>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>, then:
+
+  <ol>
+   <li><p>If <var>item</var> is <a>end-of-queue</a>, do nothing.
+   <li><p>Otherwise, <a for=list>insert</a> <var>item</var> before the last <a for=list>item</a> in
+   <var>ioQueue</var>.
+  </ol>
+ </li>
 
  <li><p>Otherwise, <a for=list>append</a> <var>item</var> to <var>ioQueue</var>.
 </ol>
@@ -179,10 +186,10 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 <p>To <a for="I/O queue">push</a> a sequence of items to an <a for=/>I/O queue</a>
 <var>ioQueue</var> is to push each item in the sequence to <var>ioQueue</var>, in the given order.
 
-<p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> an <a for=list>item</a> to an
-<a for=/>I/O queue</a>, perform the normal <a for=/>list</a> <a for=list>prepend</a> operation. To
-prepend a sequence of items, insert those items, in the given order, before the first item in the
-queue.
+<p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> an <a for=list>item</a> other
+than <a>end-of-queue</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
+<a for=list>prepend</a> operation. To prepend a sequence of items, insert those items, in the given
+order, before the first item in the queue.
 
 <p class=example id=example-tokens>Inserting the sequence of scalar value items
 <code>&amp;#128169;</code> in an I/O queue of scalar values "<code> hello world</code>", results in
