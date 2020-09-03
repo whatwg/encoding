@@ -1012,12 +1012,12 @@ fallback encoding <var>encoding</var>, run these steps:
 run these steps:
 
 <ol>
- <li><p>Let <var>buffer</var> be an empty byte sequence.
+ <li><p>Let <var>buffer</var> be the result of <a for="I/O queue">reading</a> three bytes from
+ <var>ioQueue</var>.
 
- <li><p><a>Read</a> three bytes from <var>ioQueue</var> into <var>buffer</var>.
+ <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF, <a>prepend</a> <var>buffer</var> to
+ <var>ioQueue</var>.
 
- <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF,
- <a>prepend</a> <var>buffer</var> to <var>ioQueue</var>.
 
  <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
  « <a>end-of-queue</a> ».
