@@ -68,7 +68,7 @@ big5_prefer_last = [
 
 def classify(code_point):
     if code_point < 0x80:
-        raise Error()
+        raise Exception()
     if code_point < 0x800:
         return "mid"
     if code_point > 0xFFFF:
