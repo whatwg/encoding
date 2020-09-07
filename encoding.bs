@@ -307,8 +307,16 @@ happening.
  <li><p>Let <var>result</var> be the result of running <var>encoderDecoderInstance</var>'s
  <a>handler</a> on <var>input</var> and <var>item</var>.
 
- <li><p>If <var>result</var> is <a>continue</a> or <a>finished</a>, return
- <var>result</var>.
+ <li><p>If <var>result</var> is <a>continue</a>, return <var>result</var>.
+
+ <li>
+  <p>Otherwise, if <var>result</var> is <a>finished</a>:
+
+  <ol>
+   <li><p><a>Push</a> <a>end-of-queue</a> to <var>output</var>.
+   <li><p>Return <var>result</var>.
+  </ol>
+ </li>
 
  <li>
   <p>Otherwise, if <var>result</var> is one or more <a for=list>items</a>:
@@ -1003,8 +1011,6 @@ these steps:
  <li><p><a>Run</a> <var>encoding</var>'s <a for=/>decoder</a> with <var>ioQueue</var> and
  <var>output</var>.
 
- <li><p><a for="I/O queue">Push</a> <a>end-of-queue</a> into <var>output</var>.
-
  <li><p>Return <var>output</var>.
 </ol>
 
@@ -1021,8 +1027,6 @@ queue of scalar values <var>output</var> (default « »), run these steps:
  <li><p><a>Run</a> <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var> and
  <var>output</var>.
 
- <li><p><a for="I/O queue">Push</a> <a>end-of-queue</a> into <var>output</var>.
-
  <li><p>Return <var>output</var>.
 </ol>
 
@@ -1032,8 +1036,6 @@ optional I/O queue of scalar values <var>output</var> (default « »), run these
 <ol>
  <li><p><a>Run</a> <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var> and
  <var>output</var>.
-
- <li><p><a for="I/O queue">Push</a> <a>end-of-queue</a> into <var>output</var>.
 
  <li><p>Return <var>output</var>.
 </ol>
@@ -1050,8 +1052,6 @@ given an optional I/O queue of scalar values <var>output</var> (default « »), 
 
  <li><p>If <var>potentialError</var> is <a>error</a>, return failure.
 
- <li><p><a for="I/O queue">Push</a> <a>end-of-queue</a> into <var>output</var>.
-
  <li><p>Return <var>output</var>.
 </ol>
 
@@ -1066,8 +1066,6 @@ these steps:
 
  <li><p><a>Run</a> <var>encoding</var>'s <a for=/>encoder</a> with <var>ioQueue</var>,
  <var>output</var>, and "<code>html</code>".
-
- <li><p><a for="I/O queue">Push</a> <a>end-of-queue</a> into <var>output</var>.
 
  <li><p>Return <var>output</var>.
 </ol>
