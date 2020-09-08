@@ -1830,8 +1830,6 @@ constructor steps are:
  <li><p>Set <a>this</a>'s <a for=TextEncoderStream>encoder</a> to <a>UTF-8</a>'s
  <a for=/>encoder</a>.
 
- <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
-
  <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
  and runs the <a>encode and enqueue a chunk</a> algorithm with <a>this</a> and <var>chunk</var>.
 
@@ -1943,12 +1941,10 @@ that are split between strings. [[!INFRA]]
 
   <ol>
    <li>
-    <p>Let <var>output</var> be the byte sequence 0xEF 0xBF 0xBD.
+    <p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
+    0xEF 0xBF 0xBD.
 
-    <p class=note>This is the replacement character U+FFFD encoded as UTF-8.
-
-   <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
-   <var>output</var>.
+    <p class=note>This is U+FFFD (�) in <a>UTF-8</a> bytes.
 
    <li><p><a for=TransformStream>Enqueue</a> <var>chunk</var> into <var>encoder</var>'s
    <a for=GenericTransformStream>transform</a>.
