@@ -3361,9 +3361,9 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 <h2 id=browser-ui>Browser UI</h2>
 
 <p>Browsers are encouraged to not enable overriding the encoding of a resource. If such a feature is
-nonetheless present, browsers should not offer <a>UTF-16BE/LE</a> as option due to aforementioned
-security issues. Browsers also should disable this feature if the resource was decoded using
-<a>UTF-16BE/LE</a>.
+nonetheless present, browsers should not offer <a>UTF-16BE/LE</a> as an option, due to the
+aforementioned security issues. Browsers should also disable this feature if the resource was
+decoded using <a>UTF-16BE/LE</a>.
 
 
 
