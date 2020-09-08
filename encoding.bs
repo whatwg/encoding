@@ -11,10 +11,6 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 
 <link rel=stylesheet href=visualization-colors.css>
 
-<pre class=link-defaults>
-spec:streams; type:interface; text:ReadableStream
-</pre>
-
 
 
 <h2 id=preface>Preface</h2>
@@ -94,35 +90,130 @@ bitwise AND by "&amp;", and bitwise OR by "|".
 
 <hr>
 
-<p>A <dfn id=concept-token>token</dfn> is a piece of data, such as a <a>byte</a> or
-<a>scalar value</a>.
+<p>An <dfn id=concept-stream export>I/O queue</dfn> is a type of <a for=/>list</a> with
+<a for=list>items</a> of a particular type (i.e., <a>bytes</a> or <a>scalar values</a>).
+<dfn id="end-of-stream" export>End-of-queue</dfn> is a special <a for=list>item</a> that can be
+present in <a for=/>I/O queues</a> of any type and it signifies that there are no more
+<a for=list>items</a> in the queue.
 
-<p>A <dfn id=concept-stream>stream</dfn> represents an ordered sequence of
-<a>tokens</a>. <dfn>End-of-stream</dfn> is a special
-<a>token</a> that signifies no more
-<a>tokens</a> are in the
-<a for=/>stream</a>.
+<div class=note>
+ <p>There are two ways to use an <a for=/>I/O queue</a>: in immediate mode, to represent I/O data
+ stored in memory, and in streaming mode, to represent data coming in from the network. Immediate
+ queues have <a>end-of-queue</a> as their last item, whereas streaming queues need not have it, and
+ so their <a for="I/O queue">read</a> operation might block.
 
-<p>When a <a>token</a> is
-<dfn id=concept-stream-read for=stream>read</dfn> from a <a for=/>stream</a>,
-the first token in the stream must be returned and subsequently removed, and
-<a>end-of-stream</a> must be returned otherwise.
-<!-- this means read is blocking on e.g. networking activity;
-     SimonSapin thinks this is fine, blame him if not -->
+ <p>It is expected that streaming <a for=/>I/O queues</a> will be created empty, and that new
+ <a for=list>items</a> will be <a for="I/O queue">pushed</a> to it as data comes in from the
+ network. When the underlying network stream closes, an <a>end-of-queue</a> item is to be
+ <a for="I/O queue">pushed</a> into the queue.
 
-<p>When one or more <a>tokens</a> are
-<dfn id=concept-stream-prepend for=stream>prepended</dfn> to a
-<a for=/>stream</a>, those tokens must be inserted, in given order,
-before the first token in the stream.
+ <p>Since reading from a streaming <a for=/>I/O queue</a> might block, streaming
+ <a for=/>I/O queues</a> are not to be used from an <a for=/>event loop</a>. They are to be used
+ <a>in parallel</a> instead.
+</div>
 
-<p class=example id=example-tokens>Inserting the sequence of tokens <code>&amp;#128169;</code>
-in a stream "<code> hello world</code>", results in a stream
-"<code>&amp;#128169; hello world</code>". The next token to be read would be
+<p>To <dfn id=concept-stream-read for="I/O queue" export>read</dfn> an <a for=list>item</a> from an
+<a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
+
+<ol>
+ <li><p>If <var>ioQueue</var> is <a for=list>empty</a>, then wait until its <a for=list>size</a> is
+ at least 1.
+
+ <li><p>If <var>ioQueue</var>[0] is <a>end-of-queue</a>, then return <a>end-of-queue</a>.
+
+ <li><p><a for=list>Remove</a> <var>ioQueue</var>[0] and return it.
+</ol>
+
+<p>To <a for="I/O queue">read</a> a number <var>number</var> of <a for=list>items</a> from
+<var>ioQueue</var>, run these steps:
+
+<ol>
+ <li><p>Let <var>readItems</var> be an empty list.
+
+ <li>
+  <p>Perform the following step <var>number</var> times:
+
+  <ol>
+   <li><p><a for=list>Append</a> to <var>readItems</var> the result of
+   <a for="I/O queue">reading</a> an item from <var>ioQueue</var>.
+  </ol>
+ </li>
+
+ <li><p><a for=list>Remove</a> <a>end-of-queue</a> from <var>readItems</var>.
+
+ <li><p>Return <var>readItems</var>.
+</ol>
+
+<p>To <dfn for="I/O queue" export>peek</dfn> a number <var>number</var> of <a for=list>items</a>
+from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
+
+<ol>
+ <li><p>Wait until either <var>ioQueue</var>'s <a for=list>size</a> is equal to or greater than
+ <var>number</var>, or <var>ioQueue</var> <a for=list>contains</a> <a>end-of-queue</a>, whichever
+ comes first.
+
+ <li><p>Let <var>prefix</var> be an empty list.
+
+ <li>
+  <p><a for=list>For each</a> <var>n</var> in <a>the range</a> 1 to <var>number</var>, inclusive:
+
+  <ol>
+   <li><p>If <var>ioQueue</var>[<var>n</var>] is <a>end-of-queue</a>, <a>break</a>.
+
+   <li><p>Otherwise, <a for=list>append</a> <var>ioQueue</var>[<var>n</var>] to <var>prefix</var>.
+  </ol>
+ </li>
+
+ <li><p>Return <var>prefix</var>.
+</ol>
+
+<p>To <dfn id=concept-stream-push for="I/O queue" export>push</dfn> an <a for=list>item</a>
+<var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
+
+<ol>
+ <li>
+  <p>If the last <a for=list>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>, then:
+
+  <ol>
+   <li><p>If <var>item</var> is <a>end-of-queue</a>, do nothing.
+
+   <li><p>Otherwise, <a for=list>insert</a> <var>item</var> before the last <a for=list>item</a> in
+   <var>ioQueue</var>.
+  </ol>
+ </li>
+
+ <li><p>Otherwise, <a for=list>append</a> <var>item</var> to <var>ioQueue</var>.
+</ol>
+
+<p>To <a for="I/O queue">push</a> a sequence of items to an <a for=/>I/O queue</a>
+<var>ioQueue</var> is to push each item in the sequence to <var>ioQueue</var>, in the given order.
+
+<p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> an <a for=list>item</a> other
+than <a>end-of-queue</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
+<a for=list>prepend</a> operation. To prepend a sequence of items, insert those items, in the given
+order, before the first item in the queue.
+
+<p class=example id=example-tokens>Inserting the sequence of scalar value items
+<code>&amp;#128169;</code> in an I/O queue of scalar values "<code> hello world</code>", results in
+an I/O queue "<code>&amp;#128169; hello world</code>". The next item to be read would be
 <code>&amp;</code>. <!-- 💩 -->
 
-<p>When one or more <a>tokens</a> are
-<dfn id=concept-stream-push for=stream>pushed</dfn> to a <a for=/>stream</a>,
-those tokens must be inserted, in given order, after the last token in the stream.
+<p>To <dfn for="from I/O queue">convert</dfn> an <a for=/>I/O queue</a> <var>ioQueue</var> into a
+<a for=/>list</a>, <a>string</a> or <a>byte sequence</a>, return the result of
+<a for="I/O queue">reading</a> an indefinite number of <a for=list>items</a> from
+<var>ioQueue</var>. To <dfn for="to I/O queue">convert</dfn> a <a for=/>list</a>, <a>string</a> or
+<a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, return an
+<a for=/>I/O queue</a> containing the <a for=list>items</a> in <var>input</var>, in order, followed
+by <a>end-of-queue</a>.
+
+<p class=XXX>The Infra standard is expected to define some infrastructure around type conversions.
+See <a href="https://github.com/whatwg/infra/issues/319">whatwg/infra issue #319</a>. [[INFRA]]
+
+<p class=note><a for=/>I/O queues</a> are defined as <a for=/>lists</a>, not
+<a spec=infra>queues</a>, because they feature a <a for="I/O queue">prepend</a> operation. However,
+this prepend operation is an internal detail of the algorithms in this specification, and is not to
+be used by other standards. Implementations are free to find alternative ways to implement such
+algorithms, as detailed in [[#implementation-considerations]].
 
 
 
@@ -149,8 +240,8 @@ This specification does not provide wrapper algorithms that would combine with <
 <p>Each <a for=/>encoding</a> has an associated <dfn>decoder</dfn> and most of them have an
 associated <dfn>encoder</dfn>. Each <a for=/>decoder</a> and <a for=/>encoder</a> have a
 <dfn>handler</dfn> algorithm. A <a>handler</a> algorithm takes an input
-<a for=/>stream</a> and a <a>token</a>, and returns
-<dfn>finished</dfn>, one or more <a>tokens</a>, <dfn>error</dfn>
+<a for=/>I/O queue</a> and an <a for=list>item</a>, and returns
+<dfn>finished</dfn>, one or more <a for=list>items</a>, <dfn>error</dfn>
 optionally with a <a>code point</a>, or <dfn>continue</dfn>.
 
 <p class="note no-backref">The <a>replacement</a>, <a>UTF-16BE</a>, and
@@ -174,8 +265,8 @@ happening.
 
 <p>To <dfn id=concept-encoding-run for=encoding>run</dfn> an <a for=/>encoding</a>'s
 <a for=/>decoder</a> or <a for=/>encoder</a> <var>encoderDecoder</var> with input
-<a for=/>stream</a> <var>input</var>, output
-<a for=/>stream</a> <var>output</var>, and optional
+<a for=/>I/O queue</a> <var>input</var>, output
+<a for=/>I/O queue</a> <var>output</var>, and optional
 <a for=/>error mode</a> <var>mode</var>, run these steps:
 
 <ol>
@@ -200,11 +291,11 @@ happening.
   </ol>
 </ol>
 
-<p>To <dfn id=concept-encoding-process for=encoding>process</dfn> a
-<a>token</a> <var>token</var> for an <a for=/>encoding</a>'s
+<p>To <dfn id=concept-encoding-process for=encoding>process</dfn> an
+<a for=list>item</a> <var>item</var> for an <a for=/>encoding</a>'s
 <a for=/>encoder</a> or <a for=/>decoder</a> instance <var>encoderDecoderInstance</var>,
-<a for=/>stream</a> <var>input</var>, output
-<a for=/>stream</a> <var>output</var>, and optional
+<a for=/>I/O queue</a> <var>input</var>, output
+<a for=/>I/O queue</a> <var>output</var>, and optional
 <a for=/>error mode</a> <var>mode</var>, run these steps:
 
 <ol>
@@ -213,16 +304,25 @@ happening.
  "<code>fatal</code>".
 
  <li><p>Assert: if <var>encoderDecoderInstance</var> is an <a for=/>encoder</a> instance,
- <var>token</var> is not a <a>surrogate</a>.
+ <var>item</var> is not a <a>surrogate</a>.
 
  <li><p>Let <var>result</var> be the result of running <var>encoderDecoderInstance</var>'s
- <a>handler</a> on <var>input</var> and <var>token</var>.
+ <a>handler</a> on <var>input</var> and <var>item</var>.
 
- <li><p>If <var>result</var> is <a>continue</a> or <a>finished</a>, return
- <var>result</var>.
+ <li><p>If <var>result</var> is <a>continue</a>, return <var>result</var>.
 
  <li>
-  <p>Otherwise, if <var>result</var> is one or more <a>tokens</a>:
+  <p>Otherwise, if <var>result</var> is <a>finished</a>:
+
+  <ol>
+   <li><p><a>Push</a> <a>end-of-queue</a> to <var>output</var>.
+
+   <li><p>Return <var>result</var>.
+  </ol>
+ </li>
+
+ <li>
+  <p>Otherwise, if <var>result</var> is one or more <a for=list>items</a>:
 
   <ol>
    <li><p>Assert: if <var>encoderDecoderInstance</var> is a <a for=/>decoder</a> instance,
@@ -238,11 +338,13 @@ happening.
   <dl class=switch>
    <dt>"<code>replacement</code>"
    <dd><a>Push</a> U+FFFD to <var>output</var>.
+
    <dt>"<code>html</code>"
    <dd><a>Prepend</a> U+0026, U+0023, followed by the
    shortest sequence of <a>ASCII digits</a> representing <var>result</var>'s
    <a>code point</a> in base ten, followed by U+003B to <var>input</var>.
    <!-- &# ... ; -->
+
    <dt>"<code>fatal</code>"
    <dd>Return <a>error</a>.
   </dl>
@@ -886,16 +988,17 @@ different format here, to be able to represent ranges.)
  <p>The <a>get an encoding</a> algorithm is to be used to turn a <a>label</a> into an
  <a for=/>encoding</a>.
 
- <p>Standards are to ensure that the streams they pass to the <a for=/>encode</a> and
- <a>UTF-8 encode</a> algorithms are effectively scalar value streams, i.e., they contain no
- <a>surrogates</a>.
+ <p>Standards are to ensure that the I/O queues they pass to the <a for=/>encode</a> and
+ <a>UTF-8 encode</a> algorithms are effectively I/O queues of scalar values, i.e., they contain
+ no <a>surrogates</a>.
 </div>
 
-<p>To <dfn export>decode</dfn> a byte stream <var>stream</var> using
-fallback encoding <var>encoding</var>, run these steps:
+<p>To <dfn export>decode</dfn> an I/O queue of bytes <var>ioQueue</var> given a fallback encoding
+<var>encoding</var> and an optional I/O queue of scalar values <var>output</var> (default « »), run
+these steps:
 
 <ol>
- <li><p>Let <var>BOMEncoding</var> be the result of <a>BOM sniffing</a> <var>stream</var>.
+ <li><p>Let <var>BOMEncoding</var> be the result of <a>BOM sniffing</a> <var>ioQueue</var>.
 
  <li>
   <p>If <var>BOMEncoding</var> is non-null:
@@ -903,66 +1006,55 @@ fallback encoding <var>encoding</var>, run these steps:
   <ol>
    <li><p>Set <var>encoding</var> to <var>BOMEncoding</var>.
 
-   <li><p><a>Read</a> three bytes from <var>stream</var>, if <var>BOMEncoding</var> is <a>UTF-8</a>;
-   otherwise <a>read</a> two bytes. (Do nothing with those bytes.)
+   <li><p><a>Read</a> three bytes from <var>ioQueue</var>, if <var>BOMEncoding</var> is
+   <a>UTF-8</a>; otherwise <a>read</a> two bytes. (Do nothing with those bytes.)
   </ol>
 
   <p class=note>For compatibility with deployed content, the byte order mark is more authoritative
   than anything else. In a context where HTTP is used this is in violation of the semantics of the
   `<code>Content-Type</code>` header.
 
- <li><p>Let <var>output</var> be a scalar value <a for=/>stream</a>.
-
- <li><p><a>Run</a> <var>encoding</var>'s
- <a for=/>decoder</a> with <var>stream</var> and <var>output</var>.
+ <li><p><a>Run</a> <var>encoding</var>'s <a for=/>decoder</a> with <var>ioQueue</var> and
+ <var>output</var>.
 
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn export>UTF-8 decode</dfn> a byte stream <var>stream</var>, run
-these steps:
+<p>To <dfn export>UTF-8 decode</dfn> an I/O queue of bytes <var>ioQueue</var> given an optional I/O
+queue of scalar values <var>output</var> (default « »), run these steps:
 
 <ol>
- <li><p>Let <var>buffer</var> be an empty byte sequence.
+ <li><p>Let <var>buffer</var> be the result of <a for="I/O queue">reading</a> three bytes from
+ <var>ioQueue</var>.
 
- <li><p><a>Read</a> three bytes from <var>stream</var>
- into <var>buffer</var>.
+ <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF, <a>prepend</a> <var>buffer</var> to
+ <var>ioQueue</var>.
 
- <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF,
- <a>prepend</a> <var>buffer</var> to <var>stream</var>.
-
- <li><p>Let <var>output</var> be a scalar value <a for=/>stream</a>.
-
- <li><p><a>Run</a> <a>UTF-8</a>'s
- <a for=/>decoder</a> with <var>stream</var> and <var>output</var>.
+ <li><p><a>Run</a> <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var> and
+ <var>output</var>.
 
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn export>UTF-8 decode without BOM</dfn> a byte stream <var>stream</var>, run these
-steps:
+<p>To <dfn export>UTF-8 decode without BOM</dfn> an I/O queue of bytes <var>ioQueue</var> given an
+optional I/O queue of scalar values <var>output</var> (default « »), run these steps:
 
 <ol>
- <li><p>Let <var>output</var> be a scalar value <a for=/>stream</a>.
-
- <li><p><a>Run</a> <a>UTF-8</a>'s
- <a for=/>decoder</a> with <var>stream</var> and <var>output</var>.
+ <li><p><a>Run</a> <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var> and
+ <var>output</var>.
 
  <li><p>Return <var>output</var>.
 </ol>
 
-<p>To <dfn export>UTF-8 decode without BOM or fail</dfn> a byte stream <var>stream</var>, run these
-steps:
+<p>To <dfn export>UTF-8 decode without BOM or fail</dfn> an I/O queue of bytes <var>ioQueue</var>
+given an optional I/O queue of scalar values <var>output</var> (default « »), run these steps:
 <!-- Needed by https://tools.ietf.org/html/rfc6455#section-8.1 and
      https://webassembly.github.io/spec/js-api/#dom-module-customsections-moduleobject-sectionname
      -->
 
 <ol>
- <li><p>Let <var>output</var> be a scalar value stream.
-
- <li><p>Let <var>potentialError</var> be the result of <a>running</a>
- <a>UTF-8</a>'s <a for=/>decoder</a> with <var>stream</var>, <var>output</var>, and
- "<code>fatal</code>".
+ <li><p>Let <var>potentialError</var> be the result of <a>running</a> <a>UTF-8</a>'s
+ <a for=/>decoder</a> with <var>ioQueue</var>, <var>output</var>, and "<code>fatal</code>".
 
  <li><p>If <var>potentialError</var> is <a>error</a>, return failure.
 
@@ -971,17 +1063,15 @@ steps:
 
 <hr>
 
-<p>To <dfn export>encode</dfn> a scalar value stream <var>stream</var> using encoding
-<var>encoding</var>, run these steps:
+<p>To <dfn export>encode</dfn> an I/O queue of scalar values <var>ioQueue</var> given an encoding
+<var>encoding</var> and an optional I/O queue of scalar values <var>output</var> (default « »), run
+these steps:
 
 <ol>
- <li><p>Assert: <var>encoding</var> is not <a>replacement</a>, <a>UTF-16BE</a> or
- <a>UTF-16LE</a>.
+ <li><p>Assert: <var>encoding</var> is not <a>replacement</a>, <a>UTF-16BE</a>, or <a>UTF-16LE</a>.
 
- <li><p>Let <var>output</var> be a byte <a for=/>stream</a>.
-
- <li><p><a>Run</a> <var>encoding</var>'s
- <a for=/>encoder</a> with <var>stream</var>, <var>output</var>, and "<code>html</code>".
+ <li><p><a>Run</a> <var>encoding</var>'s <a for=/>encoder</a> with <var>ioQueue</var>,
+ <var>output</var>, and "<code>html</code>".
 
  <li><p>Return <var>output</var>.
 </ol>
@@ -992,22 +1082,23 @@ steps:
 [[URL]]
 [[HTML]]
 
-<p>To <dfn export>UTF-8 encode</dfn> a scalar value stream <var>stream</var>, return the result of
-<a lt=encode for=/>encoding</a> <var>stream</var> using encoding <a>UTF-8</a>.
+<p>To <dfn export>UTF-8 encode</dfn> an I/O queue of scalar values <var>ioQueue</var> given an
+optional I/O queue of scalar values <var>output</var> (default « »), return the result of
+<a lt=encode for=/>encoding</a> <var>ioQueue</var> with encoding <a>UTF-8</a> and <var>output</var>.
 
 <hr>
 
-<p>To <dfn export>BOM sniff</dfn> a byte stream <var>stream</var>, run these steps:
+<p>To <dfn export>BOM sniff</dfn> an I/O queue of bytes <var>ioQueue</var>, run these steps:
 
 <ol>
- <li><p>Wait until <var>stream</var> has three bytes available or the <a>end-of-stream</a> has been
- reached, whichever comes first.
+ <li><p>Let <var>BOM</var> be the result of <a for="I/O queue">peeking</a> 3 bytes from
+ <var>ioQueue</var>, <a for="from I/O queue">converted</a> to a byte sequence.
 
  <li>
   <p>For each of the rows in the table below, starting with the first one and going down, if
-  <var>stream</var> <a for="byte sequence">starts with</a> the bytes given in the first column,
-  return the <a for=/>encoding</a> given in the cell in the second column of that row. (Do not
-  consume those bytes.)
+  <var>BOM</var> <a for="byte sequence">starts with</a> the bytes given in the first column, then
+  return the <a for=/>encoding</a> given in the cell in the second column of that row. Otherwise,
+  return null.
 
   <table>
    <tbody><tr><th>Byte order mark<th>Encoding
@@ -1015,8 +1106,6 @@ steps:
    <tr><td>0xFE 0xFF<td><a>UTF-16BE</a>
    <tr><td>0xFF 0xFE<td><a>UTF-16LE</a>
   </table>
-
- <li><p>Return null.
 </ol>
 
 <p class=note>This hook is a workaround for the fact that <a>decode</a> has no way to communicate
@@ -1120,8 +1209,8 @@ interface mixin TextDecoderCommon {
  <dt><dfn for=TextDecoderCommon oldids=textdecoder-decoder,textdecoderstream-decoder>decoder</dfn>
  <dd>A <a for=/>decoder</a>.
 
- <dt><dfn for=TextDecoderCommon oldids=textdecoder-stream,textdecoderstream-stream>stream</dfn>
- <dd>A <a for=/>stream</a>.
+ <dt><dfn for=TextDecoderCommon oldids=textdecoder-stream,textdecoderstream-stream,textdecodercommon-stream>I/O queue</dfn>
+ <dd>An <a for=/>I/O queue</a> of bytes.
 
  <dt><dfn id=textdecoder-ignore-bom-flag for=TextDecoderCommon>ignore BOM</dfn>
  <dd>A boolean, initially false.
@@ -1133,8 +1222,9 @@ interface mixin TextDecoderCommon {
  <dd>An <a for=/>error mode</a>, initially "<code>replacement</code>".
 </dl>
 
-<p>The <dfn id=concept-td-serialize>serialize stream</dfn> algorithm, given a {{TextDecoderCommon}}
-<var>decoder</var> and a <a for=/>stream</a> <var>stream</var>, runs these steps:
+<p>The <dfn id=concept-td-serialize>serialize I/O queue</dfn> algorithm, given a
+{{TextDecoderCommon}} <var>decoder</var> and an <a for=/>I/O queue</a> of scalar values
+<var>ioQueue</var>, runs these steps:
 
 <ol>
  <li><p>Let <var>output</var> be the empty string.
@@ -1143,9 +1233,9 @@ interface mixin TextDecoderCommon {
   <p>While true:
 
   <ol>
-   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>stream</var>.
+   <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>ioQueue</var>.
 
-   <li><p>If <var>token</var> is <a>end-of-stream</a>, then return <var>output</var>.
+   <li><p>If <var>item</var> is <a>end-of-queue</a>, then return <var>output</var>.
 
    <li>
     <p>If <var>decoder</var>'s <a for=TextDecoderCommon>encoding</a> is <a>UTF-8</a>,
@@ -1156,10 +1246,10 @@ interface mixin TextDecoderCommon {
     <ol>
      <li><p>Set <var>decoder</var>'s <a for=TextDecoderCommon>BOM seen</a> to true.
 
-     <li><p>If <var>token</var> is U+FEFF, then <a for=iteration>continue</a>.
+     <li><p>If <var>item</var> is U+FEFF, then <a for=iteration>continue</a>.
     </ol>
 
-   <li><p>Append <var>token</var> to <var>output</var>.
+   <li><p>Append <var>item</var> to <var>output</var>.
   </ol>
 </ol>
 
@@ -1231,7 +1321,7 @@ initially false.
   <p>Returns the result of running <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a>.
   The method can be invoked zero or more times with <var>options</var>'s <code>stream</code> set to
   true, and then once without <var>options</var>'s <code>stream</code> (or set to false), to process
-  a fragmented stream. If the invocation without <var>options</var>'s <code>stream</code> (or set to
+  a fragmented input. If the invocation without <var>options</var>'s <code>stream</code> (or set to
   false) has no <var>input</var>, it's clearest to omit both arguments.
 
   <pre class=example id=example-end-of-stream><code class=lang-javascript>
@@ -1239,7 +1329,7 @@ var string = "", decoder = new TextDecoder(encoding), buffer;
 while(buffer = next_chunk()) {
   string += decoder.decode(buffer, {stream:true});
 }
-string += decoder.decode(); // end-of-stream</code></pre>
+string += decoder.decode(); // end-of-queue</code></pre>
 
   <p>If the <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>" and
   <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>,
@@ -1270,8 +1360,9 @@ method steps are:
 <ol>
  <li><p>If <a>this</a>'s <a for=TextDecoder>do not flush</a> is false, then set <a>this</a>'s
  <a for=TextDecoderCommon>decoder</a> to a new <a for=/>decoder</a> for <a>this</a>'s
- <a for=TextDecoderCommon>encoding</a>, <a>this</a>'s <a for=TextDecoderCommon>stream</a> to a new
- <a for=/>stream</a>, and <a>this</a>'s <a for=TextDecoderCommon>BOM seen</a> to false.
+ <a for=TextDecoderCommon>encoding</a>, <a>this</a>'s <a for=TextDecoderCommon>I/O queue</a> to the
+ <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> », and <a>this</a>'s
+ <a for=TextDecoderCommon>BOM seen</a> to false.
 
  <li><p>Set <a>this</a>'s <a for=TextDecoder>do not flush</a> to
  <var>options</var>["{{TextDecodeOptions/stream}}"].
@@ -1279,7 +1370,7 @@ method steps are:
  <li>
   <p>If <var>input</var> is given, then <a>push</a> a
   <a lt="get a copy of the buffer source">copy of</a> <var>input</var> to <a>this</a>'s
-  <a for=TextDecoderCommon>stream</a>.
+  <a for=TextDecoderCommon>I/O queue</a>.
 
   <p class=note>Implementations are strongly encouraged to use an implementation strategy that
   avoids this copy. When doing so they will have to make sure that changes to <var>input</var> do
@@ -1290,21 +1381,22 @@ method steps are:
   programming languages typically used for implementations. When implementing, take care to use the
   appropriate facilities when accessing memory exposed by <code>SharedArrayBuffer</code> objects.
 
- <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
  <li>
   <p>While true:
 
   <ol>
-   <li><p>Let <var>token</var> be the result of <a>reading</a> from <a>this</a>'s
-   <a for=TextDecoderCommon>stream</a>.
+   <li><p>Let <var>item</var> be the result of <a>reading</a> from <a>this</a>'s
+   <a for=TextDecoderCommon>I/O queue</a>.
 
    <li>
-    <p>If <var>token</var> is <a>end-of-stream</a> and <a>this</a>'s
+    <p>If <var>item</var> is <a>end-of-queue</a> and <a>this</a>'s
     <a for=TextDecoder>do not flush</a> is true, then return the result of running
-    <a>serialize stream</a> with <a>this</a> and <var>output</var>.
+    <a>serialize I/O queue</a> with <a>this</a> and <var>output</var>.
 
-    <p class=note>The way streaming works is to not handle <a>end-of-stream</a> here when
+    <p class=note>The way streaming works is to not handle <a>end-of-queue</a> here when
     <a>this</a>'s <a for=TextDecoder>do not flush</a> is true and to not set it to false. That way
     in a subsequent invocation <a>this</a>'s <a for=TextDecoderCommon>decoder</a> is not set anew in
     the first step of the algorithm and its state is preserved.
@@ -1313,13 +1405,13 @@ method steps are:
     <p>Otherwise:
 
     <ol>
-     <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
+     <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for
      <a>this</a>'s <a for=TextDecoderCommon>decoder</a>, <a>this</a>'s
-     <a for=TextDecoderCommon>stream</a>, <var>output</var>, and <a>this</a>'s
+     <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <a>this</a>'s
      <a for=TextDecoderCommon>error mode</a>.
 
      <li><p>If <var>result</var> is <a>finished</a>, then return the result of running
-     <a>serialize stream</a> with <a>this</a> and <var>output</var>.
+     <a>serialize I/O queue</a> with <a>this</a> and <var>output</var>.
 
      <li><p>Otherwise, if <var>result</var> is <a>error</a>, then <a lt=throw>throw</a> a
      {{TypeError}}.
@@ -1391,18 +1483,19 @@ constructor steps are to do nothing.
 <p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method steps are:
 
 <ol>
- <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
+ <li><p><a for="to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of scalar
+ values.
 
- <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> ».
 
  <li>
   <p>While true:
 
   <ol>
-   <li><p>Let <var>token</var> be the result of
+   <li><p>Let <var>item</var> be the result of
    <a>reading</a> from <var>input</var>.
 
-   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for the
+   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for the
    <a>UTF-8 encoder</a>, <var>input</var>, <var>output</var>.
 
    <li>
@@ -1410,8 +1503,9 @@ constructor steps are to do nothing.
 
     <p class=note>The <a>UTF-8 encoder</a> cannot return <a>error</a>.
 
-   <li><p>If <var>result</var> is <a>finished</a>, convert <var>output</var> into a byte sequence,
-   and then return a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing <var>output</var>.
+   <li><p>If <var>result</var> is <a>finished</a>, <a for="from I/O queue">convert</a>
+   <var>output</var> into a byte sequence, and then return a {{Uint8Array}} object wrapping an
+   {{ArrayBuffer}} containing <var>output</var>.
    <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
   </ol>
 </ol>
@@ -1430,21 +1524,22 @@ method steps are:
  <var>destination</var>.
 
  <li>
-  <p>Let <var>unused</var> be a new <a for=/>stream</a>.
+  <p>Let <var>unused</var> be the <a for=/>I/O queue</a> of scalar values « <a>end-of-queue</a> ».
 
   <p class=note>The <a>handler</a> algorithm invoked below requires this argument, but it is not
   used by the <a>UTF-8 encoder</a>.
 
- <li><p>Convert <var>source</var> to a <a for=/>stream</a>.
+ <li><p><a for="to I/O queue">Convert</a> <var>source</var> to an <a for=/>I/O queue</a> of scalar
+ values.
 
  <li>
   <p>While true:
 
   <ol>
-   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>source</var>.
+   <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>source</var>.
 
    <li><p>Let <var>result</var> be the result of running the <a>UTF-8 encoder</a>'s <a>handler</a>
-   on <var>unused</var> and <var>token</var>.
+   on <var>unused</var> and <var>item</var>.
 
    <li><p>If <var>result</var> is <a>finished</a>, then <a for=iteration>break</a>.
 
@@ -1457,7 +1552,7 @@ method steps are:
       <var>written</var> is greater than or equal to the number of bytes in <var>result</var>, then:
 
       <ol>
-       <li><p>If <var>token</var> is greater than U+FFFF, then increment <var>read</var> by 2.
+       <li><p>If <var>item</var> is greater than U+FFFF, then increment <var>read</var> by 2.
 
        <li><p>Otherwise, increment <var>read</var> by 1.
 
@@ -1609,7 +1704,7 @@ constructor steps are:
 
  <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>decoder</a> to a new <a for=/>decoder</a> for
  <a>this</a>'s <a for=TextDecoderCommon>encoding</a>, and set <a>this</a>'s
- <a for=TextDecoderCommon>stream</a> to a new <a for=/>stream</a>.
+ <a for=TextDecoderCommon>I/O queue</a> to a new <a for=/>I/O queue</a>.
 
  <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
 
@@ -1637,8 +1732,8 @@ constructor steps are:
 
  <li>
   <p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>bufferSource</var> to
-  <var>decoder</var>'s <a for=TextDecoderCommon>stream</a>. If this throws an exception, then return
-  a promise rejected with that exception.
+  <var>decoder</var>'s <a for=TextDecoderCommon>I/O queue</a>. If this throws an exception, then
+  return a promise rejected with that exception.
 
   <p class=warning>See the
   <a href=#sharedarraybuffer-warning>warning for <code>SharedArrayBuffer</code> objects</a> above.
@@ -1646,19 +1741,21 @@ constructor steps are:
  <li><p>Let <var>controller</var> be <var>decoder</var>'s
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
- <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
  <li>
-  <p>While true, run these steps:
+  <p>While true:
 
   <ol>
-   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>decoder</var>'s
-   <a for=TextDecoderCommon>stream</a>.
+   <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>decoder</var>'s
+   <a for=TextDecoderCommon>I/O queue</a>.
 
    <li>
-    <p>If <var>token</var> is <a>end-of-stream</a>, run these steps:
+    <p>If <var>item</var> is <a>end-of-queue</a>, then:
+
     <ol>
-     <li><p>Let <var>outputChunk</var> be the result of running <a>serialize stream</a> with
+     <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
      <var>decoder</var> and <var>output</var>.
 
      <li><p>if <var>outputChunk</var> is non-empty, call
@@ -1668,9 +1765,9 @@ constructor steps are:
      <li><p>Return a new promise resolved with undefined.
     </ol>
 
-   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>token</var> for
+   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for
    <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a>, <var>decoder</var>'s
-   <a for=TextDecoderCommon>stream</a>, <var>output</var>, and <var>decoder</var>'s
+   <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <var>decoder</var>'s
    <a for=TextDecoderCommon>error mode</a>.
 
    <li><p>If <var>result</var> is <a>error</a>, then return a new promise rejected with a
@@ -1683,27 +1780,30 @@ constructor steps are:
 steps:
 
 <ol>
- <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
+ « <a>end-of-queue</a> ».
 
- <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-stream</a> for
+ <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-queue</a> for
  <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a> and <var>decoder</var>'s
- <a for=TextDecoderCommon>stream</a>, <var>output</var>, and <var>decoder</var>'s
+ <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <var>decoder</var>'s
  <a for=TextDecoderCommon>error mode</a>.
 
- <li><p>If <var>result</var> is <a>finished</a>, run these steps:
- <ol>
-  <li><p>Let <var>outputChunk</var> be the result of running <a>serialize stream</a> with
-  <var>decoder</var> and <var>output</var>.
+ <li>
+  <p>If <var>result</var> is <a>finished</a>, then:
 
-  <li><p>Let <var>controller</var> be <var>decoder</var>'s
-  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
+  <ol>
+   <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
+   <var>decoder</var> and <var>output</var>.
 
-  <li><p>If <var>outputChunk</var> is non-empty, call
-  <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-  <var>outputChunk</var>).
+   <li><p>Let <var>controller</var> be <var>decoder</var>'s
+   <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
-  <li><p>Return a new promise resolved with undefined.
- </ol>
+   <li><p>If <var>outputChunk</var> is non-empty, call
+   <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+   <var>outputChunk</var>).
+
+   <li><p>Return a new promise resolved with undefined.
+  </ol>
 
  <li><p>Otherwise, return a new promise rejected with a {{TypeError}} exception.
 </ol>
@@ -1793,31 +1893,33 @@ constructor steps are:
  <var>chunk</var> to a {{DOMString}}. If this throws an exception, then return a promise rejected
  with that exception.
 
- <p class=note>{{DOMString}} is used here so that a surrogate pair that is split between chunks can
- be reassembled into the appropriate scalar value. The behavior is otherwise identical to
- {{USVString}}. In particular, lone surrogates will be replaced with U+FFFD.
+ <li><p><a for="to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of
+ <a>code units</a>.
 
- <li><p>Convert <var>input</var> to a <a for=/>stream</a>.
+ <p class=note>{{DOMString}}, as well as an <a for=/>I/O queue</a> of code units rather than scalar
+ values, are used here so that a surrogate pair that is split between chunks can be reassembled into
+ the appropriate scalar value. The behavior is otherwise identical to {{USVString}}. In particular,
+ lone surrogates will be replaced with U+FFFD.
 
- <li><p>Let <var>output</var> be a new <a for=/>stream</a>.
+ <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> ».
 
  <li><p>Let <var>controller</var> be <var>encoder</var>'s
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
  <li>
-  <p>While true, run these steps:
+  <p>While true:
 
   <ol>
-   <li><p>Let <var>token</var> be the result of <a>reading</a> from <var>input</var>.
+   <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>input</var>.
 
    <li>
-    <p>If <var>token</var> is <a>end-of-stream</a>, run these steps:
+    <p>If <var>item</var> is <a>end-of-queue</a>, then:
 
     <ol>
-     <li><p>Convert <var>output</var> into a byte sequence.
+     <li><p><a for="from I/O queue">Convert</a> <var>output</var> into a byte sequence.
 
      <li>
-      <p>If <var>output</var> is non-empty, run these steps:
+      <p>If <var>output</var> is non-empty, then:
 
       <ol>
        <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
@@ -1831,7 +1933,7 @@ constructor steps are:
     </ol>
 
    <li><p>Let <var>result</var> be the result of executing the <a>convert code unit to scalar
-   value</a> algorithm with <var>encoder</var>, <var>token</var> and <var>input</var>.
+   value</a> algorithm with <var>encoder</var>, <var>item</var> and <var>input</var>.
 
    <li><p>If <var>result</var> is not <a>continue</a>, then <a>process</a> <var>result</var> for
    <a for=TextEncoderStream>encoder</a>, <var>input</var>, <var>output</var>.
@@ -1840,32 +1942,33 @@ constructor steps are:
 </ol>
 
 <p>The <dfn>convert code unit to scalar value</dfn> algorithm, given a {{TextEncoderStream}} object
-<var>encoder</var>, <var>token</var>, and stream <var>input</var>, runs these steps:
+<var>encoder</var>, a <a>code unit</a> <var>item</var>, and an <a for=/>I/O queue</a> of code units
+<var>input</var>, runs these steps:
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, run these steps:
+  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, then:
 
   <ol>
    <li><p>Let <var>high surrogate</var> be <var>encoder</var>'s <a>pending high surrogate</a>.
 
    <li><p>Set <var>encoder</var>'s <a>pending high surrogate</a> to null.
 
-   <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return a code point
+   <li><p>If <var>item</var> is in the range U+DC00 to U+DFFF, inclusive, then return a scalar value
    whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
-   (<var>token</var> &minus; 0xDC00).
+   (<var>item</var> &minus; 0xDC00).
 
-   <li><p><a>Prepend</a> <var>token</var> to <var>input</var>.
+   <li><p><a>Prepend</a> <var>item</var> to <var>input</var>.
 
    <li><p>Return U+FFFD.
   </ol>
 
- <li><p>If <var>token</var> is in the range U+D800 to U+DBFF, inclusive, then set <a>pending high
- surrogate</a> to <var>token</var> and return <a>continue</a>.
+ <li><p>If <var>item</var> is in the range U+D800 to U+DBFF, inclusive, then set <a>pending high
+ surrogate</a> to <var>item</var> and return <a>continue</a>.
 
- <li><p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return U+FFFD.
+ <li><p>If <var>item</var> is in the range U+DC00 to U+DFFF, inclusive, then return U+FFFD.
 
- <li><p>Return <var>token</var>.
+ <li><p>Return <var>item</var>.
 </ol>
 
 <p class=note>This is equivalent to the "<a for=string>convert</a> a <a for=/>string</a> into a
@@ -1877,7 +1980,7 @@ that are split between strings. [[!INFRA]]
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, run these steps:
+  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, then:
 
   <ol>
    <li><p>Let <var>controller</var> be <var>encoder</var>'s
@@ -1915,15 +2018,15 @@ algorithm but rather the <a>decode</a> and <a>UTF-8 decode</a> algorithms.
 <dfn>UTF-8 bytes needed</dfn> (all initially 0), a <dfn>UTF-8 lower boundary</dfn>
 (initially 0x80), and a <dfn>UTF-8 upper boundary</dfn> (initially 0xBF).
 
-<p><a>UTF-8</a>'s <a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps:
+<p><a>UTF-8</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>UTF-8 bytes needed</a> is not 0, set
  <a>UTF-8 bytes needed</a> to 0 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li>
@@ -1994,8 +2097,7 @@ algorithm but rather the <a>decode</a> and <a>UTF-8 decode</a> algorithms.
    set <a>UTF-8 lower boundary</a> to 0x80, and set
    <a>UTF-8 upper boundary</a> to 0xBF.
 
-   <li><p><a>Prepend</a> <var>byte</var> to
-   <var>stream</var>.
+   <li><p><a>Prepend</a> <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
@@ -2033,11 +2135,11 @@ achieve the same result are fine, even encouraged).
 
 <h4 id=utf-8-encoder dfn export>UTF-8 encoder</h4>
 
-<p><a>UTF-8</a>'s <a for=/>encoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>code point</var>, runs these steps:
+<p><a>UTF-8</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2132,11 +2234,11 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 <h3 id=single-byte-decoder dfn export>single-byte decoder</h3>
 
 <p><a>Single-byte encodings</a>'s
-<a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps:
+<a for=/>decoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
+<var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return a code point whose value
@@ -2153,11 +2255,11 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 <h3 id=single-byte-encoder export dfn>single-byte encoder</h3>
 
 <p><a>Single-byte encodings</a>'s
-<a for=/>encoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>code point</var>, runs these steps:
+<a for=/>encoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
+<var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2200,15 +2302,15 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <p><a>gb18030</a>'s <a for=/>decoder</a> has an associated <dfn>gb18030 first</dfn>,
 <dfn>gb18030 second</dfn>, and <dfn>gb18030 third</dfn> (all initially 0x00).
 
-<p><a>gb18030</a>'s <a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps:
+<p><a>gb18030</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>gb18030 first</a>, <a>gb18030 second</a>, and <a>gb18030 third</a>
  are 0x00, return <a>finished</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-stream</a>, and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, and
  <a>gb18030 first</a>, <a>gb18030 second</a>, or <a>gb18030 third</a>
  is not 0x00, set <a>gb18030 first</a>, <a>gb18030 second</a>, and
  <a>gb18030 third</a> to 0x00, and return <a>error</a>.
@@ -2222,7 +2324,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
     <ol>
      <li><p><a>Prepend</a> <a>gb18030 second</a>, <a>gb18030 third</a>, and <var>byte</var> to
-     <var>stream</var>.
+     <var>ioQueue</var>.
 
      <li><p>Set <a>gb18030 first</a>, <a>gb18030 second</a>, and <a>gb18030 third</a> to 0x00.
 
@@ -2249,7 +2351,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <a>gb18030 third</a> to <var>byte</var> and return <a>continue</a>.
 
    <li><p><a>Prepend</a> <a>gb18030 second</a>
-   followed by <var>byte</var> to <var>stream</var>, set
+   followed by <var>byte</var> to <var>ioQueue</var>, set
    <a>gb18030 first</a> and <a>gb18030 second</a> to 0x00, and return
    <a>error</a>.
   </ol>
@@ -2277,7 +2379,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>code point</var>.
 
    <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
-   <var>stream</var>.
+   <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
@@ -2299,11 +2401,11 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <p><a>gb18030</a>'s <a for=/>encoder</a> has an associated <dfn id=gbk-flag>is GBK</dfn>
 (initially false).
 
-<p><a>gb18030</a>'s <a for=/>encoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>code point</var>, runs these steps:
+<p><a>gb18030</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2376,14 +2478,14 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <p><a>Big5</a>'s <a for=/>decoder</a> has an associated
 <dfn>Big5 lead</dfn> (initially 0x00).
 
-<a>Big5</a>'s <a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps:
+<a>Big5</a>'s <a for=/>decoder</a>'s <a>handler</a>, given <var>ioQueue</var>
+and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and <a>Big5 lead</a>
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a>
  is not 0x00, set <a>Big5 lead</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and <a>Big5 lead</a>
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a>
  is 0x00, return <a>finished</a>.
 
  <li>
@@ -2423,7 +2525,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>code point</var>.
 
    <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
-   <var>stream</var>.
+   <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
@@ -2440,11 +2542,11 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h4 id=big5-encoder dfn export>Big5 encoder</h4>
 
-<p><a>Big5</a>'s <a for=/>encoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>code point</var>, runs these steps:
+<p><a>Big5</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var>ioQueue</var>
+and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2480,15 +2582,15 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <dfn id=euc-jp-jis0212-flag>EUC-JP jis0212</dfn> (initially false) and
 <dfn>EUC-JP lead</dfn> (initially 0x00).
 
-<p><a>EUC-JP</a>'s <a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps:
+<p><a>EUC-JP</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>EUC-JP lead</a> is not 0x00, set <a>EUC-JP lead</a> to 0x00, and return
  <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>EUC-JP lead</a> is 0x00, return <a>finished</a>.
 
  <li><p>If <a>EUC-JP lead</a> is 0x8E and <var>byte</var> is
@@ -2519,7 +2621,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>code point</var>.
 
    <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
-   <var>stream</var>.
+   <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
@@ -2537,11 +2639,11 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h4 id=euc-jp-encoder dfn export>EUC-JP encoder</h4>
 
-<p><a>EUC-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>code point</var>, runs these steps:
+<p><a>EUC-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -2592,8 +2694,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <dfn>ISO-2022-JP lead</dfn> (initially 0x00), and
 <dfn id=iso-2022-jp-output-flag>ISO-2022-JP output</dfn> (initially false).
 
-<p><a>ISO-2022-JP</a>'s <a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps, switching on
+<p><a>ISO-2022-JP</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>byte</var>, runs these steps, switching on
 <a>ISO-2022-JP decoder state</a>:
 
 <dl class=switch>
@@ -2611,7 +2713,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <dd><p>Set <a>ISO-2022-JP output</a> to false and return a code point whose
    value is <var>byte</var>.
 
-   <dt><a>end-of-stream</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Return <a>finished</a>.
 
    <dt>Otherwise
@@ -2638,7 +2740,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <dd><p>Set <a>ISO-2022-JP output</a> to false and return a code point whose
    value is <var>byte</var>.
 
-   <dt><a>end-of-stream</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Return <a>finished</a>.
 
    <dt>Otherwise
@@ -2659,7 +2761,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    value is 0xFF61 &minus; 0x21 + <var>byte</var>.
    <!-- Katakana; subtraction is done first to avoid upsetting compilers -->
 
-   <dt><a>end-of-stream</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Return <a>finished</a>.
 
    <dt>Otherwise
@@ -2682,7 +2784,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <a lt="ISO-2022-JP decoder trail byte">trail byte</a>, and return
    <a>continue</a>.
 
-   <dt><a>end-of-stream</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Return <a>finished</a>.
 
    <dt>Otherwise
@@ -2716,11 +2818,11 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
      <li><p>Return a code point whose value is <var>code point</var>.
     </ol>
 
-   <dt><a>end-of-stream</a>
+   <dt><a>end-of-queue</a>
    <dd><p>Set the <a>ISO-2022-JP decoder state</a> to
    <a lt="ISO-2022-JP decoder lead byte">lead byte</a>,
    <a>prepend</a> <var>byte</var> to
-   <var>stream</var>, and return <a>error</a>.
+   <var>ioQueue</var>, and return <a>error</a>.
 
    <dt>Otherwise
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
@@ -2738,8 +2840,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <a lt="ISO-2022-JP decoder escape">escape</a>, and return
    <a>continue</a>.
 
-   <li><p><a>Prepend</a> <var>byte</var> to
-   <var>stream</var>.
+   <li><p><a>Prepend</a> <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
    <a>ISO-2022-JP decoder state</a> to
@@ -2782,8 +2883,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
      <a>error</a> otherwise.
     </ol>
 
-   <li><p><a>Prepend</a>
-   <var>lead</var> and <var>byte</var> to <var>stream</var>.
+   <li><p><a>Prepend</a> <var>lead</var> and <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
    <a>ISO-2022-JP decoder state</a> to <a>ISO-2022-JP decoder output state</a>
@@ -2810,19 +2910,19 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <dfn lt="ISO-2022-JP encoder jis0208">jis0208</dfn> (initially
 <a lt="ISO-2022-JP encoder ASCII">ASCII</a>).
 
-<p><a>ISO-2022-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>code point</var>, runs these steps:
+<p><a>ISO-2022-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-stream</a> and
+ <li><p>If <var>code point</var> is <a>end-of-queue</a> and
  <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>,
  <a>prepend</a> <var>code point</var> to
- <var>stream</var>, set <a>ISO-2022-JP encoder state</a> to
+ <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes
  0x1B 0x28 0x42.
 
- <li><p>If <var>code point</var> is <a>end-of-stream</a> and
+ <li><p>If <var>code point</var> is <a>end-of-queue</a> and
  <a>ISO-2022-JP encoder state</a> is
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, return <a>finished</a>.
 
@@ -2857,7 +2957,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>,
  <a>prepend</a> <var>code point</var> to
- <var>stream</var>, set <a>ISO-2022-JP encoder state</a> to
+ <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes
  0x1B 0x28 0x42.
 
@@ -2865,7 +2965,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder Roman">Roman</a>,
  <a>prepend</a> <var>code point</var> to
- <var>stream</var>, set <a>ISO-2022-JP encoder state</a> to
+ <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder Roman">Roman</a>, and return three bytes
  0x1B 0x28 0x4A.
 
@@ -2888,7 +2988,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <li><p>If <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
  <a>prepend</a> <var>code point</var> to
- <var>stream</var>, set <a>ISO-2022-JP encoder state</a> to
+ <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder jis0208">jis0208</a>, and return three bytes
  0x1B 0x24 0x42.
 
@@ -2908,15 +3008,15 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <p><a>Shift_JIS</a>'s <a for=/>decoder</a> has an associated
 <dfn>Shift_JIS lead</dfn> (initially 0x00).
 
-<p><a>Shift_JIS</a>'s <a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps:
+<p><a>Shift_JIS</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>Shift_JIS lead</a> is not 0x00, set <a>Shift_JIS lead</a> to 0x00 and
  return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>Shift_JIS lead</a> is 0x00, return <a>finished</a>.
 
  <li>
@@ -2947,7 +3047,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>code point</var>.
 
    <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
-   <var>stream</var>.
+   <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
@@ -2970,11 +3070,11 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h4 id=shift_jis-encoder dfn export>Shift_JIS encoder</h4>
 
-<p><a>Shift_JIS</a>'s <a for=/>encoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>code point</var>, runs these steps:
+<p><a>Shift_JIS</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a> or U+0080, return
@@ -3020,15 +3120,15 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <p><a>EUC-KR</a>'s <a for=/>decoder</a> has an associated
 <dfn>EUC-KR lead</dfn> (initially 0x00).
 
-<p><a>EUC-KR</a>'s <a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps:
+<p><a>EUC-KR</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>EUC-KR lead</a> is not 0x00, set <a>EUC-KR lead</a> to 0x00
  and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>EUC-KR lead</a> is 0x00, return <a>finished</a>.
 
  <li>
@@ -3047,7 +3147,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>code point</var>.
 
    <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
-   <var>stream</var>.
+   <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
@@ -3064,11 +3164,11 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h4 id=euc-kr-encoder dfn export>EUC-KR encoder</h4>
 
-<p><a>EUC-KR</a>'s <a for=/>encoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>code point</var>, runs these steps:
+<p><a>EUC-KR</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -3103,11 +3203,11 @@ the server and the client.
 <p><a>replacement</a>'s <a for=/>decoder</a> has an associated
 <dfn id=replacement-error-returned-flag>replacement error returned</dfn> (initially false).
 
-<p><a>replacement</a>'s <a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps:
+<p><a>replacement</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a>, return <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, return <a>finished</a>.
 
  <li><p>If <a>replacement error returned</a> is false, set
  <a>replacement error returned</a> to true and return <a>error</a>.
@@ -3128,16 +3228,16 @@ has been found to be more accurate in deployed content. Therefore it is not part
 <dfn>UTF-16 lead surrogate</dfn> (both initially null), and
 <dfn id=utf-16be-decoder-flag>is UTF-16BE decoder</dfn> (initially false).
 
-<p><a>shared UTF-16 decoder</a>'s <a>handler</a>, given a <var>stream</var>
-and <var>byte</var>, runs these steps:
+<p><a>shared UTF-16 decoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
+<var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and either
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and either
  <a>UTF-16 lead byte</a> or <a>UTF-16 lead surrogate</a> is non-null, set
  <a>UTF-16 lead byte</a> and <a>UTF-16 lead surrogate</a> to null, and return
  <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-stream</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and
  <a>UTF-16 lead byte</a> and <a>UTF-16 lead surrogate</a> are null, return
  <a>finished</a>.
 
@@ -3172,8 +3272,7 @@ and <var>byte</var>, runs these steps:
    <li><p>Let <var>bytes</var> be two bytes whose values are <var>byte1</var> and <var>byte2</var>,
    if <a>is UTF-16BE decoder</a> is true, and <var>byte2</var> and <var>byte1</var> otherwise.
 
-   <li><p><a>Prepend</a> the <var>bytes</var> to
-   <var>stream</var> and return <a>error</a>.
+   <li><p><a>Prepend</a> the <var>bytes</var> to <var>ioQueue</var> and return <a>error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera U+FFFD them -->
   </ol>
 
@@ -3224,11 +3323,11 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 
 <h4 id=x-user-defined-decoder dfn export>x-user-defined decoder</h4>
 
-<p><a>x-user-defined</a>'s <a for=/>decoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>byte</var>, runs these steps:
+<p><a>x-user-defined</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
@@ -3240,11 +3339,11 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 
 <h4 id=x-user-defined-encoder dfn export>x-user-defined encoder</h4>
 
-<p><a>x-user-defined</a>'s <a for=/>encoder</a>'s <a>handler</a>, given a
-<var>stream</var> and <var>code point</var>, runs these steps:
+<p><a>x-user-defined</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
+<var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-stream</a>, return
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
  <a>finished</a>.
 
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
@@ -3270,7 +3369,7 @@ issues. Browsers also should disable this feature if the resource was decoded us
 
 <h2 class=no-num id=implementation-considerations>Implementation considerations</h2>
 
-<p>Instead of supporting <a for=/>streams</a> with arbitrary <a for=stream>prepend</a>, the
+<p>Instead of supporting <a for=/>I/O queues</a> with arbitrary <a for="I/O queue">prepend</a>, the
 <a for=/>decoders</a> for <a for=/>encodings</a> in this standard could be implemented with:
 
 <ol>
