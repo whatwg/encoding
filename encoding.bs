@@ -1413,8 +1413,7 @@ method steps are:
      <li><p>If <var>result</var> is <a>finished</a>, then return the result of running
      <a>serialize I/O queue</a> with <a>this</a> and <var>output</var>.
 
-     <li><p>Otherwise, if <var>result</var> is <a>error</a>, then <a lt=throw>throw</a> a
-     {{TypeError}}.
+     <li><p>Otherwise, if <var>result</var> is <a>error</a>, <a>throw</a> a {{TypeError}}.
     </ol>
   </ol>
 </ol>
@@ -1740,7 +1739,7 @@ constructor steps are:
    <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <var>decoder</var>'s
    <a for=TextDecoderCommon>error mode</a>.
 
-   <li><p>If <var>result</var> is <a>error</a>, then throw a {{TypeError}} exception.
+   <li><p>If <var>result</var> is <a>error</a>, then <a>throw</a> a {{TypeError}}.
   </ol>
 </ol>
 
@@ -1771,7 +1770,7 @@ steps:
    <var>outputChunk</var> in <var>decoder</var>'s <a for=GenericTransformStream>transform</a>.
   </ol>
 
- <li><p>Otherwise, throw a {{TypeError}} exception.
+ <li><p>Otherwise, <a>throw</a> a {{TypeError}}.
 </ol>
 
 
