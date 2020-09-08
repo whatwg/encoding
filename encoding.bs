@@ -1763,9 +1763,6 @@ steps:
    <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
    <var>decoder</var> and <var>output</var>.
 
-   <li><p>Let <var>controller</var> be <var>decoder</var>'s
-   <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
-
    <li><p>If <var>outputChunk</var> is non-empty, then <a for=TransformStream>enqueue</a>
    <var>outputChunk</var> in <var>decoder</var>'s <a for=GenericTransformStream>transform</a>.
   </ol>
