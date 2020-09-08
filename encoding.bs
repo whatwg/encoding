@@ -121,7 +121,7 @@ present in <a for=/>I/O queues</a> of any type and it signifies that there are n
 
  <li><p>If <var>ioQueue</var>[0] is <a>end-of-queue</a>, then return <a>end-of-queue</a>.
 
- <li><p>Otherwise, <a for=list>remove</a> <var>ioQueue</var>[0] and return it.
+ <li><p><a for=list>Remove</a> <var>ioQueue</var>[0] and return it.
 </ol>
 
 <p>To <a for="I/O queue">read</a> a number <var>number</var> of <a for=list>items</a> from
@@ -159,6 +159,7 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
   <ol>
    <li><p>If <var>ioQueue</var>[<var>n</var>] is <a>end-of-queue</a>, <a>break</a>.
+
    <li><p>Otherwise, <a for=list>append</a> <var>ioQueue</var>[<var>n</var>] to <var>prefix</var>.
   </ol>
  </li>
@@ -175,6 +176,7 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
   <ol>
    <li><p>If <var>item</var> is <a>end-of-queue</a>, do nothing.
+
    <li><p>Otherwise, <a for=list>insert</a> <var>item</var> before the last <a for=list>item</a> in
    <var>ioQueue</var>.
   </ol>
@@ -314,6 +316,7 @@ happening.
 
   <ol>
    <li><p><a>Push</a> <a>end-of-queue</a> to <var>output</var>.
+
    <li><p>Return <var>result</var>.
   </ol>
  </li>
@@ -335,11 +338,13 @@ happening.
   <dl class=switch>
    <dt>"<code>replacement</code>"
    <dd><a>Push</a> U+FFFD to <var>output</var>.
+
    <dt>"<code>html</code>"
    <dd><a>Prepend</a> U+0026, U+0023, followed by the
    shortest sequence of <a>ASCII digits</a> representing <var>result</var>'s
    <a>code point</a> in base ten, followed by U+003B to <var>input</var>.
    <!-- &# ... ; -->
+
    <dt>"<code>fatal</code>"
    <dd>Return <a>error</a>.
   </dl>
@@ -1062,7 +1067,7 @@ given an optional I/O queue of scalar values <var>output</var> (default « »), 
 these steps:
 
 <ol>
- <li><p>Assert: <var>encoding</var> is not <a>replacement</a>, <a>UTF-16BE</a> or <a>UTF-16LE</a>.
+ <li><p>Assert: <var>encoding</var> is not <a>replacement</a>, <a>UTF-16BE</a>, or <a>UTF-16LE</a>.
 
  <li><p><a>Run</a> <var>encoding</var>'s <a for=/>encoder</a> with <var>ioQueue</var>,
  <var>output</var>, and "<code>html</code>".
@@ -1739,14 +1744,15 @@ constructor steps are:
  « <a>end-of-queue</a> ».
 
  <li>
-  <p>While true, run these steps:
+  <p>While true:
 
   <ol>
    <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>decoder</var>'s
    <a for=TextDecoderCommon>I/O queue</a>.
 
    <li>
-    <p>If <var>item</var> is <a>end-of-queue</a>, run these steps:
+    <p>If <var>item</var> is <a>end-of-queue</a>, then:
+
     <ol>
      <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
      <var>decoder</var> and <var>output</var>.
@@ -1781,20 +1787,22 @@ steps:
  <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <var>decoder</var>'s
  <a for=TextDecoderCommon>error mode</a>.
 
- <li><p>If <var>result</var> is <a>finished</a>, run these steps:
- <ol>
-  <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
-  <var>decoder</var> and <var>output</var>.
+ <li>
+  <p>If <var>result</var> is <a>finished</a>, then:
 
-  <li><p>Let <var>controller</var> be <var>decoder</var>'s
-  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
+  <ol>
+   <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
+   <var>decoder</var> and <var>output</var>.
 
-  <li><p>If <var>outputChunk</var> is non-empty, call
-  <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-  <var>outputChunk</var>).
+   <li><p>Let <var>controller</var> be <var>decoder</var>'s
+   <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
-  <li><p>Return a new promise resolved with undefined.
- </ol>
+   <li><p>If <var>outputChunk</var> is non-empty, call
+   <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
+   <var>outputChunk</var>).
+
+   <li><p>Return a new promise resolved with undefined.
+  </ol>
 
  <li><p>Otherwise, return a new promise rejected with a {{TypeError}} exception.
 </ol>
@@ -1898,19 +1906,19 @@ constructor steps are:
  <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
  <li>
-  <p>While true, run these steps:
+  <p>While true:
 
   <ol>
    <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>input</var>.
 
    <li>
-    <p>If <var>item</var> is <a>end-of-queue</a>, run these steps:
+    <p>If <var>item</var> is <a>end-of-queue</a>, then:
 
     <ol>
      <li><p><a for="from I/O queue">Convert</a> <var>output</var> into a byte sequence.
 
      <li>
-      <p>If <var>output</var> is non-empty, run these steps:
+      <p>If <var>output</var> is non-empty, then:
 
       <ol>
        <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
@@ -1938,7 +1946,7 @@ constructor steps are:
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, run these steps:
+  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, then:
 
   <ol>
    <li><p>Let <var>high surrogate</var> be <var>encoder</var>'s <a>pending high surrogate</a>.
@@ -1971,7 +1979,7 @@ that are split between strings. [[!INFRA]]
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, run these steps:
+  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, then:
 
   <ol>
    <li><p>Let <var>controller</var> be <var>encoder</var>'s
@@ -2088,8 +2096,7 @@ algorithm but rather the <a>decode</a> and <a>UTF-8 decode</a> algorithms.
    set <a>UTF-8 lower boundary</a> to 0x80, and set
    <a>UTF-8 upper boundary</a> to 0xBF.
 
-   <li><p><a>Prepend</a> <var>byte</var> to
-   <var>ioQueue</var>.
+   <li><p><a>Prepend</a> <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
@@ -2832,8 +2839,7 @@ and <var>code point</var>, runs these steps:
    <a lt="ISO-2022-JP decoder escape">escape</a>, and return
    <a>continue</a>.
 
-   <li><p><a>Prepend</a> <var>byte</var> to
-   <var>ioQueue</var>.
+   <li><p><a>Prepend</a> <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
    <a>ISO-2022-JP decoder state</a> to
@@ -2876,8 +2882,7 @@ and <var>code point</var>, runs these steps:
      <a>error</a> otherwise.
     </ol>
 
-   <li><p><a>Prepend</a>
-   <var>lead</var> and <var>byte</var> to <var>ioQueue</var>.
+   <li><p><a>Prepend</a> <var>lead</var> and <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
    <a>ISO-2022-JP decoder state</a> to <a>ISO-2022-JP decoder output state</a>
@@ -3266,8 +3271,7 @@ has been found to be more accurate in deployed content. Therefore it is not part
    <li><p>Let <var>bytes</var> be two bytes whose values are <var>byte1</var> and <var>byte2</var>,
    if <a>is UTF-16BE decoder</a> is true, and <var>byte2</var> and <var>byte1</var> otherwise.
 
-   <li><p><a>Prepend</a> the <var>bytes</var> to
-   <var>ioQueue</var> and return <a>error</a>.
+   <li><p><a>Prepend</a> the <var>bytes</var> to <var>ioQueue</var> and return <a>error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera U+FFFD them -->
   </ol>
 
