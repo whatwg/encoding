@@ -52,11 +52,10 @@ values now require that in case of an illegal byte combination, a scalar value i
 range U+0000 to U+007F, inclusive, cannot be “masked”. For the aforementioned sequence the
 output would be U+FFFD U+0022.
 
-<p>This is a larger issue for encodings that map anything that is an <a>ASCII byte</a> to
-something that is not an <a>ASCII code point</a>, when there is no lead byte present. These
-are “ASCII-incompatible” encodings and other than <a>ISO-2022-JP</a>, <a>UTF-16BE</a>,
-and <a>UTF-16LE</a>, which are unfortunately required due to deployed content, they are not
-supported. (Investigation is
+<p>This is a larger issue for encodings that map anything that is an <a>ASCII byte</a> to something
+that is not an <a>ASCII code point</a>, when there is no lead byte present. These are
+“ASCII-incompatible” encodings and other than <a>ISO-2022-JP</a> and <a>UTF-16BE/LE</a>, which are
+unfortunately required due to deployed content, they are not supported. (Investigation is
 <a href=https://github.com/whatwg/encoding/issues/8 lt="Add more labels to the replacement encoding">ongoing</a>
 whether more labels of other such encodings can be mapped to the <a>replacement</a>
 encoding, rather than the unknown encoding fallback.) An example attack is injecting
@@ -244,8 +243,8 @@ associated <dfn>encoder</dfn>. Each <a for=/>decoder</a> and <a for=/>encoder</a
 <dfn>finished</dfn>, one or more <a for=list>items</a>, <dfn>error</dfn>
 optionally with a <a>code point</a>, or <dfn>continue</dfn>.
 
-<p class="note no-backref">The <a>replacement</a>, <a>UTF-16BE</a>, and
-<a>UTF-16LE</a> <a for=/>encodings</a> have no <a for=/>encoder</a>.
+<p class="note no-backref">The <a>replacement</a> and <a>UTF-16BE/LE</a> <a for=/>encodings</a> have
+no <a for=/>encoder</a>.
 
 <p>An <dfn>error mode</dfn> as used below is "<code>replacement</code>" (default) or
 "<code>fatal</code>" for a <a for=/>decoder</a> and "<code>fatal</code>" (default) or
@@ -743,8 +742,8 @@ plans to remove these.</p>
 <var>encoding</var>, run these steps:
 
 <ol>
- <li><p>If <var>encoding</var> is <a>replacement</a>, <a>UTF-16BE</a>, or
- <a>UTF-16LE</a>, return <a>UTF-8</a>.
+ <li><p>If <var>encoding</var> is <a>replacement</a> or <a>UTF-16BE/LE</a>, then return
+ <a>UTF-8</a>.
 
  <li><p>Return <var>encoding</var>.
 </ol>
@@ -1068,7 +1067,7 @@ given an optional I/O queue of scalar values <var>output</var> (default « »), 
 these steps:
 
 <ol>
- <li><p>Assert: <var>encoding</var> is not <a>replacement</a>, <a>UTF-16BE</a>, or <a>UTF-16LE</a>.
+ <li><p>Assert: <var>encoding</var> is not <a>replacement</a> or <a>UTF-16BE/LE</a>.
 
  <li><p><a>Run</a> <var>encoding</var>'s <a for=/>encoder</a> with <var>ioQueue</var>,
  <var>output</var>, and "<code>html</code>".
@@ -1238,10 +1237,9 @@ interface mixin TextDecoderCommon {
    <li><p>If <var>item</var> is <a>end-of-queue</a>, then return <var>output</var>.
 
    <li>
-    <p>If <var>decoder</var>'s <a for=TextDecoderCommon>encoding</a> is <a>UTF-8</a>,
-    <a>UTF-16BE</a>, or <a>UTF-16LE</a>, and <var>decoder</var>'s
-    <a for=TextDecoderCommon>ignore BOM</a> and <a for=TextDecoderCommon>BOM seen</a> are false,
-    then:
+    <p>If <var>decoder</var>'s <a for=TextDecoderCommon>encoding</a> is <a>UTF-8</a> or
+    <a>UTF-16BE/LE</a>, and <var>decoder</var>'s <a for=TextDecoderCommon>ignore BOM</a> and
+    <a for=TextDecoderCommon>BOM seen</a> are false, then:
 
     <ol>
      <li><p>Set <var>decoder</var>'s <a for=TextDecoderCommon>BOM seen</a> to true.
@@ -3216,7 +3214,10 @@ the server and the client.
 </ol>
 
 
-<h3 id=common-infrastructure-for-utf-16be-and-utf-16le>Common infrastructure for <a>UTF-16BE</a> and <a>UTF-16LE</a></h3>
+<h3 id=common-infrastructure-for-utf-16be-and-utf-16le>Common infrastructure for <a>UTF-16BE/LE</a></h3>
+
+<p><dfn export>UTF-16BE/LE</dfn> is <a>UTF-16BE</a> or <a>UTF-16LE</a>.
+
 
 <h4 id=shared-utf-16-decoder dfn export>shared UTF-16 decoder</h4>
 
@@ -3359,11 +3360,10 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 
 <h2 id=browser-ui>Browser UI</h2>
 
-<p>Browsers are encouraged to not enable overriding the encoding of a resource. If such a
-feature is nonetheless present, browsers should not offer either
-<a>UTF-16BE</a> or <a>UTF-16LE</a> as option due to aforementioned security
-issues. Browsers also should disable this feature if the resource was decoded using either
-<a>UTF-16BE</a> or <a>UTF-16LE</a>.
+<p>Browsers are encouraged to not enable overriding the encoding of a resource. If such a feature is
+nonetheless present, browsers should not offer <a>UTF-16BE/LE</a> as an option, due to the
+aforementioned security issues. Browsers should also disable this feature if the resource was
+decoded using <a>UTF-16BE/LE</a>.
 
 
 
