@@ -1063,8 +1063,8 @@ given an optional I/O queue of scalar values <var>output</var> (default « »), 
 <hr>
 
 <p>To <dfn export>encode</dfn> an I/O queue of scalar values <var>ioQueue</var> given an encoding
-<var>encoding</var> and an optional I/O queue of scalar values <var>output</var> (default « »), run
-these steps:
+<var>encoding</var> and an optional I/O queue of bytes <var>output</var> (default « »), run these
+steps:
 
 <ol>
  <li><p>Assert: <var>encoding</var> is not <a>replacement</a> or <a>UTF-16BE/LE</a>.
@@ -1082,7 +1082,7 @@ these steps:
 [[HTML]]
 
 <p>To <dfn export>UTF-8 encode</dfn> an I/O queue of scalar values <var>ioQueue</var> given an
-optional I/O queue of scalar values <var>output</var> (default « »), return the result of
+optional I/O queue of bytes <var>output</var> (default « »), return the result of
 <a lt=encode for=/>encoding</a> <var>ioQueue</var> with encoding <a>UTF-8</a> and <var>output</var>.
 
 <hr>
