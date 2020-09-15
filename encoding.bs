@@ -9,6 +9,14 @@ Markup Shorthands: css off
 Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeoptions textdecodeoptions,index section-index
 </pre>
 
+<pre class=link-defaults>
+spec:streams
+    type:interface; text:GenericTransformStream
+    type:attribute;
+        text:readable
+        text:writable
+</pre>
+
 <link rel=stylesheet href=visualization-colors.css>
 
 
@@ -1411,8 +1419,7 @@ method steps are:
      <li><p>If <var>result</var> is <a>finished</a>, then return the result of running
      <a>serialize I/O queue</a> with <a>this</a> and <var>output</var>.
 
-     <li><p>Otherwise, if <var>result</var> is <a>error</a>, then <a lt=throw>throw</a> a
-     {{TypeError}}.
+     <li><p>Otherwise, if <var>result</var> is <a>error</a>, <a>throw</a> a {{TypeError}}.
     </ol>
   </ol>
 </ol>
@@ -1602,29 +1609,6 @@ function convertString(buffer, input, callback) {
 </div>
 
 
-<h3 id=interface-mixin-generictransformstream>Interface mixin {{GenericTransformStream}}</h3>
-
-<p>The {{GenericTransformStream}} interface mixin represents the concept of a
-<a>transform stream</a> in IDL. It is not a {{TransformStream}}, though it has the same interface
-and it delegates to one.
-
-<pre class=idl>
-interface mixin GenericTransformStream {
-  readonly attribute ReadableStream readable;
-  readonly attribute WritableStream writable;
-};
-</pre>
-
-<p>An object that includes {{GenericTransformStream}} has an associated
-<dfn for=GenericTransformStream>transform</dfn> of type {{TransformStream}}.
-
-<p>The <dfn attribute for=GenericTransformStream><code>readable</code></dfn> getter steps are to
-return <a>this</a>'s <a for=GenericTransformStream>transform</a>.\[[readable]].
-
-<p>The <dfn attribute for=GenericTransformStream><code>writable</code></dfn> getter steps are to
-return <a>this</a>'s <a for=GenericTransformStream>transform</a>.\[[writable]].
-
-
 <h3 id=interface-textdecoderstream>Interface {{TextDecoderStream}}</h3>
 
 <pre class=idl>
@@ -1704,19 +1688,18 @@ constructor steps are:
  <a>this</a>'s <a for=TextDecoderCommon>encoding</a>, and set <a>this</a>'s
  <a for=TextDecoderCommon>I/O queue</a> to a new <a for=/>I/O queue</a>.
 
- <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
-
  <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
  and runs the <a>decode and enqueue a chunk</a> algorithm with <a>this</a> and <var>chunk</var>.
 
  <li><p>Let <var>flushAlgorithm</var> be an algorithm which takes no arguments and runs the
  <a>flush and enqueue</a> algorithm with <a>this</a>.
 
- <li><p>Let <var>transform</var> be the result of calling
- <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
- <var>flushAlgorithm</var>).
-
- <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to <var>transform</var>.
+ <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to the result of
+ <a for=TransformStream>creating</a> a {{TransformStream}} with
+ <a for=TransformStream/create><var ignore>transformAlgorithm</var></a> set to
+ <var>transformAlgorithm</var> and
+ <a for=TransformStream/create><var ignore>flushAlgorithm</var></a> set to
+ <var>flushAlgorithm</var>.
 </ol>
 
 <p>The <dfn>decode and enqueue a chunk</dfn> algorithm, given a {{TextDecoderStream}} object
@@ -1725,19 +1708,14 @@ constructor steps are:
 <ol>
  <li><p>Let <var>bufferSource</var> be the result of
  <a lt="converted to an IDL value">converting</a> <var>chunk</var> to an
- <code>[<a extended-attribute>AllowShared</a>] <a typedef>BufferSource</a></code>. If this throws an
- exception, then return a promise rejected with that exception.
+ <code>[<a extended-attribute>AllowShared</a>] <a typedef>BufferSource</a></code>.
 
  <li>
   <p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>bufferSource</var> to
-  <var>decoder</var>'s <a for=TextDecoderCommon>I/O queue</a>. If this throws an exception, then
-  return a promise rejected with that exception.
+  <var>decoder</var>'s <a for=TextDecoderCommon>I/O queue</a>.
 
   <p class=warning>See the
   <a href=#sharedarraybuffer-warning>warning for <code>SharedArrayBuffer</code> objects</a> above.
-
- <li><p>Let <var>controller</var> be <var>decoder</var>'s
- <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
  <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
  « <a>end-of-queue</a> ».
@@ -1756,11 +1734,10 @@ constructor steps are:
      <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
      <var>decoder</var> and <var>output</var>.
 
-     <li><p>if <var>outputChunk</var> is non-empty, call
-     <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-     <var>outputChunk</var>).
+     <li><p>If <var>outputChunk</var> is non-empty, then <a for=TransformStream>enqueue</a>
+     <var>outputChunk</var> in <var>decoder</var>'s <a for=GenericTransformStream>transform</a>.
 
-     <li><p>Return a new promise resolved with undefined.
+     <li><p>Return.
     </ol>
 
    <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for
@@ -1768,8 +1745,7 @@ constructor steps are:
    <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <var>decoder</var>'s
    <a for=TextDecoderCommon>error mode</a>.
 
-   <li><p>If <var>result</var> is <a>error</a>, then return a new promise rejected with a
-   {{TypeError}} exception.
+   <li><p>If <var>result</var> is <a>error</a>, then <a>throw</a> a {{TypeError}}.
   </ol>
 </ol>
 
@@ -1793,17 +1769,11 @@ steps:
    <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
    <var>decoder</var> and <var>output</var>.
 
-   <li><p>Let <var>controller</var> be <var>decoder</var>'s
-   <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
-
-   <li><p>If <var>outputChunk</var> is non-empty, call
-   <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-   <var>outputChunk</var>).
-
-   <li><p>Return a new promise resolved with undefined.
+   <li><p>If <var>outputChunk</var> is non-empty, then <a for=TransformStream>enqueue</a>
+   <var>outputChunk</var> in <var>decoder</var>'s <a for=GenericTransformStream>transform</a>.
   </ol>
 
- <li><p>Otherwise, return a new promise rejected with a {{TypeError}} exception.
+ <li><p>Otherwise, <a>throw</a> a {{TypeError}}.
 </ol>
 
 
@@ -1866,19 +1836,18 @@ constructor steps are:
  <li><p>Set <a>this</a>'s <a for=TextEncoderStream>encoder</a> to <a>UTF-8</a>'s
  <a for=/>encoder</a>.
 
- <li><p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing.
-
  <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
  and runs the <a>encode and enqueue a chunk</a> algorithm with <a>this</a> and <var>chunk</var>.
 
  <li><p>Let <var>flushAlgorithm</var> be an algorithm which runs the <a>encode and flush</a>
  algorithm with <a>this</a>.
 
- <li><p>Let <var>transform</var> be the result of calling
- <a abstract-op>CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>,
- <var>flushAlgorithm</var>).
-
- <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to <var>transform</var>.
+ <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to the result of
+ <a for=TransformStream>creating</a> a {{TransformStream}} with
+ <a for=TransformStream/create><var ignore>transformAlgorithm</var></a> set to
+ <var>transformAlgorithm</var> and
+ <a for=TransformStream/create><var ignore>flushAlgorithm</var></a> set to
+ <var>flushAlgorithm</var>.
 </ol>
 
 <hr>
@@ -1888,8 +1857,7 @@ constructor steps are:
 
 <ol>
  <li><p>Let <var>input</var> be the result of <a lt="converted to an IDL value">converting</a>
- <var>chunk</var> to a {{DOMString}}. If this throws an exception, then return a promise rejected
- with that exception.
+ <var>chunk</var> to a {{DOMString}}.
 
  <li><p><a for="to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of
  <a>code units</a>.
@@ -1900,9 +1868,6 @@ constructor steps are:
  lone surrogates will be replaced with U+FFFD.
 
  <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> ».
-
- <li><p>Let <var>controller</var> be <var>encoder</var>'s
- <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
 
  <li>
   <p>While true:
@@ -1923,11 +1888,11 @@ constructor steps are:
        <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
        <var>output</var>.
 
-       <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-       <var>chunk</var>).
+       <li><p><a for=TransformStream>Enqueue</a> <var>chunk</var> into <var>encoder</var>'s
+       <a for=GenericTransformStream>transform</a>.
       </ol>
 
-     <li><p>Return a new promise resolved with undefined.
+     <li><p>Return.
     </ol>
 
    <li><p>Let <var>result</var> be the result of executing the <a>convert code unit to scalar
@@ -1981,22 +1946,15 @@ that are split between strings. [[!INFRA]]
   <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, then:
 
   <ol>
-   <li><p>Let <var>controller</var> be <var>encoder</var>'s
-   <a for=GenericTransformStream>transform</a>.\[[transformStreamController]].
-
    <li>
-    <p>Let <var>output</var> be the byte sequence 0xEF 0xBF 0xBD.
+    <p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
+    0xEF 0xBF 0xBD.
 
-    <p class=note>This is the replacement character U+FFFD encoded as UTF-8.
+    <p class=note>This is U+FFFD (�) in <a>UTF-8</a> bytes.
 
-   <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
-   <var>output</var>.
-
-   <li><p>Call <a abstract-op>TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>,
-   <var>chunk</var>).
+   <li><p><a for=TransformStream>Enqueue</a> <var>chunk</var> into <var>encoder</var>'s
+   <a for=GenericTransformStream>transform</a>.
   </ol>
-
- <li><p>Return a new promise resolved with undefined.
 </ol>
 
 
