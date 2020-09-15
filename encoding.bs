@@ -9,6 +9,10 @@ Markup Shorthands: css off
 Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeoptions textdecodeoptions,index section-index
 </pre>
 
+<pre class=link-defaults>
+spec:streams; type:interface; text:GenericTransformStream
+</pre>
+
 <link rel=stylesheet href=visualization-colors.css>
 
 
