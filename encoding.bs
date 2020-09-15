@@ -10,7 +10,9 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 </pre>
 
 <pre class=link-defaults>
-spec:streams; type:interface; text:GenericTransformStream
+spec:streams
+    type:interface; text:GenericTransformStream
+    type:attribute; text:readable
 </pre>
 
 <link rel=stylesheet href=visualization-colors.css>
