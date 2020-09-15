@@ -12,7 +12,9 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 <pre class=link-defaults>
 spec:streams
     type:interface; text:GenericTransformStream
-    type:attribute; text:readable
+    type:attribute;
+        text:readable
+        text:writable
 </pre>
 
 <link rel=stylesheet href=visualization-colors.css>
