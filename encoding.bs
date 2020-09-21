@@ -995,9 +995,16 @@ different format here, to be able to represent ranges.)
  <p>The <a>get an encoding</a> algorithm is to be used to turn a <a>label</a> into an
  <a for=/>encoding</a>.
 
- <p>Standards are to ensure that the I/O queues they pass to the <a for=/>encode</a> and
+ <p>Standards are to ensure that the input I/O queues they pass to the <a for=/>encode</a> and
  <a>UTF-8 encode</a> algorithms are effectively I/O queues of scalar values, i.e., they contain
  no <a>surrogates</a>.
+
+ <p>These hooks, with the exception of <a>BOM sniff</a>, will block until the input I/O queue has
+ been consumed in its entirety. In order to use the output tokens as they are pushed into the
+ stream, callers are to invoke the hooks with an empty output I/O queue and read from it
+ <a>in parallel</a>. Note that some care is needed when using
+ <a>UTF-8 decode without BOM or fail</a>, as any error found during decoding will prevent the
+ <a>end-of-queue</a> item from ever being pushed into the output I/O queue.
 </div>
 
 <p>To <dfn export>decode</dfn> an I/O queue of bytes <var>ioQueue</var> given a fallback encoding
