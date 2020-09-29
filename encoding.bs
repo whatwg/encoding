@@ -3,6 +3,7 @@ Group: WHATWG
 H1: Encoding
 Shortname: encoding
 Text Macro: TWITTER encodings
+Text Macro: LATESTRD 2020-06
 Abstract: The Encoding Standard defines encodings and their JavaScript API.
 Translation: ja https://triple-underscore.github.io/Encoding-ja.html
 Markup Shorthands: css off
