@@ -346,10 +346,9 @@ happening.
    <dd><a>Push</a> U+FFFD to <var>output</var>.
 
    <dt>"<code>html</code>"
-   <dd><a>Push</a> the result of <a>UTF-8 encoding</a> U+0026 (&amp;), U+0023 (#), followed by the
-   shortest sequence of <a>ASCII digits</a> representing <var>result</var>'s <a>code point</a> in
-   base ten, followed by U+003B (;) to <var>output</var>.
-   <!-- &# ... ; -->
+   <dd><a>Push</a> 0x26 (&amp;), 0x23 (#), followed by the shortest sequence of 0x30 (0) to
+   0x39 (9), inclusive, representing <var>result</var>'s <a>code point</a>'s
+   <a for="code point">value</a> in base ten, followed by 0x3B (;) to <var>output</var>.
 
    <dt>"<code>fatal</code>"
    <dd>Return <a>error</a>.
