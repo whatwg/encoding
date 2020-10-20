@@ -304,6 +304,12 @@ happening.
  "<code>fatal</code>".
 
  <li><p>Assert: if <var>encoderDecoderInstance</var> is an <a for=/>encoder</a> instance,
+ <var>mode</var> is not "<code>replacement</code>".
+
+ <li><p>Assert: if <var>encoderDecoderInstance</var> is a <a for=/>decoder</a> instance,
+ <var>mode</var> is not "<code>html</code>".
+
+ <li><p>Assert: if <var>encoderDecoderInstance</var> is an <a for=/>encoder</a> instance,
  <var>item</var> is not a <a>surrogate</a>.
 
  <li><p>Let <var>result</var> be the result of running <var>encoderDecoderInstance</var>'s
@@ -340,9 +346,9 @@ happening.
    <dd><a>Push</a> U+FFFD to <var>output</var>.
 
    <dt>"<code>html</code>"
-   <dd><a>Prepend</a> U+0026, U+0023, followed by the
-   shortest sequence of <a>ASCII digits</a> representing <var>result</var>'s
-   <a>code point</a> in base ten, followed by U+003B to <var>input</var>.
+   <dd><a>Push</a> the result of <a>UTF-8 encoding</a> U+0026 (&amp;), U+0023 (#), followed by the
+   shortest sequence of <a>ASCII digits</a> representing <var>result</var>'s <a>code point</a> in
+   base ten, followed by U+003B (;) to <var>output</var>.
    <!-- &# ... ; -->
 
    <dt>"<code>fatal</code>"
@@ -2938,8 +2944,17 @@ and <var>code point</var>, runs these steps:
   <p class=note>If <var>pointer</var> is non-null, it is less than 8836 due to the nature of
   <a>index jis0208</a> and the <a>index pointer</a> operation.
 
- <li><p>If <var>pointer</var> is null, return <a>error</a> with
- <var>code point</var>.
+ <li>
+  <p>If <var>pointer</var> is null, then:
+
+  <ol>
+   <li><p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
+   then <a>prepend</a> <var>code point</var> to <var>ioQueue</var>, set
+   <a>ISO-2022-JP encoder state</a> to <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three
+   bytes 0x1B 0x28 0x42.
+
+   <li><p>Return <a>error</a> with <var>code point</var>.
+  </ol>
 
  <li><p>If <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
