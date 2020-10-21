@@ -263,11 +263,10 @@ happening.
 [[URL]]
 [[HTML]]
 
-<p>To <dfn id=concept-encoding-run for=encoding>run</dfn> an <a for=/>encoding</a>'s
-<a for=/>decoder</a> or <a for=/>encoder</a> <var>encoderDecoder</var> with input
-<a for=/>I/O queue</a> <var>input</var>, output
-<a for=/>I/O queue</a> <var>output</var>, and optional
-<a for=/>error mode</a> <var>mode</var>, run these steps:
+<p>To <dfn id=concept-encoding-run>run</dfn> an <a for=/>encoding</a>'s <a for=/>decoder</a> or
+<a for=/>encoder</a> <var>encoderDecoder</var> with input <a for=/>I/O queue</a> <var>input</var>,
+output <a for=/>I/O queue</a> <var>output</var>, and optional <a for=/>error mode</a>
+<var>mode</var>, run these steps:
 
 <ol>
  <li><p>If <var>mode</var> is not given, then set it to "<code>replacement</code>" if
@@ -285,18 +284,15 @@ happening.
    <var>encoderDecoderInstance</var>, <var>input</var>, <var>output</var>, and
    <var>mode</var>.
 
-   <li><p>If <var>result</var> is not <a>continue</a>, return <var>result</var>.
-
-   <li><p>Otherwise, do nothing.
+   <li><p>If <var>result</var> is not <a>continue</a>, then return <var>result</var>.
   </ol>
 </ol>
 
-<p>To <dfn id=concept-encoding-process for=encoding>process</dfn> an
-<a for=list>item</a> <var>item</var> for an <a for=/>encoding</a>'s
-<a for=/>encoder</a> or <a for=/>decoder</a> instance <var>encoderDecoderInstance</var>,
-<a for=/>I/O queue</a> <var>input</var>, output
-<a for=/>I/O queue</a> <var>output</var>, and optional
-<a for=/>error mode</a> <var>mode</var>, run these steps:
+<p>To <dfn id=concept-encoding-process>process</dfn> an <a for=list>item</a> <var>item</var> for an
+<a for=/>encoding</a>'s <a for=/>encoder</a> or <a for=/>decoder</a> instance
+<var>encoderDecoderInstance</var>, <a for=/>I/O queue</a> <var>input</var>, output
+<a for=/>I/O queue</a> <var>output</var>, and optional <a for=/>error mode</a> <var>mode</var>, run
+these steps:
 
 <ol>
  <li><p>If <var>mode</var> is not given, then set it to "<code>replacement</code>" if
@@ -338,12 +334,12 @@ happening.
   </ol>
 
  <li>
-  <p>Otherwise, if <var>result</var> is <a>error</a>, switch on <var>mode</var> and
-  run the associated steps:
+  <p>Otherwise, if <var>result</var> is an <a>error</a>, switch on <var>mode</var> and run the
+  associated steps:
 
   <dl class=switch>
    <dt>"<code>replacement</code>"
-   <dd><a>Push</a> U+FFFD to <var>output</var>.
+   <dd><a>Push</a> U+FFFD (�) to <var>output</var>.
 
    <dt>"<code>html</code>"
    <dd><a>Push</a> 0x26 (&amp;), 0x23 (#), followed by the shortest sequence of 0x30 (0) to
@@ -351,10 +347,10 @@ happening.
    <a for="code point">value</a> in base ten, followed by 0x3B (;) to <var>output</var>.
 
    <dt>"<code>fatal</code>"
-   <dd>Return <a>error</a>.
+   <dd>Return <var>result</var>.
   </dl>
 
- <li>Return <a>continue</a>.
+ <li><p>Return <a>continue</a>.
 </ol>
 
 
@@ -977,9 +973,9 @@ different format here, to be able to represent ranges.)
 <h2 id=specification-hooks>Hooks for standards</h2>
 
 <div class=note>
- <p>The algorithms defined below (<a>decode</a>, <a>UTF-8 decode</a>,
- <a>UTF-8 decode without BOM</a>, <a>UTF-8 decode without BOM or fail</a>, <a for=/>encode</a>,
- <a>UTF-8 encode</a>, and <a>BOM sniff</a>) are intended for usage by other standards.
+ <p>The algorithms defined below (<a>UTF-8 decode</a>, <a>UTF-8 decode without BOM</a>,
+ <a>UTF-8 decode without BOM or fail</a>, and <a>UTF-8 encode</a>) are intended for usage by other
+ standards.
 
  <p>For decoding, <a>UTF-8 decode</a> is to be used by new formats. For identifiers or byte
  sequences within a format or protocol, use <a>UTF-8 decode without BOM</a> or
@@ -987,50 +983,17 @@ different format here, to be able to represent ranges.)
 
  <p>For encoding, <a>UTF-8 encode</a> is to be used.
 
- <p>Standards are strongly discouraged from using <a>decode</a>, <a for=/>encode</a>, and
- <a>BOM sniff</a>, except as needed for compatibility.
+ <p>Standards are to ensure that the input I/O queues they pass to <a>UTF-8 encode</a> (as well as
+ the legacy <a>encode</a>) are effectively I/O queues of scalar values, i.e., they contain no
+ <a>surrogates</a>.
 
- <p>The <a>get an encoding</a> algorithm is to be used to turn a <a>label</a> into an
- <a for=/>encoding</a>.
-
- <p>Standards are to ensure that the input I/O queues they pass to the <a for=/>encode</a> and
- <a>UTF-8 encode</a> algorithms are effectively I/O queues of scalar values, i.e., they contain
- no <a>surrogates</a>.
-
- <p>These hooks, with the exception of <a>BOM sniff</a>, will block until the input I/O queue has
- been consumed in its entirety. In order to use the output tokens as they are pushed into the
+ <p>These hooks (as well as <a>decode</a> and <a>encode</a>) will block until the input I/O queue
+ has been consumed in its entirety. In order to use the output tokens as they are pushed into the
  stream, callers are to invoke the hooks with an empty output I/O queue and read from it
  <a>in parallel</a>. Note that some care is needed when using
  <a>UTF-8 decode without BOM or fail</a>, as any error found during decoding will prevent the
  <a>end-of-queue</a> item from ever being pushed into the output I/O queue.
 </div>
-
-<p>To <dfn export>decode</dfn> an I/O queue of bytes <var>ioQueue</var> given a fallback encoding
-<var>encoding</var> and an optional I/O queue of scalar values <var>output</var> (default « »), run
-these steps:
-
-<ol>
- <li><p>Let <var>BOMEncoding</var> be the result of <a>BOM sniffing</a> <var>ioQueue</var>.
-
- <li>
-  <p>If <var>BOMEncoding</var> is non-null:
-
-  <ol>
-   <li><p>Set <var>encoding</var> to <var>BOMEncoding</var>.
-
-   <li><p><a>Read</a> three bytes from <var>ioQueue</var>, if <var>BOMEncoding</var> is
-   <a>UTF-8</a>; otherwise <a>read</a> two bytes. (Do nothing with those bytes.)
-  </ol>
-
-  <p class=note>For compatibility with deployed content, the byte order mark is more authoritative
-  than anything else. In a context where HTTP is used this is in violation of the semantics of the
-  `<code>Content-Type</code>` header.
-
- <li><p><a>Run</a> <var>encoding</var>'s <a for=/>decoder</a> with <var>ioQueue</var> and
- <var>output</var>.
-
- <li><p>Return <var>output</var>.
-</ol>
 
 <p>To <dfn export>UTF-8 decode</dfn> an I/O queue of bytes <var>ioQueue</var> given an optional I/O
 queue of scalar values <var>output</var> (default « »), run these steps:
@@ -1068,37 +1031,52 @@ given an optional I/O queue of scalar values <var>output</var> (default « »), 
  <li><p>Let <var>potentialError</var> be the result of <a>running</a> <a>UTF-8</a>'s
  <a for=/>decoder</a> with <var>ioQueue</var>, <var>output</var>, and "<code>fatal</code>".
 
- <li><p>If <var>potentialError</var> is <a>error</a>, return failure.
+ <li><p>If <var>potentialError</var> is an <a>error</a>, then return failure.
 
  <li><p>Return <var>output</var>.
 </ol>
 
 <hr>
-
-<p>To <dfn export>encode</dfn> an I/O queue of scalar values <var>ioQueue</var> given an encoding
-<var>encoding</var> and an optional I/O queue of bytes <var>output</var> (default « »), run these
-steps:
-
-<ol>
- <li><p>Assert: <var>encoding</var> is not <a>replacement</a> or <a>UTF-16BE/LE</a>.
-
- <li><p><a>Run</a> <var>encoding</var>'s <a for=/>encoder</a> with <var>ioQueue</var>,
- <var>output</var>, and "<code>html</code>".
-
- <li><p>Return <var>output</var>.
-</ol>
-
-<p class="note no-backref">This is mostly a legacy hook for URLs and HTML forms. Layering
-<a>UTF-8 encode</a> on top is safe as it never triggers
-<a>errors</a>.
-[[URL]]
-[[HTML]]
 
 <p>To <dfn export>UTF-8 encode</dfn> an I/O queue of scalar values <var>ioQueue</var> given an
 optional I/O queue of bytes <var>output</var> (default « »), return the result of
 <a lt=encode for=/>encoding</a> <var>ioQueue</var> with encoding <a>UTF-8</a> and <var>output</var>.
 
-<hr>
+
+<h3 id=legacy-hooks>Legacy hooks for standards</h3>
+
+<p class=note>In addition to the <a>decode</a>, <a>BOM sniff</a>, and <a>encode</a> algorithms
+below, standards needing these legacy hooks will most likely also need to use <a>get an encoding</a>
+(to turn a <a>label</a> into an <a for=/>encoding</a>) and <a>get an output encoding</a> (to turn an
+<a for=/>encoding</a> into another <a for=/>encoding</a> that is suitable to pass into
+<a>encode</a>). Other algorithms are not to be used directly.
+
+<p>To <dfn export>decode</dfn> an I/O queue of bytes <var>ioQueue</var> given a fallback encoding
+<var>encoding</var> and an optional I/O queue of scalar values <var>output</var> (default « »), run
+these steps:
+
+<ol>
+ <li><p>Let <var>BOMEncoding</var> be the result of <a>BOM sniffing</a> <var>ioQueue</var>.
+
+ <li>
+  <p>If <var>BOMEncoding</var> is non-null:
+
+  <ol>
+   <li><p>Set <var>encoding</var> to <var>BOMEncoding</var>.
+
+   <li><p><a>Read</a> three bytes from <var>ioQueue</var>, if <var>BOMEncoding</var> is
+   <a>UTF-8</a>; otherwise <a>read</a> two bytes. (Do nothing with those bytes.)
+  </ol>
+
+  <p class=note>For compatibility with deployed content, the byte order mark is more authoritative
+  than anything else. In a context where HTTP is used this is in violation of the semantics of the
+  `<code>Content-Type</code>` header.
+
+ <li><p><a>Run</a> <var>encoding</var>'s <a for=/>decoder</a> with <var>ioQueue</var> and
+ <var>output</var>.
+
+ <li><p>Return <var>output</var>.
+</ol>
 
 <p>To <dfn export>BOM sniff</dfn> an I/O queue of bytes <var>ioQueue</var>, run these steps:
 
@@ -1124,6 +1102,27 @@ optional I/O queue of bytes <var>output</var> (default « »), return the result
 back to the caller that it has found a byte order mark and is therefore not using the provided
 encoding. The hook is to be invoked before <a>decode</a>, and it will return an encoding
 corresponding to the byte order mark found, or null otherwise.
+
+<hr>
+
+<p>To <dfn export>encode</dfn> an I/O queue of scalar values <var>ioQueue</var> given an encoding
+<var>encoding</var> and an optional I/O queue of bytes <var>output</var> (default « »), run these
+steps:
+
+<ol>
+ <li><p>Assert: <var>encoding</var> is not <a>replacement</a> or <a>UTF-16BE/LE</a>.
+
+ <li><p><a>Run</a> <var>encoding</var>'s <a for=/>encoder</a> with <var>ioQueue</var>,
+ <var>output</var>, and "<code>html</code>".
+
+ <li><p>Return <var>output</var>.
+</ol>
+
+<p class="note no-backref">This is mostly a legacy hook for URLs and HTML forms. Layering
+<a>UTF-8 encode</a> on top is safe as it never triggers
+<a>errors</a>.
+[[URL]]
+[[HTML]]
 
 
 
