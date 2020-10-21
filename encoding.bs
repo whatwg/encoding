@@ -1045,12 +1045,17 @@ optional I/O queue of bytes <var>output</var> (default « »), return the result
 
 <h3 id=legacy-hooks>Legacy hooks for standards</h3>
 
-<p class=note>Standards are strongly discouraged from using <a>decode</a>, <a for=/>encode</a>, and
-<a>BOM sniff</a>, except as needed for compatibility. Standards needing these legacy hooks will most
-likely also need to use <a>get an encoding</a> (to turn a <a>label</a> into an
-<a for=/>encoding</a>) and <a>get an output encoding</a> (to turn an <a for=/>encoding</a> into
-another <a for=/>encoding</a> that is suitable to pass into <a>encode</a>). Other algorithms are not
-to be used directly.
+<div class=note>
+ <p>Standards are strongly discouraged from using <a>decode</a>, <a>BOM sniff</a>, and
+ <a for=/>encode</a>, except as needed for compatibility. Standards needing these legacy hooks will
+ most likely also need to use <a>get an encoding</a> (to turn a <a>label</a> into an
+ <a for=/>encoding</a>) and <a>get an output encoding</a> (to turn an <a for=/>encoding</a> into
+ another <a for=/>encoding</a> that is suitable to pass into <a>encode</a>).
+
+ <p>For an extremely niche case custom encoder error handling is needed. The <a>get an encoder</a>
+ and <a>encode or fail</a> algorithms are to be used for that. Other algorithms are not to be used
+ directly.
+</div>
 
 <p>To <dfn export>decode</dfn> an I/O queue of bytes <var>ioQueue</var> given a fallback encoding
 <var>encoding</var> and an optional I/O queue of scalar values <var>output</var> (default « »), run
@@ -1111,19 +1116,52 @@ corresponding to the byte order mark found, or null otherwise.
 steps:
 
 <ol>
- <li><p>Assert: <var>encoding</var> is not <a>replacement</a> or <a>UTF-16BE/LE</a>.
+ <li><p>Let <var>encoder</var> be the result of <a>getting an encoder</a> from <var>encoding</var>.
 
- <li><p><a>Run</a> <var>encoding</var>'s <a for=/>encoder</a> with <var>ioQueue</var>,
- <var>output</var>, and "<code>html</code>".
+ <li><p><a>Run</a> <var>encoder</var> with <var>ioQueue</var>, <var>output</var>, and
+ "<code>html</code>".
 
  <li><p>Return <var>output</var>.
 </ol>
 
-<p class="note no-backref">This is mostly a legacy hook for URLs and HTML forms. Layering
-<a>UTF-8 encode</a> on top is safe as it never triggers
-<a>errors</a>.
-[[URL]]
-[[HTML]]
+<p class="note no-backref">This is a legacy hook for HTML forms. Layering <a>UTF-8 encode</a> on top
+is safe as it never triggers <a>errors</a>. [[HTML]]
+
+<hr>
+
+<p>To <dfn export lt="get an encoder|getting an encoder">get an encoder</dfn> from an
+<a for=/>encoding</a> <var>encoding</var>:
+
+<ol>
+ <li><p>Assert: <var>encoding</var> is not <a>replacement</a> or <a>UTF-16BE/LE</a>.
+
+ <li><p>Return <var>encoding</var>'s <a for=/>encoder</a>.
+</ol>
+
+<p>To <dfn export>encode or fail</dfn> an I/O queue of scalar values <var>ioQueue</var> given an
+<a for=/>encoder</a> <var>encoder</var> and an I/O queue of bytes <var>output</var>, run these
+steps:
+
+<ol>
+ <li><p>Let <var>potentialError</var> be the result of <a>running</a> <var>encoder</var> with
+ <var>ioQueue</var>, <var>output</var>, and "<code>fatal</code>".
+
+ <li><p>If <var>potentialError</var> is an <a>error</a>, then return <a>error</a>'s
+ <a>code point</a>'s <a for="code point">value</a>.
+
+ <li><p>Return null.
+</ol>
+
+<div class=note>
+ <p>This is a legacy hook for URLs. The caller will have to keep an <a for=/>encoder</a> alive as
+ the <a>ISO-2022-JP encoder</a> can be in two different states when returning an <a>error</a>. That
+ also means that if the caller emits bytes to encode the error in some way, these have to be in the
+ range 0x00 to 0x7F, inclusive, excluding 0x0E, 0x0F, 0x1B, 0x5C, and 0x7E. [[URL]]
+
+ <p>The return value is either the number representing the <a>code point</a> that could not be
+ encoded or null, if there was no <a>error</a>. When it returns non-null the caller will have to
+ invoke it again, supplying the same <a for=/>encoder</a> and a new output I/O queue.
+</div>
 
 
 
@@ -3399,6 +3437,7 @@ Glenn Maynard,
 Gordon P. Hemsley,
 Henri Sivonen,
 Ian Hickson,
+J. King,
 James Graham,
 Jeffrey Yasskin,
 John Tamplin,
