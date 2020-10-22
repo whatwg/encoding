@@ -1045,11 +1045,12 @@ optional I/O queue of bytes <var>output</var> (default « »), return the result
 
 <h3 id=legacy-hooks>Legacy hooks for standards</h3>
 
-<p class=note>In addition to the <a>decode</a>, <a>BOM sniff</a>, and <a>encode</a> algorithms
-below, standards needing these legacy hooks will most likely also need to use <a>get an encoding</a>
-(to turn a <a>label</a> into an <a for=/>encoding</a>) and <a>get an output encoding</a> (to turn an
-<a for=/>encoding</a> into another <a for=/>encoding</a> that is suitable to pass into
-<a>encode</a>). Other algorithms are not to be used directly.
+<p class=note>Standards are strongly discouraged from using <a>decode</a>, <a for=/>encode</a>, and
+<a>BOM sniff</a>, except as needed for compatibility. Standards needing these legacy hooks will most
+likely also need to use <a>get an encoding</a> (to turn a <a>label</a> into an
+<a for=/>encoding</a>) and <a>get an output encoding</a> (to turn an <a for=/>encoding</a> into
+another <a for=/>encoding</a> that is suitable to pass into <a>encode</a>). Other algorithms are not
+to be used directly.
 
 <p>To <dfn export>decode</dfn> an I/O queue of bytes <var>ioQueue</var> given a fallback encoding
 <var>encoding</var> and an optional I/O queue of scalar values <var>output</var> (default « »), run
