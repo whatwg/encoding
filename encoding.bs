@@ -1052,9 +1052,9 @@ optional I/O queue of bytes <var>output</var> (default « »), return the result
  <a for=/>encoding</a>) and <a>get an output encoding</a> (to turn an <a for=/>encoding</a> into
  another <a for=/>encoding</a> that is suitable to pass into <a>encode</a>).
 
- <p>For an extremely niche case custom encoder error handling is needed. The <a>get an encoder</a>
- and <a>encode or fail</a> algorithms are to be used for that. Other algorithms are not to be used
- directly.
+ <p>For the extremely niche case of URL percent-encoding, custom encoder error handling is needed.
+ The <a>get an encoder</a> and <a>encode or fail</a> algorithms are to be used for that. Other
+ algorithms are not to be used directly.
 </div>
 
 <p>To <dfn export>decode</dfn> an I/O queue of bytes <var>ioQueue</var> given a fallback encoding
@@ -1146,17 +1146,28 @@ steps:
  <li><p>Let <var>potentialError</var> be the result of <a>running</a> <var>encoder</var> with
  <var>ioQueue</var>, <var>output</var>, and "<code>fatal</code>".
 
+ <li><p><a for="I/O queue">Push</a> <a>end-of-queue</a> to <var>output</var>.
+
  <li><p>If <var>potentialError</var> is an <a>error</a>, then return <a>error</a>'s
  <a>code point</a>'s <a for="code point">value</a>.
 
  <li><p>Return null.
 </ol>
 
-<div class=note>
- <p>This is a legacy hook for URLs. The caller will have to keep an <a for=/>encoder</a> alive as
- the <a>ISO-2022-JP encoder</a> can be in two different states when returning an <a>error</a>. That
- also means that if the caller emits bytes to encode the error in some way, these have to be in the
- range 0x00 to 0x7F, inclusive, excluding 0x0E, 0x0F, 0x1B, 0x5C, and 0x7E. [[URL]]
+<div class=note id=pit-of-iso-2022-jp>
+ <p>This is a legacy hook for URL percent-encoding. The caller will have to keep an
+ <a for=/>encoder</a> alive as the <a>ISO-2022-JP encoder</a> can be in two different states when
+ returning an <a>error</a>. That also means that if the caller emits bytes to encode the error in
+ some way, these have to be in the range 0x00 to 0x7F, inclusive, excluding 0x0E, 0x0F, 0x1B, 0x5C,
+ and 0x7E. [[URL]]
+
+ <p>In particular, if upon returning an <a>error</a> the <a>ISO-2022-JP encoder</a> is in the
+ <a lt="ISO-2022-JP decoder Roman">Roman</a> state, the caller cannot output 0x5C (\) as it will not
+ decode as U+005C (\). For this reason, applications using <a>encode or fail</a> for unintended
+ purposes ought to take care to prevent the use of the <a>ISO-2022-JP encoder</a> in combination
+ with replacement schemes, such as those of JavaScript and CSS, that use U+005C (\) as part of the
+ replacement syntax (e.g., <code>\u2603</code>) or make sure to pass the replacement syntax through
+ the encoder (in contrast to URL percent-encoding).
 
  <p>The return value is either the number representing the <a>code point</a> that could not be
  encoded or null, if there was no <a>error</a>. When it returns non-null the caller will have to
