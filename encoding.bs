@@ -247,9 +247,8 @@ optionally with a <a>code point</a>, or <dfn>continue</dfn>.
 <p class="note no-backref">The <a>replacement</a> and <a>UTF-16BE/LE</a> <a for=/>encodings</a> have
 no <a for=/>encoder</a>.
 
-<p>An <dfn>error mode</dfn> as used below is "<code>replacement</code>" (default) or
-"<code>fatal</code>" for a <a for=/>decoder</a> and "<code>fatal</code>" (default) or
-"<code>html</code>" for an <a for=/>encoder</a>.
+<p>An <dfn>error mode</dfn> as used below is "<code>replacement</code>" or "<code>fatal</code>" for
+a <a for=/>decoder</a> and "<code>fatal</code>" or "<code>html</code>" for an <a for=/>encoder</a>.
 
 <p class=note>An XML processor would set <a for=/>error mode</a> to "<code>fatal</code>".
 [[XML]]
@@ -264,24 +263,17 @@ happening.
 [[HTML]]
 
 <p>To <dfn id=concept-encoding-run>run</dfn> an <a for=/>encoding</a>'s <a for=/>decoder</a> or
-<a for=/>encoder</a> <var>encoderDecoder</var> with input <a for=/>I/O queue</a> <var>input</var>,
-output <a for=/>I/O queue</a> <var>output</var>, and optional <a for=/>error mode</a>
+<a for=/>encoder</a> instance <var>encoderDecoder</var> with <a for=/>I/O queue</a>
+<var>input</var>, <a for=/>I/O queue</a> <var>output</var>, and <a for=/>error mode</a>
 <var>mode</var>, run these steps:
 
 <ol>
- <li><p>If <var>mode</var> is not given, then set it to "<code>replacement</code>" if
- <var>encoderDecoder</var> is a <a for=/>decoder</a>, otherwise "<code>fatal</code>".
-
- <li><p>Let <var>encoderDecoderInstance</var> be a new <var>encoderDecoder</var>.
-
  <li>
   <p>While true:
 
   <ol>
-   <li><p>Let <var>result</var> be the result of
-   <a>processing</a> the result of
-   <a>reading</a> from <var>input</var> for
-   <var>encoderDecoderInstance</var>, <var>input</var>, <var>output</var>, and
+   <li><p>Let <var>result</var> be the result of <a>processing</a> the result of <a>reading</a> from
+   <var>input</var> for <var>encoderDecoder</var>, <var>input</var>, <var>output</var>, and
    <var>mode</var>.
 
    <li><p>If <var>result</var> is not <a>continue</a>, then return <var>result</var>.
@@ -290,28 +282,23 @@ output <a for=/>I/O queue</a> <var>output</var>, and optional <a for=/>error mod
 
 <p>To <dfn id=concept-encoding-process>process</dfn> an <a for=list>item</a> <var>item</var> for an
 <a for=/>encoding</a>'s <a for=/>encoder</a> or <a for=/>decoder</a> instance
-<var>encoderDecoderInstance</var>, <a for=/>I/O queue</a> <var>input</var>, output
-<a for=/>I/O queue</a> <var>output</var>, and optional <a for=/>error mode</a> <var>mode</var>, run
-these steps:
+<var>encoderDecoder</var>, <a for=/>I/O queue</a> <var>input</var>, <a for=/>I/O queue</a>
+<var>output</var>, and <a for=/>error mode</a> <var>mode</var>, run these steps:
 
 <ol>
- <li><p>If <var>mode</var> is not given, then set it to "<code>replacement</code>" if
- <var>encoderDecoderInstance</var> is a <a for=/>decoder</a> instance, otherwise
- "<code>fatal</code>".
+ <li><p>Assert: if <var>encoderDecoder</var> is an <a for=/>encoder</a> instance, <var>mode</var> is
+ not "<code>replacement</code>".
 
- <li><p>Assert: if <var>encoderDecoderInstance</var> is an <a for=/>encoder</a> instance,
- <var>mode</var> is not "<code>replacement</code>".
+ <li><p>Assert: if <var>encoderDecoder</var> is a <a for=/>decoder</a> instance, <var>mode</var> is
+ not "<code>html</code>".
 
- <li><p>Assert: if <var>encoderDecoderInstance</var> is a <a for=/>decoder</a> instance,
- <var>mode</var> is not "<code>html</code>".
+ <li><p>Assert: if <var>encoderDecoder</var> is an <a for=/>encoder</a> instance, <var>item</var> is
+ not a <a>surrogate</a>.
 
- <li><p>Assert: if <var>encoderDecoderInstance</var> is an <a for=/>encoder</a> instance,
- <var>item</var> is not a <a>surrogate</a>.
+ <li><p>Let <var>result</var> be the result of running <var>encoderDecoder</var>'s <a>handler</a> on
+ <var>input</var> and <var>item</var>.
 
- <li><p>Let <var>result</var> be the result of running <var>encoderDecoderInstance</var>'s
- <a>handler</a> on <var>input</var> and <var>item</var>.
-
- <li><p>If <var>result</var> is <a>continue</a>, return <var>result</var>.
+ <li><p>If <var>result</var> is <a>continue</a>, then return <var>result</var>.
 
  <li>
   <p>Otherwise, if <var>result</var> is <a>finished</a>:
@@ -327,8 +314,8 @@ these steps:
   <p>Otherwise, if <var>result</var> is one or more <a for=list>items</a>:
 
   <ol>
-   <li><p>Assert: if <var>encoderDecoderInstance</var> is a <a for=/>decoder</a> instance,
-   <var>result</var> does not contain any <a>surrogates</a>.
+   <li><p>Assert: if <var>encoderDecoder</var> is a <a for=/>decoder</a> instance, <var>result</var>
+   does not contain any <a>surrogates</a>.
 
    <li><p><a>Push</a> <var>result</var> to <var>output</var>.
   </ol>
@@ -1005,8 +992,8 @@ queue of scalar values <var>output</var> (default « »), run these steps:
  <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF, <a>prepend</a> <var>buffer</var> to
  <var>ioQueue</var>.
 
- <li><p><a>Run</a> <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var> and
- <var>output</var>.
+ <li><p><a>Run</a> an instance of <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var>,
+ <var>output</var>, and "<code>replacement</code>".
 
  <li><p>Return <var>output</var>.
 </ol>
@@ -1015,8 +1002,8 @@ queue of scalar values <var>output</var> (default « »), run these steps:
 optional I/O queue of scalar values <var>output</var> (default « »), run these steps:
 
 <ol>
- <li><p><a>Run</a> <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var> and
- <var>output</var>.
+ <li><p><a>Run</a> an instance of <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var>,
+ <var>output</var>, and "<code>replacement</code>".
 
  <li><p>Return <var>output</var>.
 </ol>
@@ -1078,8 +1065,8 @@ these steps:
   than anything else. In a context where HTTP is used this is in violation of the semantics of the
   `<code>Content-Type</code>` header.
 
- <li><p><a>Run</a> <var>encoding</var>'s <a for=/>decoder</a> with <var>ioQueue</var> and
- <var>output</var>.
+ <li><p><a>Run</a> an instance of <var>encoding</var>'s <a for=/>decoder</a> with
+ <var>ioQueue</var>, <var>output</var>, and "<code>replacement</code>".
 
  <li><p>Return <var>output</var>.
 </ol>
@@ -1135,12 +1122,12 @@ is safe as it never triggers <a>errors</a>. [[HTML]]
 <ol>
  <li><p>Assert: <var>encoding</var> is not <a>replacement</a> or <a>UTF-16BE/LE</a>.
 
- <li><p>Return <var>encoding</var>'s <a for=/>encoder</a>.
+ <li><p>Return an instance of <var>encoding</var>'s <a for=/>encoder</a>.
 </ol>
 
 <p>To <dfn export>encode or fail</dfn> an I/O queue of scalar values <var>ioQueue</var> given an
-<a for=/>encoder</a> <var>encoder</var> and an I/O queue of bytes <var>output</var>, run these
-steps:
+<a for=/>encoder</a> instance <var>encoder</var> and an I/O queue of bytes <var>output</var>, run
+these steps:
 
 <ol>
  <li><p>Let <var>potentialError</var> be the result of <a>running</a> <var>encoder</var> with
@@ -1419,10 +1406,10 @@ method steps are:
 
 <ol>
  <li><p>If <a>this</a>'s <a for=TextDecoder>do not flush</a> is false, then set <a>this</a>'s
- <a for=TextDecoderCommon>decoder</a> to a new <a for=/>decoder</a> for <a>this</a>'s
- <a for=TextDecoderCommon>encoding</a>, <a>this</a>'s <a for=TextDecoderCommon>I/O queue</a> to the
- <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> », and <a>this</a>'s
- <a for=TextDecoderCommon>BOM seen</a> to false.
+ <a for=TextDecoderCommon>decoder</a> to a new instance of <a>this</a>'s
+ <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a>, <a>this</a>'s
+ <a for=TextDecoderCommon>I/O queue</a> to the <a for=/>I/O queue</a> of bytes
+ « <a>end-of-queue</a> », and <a>this</a>'s <a for=TextDecoderCommon>BOM seen</a> to false.
 
  <li><p>Set <a>this</a>'s <a for=TextDecoder>do not flush</a> to
  <var>options</var>["{{TextDecodeOptions/stream}}"].
@@ -1554,8 +1541,8 @@ constructor steps are to do nothing.
    <li><p>Let <var>item</var> be the result of
    <a>reading</a> from <var>input</var>.
 
-   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for the
-   <a>UTF-8 encoder</a>, <var>input</var>, <var>output</var>.
+   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for an instance
+   of the <a>UTF-8 encoder</a>, <var>input</var>, <var>output</var>, and "<code>fatal</code>".
 
    <li>
     <p>Assert: <var>result</var> is not <a>error</a>.
@@ -1738,8 +1725,8 @@ constructor steps are:
  <li><p>set <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a> to
  <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"].
 
- <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>decoder</a> to a new <a for=/>decoder</a> for
- <a>this</a>'s <a for=TextDecoderCommon>encoding</a>, and set <a>this</a>'s
+ <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>decoder</a> to a new instance of <a>this</a>'s
+ <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a>, and set <a>this</a>'s
  <a for=TextDecoderCommon>I/O queue</a> to a new <a for=/>I/O queue</a>.
 
  <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
@@ -1887,8 +1874,8 @@ textReadable
 constructor steps are:
 
 <ol>
- <li><p>Set <a>this</a>'s <a for=TextEncoderStream>encoder</a> to <a>UTF-8</a>'s
- <a for=/>encoder</a>.
+ <li><p>Set <a>this</a>'s <a for=TextEncoderStream>encoder</a> to an instance of the
+ <a>UTF-8 encoder</a>.
 
  <li><p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
  and runs the <a>encode and enqueue a chunk</a> algorithm with <a>this</a> and <var>chunk</var>.
@@ -1953,8 +1940,8 @@ constructor steps are:
    value</a> algorithm with <var>encoder</var>, <var>item</var> and <var>input</var>.
 
    <li><p>If <var>result</var> is not <a>continue</a>, then <a>process</a> <var>result</var> for
-   <a for=TextEncoderStream>encoder</a>, <var>input</var>, <var>output</var>.
-
+   <var>encoder</var>'s <a for=TextEncoderStream>encoder</a>, <var>input</var>, <var>output</var>,
+   and "<code>fatal</code>".
   </ol>
 </ol>
 
