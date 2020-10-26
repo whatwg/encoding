@@ -238,8 +238,8 @@ This specification does not provide wrapper algorithms that would combine with <
 <h3 id=encoders-and-decoders>Encoders and decoders</h3>
 
 <p>Each <a for=/>encoding</a> has an associated <dfn>decoder</dfn> and most of them have an
-associated <dfn>encoder</dfn>. Each <a for=/>decoder</a> and <a for=/>encoder</a> have a
-<dfn>handler</dfn> algorithm. A <a>handler</a> algorithm takes an input
+associated <dfn>encoder</dfn>. Instances of <a for=/>decoders</a> and <a for=/>encoders</a> have a
+<dfn>handler</dfn> algorithm and might also have state. A <a>handler</a> algorithm takes an input
 <a for=/>I/O queue</a> and an <a for=list>item</a>, and returns
 <dfn>finished</dfn>, one or more <a for=list>items</a>, <dfn>error</dfn>
 optionally with a <a>code point</a>, or <dfn>continue</dfn>.
@@ -1015,7 +1015,7 @@ given an optional I/O queue of scalar values <var>output</var> (default « »), 
      -->
 
 <ol>
- <li><p>Let <var>potentialError</var> be the result of <a>running</a> <a>UTF-8</a>'s
+ <li><p>Let <var>potentialError</var> be the result of <a>running</a> an instance of <a>UTF-8</a>'s
  <a for=/>decoder</a> with <var>ioQueue</var>, <var>output</var>, and "<code>fatal</code>".
 
  <li><p>If <var>potentialError</var> is an <a>error</a>, then return failure.
@@ -1255,7 +1255,7 @@ interface mixin TextDecoderCommon {
  <dd>An <a for=/>encoding</a>.
 
  <dt><dfn for=TextDecoderCommon oldids=textdecoder-decoder,textdecoderstream-decoder>decoder</dfn>
- <dd>A <a for=/>decoder</a>.
+ <dd>A <a for=/>decoder</a> instance.
 
  <dt><dfn for=TextDecoderCommon oldids=textdecoder-stream,textdecoderstream-stream,textdecodercommon-stream>I/O queue</dfn>
  <dd>An <a for=/>I/O queue</a> of bytes.
@@ -1835,7 +1835,7 @@ TextEncoderStream includes GenericTransformStream;
 
 <dl>
  <dt><dfn for=TextEncoderStream>encoder</dfn>
- <dd>An <a for=/>encoder</a>.
+ <dd>An <a for=/>encoder</a> instance.
 
  <dt><dfn for=TextEncoderStream>pending high surrogate</dfn>
  <dd>Null or a <a for=/>surrogate</a>, initially null.
@@ -2012,7 +2012,7 @@ that are split between strings. [[!INFRA]]
 to be more accurate in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a>
 algorithm but rather the <a>decode</a> and <a>UTF-8 decode</a> algorithms.
 
-<p><a>UTF-8</a>'s <a for=/>decoder</a>'s has an associated
+<p><a>UTF-8</a>'s <a for=/>decoder</a> has an associated
 <dfn>UTF-8 code point</dfn>, <dfn>UTF-8 bytes seen</dfn>, and
 <dfn>UTF-8 bytes needed</dfn> (all initially 0), a <dfn>UTF-8 lower boundary</dfn>
 (initially 0x80), and a <dfn>UTF-8 upper boundary</dfn> (initially 0xBF).
