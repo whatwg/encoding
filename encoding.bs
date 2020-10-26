@@ -207,7 +207,8 @@ an I/O queue "<code>&amp;#128169; hello world</code>". The next item to be read 
 <a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, run these steps:
 
 <ol>
- <li><p>Assert: <var>input</var> does not <a for=list>contain</a> <a>end-of-queue</a>.
+ <li><p>Assert: if <var>input</var> is a <a for=/>list</a>, then it does not <a for=list>contain</a>
+ <a>end-of-queue</a>.
 
  <li><p>Return an <a for=/>I/O queue</a> containing the <a for=list>items</a> in <var>input</var>,
  in order, followed by <a>end-of-queue</a>.
@@ -1009,7 +1010,7 @@ queue of scalar values <var>output</var> (default « »), run these steps:
  <li><p>Let <var>buffer</var> be the result of <a for="I/O queue">peeking</a> three bytes from
  <var>ioQueue</var>, converted to a byte sequence.
 
- <li><p>If <var>buffer</var> matches 0xEF 0xBB 0xBF, <a for="I/O queue">read</a> three bytes from
+ <li><p>If <var>buffer</var> is 0xEF 0xBB 0xBF, then <a for="I/O queue">read</a> three bytes from
  <var>ioQueue</var>. (Do nothing with those bytes.)
 
  <li><p><a>Run</a> <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var> and
