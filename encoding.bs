@@ -199,11 +199,11 @@ an I/O queue "<code>&amp;#128169; hello world</code>". The next item to be read 
 <code>&amp;</code>. <!-- 💩 -->
 
 <p>To <dfn for="from I/O queue">convert</dfn> an <a for=/>I/O queue</a> <var>ioQueue</var> into a
-<a for=/>list</a>, <a>string</a> or <a>byte sequence</a>, return the result of
+<a for=/>list</a>, <a>string</a>, or <a>byte sequence</a>, return the result of
 <a for="I/O queue">reading</a> an indefinite number of <a for=list>items</a> from
 <var>ioQueue</var>.
 
-<p>To <dfn for="to I/O queue">convert</dfn> a <a for=/>list</a>, <a>string</a> or
+<p>To <dfn for="to I/O queue">convert</dfn> a <a for=/>list</a>, <a>string</a>, or
 <a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, run these steps:
 
 <ol>
