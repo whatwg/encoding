@@ -190,8 +190,8 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
 <p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> an <a for=list>item</a> other
 than <a>end-of-queue</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
-<a for=list>prepend</a> operation. To prepend a sequence of items, insert those items, in the given
-order, before the first item in the queue.
+<a for=list>prepend</a> operation. To prepend a sequence of items not containing
+<a>end-of-queue</a>, insert those items, in the given order, before the first item in the queue.
 
 <p class=example id=example-tokens>Inserting the sequence of scalar value items
 <code>&amp;#128169;</code> in an I/O queue of scalar values "<code> hello world</code>", results in
@@ -199,12 +199,20 @@ an I/O queue "<code>&amp;#128169; hello world</code>". The next item to be read 
 <code>&amp;</code>. <!-- 💩 -->
 
 <p>To <dfn for="from I/O queue">convert</dfn> an <a for=/>I/O queue</a> <var>ioQueue</var> into a
-<a for=/>list</a>, <a>string</a> or <a>byte sequence</a>, return the result of
+<a for=/>list</a>, <a>string</a>, or <a>byte sequence</a>, return the result of
 <a for="I/O queue">reading</a> an indefinite number of <a for=list>items</a> from
-<var>ioQueue</var>. To <dfn for="to I/O queue">convert</dfn> a <a for=/>list</a>, <a>string</a> or
-<a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, return an
-<a for=/>I/O queue</a> containing the <a for=list>items</a> in <var>input</var>, in order, followed
-by <a>end-of-queue</a>.
+<var>ioQueue</var>.
+
+<p>To <dfn for="to I/O queue">convert</dfn> a <a for=/>list</a>, <a>string</a>, or
+<a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, run these steps:
+
+<ol>
+ <li><p>Assert: if <var>input</var> is a <a for=/>list</a>, then it does not <a for=list>contain</a>
+ <a>end-of-queue</a>.
+
+ <li><p>Return an <a for=/>I/O queue</a> containing the <a for=list>items</a> in <var>input</var>,
+ in order, followed by <a>end-of-queue</a>.
+</ol>
 
 <p class=XXX>The Infra standard is expected to define some infrastructure around type conversions.
 See <a href="https://github.com/whatwg/infra/issues/319">whatwg/infra issue #319</a>. [[INFRA]]
@@ -986,11 +994,11 @@ different format here, to be able to represent ranges.)
 queue of scalar values <var>output</var> (default « »), run these steps:
 
 <ol>
- <li><p>Let <var>buffer</var> be the result of <a for="I/O queue">reading</a> three bytes from
- <var>ioQueue</var>.
+ <li><p>Let <var>buffer</var> be the result of <a for="I/O queue">peeking</a> three bytes from
+ <var>ioQueue</var>, converted to a byte sequence.
 
- <li><p>If <var>buffer</var> does not match 0xEF 0xBB 0xBF, <a>prepend</a> <var>buffer</var> to
- <var>ioQueue</var>.
+ <li><p>If <var>buffer</var> is 0xEF 0xBB 0xBF, then <a for="I/O queue">read</a> three bytes from
+ <var>ioQueue</var>. (Do nothing with those bytes.)
 
  <li><p><a>Run</a> an instance of <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var>,
  <var>output</var>, and "<code>replacement</code>".
@@ -1075,7 +1083,7 @@ these steps:
 
 <ol>
  <li><p>Let <var>BOM</var> be the result of <a for="I/O queue">peeking</a> 3 bytes from
- <var>ioQueue</var>, <a for="from I/O queue">converted</a> to a byte sequence.
+ <var>ioQueue</var>, converted to a byte sequence.
 
  <li>
   <p>For each of the rows in the table below, starting with the first one and going down, if
@@ -3479,7 +3487,8 @@ Simon Montagu,
 Simon Pieters,
 Simon Sapin,
 寺田健 (Takeshi Terada),
-Vyacheslav Matva, and
+Vyacheslav Matva,
+Wolf Lammen, and
 成瀬ゆい (Yui Naruse)
 for being awesome.
 
