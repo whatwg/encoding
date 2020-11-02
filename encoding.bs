@@ -1299,7 +1299,7 @@ interface mixin TextDecoderCommon {
     <ol>
      <li><p>Set <var>decoder</var>'s <a for=TextDecoderCommon>BOM seen</a> to true.
 
-     <li><p>If <var>item</var> is U+FEFF, then <a for=iteration>continue</a>.
+     <li><p>If <var>item</var> is U+FEFF BOM, then <a for=iteration>continue</a>.
     </ol>
 
    <li><p>Append <var>item</var> to <var>output</var>.
@@ -1607,7 +1607,8 @@ method steps are:
       <var>written</var> is greater than or equal to the number of bytes in <var>result</var>, then:
 
       <ol>
-       <li><p>If <var>item</var> is greater than U+FFFF, then increment <var>read</var> by 2.
+       <li><p>If <var>item</var>'s <a for="code point">value</a> is greater than 0xFFFF, then
+       increment <var>read</var> by 2.
 
        <li><p>Otherwise, increment <var>read</var> by 1.
 
@@ -1915,7 +1916,7 @@ constructor steps are:
  <p class=note>{{DOMString}}, as well as an <a for=/>I/O queue</a> of code units rather than scalar
  values, are used here so that a surrogate pair that is split between chunks can be reassembled into
  the appropriate scalar value. The behavior is otherwise identical to {{USVString}}. In particular,
- lone surrogates will be replaced with U+FFFD.
+ lone surrogates will be replaced with U+FFFD (�).
 
  <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> ».
 
@@ -1973,13 +1974,13 @@ constructor steps are:
 
    <li><p><a>Prepend</a> <var>item</var> to <var>input</var>.
 
-   <li><p>Return U+FFFD.
+   <li><p>Return U+FFFD (�).
   </ol>
 
  <li><p>If <var>item</var> is in the range U+D800 to U+DBFF, inclusive, then set <a>pending high
  surrogate</a> to <var>item</var> and return <a>continue</a>.
 
- <li><p>If <var>item</var> is in the range U+DC00 to U+DFFF, inclusive, then return U+FFFD.
+ <li><p>If <var>item</var> is in the range U+DC00 to U+DFFF, inclusive, then return U+FFFD (�).
 
  <li><p>Return <var>item</var>.
 </ol>
@@ -2390,10 +2391,10 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <li><p>Return <a>error</a>.
   </ol>
 
- <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
- a code point whose value is <var>byte</var>.
+ <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a <a>code point</a> whose
+ <a for="code point">value</a> is <var>byte</var>.
 
- <li><p>If <var>byte</var> is 0x80, return code point U+20AC.
+ <li><p>If <var>byte</var> is 0x80, then return U+20AC (€).
 
  <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
  <a>gb18030 first</a> to <var>byte</var> and return <a>continue</a>.
@@ -3345,13 +3346,15 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
- a code point whose value is <var>byte</var>.
+ <li><p>Let <var>byteValue</var> be <var>byte</var>'s <a for=byte>value</a>.
 
- <li><p>Return a code point whose value is 0xF780 + <var>byte</var> &minus; 0x80.
+ <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a <a>code point</a> whose
+ <a for="code point">value</a> is <var>byte</var>.
+
+ <li><p>Return a <a>code point</a> whose <a for="code point">value</a> is
+ 0xF780 + <var>byteValue</var> &minus; 0x80.
 </ol>
 
 
@@ -3361,14 +3364,15 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>code point</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
- a byte whose value is <var>code point</var>.
+ <li><p>Let <var>codePointValue</var> be <var>code point</var>'s <a for="code point">value</a>.
 
- <li><p>If <var>code point</var> is in the range U+F780 to U+F7FF, inclusive, return
- a byte whose value is <var>code point</var> &minus; 0xF780 + 0x80.
+ <li><p>If <var>code point</var> is an <a>ASCII code point</a>, then return a <a>byte</a> whose
+ <a for=byte>value</a> is <var>codePointValue</var>.
+
+ <li><p>If <var>codePointValue</var> is in the range 0xF780 to 0xF7FF, inclusive, then return a
+ <a>byte</a> whose <a for=byte>value</a> is <var>codePointValue</var> &minus; 0xF780 + 0x80.
 
  <li><p>Return <a>error</a> with <var>code point</var>.
 </ol>
