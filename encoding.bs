@@ -3351,7 +3351,7 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
  <li><p>Let <var>byteValue</var> be <var>byte</var>'s <a for=byte>value</a>.
 
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a <a>code point</a> whose
- <a for="code point">value</a> is <var>byte</var>.
+ <a for="code point">value</a> is <var>byteValue</var>.
 
  <li><p>Return a <a>code point</a> whose <a for="code point">value</a> is
  0xF780 + <var>byteValue</var> &minus; 0x80.
