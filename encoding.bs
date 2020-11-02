@@ -261,37 +261,36 @@ a <a for=/>decoder</a> and "<code>fatal</code>" or "<code>html</code>" for an <a
 <p class=note>An XML processor would set <a for=/>error mode</a> to "<code>fatal</code>".
 [[XML]]
 
-<p class=note><code>html</code> exists as <a for=/>error mode</a> due to URLs and HTML forms
-requiring a non-terminating legacy <a for=/>encoder</a>. The "<code>html</code>"
-<a for=/>error mode</a> causes a sequence to be emitted that cannot be distinguished from
-legitimate input and can therefore lead to silent data loss. Developers are strongly
-encouraged to use the <a>UTF-8</a> <a for=/>encoding</a> to prevent this from
-happening.
-[[URL]]
-[[HTML]]
+<p class=note>"<code>html</code>" exists as <a for=/>error mode</a> due to HTML forms requiring a
+non-terminating legacy <a for=/>encoder</a>. The "<code>html</code>" <a for=/>error mode</a> causes
+a sequence to be emitted that cannot be distinguished from legitimate input and can therefore lead
+to silent data loss. Developers are strongly encouraged to use the <a>UTF-8</a>
+<a for=/>encoding</a> to prevent this from happening. [[HTML]]
 
-<p>To <dfn id=concept-encoding-run>run</dfn> an <a for=/>encoding</a>'s <a for=/>decoder</a> or
-<a for=/>encoder</a> instance <var>encoderDecoder</var> with <a for=/>I/O queue</a>
-<var>input</var>, <a for=/>I/O queue</a> <var>output</var>, and <a for=/>error mode</a>
-<var>mode</var>, run these steps:
+<hr>
+
+<p>To <dfn id=concept-encoding-run>process a queue</dfn> given an <a for=/>encoding</a>'s
+<a for=/>decoder</a> or <a for=/>encoder</a> instance <var>encoderDecoder</var>,
+<a for=/>I/O queue</a> <var>input</var>, <a for=/>I/O queue</a> <var>output</var>, and
+<a for=/>error mode</a> <var>mode</var>:
 
 <ol>
  <li>
   <p>While true:
 
   <ol>
-   <li><p>Let <var>result</var> be the result of <a>processing</a> the result of <a>reading</a> from
-   <var>input</var> for <var>encoderDecoder</var>, <var>input</var>, <var>output</var>, and
-   <var>mode</var>.
+   <li><p>Let <var>result</var> be the result of <a>process an item</a> with the result of
+   <a>reading</a> from <var>input</var>, <var>encoderDecoder</var>, <var>input</var>,
+   <var>output</var>, and <var>mode</var>.
 
    <li><p>If <var>result</var> is not <a>continue</a>, then return <var>result</var>.
   </ol>
 </ol>
 
-<p>To <dfn id=concept-encoding-process>process</dfn> an <a for=list>item</a> <var>item</var> for an
-<a for=/>encoding</a>'s <a for=/>encoder</a> or <a for=/>decoder</a> instance
+<p>To <dfn id=concept-encoding-process>process an item</dfn> given an <a for=list>item</a>
+<var>item</var>, <a for=/>encoding</a>'s <a for=/>encoder</a> or <a for=/>decoder</a> instance
 <var>encoderDecoder</var>, <a for=/>I/O queue</a> <var>input</var>, <a for=/>I/O queue</a>
-<var>output</var>, and <a for=/>error mode</a> <var>mode</var>, run these steps:
+<var>output</var>, and <a for=/>error mode</a> <var>mode</var>:
 
 <ol>
  <li><p>Assert: if <var>encoderDecoder</var> is an <a for=/>encoder</a> instance, <var>mode</var> is
@@ -306,10 +305,8 @@ happening.
  <li><p>Let <var>result</var> be the result of running <var>encoderDecoder</var>'s <a>handler</a> on
  <var>input</var> and <var>item</var>.
 
- <li><p>If <var>result</var> is <a>continue</a>, then return <var>result</var>.
-
  <li>
-  <p>Otherwise, if <var>result</var> is <a>finished</a>:
+  <p>If <var>result</var> is <a>finished</a>:
 
   <ol>
    <li><p><a>Push</a> <a>end-of-queue</a> to <var>output</var>.
@@ -1000,8 +997,8 @@ queue of scalar values <var>output</var> (default « »), run these steps:
  <li><p>If <var>buffer</var> is 0xEF 0xBB 0xBF, then <a for="I/O queue">read</a> three bytes from
  <var>ioQueue</var>. (Do nothing with those bytes.)
 
- <li><p><a>Run</a> an instance of <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var>,
- <var>output</var>, and "<code>replacement</code>".
+ <li><p><a>Process a queue</a> with an instance of <a>UTF-8</a>'s <a for=/>decoder</a>,
+ <var>ioQueue</var>, <var>output</var>, and "<code>replacement</code>".
 
  <li><p>Return <var>output</var>.
 </ol>
@@ -1010,8 +1007,8 @@ queue of scalar values <var>output</var> (default « »), run these steps:
 optional I/O queue of scalar values <var>output</var> (default « »), run these steps:
 
 <ol>
- <li><p><a>Run</a> an instance of <a>UTF-8</a>'s <a for=/>decoder</a> with <var>ioQueue</var>,
- <var>output</var>, and "<code>replacement</code>".
+ <li><p><a>Process a queue</a> wih an instance of <a>UTF-8</a>'s <a for=/>decoder</a>,
+ <var>ioQueue</var>, <var>output</var>, and "<code>replacement</code>".
 
  <li><p>Return <var>output</var>.
 </ol>
@@ -1023,8 +1020,9 @@ given an optional I/O queue of scalar values <var>output</var> (default « »), 
      -->
 
 <ol>
- <li><p>Let <var>potentialError</var> be the result of <a>running</a> an instance of <a>UTF-8</a>'s
- <a for=/>decoder</a> with <var>ioQueue</var>, <var>output</var>, and "<code>fatal</code>".
+ <li><p>Let <var>potentialError</var> be the result of <a>process a queue</a> with an instance of
+ <a>UTF-8</a>'s <a for=/>decoder</a>, <var>ioQueue</var>, <var>output</var>, and
+ "<code>fatal</code>".
 
  <li><p>If <var>potentialError</var> is an <a>error</a>, then return failure.
 
@@ -1073,7 +1071,7 @@ these steps:
   than anything else. In a context where HTTP is used this is in violation of the semantics of the
   `<code>Content-Type</code>` header.
 
- <li><p><a>Run</a> an instance of <var>encoding</var>'s <a for=/>decoder</a> with
+ <li><p><a>Process a queue</a> with an instance of <var>encoding</var>'s <a for=/>decoder</a>,
  <var>ioQueue</var>, <var>output</var>, and "<code>replacement</code>".
 
  <li><p>Return <var>output</var>.
@@ -1113,7 +1111,7 @@ steps:
 <ol>
  <li><p>Let <var>encoder</var> be the result of <a>getting an encoder</a> from <var>encoding</var>.
 
- <li><p><a>Run</a> <var>encoder</var> with <var>ioQueue</var>, <var>output</var>, and
+ <li><p><a>Process a queue</a> with <var>encoder</var>, <var>ioQueue</var>, <var>output</var>, and
  "<code>html</code>".
 
  <li><p>Return <var>output</var>.
@@ -1138,8 +1136,8 @@ is safe as it never triggers <a>errors</a>. [[HTML]]
 these steps:
 
 <ol>
- <li><p>Let <var>potentialError</var> be the result of <a>running</a> <var>encoder</var> with
- <var>ioQueue</var>, <var>output</var>, and "<code>fatal</code>".
+ <li><p>Let <var>potentialError</var> be the result of <a>process a queue</a> with
+ <var>encoder</var>, <var>ioQueue</var>, <var>output</var>, and "<code>fatal</code>".
 
  <li><p><a for="I/O queue">Push</a> <a>end-of-queue</a> to <var>output</var>.
 
@@ -1460,7 +1458,7 @@ method steps are:
     <p>Otherwise:
 
     <ol>
-     <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for
+     <li><p>Let <var>result</var> be the result of <a>process an item</a> with <var>item</var>,
      <a>this</a>'s <a for=TextDecoderCommon>decoder</a>, <a>this</a>'s
      <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <a>this</a>'s
      <a for=TextDecoderCommon>error mode</a>.
@@ -1549,16 +1547,17 @@ constructor steps are to do nothing.
    <li><p>Let <var>item</var> be the result of
    <a>reading</a> from <var>input</var>.
 
-   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for an instance
-   of the <a>UTF-8 encoder</a>, <var>input</var>, <var>output</var>, and "<code>fatal</code>".
+   <li><p>Let <var>result</var> be the result of <a>process an item</a> with <var>item</var>, an
+   instance of the <a>UTF-8 encoder</a>, <var>input</var>, <var>output</var>, and
+   "<code>fatal</code>".
 
    <li>
-    <p>Assert: <var>result</var> is not <a>error</a>.
+    <p>Assert: <var>result</var> is not an <a>error</a>.
 
     <p class=note>The <a>UTF-8 encoder</a> cannot return <a>error</a>.
 
-   <li><p>If <var>result</var> is <a>finished</a>, <a for="from I/O queue">convert</a>
-   <var>output</var> into a byte sequence, and then return a {{Uint8Array}} object wrapping an
+   <li><p>If <var>result</var> is <a>finished</a>, then <a for="from I/O queue">convert</a>
+   <var>output</var> into a byte sequence and return a {{Uint8Array}} object wrapping an
    {{ArrayBuffer}} containing <var>output</var>.
    <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
   </ol>
@@ -1791,7 +1790,7 @@ constructor steps are:
      <li><p>Return.
     </ol>
 
-   <li><p>Let <var>result</var> be the result of <a>processing</a> <var>item</var> for
+   <li><p>Let <var>result</var> be the result of <a>process an item</a> with <var>item</var>,
    <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a>, <var>decoder</var>'s
    <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <var>decoder</var>'s
    <a for=TextDecoderCommon>error mode</a>.
@@ -1808,8 +1807,8 @@ steps:
  <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of scalar values
  « <a>end-of-queue</a> ».
 
- <li><p>Let <var>result</var> be the result of <a>processing</a> <a>end-of-queue</a> for
- <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a> and <var>decoder</var>'s
+ <li><p>Let <var>result</var> be the result of <a>process an item</a> with <a>end-of-queue</a>,
+ <var>decoder</var>'s <a for=TextDecoderCommon>decoder</a>, <var>decoder</var>'s
  <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <var>decoder</var>'s
  <a for=TextDecoderCommon>error mode</a>.
 
@@ -1949,9 +1948,9 @@ constructor steps are:
    <li><p>Let <var>result</var> be the result of executing the <a>convert code unit to scalar
    value</a> algorithm with <var>encoder</var>, <var>item</var> and <var>input</var>.
 
-   <li><p>If <var>result</var> is not <a>continue</a>, then <a>process</a> <var>result</var> for
-   <var>encoder</var>'s <a for=TextEncoderStream>encoder</a>, <var>input</var>, <var>output</var>,
-   and "<code>fatal</code>".
+   <li><p>If <var>result</var> is not <a>continue</a>, then <a>process an item</a> with
+   <var>result</var>, <var>encoder</var>'s <a for=TextEncoderStream>encoder</a>, <var>input</var>,
+   <var>output</var>, and "<code>fatal</code>".
   </ol>
 </ol>
 
