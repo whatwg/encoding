@@ -1007,7 +1007,7 @@ queue of scalar values <var>output</var> (default « »), run these steps:
 optional I/O queue of scalar values <var>output</var> (default « »), run these steps:
 
 <ol>
- <li><p><a>Process a queue</a> wih an instance of <a>UTF-8</a>'s <a for=/>decoder</a>,
+ <li><p><a>Process a queue</a> with an instance of <a>UTF-8</a>'s <a for=/>decoder</a>,
  <var>ioQueue</var>, <var>output</var>, and "<code>replacement</code>".
 
  <li><p>Return <var>output</var>.
