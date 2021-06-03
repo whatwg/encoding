@@ -1572,10 +1572,6 @@ method steps are:
 
  <li><p>Let <var>written</var> be 0.
 
- <li><p>Let <var>destinationBytes</var> be the result of
- <a lt="get a reference to the buffer source">getting a reference to the bytes held by</a>
- <var>destination</var>.
-
  <li><p>Let <var>encoder</var> be an instance of the <a>UTF-8 encoder</a>.
 
  <li>
@@ -1603,7 +1599,7 @@ method steps are:
 
     <ol>
      <li>
-      <p>If <var>destinationBytes</var>'s <a for="byte sequence">length</a> &minus;
+      <p>If <var>destination</var>'s <a for="BufferSource">byte length</a> &minus;
       <var>written</var> is greater than or equal to the number of bytes in <var>result</var>, then:
 
       <ol>
@@ -1612,7 +1608,8 @@ method steps are:
        <li><p>Otherwise, increment <var>read</var> by 1.
 
        <li>
-        <p>Write the bytes in <var>result</var> into <var>destinationBytes</var>, from byte offset
+        <p><a for="ArrayBufferView">Write</a> the bytes in <var>result</var> into
+        <var>destination</var>, with <a for="ArrayBufferView/write"><i>startingOffset</i> set to
         <var>written</var>.
 
         <p class=warning>See the
