@@ -1731,7 +1731,7 @@ constructor steps are:
  <li><p>If <var>options</var>["{{TextDecoderOptions/fatal}}"] is true, then set <a>this</a>'s
  <a for=TextDecoderCommon>error mode</a> to "<code>fatal</code>".
 
- <li><p>set <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a> to
+ <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a> to
  <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"].
 
  <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>decoder</a> to a new instance of <a>this</a>'s
@@ -1744,12 +1744,15 @@ constructor steps are:
  <li><p>Let <var>flushAlgorithm</var> be an algorithm which takes no arguments and runs the
  <a>flush and enqueue</a> algorithm with <a>this</a>.
 
- <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to the result of
- <a for=TransformStream>creating</a> a {{TransformStream}} with
- <a for=TransformStream/create><var ignore>transformAlgorithm</var></a> set to
+ <li><p>Let <var>transformStream</var> be a [=new=] {{TransformStream}}.
+
+ <li><p>[=TransformStream/Set up=] <var>transformStream</var> with
+ <a for="TransformStream/set up"><var ignore>transformAlgorithm</var></a> set to
  <var>transformAlgorithm</var> and
- <a for=TransformStream/create><var ignore>flushAlgorithm</var></a> set to
+ <a for="TransformStream/set up"><var ignore>flushAlgorithm</var></a> set to
  <var>flushAlgorithm</var>.
+
+ <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to <var>transformStream</var>.
 </ol>
 
 <p>The <dfn>decode and enqueue a chunk</dfn> algorithm, given a {{TextDecoderStream}} object
@@ -1892,12 +1895,15 @@ constructor steps are:
  <li><p>Let <var>flushAlgorithm</var> be an algorithm which runs the <a>encode and flush</a>
  algorithm with <a>this</a>.
 
- <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to the result of
- <a for=TransformStream>creating</a> a {{TransformStream}} with
- <a for=TransformStream/create><var ignore>transformAlgorithm</var></a> set to
+ <li><p>Let <var>transformStream</var> be a [=new=] {{TransformStream}}.
+
+ <li><p>[=TransformStream/Set up=] <var>transformStream</var> with
+ <a for="TransformStream/set up"><var ignore>transformAlgorithm</var></a> set to
  <var>transformAlgorithm</var> and
- <a for=TransformStream/create><var ignore>flushAlgorithm</var></a> set to
+ <a for="TransformStream/set up"><var ignore>flushAlgorithm</var></a> set to
  <var>flushAlgorithm</var>.
+
+ <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to <var>transformStream</var>.
 </ol>
 
 <hr>
