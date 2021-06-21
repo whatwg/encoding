@@ -1823,7 +1823,7 @@ steps:
    <a for=TextDecoderCommon>error mode</a>.
 
    <li>
-    <p>If <var>result</var> is finished, then:
+    <p>If <var>result</var> is <a>finished</a>, then:
 
     <ol>
      <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
