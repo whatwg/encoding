@@ -1,3 +1,4 @@
 .*Text run is not in Unicode Normalization Form C.*
 .*Document uses the Unicode Private Use Area.*
 .*File was not checked. Files must have .html, .xhtml, .htm, or .xht extensions.*
+.*Possible misuse of “aria-label”. (If you disagree with this warning, file an issue report or send e-mail to www-validator@w3.org.).*
