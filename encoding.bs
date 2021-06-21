@@ -2832,9 +2832,7 @@ and <var>code point</var>, runs these steps:
 
    <dt><a>end-of-queue</a>
    <dd><p>Set the <a>ISO-2022-JP decoder state</a> to
-   <a lt="ISO-2022-JP decoder lead byte">lead byte</a>,
-   <a>prepend</a> <var>byte</var> to
-   <var>ioQueue</var>, and return <a>error</a>.
+   <a lt="ISO-2022-JP decoder lead byte">lead byte</a> and return <a>error</a>.
 
    <dt>Otherwise
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
@@ -2852,7 +2850,8 @@ and <var>code point</var>, runs these steps:
    <a lt="ISO-2022-JP decoder escape">escape</a>, and return
    <a>continue</a>.
 
-   <li><p><a>Prepend</a> <var>byte</var> to <var>ioQueue</var>.
+   <li><p>If <var>byte</var> is not <a>end-of-queue</a>, then <a>prepend</a>
+   <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
    <a>ISO-2022-JP decoder state</a> to
@@ -2895,7 +2894,9 @@ and <var>code point</var>, runs these steps:
      <a>error</a> otherwise.
     </ol>
 
-   <li><p><a>Prepend</a> <var>lead</var> and <var>byte</var> to <var>ioQueue</var>.
+   <li><p>If <var>byte</var> is <a>end-of-queue</a>, then <a>prepend</a>
+   <var>lead</var> to <var>ioQueue</var>. Otherwise, <a>prepend</a>
+   <var>lead</var> and <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
    <a>ISO-2022-JP decoder state</a> to <a>ISO-2022-JP decoder output state</a>
@@ -2928,9 +2929,8 @@ and <var>code point</var>, runs these steps:
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-queue</a> and
  <a>ISO-2022-JP encoder state</a> is not
- <a lt="ISO-2022-JP encoder ASCII">ASCII</a>,
- <a>prepend</a> <var>code point</var> to
- <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, set
+ <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes
  0x1B 0x28 0x42.
 
