@@ -1609,7 +1609,7 @@ method steps are:
 
        <li>
         <p><a for="ArrayBufferView">Write</a> the bytes in <var>result</var> into
-        <var>destination</var>, with <a for="ArrayBufferView/write"><i>startingOffset</i> set to
+        <var>destination</var>, with <a for="ArrayBufferView/write"><i>startingOffset</i></a> set to
         <var>written</var>.
 
         <p class=warning>See the
