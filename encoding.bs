@@ -1337,7 +1337,7 @@ dictionary TextDecodeOptions {
   boolean stream = false;
 };
 
-[Exposed=(Window,Worker)]
+[Exposed=*]
 interface TextDecoder {
   constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options = {});
 
@@ -1494,7 +1494,7 @@ dictionary TextEncoderEncodeIntoResult {
   unsigned long long written;
 };
 
-[Exposed=(Window,Worker)]
+[Exposed=*]
 interface TextEncoder {
   constructor();
 
@@ -1659,7 +1659,7 @@ function convertString(buffer, input, callback) {
 <h3 id=interface-textdecoderstream>Interface {{TextDecoderStream}}</h3>
 
 <pre class=idl>
-[Exposed=(Window,Worker)]
+[Exposed=*]
 interface TextDecoderStream {
   constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options = {});
 };
@@ -1842,7 +1842,7 @@ steps:
 <h3 id=interface-textencoderstream>Interface {{TextEncoderStream}}</h3>
 
 <pre class=idl>
-[Exposed=(Window,Worker)]
+[Exposed=*]
 interface TextEncoderStream {
   constructor();
 };
