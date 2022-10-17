@@ -1,5 +1,5 @@
 SHELL=/bin/bash -o pipefail
-.PHONY: local remote deploy review
+.PHONY: local remote deploy
 
 remote: encoding.bs
 	@ (HTTP_STATUS=$$(curl https://api.csswg.org/bikeshed/ \
@@ -23,7 +23,3 @@ deploy: encoding.bs
 	EXTRA_FILES="*.txt *.json *.css" \
 	POST_BUILD_STEP='python visualize.py "$$DIR/"' \
 	bash ./deploy.sh
-
-review: encoding.bs
-	curl --remote-name --fail https://resources.whatwg.org/build/review.sh
-	bash ./review.sh
