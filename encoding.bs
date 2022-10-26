@@ -3507,8 +3507,7 @@ Wolf Lammen, and
 成瀬ゆい (Yui Naruse)
 for being awesome.
 
-<p>This standard is written by
-<a href=https://annevankesteren.nl/ lang=nl>Anne van Kesteren</a>
-(<a href=https://www.mozilla.org/>Mozilla</a>,
-<a href=mailto:annevk@annevk.nl>annevk@annevk.nl</a>). The <a href=#api>API</a> chapter
-was initially written by Joshua Bell (<a href=https://www.google.com/>Google</a>).
+<p>This standard is written by <a href=https://annevankesteren.nl/ lang=nl>Anne van Kesteren</a>
+(<a href=https://www.apple.com/>Apple</a>, <a href=mailto:annevk@annevk.nl>annevk@annevk.nl</a>).
+The <a href=#api>API</a> chapter was initially written by Joshua Bell
+(<a href=https://www.google.com/>Google</a>).
