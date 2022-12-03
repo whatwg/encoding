@@ -1333,6 +1333,10 @@ dictionary TextDecoderOptions {
   boolean ignoreBOM = false;
 };
 
+dictionary TextDecoderOptionsWithLabel : TextDecoderOptions {
+  DOMString label = "utf-8";
+};
+
 dictionary TextDecodeOptions {
   boolean stream = false;
 };
@@ -1340,6 +1344,8 @@ dictionary TextDecodeOptions {
 [Exposed=*]
 interface TextDecoder {
   constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options = {});
+
+  static USVString decode(optional [AllowShared] BufferSource input, optional TextDecoderOptionsWithLabel options = {});
 
   USVString decode(optional [AllowShared] BufferSource input, optional TextDecodeOptions options = {});
 };
@@ -1351,13 +1357,17 @@ TextDecoder includes TextDecoderCommon;
 initially false.
 
 <dl class=domintro>
+ <dt>{{TextDecoder}} . <a method for=TextDecoder lt=decode()>decode([<var>input</var> [, <var>options</var>]])</a></code>
+ <dd>
+  <p>Returns the result of running <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a>.
+  <p>If <var>options</var>["{{TextDecoderOptionsWithLabel/label}}"] is either not a <a>label</a> or
+  is a <a>label</a> for <a>replacement</a>, <a>throws</a> a {{RangeError}}.
+
  <dt><code><var>decoder</var> = new <a constructor for=TextDecoder lt=TextDecoder()>TextDecoder([<var>label</var> = "utf-8" [, <var>options</var>]])</a></code>
  <dd>
   <p>Returns a new {{TextDecoder}} object.
-  <p>If <var>label</var> is either not a <a>label</a> or is a
-  <a>label</a> for <a>replacement</a>,
-  <a>throws</a> a
-  {{RangeError}}.
+  <p>If <var>label</var> is either not a <a>label</a> or is a <a>label</a> for <a>replacement</a>,
+  <a>throws</a> a {{RangeError}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>encoding</a></code>
  <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a>name</a>, lowercased.
@@ -1389,40 +1399,41 @@ string += decoder.decode(); // end-of-queue</code></pre>
   <a>throws</a> a {{TypeError}}.
 </dl>
 
-<p>The
-<dfn constructor for=TextDecoder lt="TextDecoder(label, options)" id=dom-textdecoder><code>new TextDecoder(<var>label</var>, <var>options</var>)</code></dfn>
-constructor steps are:
+<p>To <dfn>initialize</dfn> a {{TextDecoder}} <var>decoder</var>,
+<a>DOMString</a> <var>label</var>, an optional <var>fatal</var> flag, and an optional
+<var>ignoreBOM</var> flag, run these steps:
 
 <ol>
  <li><p>Let <var>encoding</var> be the result of <a>getting an encoding</a> from <var>label</var>.
 
  <li><p>If <var>encoding</var> is failure or <a>replacement</a>, then <a>throw</a> a {{RangeError}}.
 
- <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>encoding</a> to <var>encoding</var>.
+ <li><p>Set <a>decoder</a>'s <a for=TextDecoderCommon>encoding</a> to <var>encoding</var>.
 
- <li><p>If <var>options</var>["{{TextDecoderOptions/fatal}}"] is true, then set <a>this</a>'s
+ <li><p>If <var>fatal</var> is set, then set <a>decoder</a>'s
  <a for=TextDecoderCommon>error mode</a> to "<code>fatal</code>".
 
- <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a> to
- <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"].
+ <li><p>Set <a>decoder</a>'s <a for=TextDecoderCommon>ignore BOM</a> to
+ <code>true</code> if <var>ignoreBOM</var> if is set, <code>false</code> otherwise.
 </ol>
 
-<p>The <dfn method for=TextDecoder><code>decode(<var>input</var>, <var>options</var>)</code></dfn>
-method steps are:
+<p>To <dfn>decode an input</dfn>, given a {{TextDecoder}} <var>decoderObject</var>, a
+<a>BufferSource</a> <var>input</var>, and an optional <var>stream</var> flag, run these steps:
 
 <ol>
- <li><p>If <a>this</a>'s <a for=TextDecoder>do not flush</a> is false, then set <a>this</a>'s
- <a for=TextDecoderCommon>decoder</a> to a new instance of <a>this</a>'s
- <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a>, <a>this</a>'s
- <a for=TextDecoderCommon>I/O queue</a> to the <a for=/>I/O queue</a> of bytes
- « <a>end-of-queue</a> », and <a>this</a>'s <a for=TextDecoderCommon>BOM seen</a> to false.
+ <li><p>If <var>decoderObject</var>'s <a for=TextDecoder>do not flush</a> is false, then set
+ <var>decoderObject</var>'s <a for=TextDecoderCommon>decoder</a> to a new instance of
+ <var>decoderObject</var>'s <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a>,
+ <var>decoderObject</var>'s <a for=TextDecoderCommon>I/O queue</a> to the <a for=/>I/O queue</a> of
+ bytes « <a>end-of-queue</a> », and <var>decoderObject</var>'s <a for=TextDecoderCommon>BOM seen</a>
+ to false.
 
- <li><p>Set <a>this</a>'s <a for=TextDecoder>do not flush</a> to
- <var>options</var>["{{TextDecodeOptions/stream}}"].
+ <li><p>Set <var>decoderObject</var>'s <a for=TextDecoder>do not flush</a> to <code>true</code> if
+ <var>stream</var> if is set, <code>false</code> otherwise.
 
  <li>
   <p>If <var>input</var> is given, then <a>push</a> a
-  <a lt="get a copy of the buffer source">copy of</a> <var>input</var> to <a>this</a>'s
+  <a lt="get a copy of the buffer source">copy of</a> <var>input</var> to <a>decoder</a>'s
   <a for=TextDecoderCommon>I/O queue</a>.
 
   <p class=note>Implementations are strongly encouraged to use an implementation strategy that
@@ -1441,34 +1452,70 @@ method steps are:
   <p>While true:
 
   <ol>
-   <li><p>Let <var>item</var> be the result of <a>reading</a> from <a>this</a>'s
+   <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>decoderObject</var>'s
    <a for=TextDecoderCommon>I/O queue</a>.
 
    <li>
-    <p>If <var>item</var> is <a>end-of-queue</a> and <a>this</a>'s
+    <p>If <var>item</var> is <a>end-of-queue</a> and <var>decoderObject</var>'s
     <a for=TextDecoder>do not flush</a> is true, then return the result of running
-    <a>serialize I/O queue</a> with <a>this</a> and <var>output</var>.
+    <a>serialize I/O queue</a> with <var>decoderObject</var> and <var>output</var>.
 
     <p class=note>The way streaming works is to not handle <a>end-of-queue</a> here when
-    <a>this</a>'s <a for=TextDecoder>do not flush</a> is true and to not set it to false. That way
-    in a subsequent invocation <a>this</a>'s <a for=TextDecoderCommon>decoder</a> is not set anew in
-    the first step of the algorithm and its state is preserved.
+    <var>decoderObject</var>'s <a for=TextDecoder>do not flush</a> is true and to not set it to
+    false. That way in a subsequent invocation <var>decoderObject</var>'s
+    <a for=TextDecoderCommon>decoder</a> is not set anew in the first step of the algorithm and its
+    state is preserved.
 
    <li>
     <p>Otherwise:
 
     <ol>
      <li><p>Let <var>result</var> be the result of <a>processing an item</a> with <var>item</var>,
-     <a>this</a>'s <a for=TextDecoderCommon>decoder</a>, <a>this</a>'s
-     <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <a>this</a>'s
+     <var>decoderObject</var>'s <a for=TextDecoderCommon>decoder</a>, <var>decoderObject</var>'s
+     <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <var>decoderObject</var>'s
      <a for=TextDecoderCommon>error mode</a>.
 
      <li><p>If <var>result</var> is <a>finished</a>, then return the result of running
-     <a>serialize I/O queue</a> with <a>this</a> and <var>output</var>.
+     <a>serialize I/O queue</a> with <var>decoderObject</var> and <var>output</var>.
 
      <li><p>Otherwise, if <var>result</var> is <a>error</a>, <a>throw</a> a {{TypeError}}.
     </ol>
   </ol>
+</ol>
+
+<p>The
+<dfn constructor for=TextDecoder lt="TextDecoder(label, options)" id=dom-textdecoder><code>new TextDecoder(<var>label</var>, <var>options</var>)</code></dfn>
+constructor steps are:
+
+<ol>
+ <li><p>Run the <a>initialize a TextDecoder</a> steps on <a>this</a> with <var>label</var>, the
+ fatal flag set if <var>options</var>["{{TextDecoderOptions/fatal}}"] is <code>true</code>, and the
+ ignoreBOM flag set if <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"] is <code>true</code>.
+</ol>
+
+<p>The static
+<dfn method for=TextDecoder><code>decode(<var>input</var>, <var>options</var>)</code></dfn> method
+steps are:
+
+<ol>
+ <li><p>Let <var>decoderObject</var> be a new <a>TextDecoder</a> object.
+
+ <li><p>Run the <a>initialize a TextDecoder</a> steps on <var>decoderObject</var> with
+ <var>options</var>["{{TextDecoderOptionsWithLabel/label}}"], the fatal flag set if
+ <var>options</var>["{{TextDecoderOptions/fatal}}"] is <code>true</code>, and the ignoreBOM flag set
+ if <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"] is <code>true</code>.
+
+ <li><p>Return the result of running the <a>decode an input</a> steps with <a>decoderObject</a>,
+ <var>input</var>.
+</ol>
+
+<p>The <dfn method for=TextDecoder><code>decode(<var>input</var>, <var>options</var>)</code></dfn>
+method steps are:
+
+<ol>
+ <li><p>Return the result of running the <a>decode an input</a> steps with <a>this</a>,
+ <var>input</var>, and the <code>stream</code> flag set if
+ <var>options</var>["{{TextDecoderOptions/stream}}"] is <code>true</code>.
 </ol>
 
 <h3 id=interface-mixin-textencodercommon>Interface mixin {{TextEncoderCommon}}</h3>
@@ -1498,6 +1545,9 @@ dictionary TextEncoderEncodeIntoResult {
 interface TextEncoder {
   constructor();
 
+  [NewObject] static Uint8Array encode(optional USVString input = "");
+  static TextEncoderEncodeIntoResult encodeInto(USVString source, [AllowShared] Uint8Array destination);
+
   [NewObject] Uint8Array encode(optional USVString input = "");
   TextEncoderEncodeIntoResult encodeInto(USVString source, [AllowShared] Uint8Array destination);
 };
@@ -1511,6 +1561,16 @@ requires buffering of scalar values.
 <hr>
 
 <dl class=domintro>
+ <dt>{{TextEncoder}} . <a method for=TextEncoder lt=encode()>encode([<var>input</var> = ""])</a></code>
+ <dd><p>Returns the result of running <a>UTF-8</a>'s <a for=/>encoder</a> on input.
+
+ <dt>{{TextEncoder}} . <a method=for=TextEncoder lt="encodeInto(source, destination)">encodeInto(<var>source</var>, <var>destination</var>)</a></code>
+ <dd><p>Runs the <a>UTF-8 encoder</a> on <var>source</var>, stores the result of that operation into
+ <var>destination</var>, and returns the progress made as an object wherein
+ {{TextEncoderEncodeIntoResult/read}} is the number of converted <a>code units</a> of
+ <var>source</var> and {{TextEncoderEncodeIntoResult/written}} is the number of bytes modified in
+ <var>destination</var>.
+
  <dt><code><var>encoder</var> = new <a constructor for=TextEncoder>TextEncoder()</a></code>
  <dd><p>Returns a new {{TextEncoder}} object.
 
@@ -1528,11 +1588,7 @@ requires buffering of scalar values.
  <var>destination</var>.
 </dl>
 
-<p>The
-<dfn constructor for=TextEncoder lt=TextEncoder() id=dom-textencoder><code>new TextEncoder()</code></dfn>
-constructor steps are to do nothing.
-
-<p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method steps are:
+<p>To <a>encode an input</a> given a <a>USVString</a> <var>input</var>, run the following steps:
 
 <ol>
  <li><p><a for="to I/O queue">Convert</a> <var>input</var> to an <a for=/>I/O queue</a> of scalar
@@ -1563,9 +1619,8 @@ constructor steps are to do nothing.
   </ol>
 </ol>
 
-<p>The
-<dfn method for=TextEncoder><code>encodeInto(<var>source</var>, <var>destination</var>)</code></dfn>
-method steps are:
+<p>To <a>encode a source into a destination</a> given a <a>USVString</a> <var>source</var>, and a
+<a>BufferSource</a> <var>destination</var>, run the following steps:
 
 <ol>
  <li><p>Let <var>read</var> be 0.
@@ -1625,6 +1680,41 @@ method steps are:
 
  <li><p>Return «[ "{{TextEncoderEncodeIntoResult/read}}" → <var>read</var>,
  "{{TextEncoderEncodeIntoResult/written}}" → <var>written</var> ]».
+</ol>
+
+<p>The
+<dfn constructor for=TextEncoder lt=TextEncoder() id=dom-textencoder><code>new TextEncoder()</code></dfn>
+constructor steps are to do nothing.
+
+<p>The static <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method steps
+are:
+
+<ol>
+ <li><p>Return the result of running the <a>encode an input</a> steps with <var>input</var>.
+</ol>
+
+<p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method steps are:
+
+<ol>
+ <li><p>Return the result of running the <a>encode an input</a> steps with <var>input</var>.
+</ol>
+
+<p>The static
+<dfn method for=TextEncoder><code>encodeInto(<var>source</var>, <var>destination</var>)</code></dfn>
+method steps are:
+
+<ol>
+ <li><p>Return the result of running the <a>encode a source into a destination</a> steps with
+ <var>source</var> and <var>destination</var>.
+</ol>
+
+<p>The
+<dfn method for=TextEncoder><code>encodeInto(<var>source</var>, <var>destination</var>)</code></dfn>
+method steps are:
+
+<ol>
+  <li><p>Return the result of running the <a>encode a source into a destination</a> steps with
+  <var>source</var> and <var>destination</var>.
 </ol>
 
 <div class=example id=example-textencoder-encodeinto>
