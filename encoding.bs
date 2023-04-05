@@ -1855,8 +1855,8 @@ TextEncoderStream includes GenericTransformStream;
  <dt><dfn for=TextEncoderStream>encoder</dfn>
  <dd>An <a for=/>encoder</a> instance.
 
- <dt><dfn for=TextEncoderStream>pending high surrogate</dfn>
- <dd>Null or a <a for=/>surrogate</a>, initially null.
+ <dt><dfn for=TextEncoderStream id=textencoderstream-pending-high-surrogate>leading surrogate</dfn>
+ <dd>Null or a <a for=/>leading surrogate</a>, initially null.
 </dl>
 
 <p class="note no-backref">A {{TextEncoderStream}} object offers no <var>label</var> argument as it
@@ -1974,26 +1974,26 @@ constructor steps are:
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, then:
+  <p>If <var>encoder</var>'s <a>leading surrogate</a> is non-null, then:
 
   <ol>
-   <li><p>Let <var>high surrogate</var> be <var>encoder</var>'s <a>pending high surrogate</a>.
+   <li><p>Let <var>leadingSurrogate</var> be <var>encoder</var>'s <a>leading surrogate</a>.
 
-   <li><p>Set <var>encoder</var>'s <a>pending high surrogate</a> to null.
+   <li><p>Set <var>encoder</var>'s <a>leading surrogate</a> to null.
 
-   <li><p>If <var>item</var> is in the range U+DC00 to U+DFFF, inclusive, then return a scalar value
-   whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
-   (<var>item</var> &minus; 0xDC00).
+   <li><p>If <var>item</var> is a <a>trailing surrogate</a>, then return a scalar value whose value
+   is
+   0x10000 + ((<var>leadingSurrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>item</var> &minus; 0xDC00).
 
    <li><p><a>Restore</a> <var>item</var> to <var>input</var>.
 
    <li><p>Return U+FFFD.
   </ol>
 
- <li><p>If <var>item</var> is in the range U+D800 to U+DBFF, inclusive, then set <a>pending high
- surrogate</a> to <var>item</var> and return <a>continue</a>.
+ <li><p>If <var>item</var> is a <a>leading surrogate</a>, then set <a>leading surrogate</a> to
+ <var>item</var> and return <a>continue</a>.
 
- <li><p>If <var>item</var> is in the range U+DC00 to U+DFFF, inclusive, then return U+FFFD.
+ <li><p>If <var>item</var> is a <a>trailing surrogate</a>, then return U+FFFD.
 
  <li><p>Return <var>item</var>.
 </ol>
@@ -2007,7 +2007,7 @@ that are split between strings. [[!INFRA]]
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a>pending high surrogate</a> is non-null, then:
+  <p>If <var>encoder</var>'s <a>leading surrogate</a> is non-null, then:
 
   <ol>
    <li>
@@ -3322,7 +3322,7 @@ in deployed content. Therefore it is not part of the <a>shared UTF-16 decoder</a
 rather the <a>decode</a> algorithm.
 
 <p><a>shared UTF-16 decoder</a> has an associated <dfn>UTF-16 lead byte</dfn> and
-<dfn>UTF-16 lead surrogate</dfn> (both initially null), and
+<dfn id=utf-16-lead-surrogate>UTF-16 leading surrogate</dfn> (both initially null), and
 <dfn id=utf-16be-decoder-flag>is UTF-16BE decoder</dfn> (initially false).
 
 <p><a>shared UTF-16 decoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
@@ -3330,12 +3330,12 @@ rather the <a>decode</a> algorithm.
 
 <ol>
  <li><p>If <var>byte</var> is <a>end-of-queue</a> and either
- <a>UTF-16 lead byte</a> or <a>UTF-16 lead surrogate</a> is non-null, set
- <a>UTF-16 lead byte</a> and <a>UTF-16 lead surrogate</a> to null, and return
+ <a>UTF-16 lead byte</a> or <a>UTF-16 leading surrogate</a> is non-null, set
+ <a>UTF-16 lead byte</a> and <a>UTF-16 leading surrogate</a> to null, and return
  <a>error</a>.
 
  <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>UTF-16 lead byte</a> and <a>UTF-16 lead surrogate</a> are null, return
+ <a>UTF-16 lead byte</a> and <a>UTF-16 leading surrogate</a> are null, return
  <a>finished</a>.
 
  <li><p>If <a>UTF-16 lead byte</a> is null, set <a>UTF-16 lead byte</a> to
@@ -3354,13 +3354,16 @@ rather the <a>decode</a> algorithm.
   <p>Then set <a>UTF-16 lead byte</a> to null.
 
  <li>
-  <p>If <a>UTF-16 lead surrogate</a> is non-null, let <var>lead surrogate</var> be
-  <a>UTF-16 lead surrogate</a>, set <a>UTF-16 lead surrogate</a> to null, and then:
+  <p>If <a>UTF-16 leading surrogate</a> is non-null:
 
   <ol>
-   <li><p>If <var>code unit</var> is in the range U+DC00 to U+DFFF, inclusive,
-   return a code point whose value is
-   0x10000 + ((<var>lead surrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>code unit</var> &minus; 0xDC00).
+   <li><p>Let <var>leadingSurrogate</var> be <a>UTF-16 leading surrogate</a>.
+
+   <li><p>Set <a>UTF-16 leading surrogate</a> to null.
+
+   <li><p>If <var>code unit</var> is a <a>trailing surrogate</a>, then return a code point whose
+   value is
+   0x10000 + ((<var>leadingSurrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>code unit</var> &minus; 0xDC00).
 
    <li><p>Let <var>byte1</var> be <var>code unit</var> >> 8.
 
@@ -3371,16 +3374,12 @@ rather the <a>decode</a> algorithm.
    <var>byte1</var>.
 
    <li><p><a>Restore</a> <var>bytes</var> to <var>ioQueue</var> and return <a>error</a>.
-   <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera U+FFFD them -->
   </ol>
 
- <li><p>If <var>code unit</var> is in the range U+D800 to U+DBFF, inclusive, set
- <a>UTF-16 lead surrogate</a> to <var>code unit</var> and return
- <a>continue</a>.
+ <li><p>If <var>code unit</var> is a <a>leading surrogate</a>, then set
+ <a>UTF-16 leading surrogate</a> to <var>code unit</var> and return <a>continue</a>.
 
- <li><p>If <var>code unit</var> is in the range U+DC00 to U+DFFF, inclusive,
- return <a>error</a>.
- <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera U+FFFD them -->
+ <li><p>If <var>code unit</var> is a <a>trailing surrogate</a>, then return <a>error</a>.
 
  <li><p>Return code point <var>code unit</var>.
 </ol>
