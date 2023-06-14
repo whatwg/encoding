@@ -1341,7 +1341,7 @@ dictionary TextDecodeOptions {
 interface TextDecoder {
   constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options = {});
 
-  USVString decode(optional [AllowShared] BufferSource input, optional TextDecodeOptions options = {});
+  USVString decode(optional AllowSharedBufferSource input, optional TextDecodeOptions options = {});
 };
 TextDecoder includes TextDecoderCommon;
 </pre>
@@ -1695,7 +1695,7 @@ TextDecoderStream includes GenericTransformStream;
  <dt><code><var>decoder</var> . <a attribute for=GenericTransformStream>writable</a></code>
  <dd>
   <p>Returns a <a>writable stream</a> which accepts
-  <code>[<a extended-attribute>AllowShared</a>] <a typedef>BufferSource</a></code> chunks and runs
+  <code><a typedef>AllowSharedBufferSource</a></code> chunks and runs
   them through <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a> before making them
   available to {{GenericTransformStream/readable}}.
 
@@ -1758,7 +1758,7 @@ constructor steps are:
 <ol>
  <li><p>Let <var>bufferSource</var> be the result of
  <a lt="converted to an IDL value">converting</a> <var>chunk</var> to an
- <code>[<a extended-attribute>AllowShared</a>] <a typedef>BufferSource</a></code>.
+ <code><a typedef>AllowSharedBufferSource</a></code>.
 
  <li>
   <p><a>Push</a> a <a lt="get a copy of the buffer source">copy of</a> <var>bufferSource</var> to
