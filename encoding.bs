@@ -356,14 +356,13 @@ or <a for=encoding>labels</a>.
 <p class=note>For each encoding, <a lt="ASCII lowercase">ASCII-lowercasing</a> its
 <a for=encoding>name</a> yields one of its <a for=encoding>labels</a>.
 
-<p>Authors must use the <a>UTF-8</a> <a for=/>encoding</a> and must use the
-<a>ASCII case-insensitive</a> "<code>utf-8</code>" <a>label</a> to
-identify it.
+<p>Authors must use the <a>UTF-8</a> <a for=/>encoding</a> and must use its
+(<a>ASCII case-insensitive</a>) "<code>utf-8</code>" <a for=encoding>label</a> to identify it.
 
-<p>New protocols and formats, as well as existing formats deployed in new contexts, must
-use the <a>UTF-8</a> <a for=/>encoding</a> exclusively. If these protocols and
-formats need to expose the <a for=/>encoding</a>'s <a>name</a> or
-<a>label</a>, they must expose it as "<code>utf-8</code>".
+<p>New protocols and formats, as well as existing formats deployed in new contexts, must use the
+<a>UTF-8</a> <a for=/>encoding</a> exclusively. If these protocols and formats need to expose the
+<a for=/>encoding</a>'s <a for=encoding>name</a> or <a for=encoding>label</a>, they must expose it
+as "<code>utf-8</code>".
 <!-- “UTF-8 or death” — Emil A Eklund -->
 
 <p>To
@@ -378,7 +377,7 @@ from a string <var>label</var>, run these steps:
  in the table below, then return the corresponding <a for=/>encoding</a>; otherwise return failure.
 </ol>
 
-<p class="note no-backref">This is a more basic and restrictive algorithm of mapping labels to
+<p class=note>This is a more basic and restrictive algorithm of mapping labels to
 <a for=/>encodings</a> than
 <a href=https://www.unicode.org/reports/tr22/tr22-8.html#Charset_Alias_Matching>section 1.4 of Unicode Technical Standard #22</a>
 prescribes, as that is necessary to be compatible with deployed content.
@@ -1039,9 +1038,9 @@ optional I/O queue of bytes <var>output</var> (default « »), return the result
 <div class=note>
  <p>Standards are strongly discouraged from using <a>decode</a>, <a>BOM sniff</a>, and
  <a for=/>encode</a>, except as needed for compatibility. Standards needing these legacy hooks will
- most likely also need to use <a>get an encoding</a> (to turn a <a>label</a> into an
- <a for=/>encoding</a>) and <a>get an output encoding</a> (to turn an <a for=/>encoding</a> into
- another <a for=/>encoding</a> that is suitable to pass into <a>encode</a>).
+ most likely also need to use <a>get an encoding</a> (to turn a label into an <a for=/>encoding</a>)
+ and <a>get an output encoding</a> (to turn an <a for=/>encoding</a> into another
+ <a for=/>encoding</a> that is suitable to pass into <a>encode</a>).
 
  <p>For the extremely niche case of URL percent-encoding, custom encoder error handling is needed.
  The <a>get an encoder</a> and <a>encode or fail</a> algorithms are to be used for that. Other
@@ -1352,10 +1351,8 @@ initially false.
  <dt><code><var>decoder</var> = new <a constructor for=TextDecoder lt=TextDecoder()>TextDecoder([<var>label</var> = "utf-8" [, <var>options</var>]])</a></code>
  <dd>
   <p>Returns a new {{TextDecoder}} object.
-  <p>If <var>label</var> is either not a <a>label</a> or is a
-  <a>label</a> for <a>replacement</a>,
-  <a>throws</a> a
-  {{RangeError}}.
+  <p>If <var>label</var> is either not a label or is a <a for=encoding>label</a> for
+  <a>replacement</a>, <a>throws</a> a {{RangeError}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>encoding</a></code>
  <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a>name</a>, lowercased.
@@ -1671,8 +1668,8 @@ TextDecoderStream includes GenericTransformStream;
  "utf-8" [, <var>options</var>]])</a></code>
  <dd>
   <p>Returns a new {{TextDecoderStream}} object.
-  <p>If <var>label</var> is either not a <a>label</a> or is a <a>label</a> for <a>replacement</a>,
-  <a>throws</a> a {{RangeError}}.
+  <p>If <var>label</var> is either not a label or is a <a for=encoding>label</a> for
+  <a>replacement</a>, <a>throws</a> a {{RangeError}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>encoding</a></code>
  <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a>name</a>, lowercased.
@@ -2028,9 +2025,9 @@ that are split between strings. [[!INFRA]]
 
 <h4 id=utf-8-decoder dfn export>UTF-8 decoder</h4>
 
-<p class="note no-backref">A byte order mark has priority over a <a>label</a> as it has been found
-to be more accurate in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a>
-algorithm but rather the <a>decode</a> and <a>UTF-8 decode</a> algorithms.
+<p class=note>A byte order mark has priority over a label as it has been found to be more accurate
+in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algorithm, but rather the
+<a>decode</a> and <a>UTF-8 decode</a> algorithms.
 
 <p><a>UTF-8</a>'s <a for=/>decoder</a> has an associated
 <dfn>UTF-8 code point</dfn>, <dfn>UTF-8 bytes seen</dfn>, and
@@ -3251,9 +3248,9 @@ the server and the client.
 
 <h4 id=shared-utf-16-decoder dfn export>shared UTF-16 decoder</h4>
 
-<p class="note no-backref">A byte order mark has priority over a <a>label</a> as it
-has been found to be more accurate in deployed content. Therefore it is not part of the
-<a>shared UTF-16 decoder</a> algorithm but rather the <a>decode</a> algorithm.
+<p class=note>A byte order mark has priority over a label as it has been found to be more accurate
+in deployed content. Therefore it is not part of the <a>shared UTF-16 decoder</a> algorithm, but
+rather the <a>decode</a> algorithm.
 
 <p><a>shared UTF-16 decoder</a> has an associated <dfn>UTF-16 lead byte</dfn> and
 <dfn>UTF-16 lead surrogate</dfn> (both initially null), and
@@ -3329,7 +3326,7 @@ its <a>is UTF-16BE decoder</a> set to true.
 
 <h3 id=utf-16le dfn export>UTF-16LE</h3>
 
-<p class="note no-backref">"<code>utf-16</code>" is a <a>label</a> for <a>UTF-16LE</a> to deal with
+<p class=note>"<code>utf-16</code>" is a <a for=encoding>label</a> for <a>UTF-16LE</a> to deal with
 deployed content.
 
 
