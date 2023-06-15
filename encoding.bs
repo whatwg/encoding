@@ -349,9 +349,9 @@ given an <a for=list>item</a> <var>item</var>, <a for=/>encoding</a>'s <a for=/>
 <h3 id=names-and-labels>Names and labels</h3>
 
 <p>The table below lists all <a for=/>encodings</a>
-and their <a>labels</a> user agents must support.
+and their <a for=encoding>labels</a> user agents must support.
 User agents must not support any other <a for=/>encodings</a>
-or <a>labels</a>.
+or <a for=encoding>labels</a>.
 
 <p class=note>For each encoding, <a lt="ASCII lowercase">ASCII-lowercasing</a> its
 <a for=encoding>name</a> yields one of its <a for=encoding>labels</a>.
@@ -374,21 +374,20 @@ from a string <var>label</var>, run these steps:
  <li><p>Remove any leading and trailing <a>ASCII whitespace</a> from
  <var>label</var>.
 
- <li><p>If <var>label</var> is an <a>ASCII case-insensitive</a> match for any of the <a>labels</a>
- listed in the table below, then return the corresponding <a for=/>encoding</a>; otherwise return
- failure.
+ <li><p>If <var>label</var> is an <a>ASCII case-insensitive</a> match for any of the labels listed
+ in the table below, then return the corresponding <a for=/>encoding</a>; otherwise return failure.
 </ol>
 
-<p class="note no-backref">This is a more basic and restrictive algorithm of mapping <a>labels</a>
-to <a for=/>encodings</a> than
+<p class="note no-backref">This is a more basic and restrictive algorithm of mapping labels to
+<a for=/>encodings</a> than
 <a href=https://www.unicode.org/reports/tr22/tr22-8.html#Charset_Alias_Matching>section 1.4 of Unicode Technical Standard #22</a>
 prescribes, as that is necessary to be compatible with deployed content.
 
 <table>
  <thead>
   <tr>
-   <th><a>Name</a>
-   <th><a>Labels</a>
+   <th>Name
+   <th>Labels
  <tbody>
   <tr><th colspan=2><a href=#the-encoding>The Encoding</a>
   <tr>
@@ -713,9 +712,8 @@ prescribes, as that is necessary to be compatible with deployed content.
    <td>"<code>x-user-defined</code>"
 </table>
 
-<p class=note>All <a for=/>encodings</a> and their
-<a>labels</a> are also available as non-normative
-<a href=encodings.json>encodings.json</a> resource.
+<p class=note>All <a for=/>encodings</a> and their <a for=encoding>labels</a> are also available as
+non-normative <a href=encodings.json>encodings.json</a> resource.
 
 <p class=note id=supported-encodings>The set of supported <a for=/>encodings</a> is primarily based
 on the intersection of the sets supported by major browser engines when the development of this
