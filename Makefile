@@ -16,7 +16,7 @@ remote: encoding.bs
 	);
 
 local: encoding.bs
-	bikeshed spec encoding.bs encoding.html --md-Text-Macro="COMMIT-SHA LOCAL COPY"
+	bikeshed spec encoding.bs encoding.html --md-Text-Macro="COMMIT-SHA LOCAL-COPY"
 
 deploy: encoding.bs
 	curl --remote-name --fail https://resources.whatwg.org/build/deploy.sh
