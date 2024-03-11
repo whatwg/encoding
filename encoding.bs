@@ -190,7 +190,7 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
 <p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> an <a for=list>item</a> other
 than <a>end-of-queue</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
-<a for=list>prepend</a> operation. To prepend a sequence of items not containing
+<a for=list>prepend</a> operation. To prepend a <a for=/>list</a> of <a for=list>items</a> excluding
 <a>end-of-queue</a>, insert those items, in the given order, before the first item in the queue.
 
 <p class=example id=example-tokens>Inserting the sequence of scalar value items
@@ -1355,7 +1355,7 @@ initially false.
   <a>replacement</a>, <a>throws</a> a {{RangeError}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>encoding</a></code>
- <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a>name</a>, lowercased.
+ <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a for=encoding>name</a>, lowercased.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>fatal</a></code>
  <dd><p>Returns true if <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>", otherwise
@@ -1672,7 +1672,7 @@ TextDecoderStream includes GenericTransformStream;
   <a>replacement</a>, <a>throws</a> a {{RangeError}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>encoding</a></code>
- <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a>name</a>, lowercased.
+ <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a for=encoding>name</a>, lowercased.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>fatal</a></code>
  <dd><p>Returns true if <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>", and
@@ -2339,7 +2339,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
     <p>If <var>byte</var> is not in the range 0x30 to 0x39, inclusive, then:
 
     <ol>
-     <li><p><a>Prepend</a> <a>gb18030 second</a>, <a>gb18030 third</a>, and <var>byte</var> to
+     <li><p><a>Prepend</a> « <a>gb18030 second</a>, <a>gb18030 third</a>, <var>byte</var> » to
      <var>ioQueue</var>.
 
      <li><p>Set <a>gb18030 first</a>, <a>gb18030 second</a>, and <a>gb18030 third</a> to 0x00.
@@ -2366,10 +2366,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
    <a>gb18030 third</a> to <var>byte</var> and return <a>continue</a>.
 
-   <li><p><a>Prepend</a> <a>gb18030 second</a>
-   followed by <var>byte</var> to <var>ioQueue</var>, set
-   <a>gb18030 first</a> and <a>gb18030 second</a> to 0x00, and return
-   <a>error</a>.
+   <li><p><a>Prepend</a> « <a>gb18030 second</a>, <var>byte</var> » to <var>ioQueue</var>, set
+   <a>gb18030 first</a> and <a>gb18030 second</a> to 0x00, and return <a>error</a>.
   </ol>
 
  <li>
@@ -2898,9 +2896,9 @@ and <var>code point</var>, runs these steps:
      <a>error</a> otherwise.
     </ol>
 
-   <li><p>If <var>byte</var> is <a>end-of-queue</a>, then <a>prepend</a>
-   <var>lead</var> to <var>ioQueue</var>. Otherwise, <a>prepend</a>
-   <var>lead</var> and <var>byte</var> to <var>ioQueue</var>.
+   <li><p>If <var>byte</var> is <a>end-of-queue</a>, then <a>prepend</a> <var>lead</var> to
+   <var>ioQueue</var>; otherwise, <a>prepend</a> « <var>lead</var>, <var>byte</var> » to
+   <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
    <a>ISO-2022-JP decoder state</a> to <a>ISO-2022-JP decoder output state</a>
@@ -3297,10 +3295,11 @@ rather the <a>decode</a> algorithm.
 
    <li><p>Let <var>byte2</var> be <var>code unit</var> &amp; 0x00FF.
 
-   <li><p>Let <var>bytes</var> be two bytes whose values are <var>byte1</var> and <var>byte2</var>,
-   if <a>is UTF-16BE decoder</a> is true, and <var>byte2</var> and <var>byte1</var> otherwise.
+   <li><p>Let <var>bytes</var> be a <a for=/>list</a> of two bytes whose values are <var>byte1</var>
+   and <var>byte2</var>, if <a>is UTF-16BE decoder</a> is true; otherwise <var>byte2</var> and
+   <var>byte1</var>.
 
-   <li><p><a>Prepend</a> the <var>bytes</var> to <var>ioQueue</var> and return <a>error</a>.
+   <li><p><a>Prepend</a> <var>bytes</var> to <var>ioQueue</var> and return <a>error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera U+FFFD them -->
   </ol>
 
