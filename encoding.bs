@@ -188,15 +188,15 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 <p>To <a for="I/O queue">push</a> a sequence of items to an <a for=/>I/O queue</a>
 <var>ioQueue</var> is to push each item in the sequence to <var>ioQueue</var>, in the given order.
 
-<p>To <dfn id=concept-stream-prepend for="I/O queue">prepend</dfn> an <a for=list>item</a> other
-than <a>end-of-queue</a> to an <a for=/>I/O queue</a>, perform the normal <a for=/>list</a>
-<a for=list>prepend</a> operation. To prepend a sequence of items not containing
-<a>end-of-queue</a>, insert those items, in the given order, before the first item in the queue.
+<p>To <dfn id=concept-stream-prepend for="I/O queue">restore</dfn> an <a for=list>item</a> other
+than <a>end-of-queue</a> to an <a for=/>I/O queue</a>, perform the <a for=/>list</a>
+<a for=list>prepend</a> operation. To <a for="I/O queue">restore</a> a <a for=/>list</a> of
+<a for=list>items</a> excluding <a>end-of-queue</a> to an <a for=/>I/O queue</a>, insert those
+items, in the given order, before the first item in the queue.
 
-<p class=example id=example-tokens>Inserting the sequence of scalar value items
-<code>&amp;#128169;</code> in an I/O queue of scalar values "<code> hello world</code>", results in
-an I/O queue "<code>&amp;#128169; hello world</code>". The next item to be read would be
-<code>&amp;</code>. <!-- 💩 -->
+<p class=example id=example-tokens>Inserting the bytes « 0xF0, 0x9F » in an I/O queue
+« 0x92 0xA9, <a>end-of-queue</a> », results in an I/O queue
+« 0xF0, 0x9F, 0x92 0xA9, <a>end-of-queue</a> ». The next item to be read would be 0xF0. <!-- 💩 -->
 
 <p>To <dfn for="from I/O queue">convert</dfn> an <a for=/>I/O queue</a> <var>ioQueue</var> into a
 <a for=/>list</a>, <a>string</a>, or <a>byte sequence</a>, return the result of
@@ -218,8 +218,8 @@ an I/O queue "<code>&amp;#128169; hello world</code>". The next item to be read 
 See <a href="https://github.com/whatwg/infra/issues/319">whatwg/infra issue #319</a>. [[INFRA]]
 
 <p class=note><a for=/>I/O queues</a> are defined as <a for=/>lists</a>, not
-<a spec=infra>queues</a>, because they feature a <a for="I/O queue">prepend</a> operation. However,
-this prepend operation is an internal detail of the algorithms in this specification, and is not to
+<a spec=infra>queues</a>, because they feature a <a for="I/O queue">restore</a> operation. However,
+this restore operation is an internal detail of the algorithms in this specification, and is not to
 be used by other standards. Implementations are free to find alternative ways to implement such
 algorithms, as detailed in [[#implementation-considerations]].
 
@@ -1355,7 +1355,7 @@ initially false.
   <a>replacement</a>, <a>throws</a> a {{RangeError}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>encoding</a></code>
- <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a>name</a>, lowercased.
+ <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a for=encoding>name</a>, lowercased.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>fatal</a></code>
  <dd><p>Returns true if <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>", otherwise
@@ -1672,7 +1672,7 @@ TextDecoderStream includes GenericTransformStream;
   <a>replacement</a>, <a>throws</a> a {{RangeError}}.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>encoding</a></code>
- <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a>name</a>, lowercased.
+ <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a for=encoding>name</a>, lowercased.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>fatal</a></code>
  <dd><p>Returns true if <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>", and
@@ -1981,7 +1981,7 @@ constructor steps are:
    whose value is 0x10000 + ((<var>high surrogate</var> &minus; 0xD800) &lt;&lt; 10) +
    (<var>item</var> &minus; 0xDC00).
 
-   <li><p><a>Prepend</a> <var>item</var> to <var>input</var>.
+   <li><p><a>Restore</a> <var>item</var> to <var>input</var>.
 
    <li><p>Return U+FFFD.
   </ol>
@@ -2113,7 +2113,7 @@ in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algori
    set <a>UTF-8 lower boundary</a> to 0x80, and set
    <a>UTF-8 upper boundary</a> to 0xBF.
 
-   <li><p><a>Prepend</a> <var>byte</var> to <var>ioQueue</var>.
+   <li><p><a>Restore</a> <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
@@ -2339,7 +2339,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
     <p>If <var>byte</var> is not in the range 0x30 to 0x39, inclusive, then:
 
     <ol>
-     <li><p><a>Prepend</a> <a>gb18030 second</a>, <a>gb18030 third</a>, and <var>byte</var> to
+     <li><p><a>Restore</a> « <a>gb18030 second</a>, <a>gb18030 third</a>, <var>byte</var> » to
      <var>ioQueue</var>.
 
      <li><p>Set <a>gb18030 first</a>, <a>gb18030 second</a>, and <a>gb18030 third</a> to 0x00.
@@ -2366,10 +2366,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
    <a>gb18030 third</a> to <var>byte</var> and return <a>continue</a>.
 
-   <li><p><a>Prepend</a> <a>gb18030 second</a>
-   followed by <var>byte</var> to <var>ioQueue</var>, set
-   <a>gb18030 first</a> and <a>gb18030 second</a> to 0x00, and return
-   <a>error</a>.
+   <li><p><a>Restore</a> « <a>gb18030 second</a>, <var>byte</var> » to <var>ioQueue</var>, set
+   <a>gb18030 first</a> and <a>gb18030 second</a> to 0x00, and return <a>error</a>.
   </ol>
 
  <li>
@@ -2394,7 +2392,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <li><p>If <var>code point</var> is non-null, return a code point whose value is
    <var>code point</var>.
 
-   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
@@ -2540,7 +2538,7 @@ and <var>byte</var>, runs these steps:
    <li><p>If <var>code point</var> is non-null, return a code point whose value is
    <var>code point</var>.
 
-   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
@@ -2636,7 +2634,7 @@ and <var>code point</var>, runs these steps:
    <li><p>If <var>code point</var> is non-null, return a code point whose value is
    <var>code point</var>.
 
-   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
@@ -2854,7 +2852,7 @@ and <var>code point</var>, runs these steps:
    <a lt="ISO-2022-JP decoder escape">escape</a>, and return
    <a>continue</a>.
 
-   <li><p>If <var>byte</var> is not <a>end-of-queue</a>, then <a>prepend</a>
+   <li><p>If <var>byte</var> is not <a>end-of-queue</a>, then <a>restore</a>
    <var>byte</var> to <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
@@ -2898,9 +2896,9 @@ and <var>code point</var>, runs these steps:
      <a>error</a> otherwise.
     </ol>
 
-   <li><p>If <var>byte</var> is <a>end-of-queue</a>, then <a>prepend</a>
-   <var>lead</var> to <var>ioQueue</var>. Otherwise, <a>prepend</a>
-   <var>lead</var> and <var>byte</var> to <var>ioQueue</var>.
+   <li><p>If <var>byte</var> is <a>end-of-queue</a>, then <a>restore</a> <var>lead</var> to
+   <var>ioQueue</var>; otherwise, <a>restore</a> « <var>lead</var>, <var>byte</var> » to
+   <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
    <a>ISO-2022-JP decoder state</a> to <a>ISO-2022-JP decoder output state</a>
@@ -2972,7 +2970,7 @@ and <var>code point</var>, runs these steps:
  <li><p>If <var>code point</var> is an <a>ASCII code point</a>, and
  <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>,
- <a>prepend</a> <var>code point</var> to
+ <a>restore</a> <var>code point</var> to
  <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes
  0x1B 0x28 0x42.
@@ -2980,7 +2978,7 @@ and <var>code point</var>, runs these steps:
  <li><p>If <var>code point</var> is either U+00A5 or U+203E, and
  <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder Roman">Roman</a>,
- <a>prepend</a> <var>code point</var> to
+ <a>restore</a> <var>code point</var> to
  <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder Roman">Roman</a>, and return three bytes
  0x1B 0x28 0x4A.
@@ -3003,7 +3001,7 @@ and <var>code point</var>, runs these steps:
 
   <ol>
    <li><p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
-   then <a>prepend</a> <var>code point</var> to <var>ioQueue</var>, set
+   then <a>restore</a> <var>code point</var> to <var>ioQueue</var>, set
    <a>ISO-2022-JP encoder state</a> to <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three
    bytes 0x1B 0x28 0x42.
 
@@ -3012,7 +3010,7 @@ and <var>code point</var>, runs these steps:
 
  <li><p>If <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
- <a>prepend</a> <var>code point</var> to
+ <a>restore</a> <var>code point</var> to
  <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder jis0208">jis0208</a>, and return three bytes
  0x1B 0x24 0x42.
@@ -3071,7 +3069,7 @@ and <var>code point</var>, runs these steps:
    <li><p>If <var>code point</var> is non-null, return a code point whose value is
    <var>code point</var>.
 
-   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
@@ -3171,7 +3169,7 @@ and <var>code point</var>, runs these steps:
    <li><p>If <var>code point</var> is non-null, return a code point whose value is
    <var>code point</var>.
 
-   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>prepend</a> <var>byte</var> to
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
@@ -3297,10 +3295,11 @@ rather the <a>decode</a> algorithm.
 
    <li><p>Let <var>byte2</var> be <var>code unit</var> &amp; 0x00FF.
 
-   <li><p>Let <var>bytes</var> be two bytes whose values are <var>byte1</var> and <var>byte2</var>,
-   if <a>is UTF-16BE decoder</a> is true, and <var>byte2</var> and <var>byte1</var> otherwise.
+   <li><p>Let <var>bytes</var> be a <a for=/>list</a> of two bytes whose values are <var>byte1</var>
+   and <var>byte2</var>, if <a>is UTF-16BE decoder</a> is true; otherwise <var>byte2</var> and
+   <var>byte1</var>.
 
-   <li><p><a>Prepend</a> the <var>bytes</var> to <var>ioQueue</var> and return <a>error</a>.
+   <li><p><a>Restore</a> <var>bytes</var> to <var>ioQueue</var> and return <a>error</a>.
    <!-- unpaired surrogates; IE/WebKit output them, Gecko/Opera U+FFFD them -->
   </ol>
 
@@ -3396,7 +3395,7 @@ decoded using <a>UTF-16BE/LE</a>.
 
 <h2 class=no-num id=implementation-considerations>Implementation considerations</h2>
 
-<p>Instead of supporting <a for=/>I/O queues</a> with arbitrary <a for="I/O queue">prepend</a>, the
+<p>Instead of supporting <a for=/>I/O queues</a> with arbitrary <a for="I/O queue">restore</a>, the
 <a for=/>decoders</a> for <a for=/>encodings</a> in this standard could be implemented with:
 
 <ol>
