@@ -116,7 +116,7 @@ present in <a for=/>I/O queues</a> of any type and it signifies that there are n
 <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
 <ol>
- <li><p>If <var>ioQueue</var> is <a for=list>empty</a>, then wait until its <a for=list>size</a> is
+ <li><p>If <var>ioQueue</var> <a for=list>is empty</a>, then wait until its <a for=list>size</a> is
  at least 1.
 
  <li><p>If <var>ioQueue</var>[0] is <a>end-of-queue</a>, then return <a>end-of-queue</a>.
