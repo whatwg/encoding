@@ -835,7 +835,8 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <td>This matches the GB18030-2005 standard for code points encoded as two bytes, except for
   0xA3 0xA0 which maps to U+3000 to be compatible with deployed content. This index covers the
   CJK Unified Ideographs block of Unicode in its entirety. Entries from that block that are above or
-  to the left of (the first) U+3000 in the visualization are in the Unicode order.
+  to the left of (the first) U+3000 in the visualization are in the Unicode order. (Support for the
+  GB18030-2022 standard is handled separately to avoid impacting <a>GBK</a>.)
   <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=131837
        https://bugs.webkit.org/show_bug.cgi?id=17014
        https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396
@@ -2298,13 +2299,14 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 
 <h4 id=gbk-decoder dfn export>GBK decoder</h4>
 
-<p><a>GBK</a>'s <a for=/>decoder</a> is <a>gb18030</a>'s <a for=/>decoder</a>.
+<p><a>GBK</a>'s <a for=/>decoder</a> is <a>gb18030</a>'s <a for=/>decoder</a> with its
+<a for="gb18030 decoder">is GBK</a> set to true.
 
 
 <h4 id=gbk-encoder dfn export>GBK encoder</h4>
 
-<p><a>GBK</a>'s <a for=/>encoder</a> is <a>gb18030</a>'s <a for=/>encoder</a>
-with its <a>is GBK</a> set to true.
+<p><a>GBK</a>'s <a for=/>encoder</a> is <a>gb18030</a>'s <a for=/>encoder</a> with its
+<a for="gb18030 encoder">is GBK</a> set to true.
 
 <p class="note no-backref">Not fully aliasing <a>GBK</a> with <a>gb18030</a>
 is a conservative move to decrease the chances of breaking legacy servers and other
@@ -2315,8 +2317,9 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h4 id=gb18030-decoder dfn export>gb18030 decoder</h4>
 
-<p><a>gb18030</a>'s <a for=/>decoder</a> has an associated <dfn>gb18030 first</dfn>,
-<dfn>gb18030 second</dfn>, and <dfn>gb18030 third</dfn> (all initially 0x00).
+<p><a>gb18030</a>'s <a for=/>decoder</a> has an associated <dfn for="gb18030 decoder">is GBK</dfn>
+(initially false), <dfn>gb18030 first</dfn> (initially 0x00), <dfn>gb18030 second</dfn> (initially
+0x00), and <dfn>gb18030 third</dfn> (initially 0x00).
 
 <p><a>gb18030</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
@@ -2347,14 +2350,162 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
      <li><p>Return <a>error</a>.
     </ol>
 
-   <li><p>Let <var>code point</var> be the <a>index gb18030 ranges code point</a> for
+   <li><p>Let <var>code point</var> be null.
+
+   <li>
+    <p>If <a for="gb18030 decoder">is GBK</a> is false and there is a row in the table below whose
+    first column is <a>gb18030 first</a>, second column is <a>gb18030 second</a>, third column is
+    <a>gb18030 third</a>, and fourth column is <var>byte</var>, then set <var>code point</var> to
+    the fifth column on the same row:
+
+    <table>
+     <tr>
+      <th>First byte
+      <th>Second byte
+      <th>Third byte
+      <th>Fourth byte
+      <th>Code point
+      <th>Notes
+     <tr>
+      <td>0x82
+      <td>0x35
+      <td>0x90
+      <td>0x37
+      <td>U+9FB4
+      <td>龴 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0x82
+      <td>0x35
+      <td>0x90
+      <td>0x38
+      <td>U+9FB5
+      <td>龵 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0x82
+      <td>0x35
+      <td>0x90
+      <td>0x39
+      <td>U+9FB6
+      <td>龶 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0x82
+      <td>0x35
+      <td>0x91
+      <td>0x30
+      <td>U+9FB7
+      <td>龷 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0x82
+      <td>0x35
+      <td>0x91
+      <td>0x31
+      <td>U+9FB8
+      <td>龸 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0x82
+      <td>0x35
+      <td>0x91
+      <td>0x32
+      <td>U+9FB9
+      <td>龹 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0x82
+      <td>0x35
+      <td>0x91
+      <td>0x33
+      <td>U+9FBA
+      <td>龺 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0x82
+      <td>0x35
+      <td>0x91
+      <td>0x34
+      <td>U+9FBB
+      <td>龻 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x82
+      <td>0x36
+      <td>U+FE10
+      <td>︐ (PRESENTATION FORM FOR VERTICAL COMMA)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x82
+      <td>0x37
+      <td>U+FE11
+      <td>︑ (PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x82
+      <td>0x38
+      <td>U+FE12
+      <td>︒ (PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC FULL STOP)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x82
+      <td>0x39
+      <td>U+FE13
+      <td>︓ (PRESENTATION FORM FOR VERTICAL COLON)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x83
+      <td>0x30
+      <td>U+FE14
+      <td>︔ (PRESENTATION FORM FOR VERTICAL SEMICOLON)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x83
+      <td>0x31
+      <td>U+FE15
+      <td>︕ (PRESENTATION FORM FOR VERTICAL EXCLAMATION MARK)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x83
+      <td>0x32
+      <td>U+FE16
+      <td>︖ (PRESENTATION FORM FOR VERTICAL QUESTION MARK)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x83
+      <td>0x33
+      <td>U+FE17
+      <td>︗ (PRESENTATION FORM FOR VERTICAL LEFT WHITE LENTICULAR BRACKET)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x83
+      <td>0x34
+      <td>U+FE18
+      <td>︘ (PRESENTATION FORM FOR VERTICAL RIGHT WHITE LENTICULAR BRAKCET)
+     <tr>
+      <td>0x84
+      <td>0x31
+      <td>0x83
+      <td>0x35
+      <td>U+FE19
+      <td>︙ (PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS)
+    </table>
+
+    <p class=note>This step codifies part of the GB18030-2022 standard. These mappings go in one
+    direction only.
+
+   <li><p>If <var>code point</var> is null, then set <var>code point</var> to the
+   <a>index gb18030 ranges code point</a> for
    ((<a>gb18030 first</a> &minus; 0x81) × (10 × 126 × 10)) +
    ((<a>gb18030 second</a> &minus; 0x30) × (10 × 126)) +
    ((<a>gb18030 third</a> &minus; 0x81) × 10) + <var>byte</var> &minus; 0x30.
 
    <li><p>Set <a>gb18030 first</a>, <a>gb18030 second</a>, and <a>gb18030 third</a> to 0x00.
 
-   <li><p>If <var>code point</var> is null, return <a>error</a>.
+   <li><p>If <var>code point</var> is null, then return <a>error</a>.
 
    <li><p>Return a code point whose value is <var>code point</var>.
   </ol>
@@ -2379,6 +2530,112 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
    <li><p>Let <var>lead</var> be <a>gb18030 first</a>, let
    <var>pointer</var> be null, and set <a>gb18030 first</a> to 0x00.
+
+   <li>
+    <p>If <a for="gb18030 decoder">is GBK</a> is false and there is a row in the table below whose
+    first column is <var>lead</var> and second column is <var>byte</var>, then return the code point
+    on the same row listed in the third column:
+
+    <table>
+     <tr>
+      <th>Lead byte
+      <th>Trail byte
+      <th>Code point
+      <th>Notes
+     <tr>
+      <td>0xA6
+      <td>0xD9
+      <td>U+FE10
+      <td>︐ (PRESENTATION FORM FOR VERTICAL COMMA)
+     <tr>
+      <td>0xA6
+      <td>0xDA
+      <td>U+FE12
+      <td>︒ (PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC FULL STOP)
+     <tr>
+      <td>0xA6
+      <td>0xDB
+      <td>U+FE11
+      <td>︑ (PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA)
+     <tr>
+      <td>0xA6
+      <td>0xDC
+      <td>U+FE13
+      <td>︓ (PRESENTATION FORM FOR VERTICAL COLON)
+     <tr>
+      <td>0xA6
+      <td>0xDD
+      <td>U+FE14
+      <td>︔ (PRESENTATION FORM FOR VERTICAL SEMICOLON)
+     <tr>
+      <td>0xA6
+      <td>0xDE
+      <td>U+FE15
+      <td>︕ (PRESENTATION FORM FOR VERTICAL EXCLAMATION MARK)
+     <tr>
+      <td>0xA6
+      <td>0xDF
+      <td>U+FE16
+      <td>︖ (PRESENTATION FORM FOR VERTICAL QUESTION MARK)
+     <tr>
+      <td>0xA6
+      <td>0xEC
+      <td>U+FE17
+      <td>︗ (PRESENTATION FORM FOR VERTICAL LEFT WHITE LENTICULAR BRACKET)
+     <tr>
+      <td>0xA6
+      <td>0xED
+      <td>U+FE18
+      <td>︘ (PRESENTATION FORM FOR VERTICAL RIGHT WHITE LENTICULAR BRAKCET)
+     <tr>
+      <td>0xA6
+      <td>0xF3
+      <td>U+FE19
+      <td>︙ (PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS)
+     <tr>
+      <td>0xFE
+      <td>0x59
+      <td>U+9FB4
+      <td>龴 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0xFE
+      <td>0x61
+      <td>U+9FB5
+      <td>龵 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0xFE
+      <td>0x66
+      <td>U+9FB6
+      <td>龶 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0xFE
+      <td>0x67
+      <td>U+9FB7
+      <td>龷 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0xFE
+      <td>0x6D
+      <td>U+9FB8
+      <td>龸 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0xFE
+      <td>0x7E
+      <td>U+9FB9
+      <td>龹 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0xFE
+      <td>0x90
+      <td>U+9FBA
+      <td>龺 (&lt;CJK Ideograph>)
+     <tr>
+      <td>0xFE
+      <td>0xA0
+      <td>U+9FBB
+      <td>龻 (&lt;CJK Ideograph>)
+    </table>
+
+    <p class=note>This step codifies part of the GB18030-2022 standard. The same eighteen mappings
+    in the opposite direction can be found in the <a>gb18030 encoder</a>.
 
    <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F, otherwise 0x41.
 
@@ -2412,8 +2669,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h4 id=gb18030-encoder dfn export>gb18030 encoder</h4>
 
-<p><a>gb18030</a>'s <a for=/>encoder</a> has an associated <dfn id=gbk-flag>is GBK</dfn>
-(initially false).
+<p><a>gb18030</a>'s <a for=/>encoder</a> has an associated
+<dfn id=gbk-flag for="gb18030 encoder">is GBK</dfn> (initially false).
 
 <p><a>gb18030</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
@@ -2431,8 +2688,131 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
   <p class=note><a>Index gb18030</a> maps 0xA3 0xA0 to U+3000 rather than U+E5E5 for
   compatibility with deployed content. Therefore it cannot roundtrip.
 
- <li><p>If <a>is GBK</a> is true and <var>code point</var> is
- U+20AC, return byte 0x80.
+ <li><p>If <a for="gb18030 encoder">is GBK</a> is true and <var>code point</var> is U+20AC, then
+ return byte 0x80.
+
+ <li>
+  <p>If <a for="gb18030 encoder">is GBK</a> is false and there is a row in the table below whose
+  first column is <var>code point</var>, then return the two bytes on the same row listed in the
+  second column:
+
+  <table>
+   <tr>
+    <th>Code point
+    <th>Bytes
+   <tr>
+    <td>U+E78D
+    <td>0xA6 0xD9
+   <tr>
+    <td>U+E78E
+    <td>0xA6 0xDA
+   <tr>
+    <td>U+E78F
+    <td>0xA6 0xDB
+   <tr>
+    <td>U+E790
+    <td>0xA6 0xDC
+   <tr>
+    <td>U+E791
+    <td>0xA6 0xDD
+   <tr>
+    <td>U+E792
+    <td>0xA6 0xDE
+   <tr>
+    <td>U+E793
+    <td>0xA6 0xDF
+   <tr>
+    <td>U+E794
+    <td>0xA6 0xEC
+   <tr>
+    <td>U+E795
+    <td>0xA6 0xED
+   <tr>
+    <td>U+E796
+    <td>0xA6 0xF3
+   <tr>
+    <td>U+E81E
+    <td>0xFE 0x59
+   <tr>
+    <td>U+E826
+    <td>0xFE 0x61
+   <tr>
+    <td>U+E82B
+    <td>0xFE 0x66
+   <tr>
+    <td>U+E82C
+    <td>0xFE 0x67
+   <tr>
+    <td>U+E832
+    <td>0xFE 0x6D
+   <tr>
+    <td>U+E843
+    <td>0xFE 0x7E
+   <tr>
+    <td>U+E854
+    <td>0xFE 0x90
+   <tr>
+    <td>U+E864
+    <td>0xFE 0xA0
+   <tr>
+    <td>U+9FB4
+    <td>0xFE 0x59
+   <tr>
+    <td>U+9FB5
+    <td>0xFE 0x61
+   <tr>
+    <td>U+9FB6
+    <td>0xFE 0x66
+   <tr>
+    <td>U+9FB7
+    <td>0xFE 0x67
+   <tr>
+    <td>U+9FB8
+    <td>0xFE 0x6D
+   <tr>
+    <td>U+9FB9
+    <td>0xFE 0x7E
+   <tr>
+    <td>U+9FBA
+    <td>0xFE 0x90
+   <tr>
+    <td>U+9FBB
+    <td>0xFE 0xA0
+   <tr>
+    <td>U+FE10
+    <td>0xA6 0xD9
+   <tr>
+    <td>U+FE11
+    <td>0xA6 0xDB
+   <tr>
+    <td>U+FE12
+    <td>0xA6 0xDA
+   <tr>
+    <td>U+FE13
+    <td>0xA6 0xDC
+   <tr>
+    <td>U+FE14
+    <td>0xA6 0xDD
+   <tr>
+    <td>U+FE15
+    <td>0xA6 0xDE
+   <tr>
+    <td>U+FE16
+    <td>0xA6 0xDF
+   <tr>
+    <td>U+FE17
+    <td>0xA6 0xEC
+   <tr>
+    <td>U+FE18
+    <td>0xA6 0xED
+   <tr>
+    <td>U+FE19
+    <td>0xA6 0xF3
+  </table>
+
+  <p class=note>This step codifies part of the GB18030-2022 standard. The mappings in the opposite
+  direction for U+9FB4 to U+9FBB, inclusive, and U+FE10 to U+FE19, inclusive, can be found in the
+  <a>gb18030 decoder</a>.
 
  <li><p>Let <var>pointer</var> be the <a>index pointer</a> for
  <var>code point</var> in <a>index gb18030</a>.
@@ -2452,7 +2832,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>trail</var> + <var>offset</var>.
   </ol>
 
- <li><p>If <a>is GBK</a> is true, return <a>error</a> with
+ <li><p>If <a for="gb18030 encoder">is GBK</a> is true, then return <a>error</a> with
  <var>code point</var>.
 
  <li><p>Set <var>pointer</var> to the
