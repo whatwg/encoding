@@ -2,7 +2,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: af8f1e12df79b768322b5e83613698cdc619438270a2fc359554331c805054a3
-# Date: 2018-01-06
+# Date: 2024-09-18
 
   0	0x0080	 (<control>)
   1	0x0081	 (<control>)

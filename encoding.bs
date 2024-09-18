@@ -832,7 +832,7 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <td><a href=index-gb18030.txt>index-gb18030.txt</a>
   <td><a href=gb18030.html>index gb18030 visualization</a>
   <td><a href=gb18030-bmp.html>index gb18030 BMP coverage</a>
-  <td>This matches the GB18030-2005 standard for code points encoded as two bytes, except for
+  <td>This matches the GB18030-2022 standard for code points encoded as two bytes, except for
   0xA3 0xA0 which maps to U+3000 to be compatible with deployed content. This index covers the
   CJK Unified Ideographs block of Unicode in its entirety. Entries from that block that are above or
   to the left of (the first) U+3000 in the visualization are in the Unicode order.
@@ -845,7 +845,7 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <td colspan=3><a href=index-gb18030-ranges.txt>index-gb18030-ranges.txt</a>
   <td>This <a>index</a> works different from all others. Listing all code points would result
   in over a million items whereas they can be represented neatly in 207 ranges combined with trivial
-  limit checks. It therefore only superficially matches the GB18030-2005 standard for code points
+  limit checks. It therefore only superficially matches the GB18030-2022 standard for code points
   encoded as four bytes. See also <a>index gb18030 ranges code point</a> and
   <a>index gb18030 ranges pointer</a> below.
  <tr>
@@ -2433,6 +2433,73 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
  <li><p>If <a>is GBK</a> is true and <var>code point</var> is
  U+20AC, return byte 0x80.
+
+ <li>
+  <p>If there is a row in the table below whose first column is <var>code point</var>, then return
+  the two bytes on the same row listed in the second column:
+
+  <table>
+   <tr>
+    <th>Code point
+    <th>Bytes
+   <tr>
+    <td>U+E78D
+    <td>0xA6 0xD9
+   <tr>
+    <td>U+E78E
+    <td>0xA6 0xDA
+   <tr>
+    <td>U+E78F
+    <td>0xA6 0xDB
+   <tr>
+    <td>U+E790
+    <td>0xA6 0xDC
+   <tr>
+    <td>U+E791
+    <td>0xA6 0xDD
+   <tr>
+    <td>U+E792
+    <td>0xA6 0xDE
+   <tr>
+    <td>U+E793
+    <td>0xA6 0xDF
+   <tr>
+    <td>U+E794
+    <td>0xA6 0xEC
+   <tr>
+    <td>U+E795
+    <td>0xA6 0xED
+   <tr>
+    <td>U+E796
+    <td>0xA6 0xF3
+   <tr>
+    <td>U+E81E
+    <td>0xFE 0x59
+   <tr>
+    <td>U+E826
+    <td>0xFE 0x61
+   <tr>
+    <td>U+E82B
+    <td>0xFE 0x66
+   <tr>
+    <td>U+E82C
+    <td>0xFE 0x67
+   <tr>
+    <td>U+E832
+    <td>0xFE 0x6D
+   <tr>
+    <td>U+E843
+    <td>0xFE 0x7E
+   <tr>
+    <td>U+E854
+    <td>0xFE 0x90
+   <tr>
+    <td>U+E864
+    <td>0xFE 0xA0
+  </table>
+
+  <p class=note>This asymmetric encoder table is introduced to maximize compatibility with an
+  earlier iteration of <a>index gb18030</a>.
 
  <li><p>Let <var>pointer</var> be the <a>index pointer</a> for
  <var>code point</var> in <a>index gb18030</a>.
