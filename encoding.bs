@@ -845,12 +845,13 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <td colspan=3><a href=index-gb18030-ranges.txt>index-gb18030-ranges.txt</a>
   <td>This <a>index</a> works different from all others. Listing all code points would result
   in over a million items whereas they can be represented neatly in 207 ranges combined with trivial
-  limit checks. It therefore only superficially matches the GB18030-2005 standard for code points
-  encoded as four bytes. It does not match the GB18030-2022 standard as that would increase the
-  number of byte sequences mapping to Private Use code points. And the relevant Private Use code
-  points are mapped in the <a>gb18030 encoder</a> directly through a side table to maximize
-  compatibility with how they were mapped in GB18030-2005. See also
-  <a>index gb18030 ranges code point</a> and <a>index gb18030 ranges pointer</a> below.
+  limit checks. It therefore only superficially matches the GB18030-2000 standard for code points
+  encoded as four bytes. The change for the GB18030-2005 revision is handled inline by the
+  <a>index gb18030 ranges code point</a> and <a>index gb18030 ranges pointer</a> algorithms below
+  that accompany this index. And the changes for the GB18030-2022 revision are handled differently
+  again to not further increase the number of byte sequences mapping to Private Use code points. The
+  relevant Private Use code points are mapped in the <a>gb18030 encoder</a> directly through a side
+  table to preserve compatibility with how they were mapped before.
  <tr>
   <td><dfn export>index jis0208</dfn>
   <td><a href=index-jis0208.txt>index-jis0208.txt</a>
@@ -2501,8 +2502,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
     <td>0xFE 0xA0
   </table>
 
-  <p class=note>This asymmetric encoder table is introduced to maximize compatibility with
-  GB18030-2005. See also the explanation at <a>index gb18030 ranges</a>.
+  <p class=note>This asymmetric encoder table preserves compatibility with the GB18030-2005
+  standard. See also the explanation at <a>index gb18030 ranges</a>.
 
  <li><p>Let <var>pointer</var> be the <a>index pointer</a> for
  <var>code point</var> in <a>index gb18030</a>.
