@@ -2,7 +2,7 @@
 # https://encoding.spec.whatwg.org/
 #
 # Identifier: cd7fb43c97eefa1651084d92d02af53ad668bd848528c18c3b1af5c06b499651
-# Date: 2018-01-06
+# Date: 2024-09-18
 
   0	0x20AC	€ (EURO SIGN)
   1	0x0081	 (<control>)
