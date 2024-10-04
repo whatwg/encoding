@@ -223,6 +223,12 @@ this restore operation is an internal detail of the algorithms in this specifica
 be used by other standards. Implementations are free to find alternative ways to implement such
 algorithms, as detailed in [[#implementation-considerations]].
 
+<hr>
+
+<p>To obtain a <dfn>scalar value from surrogates</dfn>, given a <a for=/>leading surrogate</a>
+<var>leading</var> and a <a for=/>trailing surrogate</a> <var>trailing</var>, return
+0x10000 + ((<var>leading</var> &minus; 0xD800) &lt;&lt; 10) + (<var>trailing</var> &minus; 0xDC00).
+
 
 
 <h2 id=encodings>Encodings</h2>
@@ -1974,26 +1980,26 @@ constructor steps are:
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a>leading surrogate</a> is non-null, then:
+  <p>If <var>encoder</var>'s <a for=TextEncoderStream>leading surrogate</a> is non-null, then:
 
   <ol>
-   <li><p>Let <var>leadingSurrogate</var> be <var>encoder</var>'s <a>leading surrogate</a>.
+   <li><p>Let <var>leadingSurrogate</var> be <var>encoder</var>'s
+   <a for=TextEncoderStream>leading surrogate</a>.
 
-   <li><p>Set <var>encoder</var>'s <a>leading surrogate</a> to null.
+   <li><p>Set <var>encoder</var>'s <a for=TextEncoderStream>leading surrogate</a> to null.
 
-   <li><p>If <var>item</var> is a <a>trailing surrogate</a>, then return a scalar value whose value
-   is
-   0x10000 + ((<var>leadingSurrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>item</var> &minus; 0xDC00).
+   <li><p>If <var>item</var> is a <a for=/>trailing surrogate</a>, then return a
+   <a>scalar value from surrogates</a> given <var>leadingSurrogate</var> and <var>item</var>.
 
    <li><p><a>Restore</a> <var>item</var> to <var>input</var>.
 
    <li><p>Return U+FFFD.
   </ol>
 
- <li><p>If <var>item</var> is a <a>leading surrogate</a>, then set <a>leading surrogate</a> to
- <var>item</var> and return <a>continue</a>.
+ <li><p>If <var>item</var> is a <a for=/>leading surrogate</a>, then set <var>encoder</var>'s
+ <a for=TextEncoderStream>leading surrogate</a> to <var>item</var> and return <a>continue</a>.
 
- <li><p>If <var>item</var> is a <a>trailing surrogate</a>, then return U+FFFD.
+ <li><p>If <var>item</var> is a <a for=/>trailing surrogate</a>, then return U+FFFD.
 
  <li><p>Return <var>item</var>.
 </ol>
@@ -2007,7 +2013,7 @@ that are split between strings. [[!INFRA]]
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a>leading surrogate</a> is non-null, then:
+  <p>If <var>encoder</var>'s <a for=TextEncoderStream>leading surrogate</a> is non-null, then:
 
   <ol>
    <li>
@@ -3361,9 +3367,8 @@ rather the <a>decode</a> algorithm.
 
    <li><p>Set <a>UTF-16 leading surrogate</a> to null.
 
-   <li><p>If <var>code unit</var> is a <a>trailing surrogate</a>, then return a code point whose
-   value is
-   0x10000 + ((<var>leadingSurrogate</var> &minus; 0xD800) &lt;&lt; 10) + (<var>code unit</var> &minus; 0xDC00).
+   <li><p>If <var>code unit</var> is a <a>trailing surrogate</a>, then return a
+   <a>scalar value from surrogates</a> given <var>leadingSurrogate</var> and <var>code unit</var>.
 
    <li><p>Let <var>byte1</var> be <var>code unit</var> >> 8.
 
@@ -3376,7 +3381,7 @@ rather the <a>decode</a> algorithm.
    <li><p><a>Restore</a> <var>bytes</var> to <var>ioQueue</var> and return <a>error</a>.
   </ol>
 
- <li><p>If <var>code unit</var> is a <a>leading surrogate</a>, then set
+ <li><p>If <var>code unit</var> is a <a for=/>leading surrogate</a>, then set
  <a>UTF-16 leading surrogate</a> to <var>code unit</var> and return <a>continue</a>.
 
  <li><p>If <var>code unit</var> is a <a>trailing surrogate</a>, then return <a>error</a>.
