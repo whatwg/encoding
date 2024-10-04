@@ -3367,7 +3367,7 @@ rather the <a>decode</a> algorithm.
 
    <li><p>Set <a>UTF-16 leading surrogate</a> to null.
 
-   <li><p>If <var>code unit</var> is a <a>trailing surrogate</a>, then return a
+   <li><p>If <var>code unit</var> is a <a for=/>trailing surrogate</a>, then return a
    <a>scalar value from surrogates</a> given <var>leadingSurrogate</var> and <var>code unit</var>.
 
    <li><p>Let <var>byte1</var> be <var>code unit</var> >> 8.
@@ -3384,7 +3384,7 @@ rather the <a>decode</a> algorithm.
  <li><p>If <var>code unit</var> is a <a for=/>leading surrogate</a>, then set
  <a>UTF-16 leading surrogate</a> to <var>code unit</var> and return <a>continue</a>.
 
- <li><p>If <var>code unit</var> is a <a>trailing surrogate</a>, then return <a>error</a>.
+ <li><p>If <var>code unit</var> is a <a for=/>trailing surrogate</a>, then return <a>error</a>.
 
  <li><p>Return code point <var>code unit</var>.
 </ol>
