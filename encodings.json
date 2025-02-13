@@ -340,6 +340,7 @@
           "gb_2312-80",
           "gbk",
           "iso-ir-58",
+          "windows-936-2000",
           "x-gbk"
         ],
         "name": "GBK"
