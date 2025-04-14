@@ -14,7 +14,14 @@ def create_table():
             if label_len > 1:
                 rowspan = " rowspan=" + str(label_len)
 
-            table += "  <tr>\n   <td" + rowspan + "><a>" + encoding["name"] + "</a>"
+            if encoding["name"] != "windows-1252":
+                table += "  <tr><td" + rowspan + ">" + encoding["name"] + "\n"
+            else:
+                table += f"""  <tr>
+   <td{rowspan}>
+    <a>{encoding["name"]}</a>
+    <p class=note>See <a href="#note-latin1-ascii">below</a> for the relationship to historical
+    "Latin1" and "ASCII" concepts."""
             i = 0
             for label in encoding["labels"]:
                 if i > 0:
