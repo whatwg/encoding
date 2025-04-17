@@ -21,7 +21,7 @@ def create_table():
    <td{rowspan}>
     <a>{encoding["name"]}</a>
     <p class=note>See <a href="#note-latin1-ascii">below</a> for the relationship to historical
-    "Latin1" and "ASCII" concepts."""
+    "Latin1" and "ASCII" concepts.\n"""
             i = 0
             for label in encoding["labels"]:
                 if i > 0:

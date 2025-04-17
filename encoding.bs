@@ -747,13 +747,13 @@ part of the ISO 8859 series. In particular, the necessity of the inclusion of <a
 and <a>ISO-8859-16</a> is doubtful for the purpose of supporting existing content, but there are no
 plans to remove these.</p>
 
-<div class=note id=note-latin1-ascii> <p>The <a>windows-1252</a> <a for=/>encoding</a> has various
-<a for=encoding>labels</a>, such as "<code>latin1</code>", "<code>iso-8859-1</code>", and
-"<code>ascii</code>", which have historically been confusing for developers. On the web, and in any
-software that seeks to be web-compatible by implementing this standard, these are synonyms:
-"<code>latin1</code>" and "<code>ascii</code>" are just labels for <a>windows-1252</a>, and any
-software following this standard will, for example, decode 0x80 as U+20AC (€) when asked for the
-"Latin1" or "ASCII" decoding of that byte.
+<div class=note id=note-latin1-ascii>
+ <p>The <a>windows-1252</a> <a for=/>encoding</a> has various <a for=encoding>labels</a>, such as
+ "<code>latin1</code>", "<code>iso-8859-1</code>", and "<code>ascii</code>", which have historically
+ been confusing for developers. On the web, and in any software that seeks to be web-compatible by
+ implementing this standard, these are synonyms: "<code>latin1</code>" and "<code>ascii</code>" are
+ just labels for <a>windows-1252</a>, and any software following this standard will, for example,
+ decode 0x80 as U+20AC (€) when asked for the "Latin1" or "ASCII" decoding of that byte.
 
  <p>Software that does not follow this standard does not always give the same answers. The root of
  this is that the original document that specified Latin1 (ISO/IEC 8859-1) did not provide any
