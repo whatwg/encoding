@@ -112,6 +112,7 @@ present in <a for=/>I/O queues</a> of any type and it signifies that there are n
  <a>in parallel</a> instead.
 </div>
 
+<div algorithm>
 <p>To <dfn id=concept-stream-read for="I/O queue" export>read</dfn> an <a for=list>item</a> from an
 <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
@@ -123,7 +124,9 @@ present in <a for=/>I/O queues</a> of any type and it signifies that there are n
 
  <li><p><a for=list>Remove</a> <var>ioQueue</var>[0] and return it.
 </ol>
+</div>
 
+<div algorithm="I/O queue/read items">
 <p>To <a for="I/O queue">read</a> a number <var>number</var> of <a for=list>items</a> from
 <var>ioQueue</var>, run these steps:
 
@@ -143,7 +146,9 @@ present in <a for=/>I/O queues</a> of any type and it signifies that there are n
 
  <li><p>Return <var>readItems</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>To <dfn for="I/O queue" export>peek</dfn> a number <var>number</var> of <a for=list>items</a>
 from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
@@ -166,7 +171,9 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
  <li><p>Return <var>prefix</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>To <dfn id=concept-stream-push for="I/O queue" export>push</dfn> an <a for=list>item</a>
 <var>item</var> to an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
@@ -184,25 +191,33 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
  <li><p>Otherwise, <a for=list>append</a> <var>item</var> to <var>ioQueue</var>.
 </ol>
+</div>
 
+<div algorithm="I/O queue/push items">
 <p>To <a for="I/O queue">push</a> a sequence of items to an <a for=/>I/O queue</a>
 <var>ioQueue</var> is to push each item in the sequence to <var>ioQueue</var>, in the given order.
+</div>
 
+<div algorithm>
 <p>To <dfn id=concept-stream-prepend for="I/O queue">restore</dfn> an <a for=list>item</a> other
 than <a>end-of-queue</a> to an <a for=/>I/O queue</a>, perform the <a for=/>list</a>
 <a for=list>prepend</a> operation. To <a for="I/O queue">restore</a> a <a for=/>list</a> of
 <a for=list>items</a> excluding <a>end-of-queue</a> to an <a for=/>I/O queue</a>, insert those
 items, in the given order, before the first item in the queue.
+</div>
 
 <p class=example id=example-tokens>Inserting the bytes « 0xF0, 0x9F » in an I/O queue
 « 0x92 0xA9, <a>end-of-queue</a> », results in an I/O queue
 « 0xF0, 0x9F, 0x92 0xA9, <a>end-of-queue</a> ». The next item to be read would be 0xF0. <!-- 💩 -->
 
+<div algorithm>
 <p>To <dfn for="from I/O queue">convert</dfn> an <a for=/>I/O queue</a> <var>ioQueue</var> into a
 <a for=/>list</a>, <a>string</a>, or <a>byte sequence</a>, return the result of
 <a for="I/O queue">reading</a> an indefinite number of <a for=list>items</a> from
 <var>ioQueue</var>.
+</div>
 
+<div algorithm>
 <p>To <dfn for="to I/O queue">convert</dfn> a <a for=/>list</a>, <a>string</a>, or
 <a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, run these steps:
 
@@ -213,6 +228,7 @@ items, in the given order, before the first item in the queue.
  <li><p>Return an <a for=/>I/O queue</a> containing the <a for=list>items</a> in <var>input</var>,
  in order, followed by <a>end-of-queue</a>.
 </ol>
+</div>
 
 <p class=XXX>The Infra standard is expected to define some infrastructure around type conversions.
 See <a href="https://github.com/whatwg/infra/issues/319">whatwg/infra issue #319</a>. [[INFRA]]
@@ -225,10 +241,11 @@ algorithms, as detailed in [[#implementation-considerations]].
 
 <hr>
 
+<div algorithm>
 <p>To obtain a <dfn>scalar value from surrogates</dfn>, given a <a for=/>leading surrogate</a>
 <var>leading</var> and a <a for=/>trailing surrogate</a> <var>trailing</var>, return
 0x10000 + ((<var>leading</var> &minus; 0xD800) &lt;&lt; 10) + (<var>trailing</var> &minus; 0xDC00).
-
+</div>
 
 
 <h2 id=encodings>Encodings</h2>
@@ -275,6 +292,7 @@ to silent data loss. Developers are strongly encouraged to use the <a>UTF-8</a>
 
 <hr>
 
+<div algorithm>
 <p>To <dfn lt="process a queue|processing a queue" id=concept-encoding-run>process a queue</dfn>
 given an <a for=/>encoding</a>'s <a for=/>decoder</a> or <a for=/>encoder</a> instance
 <var>encoderDecoder</var>, <a for=/>I/O queue</a> <var>input</var>, <a for=/>I/O queue</a>
@@ -292,7 +310,9 @@ given an <a for=/>encoding</a>'s <a for=/>decoder</a> or <a for=/>encoder</a> in
    <li><p>If <var>result</var> is not <a>continue</a>, then return <var>result</var>.
   </ol>
 </ol>
+</div>
 
+<div algorithm>
 <p>To <dfn lt="process an item|processing an item" id=concept-encoding-process>process an item</dfn>
 given an <a for=list>item</a> <var>item</var>, <a for=/>encoding</a>'s <a for=/>encoder</a> or
 <a for=/>decoder</a> instance <var>encoderDecoder</var>, <a for=/>I/O queue</a> <var>input</var>,
@@ -350,6 +370,7 @@ given an <a for=list>item</a> <var>item</var>, <a for=/>encoding</a>'s <a for=/>
 
  <li><p>Return <a>continue</a>.
 </ol>
+</div>
 
 
 <h3 id=names-and-labels>Names and labels</h3>
@@ -371,6 +392,7 @@ or <a for=encoding>labels</a>.
 as "<code>utf-8</code>".
 <!-- “UTF-8 or death” — Emil A Eklund -->
 
+<div algorithm>
 <p>To
 <dfn export lt="get an encoding|getting an encoding" id=concept-encoding-get>get an encoding</dfn>
 from a string <var>label</var>, run these steps:
@@ -382,6 +404,7 @@ from a string <var>label</var>, run these steps:
  <li><p>If <var>label</var> is an <a>ASCII case-insensitive</a> match for any of the labels listed
  in the table below, then return the corresponding <a for=/>encoding</a>; otherwise return failure.
 </ol>
+</div>
 
 <p class=note>This is a more basic and restrictive algorithm of mapping labels to
 <a for=/>encodings</a> than
@@ -889,6 +912,7 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <a>ISO-2022-JP encoder</a>. [[UNICODE]]
 </table>
 
+<div algorithm>
 <p>The <dfn>index gb18030 ranges code point</dfn> for <var>pointer</var> is
 the return value of these steps:
 
@@ -906,7 +930,9 @@ the return value of these steps:
  <li><p>Return a code point whose value is
  <var>code point offset</var> + <var>pointer</var> &minus; <var>offset</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>The <dfn>index gb18030 ranges pointer</dfn> for <var>code point</var> is
 the return value of these steps:
 
@@ -920,7 +946,9 @@ the return value of these steps:
  <li><p>Return a pointer whose value is
  <var>pointer offset</var> + <var>code point</var> &minus; <var>offset</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>The <dfn>index Shift_JIS pointer</dfn> for <var>code point</var> is the return value of these
 steps:
 
@@ -937,7 +965,9 @@ steps:
  <li><p>Return the <a>index pointer</a> for <var>code point</var> in
  <var>index</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>The <dfn>index Big5 pointer</dfn> for <var>code point</var> is the return value of
 these steps:
 
@@ -960,6 +990,7 @@ these steps:
  <li><p>Return the <a>index pointer</a> for <var>code point</var> in
  <var>index</var>.
 </ol>
+</div>
 
 <hr>
 
@@ -994,6 +1025,7 @@ different format here, to be able to represent ranges.)
  <a>end-of-queue</a> item from ever being pushed into the output I/O queue.
 </div>
 
+<div algorithm>
 <p>To <dfn export>UTF-8 decode</dfn> an I/O queue of bytes <var>ioQueue</var> given an optional I/O
 queue of scalar values <var>output</var> (default « »), run these steps:
 
@@ -1009,7 +1041,9 @@ queue of scalar values <var>output</var> (default « »), run these steps:
 
  <li><p>Return <var>output</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>To <dfn export>UTF-8 decode without BOM</dfn> an I/O queue of bytes <var>ioQueue</var> given an
 optional I/O queue of scalar values <var>output</var> (default « »), run these steps:
 
@@ -1019,7 +1053,9 @@ optional I/O queue of scalar values <var>output</var> (default « »), run these
 
  <li><p>Return <var>output</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>To <dfn export>UTF-8 decode without BOM or fail</dfn> an I/O queue of bytes <var>ioQueue</var>
 given an optional I/O queue of scalar values <var>output</var> (default « »), run these steps:
 <!-- Needed by https://tools.ietf.org/html/rfc6455#section-8.1 and
@@ -1035,12 +1071,15 @@ given an optional I/O queue of scalar values <var>output</var> (default « »), 
 
  <li><p>Return <var>output</var>.
 </ol>
+</div>
 
 <hr>
 
+<div algorithm>
 <p>To <dfn export>UTF-8 encode</dfn> an I/O queue of scalar values <var>ioQueue</var> given an
 optional I/O queue of bytes <var>output</var> (default « »), return the result of
 <a lt=encode for=/>encoding</a> <var>ioQueue</var> with encoding <a>UTF-8</a> and <var>output</var>.
+</div>
 
 
 <h3 id=legacy-hooks>Legacy hooks for standards</h3>
@@ -1057,6 +1096,7 @@ optional I/O queue of bytes <var>output</var> (default « »), return the result
  algorithms are not to be used directly.
 </div>
 
+<div algorithm>
 <p>To <dfn export>decode</dfn> an I/O queue of bytes <var>ioQueue</var> given a fallback encoding
 <var>encoding</var> and an optional I/O queue of scalar values <var>output</var> (default « »), run
 these steps:
@@ -1083,7 +1123,9 @@ these steps:
 
  <li><p>Return <var>output</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>To <dfn export>BOM sniff</dfn> an I/O queue of bytes <var>ioQueue</var>, run these steps:
 
 <ol>
@@ -1108,9 +1150,11 @@ these steps:
 back to the caller that it has found a byte order mark and is therefore not using the provided
 encoding. The hook is to be invoked before <a>decode</a>, and it will return an encoding
 corresponding to the byte order mark found, or null otherwise.
+</div>
 
 <hr>
 
+<div algorithm>
 <p>To <dfn export>encode</dfn> an I/O queue of scalar values <var>ioQueue</var> given an encoding
 <var>encoding</var> and an optional I/O queue of bytes <var>output</var> (default « »), run these
 steps:
@@ -1126,9 +1170,11 @@ steps:
 
 <p class="note no-backref">This is a legacy hook for HTML forms. Layering <a>UTF-8 encode</a> on top
 is safe as it never triggers <a>errors</a>. [[HTML]]
+</div>
 
 <hr>
 
+<div algorithm>
 <p>To <dfn export lt="get an encoder|getting an encoder">get an encoder</dfn> from an
 <a for=/>encoding</a> <var>encoding</var>:
 
@@ -1137,7 +1183,9 @@ is safe as it never triggers <a>errors</a>. [[HTML]]
 
  <li><p>Return an instance of <var>encoding</var>'s <a for=/>encoder</a>.
 </ol>
+</div>
 
+<div algorithm>
 <p>To <dfn export>encode or fail</dfn> an I/O queue of scalar values <var>ioQueue</var> given an
 <a for=/>encoder</a> instance <var>encoder</var> and an I/O queue of bytes <var>output</var>, run
 these steps:
@@ -1172,6 +1220,7 @@ these steps:
  <p>The return value is either the number representing the <a>code point</a> that could not be
  encoded or null, if there was no <a>error</a>. When it returns non-null the caller will have to
  invoke it again, supplying the same <a for=/>encoder</a> instance and a new output I/O queue.
+</div>
 </div>
 
 
@@ -1283,6 +1332,7 @@ interface mixin TextDecoderCommon {
  <dd>An <a for=/>error mode</a>, initially "<code>replacement</code>".
 </dl>
 
+<div algorithm>
 <p>The <dfn id=concept-td-serialize>serialize I/O queue</dfn> algorithm, given a
 {{TextDecoderCommon}} <var>decoder</var> and an <a for=/>I/O queue</a> of scalar values
 <var>ioQueue</var>, runs these steps:
@@ -1316,20 +1366,27 @@ interface mixin TextDecoderCommon {
 <p class=note>This algorithm is intentionally different with respect to BOM handling from
 the <a for=/>decode</a> algorithm used by the rest of the platform to give API users more
 control.
+</div>
 
 <hr>
 
+<div algorithm>
 <p>The <dfn attribute id=dom-textdecoder-encoding for=TextDecoderCommon><code>encoding</code></dfn>
 getter steps are to return <a>this</a>'s <a for=TextDecoderCommon>encoding</a>'s
 <a for=encoding>name</a>, <a>ASCII lowercased</a>.
+</div>
 
+<div algorithm>
 <p>The <dfn attribute id=dom-textdecoder-fatal for=TextDecoderCommon><code>fatal</code></dfn> getter
 steps are to return true if <a>this</a>'s <a for=TextDecoderCommon>error mode</a> is
 "<code>fatal</code>", otherwise false.
+</div>
 
+<div algorithm>
 <p>The
 <dfn attribute id=dom-textdecoder-ignorebom for=TextDecoderCommon><code>ignoreBOM</code></dfn>
 getter steps are to return <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a>.
+</div>
 
 
 <h3 id=interface-textdecoder>Interface {{TextDecoder}}</h3>
@@ -1394,6 +1451,7 @@ string += decoder.decode(); // end-of-queue</code></pre>
   <a>throws</a> a {{TypeError}}.
 </dl>
 
+<div algorithm>
 <p>The
 <dfn constructor for=TextDecoder lt="TextDecoder(label, options)" id=dom-textdecoder><code>new TextDecoder(<var>label</var>, <var>options</var>)</code></dfn>
 constructor steps are:
@@ -1411,7 +1469,9 @@ constructor steps are:
  <li><p>Set <a>this</a>'s <a for=TextDecoderCommon>ignore BOM</a> to
  <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"].
 </ol>
+</div>
 
+<div algorithm>
 <p>The <dfn method for=TextDecoder><code>decode(<var>input</var>, <var>options</var>)</code></dfn>
 method steps are:
 
@@ -1475,6 +1535,7 @@ method steps are:
     </ol>
   </ol>
 </ol>
+</div>
 
 <h3 id=interface-mixin-textencodercommon>Interface mixin {{TextEncoderCommon}}</h3>
 
@@ -1487,8 +1548,10 @@ interface mixin TextEncoderCommon {
 <p>The {{TextEncoderCommon}} interface mixin defines common getters that are shared between
 {{TextEncoder}} and {{TextEncoderStream}} objects.
 
+<div algorithm>
 <p>The <dfn attribute id=dom-textencoder-encoding for=TextEncoderCommon><code>encoding</code></dfn>
 getter steps are to return "<code>utf-8</code>".
+</div>
 
 
 <h3 id=interface-textencoder>Interface {{TextEncoder}}</h3>
@@ -1533,10 +1596,13 @@ requires buffering of scalar values.
  <var>destination</var>.
 </dl>
 
+<div algorithm>
 <p>The
 <dfn constructor for=TextEncoder lt=TextEncoder() id=dom-textencoder><code>new TextEncoder()</code></dfn>
 constructor steps are to do nothing.
+</div>
 
+<div algorithm>
 <p>The <dfn method for=TextEncoder><code>encode(<var>input</var>)</code></dfn> method steps are:
 
 <ol>
@@ -1567,7 +1633,9 @@ constructor steps are to do nothing.
    <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
   </ol>
 </ol>
+</div>
 
+<div algorithm>
 <p>The
 <dfn method for=TextEncoder><code>encodeInto(<var>source</var>, <var>destination</var>)</code></dfn>
 method steps are:
@@ -1659,6 +1727,7 @@ function convertString(buffer, input, callback) {
 }
 </code></pre>
 </div>
+</div>
 
 
 <h3 id=interface-textdecoderstream>Interface {{TextDecoderStream}}</h3>
@@ -1719,6 +1788,7 @@ byteReadable
   {{TypeError}}.
 </dl>
 
+<div algorithm>
 <p>The
 <dfn constructor for=TextDecoderStream lt="TextDecoderStream(label, options)" id=dom-textdecoderstream><code>new TextDecoderStream(<var>label</var>, <var>options</var>)</code></dfn>
 constructor steps are:
@@ -1756,7 +1826,9 @@ constructor steps are:
 
  <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to <var>transformStream</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>The <dfn>decode and enqueue a chunk</dfn> algorithm, given a {{TextDecoderStream}} object
 <var>decoder</var> and a <var>chunk</var>, runs these steps:
 
@@ -1803,7 +1875,9 @@ constructor steps are:
    <li><p>If <var>result</var> is <a>error</a>, then <a>throw</a> a {{TypeError}}.
   </ol>
 </ol>
+</div>
 
+<div algorithm>
 <p>The <dfn>flush and enqueue</dfn> algorithm, which handles the end of data from the input
 {{ReadableStream}} object, given a {{TextDecoderStream}} object <var>decoder</var>, runs these
 steps:
@@ -1842,6 +1916,7 @@ steps:
   </ol>
  </li>
 </ol>
+</div>
 
 
 <h3 id=interface-textencoderstream>Interface {{TextEncoderStream}}</h3>
@@ -1895,6 +1970,7 @@ textReadable
   .pipeTo(byteWritable);</code></pre>
 </dl>
 
+<div algorithm>
 <p>The
 <dfn constructor for=TextEncoderStream lt=TextEncoderStream() id=dom-textencoderstream><code>new TextEncoderStream()</code></dfn>
 constructor steps are:
@@ -1919,9 +1995,11 @@ constructor steps are:
 
  <li><p>Set <a>this</a>'s <a for=GenericTransformStream>transform</a> to <var>transformStream</var>.
 </ol>
+</div>
 
 <hr>
 
+<div algorithm>
 <p>The <dfn>encode and enqueue a chunk</dfn> algorithm, given a {{TextEncoderStream}} object
 <var>encoder</var> and <var>chunk</var>, runs these steps:
 
@@ -1973,7 +2051,9 @@ constructor steps are:
    <var>output</var>, and "<code>fatal</code>".
   </ol>
 </ol>
+</div>
 
+<div algorithm>
 <p>The <dfn>convert code unit to scalar value</dfn> algorithm, given a {{TextEncoderStream}} object
 <var>encoder</var>, a <a>code unit</a> <var>item</var>, and an <a for=/>I/O queue</a> of code units
 <var>input</var>, runs these steps:
@@ -2007,7 +2087,9 @@ constructor steps are:
 <p class=note>This is equivalent to the "<a for=string>convert</a> a <a for=/>string</a> into a
 <a for=/>scalar value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs
 that are split between strings. [[!INFRA]]
+</div>
 
+<div algorithm>
 <p>The <dfn>encode and flush</dfn> algorithm, given a {{TextEncoderStream}} object
 <var>encoder</var>, runs these steps:
 
@@ -2026,6 +2108,7 @@ that are split between strings. [[!INFRA]]
    <a for=GenericTransformStream>transform</a>.
   </ol>
 </ol>
+</div>
 
 
 
