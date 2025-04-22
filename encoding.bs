@@ -248,6 +248,7 @@ algorithms, as detailed in [[#implementation-considerations]].
 </div>
 
 
+
 <h2 id=encodings>Encodings</h2>
 
 <p>An <dfn export>encoding</dfn> defines a mapping from a <a>scalar value</a> sequence to
@@ -2116,7 +2117,7 @@ that are split between strings. [[!INFRA]]
 
 <h3 id=utf-8 dfn export>UTF-8</h3>
 
-<h4 id=utf-8-decoder dfn export>UTF-8 decoder</h4>
+<h4 id=utf-8-decoder dfn algorithm export>UTF-8 decoder</h4>
 
 <p class=note>A byte order mark has priority over a label as it has been found to be more accurate
 in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algorithm, but rather the
@@ -2242,7 +2243,7 @@ achieve the same result are fine, even encouraged).
 [[!UNICODE]]
 
 
-<h4 id=utf-8-encoder dfn export>UTF-8 encoder</h4>
+<h4 id=utf-8-encoder dfn algorithm export>UTF-8 encoder</h4>
 
 <p><a>UTF-8</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
@@ -2340,7 +2341,7 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 "ISO-8859-6-I" as well, that is no longer true.
 <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=19505 -->
 
-<h3 id=single-byte-decoder dfn export>single-byte decoder</h3>
+<h3 id=single-byte-decoder dfn algorithm export>single-byte decoder</h3>
 
 <p><a>Single-byte encodings</a>'s
 <a for=/>decoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
@@ -2361,7 +2362,7 @@ historically this might have been the case for <a>ISO-8859-6</a> and
  <li><p>Return a code point whose value is <var>code point</var>.
 </ol>
 
-<h3 id=single-byte-encoder export dfn>single-byte encoder</h3>
+<h3 id=single-byte-encoder dfn algorithm export>single-byte encoder</h3>
 
 <p><a>Single-byte encodings</a>'s
 <a for=/>encoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
@@ -2389,12 +2390,12 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 
 <h3 id=gbk dfn export>GBK</h3>
 
-<h4 id=gbk-decoder dfn export>GBK decoder</h4>
+<h4 id=gbk-decoder dfn algorithm export>GBK decoder</h4>
 
 <p><a>GBK</a>'s <a for=/>decoder</a> is <a>gb18030</a>'s <a for=/>decoder</a>.
 
 
-<h4 id=gbk-encoder dfn export>GBK encoder</h4>
+<h4 id=gbk-encoder dfn algorithm export>GBK encoder</h4>
 
 <p><a>GBK</a>'s <a for=/>encoder</a> is <a>gb18030</a>'s <a for=/>encoder</a>
 with its <a>is GBK</a> set to true.
@@ -2406,7 +2407,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h3 id=gb18030 dfn export>gb18030</h3>
 
-<h4 id=gb18030-decoder dfn export>gb18030 decoder</h4>
+<h4 id=gb18030-decoder dfn algorithm export>gb18030 decoder</h4>
 
 <p><a>gb18030</a>'s <a for=/>decoder</a> has an associated <dfn>gb18030 first</dfn>,
 <dfn>gb18030 second</dfn>, and <dfn>gb18030 third</dfn> (all initially 0x00).
@@ -2503,7 +2504,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 </ol>
 
 
-<h4 id=gb18030-encoder dfn export>gb18030 encoder</h4>
+<h4 id=gb18030-encoder dfn algorithm export>gb18030 encoder</h4>
 
 <p><a>gb18030</a>'s <a for=/>encoder</a> has an associated <dfn id=gbk-flag>is GBK</dfn>
 (initially false).
@@ -2647,7 +2648,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h3 id=big5 dfn export>Big5</h3>
 
-<h4 id=big5-decoder dfn export>Big5 decoder</h4>
+<h4 id=big5-decoder dfn algorithm export>Big5 decoder</h4>
 
 <p><a>Big5</a>'s <a for=/>decoder</a> has an associated
 <dfn>Big5 lead</dfn> (initially 0x00).
@@ -2714,7 +2715,7 @@ and <var>byte</var>, runs these steps:
 </ol>
 
 
-<h4 id=big5-encoder dfn export>Big5 encoder</h4>
+<h4 id=big5-encoder dfn algorithm export>Big5 encoder</h4>
 
 <p><a>Big5</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var>ioQueue</var>
 and <var>code point</var>, runs these steps:
@@ -2750,7 +2751,7 @@ and <var>code point</var>, runs these steps:
 <h3 id=euc-jp dfn export>EUC-JP</h3>
 <!-- https://www.iana.org/assignments/charset-reg/CP51932 -->
 
-<h4 id=euc-jp-decoder dfn export>EUC-JP decoder</h4>
+<h4 id=euc-jp-decoder dfn algorithm export>EUC-JP decoder</h4>
 
 <p><a>EUC-JP</a>'s <a for=/>decoder</a> has an associated
 <dfn id=euc-jp-jis0212-flag>EUC-JP jis0212</dfn> (initially false) and
@@ -2811,7 +2812,7 @@ and <var>code point</var>, runs these steps:
 </ol>
 
 
-<h4 id=euc-jp-encoder dfn export>EUC-JP encoder</h4>
+<h4 id=euc-jp-encoder dfn algorithm export>EUC-JP encoder</h4>
 
 <p><a>EUC-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
@@ -2858,7 +2859,7 @@ and <var>code point</var>, runs these steps:
  "ESC ) I" is from ISO-2022-JP-3 reportedly
 -->
 
-<h4 id=iso-2022-jp-decoder dfn export>ISO-2022-JP decoder</h4>
+<h4 id=iso-2022-jp-decoder dfn algorithm export>ISO-2022-JP decoder</h4>
 
 <p><a>ISO-2022-JP</a>'s <a for=/>decoder</a> has an associated
 <dfn>ISO-2022-JP decoder state</dfn> (initially
@@ -3067,7 +3068,7 @@ and <var>code point</var>, runs these steps:
 </dl>
 
 
-<h4 id=iso-2022-jp-encoder dfn export>ISO-2022-JP encoder</h4>
+<h4 id=iso-2022-jp-encoder dfn algorithm export>ISO-2022-JP encoder</h4>
 
 <div class="note no-backref">
  <p>The <a>ISO-2022-JP encoder</a> is the only <a for=/>encoder</a> for which the concatenation of
@@ -3186,7 +3187,7 @@ and <var>code point</var>, runs these steps:
 
 <h3 id=shift_jis dfn export>Shift_JIS</h3>
 
-<h4 id=shift_jis-decoder dfn export>Shift_JIS decoder</h4>
+<h4 id=shift_jis-decoder dfn algorithm export>Shift_JIS decoder</h4>
 
 <p><a>Shift_JIS</a>'s <a for=/>decoder</a> has an associated
 <dfn>Shift_JIS lead</dfn> (initially 0x00).
@@ -3251,7 +3252,7 @@ and <var>code point</var>, runs these steps:
 </ol>
 
 
-<h4 id=shift_jis-encoder dfn export>Shift_JIS encoder</h4>
+<h4 id=shift_jis-encoder dfn algorithm export>Shift_JIS encoder</h4>
 
 <p><a>Shift_JIS</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
@@ -3298,7 +3299,7 @@ and <var>code point</var>, runs these steps:
 
 <h3 id=euc-kr dfn export>EUC-KR</h3>
 
-<h4 id=euc-kr-decoder dfn export>EUC-KR decoder</h4>
+<h4 id=euc-kr-decoder dfn algorithm export>EUC-KR decoder</h4>
 
 <p><a>EUC-KR</a>'s <a for=/>decoder</a> has an associated
 <dfn>EUC-KR lead</dfn> (initially 0x00).
@@ -3345,7 +3346,7 @@ and <var>code point</var>, runs these steps:
 </ol>
 
 
-<h4 id=euc-kr-encoder dfn export>EUC-KR encoder</h4>
+<h4 id=euc-kr-encoder dfn algorithm export>EUC-KR encoder</h4>
 
 <p><a>EUC-KR</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
@@ -3381,7 +3382,7 @@ attacks that abuse a mismatch between <a for=/>encodings</a> supported on
 the server and the client.
 
 
-<h4 id=replacement-decoder dfn export>replacement decoder</h4>
+<h4 id=replacement-decoder dfn algorithm export>replacement decoder</h4>
 
 <p><a>replacement</a>'s <a for=/>decoder</a> has an associated
 <dfn id=replacement-error-returned-flag>replacement error returned</dfn> (initially false).
@@ -3404,7 +3405,7 @@ the server and the client.
 <p><dfn export>UTF-16BE/LE</dfn> is <a>UTF-16BE</a> or <a>UTF-16LE</a>.
 
 
-<h4 id=shared-utf-16-decoder dfn export>shared UTF-16 decoder</h4>
+<h4 id=shared-utf-16-decoder dfn algorithm export>shared UTF-16 decoder</h4>
 
 <p class=note>A byte order mark has priority over a label as it has been found to be more accurate
 in deployed content. Therefore it is not part of the <a>shared UTF-16 decoder</a> algorithm, but
@@ -3475,7 +3476,7 @@ rather the <a>decode</a> algorithm.
 
 <h3 id=utf-16be dfn export>UTF-16BE</h3>
 
-<h4 id=utf-16be-decoder dfn export>UTF-16BE decoder</h4>
+<h4 id=utf-16be-decoder dfn algorithm export>UTF-16BE decoder</h4>
 
 <p><a>UTF-16BE</a>'s <a for=/>decoder</a> is <a>shared UTF-16 decoder</a> with
 its <a>is UTF-16BE decoder</a> set to true.
@@ -3487,7 +3488,7 @@ its <a>is UTF-16BE decoder</a> set to true.
 deployed content.
 
 
-<h4 id=utf-16le-decoder dfn export>UTF-16LE decoder</h4>
+<h4 id=utf-16le-decoder dfn algorithm export>UTF-16LE decoder</h4>
 
 <p><a>UTF-16LE</a>'s <a for=/>decoder</a> is <a>shared UTF-16 decoder</a>.
 
@@ -3506,7 +3507,7 @@ https://krijnhoetmer.nl/irc-logs/whatwg/20121010#l-812
 https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf7-when-using-charset-x-user-defined-with-xm
 -->
 
-<h4 id=x-user-defined-decoder dfn export>x-user-defined decoder</h4>
+<h4 id=x-user-defined-decoder dfn algorithm export>x-user-defined decoder</h4>
 
 <p><a>x-user-defined</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
@@ -3522,7 +3523,7 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 </ol>
 
 
-<h4 id=x-user-defined-encoder dfn export>x-user-defined encoder</h4>
+<h4 id=x-user-defined-encoder dfn algorithm export>x-user-defined encoder</h4>
 
 <p><a>x-user-defined</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>code point</var>, runs these steps:
