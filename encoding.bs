@@ -2245,8 +2245,8 @@ achieve the same result are fine, even encouraged).
 
 <h4 id=utf-8-encoder dfn algorithm export>UTF-8 encoder</h4>
 
-<p><a>UTF-8</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>code point</var>, runs these steps:
+<p><a>UTF-8</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
+<var>code point</var>, runs these steps:
 
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
@@ -2343,9 +2343,8 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 
 <h3 id=single-byte-decoder dfn algorithm export>single-byte decoder</h3>
 
-<p><a>Single-byte encodings</a>'s
-<a for=/>decoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
-<var>byte</var>, runs these steps:
+<p><a>Single-byte encodings</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
+<var ignore>unused</var> and <var>byte</var>, runs these steps:
 
 <ol>
  <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
@@ -2364,9 +2363,8 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 
 <h3 id=single-byte-encoder dfn algorithm export>single-byte encoder</h3>
 
-<p><a>Single-byte encodings</a>'s
-<a for=/>encoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
-<var>code point</var>, runs these steps:
+<p><a>Single-byte encodings</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
+<var ignore>unused</var> and <var>code point</var>, runs these steps:
 
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
@@ -2509,8 +2507,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <p><a>gb18030</a>'s <a for=/>encoder</a> has an associated <dfn id=gbk-flag>is GBK</dfn>
 (initially false).
 
-<p><a>gb18030</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>code point</var>, runs these steps:
+<p><a>gb18030</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
+<var>code point</var>, runs these steps:
 
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
@@ -2717,8 +2715,8 @@ and <var>byte</var>, runs these steps:
 
 <h4 id=big5-encoder dfn algorithm export>Big5 encoder</h4>
 
-<p><a>Big5</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var>ioQueue</var>
-and <var>code point</var>, runs these steps:
+<p><a>Big5</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
+<var>code point</var>, runs these steps:
 
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
@@ -2814,8 +2812,8 @@ and <var>code point</var>, runs these steps:
 
 <h4 id=euc-jp-encoder dfn algorithm export>EUC-JP encoder</h4>
 
-<p><a>EUC-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>code point</var>, runs these steps:
+<p><a>EUC-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
+<var>code point</var>, runs these steps:
 
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
@@ -3254,8 +3252,8 @@ and <var>code point</var>, runs these steps:
 
 <h4 id=shift_jis-encoder dfn algorithm export>Shift_JIS encoder</h4>
 
-<p><a>Shift_JIS</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>code point</var>, runs these steps:
+<p><a>Shift_JIS</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
+<var>code point</var>, runs these steps:
 
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
@@ -3348,8 +3346,8 @@ and <var>code point</var>, runs these steps:
 
 <h4 id=euc-kr-encoder dfn algorithm export>EUC-KR encoder</h4>
 
-<p><a>EUC-KR</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>code point</var>, runs these steps:
+<p><a>EUC-KR</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
+<var>code point</var>, runs these steps:
 
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
@@ -3387,8 +3385,8 @@ the server and the client.
 <p><a>replacement</a>'s <a for=/>decoder</a> has an associated
 <dfn id=replacement-error-returned-flag>replacement error returned</dfn> (initially false).
 
-<p><a>replacement</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>byte</var>, runs these steps:
+<p><a>replacement</a>'s <a for=/>decoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
+<var>byte</var>, runs these steps:
 
 <ol>
  <li><p>If <var>byte</var> is <a>end-of-queue</a>, return <a>finished</a>.
@@ -3509,8 +3507,8 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 
 <h4 id=x-user-defined-decoder dfn algorithm export>x-user-defined decoder</h4>
 
-<p><a>x-user-defined</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>byte</var>, runs these steps:
+<p><a>x-user-defined</a>'s <a for=/>decoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
+<var>byte</var>, runs these steps:
 
 <ol>
  <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
@@ -3525,8 +3523,8 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 
 <h4 id=x-user-defined-encoder dfn algorithm export>x-user-defined encoder</h4>
 
-<p><a>x-user-defined</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>code point</var>, runs these steps:
+<p><a>x-user-defined</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
+<var>code point</var>, runs these steps:
 
 <ol>
  <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
