@@ -179,7 +179,7 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 
 <ol>
  <li>
-  <p>If the last <a for=list>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>, then:
+  <p>If the last <a for=list>item</a> in <var>ioQueue</var> is <a>end-of-queue</a>:
 
   <ol>
    <li><p>If <var>item</var> is <a>end-of-queue</a>, do nothing.
@@ -801,10 +801,10 @@ changed, so has the <a>index</a>.
 <var>pointer</var> in <var>index</var>, or null if
 <var>pointer</var> is not in <var>index</var>.
 
-<p>The <dfn>index pointer</dfn> for <var>code point</var> in
+<p>The <dfn>index pointer</dfn> for <var>codePoint</var> in
 <var>index</var> is the <em>first</em> pointer corresponding to
-<var>code point</var> in <var>index</var>, or null if
-<var>code point</var> is not in <var>index</var>.
+<var>codePoint</var> in <var>index</var>, or null if
+<var>codePoint</var> is not in <var>index</var>.
 
 <div class=note id=visualization>
  <p>There is a non-normative visualization for each <a>index</a> other than
@@ -918,10 +918,10 @@ specification, excluding <a>index single-byte</a>, which have their own table:
 the return value of these steps:
 
 <ol>
- <li><p>If <var>pointer</var> is greater than 39419 and less than
- 189000, or <var>pointer</var> is greater than 1237575, return null.
+ <li><p>If <var>pointer</var> is greater than 39419 and less than 189000, or <var>pointer</var> is
+ greater than 1237575, then return null.
 
- <li><p>If <var>pointer</var> is 7457, return code point U+E7C7.
+ <li><p>If <var>pointer</var> is 7457, then return code point U+E7C7.
  <!-- 7457 is 0x81 0x35 0xF4 0x37 -->
 
  <li><p>Let <var>offset</var> be the last pointer in <a>index gb18030 ranges</a> that is less than
@@ -934,23 +934,23 @@ the return value of these steps:
 </div>
 
 <div algorithm>
-<p>The <dfn>index gb18030 ranges pointer</dfn> for <var>code point</var> is
+<p>The <dfn>index gb18030 ranges pointer</dfn> for <var>codePoint</var> is
 the return value of these steps:
 
 <ol>
- <li><p>If <var>code point</var> is U+E7C7, return pointer 7457.
+ <li><p>If <var>codePoint</var> is U+E7C7, then return pointer 7457.
 
  <li><p>Let <var>offset</var> be the last code point in <a>index gb18030 ranges</a> that is less
- than or equal to <var>code point</var> and let <var>pointer offset</var> be its corresponding
+ than or equal to <var>codePoint</var> and let <var>pointer offset</var> be its corresponding
  pointer.
 
  <li><p>Return a pointer whose value is
- <var>pointer offset</var> + <var>code point</var> &minus; <var>offset</var>.
+ <var>pointer offset</var> + <var>codePoint</var> &minus; <var>offset</var>.
 </ol>
 </div>
 
 <div algorithm>
-<p>The <dfn>index Shift_JIS pointer</dfn> for <var>code point</var> is the return value of these
+<p>The <dfn>index Shift_JIS pointer</dfn> for <var>codePoint</var> is the return value of these
 steps:
 
 <ol>
@@ -963,13 +963,12 @@ steps:
   <p class=note>The <a>index jis0208</a> contains duplicate code points so the exclusion of
   these entries causes later code points to be used.
 
- <li><p>Return the <a>index pointer</a> for <var>code point</var> in
- <var>index</var>.
+ <li><p>Return the <a>index pointer</a> for <var>codePoint</var> in <var>index</var>.
 </ol>
 </div>
 
 <div algorithm>
-<p>The <dfn>index Big5 pointer</dfn> for <var>code point</var> is the return value of
+<p>The <dfn>index Big5 pointer</dfn> for <var>codePoint</var> is the return value of
 these steps:
 
 <ol>
@@ -980,16 +979,15 @@ these steps:
   <p class=note>Avoid returning Hong Kong Supplementary Character Set extensions literally.
 
  <li>
-  <p>If <var>code point</var> is U+2550, U+255E, U+2561, U+256A, U+5341, or U+5345,
-  return the <em>last</em> pointer corresponding to <var>code point</var> in
+  <p>If <var>codePoint</var> is U+2550, U+255E, U+2561, U+256A, U+5341, or U+5345,
+  return the <em>last</em> pointer corresponding to <var>codePoint</var> in
   <var>index</var>.
   <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=27878 -->
 
   <p class=note>There are other duplicate code points, but for those the <em>first</em> pointer is
   to be used.
 
- <li><p>Return the <a>index pointer</a> for <var>code point</var> in
- <var>index</var>.
+ <li><p>Return the <a>index pointer</a> for <var>codePoint</var> in <var>index</var>.
 </ol>
 </div>
 
@@ -1352,7 +1350,7 @@ interface mixin TextDecoderCommon {
    <li>
     <p>If <var>decoder</var>'s <a for=TextDecoderCommon>encoding</a> is <a>UTF-8</a> or
     <a>UTF-16BE/LE</a>, and <var>decoder</var>'s <a for=TextDecoderCommon>ignore BOM</a> and
-    <a for=TextDecoderCommon>BOM seen</a> are false, then:
+    <a for=TextDecoderCommon>BOM seen</a> are false:
 
     <ol>
      <li><p>Set <var>decoder</var>'s <a for=TextDecoderCommon>BOM seen</a> to true.
@@ -1674,7 +1672,7 @@ method steps are:
     <ol>
      <li>
       <p>If <var>destination</var>'s <a for="BufferSource">byte length</a> &minus;
-      <var>written</var> is greater than or equal to the number of bytes in <var>result</var>, then:
+      <var>written</var> is greater than or equal to the number of bytes in <var>result</var>:
 
       <ol>
        <li><p>If <var>item</var> is greater than U+FFFF, then increment <var>read</var> by 2.
@@ -1856,7 +1854,7 @@ constructor steps are:
    <a for=TextDecoderCommon>I/O queue</a>.
 
    <li>
-    <p>If <var>item</var> is <a>end-of-queue</a>, then:
+    <p>If <var>item</var> is <a>end-of-queue</a>:
 
     <ol>
      <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
@@ -1900,7 +1898,7 @@ steps:
    <a for=TextDecoderCommon>error mode</a>.
 
    <li>
-    <p>If <var>result</var> is <a>finished</a>, then:
+    <p>If <var>result</var> is <a>finished</a>:
 
     <ol>
      <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
@@ -2025,13 +2023,13 @@ constructor steps are:
    <li><p>Let <var>item</var> be the result of <a>reading</a> from <var>input</var>.
 
    <li>
-    <p>If <var>item</var> is <a>end-of-queue</a>, then:
+    <p>If <var>item</var> is <a>end-of-queue</a>:
 
     <ol>
      <li><p><a for="from I/O queue">Convert</a> <var>output</var> into a byte sequence.
 
      <li>
-      <p>If <var>output</var> is non-empty, then:
+      <p>If <var>output</var> is non-empty:
 
       <ol>
        <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
@@ -2061,7 +2059,7 @@ constructor steps are:
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a for=TextEncoderStream>leading surrogate</a> is non-null, then:
+  <p>If <var>encoder</var>'s <a for=TextEncoderStream>leading surrogate</a> is non-null:
 
   <ol>
    <li><p>Let <var>leadingSurrogate</var> be <var>encoder</var>'s
@@ -2096,7 +2094,7 @@ that are split between strings. [[!INFRA]]
 
 <ol>
  <li>
-  <p>If <var>encoder</var>'s <a for=TextEncoderStream>leading surrogate</a> is non-null, then:
+  <p>If <var>encoder</var>'s <a for=TextEncoderStream>leading surrogate</a> is non-null:
 
   <ol>
    <li>
@@ -2136,8 +2134,7 @@ in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algori
  <a>UTF-8 bytes needed</a> is not 0, set
  <a>UTF-8 bytes needed</a> to 0 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
  <li>
   <p>If <a>UTF-8 bytes needed</a> is 0, based on <var>byte</var>:
@@ -2199,7 +2196,7 @@ in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algori
 
  <li>
   <p>If <var>byte</var> is not in the range <a>UTF-8 lower boundary</a> to
-  <a>UTF-8 upper boundary</a>, inclusive, then:
+  <a>UTF-8 upper boundary</a>, inclusive:
 
   <ol>
    <li><p>Set <a>UTF-8 code point</a>,
@@ -2225,15 +2222,15 @@ in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algori
 
  <li><p>Increase <a>UTF-8 bytes seen</a> by one.
 
- <li><p>If <a>UTF-8 bytes seen</a> is not equal to
- <a>UTF-8 bytes needed</a>, return <a>continue</a>.
+ <li><p>If <a>UTF-8 bytes seen</a> is not equal to <a>UTF-8 bytes needed</a>, then return
+ <a>continue</a>.
 
- <li><p>Let <var>code point</var> be <a>UTF-8 code point</a>.
+ <li><p>Let <var>codePoint</var> be <a>UTF-8 code point</a>.
 
  <li><p>Set <a>UTF-8 code point</a>,
  <a>UTF-8 bytes needed</a>, and <a>UTF-8 bytes seen</a> to 0.
 
- <li><p>Return a code point whose value is <var>code point</var>.
+ <li><p>Return a code point whose value is <var>codePoint</var>.
 </ol>
 
 <p class=note>The constraints in the <a>UTF-8 decoder</a> above match
@@ -2246,18 +2243,17 @@ achieve the same result are fine, even encouraged).
 <h4 id=utf-8-encoder dfn algorithm export>UTF-8 encoder</h4>
 
 <p><a>UTF-8</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
-<var>code point</var>, runs these steps:
+<var>codePoint</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
- a byte whose value is <var>code point</var>.
+ <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
+ <var>codePoint</var>.
 
  <li>
   <p>Set <var>count</var> and <var>offset</var> based on the
-  range <var>code point</var> is in:
+  range <var>codePoint</var> is in:
 
   <dl class=switch>
    <dt>U+0080 to U+07FF, inclusive
@@ -2269,14 +2265,14 @@ achieve the same result are fine, even encouraged).
   </dl>
 
  <li><p>Let <var>bytes</var> be a byte sequence whose first byte is
- (<var>code point</var> >> (6 × <var>count</var>)) + <var>offset</var>.
+ (<var>codePoint</var> >> (6 × <var>count</var>)) + <var>offset</var>.
 
  <li>
   <p>While <var>count</var> is greater than 0:
 
   <ol>
    <li><p>Set <var>temp</var> to
-   <var>code point</var> >> (6 × (<var>count</var> &minus; 1)).
+   <var>codePoint</var> >> (6 × (<var>count</var> &minus; 1)).
 
    <li><p>Append to <var>bytes</var> 0x80 | (<var>temp</var> &amp; 0x3F).
 
@@ -2347,37 +2343,34 @@ historically this might have been the case for <a>ISO-8859-6</a> and
 <var ignore>unused</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return a code point whose value
- is <var>byte</var>.
+ <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a code point whose value is
+ <var>byte</var>.
 
- <li><p>Let <var>code point</var> be the <a>index code point</a>
+ <li><p>Let <var>codePoint</var> be the <a>index code point</a>
  for <var>byte</var> &minus; 0x80 in <a>index single-byte</a>.
 
- <li><p>If <var>code point</var> is null, return <a>error</a>.
+ <li><p>If <var>codePoint</var> is null, then return <a>error</a>.
 
- <li><p>Return a code point whose value is <var>code point</var>.
+ <li><p>Return a code point whose value is <var>codePoint</var>.
 </ol>
 
 <h3 id=single-byte-encoder dfn algorithm export>single-byte encoder</h3>
 
 <p><a>Single-byte encodings</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
-<var ignore>unused</var> and <var>code point</var>, runs these steps:
+<var ignore>unused</var> and <var>codePoint</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
- a byte whose value is <var>code point</var>.
+ <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
+ <var>codePoint</var>.
 
- <li><p>Let <var>pointer</var> be the <a>index pointer</a> for
- <var>code point</var> in <a>index single-byte</a>.
+ <li><p>Let <var>pointer</var> be the <a>index pointer</a> for <var>codePoint</var> in
+ <a>index single-byte</a>.
 
- <li><p>If <var>pointer</var> is null, return <a>error</a> with
- <var>code point</var>.
+ <li><p>If <var>pointer</var> is null, then return <a>error</a> with <var>codePoint</var>.
 
  <li><p>Return a byte whose value is <var>pointer</var> + 0x80.
 </ol>
@@ -2414,21 +2407,19 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>gb18030 first</a>, <a>gb18030 second</a>, and <a>gb18030 third</a>
- are 0x00, return <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>gb18030 first</a>, <a>gb18030 second</a>,
+ and <a>gb18030 third</a> are 0x00, then return <a>finished</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a>, and
- <a>gb18030 first</a>, <a>gb18030 second</a>, or <a>gb18030 third</a>
- is not 0x00, set <a>gb18030 first</a>, <a>gb18030 second</a>, and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, and <a>gb18030 first</a>, <a>gb18030 second</a>,
+ or <a>gb18030 third</a> is not 0x00, then set <a>gb18030 first</a>, <a>gb18030 second</a>, and
  <a>gb18030 third</a> to 0x00, and return <a>error</a>.
 
  <li>
-  <p>If <a>gb18030 third</a> is not 0x00, then:
+  <p>If <a>gb18030 third</a> is not 0x00:
 
   <ol>
    <li>
-    <p>If <var>byte</var> is not in the range 0x30 to 0x39, inclusive, then:
+    <p>If <var>byte</var> is not in the range 0x30 to 0x39, inclusive:
 
     <ol>
      <li><p><a>Restore</a> « <a>gb18030 second</a>, <a>gb18030 third</a>, <var>byte</var> » to
@@ -2439,20 +2430,20 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
      <li><p>Return <a>error</a>.
     </ol>
 
-   <li><p>Let <var>code point</var> be the <a>index gb18030 ranges code point</a> for
+   <li><p>Let <var>codePoint</var> be the <a>index gb18030 ranges code point</a> for
    ((<a>gb18030 first</a> &minus; 0x81) × (10 × 126 × 10)) +
    ((<a>gb18030 second</a> &minus; 0x30) × (10 × 126)) +
    ((<a>gb18030 third</a> &minus; 0x81) × 10) + <var>byte</var> &minus; 0x30.
 
    <li><p>Set <a>gb18030 first</a>, <a>gb18030 second</a>, and <a>gb18030 third</a> to 0x00.
 
-   <li><p>If <var>code point</var> is null, return <a>error</a>.
+   <li><p>If <var>codePoint</var> is null, then return <a>error</a>.
 
-   <li><p>Return a code point whose value is <var>code point</var>.
+   <li><p>Return a code point whose value is <var>codePoint</var>.
   </ol>
 
  <li>
-  <p>If <a>gb18030 second</a> is not 0x00, then:
+  <p>If <a>gb18030 second</a> is not 0x00:
 
   <ol>
    <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
@@ -2463,7 +2454,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
   </ol>
 
  <li>
-  <p>If <a>gb18030 first</a> is not 0x00, then:
+  <p>If <a>gb18030 first</a> is not 0x00:
 
   <ol>
    <li><p>If <var>byte</var> is in the range 0x30 to 0x39, inclusive, set
@@ -2478,25 +2469,25 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    0x80 to 0xFE, inclusive, set <var>pointer</var> to
    (<var>lead</var> &minus; 0x81) × 190 + (<var>byte</var> &minus; <var>offset</var>).
 
-   <li><p>Let <var>code point</var> be null if <var>pointer</var> is null, otherwise the
+   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null, otherwise the
    <a>index code point</a> for <var>pointer</var> in <a>index gb18030</a>.
 
-   <li><p>If <var>code point</var> is non-null, return a code point whose value is
-   <var>code point</var>.
+   <li><p>If <var>codePoint</var> is non-null, then return a code point whose value is
+   <var>codePoint</var>.
 
-   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
 
- <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
- a code point whose value is <var>byte</var>.
+ <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a code point whose value is
+ <var>byte</var>.
 
- <li><p>If <var>byte</var> is 0x80, return code point U+20AC.
+ <li><p>If <var>byte</var> is 0x80, then return code point U+20AC (€).
 
- <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
- <a>gb18030 first</a> to <var>byte</var> and return <a>continue</a>.
+ <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, then set <a>gb18030 first</a> to
+ <var>byte</var> and return <a>continue</a>.
 
  <li><p>Return <a>error</a>.
 </ol>
@@ -2508,26 +2499,24 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 (initially false).
 
 <p><a>gb18030</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
-<var>code point</var>, runs these steps:
+<var>codePoint</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
- a byte whose value is <var>code point</var>.
+ <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
+ <var>codePoint</var>.
 
  <li>
-  <p>If <var>code point</var> is U+E5E5, return <a>error</a> with <var>code point</var>.
+  <p>If <var>codePoint</var> is U+E5E5, then return <a>error</a> with <var>codePoint</var>.
 
   <p class=note><a>Index gb18030</a> maps 0xA3 0xA0 to U+3000 rather than U+E5E5 for
   compatibility with deployed content. Therefore it cannot roundtrip.
 
- <li><p>If <a>is GBK</a> is true and <var>code point</var> is
- U+20AC, return byte 0x80.
+ <li><p>If <a>is GBK</a> is true and <var>codePoint</var> is U+20AC (€), then return byte 0x80.
 
  <li>
-  <p>If there is a row in the table below whose first column is <var>code point</var>, then return
+  <p>If there is a row in the table below whose first column is <var>codePoint</var>, then return
   the two bytes on the same row listed in the second column:
 
   <table>
@@ -2593,11 +2582,11 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
   <p class=note>This asymmetric encoder table preserves compatibility with the GB18030-2005
   standard. See also the explanation at <a>index gb18030 ranges</a>.
 
- <li><p>Let <var>pointer</var> be the <a>index pointer</a> for
- <var>code point</var> in <a>index gb18030</a>.
+ <li><p>Let <var>pointer</var> be the <a>index pointer</a> for <var>codePoint</var> in
+ <a>index gb18030</a>.
 
  <li>
-  <p>If <var>pointer</var> is non-null, then:
+  <p>If <var>pointer</var> is non-null:
 
   <ol>
    <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
@@ -2611,11 +2600,10 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <var>trail</var> + <var>offset</var>.
   </ol>
 
- <li><p>If <a>is GBK</a> is true, return <a>error</a> with
- <var>code point</var>.
+ <li><p>If <a>is GBK</a> is true, then return <a>error</a> with <var>codePoint</var>.
 
  <li><p>Set <var>pointer</var> to the
- <a>index gb18030 ranges pointer</a> for <var>code point</var>.
+ <a>index gb18030 ranges pointer</a> for <var>codePoint</var>.
 
  <li><p>Let <var>byte1</var> be <var>pointer</var> / (10 × 126 × 10).
 
@@ -2655,18 +2643,22 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a>
- is not 0x00, set <a>Big5 lead</a> to 0x00 and return <a>error</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a> is not 0x00, then set
+ <a>Big5 lead</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a>
- is 0x00, return <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a> is 0x00, then return
+ <a>finished</a>.
 
  <li>
-  <p>If <a>Big5 lead</a> is not 0x00, let <var>lead</var> be
-  <a>Big5 lead</a>, let <var>pointer</var> be null, set
-  <a>Big5 lead</a> to 0x00, and then:
+  <p>If <a>Big5 lead</a> is not 0x00:
 
   <ol>
+   <li><p>Let <var>lead</var> be <a>Big5 lead</a>.
+
+   <li><p>Set <a>Big5 lead</a> to 0x00.
+
+   <li><p>Let <var>pointer</var> be null.
+
    <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F, otherwise 0x62.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
 
@@ -2675,9 +2667,8 @@ and <var>byte</var>, runs these steps:
    (<var>lead</var> &minus; 0x81) × 157 + (<var>byte</var> &minus; <var>offset</var>).
 
    <li>
-    <p>If there is a row in the table below whose first column is
-    <var>pointer</var>, return the <em>two</em> code points listed in
-    its second column (the third column is irrelevant):
+    <p>If there is a row in the table below whose first column is <var>pointer</var>, then return
+    the <em>two</em> code points listed in its second column (the third column is irrelevant):
 
     <table>
      <tbody><tr><th>Pointer<th>Code points<th>Notes<!-- https://www.unicode.org/Public/UNIDATA/NamedSequences.txt -->
@@ -2691,11 +2682,11 @@ and <var>byte</var>, runs these steps:
     <p class=note>Since <a lt=index>indexes</a> are limited to
     single code points this table is used for these pointers.
 
-   <li><p>Let <var>code point</var> be null if <var>pointer</var> is null, otherwise the
+   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null, otherwise the
    <a>index code point</a> for <var>pointer</var> in <a>index Big5</a>.
 
-   <li><p>If <var>code point</var> is non-null, return a code point whose value is
-   <var>code point</var>.
+   <li><p>If <var>codePoint</var> is non-null, then return a code point whose value is
+   <var>codePoint</var>.
 
    <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
@@ -2703,10 +2694,10 @@ and <var>byte</var>, runs these steps:
    <li><p>Return <a>error</a>.
   </ol>
 
- <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
- a code point whose value is <var>byte</var>.
+ <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a code point whose value is
+ <var>byte</var>.
 
- <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
+ <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, then set
  <a>Big5 lead</a> to <var>byte</var> and return <a>continue</a>.
 
  <li><p>Return <a>error</a>.
@@ -2716,20 +2707,17 @@ and <var>byte</var>, runs these steps:
 <h4 id=big5-encoder dfn algorithm export>Big5 encoder</h4>
 
 <p><a>Big5</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
-<var>code point</var>, runs these steps:
+<var>codePoint</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
- a byte whose value is <var>code point</var>.
+ <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
+ <var>codePoint</var>.
 
- <li><p>Let <var>pointer</var> be the <a>index Big5 pointer</a> for
- <var>code point</var>.
+ <li><p>Let <var>pointer</var> be the <a>index Big5 pointer</a> for <var>codePoint</var>.
 
- <li><p>If <var>pointer</var> is null, return <a>error</a> with
- <var>code point</var>.
+ <li><p>If <var>pointer</var> is null, then return <a>error</a> with <var>codePoint</var>.
 
  <li><p>Let <var>lead</var> be <var>pointer</var> / 157 + 0x81.
 
@@ -2759,12 +2747,11 @@ and <var>byte</var>, runs these steps:
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>EUC-JP lead</a> is not 0x00, set <a>EUC-JP lead</a> to 0x00, and return
- <a>error</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-JP lead</a> is not 0x00, then set
+ <a>EUC-JP lead</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>EUC-JP lead</a> is 0x00, return <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-JP lead</a> is 0x00, then return
+ <a>finished</a>.
 
  <li><p>If <a>EUC-JP lead</a> is 0x8E and <var>byte</var> is
  in the range 0xA1 to 0xDF, inclusive, set <a>EUC-JP lead</a> to 0x00 and return
@@ -2776,35 +2763,37 @@ and <var>byte</var>, runs these steps:
  <a>EUC-JP lead</a> to <var>byte</var>, and return <a>continue</a>.
 
  <li>
-  <p>If <a>EUC-JP lead</a> is not 0x00, let <var>lead</var> be <a>EUC-JP lead</a>, set
-  <a>EUC-JP lead</a> to 0x00, and then:
+  <p>If <a>EUC-JP lead</a> is not 0x00:
 
   <ol>
-   <li><p>Let <var>code point</var> be null.
+   <li><p>Let <var>lead</var> be <a>EUC-JP lead</a>.
+
+   <li><p>Set <a>EUC-JP lead</a> to 0x00.
+
+   <li><p>Let <var>codePoint</var> be null.
 
    <li><p>If <var>lead</var> and <var>byte</var> are both in the range 0xA1 to 0xFE, inclusive, then
-   set <var>code point</var> to the <a>index code point</a> for
+   set <var>codePoint</var> to the <a>index code point</a> for
    (<var>lead</var> &minus; 0xA1) × 94 + <var>byte</var> &minus; 0xA1
    in <a>index jis0208</a> if <a>EUC-JP jis0212</a> is false and in
    <a>index jis0212</a> otherwise.
 
    <li><p>Set <a>EUC-JP jis0212</a> to false.
 
-   <li><p>If <var>code point</var> is non-null, return a code point whose value is
-   <var>code point</var>.
+   <li><p>If <var>codePoint</var> is non-null, then return a code point whose value is
+   <var>codePoint</var>.
 
-   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
 
- <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
- a code point whose value is <var>byte</var>.
+ <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a code point whose value is
+ <var>byte</var>.
 
- <li><p>If <var>byte</var> is 0x8E, 0x8F, or in the range 0xA1 to
- 0xFE, inclusive, set <a>EUC-JP lead</a> to <var>byte</var> and return
- <a>continue</a>.
+ <li><p>If <var>byte</var> is 0x8E, 0x8F, or in the range 0xA1 to 0xFE, inclusive, then set
+ <a>EUC-JP lead</a> to <var>byte</var> and return <a>continue</a>.
 
  <li><p>Return <a>error</a>.
 </ol>
@@ -2813,40 +2802,37 @@ and <var>byte</var>, runs these steps:
 <h4 id=euc-jp-encoder dfn algorithm export>EUC-JP encoder</h4>
 
 <p><a>EUC-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
-<var>code point</var>, runs these steps:
+<var>codePoint</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
- a byte whose value is <var>code point</var>.
+ <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
+ <var>codePoint</var>.
 
- <li><p>If <var>code point</var> is U+00A5, return byte 0x5C.
+ <li><p>If <var>codePoint</var> is U+00A5, then return byte 0x5C.
 
- <li><p>If <var>code point</var> is U+203E, return byte 0x7E.
+ <li><p>If <var>codePoint</var> is U+203E, then return byte 0x7E.
 
- <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, return
- two bytes whose values are 0x8E and <var>code point</var> &minus; 0xFF61 + 0xA1.
+ <li><p>If <var>codePoint</var> is in the range U+FF61 to U+FF9F, inclusive, then return two bytes
+ whose values are 0x8E and <var>codePoint</var> &minus; 0xFF61 + 0xA1.
 
- <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
+ <li><p>If <var>codePoint</var> is U+2212, then set it to U+FF0D.
 
  <li>
-  <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>code point</var> in
+  <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>codePoint</var> in
   <a>index jis0208</a>.
 
   <p class=note>If <var>pointer</var> is non-null, it is less than 8836 due to the nature of
   <a>index jis0208</a> and the <a>index pointer</a> operation.
 
- <li><p>If <var>pointer</var> is null, return <a>error</a> with
- <var>code point</var>.
+ <li><p>If <var>pointer</var> is null, then return <a>error</a> with <var>codePoint</var>.
 
  <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0xA1.
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0xA1.
 
- <li><p>Return two bytes whose values are <var>lead</var> and
- <var>trail</var>.
+ <li><p>Return two bytes whose values are <var>lead</var> and <var>trail</var>.
 </ol>
 
 
@@ -2983,12 +2969,12 @@ and <var>byte</var>, runs these steps:
      <li><p>Let <var>pointer</var> be
      (<a>ISO-2022-JP lead</a> &minus; 0x21) × 94 + <var>byte</var> &minus; 0x21.
 
-     <li><p>Let <var>code point</var> be the <a>index code point</a> for
+     <li><p>Let <var>codePoint</var> be the <a>index code point</a> for
      <var>pointer</var> in <a>index jis0208</a>.
 
-     <li><p>If <var>code point</var> is null, return <a>error</a>.
+     <li><p>If <var>codePoint</var> is null, then return <a>error</a>.
 
-     <li><p>Return a code point whose value is <var>code point</var>.
+     <li><p>Return a code point whose value is <var>codePoint</var>.
     </ol>
 
    <dt><a>end-of-queue</a>
@@ -3041,7 +3027,7 @@ and <var>byte</var>, runs these steps:
    <a lt="ISO-2022-JP decoder lead byte">lead byte</a>.
 
    <li>
-    <p>If <var>state</var> is non-null, then:
+    <p>If <var>state</var> is non-null:
 
     <ol>
      <li><p>Set <a>ISO-2022-JP decoder state</a> and
@@ -3085,91 +3071,80 @@ and <var>byte</var>, runs these steps:
 <a lt="ISO-2022-JP encoder ASCII">ASCII</a>).
 
 <p><a>ISO-2022-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>code point</var>, runs these steps:
+<var>ioQueue</var> and <var>codePoint</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a> and
- <a>ISO-2022-JP encoder state</a> is not
- <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, set
- <a>ISO-2022-JP encoder state</a> to
- <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes
- 0x1B 0x28 0x42.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a> and <a>ISO-2022-JP encoder state</a> is not
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, then set <a>ISO-2022-JP encoder state</a> to
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a> and return three bytes 0x1B 0x28 0x42.
 
- <li><p>If <var>code point</var> is <a>end-of-queue</a> and
- <a>ISO-2022-JP encoder state</a> is
- <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, return <a>finished</a>.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a> and <a>ISO-2022-JP encoder state</a> is
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, then return <a>finished</a>.
 
  <li>
-  <p>If <a>ISO-2022-JP encoder state</a> is
-  <a lt="ISO-2022-JP encoder ASCII">ASCII</a> or
-  <a lt="ISO-2022-JP encoder Roman">Roman</a>, and <var>code point</var> is U+000E, U+000F,
-  or U+001B, return <a>error</a> with U+FFFD.
+  <p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder ASCII">ASCII</a> or
+  <a lt="ISO-2022-JP encoder Roman">Roman</a>, and <var>codePoint</var> is U+000E, U+000F, or
+  U+001B, then return <a>error</a> with U+FFFD.
 
-  <p class=note>This returns U+FFFD rather than <var>code point</var> to prevent attacks.
+  <p class=note>This returns U+FFFD rather than <var>codePoint</var> to prevent attacks.
   <!-- https://github.com/whatwg/encoding/issues/15 -->
 
- <li><p>If <a>ISO-2022-JP encoder state</a> is
- <a lt="ISO-2022-JP encoder ASCII">ASCII</a> and <var>code point</var> is an
- <a>ASCII code point</a>, return a byte whose value is <var>code point</var>.
+ <li><p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder ASCII">ASCII</a> and
+ <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
+ <var>codePoint</var>.
 
  <li>
   <p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder Roman">Roman</a> and
-  <var>code point</var> is an <a>ASCII code point</a>, excluding U+005C and U+007E, or is U+00A5 or
-  U+203E, then:
+  <var>codePoint</var> is an <a>ASCII code point</a>, excluding U+005C and U+007E, or is U+00A5 or
+  U+203E:
 
   <ol>
-   <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return a byte
-   whose value is <var>code point</var>.
+   <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
+   <var>codePoint</var>.
 
-   <li><p>If <var>code point</var> is U+00A5, return byte 0x5C.
+   <li><p>If <var>codePoint</var> is U+00A5, then return byte 0x5C.
 
-   <li><p>If <var>code point</var> is U+203E, return byte 0x7E.
+   <li><p>If <var>codePoint</var> is U+203E, then return byte 0x7E.
   </ol>
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a>, and
- <a>ISO-2022-JP encoder state</a> is not
- <a lt="ISO-2022-JP encoder ASCII">ASCII</a>,
- <a>restore</a> <var>code point</var> to
+ <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, and <a>ISO-2022-JP encoder state</a>
+ is not <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, then <a>restore</a> <var>codePoint</var> to
  <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
- <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes
- 0x1B 0x28 0x42.
+ <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes 0x1B 0x28 0x42.
 
- <li><p>If <var>code point</var> is either U+00A5 or U+203E, and
- <a>ISO-2022-JP encoder state</a> is not
- <a lt="ISO-2022-JP encoder Roman">Roman</a>,
- <a>restore</a> <var>code point</var> to
+ <li><p>If <var>codePoint</var> is either U+00A5 or U+203E, and <a>ISO-2022-JP encoder state</a> is
+ not <a lt="ISO-2022-JP encoder Roman">Roman</a>, then <a>restore</a> <var>codePoint</var> to
  <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
- <a lt="ISO-2022-JP encoder Roman">Roman</a>, and return three bytes
- 0x1B 0x28 0x4A.
+ <a lt="ISO-2022-JP encoder Roman">Roman</a>, and return three bytes 0x1B 0x28 0x4A.
 
- <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
+ <li><p>If <var>codePoint</var> is U+2212, then set it to U+FF0D.
 
- <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, set it to the
- <a>index code point</a> for <var>code point</var> &minus; 0xFF61 in
+ <li><p>If <var>codePoint</var> is in the range U+FF61 to U+FF9F, inclusive, then set it to the
+ <a>index code point</a> for <var>codePoint</var> &minus; 0xFF61 in
  <a>index ISO-2022-JP katakana</a>.
 
  <li>
-  <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>code point</var> in
+  <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>codePoint</var> in
   <a>index jis0208</a>.
 
   <p class=note>If <var>pointer</var> is non-null, it is less than 8836 due to the nature of
   <a>index jis0208</a> and the <a>index pointer</a> operation.
 
  <li>
-  <p>If <var>pointer</var> is null, then:
+  <p>If <var>pointer</var> is null:
 
   <ol>
    <li><p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
-   then <a>restore</a> <var>code point</var> to <var>ioQueue</var>, set
+   then <a>restore</a> <var>codePoint</var> to <var>ioQueue</var>, set
    <a>ISO-2022-JP encoder state</a> to <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three
    bytes 0x1B 0x28 0x42.
 
-   <li><p>Return <a>error</a> with <var>code point</var>.
+   <li><p>Return <a>error</a> with <var>codePoint</var>.
   </ol>
 
  <li><p>If <a>ISO-2022-JP encoder state</a> is not
  <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
- <a>restore</a> <var>code point</var> to
+ <a>restore</a> <var>codePoint</var> to
  <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder jis0208">jis0208</a>, and return three bytes
  0x1B 0x24 0x42.
@@ -3178,8 +3153,7 @@ and <var>byte</var>, runs these steps:
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0x21.
 
- <li><p>Return two bytes whose values are <var>lead</var> and
- <var>trail</var>.
+ <li><p>Return two bytes whose values are <var>lead</var> and <var>trail</var>.
 </ol>
 
 
@@ -3194,57 +3168,60 @@ and <var>byte</var>, runs these steps:
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>Shift_JIS lead</a> is not 0x00, set <a>Shift_JIS lead</a> to 0x00 and
- return <a>error</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Shift_JIS lead</a> is not 0x00, then set
+ <a>Shift_JIS lead</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>Shift_JIS lead</a> is 0x00, return <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Shift_JIS lead</a> is 0x00, then return
+ <a>finished</a>.
 
  <li>
-  <p>If <a>Shift_JIS lead</a> is not 0x00, let <var>lead</var> be <a>Shift_JIS lead</a>, let
-  <var>pointer</var> be null, set <a>Shift_JIS lead</a> to 0x00, and then:
+  <p>If <a>Shift_JIS lead</a> is not 0x00:
 
   <ol>
+   <li><p>Let <var>lead</var> be <a>Shift_JIS lead</a>.
+
+   <li><p>Set <a>Shift_JIS lead</a> to 0x00.
+
+   <li><p>Let <var>pointer</var> be null.
+
    <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F, otherwise 0x41.
 
    <li><p>Let <var>lead offset</var> be 0x81 if <var>lead</var> is less than 0xA0, otherwise 0xC1.
 
-   <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or
-   0x80 to 0xFC, inclusive, set <var>pointer</var> to
+   <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or 0x80 to 0xFC, inclusive,
+   then set <var>pointer</var> to
    (<var>lead</var> &minus; <var>lead offset</var>) × 188 + <var>byte</var> &minus; <var>offset</var>.
 
    <li>
-    <p>If <var>pointer</var> is in the range 8836 to 10715, inclusive, return a code point whose
-    value is 0xE000 &minus; 8836 + <var>pointer</var>.
+    <p>If <var>pointer</var> is in the range 8836 to 10715, inclusive, then return a code point
+    whose value is 0xE000 &minus; 8836 + <var>pointer</var>.
     <!-- subtraction is done first to avoid upsetting compilers -->
 
     <p class=note>This is interoperable legacy from Windows known as EUDC.
     <!-- PUA -->
 
-   <li><p>Let <var>code point</var> be null if <var>pointer</var> is null, otherwise the
+   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null; otherwise the
    <a>index code point</a> for <var>pointer</var> in <a>index jis0208</a>.
 
-   <li><p>If <var>code point</var> is non-null, return a code point whose value is
-   <var>code point</var>.
+   <li><p>If <var>codePoint</var> is non-null, then return a code point whose value is
+   <var>codePoint</var>.
 
-   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
 
- <li><p>If <var>byte</var> is an <a>ASCII byte</a> or 0x80, return a code point
- whose value is <var>byte</var>.
+ <li><p>If <var>byte</var> is an <a>ASCII byte</a> or 0x80, then return a code point whose value is
+ <var>byte</var>.
  <!-- Opera has 0x7E -->
 
- <li><p>If <var>byte</var> is in the range 0xA1 to 0xDF, inclusive, return
- a code point whose value is 0xFF61 &minus; 0xA1 + <var>byte</var>.
+ <li><p>If <var>byte</var> is in the range 0xA1 to 0xDF, inclusive, then return a code point whose
+ value is 0xFF61 &minus; 0xA1 + <var>byte</var>.
  <!-- Katakana; subtraction is done first to avoid upsetting compilers -->
 
- <li><p>If <var>byte</var> is in the range 0x81 to 0x9F, inclusive, or 0xE0 to 0xFC,
- inclusive, set <a>Shift_JIS lead</a> to <var>byte</var> and return
- <a>continue</a>.
+ <li><p>If <var>byte</var> is in the range 0x81 to 0x9F, inclusive, or 0xE0 to 0xFC, inclusive, then
+ set <a>Shift_JIS lead</a> to <var>byte</var> and return <a>continue</a>.
 
  <li><p>Return <a>error</a>.
 </ol>
@@ -3253,41 +3230,37 @@ and <var>byte</var>, runs these steps:
 <h4 id=shift_jis-encoder dfn algorithm export>Shift_JIS encoder</h4>
 
 <p><a>Shift_JIS</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
-<var>code point</var>, runs these steps:
+<var>codePoint</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a> or U+0080, return
- a byte whose value is <var>code point</var>.
+ <li><p>If <var>codePoint</var> is an <a>ASCII code point</a> or U+0080, then return a byte whose
+ value is <var>codePoint</var>.
 
- <li><p>If <var>code point</var> is U+00A5, return byte 0x5C.
+ <li><p>If <var>codePoint</var> is U+00A5, then return byte 0x5C.
 
- <li><p>If <var>code point</var> is U+203E, return byte 0x7E.
+ <li><p>If <var>codePoint</var> is U+203E, then return byte 0x7E.
 
- <li><p>If <var>code point</var> is in the range U+FF61 to U+FF9F, inclusive, return
- a byte whose value is <var>code point</var> &minus; 0xFF61 + 0xA1.
+ <li><p>If <var>codePoint</var> is in the range U+FF61 to U+FF9F, inclusive, then return a byte
+ whose value is <var>codePoint</var> &minus; 0xFF61 + 0xA1.
 
- <li><p>If <var>code point</var> is U+2212, set it to U+FF0D.
+ <li><p>If <var>codePoint</var> is U+2212, then set it to U+FF0D.
 
- <li><p>Let <var>pointer</var> be the <a>index Shift_JIS pointer</a> for
- <var>code point</var>.
+ <li><p>Let <var>pointer</var> be the <a>index Shift_JIS pointer</a> for <var>codePoint</var>.
 
- <li><p>If <var>pointer</var> is null, return <a>error</a> with
- <var>code point</var>.
+ <li><p>If <var>pointer</var> is null, then return <a>error</a> with <var>codePoint</var>.
 
  <li><p>Let <var>lead</var> be <var>pointer</var> / 188.
 
- <li><p>Let <var>lead offset</var> be 0x81 if <var>lead</var> is less than 0x1F, otherwise 0xC1.
+ <li><p>Let <var>lead offset</var> be 0x81 if <var>lead</var> is less than 0x1F; otherwise 0xC1.
  <!-- 0xA0-0x81 -->
 
  <li><p>Let <var>trail</var> be <var>pointer</var> % 188.
 
- <li><p>Let <var>offset</var> be 0x40 if <var>trail</var> is less than 0x3F, otherwise 0x41.
+ <li><p>Let <var>offset</var> be 0x40 if <var>trail</var> is less than 0x3F; otherwise 0x41.
 
- <li><p>Return two bytes whose values are
- <var>lead</var> + <var>lead offset</var> and
+ <li><p>Return two bytes whose values are <var>lead</var> + <var>lead offset</var> and
  <var>trail</var> + <var>offset</var>.
 </ol>
 
@@ -3306,39 +3279,43 @@ and <var>byte</var>, runs these steps:
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>EUC-KR lead</a> is not 0x00, set <a>EUC-KR lead</a> to 0x00
- and return <a>error</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-KR lead</a> is not 0x00, then set
+ <a>EUC-KR lead</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>EUC-KR lead</a> is 0x00, return <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-KR lead</a> is 0x00, then return
+ <a>finished</a>.
 
  <li>
-  <p>If <a>EUC-KR lead</a> is not 0x00, let <var>lead</var> be <a>EUC-KR lead</a>, let
-  <var>pointer</var> be null, set <a>EUC-KR lead</a> to 0x00, and then:
+  <p>If <a>EUC-KR lead</a> is not 0x00:
 
   <ol>
+   <li><p>Let <var>lead</var> be <a>EUC-KR lead</a>.
+
+   <li><p>Set <a>EUC-KR lead</a> to 0x00.
+
+   <li><p>Let <var>pointer</var> be null.
+
    <li><p>If <var>byte</var> is in the range  0x41 to 0xFE, inclusive, set
    <var>pointer</var> to
    (<var>lead</var> &minus; 0x81) × 190 + (<var>byte</var> &minus; 0x41).
 
-   <li><p>Let <var>code point</var> be null if <var>pointer</var> is null, otherwise the
+   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null, otherwise the
    <a>index code point</a> for <var>pointer</var> in <a>index EUC-KR</a>.
 
-   <li><p>If <var>code point</var> is non-null, return a code point whose value is
-   <var>code point</var>.
+   <li><p>If <var>codePoint</var> is non-null, then return a code point whose value is
+   <var>codePoint</var>.
 
-   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, <a>restore</a> <var>byte</var> to
+   <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then <a>restore</a> <var>byte</var> to
    <var>ioQueue</var>.
 
    <li><p>Return <a>error</a>.
   </ol>
 
- <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
- a code point whose value is <var>byte</var>.
+ <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a code point whose value is
+ <var>byte</var>.
 
- <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
- <a>EUC-KR lead</a> to <var>byte</var> and return <a>continue</a>.
+ <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, then set <a>EUC-KR lead</a> to
+ <var>byte</var> and return <a>continue</a>.
 
  <li><p>Return <a>error</a>.
 </ol>
@@ -3347,20 +3324,18 @@ and <var>byte</var>, runs these steps:
 <h4 id=euc-kr-encoder dfn algorithm export>EUC-KR encoder</h4>
 
 <p><a>EUC-KR</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
-<var>code point</var>, runs these steps:
+<var>codePoint</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
- a byte whose value is <var>code point</var>.
+ <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
+ <var>codePoint</var>.
 
- <li><p>Let <var>pointer</var> be the <a>index pointer</a> for
- <var>code point</var> in <a>index EUC-KR</a>.
+ <li><p>Let <var>pointer</var> be the <a>index pointer</a> for <var>codePoint</var> in
+ <a>index EUC-KR</a>.
 
- <li><p>If <var>pointer</var> is null, return <a>error</a> with
- <var>code point</var>.
+ <li><p>If <var>pointer</var> is null, then return <a>error</a> with <var>codePoint</var>.
 
  <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
 
@@ -3389,10 +3364,10 @@ the server and the client.
 <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a>, return <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <a>replacement error returned</a> is false, set
- <a>replacement error returned</a> to true and return <a>error</a>.
+ <li><p>If <a>replacement error returned</a> is false, then set <a>replacement error returned</a> to
+ true and return <a>error</a>.
 
  <li><p>Return <a>finished</a>.
 </ol>
@@ -3422,15 +3397,14 @@ rather the <a>decode</a> algorithm.
  <a>UTF-16 lead byte</a> and <a>UTF-16 leading surrogate</a> to null, and return
  <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>UTF-16 lead byte</a> and <a>UTF-16 leading surrogate</a> are null, return
- <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>UTF-16 lead byte</a> and
+ <a>UTF-16 leading surrogate</a> are null, then return <a>finished</a>.
 
- <li><p>If <a>UTF-16 lead byte</a> is null, set <a>UTF-16 lead byte</a> to
- <var>byte</var> and return <a>continue</a>.
+ <li><p>If <a>UTF-16 lead byte</a> is null, then set <a>UTF-16 lead byte</a> to <var>byte</var> and
+ return <a>continue</a>.
 
  <li>
-  <p>Let <var>code unit</var> be the result of:
+  <p>Let <var>codeUnit</var> be the result of:
 
   <dl class=switch>
    <dt><a>is UTF-16BE decoder</a> is true
@@ -3449,12 +3423,12 @@ rather the <a>decode</a> algorithm.
 
    <li><p>Set <a>UTF-16 leading surrogate</a> to null.
 
-   <li><p>If <var>code unit</var> is a <a for=/>trailing surrogate</a>, then return a
-   <a>scalar value from surrogates</a> given <var>leadingSurrogate</var> and <var>code unit</var>.
+   <li><p>If <var>codeUnit</var> is a <a for=/>trailing surrogate</a>, then return a
+   <a>scalar value from surrogates</a> given <var>leadingSurrogate</var> and <var>codeUnit</var>.
 
-   <li><p>Let <var>byte1</var> be <var>code unit</var> >> 8.
+   <li><p>Let <var>byte1</var> be <var>codeUnit</var> >> 8.
 
-   <li><p>Let <var>byte2</var> be <var>code unit</var> &amp; 0x00FF.
+   <li><p>Let <var>byte2</var> be <var>codeUnit</var> &amp; 0x00FF.
 
    <li><p>Let <var>bytes</var> be a <a for=/>list</a> of two bytes whose values are <var>byte1</var>
    and <var>byte2</var>, if <a>is UTF-16BE decoder</a> is true; otherwise <var>byte2</var> and
@@ -3463,12 +3437,12 @@ rather the <a>decode</a> algorithm.
    <li><p><a>Restore</a> <var>bytes</var> to <var>ioQueue</var> and return <a>error</a>.
   </ol>
 
- <li><p>If <var>code unit</var> is a <a for=/>leading surrogate</a>, then set
- <a>UTF-16 leading surrogate</a> to <var>code unit</var> and return <a>continue</a>.
+ <li><p>If <var>codeUnit</var> is a <a for=/>leading surrogate</a>, then set
+ <a>UTF-16 leading surrogate</a> to <var>codeUnit</var> and return <a>continue</a>.
 
- <li><p>If <var>code unit</var> is a <a for=/>trailing surrogate</a>, then return <a>error</a>.
+ <li><p>If <var>codeUnit</var> is a <a for=/>trailing surrogate</a>, then return <a>error</a>.
 
- <li><p>Return code point <var>code unit</var>.
+ <li><p>Return code point <var>codeUnit</var>.
 </ol>
 
 
@@ -3511,11 +3485,10 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>byte</var> is an <a>ASCII byte</a>, return
- a code point whose value is <var>byte</var>.
+ <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a code point whose value is
+ <var>byte</var>.
 
  <li><p>Return a code point whose value is 0xF780 + <var>byte</var> &minus; 0x80.
 </ol>
@@ -3524,19 +3497,18 @@ https://stackoverflow.com/questions/6986789/why-are-some-bytes-prefixed-with-0xf
 <h4 id=x-user-defined-encoder dfn algorithm export>x-user-defined encoder</h4>
 
 <p><a>x-user-defined</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
-<var>code point</var>, runs these steps:
+<var>codePoint</var>, runs these steps:
 
 <ol>
- <li><p>If <var>code point</var> is <a>end-of-queue</a>, return
- <a>finished</a>.
+ <li><p>If <var>codePoint</var> is <a>end-of-queue</a>, then return <a>finished</a>.
 
- <li><p>If <var>code point</var> is an <a>ASCII code point</a>, return
- a byte whose value is <var>code point</var>.
+ <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
+ <var>codePoint</var>.
 
- <li><p>If <var>code point</var> is in the range U+F780 to U+F7FF, inclusive, return
- a byte whose value is <var>code point</var> &minus; 0xF780 + 0x80.
+ <li><p>If <var>codePoint</var> is in the range U+F780 to U+F7FF, inclusive, then return a byte
+ whose value is <var>codePoint</var> &minus; 0xF780 + 0x80.
 
- <li><p>Return <a>error</a> with <var>code point</var>.
+ <li><p>Return <a>error</a> with <var>codePoint</var>.
 </ol>
 
 
