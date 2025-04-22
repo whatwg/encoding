@@ -126,7 +126,7 @@ present in <a for=/>I/O queues</a> of any type and it signifies that there are n
 </ol>
 </div>
 
-<div algorithm>
+<div algorithm="I/O queue/read items">
 <p>To <a for="I/O queue">read</a> a number <var>number</var> of <a for=list>items</a> from
 <var>ioQueue</var>, run these steps:
 
@@ -193,7 +193,7 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
 </ol>
 </div>
 
-<div algorithm>
+<div algorithm="I/O queue/push items">
 <p>To <a for="I/O queue">push</a> a sequence of items to an <a for=/>I/O queue</a>
 <var>ioQueue</var> is to push each item in the sequence to <var>ioQueue</var>, in the given order.
 </div>
@@ -946,7 +946,9 @@ the return value of these steps:
  <li><p>Return a pointer whose value is
  <var>pointer offset</var> + <var>code point</var> &minus; <var>offset</var>.
 </ol>
+</div>
 
+<div algorithm>
 <p>The <dfn>index Shift_JIS pointer</dfn> for <var>code point</var> is the return value of these
 steps:
 
@@ -1181,7 +1183,9 @@ is safe as it never triggers <a>errors</a>. [[HTML]]
 
  <li><p>Return an instance of <var>encoding</var>'s <a for=/>encoder</a>.
 </ol>
+</div>
 
+<div algorithm>
 <p>To <dfn export>encode or fail</dfn> an I/O queue of scalar values <var>ioQueue</var> given an
 <a for=/>encoder</a> instance <var>encoder</var> and an I/O queue of bytes <var>output</var>, run
 these steps:
