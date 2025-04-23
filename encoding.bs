@@ -272,8 +272,8 @@ algorithms, as detailed in [[#implementation-considerations]].
 <var>ioQueue</var> and a <a for=/>realm</a> <var>realm</var>:
 
 <ol>
- <li><p>Let <var>bytes</var> be the result of <a for="I/O queue">converting</a> <var>ioQueue</var>
- into a byte sequence.
+ <li><p>Let <var>bytes</var> be the result of <a for="from I/O queue">converting</a>
+ <var>ioQueue</var> into a byte sequence.
 
  <li><p>Return the result of <a for=ArrayBufferView>creating</a> a {{Uint8Array}} object from
  <var>bytes</var> in <var>realm</var>.
