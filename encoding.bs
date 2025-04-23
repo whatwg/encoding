@@ -29,7 +29,7 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 <h2 id=preface>Preface</h2>
 
 <p>The UTF-8 encoding is the most appropriate encoding for interchange of Unicode, the
-universal coded character set. Therefore for new protocols and formats, as well as
+universal coded character set. Therefore, for new protocols and formats, as well as
 existing formats deployed in new contexts, this specification requires (and defines) the
 UTF-8 encoding.
 
@@ -56,17 +56,18 @@ specification does not provide a mechanism for extending any aspect of encodings
 
 <p>There is a set of encoding security issues when the producer and consumer do not agree on the
 encoding in use, or on the way a given encoding is to be implemented. For instance, an attack was
-reported in 2011 where a <a>Shift_JIS</a> lead byte 0x82 was used to “mask” a 0x22 trail byte in a
-JSON resource of which an attacker could control some field. The producer did not see the problem
-even though this is an illegal byte combination. The consumer decoded it as a single U+FFFD (�) and
-therefore changed the overall interpretation as U+0022 (") is an important delimiter. Decoders of
-encodings that use multiple bytes for scalar values now require that in case of an illegal byte
-combination, a scalar value in the range U+0000 to U+007F, inclusive, cannot be “masked”. For the
-aforementioned sequence the output would be U+FFFD U+0022. (As an unfortunate exception to this, the
-<a>gb18030 decoder</a> will “mask” up to one such byte at <a>end-of-queue</a>.)
+reported in 2011 where a <a>Shift_JIS</a> leading byte 0x82 was used to “mask” a 0x22 trailing byte
+in a JSON resource of which an attacker could control some field. The producer did not see the
+problem even though this is an illegal byte combination. The consumer decoded it as a single
+U+FFFD (�) and therefore changed the overall interpretation as U+0022 (") is an important delimiter.
+Decoders of encodings that use multiple bytes for scalar values now require that in case of an
+illegal byte combination, a scalar value in the range U+0000 to U+007F, inclusive, cannot be
+“masked”. For the aforementioned sequence the output would be U+FFFD U+0022. (As an unfortunate
+exception to this, the <a>gb18030 decoder</a> will “mask” up to one such byte at
+<a>end-of-queue</a>.)
 
 <p>This is a larger issue for encodings that map anything that is an <a>ASCII byte</a> to something
-that is not an <a>ASCII code point</a>, when there is no lead byte present. These are
+that is not an <a>ASCII code point</a>, when there is no leading byte present. These are
 “ASCII-incompatible” encodings and other than <a>ISO-2022-JP</a> and <a>UTF-16BE/LE</a>, which are
 unfortunately required due to deployed content, they are not supported. (Investigation is
 <a href=https://github.com/whatwg/encoding/issues/8 lt="Add more labels to the replacement encoding">ongoing</a>
@@ -901,9 +902,9 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <td><a href=gb18030.html>index gb18030 visualization</a>
   <td><a href=gb18030-bmp.html>index gb18030 BMP coverage</a>
   <td>This matches the GB18030-2022 standard for code points encoded as two bytes, except for
-  0xA3 0xA0 which maps to U+3000 to be compatible with deployed content. This index covers the
-  CJK Unified Ideographs block of Unicode in its entirety. Entries from that block that are above or
-  to the left of (the first) U+3000 in the visualization are in the Unicode order.
+  0xA3 0xA0 which maps to U+3000 IDEOGRAPHIC SPACE to be compatible with deployed content. This
+  index covers the CJK Unified Ideographs block of Unicode in its entirety. Entries from that block
+  that are above or to the left of (the first) U+3000 in the visualization are in the Unicode order.
   <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=131837
        https://bugs.webkit.org/show_bug.cgi?id=17014
        https://www.w3.org/Bugs/Public/show_bug.cgi?id=25396
@@ -947,8 +948,8 @@ specification, excluding <a>index single-byte</a>, which have their own table:
   <td><dfn export>index ISO-2022-JP katakana</dfn>
   <td colspan=3><a href=index-iso-2022-jp-katakana.txt>index-iso-2022-jp-katakana.txt</a>
   <td>This maps halfwidth to fullwidth katakana as per Unicode Normalization Form KC, except that
-  U+FF9E and U+FF9F map to U+309B and U+309C rather than U+3099 and U+309A. It is only used by the
-  <a>ISO-2022-JP encoder</a>. [[UNICODE]]
+  U+FF9E (ﾞ) and U+FF9F (ﾟ) map to U+309B (゛) and U+309C (゜) rather than U+3099 (◌゙) and
+  U+309A (◌゚). It is only used by the <a>ISO-2022-JP encoder</a>. [[UNICODE]]
 </table>
 
 <div algorithm>
@@ -963,11 +964,10 @@ the return value of these steps:
  <!-- 7457 is 0x81 0x35 0xF4 0x37 -->
 
  <li><p>Let <var>offset</var> be the last pointer in <a>index gb18030 ranges</a> that is less than
- or equal to <var>pointer</var> and let <var>code point offset</var> be its corresponding code
- point.
+ or equal to <var>pointer</var> and let <var>codePointOffset</var> be its corresponding code point.
 
  <li><p>Return a code point whose value is
- <var>code point offset</var> + <var>pointer</var> &minus; <var>offset</var>.
+ <var>codePointOffset</var> + <var>pointer</var> &minus; <var>offset</var>.
 </ol>
 </div>
 
@@ -979,11 +979,11 @@ the return value of these steps:
  <li><p>If <var>codePoint</var> is U+E7C7, then return pointer 7457.
 
  <li><p>Let <var>offset</var> be the last code point in <a>index gb18030 ranges</a> that is less
- than or equal to <var>codePoint</var> and let <var>pointer offset</var> be its corresponding
+ than or equal to <var>codePoint</var> and let <var>pointerOffset</var> be its corresponding
  pointer.
 
  <li><p>Return a pointer whose value is
- <var>pointer offset</var> + <var>codePoint</var> &minus; <var>offset</var>.
+ <var>pointerOffset</var> + <var>codePoint</var> &minus; <var>offset</var>.
 </ol>
 </div>
 
@@ -1017,8 +1017,8 @@ these steps:
   <p class=note>Avoid returning Hong Kong Supplementary Character Set extensions literally.
 
  <li>
-  <p>If <var>codePoint</var> is U+2550, U+255E, U+2561, U+256A, U+5341, or U+5345,
-  return the <em>last</em> pointer corresponding to <var>codePoint</var> in
+  <p>If <var>codePoint</var> is U+2550 (═), U+255E (╞), U+2561 (╡), U+256A (╪), U+5341 (十), or
+  U+5345 (卅), then return the <em>last</em> pointer corresponding to <var>codePoint</var> in
   <var>index</var>.
   <!-- https://www.w3.org/Bugs/Public/show_bug.cgi?id=27878 -->
 
@@ -2159,17 +2159,24 @@ that are split between strings. [[!INFRA]]
 in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algorithm, but rather the
 <a>decode</a> and <a>UTF-8 decode</a> algorithms.
 
-<p><a>UTF-8</a>'s <a for=/>decoder</a> has an associated
-<dfn>UTF-8 code point</dfn>, <dfn>UTF-8 bytes seen</dfn>, and
-<dfn>UTF-8 bytes needed</dfn> (all initially 0), a <dfn>UTF-8 lower boundary</dfn>
-(initially 0x80), and a <dfn>UTF-8 upper boundary</dfn> (initially 0xBF).
+<p><a>UTF-8</a>'s <a for=/>decoder</a> has an associated:
+
+<dl>
+ <dt><dfn>UTF-8 code point</dfn>
+ <dt><dfn>UTF-8 bytes seen</dfn>
+ <dt><dfn>UTF-8 bytes needed</dfn>
+ <dd>A number, initially 0.
+ <dt><dfn>UTF-8 lower boundary</dfn>
+ <dd>A byte, initially 0x80.
+ <dt><dfn>UTF-8 upper boundary</dfn>
+ <dd>A byte, initially 0xBF.
+</dl>
 
 <p><a>UTF-8</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and
- <a>UTF-8 bytes needed</a> is not 0, set
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>UTF-8 bytes needed</a> is not 0, then set
  <a>UTF-8 bytes needed</a> to 0 and return <a>error</a>.
 
  <li><p>If <var>byte</var> is <a>end-of-queue</a>, then return <a>finished</a>.
@@ -2195,11 +2202,9 @@ in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algori
    <dt>0xE0 to 0xEF
    <dd>
     <ol>
-     <li><p>If <var>byte</var> is 0xE0, set
-     <a>UTF-8 lower boundary</a> to 0xA0.
+     <li><p>If <var>byte</var> is 0xE0, then set <a>UTF-8 lower boundary</a> to 0xA0.
 
-     <li><p>If <var>byte</var> is 0xED, set
-     <a>UTF-8 upper boundary</a> to 0x9F.
+     <li><p>If <var>byte</var> is 0xED, then set <a>UTF-8 upper boundary</a> to 0x9F.
 
      <li><p>Set <a>UTF-8 bytes needed</a> to 2.
 
@@ -2212,11 +2217,9 @@ in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algori
    <dt>0xF0 to 0xF4
    <dd>
     <ol>
-     <li><p>If <var>byte</var> is 0xF0, set
-     <a>UTF-8 lower boundary</a> to 0x90.
+     <li><p>If <var>byte</var> is 0xF0, then set <a>UTF-8 lower boundary</a> to 0x90.
 
-     <li><p>If <var>byte</var> is 0xF4, set
-     <a>UTF-8 upper boundary</a> to 0x8F.
+     <li><p>If <var>byte</var> is 0xF4, then set <a>UTF-8 upper boundary</a> to 0x8F.
 
      <li><p>Set <a>UTF-8 bytes needed</a> to 3.
 
@@ -2438,8 +2441,14 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h4 id=gb18030-decoder dfn algorithm export>gb18030 decoder</h4>
 
-<p><a>gb18030</a>'s <a for=/>decoder</a> has an associated <dfn>gb18030 first</dfn>,
-<dfn>gb18030 second</dfn>, and <dfn>gb18030 third</dfn> (all initially 0x00).
+<p><a>gb18030</a>'s <a for=/>decoder</a> has an associated:
+
+<dl>
+ <dt><dfn>gb18030 first</dfn>
+ <dt><dfn>gb18030 second</dfn>
+ <dt><dfn>gb18030 third</dfn>
+ <dd>A byte, initially 0x00.
+</dl>
 
 <p><a>gb18030</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
@@ -2484,8 +2493,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
   <p>If <a>gb18030 second</a> is not 0x00:
 
   <ol>
-   <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, set
-   <a>gb18030 third</a> to <var>byte</var> and return <a>continue</a>.
+   <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, then set <a>gb18030 third</a>
+   to <var>byte</var> and return <a>continue</a>.
 
    <li><p><a>Restore</a> « <a>gb18030 second</a>, <var>byte</var> » to <var>ioQueue</var>, set
    <a>gb18030 first</a> and <a>gb18030 second</a> to 0x00, and return <a>error</a>.
@@ -2495,17 +2504,20 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
   <p>If <a>gb18030 first</a> is not 0x00:
 
   <ol>
-   <li><p>If <var>byte</var> is in the range 0x30 to 0x39, inclusive, set
-   <a>gb18030 second</a> to <var>byte</var> and return <a>continue</a>.
+   <li><p>If <var>byte</var> is in the range 0x30 to 0x39, inclusive, then set <a>gb18030 second</a>
+   to <var>byte</var> and return <a>continue</a>.
 
-   <li><p>Let <var>lead</var> be <a>gb18030 first</a>, let
-   <var>pointer</var> be null, and set <a>gb18030 first</a> to 0x00.
+   <li><p>Let <var>leading</var> be <a>gb18030 first</a>.
+
+   <li><p>Set <a>gb18030 first</a> to 0x00.
+
+   <li><p>Let <var>pointer</var> be null.
 
    <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F; otherwise 0x41.
 
-   <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or
-   0x80 to 0xFE, inclusive, set <var>pointer</var> to
-   (<var>lead</var> &minus; 0x81) × 190 + (<var>byte</var> &minus; <var>offset</var>).
+   <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or 0x80 to 0xFE, inclusive,
+   then set <var>pointer</var> to
+   (<var>leading</var> &minus; 0x81) × 190 + (<var>byte</var> &minus; <var>offset</var>).
 
    <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null; otherwise the
    <a>index code point</a> for <var>pointer</var> in <a>index gb18030</a>.
@@ -2533,8 +2545,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h4 id=gb18030-encoder dfn algorithm export>gb18030 encoder</h4>
 
-<p><a>gb18030</a>'s <a for=/>encoder</a> has an associated <dfn id=gbk-flag>is GBK</dfn>
-(initially false).
+<p><a>gb18030</a>'s <a for=/>encoder</a> has an associated <dfn id=gbk-flag>is GBK</dfn>, which is a
+boolean, initially false.
 
 <p><a>gb18030</a>'s <a for=/>encoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
 <var>codePoint</var>, runs these steps:
@@ -2548,8 +2560,8 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <li>
   <p>If <var>codePoint</var> is U+E5E5, then return <a>error</a> with <var>codePoint</var>.
 
-  <p class=note><a>Index gb18030</a> maps 0xA3 0xA0 to U+3000 rather than U+E5E5 for
-  compatibility with deployed content. Therefore it cannot roundtrip.
+  <p class=note><a>Index gb18030</a> maps 0xA3 0xA0 to U+3000 IDEOGRAPHIC SPACE rather than U+E5E5
+  for compatibility with deployed content. Therefore it cannot roundtrip.
 
  <li><p>If <a>is GBK</a> is true and <var>codePoint</var> is U+20AC (€), then return byte 0x80.
 
@@ -2627,15 +2639,15 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
   <p>If <var>pointer</var> is non-null:
 
   <ol>
-   <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
+   <li><p>Let <var>leading</var> be <var>pointer</var> / 190 + 0x81.
 
-   <li><p>Let <var>trail</var> be <var>pointer</var> % 190.
+   <li><p>Let <var>trailing</var> be <var>pointer</var> % 190.
 
-   <li><p>Let <var>offset</var> be 0x40 if <var>trail</var> is less than 0x3F,<!--0x7F-0x40-->
+   <li><p>Let <var>offset</var> be 0x40 if <var>trailing</var> is less than 0x3F,<!--0x7F-0x40-->
    otherwise 0x41.
 
-   <li><p>Return two bytes whose values are <var>lead</var> and
-   <var>trail</var> + <var>offset</var>.
+   <li><p>Return two bytes whose values are <var>leading</var> and
+   <var>trailing</var> + <var>offset</var>.
   </ol>
 
  <li><p>If <a>is GBK</a> is true, then return <a>error</a> with <var>codePoint</var>.
@@ -2674,35 +2686,35 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
 
 <h4 id=big5-decoder dfn algorithm export>Big5 decoder</h4>
 
-<p><a>Big5</a>'s <a for=/>decoder</a> has an associated
-<dfn>Big5 lead</dfn> (initially 0x00).
+<p><a>Big5</a>'s <a for=/>decoder</a> has an associated <dfn id=big5-lead>Big5 leading</dfn>, which
+is a byte, initially 0x00.
 
-<a>Big5</a>'s <a for=/>decoder</a>'s <a>handler</a>, given <var>ioQueue</var>
-and <var>byte</var>, runs these steps:
+<p><a>Big5</a>'s <a for=/>decoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
+<var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a> is not 0x00, then set
- <a>Big5 lead</a> to 0x00 and return <a>error</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 leading</a> is not 0x00, then set
+ <a>Big5 leading</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 lead</a> is 0x00, then return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Big5 leading</a> is 0x00, then return
  <a>finished</a>.
 
  <li>
-  <p>If <a>Big5 lead</a> is not 0x00:
+  <p>If <a>Big5 leading</a> is not 0x00:
 
   <ol>
-   <li><p>Let <var>lead</var> be <a>Big5 lead</a>.
+   <li><p>Let <var>leading</var> be <a>Big5 leading</a>.
 
-   <li><p>Set <a>Big5 lead</a> to 0x00.
+   <li><p>Set <a>Big5 leading</a> to 0x00.
 
    <li><p>Let <var>pointer</var> be null.
 
    <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F; otherwise 0x62.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
 
-   <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or
-   0xA1 to 0xFE, inclusive, set <var>pointer</var> to
-   (<var>lead</var> &minus; 0x81) × 157 + (<var>byte</var> &minus; <var>offset</var>).
+   <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or 0xA1 to 0xFE, inclusive,
+   then set <var>pointer</var> to
+   (<var>leading</var> &minus; 0x81) × 157 + (<var>byte</var> &minus; <var>offset</var>).
 
    <li>
     <p>If there is a row in the table below whose first column is <var>pointer</var>, then return
@@ -2736,7 +2748,7 @@ and <var>byte</var>, runs these steps:
  <var>byte</var>.
 
  <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, then set
- <a>Big5 lead</a> to <var>byte</var> and return <a>continue</a>.
+ <a>Big5 leading</a> to <var>byte</var> and return <a>continue</a>.
 
  <li><p>Return <a>error</a>.
 </ol>
@@ -2757,15 +2769,15 @@ and <var>byte</var>, runs these steps:
 
  <li><p>If <var>pointer</var> is null, then return <a>error</a> with <var>codePoint</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 157 + 0x81.
+ <li><p>Let <var>leading</var> be <var>pointer</var> / 157 + 0x81.
 
- <li><p>Let <var>trail</var> be <var>pointer</var> % 157.
+ <li><p>Let <var>trailing</var> be <var>pointer</var> % 157.
 
- <li><p>Let <var>offset</var> be 0x40 if <var>trail</var> is less than 0x3F,<!--0x7F-0x40-->
+ <li><p>Let <var>offset</var> be 0x40 if <var>trailing</var> is less than 0x3F,<!--0x7F-0x40-->
  otherwise 0x62.<!--0xA1-0x3F-->
 
- <li><p>Return two bytes whose values are <var>lead</var> and
- <var>trail</var> + <var>offset</var>.
+ <li><p>Return two bytes whose values are <var>leading</var> and
+ <var>trailing</var> + <var>offset</var>.
 </ol>
 
 
@@ -2777,42 +2789,47 @@ and <var>byte</var>, runs these steps:
 
 <h4 id=euc-jp-decoder dfn algorithm export>EUC-JP decoder</h4>
 
-<p><a>EUC-JP</a>'s <a for=/>decoder</a> has an associated
-<dfn id=euc-jp-jis0212-flag>EUC-JP jis0212</dfn> (initially false) and
-<dfn>EUC-JP lead</dfn> (initially 0x00).
+<p><a>EUC-JP</a>'s <a for=/>decoder</a> has an associated:
+
+<dl>
+ <dt><dfn id=euc-jp-jis0212-flag>EUC-JP jis0212</dfn>
+ <dd>A boolean, initially false.
+ <dt><dfn id=euc-jp-lead>EUC-JP leading</dfn>
+ <dd>A byte, initially 0x00.
+</dl>
 
 <p><a>EUC-JP</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-JP lead</a> is not 0x00, then set
- <a>EUC-JP lead</a> to 0x00 and return <a>error</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-JP leading</a> is not 0x00, then set
+ <a>EUC-JP leading</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-JP lead</a> is 0x00, then return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-JP leading</a> is 0x00, then return
  <a>finished</a>.
 
- <li><p>If <a>EUC-JP lead</a> is 0x8E and <var>byte</var> is
- in the range 0xA1 to 0xDF, inclusive, set <a>EUC-JP lead</a> to 0x00 and return
- a code point whose value is 0xFF61 &minus; 0xA1 + <var>byte</var>.
+ <li><p>If <a>EUC-JP leading</a> is 0x8E and <var>byte</var> is in the range 0xA1 to 0xDF,
+ inclusive, then set <a>EUC-JP leading</a> to 0x00 and return a code point whose value is
+ 0xFF61 &minus; 0xA1 + <var>byte</var>.
  <!-- Katakana; subtraction is done first to avoid upsetting compilers -->
 
- <li><p>If <a>EUC-JP lead</a> is 0x8F and <var>byte</var> is in the range
- 0xA1 to 0xFE, inclusive, set <a>EUC-JP jis0212</a> to true, set
- <a>EUC-JP lead</a> to <var>byte</var>, and return <a>continue</a>.
+ <li><p>If <a>EUC-JP leading</a> is 0x8F and <var>byte</var> is in the range 0xA1 to 0xFE,
+ inclusive, then set <a>EUC-JP jis0212</a> to true, set <a>EUC-JP leading</a> to <var>byte</var>,
+ and return <a>continue</a>.
 
  <li>
-  <p>If <a>EUC-JP lead</a> is not 0x00:
+  <p>If <a>EUC-JP leading</a> is not 0x00:
 
   <ol>
-   <li><p>Let <var>lead</var> be <a>EUC-JP lead</a>.
+   <li><p>Let <var>leading</var> be <a>EUC-JP leading</a>.
 
-   <li><p>Set <a>EUC-JP lead</a> to 0x00.
+   <li><p>Set <a>EUC-JP leading</a> to 0x00.
 
    <li><p>Let <var>codePoint</var> be null.
 
-   <li><p>If <var>lead</var> and <var>byte</var> are both in the range 0xA1 to 0xFE, inclusive, then
+   <li><p>If <var>leading</var> and <var>byte</var> are both in the range 0xA1 to 0xFE, inclusive, then
    set <var>codePoint</var> to the <a>index code point</a> for
-   (<var>lead</var> &minus; 0xA1) × 94 + <var>byte</var> &minus; 0xA1
+   (<var>leading</var> &minus; 0xA1) × 94 + <var>byte</var> &minus; 0xA1
    in <a>index jis0208</a> if <a>EUC-JP jis0212</a> is false and in
    <a>index jis0212</a> otherwise.
 
@@ -2831,7 +2848,7 @@ and <var>byte</var>, runs these steps:
  <var>byte</var>.
 
  <li><p>If <var>byte</var> is 0x8E, 0x8F, or in the range 0xA1 to 0xFE, inclusive, then set
- <a>EUC-JP lead</a> to <var>byte</var> and return <a>continue</a>.
+ <a>EUC-JP leading</a> to <var>byte</var> and return <a>continue</a>.
 
  <li><p>Return <a>error</a>.
 </ol>
@@ -2852,8 +2869,8 @@ and <var>byte</var>, runs these steps:
 
  <li><p>If <var>codePoint</var> is U+203E (‾), then return byte 0x7E.
 
- <li><p>If <var>codePoint</var> is in the range U+FF61 to U+FF9F, inclusive, then return two bytes
- whose values are 0x8E and <var>codePoint</var> &minus; 0xFF61 + 0xA1.
+ <li><p>If <var>codePoint</var> is in the range U+FF61 (｡) to U+FF9F (ﾟ), inclusive, then return two
+ bytes whose values are 0x8E and <var>codePoint</var> &minus; 0xFF61 + 0xA1.
 
  <li><p>If <var>codePoint</var> is U+2212 (−), then set it to U+FF0D (－).
 
@@ -2866,11 +2883,11 @@ and <var>byte</var>, runs these steps:
 
  <li><p>If <var>pointer</var> is null, then return <a>error</a> with <var>codePoint</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0xA1.
+ <li><p>Let <var>leading</var> be <var>pointer</var> / 94 + 0xA1.
 
- <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0xA1.
+ <li><p>Let <var>trailing</var> be <var>pointer</var> % 94 + 0xA1.
 
- <li><p>Return two bytes whose values are <var>lead</var> and <var>trail</var>.
+ <li><p>Return two bytes whose values are <var>leading</var> and <var>trailing</var>.
 </ol>
 
 
@@ -2883,13 +2900,18 @@ and <var>byte</var>, runs these steps:
 
 <h4 id=iso-2022-jp-decoder dfn algorithm export>ISO-2022-JP decoder</h4>
 
-<p><a>ISO-2022-JP</a>'s <a for=/>decoder</a> has an associated
-<dfn>ISO-2022-JP decoder state</dfn> (initially
-<a lt="ISO-2022-JP decoder ASCII">ASCII</a>),
-<dfn>ISO-2022-JP decoder output state</dfn> (initially
-<a lt="ISO-2022-JP decoder ASCII">ASCII</a>),
-<dfn>ISO-2022-JP lead</dfn> (initially 0x00), and
-<dfn id=iso-2022-jp-output-flag>ISO-2022-JP output</dfn> (initially false).
+<p><a>ISO-2022-JP</a>'s <a for=/>decoder</a> has an associated:
+
+<dl>
+ <dt><dfn>ISO-2022-JP decoder state</dfn>
+ <dd>A state, initially <a lt="ISO-2022-JP decoder ASCII">ASCII</a>.
+ <dt><dfn>ISO-2022-JP decoder output state</dfn>
+ <dd>A state, initially <a lt="ISO-2022-JP decoder ASCII">ASCII</a>.
+ <dt><dfn id=iso-2022-jp-lead>ISO-2022-JP leading</dfn>
+ <dd>A byte, initially 0x00.
+ <dt><dfn id=iso-2022-jp-output-flag>ISO-2022-JP output</dfn>
+ <dd>A boolean, initially false.
+</dl>
 
 <p><a>ISO-2022-JP</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>byte</var>, runs these steps, switching on
@@ -2965,7 +2987,7 @@ and <var>byte</var>, runs these steps:
    <dd><p>Set <a>ISO-2022-JP output</a> to false and return <a>error</a>.
   </dl>
 
- <dt><dfn lt="ISO-2022-JP decoder lead byte">Lead byte</dfn>
+ <dt><dfn id=iso-2022-jp-decoder-lead-byte lt="ISO-2022-JP decoder leading byte">Leading byte</dfn>
  <dd>
   <p>Based on <var>byte</var>:
   <dl class=switch>
@@ -2975,11 +2997,9 @@ and <var>byte</var>, runs these steps:
    <a>continue</a>.
 
    <dt>0x21 to 0x7E
-   <dd><p>Set <a>ISO-2022-JP output</a> to false,
-   <a>ISO-2022-JP lead</a> to <var>byte</var>,
-   <a>ISO-2022-JP decoder state</a> to
-   <a lt="ISO-2022-JP decoder trail byte">trail byte</a>, and return
-   <a>continue</a>.
+   <dd><p>Set <a>ISO-2022-JP output</a> to false, <a>ISO-2022-JP leading</a> to <var>byte</var>,
+   <a>ISO-2022-JP decoder state</a> to <a lt="ISO-2022-JP decoder trailing byte">trailing byte</a>,
+   and return <a>continue</a>.
 
    <dt><a>end-of-queue</a>
    <dd><p>Return <a>finished</a>.
@@ -2988,24 +3008,23 @@ and <var>byte</var>, runs these steps:
    <dd><p>Set <a>ISO-2022-JP output</a> to false and return <a>error</a>.
   </dl>
 
- <dt><dfn lt="ISO-2022-JP decoder trail byte">Trail byte</dfn>
+ <dt><dfn id=iso-2022-jp-decoder-trail-byte lt="ISO-2022-JP decoder trailing byte">Trailing byte</dfn>
  <dd>
   <p>Based on <var>byte</var>:
   <dl class=switch>
    <dt>0x1B
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
-   <a lt="ISO-2022-JP decoder escape start">escape start</a> and return
-   <a>error</a>.
-   <!-- ISO-2022-JP decoder output state is still lead byte -->
+   <a lt="ISO-2022-JP decoder escape start">escape start</a> and return <a>error</a>.
+   <!-- ISO-2022-JP decoder output state is still leading byte -->
 
    <dt>0x21 to 0x7E
    <dd>
     <ol>
      <li><p>Set the <a>ISO-2022-JP decoder state</a> to
-     <a lt="ISO-2022-JP decoder lead byte">lead byte</a>.
+     <a lt="ISO-2022-JP decoder leading byte">leading byte</a>.
 
      <li><p>Let <var>pointer</var> be
-     (<a>ISO-2022-JP lead</a> &minus; 0x21) × 94 + <var>byte</var> &minus; 0x21.
+     (<a>ISO-2022-JP leading</a> &minus; 0x21) × 94 + <var>byte</var> &minus; 0x21.
 
      <li><p>Let <var>codePoint</var> be the <a>index code point</a> for
      <var>pointer</var> in <a>index jis0208</a>.
@@ -3017,52 +3036,48 @@ and <var>byte</var>, runs these steps:
 
    <dt><a>end-of-queue</a>
    <dd><p>Set the <a>ISO-2022-JP decoder state</a> to
-   <a lt="ISO-2022-JP decoder lead byte">lead byte</a> and return <a>error</a>.
+   <a lt="ISO-2022-JP decoder leading byte">leading byte</a> and return <a>error</a>.
 
    <dt>Otherwise
    <dd><p>Set <a>ISO-2022-JP decoder state</a> to
-   <a lt="ISO-2022-JP decoder lead byte">lead byte</a> and return
+   <a lt="ISO-2022-JP decoder leading byte">leading byte</a> and return
    <a>error</a>.
-   <!-- ISO-2022-JP decoder output state is still lead byte -->
+   <!-- ISO-2022-JP decoder output state is still leading byte -->
   </dl>
 
  <dt><dfn lt="ISO-2022-JP decoder escape start">Escape start</dfn>
  <dd>
   <ol>
-   <li><p>If <var>byte</var> is either <!--$-->0x24 or <!--(-->0x28, set
-   <a>ISO-2022-JP lead</a> to <var>byte</var>,
-   <a>ISO-2022-JP decoder state</a> to
-   <a lt="ISO-2022-JP decoder escape">escape</a>, and return
-   <a>continue</a>.
+   <li><p>If <var>byte</var> is either <!--$-->0x24 or <!--(-->0x28, then set
+   <a>ISO-2022-JP leading</a> to <var>byte</var>, <a>ISO-2022-JP decoder state</a> to
+   <a lt="ISO-2022-JP decoder escape">escape</a>, and return <a>continue</a>.
 
    <li><p>If <var>byte</var> is not <a>end-of-queue</a>, then <a>restore</a>
    <var>byte</var> to <var>ioQueue</var>.
 
-   <li><p>Set <a>ISO-2022-JP output</a> to false,
-   <a>ISO-2022-JP decoder state</a> to
+   <li><p>Set <a>ISO-2022-JP output</a> to false, <a>ISO-2022-JP decoder state</a> to
    <a>ISO-2022-JP decoder output state</a>, and return <a>error</a>.
   </ol>
 
  <dt><dfn lt="ISO-2022-JP decoder escape">Escape</dfn>
  <dd>
   <ol>
-   <li><p>Let <var>lead</var> be <a>ISO-2022-JP lead</a> and set
-   <a>ISO-2022-JP lead</a> to 0x00.
+   <li><p>Let <var>leading</var> be <a>ISO-2022-JP leading</a> and set
+   <a>ISO-2022-JP leading</a> to 0x00.
 
    <li><p>Let <var>state</var> be null.
 
-   <li><p>If <var>lead</var> is 0x28 and <var>byte</var> is 0x42<!--B-->, set
+   <li><p>If <var>leading</var> is 0x28 and <var>byte</var> is 0x42<!--B-->, then set
    <var>state</var> to <a lt="ISO-2022-JP decoder ASCII">ASCII</a>.
 
-   <li><p>If <var>lead</var> is 0x28 and <var>byte</var> is 0x4A<!--J-->, set
+   <li><p>If <var>leading</var> is 0x28 and <var>byte</var> is 0x4A<!--J-->, then set
    <var>state</var> to <a lt="ISO-2022-JP decoder Roman">Roman</a>.
 
-   <li><p>If <var>lead</var> is 0x28 and <var>byte</var> is 0x49<!--I-->, set
+   <li><p>If <var>leading</var> is 0x28 and <var>byte</var> is 0x49<!--I-->, then set
    <var>state</var> to <a lt="ISO-2022-JP decoder katakana">katakana</a>.
 
-   <li><p>If <var>lead</var> is 0x24 and <var>byte</var> is either
-   0x40<!--@--> or 0x42<!--B-->, set <var>state</var> to
-   <a lt="ISO-2022-JP decoder lead byte">lead byte</a>.
+   <li><p>If <var>leading</var> is 0x24 and <var>byte</var> is either 0x40<!--@--> or 0x42<!--B-->,
+   then set <var>state</var> to <a lt="ISO-2022-JP decoder leading byte">leading byte</a>.
 
    <li>
     <p>If <var>state</var> is non-null:
@@ -3079,8 +3094,8 @@ and <var>byte</var>, runs these steps:
      <a>error</a> otherwise.
     </ol>
 
-   <li><p>If <var>byte</var> is <a>end-of-queue</a>, then <a>restore</a> <var>lead</var> to
-   <var>ioQueue</var>; otherwise, <a>restore</a> « <var>lead</var>, <var>byte</var> » to
+   <li><p>If <var>byte</var> is <a>end-of-queue</a>, then <a>restore</a> <var>leading</var> to
+   <var>ioQueue</var>; otherwise, <a>restore</a> « <var>leading</var>, <var>byte</var> » to
    <var>ioQueue</var>.
 
    <li><p>Set <a>ISO-2022-JP output</a> to false,
@@ -3097,16 +3112,16 @@ and <var>byte</var>, runs these steps:
  multiple outputs can result in an <a>error</a> when run through the corresponding
  <a for=/>decoder</a>.
 
- <p class=example id=example-iso-2022-jp-encoder-oddity>Encoding U+00A5 gives 0x1B 0x28 0x4A 0x5C
- 0x1B 0x28 0x42. Doing that twice, concatenating the results, and then decoding yields U+00A5 U+FFFD
- U+00A5.
+ <p class=example id=example-iso-2022-jp-encoder-oddity>Encoding U+00A5 (¥) gives 0x1B 0x28 0x4A
+ 0x5C 0x1B 0x28 0x42. Doing that twice, concatenating the results, and then decoding yields U+00A5
+ U+FFFD U+00A5.
 </div>
 
 <p><a>ISO-2022-JP</a>'s <a for=/>encoder</a> has an associated
 <dfn>ISO-2022-JP encoder state</dfn> which is <dfn lt="ISO-2022-JP encoder ASCII">ASCII</dfn>,
 <dfn lt="ISO-2022-JP encoder Roman">Roman</dfn>, or
-<dfn lt="ISO-2022-JP encoder jis0208">jis0208</dfn> (initially
-<a lt="ISO-2022-JP encoder ASCII">ASCII</a>).
+<dfn lt="ISO-2022-JP encoder jis0208">jis0208</dfn>, initially
+<a lt="ISO-2022-JP encoder ASCII">ASCII</a>.
 
 <p><a>ISO-2022-JP</a>'s <a for=/>encoder</a>'s <a>handler</a>, given
 <var>ioQueue</var> and <var>codePoint</var>, runs these steps:
@@ -3157,8 +3172,8 @@ and <var>byte</var>, runs these steps:
 
  <li><p>If <var>codePoint</var> is U+2212 (−), then set it to U+FF0D (－).
 
- <li><p>If <var>codePoint</var> is in the range U+FF61 to U+FF9F, inclusive, then set it to the
- <a>index code point</a> for <var>codePoint</var> &minus; 0xFF61 in
+ <li><p>If <var>codePoint</var> is in the range U+FF61 (｡) to U+FF9F (ﾟ), inclusive, then set it to
+ the <a>index code point</a> for <var>codePoint</var> &minus; 0xFF61 in
  <a>index ISO-2022-JP katakana</a>.
 
  <li>
@@ -3180,18 +3195,16 @@ and <var>byte</var>, runs these steps:
    <li><p>Return <a>error</a> with <var>codePoint</var>.
   </ol>
 
- <li><p>If <a>ISO-2022-JP encoder state</a> is not
- <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
- <a>restore</a> <var>codePoint</var> to
- <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
- <a lt="ISO-2022-JP encoder jis0208">jis0208</a>, and return three bytes
- 0x1B 0x24 0x42.
+ <li><p>If <a>ISO-2022-JP encoder state</a> is not <a lt="ISO-2022-JP encoder jis0208">jis0208</a>,
+ then <a>restore</a> <var>codePoint</var> to <var>ioQueue</var>, set
+ <a>ISO-2022-JP encoder state</a> to <a lt="ISO-2022-JP encoder jis0208">jis0208</a>, and return
+ three bytes 0x1B 0x24 0x42.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 94 + 0x21.
+ <li><p>Let <var>leading</var> be <var>pointer</var> / 94 + 0x21.
 
- <li><p>Let <var>trail</var> be <var>pointer</var> % 94 + 0x21.
+ <li><p>Let <var>trailing</var> be <var>pointer</var> % 94 + 0x21.
 
- <li><p>Return two bytes whose values are <var>lead</var> and <var>trail</var>.
+ <li><p>Return two bytes whose values are <var>leading</var> and <var>trailing</var>.
 </ol>
 
 
@@ -3200,35 +3213,36 @@ and <var>byte</var>, runs these steps:
 <h4 id=shift_jis-decoder dfn algorithm export>Shift_JIS decoder</h4>
 
 <p><a>Shift_JIS</a>'s <a for=/>decoder</a> has an associated
-<dfn>Shift_JIS lead</dfn> (initially 0x00).
+<dfn id=shift_jis-lead>Shift_JIS leading</dfn>, which is a byte, initially 0x00.
 
-<p><a>Shift_JIS</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>byte</var>, runs these steps:
+<p><a>Shift_JIS</a>'s <a for=/>decoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
+<var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Shift_JIS lead</a> is not 0x00, then set
- <a>Shift_JIS lead</a> to 0x00 and return <a>error</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Shift_JIS leading</a> is not 0x00, then set
+ <a>Shift_JIS leading</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Shift_JIS lead</a> is 0x00, then return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>Shift_JIS leading</a> is 0x00, then return
  <a>finished</a>.
 
  <li>
-  <p>If <a>Shift_JIS lead</a> is not 0x00:
+  <p>If <a>Shift_JIS leading</a> is not 0x00:
 
   <ol>
-   <li><p>Let <var>lead</var> be <a>Shift_JIS lead</a>.
+   <li><p>Let <var>leading</var> be <a>Shift_JIS leading</a>.
 
-   <li><p>Set <a>Shift_JIS lead</a> to 0x00.
+   <li><p>Set <a>Shift_JIS leading</a> to 0x00.
 
    <li><p>Let <var>pointer</var> be null.
 
    <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F; otherwise 0x41.
 
-   <li><p>Let <var>lead offset</var> be 0x81 if <var>lead</var> is less than 0xA0; otherwise 0xC1.
+   <li><p>Let <var>leadingOffset</var> be 0x81 if <var>leading</var> is less than 0xA0; otherwise
+   0xC1.
 
    <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or 0x80 to 0xFC, inclusive,
    then set <var>pointer</var> to
-   (<var>lead</var> &minus; <var>lead offset</var>) × 188 + <var>byte</var> &minus; <var>offset</var>.
+   (<var>leading</var> &minus; <var>leadingOffset</var>) × 188 + <var>byte</var> &minus; <var>offset</var>.
 
    <li>
     <p>If <var>pointer</var> is in the range 8836 to 10715, inclusive, then return a code point
@@ -3259,7 +3273,7 @@ and <var>byte</var>, runs these steps:
  <!-- Katakana; subtraction is done first to avoid upsetting compilers -->
 
  <li><p>If <var>byte</var> is in the range 0x81 to 0x9F, inclusive, or 0xE0 to 0xFC, inclusive, then
- set <a>Shift_JIS lead</a> to <var>byte</var> and return <a>continue</a>.
+ set <a>Shift_JIS leading</a> to <var>byte</var> and return <a>continue</a>.
 
  <li><p>Return <a>error</a>.
 </ol>
@@ -3280,8 +3294,8 @@ and <var>byte</var>, runs these steps:
 
  <li><p>If <var>codePoint</var> is U+203E (‾), then return byte 0x7E.
 
- <li><p>If <var>codePoint</var> is in the range U+FF61 to U+FF9F, inclusive, then return a byte
- whose value is <var>codePoint</var> &minus; 0xFF61 + 0xA1.
+ <li><p>If <var>codePoint</var> is in the range U+FF61 (｡) to U+FF9F (ﾟ), inclusive, then return a
+ byte whose value is <var>codePoint</var> &minus; 0xFF61 + 0xA1.
 
  <li><p>If <var>codePoint</var> is U+2212 (−), then set it to U+FF0D (－).
 
@@ -3289,17 +3303,17 @@ and <var>byte</var>, runs these steps:
 
  <li><p>If <var>pointer</var> is null, then return <a>error</a> with <var>codePoint</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 188.
+ <li><p>Let <var>leading</var> be <var>pointer</var> / 188.
 
- <li><p>Let <var>lead offset</var> be 0x81 if <var>lead</var> is less than 0x1F; otherwise 0xC1.
+ <li><p>Let <var>leadingOffset</var> be 0x81 if <var>leading</var> is less than 0x1F; otherwise 0xC1.
  <!-- 0xA0-0x81 -->
 
- <li><p>Let <var>trail</var> be <var>pointer</var> % 188.
+ <li><p>Let <var>trailing</var> be <var>pointer</var> % 188.
 
- <li><p>Let <var>offset</var> be 0x40 if <var>trail</var> is less than 0x3F; otherwise 0x41.
+ <li><p>Let <var>offset</var> be 0x40 if <var>trailing</var> is less than 0x3F; otherwise 0x41.
 
- <li><p>Return two bytes whose values are <var>lead</var> + <var>lead offset</var> and
- <var>trail</var> + <var>offset</var>.
+ <li><p>Return two bytes whose values are <var>leading</var> + <var>leadingOffset</var> and
+ <var>trailing</var> + <var>offset</var>.
 </ol>
 
 
@@ -3310,32 +3324,31 @@ and <var>byte</var>, runs these steps:
 
 <h4 id=euc-kr-decoder dfn algorithm export>EUC-KR decoder</h4>
 
-<p><a>EUC-KR</a>'s <a for=/>decoder</a> has an associated
-<dfn>EUC-KR lead</dfn> (initially 0x00).
+<p><a>EUC-KR</a>'s <a for=/>decoder</a> has an associated <dfn id=euc-kr-lead>EUC-KR leading</dfn>,
+which is a byte, initially 0x00.
 
-<p><a>EUC-KR</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
-<var>ioQueue</var> and <var>byte</var>, runs these steps:
+<p><a>EUC-KR</a>'s <a for=/>decoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
+<var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-KR lead</a> is not 0x00, then set
- <a>EUC-KR lead</a> to 0x00 and return <a>error</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-KR leading</a> is not 0x00, then set
+ <a>EUC-KR leading</a> to 0x00 and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-KR lead</a> is 0x00, then return
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>EUC-KR leading</a> is 0x00, then return
  <a>finished</a>.
 
  <li>
-  <p>If <a>EUC-KR lead</a> is not 0x00:
+  <p>If <a>EUC-KR leading</a> is not 0x00:
 
   <ol>
-   <li><p>Let <var>lead</var> be <a>EUC-KR lead</a>.
+   <li><p>Let <var>leading</var> be <a>EUC-KR leading</a>.
 
-   <li><p>Set <a>EUC-KR lead</a> to 0x00.
+   <li><p>Set <a>EUC-KR leading</a> to 0x00.
 
    <li><p>Let <var>pointer</var> be null.
 
-   <li><p>If <var>byte</var> is in the range  0x41 to 0xFE, inclusive, set
-   <var>pointer</var> to
-   (<var>lead</var> &minus; 0x81) × 190 + (<var>byte</var> &minus; 0x41).
+   <li><p>If <var>byte</var> is in the range  0x41 to 0xFE, inclusive, then set <var>pointer</var>
+   to (<var>leading</var> &minus; 0x81) × 190 + (<var>byte</var> &minus; 0x41).
 
    <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null; otherwise the
    <a>index code point</a> for <var>pointer</var> in <a>index EUC-KR</a>.
@@ -3352,7 +3365,7 @@ and <var>byte</var>, runs these steps:
  <li><p>If <var>byte</var> is an <a>ASCII byte</a>, then return a code point whose value is
  <var>byte</var>.
 
- <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, then set <a>EUC-KR lead</a> to
+ <li><p>If <var>byte</var> is in the range 0x81 to 0xFE, inclusive, then set <a>EUC-KR leading</a> to
  <var>byte</var> and return <a>continue</a>.
 
  <li><p>Return <a>error</a>.
@@ -3375,11 +3388,11 @@ and <var>byte</var>, runs these steps:
 
  <li><p>If <var>pointer</var> is null, then return <a>error</a> with <var>codePoint</var>.
 
- <li><p>Let <var>lead</var> be <var>pointer</var> / 190 + 0x81.
+ <li><p>Let <var>leading</var> be <var>pointer</var> / 190 + 0x81.
 
- <li><p>Let <var>trail</var> be <var>pointer</var> % 190 + 0x41.
+ <li><p>Let <var>trailing</var> be <var>pointer</var> % 190 + 0x41.
 
- <li><p>Return two bytes whose values are <var>lead</var> and <var>trail</var>.
+ <li><p>Return two bytes whose values are <var>leading</var> and <var>trailing</var>.
 </ol>
 
 
@@ -3396,7 +3409,8 @@ the server and the client.
 <h4 id=replacement-decoder dfn algorithm export>replacement decoder</h4>
 
 <p><a>replacement</a>'s <a for=/>decoder</a> has an associated
-<dfn id=replacement-error-returned-flag>replacement error returned</dfn> (initially false).
+<dfn id=replacement-error-returned-flag>replacement error returned</dfn>, which is a boolean,
+initially false.
 
 <p><a>replacement</a>'s <a for=/>decoder</a>'s <a>handler</a>, given <var ignore>unused</var> and
 <var>byte</var>, runs these steps:
@@ -3422,36 +3436,42 @@ the server and the client.
 in deployed content. Therefore it is not part of the <a>shared UTF-16 decoder</a> algorithm, but
 rather the <a>decode</a> algorithm.
 
-<p><a>shared UTF-16 decoder</a> has an associated <dfn>UTF-16 lead byte</dfn> and
-<dfn id=utf-16-lead-surrogate>UTF-16 leading surrogate</dfn> (both initially null), and
-<dfn id=utf-16be-decoder-flag>is UTF-16BE decoder</dfn> (initially false).
+<p><a>shared UTF-16 decoder</a> has an associated:
+
+<dl>
+ <dt><dfn id=utf-16-lead-byte>UTF-16 leading byte</dfn>
+ <dd>Null or a byte, initially null.
+ <dt><dfn id=utf-16-lead-surrogate>UTF-16 leading surrogate</dfn>
+ <dd>Null or a <a for=/>leading surrogate</a>, initially null.
+ <dt><dfn id=utf-16be-decoder-flag>is UTF-16BE decoder</dfn>
+ <dd>A boolean, initially false.
+</dl>
 
 <p><a>shared UTF-16 decoder</a>'s <a>handler</a>, given <var>ioQueue</var> and
 <var>byte</var>, runs these steps:
 
 <ol>
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and either
- <a>UTF-16 lead byte</a> or <a>UTF-16 leading surrogate</a> is non-null, set
- <a>UTF-16 lead byte</a> and <a>UTF-16 leading surrogate</a> to null, and return
- <a>error</a>.
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and either <a>UTF-16 leading byte</a> or
+ <a>UTF-16 leading surrogate</a> is non-null, then set <a>UTF-16 leading byte</a> and
+ <a>UTF-16 leading surrogate</a> to null, and return <a>error</a>.
 
- <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>UTF-16 lead byte</a> and
+ <li><p>If <var>byte</var> is <a>end-of-queue</a> and <a>UTF-16 leading byte</a> and
  <a>UTF-16 leading surrogate</a> are null, then return <a>finished</a>.
 
- <li><p>If <a>UTF-16 lead byte</a> is null, then set <a>UTF-16 lead byte</a> to <var>byte</var> and
- return <a>continue</a>.
+ <li><p>If <a>UTF-16 leading byte</a> is null, then set <a>UTF-16 leading byte</a> to
+ <var>byte</var> and return <a>continue</a>.
 
  <li>
   <p>Let <var>codeUnit</var> be the result of:
 
   <dl class=switch>
    <dt><a>is UTF-16BE decoder</a> is true
-   <dd><p>(<a>UTF-16 lead byte</a> &lt;&lt; 8) + <var>byte</var>.
+   <dd><p>(<a>UTF-16 leading byte</a> &lt;&lt; 8) + <var>byte</var>.
    <dt><a>is UTF-16BE decoder</a> is false
-   <dd><p>(<var>byte</var> &lt;&lt; 8) + <a>UTF-16 lead byte</a>.
+   <dd><p>(<var>byte</var> &lt;&lt; 8) + <a>UTF-16 leading byte</a>.
   </dl>
 
-  <p>Then set <a>UTF-16 lead byte</a> to null.
+ <li><p>Set <a>UTF-16 leading byte</a> to null.
 
  <li>
   <p>If <a>UTF-16 leading surrogate</a> is non-null:
