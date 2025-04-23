@@ -46,8 +46,8 @@ specification does not provide a mechanism for extending any aspect of encodings
 encoding in use, or on the way a given encoding is to be implemented. For instance, an attack was
 reported in 2011 where a <a>Shift_JIS</a> lead byte 0x82 was used to “mask” a 0x22 trail byte in a
 JSON resource of which an attacker could control some field. The producer did not see the problem
-even though this is an illegal byte combination. The consumer decoded it as a single U+FFFD and
-therefore changed the overall interpretation as U+0022 is an important delimiter. Decoders of
+even though this is an illegal byte combination. The consumer decoded it as a single U+FFFD (�) and
+therefore changed the overall interpretation as U+0022 (") is an important delimiter. Decoders of
 encodings that use multiple bytes for scalar values now require that in case of an illegal byte
 combination, a scalar value in the range U+0000 to U+007F, inclusive, cannot be “masked”. For the
 aforementioned sequence the output would be U+FFFD U+0022. (As an unfortunate exception to this, the
@@ -786,9 +786,9 @@ duplicated.
 <a for=/>decoder</a> and one for its <a for=/>encoder</a>.
 
 <p>To find the pointers and their corresponding code points in an <a>index</a>,
-let <var>lines</var> be the result of splitting the resource's contents on U+000A.
-Then remove each item in <var>lines</var> that is the empty string or starts with U+0023.
-Then the pointers and their corresponding code points are found by splitting each item in <var>lines</var> on U+0009.
+let <var>lines</var> be the result of splitting the resource's contents on U+000A LF.
+Then remove each item in <var>lines</var> that is the empty string or starts with U+0023 (#).
+Then the pointers and their corresponding code points are found by splitting each item in <var>lines</var> on U+0009 TAB.
 The first subitem is the pointer (as a decimal number) and the second is the corresponding code point (as a hexadecimal number).
 Other subitems are not relevant.
 
@@ -1355,7 +1355,7 @@ interface mixin TextDecoderCommon {
     <ol>
      <li><p>Set <var>decoder</var>'s <a for=TextDecoderCommon>BOM seen</a> to true.
 
-     <li><p>If <var>item</var> is U+FEFF, then <a for=iteration>continue</a>.
+     <li><p>If <var>item</var> is U+FEFF BOM, then <a for=iteration>continue</a>.
     </ol>
 
    <li><p>Append <var>item</var> to <var>output</var>.
@@ -2012,7 +2012,7 @@ constructor steps are:
  <p class=note>{{DOMString}}, as well as an <a for=/>I/O queue</a> of code units rather than scalar
  values, are used here so that a surrogate pair that is split between chunks can be reassembled into
  the appropriate scalar value. The behavior is otherwise identical to {{USVString}}. In particular,
- lone surrogates will be replaced with U+FFFD.
+ lone surrogates will be replaced with U+FFFD (�).
 
  <li><p>Let <var>output</var> be the <a for=/>I/O queue</a> of bytes « <a>end-of-queue</a> ».
 
@@ -2072,13 +2072,13 @@ constructor steps are:
 
    <li><p><a>Restore</a> <var>item</var> to <var>input</var>.
 
-   <li><p>Return U+FFFD.
+   <li><p>Return U+FFFD (�).
   </ol>
 
  <li><p>If <var>item</var> is a <a for=/>leading surrogate</a>, then set <var>encoder</var>'s
  <a for=TextEncoderStream>leading surrogate</a> to <var>item</var> and return <a>continue</a>.
 
- <li><p>If <var>item</var> is a <a for=/>trailing surrogate</a>, then return U+FFFD.
+ <li><p>If <var>item</var> is a <a for=/>trailing surrogate</a>, then return U+FFFD (�).
 
  <li><p>Return <var>item</var>.
 </ol>
@@ -2810,14 +2810,14 @@ and <var>byte</var>, runs these steps:
  <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
  <var>codePoint</var>.
 
- <li><p>If <var>codePoint</var> is U+00A5, then return byte 0x5C.
+ <li><p>If <var>codePoint</var> is U+00A5 (¥), then return byte 0x5C.
 
- <li><p>If <var>codePoint</var> is U+203E, then return byte 0x7E.
+ <li><p>If <var>codePoint</var> is U+203E (‾), then return byte 0x7E.
 
  <li><p>If <var>codePoint</var> is in the range U+FF61 to U+FF9F, inclusive, then return two bytes
  whose values are 0x8E and <var>codePoint</var> &minus; 0xFF61 + 0xA1.
 
- <li><p>If <var>codePoint</var> is U+2212, then set it to U+FF0D.
+ <li><p>If <var>codePoint</var> is U+2212 (−), then set it to U+FF0D (－).
 
  <li>
   <p>Let <var>pointer</var> be the <a>index pointer</a> for <var>codePoint</var> in
@@ -2890,10 +2890,10 @@ and <var>byte</var>, runs these steps:
    <a>continue</a>.
 
    <dt>0x5C
-   <dd><p>Set <a>ISO-2022-JP output</a> to false and return code point U+00A5.
+   <dd><p>Set <a>ISO-2022-JP output</a> to false and return code point U+00A5 (¥).
 
    <dt>0x7E
-   <dd><p>Set <a>ISO-2022-JP output</a> to false and return code point U+203E.
+   <dd><p>Set <a>ISO-2022-JP output</a> to false and return code point U+203E (‾).
 
    <dt>0x00 to 0x7F, excluding 0x0E, 0x0F, 0x1B, 0x5C, and 0x7E
    <dd><p>Set <a>ISO-2022-JP output</a> to false and return a code point whose
@@ -3084,9 +3084,9 @@ and <var>byte</var>, runs these steps:
  <li>
   <p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder ASCII">ASCII</a> or
   <a lt="ISO-2022-JP encoder Roman">Roman</a>, and <var>codePoint</var> is U+000E, U+000F, or
-  U+001B, then return <a>error</a> with U+FFFD.
+  U+001B, then return <a>error</a> with U+FFFD (�).
 
-  <p class=note>This returns U+FFFD rather than <var>codePoint</var> to prevent attacks.
+  <p class=note>This returns U+FFFD (�) rather than <var>codePoint</var> to prevent attacks.
   <!-- https://github.com/whatwg/encoding/issues/15 -->
 
  <li><p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder ASCII">ASCII</a> and
@@ -3095,16 +3095,16 @@ and <var>byte</var>, runs these steps:
 
  <li>
   <p>If <a>ISO-2022-JP encoder state</a> is <a lt="ISO-2022-JP encoder Roman">Roman</a> and
-  <var>codePoint</var> is an <a>ASCII code point</a>, excluding U+005C and U+007E, or is U+00A5 or
-  U+203E:
+  <var>codePoint</var> is an <a>ASCII code point</a>, excluding U+005C (\) and U+007E (~), or is
+  U+00A5 (¥) or U+203E (‾):
 
   <ol>
    <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, then return a byte whose value is
    <var>codePoint</var>.
 
-   <li><p>If <var>codePoint</var> is U+00A5, then return byte 0x5C.
+   <li><p>If <var>codePoint</var> is U+00A5 (¥), then return byte 0x5C.
 
-   <li><p>If <var>codePoint</var> is U+203E, then return byte 0x7E.
+   <li><p>If <var>codePoint</var> is U+203E (‾), then return byte 0x7E.
   </ol>
 
  <li><p>If <var>codePoint</var> is an <a>ASCII code point</a>, and <a>ISO-2022-JP encoder state</a>
@@ -3112,12 +3112,12 @@ and <var>byte</var>, runs these steps:
  <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder ASCII">ASCII</a>, and return three bytes 0x1B 0x28 0x42.
 
- <li><p>If <var>codePoint</var> is either U+00A5 or U+203E, and <a>ISO-2022-JP encoder state</a> is
- not <a lt="ISO-2022-JP encoder Roman">Roman</a>, then <a>restore</a> <var>codePoint</var> to
- <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
+ <li><p>If <var>codePoint</var> is either U+00A5 (¥) or U+203E (‾), and
+ <a>ISO-2022-JP encoder state</a> is not <a lt="ISO-2022-JP encoder Roman">Roman</a>, then
+ <a>restore</a> <var>codePoint</var> to <var>ioQueue</var>, set <a>ISO-2022-JP encoder state</a> to
  <a lt="ISO-2022-JP encoder Roman">Roman</a>, and return three bytes 0x1B 0x28 0x4A.
 
- <li><p>If <var>codePoint</var> is U+2212, then set it to U+FF0D.
+ <li><p>If <var>codePoint</var> is U+2212 (−), then set it to U+FF0D (－).
 
  <li><p>If <var>codePoint</var> is in the range U+FF61 to U+FF9F, inclusive, then set it to the
  <a>index code point</a> for <var>codePoint</var> &minus; 0xFF61 in
@@ -3238,14 +3238,14 @@ and <var>byte</var>, runs these steps:
  <li><p>If <var>codePoint</var> is an <a>ASCII code point</a> or U+0080, then return a byte whose
  value is <var>codePoint</var>.
 
- <li><p>If <var>codePoint</var> is U+00A5, then return byte 0x5C.
+ <li><p>If <var>codePoint</var> is U+00A5 (¥), then return byte 0x5C.
 
- <li><p>If <var>codePoint</var> is U+203E, then return byte 0x7E.
+ <li><p>If <var>codePoint</var> is U+203E (‾), then return byte 0x7E.
 
  <li><p>If <var>codePoint</var> is in the range U+FF61 to U+FF9F, inclusive, then return a byte
  whose value is <var>codePoint</var> &minus; 0xFF61 + 0xA1.
 
- <li><p>If <var>codePoint</var> is U+2212, then set it to U+FF0D.
+ <li><p>If <var>codePoint</var> is U+2212 (−), then set it to U+FF0D (－).
 
  <li><p>Let <var>pointer</var> be the <a>index Shift_JIS pointer</a> for <var>codePoint</var>.
 
