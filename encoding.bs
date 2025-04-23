@@ -1378,7 +1378,7 @@ getter steps are to return <a>this</a>'s <a for=TextDecoderCommon>encoding</a>'s
 <div algorithm>
 <p>The <dfn attribute id=dom-textdecoder-fatal for=TextDecoderCommon><code>fatal</code></dfn> getter
 steps are to return true if <a>this</a>'s <a for=TextDecoderCommon>error mode</a> is
-"<code>fatal</code>", otherwise false.
+"<code>fatal</code>"; otherwise false.
 </div>
 
 <div algorithm>
@@ -1424,7 +1424,7 @@ initially false.
  <dd><p>Returns <a for=TextDecoderCommon>encoding</a>'s <a for=encoding>name</a>, lowercased.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>fatal</a></code>
- <dd><p>Returns true if <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>", otherwise
+ <dd><p>Returns true if <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>"; otherwise
  false.
 
  <dt><code><var>decoder</var> . <a attribute for=TextDecoderCommon>ignoreBOM</a></code>
@@ -2463,13 +2463,13 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
    <li><p>Let <var>lead</var> be <a>gb18030 first</a>, let
    <var>pointer</var> be null, and set <a>gb18030 first</a> to 0x00.
 
-   <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F, otherwise 0x41.
+   <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F; otherwise 0x41.
 
    <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or
    0x80 to 0xFE, inclusive, set <var>pointer</var> to
    (<var>lead</var> &minus; 0x81) × 190 + (<var>byte</var> &minus; <var>offset</var>).
 
-   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null, otherwise the
+   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null; otherwise the
    <a>index code point</a> for <var>pointer</var> in <a>index gb18030</a>.
 
    <li><p>If <var>codePoint</var> is non-null, then return a code point whose value is
@@ -2659,7 +2659,7 @@ and <var>byte</var>, runs these steps:
 
    <li><p>Let <var>pointer</var> be null.
 
-   <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F, otherwise 0x62.
+   <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F; otherwise 0x62.
    <!-- 0x62 = 0xA1-0x7E+1+0x40 -->
 
    <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or
@@ -2682,7 +2682,7 @@ and <var>byte</var>, runs these steps:
     <p class=note>Since <a lt=index>indexes</a> are limited to
     single code points this table is used for these pointers.
 
-   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null, otherwise the
+   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null; otherwise the
    <a>index code point</a> for <var>pointer</var> in <a>index Big5</a>.
 
    <li><p>If <var>codePoint</var> is non-null, then return a code point whose value is
@@ -3184,9 +3184,9 @@ and <var>byte</var>, runs these steps:
 
    <li><p>Let <var>pointer</var> be null.
 
-   <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F, otherwise 0x41.
+   <li><p>Let <var>offset</var> be 0x40 if <var>byte</var> is less than 0x7F; otherwise 0x41.
 
-   <li><p>Let <var>lead offset</var> be 0x81 if <var>lead</var> is less than 0xA0, otherwise 0xC1.
+   <li><p>Let <var>lead offset</var> be 0x81 if <var>lead</var> is less than 0xA0; otherwise 0xC1.
 
    <li><p>If <var>byte</var> is in the range 0x40 to 0x7E, inclusive, or 0x80 to 0xFC, inclusive,
    then set <var>pointer</var> to
@@ -3299,7 +3299,7 @@ and <var>byte</var>, runs these steps:
    <var>pointer</var> to
    (<var>lead</var> &minus; 0x81) × 190 + (<var>byte</var> &minus; 0x41).
 
-   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null, otherwise the
+   <li><p>Let <var>codePoint</var> be null if <var>pointer</var> is null; otherwise the
    <a>index code point</a> for <var>pointer</var> in <a>index EUC-KR</a>.
 
    <li><p>If <var>codePoint</var> is non-null, then return a code point whose value is
