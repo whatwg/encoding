@@ -235,8 +235,8 @@ items, in the given order, before the first item in the queue.
 <a>byte sequence</a> <var>input</var> into an <a for=/>I/O queue</a>, run these steps:
 
 <ol>
- <li><p>Assert: if <var>input</var> is a <a for=/>list</a>, then it does not <a for=list>contain</a>
- <a>end-of-queue</a>.
+ <li><p><a for=/>Assert</a>: <var>input</var> is not a <a for=/>list</a> or it does not
+ <a for=list>contain</a> <a>end-of-queue</a>.
 
  <li><p>Return an <a for=/>I/O queue</a> containing the <a for=list>items</a> in <var>input</var>,
  in order, followed by <a>end-of-queue</a>.
@@ -258,6 +258,21 @@ algorithms, as detailed in [[#implementation-considerations]].
 <p>To obtain a <dfn>scalar value from surrogates</dfn>, given a <a for=/>leading surrogate</a>
 <var>leading</var> and a <a for=/>trailing surrogate</a> <var>trailing</var>, return
 0x10000 + ((<var>leading</var> &minus; 0xD800) &lt;&lt; 10) + (<var>trailing</var> &minus; 0xDC00).
+</div>
+
+<hr>
+
+<div algorithm>
+<p>To <dfn>create a <code>Uint8Array</code> object</dfn>, given an <a for=/>I/O queue</a>
+<var>ioQueue</var> and a <a for=ECMAScript>realm</a> <var>realm</var>:
+
+<ol>
+ <li><p>Let <var>bytes</var> be the result of <a for="from I/O queue">converting</a>
+ <var>ioQueue</var> into a byte sequence.
+
+ <li><p>Return the result of <a for=ArrayBufferView>creating</a> a {{Uint8Array}} object from
+ <var>bytes</var> in <var>realm</var>.
+</ol>
 </div>
 
 
@@ -333,14 +348,14 @@ given an <a for=list>item</a> <var>item</var>, <a for=/>encoding</a>'s <a for=/>
 <a for=/>I/O queue</a> <var>output</var>, and <a for=/>error mode</a> <var>mode</var>:
 
 <ol>
- <li><p>Assert: if <var>encoderDecoder</var> is an <a for=/>encoder</a> instance, <var>mode</var> is
- not "<code>replacement</code>".
+ <li><p><a for=/>Assert</a>: <var>encoderDecoder</var> is not an <a for=/>encoder</a> instance or
+ <var>mode</var> is not "<code>replacement</code>".
 
- <li><p>Assert: if <var>encoderDecoder</var> is a <a for=/>decoder</a> instance, <var>mode</var> is
- not "<code>html</code>".
+ <li><p><a for=/>Assert</a>: <var>encoderDecoder</var> is not a <a for=/>decoder</a> instance or
+ <var>mode</var> is not "<code>html</code>".
 
- <li><p>Assert: if <var>encoderDecoder</var> is an <a for=/>encoder</a> instance, <var>item</var> is
- not a <a>surrogate</a>.
+ <li><p><a for=/>Assert</a>: <var>encoderDecoder</var> is not an <a for=/>encoder</a> instance or
+ <var>item</var> is not a <a>surrogate</a>.
 
  <li><p>Let <var>result</var> be the result of running <var>encoderDecoder</var>'s <a>handler</a> on
  <var>input</var> and <var>item</var>.
@@ -359,8 +374,8 @@ given an <a for=list>item</a> <var>item</var>, <a for=/>encoding</a>'s <a for=/>
   <p>Otherwise, if <var>result</var> is one or more <a for=list>items</a>:
 
   <ol>
-   <li><p>Assert: if <var>encoderDecoder</var> is a <a for=/>decoder</a> instance, <var>result</var>
-   does not contain any <a>surrogates</a>.
+   <li><p><a for=/>Assert</a>: <var>encoderDecoder</var> is not a <a for=/>decoder</a> instance or
+   <var>result</var> does not contain any <a>surrogates</a>.
 
    <li><p><a>Push</a> <var>result</var> to <var>output</var>.
   </ol>
@@ -1216,7 +1231,7 @@ is safe as it never triggers <a>errors</a>. [[HTML]]
 <a for=/>encoding</a> <var>encoding</var>:
 
 <ol>
- <li><p>Assert: <var>encoding</var> is not <a>replacement</a> or <a>UTF-16BE/LE</a>.
+ <li><p><a for=/>Assert</a>: <var>encoding</var> is not <a>replacement</a> or <a>UTF-16BE/LE</a>.
 
  <li><p>Return an instance of <var>encoding</var>'s <a for=/>encoder</a>.
 </ol>
@@ -1660,14 +1675,13 @@ constructor steps are to do nothing.
    "<code>fatal</code>".
 
    <li>
-    <p>Assert: <var>result</var> is not an <a>error</a>.
+    <p><a for=/>Assert</a>: <var>result</var> is not an <a>error</a>.
 
     <p class=note>The <a>UTF-8 encoder</a> cannot return <a>error</a>.
 
-   <li><p>If <var>result</var> is <a>finished</a>, then <a for="from I/O queue">convert</a>
-   <var>output</var> into a byte sequence and return a {{Uint8Array}} object wrapping an
-   {{ArrayBuffer}} containing <var>output</var>.
-   <!-- XXX https://www.w3.org/Bugs/Public/show_bug.cgi?id=26966 -->
+   <li><p>If <var>result</var> is <a>finished</a>, then return the result of
+   <a>creating a <code>Uint8Array</code> object</a> given <var>output</var> and <a>this</a>'s
+   <a>relevant realm</a>.
   </ol>
 </ol>
 </div>
@@ -1898,8 +1912,9 @@ constructor steps are:
      <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
      <var>decoder</var> and <var>output</var>.
 
-     <li><p>If <var>outputChunk</var> is non-empty, then <a for=TransformStream>enqueue</a>
-     <var>outputChunk</var> in <var>decoder</var>'s <a for=GenericTransformStream>transform</a>.
+     <li><p>If <var>outputChunk</var> is not the empty string, then
+     <a for=TransformStream>enqueue</a> <var>outputChunk</var> in <var>decoder</var>'s
+     <a for=GenericTransformStream>transform</a>.
 
      <li><p>Return.
     </ol>
@@ -1942,8 +1957,9 @@ steps:
      <li><p>Let <var>outputChunk</var> be the result of running <a>serialize I/O queue</a> with
      <var>decoder</var> and <var>output</var>.
 
-     <li><p>If <var>outputChunk</var> is non-empty, then <a for=TransformStream>enqueue</a>
-     <var>outputChunk</var> in <var>decoder</var>'s <a for=GenericTransformStream>transform</a>.
+     <li><p>If <var>outputChunk</var> is not the empty string, then
+     <a for=TransformStream>enqueue</a> <var>outputChunk</var> in <var>decoder</var>'s
+     <a for=GenericTransformStream>transform</a>.
 
      <li><p>Return.
     </ol>
@@ -2067,11 +2083,11 @@ constructor steps are:
      <li><p><a for="from I/O queue">Convert</a> <var>output</var> into a byte sequence.
 
      <li>
-      <p>If <var>output</var> is non-empty:
+      <p>If <var>output</var> <a for=list>is not empty</a>:
 
       <ol>
-       <li><p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
-       <var>output</var>.
+       <li><p>Let <var>chunk</var> be the result of <a>creating a <code>Uint8Array</code> object</a>
+       given <var>output</var> and <var>encoder</var>'s <a>relevant realm</a>.
 
        <li><p><a for=TransformStream>Enqueue</a> <var>chunk</var> into <var>encoder</var>'s
        <a for=GenericTransformStream>transform</a>.
@@ -2136,8 +2152,8 @@ that are split between strings. [[!INFRA]]
 
   <ol>
    <li>
-    <p>Let <var>chunk</var> be a {{Uint8Array}} object wrapping an {{ArrayBuffer}} containing
-    0xEF 0xBF 0xBD.
+    <p>Let <var>chunk</var> be the result of <a>creating a <code>Uint8Array</code> object</a> given
+    « 0xEF, 0xBF, 0xBD » and <var>encoder</var>'s <a>relevant realm</a>.
 
     <p class=note>This is U+FFFD (�) in <a>UTF-8</a> bytes.
 
