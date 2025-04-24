@@ -347,13 +347,13 @@ given an <a for=list>item</a> <var>item</var>, <a for=/>encoding</a>'s <a for=/>
 <a for=/>I/O queue</a> <var>output</var>, and <a for=/>error mode</a> <var>mode</var>:
 
 <ol>
- <li><p><a for=/>Assert</a>: if <var>encoderDecoder</var> is an <a for=/>encoder</a> instance,
+ <li><p><a for=/>Assert</a>: <var>encoderDecoder</var> is not an <a for=/>encoder</a> instance or
  <var>mode</var> is not "<code>replacement</code>".
 
- <li><p><a for=/>Assert</a>: if <var>encoderDecoder</var> is a <a for=/>decoder</a> instance,
+ <li><p><a for=/>Assert</a>: <var>encoderDecoder</var> is not a <a for=/>decoder</a> instance or
  <var>mode</var> is not "<code>html</code>".
 
- <li><p><a for=/>Assert</a>: if <var>encoderDecoder</var> is an <a for=/>encoder</a> instance,
+ <li><p><a for=/>Assert</a>: <var>encoderDecoder</var> is not an <a for=/>encoder</a> instance or
  <var>item</var> is not a <a>surrogate</a>.
 
  <li><p>Let <var>result</var> be the result of running <var>encoderDecoder</var>'s <a>handler</a> on
@@ -373,7 +373,7 @@ given an <a for=list>item</a> <var>item</var>, <a for=/>encoding</a>'s <a for=/>
   <p>Otherwise, if <var>result</var> is one or more <a for=list>items</a>:
 
   <ol>
-   <li><p><a for=/>Assert</a>: if <var>encoderDecoder</var> is a <a for=/>decoder</a> instance,
+   <li><p><a for=/>Assert</a>: <var>encoderDecoder</var> is not a <a for=/>decoder</a> instance or
    <var>result</var> does not contain any <a>surrogates</a>.
 
    <li><p><a>Push</a> <var>result</var> to <var>output</var>.
