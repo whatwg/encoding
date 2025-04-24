@@ -2165,9 +2165,11 @@ in deployed content. Therefore it is not part of the <a>UTF-8 decoder</a> algori
  <dt><dfn>UTF-8 code point</dfn>
  <dt><dfn>UTF-8 bytes seen</dfn>
  <dt><dfn>UTF-8 bytes needed</dfn>
- <dd>A number, initially 0.
+ <dd>Each a number, initially 0.
+
  <dt><dfn>UTF-8 lower boundary</dfn>
  <dd>A byte, initially 0x80.
+
  <dt><dfn>UTF-8 upper boundary</dfn>
  <dd>A byte, initially 0xBF.
 </dl>
@@ -2447,7 +2449,7 @@ consumers of content generated with <a>GBK</a>'s <a for=/>encoder</a>.
  <dt><dfn>gb18030 first</dfn>
  <dt><dfn>gb18030 second</dfn>
  <dt><dfn>gb18030 third</dfn>
- <dd>A byte, initially 0x00.
+ <dd>Each a byte, initially 0x00.
 </dl>
 
 <p><a>gb18030</a>'s <a for=/>decoder</a>'s <a>handler</a>, given
@@ -2794,6 +2796,7 @@ is a byte, initially 0x00.
 <dl>
  <dt><dfn id=euc-jp-jis0212-flag>EUC-JP jis0212</dfn>
  <dd>A boolean, initially false.
+
  <dt><dfn id=euc-jp-lead>EUC-JP leading</dfn>
  <dd>A byte, initially 0x00.
 </dl>
@@ -2905,10 +2908,13 @@ is a byte, initially 0x00.
 <dl>
  <dt><dfn>ISO-2022-JP decoder state</dfn>
  <dd>A state, initially <a lt="ISO-2022-JP decoder ASCII">ASCII</a>.
+
  <dt><dfn>ISO-2022-JP decoder output state</dfn>
  <dd>A state, initially <a lt="ISO-2022-JP decoder ASCII">ASCII</a>.
+
  <dt><dfn id=iso-2022-jp-lead>ISO-2022-JP leading</dfn>
  <dd>A byte, initially 0x00.
+
  <dt><dfn id=iso-2022-jp-output-flag>ISO-2022-JP output</dfn>
  <dd>A boolean, initially false.
 </dl>
@@ -3441,8 +3447,10 @@ rather the <a>decode</a> algorithm.
 <dl>
  <dt><dfn id=utf-16-lead-byte>UTF-16 leading byte</dfn>
  <dd>Null or a byte, initially null.
+
  <dt><dfn id=utf-16-lead-surrogate>UTF-16 leading surrogate</dfn>
  <dd>Null or a <a for=/>leading surrogate</a>, initially null.
+
  <dt><dfn id=utf-16be-decoder-flag>is UTF-16BE decoder</dfn>
  <dd>A boolean, initially false.
 </dl>
