@@ -22,12 +22,6 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 }
 </pre>
 
-<pre class=anchors>
-urlPrefix: https://tc39.es/ecma262/#; spec: ECMA-262;
-    type: dfn
-        text: realm; url: realm
-</pre>
-
 <link rel=stylesheet href=visualization-colors.css>
 
 
@@ -269,7 +263,7 @@ algorithms, as detailed in [[#implementation-considerations]].
 
 <div algorithm>
 <p>To <dfn>create a <code>Uint8Array</code> object</dfn>, given an <a for=/>I/O queue</a>
-<var>ioQueue</var> and a <a for=/>realm</a> <var>realm</var>:
+<var>ioQueue</var> and a <a for=ECMAScript>realm</a> <var>realm</var>:
 
 <ol>
  <li><p>Let <var>bytes</var> be the result of <a for="from I/O queue">converting</a>
