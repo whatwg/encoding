@@ -689,7 +689,7 @@ prescribes, as that is necessary to be compatible with deployed content.
  <tbody>
   <tr><th colspan=2><a href=#legacy-multi-byte-chinese-(simplified)-encodings>Legacy multi-byte Chinese (simplified) encodings</a>
   <tr>
-   <td rowspan=9><a>GBK</a>
+   <td rowspan=10><a>GBK</a>
    <td>"<code>chinese</code>"
   <tr><td>"<code>csgb2312</code>"
   <tr><td>"<code>csiso58gb231280</code>"
@@ -698,6 +698,7 @@ prescribes, as that is necessary to be compatible with deployed content.
   <tr><td>"<code>gb_2312-80</code>"
   <tr><td>"<code>gbk</code>"
   <tr><td>"<code>iso-ir-58</code>"
+  <tr><td>"<code>windows-936-2000</code>"
   <tr><td>"<code>x-gbk</code>"
   <tr>
    <td><a>gb18030</a>
