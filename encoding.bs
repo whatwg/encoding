@@ -26,6 +26,10 @@ Translate IDs: dictdef-textdecoderoptions textdecoderoptions,dictdef-textdecodeo
 
 <link rel=stylesheet href=visualization-colors.css>
 
+<pre class=link-defaults>
+spec:infra; type:dfn; text:break;
+</pre>
+
 
 
 <h2 id=preface>Preface</h2>
