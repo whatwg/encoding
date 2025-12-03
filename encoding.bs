@@ -178,7 +178,7 @@ from an <a for=/>I/O queue</a> <var>ioQueue</var>, run these steps:
   <p><a for=list>For each</a> <var>n</var> in <a>the range</a> 1 to <var>number</var>, inclusive:
 
   <ol>
-   <li><p>If <var>ioQueue</var>[<var>n</var>] is <a>end-of-queue</a>, <a>break</a>.
+   <li><p>If <var>ioQueue</var>[<var>n</var>] is <a>end-of-queue</a>, <a for=iteration>break</a>.
 
    <li><p>Otherwise, <a for=list>append</a> <var>ioQueue</var>[<var>n</var>] to <var>prefix</var>.
   </ol>
