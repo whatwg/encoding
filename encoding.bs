@@ -1855,7 +1855,7 @@ constructor steps are:
 
  <li><p>Let <var>ignoreBOM</var> be true if <var>options</var>["{{TextDecoderOptions/ignoreBOM}}"] is true; otherwise false.
 
- <li><p>Call <a>set up a text decoder stream</a> with <a>this</a>, <var>encoding</var>, <var>errorMode</var>, and <var>ignoreBOM</var>.
+ <li><p><a>Set up a text decoder stream</a> with <a>this</a>, <var>encoding</var>, <var>errorMode</var>, and <var>ignoreBOM</var>.
 
 </ol>
 </div>
