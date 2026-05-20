@@ -1860,10 +1860,11 @@ constructor steps are:
 </div>
 
 <div algorithm>
-<p>To <dfn export>set up a text decoder stream</dfn> <var>stream</var>, given a
-{{TextDecoderStream}} stream, an optional [=/encoding=] <var>encoding</var> (default <a>UTF-8</a>),
-an optional <a for=/>error mode</a> <var>errorMode</var> (default "<code>replacement</code>"), and
-an optional boolean <var>ignoreBOM</var> (default false), run these steps:
+<p>To <dfn export>set up a text decoder stream</dfn> given a {{TextDecoderStream}} object
+<var>stream</var>, an optional [=/encoding=] <var>encoding</var> (default <a>UTF-8</a>), an optional
+<a for=/>error mode</a> <var>errorMode</var> (default "<code>replacement</code>"), and an optional
+boolean <var>ignoreBOM</var> (default false), run these steps:
+
 <ol>
  <li><p><a>Assert</a>: <var>encoding</var> is not <a>replacement</a>.
 
