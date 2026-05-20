@@ -1865,7 +1865,7 @@ constructor steps are:
 an optional <a for=/>error mode</a> <var>errorMode</var> (default "<code>replacement</code>"), and
 an optional boolean <var>ignoreBOM</var> (default false), run these steps:
 <ol>
- <li><p><a>Assert</a>: <var>encoding</var> is not <code>replacement</code>.
+ <li><p><a>Assert</a>: <var>encoding</var> is not <a>replacement</a>.
 
  <li><p>Set <var>stream</var>'s <a for=TextDecoderCommon>encoding</a> to <var>encoding</var>.
 
