@@ -1459,7 +1459,7 @@ dictionary TextDecodeOptions {
 interface TextDecoder {
   constructor(optional DOMString label = "utf-8", optional TextDecoderOptions options = {});
 
-  USVString decode(optional AllowSharedBufferSource input, optional TextDecodeOptions options = {});
+  USVString decode(optional [AllowResizable] AllowSharedBufferSource input, optional TextDecodeOptions options = {});
 };
 TextDecoder includes TextDecoderCommon;
 </pre>
@@ -1621,7 +1621,7 @@ interface TextEncoder {
   constructor();
 
   [NewObject] Uint8Array encode(optional USVString input = "");
-  TextEncoderEncodeIntoResult encodeInto(USVString source, [AllowShared] Uint8Array destination);
+  TextEncoderEncodeIntoResult encodeInto(USVString source, [AllowResizable, AllowShared] Uint8Array destination);
 };
 TextEncoder includes TextEncoderCommon;
 </pre>
