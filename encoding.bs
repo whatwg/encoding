@@ -1500,7 +1500,8 @@ string += decoder.decode(); // end-of-queue</code></pre>
 
   <p>If the <a for=TextDecoderCommon>error mode</a> is "<code>fatal</code>" and
   <a for=TextDecoderCommon>encoding</a>'s <a for=/>decoder</a> returns <a>error</a>,
-  <a>throws</a> a {{TypeError}}.
+  <a>throws</a> a {{TypeError}} and resets <var>decoder</var>, so that a subsequent invocation does
+  not continue where the error occurred.
 </dl>
 
 <div algorithm>
@@ -1571,19 +1572,21 @@ method steps are:
     in a subsequent invocation <a>this</a>'s <a for=TextDecoderCommon>decoder</a> is not set anew in
     the first step of the algorithm and its state is preserved.
 
+   <li><p>Let <var>result</var> be the result of <a>processing an item</a> with <var>item</var>,
+   <a>this</a>'s <a for=TextDecoderCommon>decoder</a>, <a>this</a>'s
+   <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <a>this</a>'s
+   <a for=TextDecoderCommon>error mode</a>.
+
+   <li><p>If <var>result</var> is <a>finished</a>, then return the result of running
+   <a>serialize I/O queue</a> with <a>this</a> and <var>output</var>.
+
    <li>
-    <p>Otherwise:
+    <p>If <var>result</var> is <a>error</a>:
 
     <ol>
-     <li><p>Let <var>result</var> be the result of <a>processing an item</a> with <var>item</var>,
-     <a>this</a>'s <a for=TextDecoderCommon>decoder</a>, <a>this</a>'s
-     <a for=TextDecoderCommon>I/O queue</a>, <var>output</var>, and <a>this</a>'s
-     <a for=TextDecoderCommon>error mode</a>.
+     <li><p>Set <a>this</a>'s <a for=TextDecoder>do not flush</a> to false.
 
-     <li><p>If <var>result</var> is <a>finished</a>, then return the result of running
-     <a>serialize I/O queue</a> with <a>this</a> and <var>output</var>.
-
-     <li><p>Otherwise, if <var>result</var> is <a>error</a>, <a>throw</a> a {{TypeError}}.
+     <li><p><a>Throw</a> a {{TypeError}}.
     </ol>
   </ol>
 </ol>
